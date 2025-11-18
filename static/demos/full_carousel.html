@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Container Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: #ffffff;
+        }
+        header {
+            background-color: #000000;
+            background-image: radial-gradient(circle at top center, #1a2a6c, #000000 70%);            
+        }
+        .header-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        #content-frame {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+        }
+        .nav-button {
+            transition: all 0.2s;
+            @apply rounded-lg font-semibold px-4 py-2 hover:bg-indigo-600 active:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed;
+        }
+
+        .query-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .prompt {
+            margin-right: 20px;
+        }
+
+        #image-gallery {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col">
+
+    <header class="header-shadow bg-white p-4 flex items-center justify-between sticky top-0 z-10">
+        <span class="prompt flex-shrink-0 hidden md:inline">Prompt:</span>    
+        <div id="image-gallery" class="flex flex-wrap gap-1.5 shrink justify-start items-center">
+        </div>
+        <div class="flex items-center space-x-4 min-w-[10rem] flex-1">
+            <div id="query-container" class="query-container p-2 rounded-lg text-sm md:text-base max-w-full max-h-24 overflow-y-auto"></div>                
+            </div>
+        </div>
+
+        <div class="flex flex-col space-y-2 items-end md:flex-row md:items-center md:space-y-0 md:space-x-3 flex-shrink-0 ml-4">
+            <a href="../../index.html" class="flex items-center rounded-lg font-semibold p-2 md:px-4 md:py-2 bg-indigo-700 text-indigo-100 hover:bg-indigo-600 transition-colors duration-200 shadow-sm">                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
+                <span class="hidden md:inline">Project Page</span>                
+            </a>
+            <button id="prev-button" class="nav-button bg-indigo-500 text-white !p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <button id="next-button" class="nav-button bg-indigo-500 text-white !p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <iframe id="content-frame" src="" title="Result Page Content"></iframe>
+
+    <script>
+        const results = [
+            {
+                filepath: "fractal-explorer",
+                query: "Explain fractals - go really in depth - i want to learn everything about it in detail",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "rolling-an-8",
+                query: "explain the probability of getting an 8 with 2 dice",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "ising-model",
+                query: "ising model",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "history-of-timekeeping",
+                query: "history of time keeping devices",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "speculative-decoding-for-kids",
+                query: "speculative decoding for kids",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "chemistry-experiments",
+                query: "chemistry experiments for kids",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "slope-with-puppies",
+                query: "explain slope and tangent using puppies",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "basketball-math",
+                query: "Teach my 5 year old addition, subtraction, multiplication and binary representation with cute creatures that play basketball. He loves basketball",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "french-history",
+                query: "french history for kids",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "thanksgiving",
+                query: "i'm hosting thanksgiving for 11 people",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "choose-a-rug",
+                query: "I want to put a rug in this room. Can you visualize what the room would look like with different styles to help me choose?",
+                images: ["img.jpg"],
+                content: "demo.html",
+            },
+            {
+                filepath: "how-to-make-a-baby-mobile",
+                query: "how to make a baby mobile",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "decorating-with-flamingos",
+                query: "decorating with flamingos",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "hosting-dinner",
+                query: "i'm hosting dinner for 11 next weekend - help!",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "puppy-tricks",
+                query: "teaching a puppy basic tricks",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "what-time-is-it",
+                query: "what time is it",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "green-things",
+                query: "green things",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "dragonfruit",
+                query: "dragonfruit",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "learn-fast-typing",
+                query: "learn fast typing, retro gaming style",
+                images: [],
+                content: "demo.html",
+            },            
+            {
+                filepath: "point-and-click-game",
+                query: "point and click adventure game",
+                images: [],
+                content: "demo.html",
+            },            
+            {
+                filepath: "fashion-advisor",
+                query: "be my fashion advisor - explain the theory and show me a dozen stylish options for me",
+                images: ["img.jpg"],
+                content: "demo.html",
+            },
+            {
+                filepath: "fashion-3",
+                query: "give yaniv, yossi, and dani fashion advice",
+                images: ["img1.jpg", "img2.jpg", "img3.jpg"],
+                content: "demo.html",
+            },
+            {
+                filepath: "social-media-avatar",
+                query: "suggest a dozen options for a social media avatar",
+                images: ["img.jpg"],
+                content: "demo.html",
+            },
+            {
+                filepath: "memory-game",
+                query: "create a match up memory game with beautiful large cards showing the people from the images making funny expressions and wearing funny props",
+                images: ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg"],
+                content: "demo.html",
+            },            
+            {
+                filepath: "tic-tac-toe",
+                query: "4 player elemental tic tac toe with retro sounds",
+                images: [],
+                content: "demo.html",
+            },            
+            {
+                filepath: "japanese-visual-novel",
+                query: "Japanese visual novel to help practice for the JLPT N3. Make the story interesting and surprising, with suspense and some branching storylines. Include an optional English translation. Include some options that would be useful for a Japanese learner.",
+                images: [],
+                content: "demo.html",
+            },            
+            {
+                filepath: "japanese-visual-novel-personal",
+                query: "Change my photo to have several different facial expressions, poses etc. and make me star in a Japanese language visual novel (around N3 level) with photorealistic graphics. Please make the plot exciting and add some choices for the player. Add some options that would make it valuable for a language learner.",
+                images: ["img.jpg"],
+                content: "demo.html",
+            },
+            {
+                filepath: "text-adventure-game",
+                query: "Create an old style text adventure game. Make it take place in a remote island. Include an amazing visual for each location and make sure the visuals are consistent. Create a full background story with some twists with 3 main characters. The characters shouldn't appear in the game but the player should slowly uncover what happened through the environment. Make sure the story is super interesting before starting. Make the game fully fledged and full length, not just a demo, as if a super talented team of indie developers made it. If released it should get really good reviews. Include at least 30 unique locations and dozens of inventory items. Make sure to also include some puzzles in the form of tricky riddles (e.g. codes to decipher). Include a hint book. Make sure the player understands all possible available commands and that the game is fully beatable. Take your time.",
+                images: [],
+                content: "demo.html",
+            },
+            {
+                filepath: "dog-traveling",
+                query: "I'm sad that my dog can't go on vacation with me. Create a comic where she goes traveling around the world.",
+                images: ["img.jpg"],
+                content: "demo.html",
+            },
+        ];
+        
+        let currentIndex = 0;
+        const iframe = document.getElementById('content-frame');
+        const queryContainer = document.getElementById('query-container');
+        const imageGallery = document.getElementById('image-gallery');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function loadResultPage(index) {
+            if (index < 0) index += results.length;
+            if (index >= results.length) index -= results.length;
+            if (index < 0 || index >= results.length) return;
+
+            currentIndex = index;
+            const result = results[currentIndex];
+            
+            iframe.src = result.filepath + "/" + result.content;
+            
+            const newUrl = window.location.pathname + '?result=' + result.filepath;
+            history.pushState({ path: newUrl }, '', newUrl);            
+
+            queryContainer.textContent = result.query;
+            queryContainer.title = result.query;
+
+            imageGallery.innerHTML = ''; // Clear previous images
+            if (result.images.length > 0) {
+                imageGallery.style.display = 'flex';
+                result.images.forEach((url, i) => {
+                    const img = document.createElement('img');
+                    img.src = result.filepath + "/" + url;
+                    img.alt = `User Image \${i + 1}`;
+                    img.className = 'w-10 h-10 object-cover rounded-md shadow-md';
+                    imageGallery.appendChild(img);
+                });
+            } else {
+                imageGallery.style.display = 'none';
+            }            
+        }
+
+        prevButton.addEventListener('click', () => {
+            loadResultPage(currentIndex - 1);
+        });
+
+        nextButton.addEventListener('click', () => {
+            loadResultPage(currentIndex + 1);
+        });
+
+        window.onload = () => {
+            let initialIndex = 0;
+            const initialFilepath = getUrlParameter('result');
+
+            if (initialFilepath) {
+                const foundIndex = results.findIndex(r => r.filepath === initialFilepath);
+                if (foundIndex !== -1) {
+                    initialIndex = foundIndex;
+                }
+            }
+            
+            if (results.length > 0) {                
+                loadResultPage(initialIndex);           
+            } else {
+                queryContainer.textContent = "No results available to display.";
+                prevButton.disabled = true;
+                nextButton.disabled = true;
+            }
+        };
+    </script>
+</body>
+</html>

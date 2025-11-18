@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
+  <meta name="description" content="Generative UI">
+  <meta property="og:title" content="Generative UI" />
+  <meta property="og:description" content="Generative UI Technical Report" />
+  <meta property="og:url" content="https://generativeui.github.io" />
+  <meta property="og:image" content="static/image/sys_diagram.png" />
+  <meta property="og:image:width" content="819" />
+  <meta property="og:image:height" content="600" />
 
 
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="twitter:title" content="Generative UI">
+  <meta name="twitter:description" content="Generative UI Technical Report">
+  <meta name="twitter:image" content="static/image/sys_diagram.png">
+  <meta name="twitter:card" content="Generative UI">
+  <meta name="keywords" content="Generative UI">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>Academic Project Page</title>
+  <title>Generative UI</title>
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <!-- <link rel="stylesheet" href="static/css/bulma-carousel.css"> -->
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -43,270 +38,499 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+
+  <style>
+    img.cover-img {
+      /* width: 510px;
+      height: 340px; */
+    }
+
+:root {
+        --hover-overlay-bg: rgba(0, 0, 0, 0.75);
+        --grid-text-color: #ffffff;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    /* Adjust for larger screens if needed */
+    @media (min-width: 1600px) {
+        .gallery-grid3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .gallery-grid4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .gallery-grid5 {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .gallery-grid6 {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+
+    .gallery-item {
+        position: relative;
+        display: block;
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease;
+        text-decoration: none;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-3px);
+        z-index: 10;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--hover-overlay-bg);
+        color: var(--grid-text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 15px;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .item-overlay span {
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+
+    .gallery-item:hover .item-overlay {
+        opacity: 1;
+    }    
+  </style>
 </head>
+
 <body>
 
-
+  <!-- ===== Authors ===== -->
   <section class="hero">
-    <div class="hero-body">
+    <div class="hero-body" style="padding-bottom: 1rem">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Academic Project Page</h1>
+            <h1 class="title is-1 publication-title">Generative UI: LLMs are Effective UI Generators</h1>
             <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
               <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">First Author</a><sup>*</sup>,</span>
-                <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
-                  <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
-                  </span>
-                  </div>
+                <a href="https://yanivle.github.io/" target="_blank">Yaniv Leviathan</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/dani-valevski-a3b5936/" target="_blank">Dani Valevski</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/matankal/" target="_blank">Matan Kalman</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/danny-lumen/" target="_blank">Danny Lumen</a>,
+              </span>
+              <br />
+              <span class="author-block">
+                Eyal Segalis,
+              </span>
+              <span class="author-block">
+                Eyal Molad,
+              </span>
+              <span class="author-block">
+                Shlomi Pasternak,
+              </span>
+              <span class="author-block">
+                Vishnu Natchu,
+              </span>
+              <span class="author-block">
+                Valerie Nygaard,
+              </span>
+              <span class="author-block">
+                Srinivasan (Cheenu) Venkatachar,
+              </span>
+              <span class="author-block">
+                James Manyika,
+              </span>
+              <span class="author-block">
+                Yossi Matias
+              </span>
 
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">Institution Name<br>Conferance name and year</span>
-                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
-                  </div>
-
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- Arxiv PDF link -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
-
-                    <!-- Supplementary PDF link -->
-                    <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span>
-
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+            </div>
+            <div class="is-size-6 publication-authors" style="padding-top: 10px; padding-bottom: 10px">
+              <span class="author-block">
+                Google Research
+              </span>
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
-                      <i class="fab fa-github"></i>
+                      <i class="fas fa-file-pdf"></i>
                     </span>
-                    <span>Code</span>
+                    <span>Paper</span>
                   </a>
                 </span>
 
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/abs/ARXIV_PAPER_ID" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- End teaser video -->
-
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-<!-- End image carousel -->
-
-
-
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
+  <!-- ===== Abstract ===== -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- Youtube embed code here -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="column">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              AI models excel at creating content, but typically render it with static, predefined
+              interfaces.  Specifically, the output of LLMs is often a markdown “wall of text”.
+              <em>Generative UI</em> is a long standing promise, where the model generates not just the
+              content, but the interface itself.  Until now, Generative UI was not possible in a
+              robust fashion. We demonstrate that when properly prompted and equipped with the
+              right set of tools, a modern LLM can robustly produce high quality custom UIs for
+              virtually any prompt.  When ignoring generation speed, results generated by our
+              implementation are overwhelmingly preferred by humans over the standard LLM markdown
+              output. In fact, while the results generated by our implementation are worse than
+              those crafted by human experts, they are at least comparable in 44% of cases. We show
+              that this ability for robust Generative UI is emergent,with substantial improvements
+              from previous models. 
+              We also create and release PAGEN, a novel dataset of expert-crafted results to aid in
+              evaluating Generative UI implementations, as well as the results of our system for
+              future comparisons.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End youtube video -->
+  </section>
+
+  <!-- ===== Demo Carousel ===== -->
+  <section class="hero is-small">
+    <div class="hero-body">
+<div class="container is-centered has-text-centered">
+        <h2 class="title is-3">Generative UI Examples</h2>
+        <p class="has-text-justified">Generative UI can be useful in a wide range of scenarios. In this section you can find examples generated automatically by our implementation
+          from a user prompt. Click on an example to access the generated result.</p>
 
 
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
+        <h2 class="title is-4" style="margin: 20px;">Education</h2>
+        <p class="has-text-justified">One category in which generative UI is particluatly helpful is education.</p>
+
+        <div class="gallery-grid gallery-grid4">
+            <a href="static/demos/full_carousel.html?result=fractal-explorer" class="gallery-item" target="_blank">
+                <img src="static/demos/fractal-explorer/cover.webp" alt="What are Fractals?">
+                <div class="item-overlay"><span>What are Fractals?</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=rolling-an-8" class="gallery-item" target="_blank">
+                <img src="static/demos/rolling-an-8/cover.webp" alt="Probability of Rolling an 8 on Two Dice">
+                <div class="item-overlay"><span>Probability of Rolling an 8 on Two Dice</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=ising-model" class="gallery-item" target="_blank">
+                <img src="static/demos/ising-model/cover.webp" alt="Ising Model">
+                <div class="item-overlay"><span>Ising Model</span></div>
+            </a>
+          <a href="static/demos/full_carousel.html?result=history-of-timekeeping" class="gallery-item" target="_blank">
+                <img src="static/demos/history-of-timekeeping/cover.webp" alt="History of Timekeeping Devices">
+                <div class="item-overlay"><span>History of Timekeeping Devices</span></div>
+            </a>
+
+          </div>
+
+        <h2 class="title is-4" style="margin: 20px; margin-top: 50px;">Education for Kids</h2>
+        <p class="has-text-justified" style="margin-top:20px">Generative UI excels at extreme customization. For example, here are results for education for children:</p>
+
+        <div class="gallery-grid gallery-grid4">
+
+            <a href="static/demos/full_carousel.html?result=speculative-decoding-for-kids" class="gallery-item" target="_blank">
+                <img src="static/demos/speculative-decoding-for-kids/cover.webp" alt="Speculative Decoding for Kids">
+                <div class="item-overlay"><span>Speculative Decoding for Kids</span></div>
+            </a>
+
+                        <a href="static/demos/full_carousel.html?result=chemistry-experiments" class="gallery-item" target="_blank">
+                <img src="static/demos/chemistry-experiments/cover.webp" alt="Chemistry Experiments for Kids">
+                <div class="item-overlay"><span>Chemistry Experiments for Kids</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=slope-with-puppies" class="gallery-item" target="_blank">
+                <img src="static/demos/slope-with-puppies/cover.webp" alt="Explain Slope and Tangent Using Puppies">
+                <div class="item-overlay"><span>Explain Slope and Tangent Using Puppies</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=basketball-math" class="gallery-item" target="_blank">
+                <img src="static/demos/basketball-math/cover.webp" alt="Basketball Math">
+                <div class="item-overlay"><span>Basketball Math</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=french-history" class="gallery-item" target="_blank">
+                <img src="static/demos/french-history/cover.webp" alt="French History for Kids">
+                <div class="item-overlay"><span>French History for Kids</span></div>
+            </a>
+
         </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
+
+
+        <h2 class="title is-4" style="margin: 20px; margin-top: 50px;">Practical Tasks</h2>
+        <p class="has-text-justified" style="margin-top:20px">Generative UI can also be helpful for practical tasks:</p>
+
+        <div class="gallery-grid gallery-grid4">
+            <a href="static/demos/full_carousel.html?result=thanksgiving" class="gallery-item" target="_blank">
+                <img src="static/demos/thanksgiving/cover.webp" alt="Hosting Thanksgiving">
+                <div class="item-overlay"><span>Hosting Thanksgiving</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=choose-a-rug" class="gallery-item" target="_blank">
+                <img src="static/demos/choose-a-rug/cover.webp" alt="Choose a Rug">
+                <div class="item-overlay"><span>Choose a Rug</span></div>
+            </a>    
+            <a href="static/demos/full_carousel.html?result=how-to-make-a-baby-mobile" class="gallery-item" target="_blank">
+                <img src="static/demos/how-to-make-a-baby-mobile/cover.webp" alt="How to Make a Baby Mobile">
+                <div class="item-overlay"><span>How to Make a Baby Mobile</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=decorating-with-flamingos" class="gallery-item" target="_blank">
+                <img src="static/demos/decorating-with-flamingos/cover.webp" alt="Decorating with Flamingos">
+                <div class="item-overlay"><span>Decorating with Flamingos</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=hosting-dinner" class="gallery-item" target="_blank">
+                <img src="static/demos/hosting-dinner/cover.webp" alt="Hosting a Dinner">
+                <div class="item-overlay"><span>Hosting a Dinner</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=puppy-tricks" class="gallery-item" target="_blank">
+                <img src="static/demos/puppy-tricks/cover.webp" alt="Teaching a Puppy Basic Tricks">
+                <div class="item-overlay"><span>Teaching a Puppy Basic Tricks</span></div>
+            </a>
         </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End video carousel -->
 
 
+        <h2 class="title is-4" style="margin: 20px; margin-top: 50px;">Simple Queries</h2>
+        <p class="has-text-justified" style="margin-top:20px">Generative UI can generate surprising results even for simple queries:</p>
 
 
-
-
-<!-- Paper poster -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
         
+        <div class="gallery-grid">
+            <a href="static/demos/full_carousel.html?result=what-time-is-it" class="gallery-item" target="_blank">
+                <img src="static/demos/what-time-is-it/cover.webp" alt="What Time is it">
+                <div class="item-overlay"><span>What Time is it</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=green-things" class="gallery-item" target="_blank">
+                <img src="static/demos/green-things/cover.webp" alt="Green Things">
+                <div class="item-overlay"><span>Green Things</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=dragonfruit" class="gallery-item" target="_blank">
+                <img src="static/demos/dragonfruit/cover.webp" alt="Dragonfruit">
+                <div class="item-overlay"><span>Dragonfruit</span></div>
+            </a>
+
+                    </div>
+
+        <h2 class="title is-4" style="margin: 20px; margin-top: 50px;">Fun & Games</h2>
+        <p class="has-text-justified" style="margin-top:20px">Generative UI can also generate fun applications and games:</p>
+
+        <div class="gallery-grid">
+            <a href="static/demos/full_carousel.html?result=learn-fast-typing" class="gallery-item" target="_blank">
+                <img src="static/demos/learn-fast-typing/cover.webp" alt="Learn Fast Typing">
+                <div class="item-overlay"><span>Learn Fast Typing</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=point-and-click-game" class="gallery-item" target="_blank">
+                <img src="static/demos/point-and-click-game/cover.webp" alt="Point and Click Game">
+                <div class="item-overlay"><span>Point and Click Game</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=fashion-advisor" class="gallery-item" target="_blank">
+                <img src="static/demos/fashion-advisor/cover.webp" alt="Fashion Advisor">
+                <div class="item-overlay"><span>Fashion Advisor</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=fashion-3" class="gallery-item" target="_blank">
+                <img src="static/demos/fashion-3/cover.webp" alt="Fashion Advisor">
+                <div class="item-overlay"><span>Fashion Advisor</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=social-media-avatar" class="gallery-item" target="_blank">
+                <img src="static/demos/social-media-avatar/cover.webp" alt="Social Media Avatar">
+                <div class="item-overlay"><span>Social Media Avatar</span></div>
+            </a>    
+            <a href="static/demos/full_carousel.html?result=memory-game" class="gallery-item" target="_blank">
+                <img src="static/demos/memory-game/cover.webp" alt="Memory Game">
+                <div class="item-overlay"><span>Memory Game</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=tic-tac-toe" class="gallery-item" target="_blank">
+                <img src="static/demos/tic-tac-toe/cover.webp" alt="Four Player Elemental Tic Tac Toe">
+                <div class="item-overlay"><span>Four Player Elemental Tic Tac Toe</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=japanese-visual-novel" class="gallery-item" target="_blank">
+                <img src="static/demos/japanese-visual-novel/cover.webp" alt="Japanese Visual Novel">
+                <div class="item-overlay"><span>Japanese Visual Novel</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=japanese-visual-novel-personal" class="gallery-item" target="_blank">
+                <img src="static/demos/japanese-visual-novel-personal/cover.webp" alt="Japanese Personal Visual Novel">
+                <div class="item-overlay"><span>Japanese Personal Visual Novel</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=text-adventure-game" class="gallery-item" target="_blank">
+                <img src="static/demos/text-adventure-game/cover.webp" alt="Text Adventure Game">
+                <div class="item-overlay"><span>Text Adventure Game</span></div>
+            </a>
+            <a href="static/demos/full_carousel.html?result=dog-traveling" class="gallery-item" target="_blank">
+                <img src="static/demos/dog-traveling/cover.webp" alt="Dog Traveling">
+                <div class="item-overlay"><span>Dog Traveling</span></div>
+            </a>
+        </div>
+
+
+      </div>      
+    </div>
+  </section>
+
+  <!-- ===== System diagram ===== -->
+  <section class="section hero is-light is-small" style=""padding-bottom:0.5rem>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3">High Level Method Overview</h2>
+            <div class="level-set has-text-justified">
+              <p>
+                Our Generative UI implementation results in a fully-generated web page that is rendered as-is on the user's browser.
+                To that end, we employ 3 main components:
+                <ol>
+                  <li>A <strong>server</strong> which exposes several endpoints enabling access to key tools, such as image generation and search.</li>
+                  <li>Carefully crafted <strong>system instructions</strong> for Gemini, which include the goal, planning guidelines, examples and more.</li>
+                  <li>A set of <strong>post-processors</strong> which fix a set of common issues that couldn't be fixed with the system instructions alone.</li>
+                </ol>
+              </p>
+            </div>
+            <div class="columns is-centered">
+              <div class="column is-four-fifths">
+                <figure class="image">
+                  <img src="static/images/sys_diagram_dotted.svg" alt="System Diagram">
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-<!--End paper poster -->
 
+  <!-- ===== Results ===== -->
+  <section class="section hero is-small" style="padding-top: 2rem">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3">Results</h2>
+            <div class="level-set has-text-justified">
+              <p>
+                <!-- ELO scores and pairwise user preferences wins. Users strongly prefer Generative UI to all other 
+                formats, except human experts. -->
 
-<!--BibTex citation -->
+                We evaluate user preference across several different result formats: a custom website crafted for the prompt by a human expert, the top Google Search result for the query, text (LLMoutput without markdown), standard LLM output (in markdown format), and our Generative UI implementation.  We randomly sampled 100 prompts from LMArena and collected pairwise preferences from human raters, sending each result to 2 raters.
+                The following tables show the resulting ELO scores and side-by-side user preference for each of the UI modalities.  Generative UI obtains an ELO score of 1710.7, indicating a strong user preference over all other formats, except human experts. See more details in the paper.
+              </p>
+            </div>
+            <div class="columns is-centered mt-2">
+              <div class="column is-four-fifths">
+                <figure class="image results-table">
+                  <img src="static/images/results/table01.png" alt="ELO scores for user preference">
+                </figure>
+              </div>
+            </div>
+            <div class="columns is-centered mt-2">
+              <div class="column is-four-fifths">
+                <figure class="image results-table">
+                  <img src="static/images/results/table02.png" alt="Pairwise user preferences wins">
+                </figure>
+              </div>
+            </div>
+            <div class="level-set has-text-justified">
+              <p>
+                Generative UI is an emerging capability with newer models - we see strong user
+                preference and drastically less errors for results with the new Gemini models.
+              </p>
+            </div>            
+            <div class="columns is-centered mt-2">
+              <div class="column is-four-fifths">
+                <figure class="image results-table">
+                  <img src="static/images/results/table03.png" alt="Model Performance Comparison">
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BibTeX =====
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>BibTex Code Here</code></pre>
     </div>
-</section>
-<!--End BibTex citation -->
+  </section> -->
 
+  <!-- ===== Acknowledgements ===== -->
+  <section class="section" id="Acknowledgements">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Acknowledgements</h2>
+        This work would not have been possible without the valuable contributions, insightful
+        suggestions, support, feedback and encouragement from Yoav Tzur, Zak Tsai, Hen Fitoussi,
+        Amir Zait, Oren Litvin, Christopher Haire, Liat Ben-Rafael, Ronit Levavi Morad,
+        Kristen Chui, William Li, Ivan Kelber, Chloe Jia, Ryan Allen, Maryam Sanglaji, Tanya Sinha,
+        Josh Woodward, Jeff Dean, and the Theta Labs, Google Research, Google Search, and Gemini
+        teams, and, as always, our families.
+    </div>
+  </section>
 
   <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
 
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the
+              footer. <br> This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
+</body>
 
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-  </body>
-  </html>
+</html>
