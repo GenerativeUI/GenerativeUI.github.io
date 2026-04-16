@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Coloring Studio - Kids Coloring App</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 16px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    /* Utility Classes */
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; }
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .w-full { width: 100%; }
+    .h-full { height: 100%; }
+    .min-h-screen { min-height: 100vh; }
+    .text-center { text-align: center; }
+    .cursor-pointer { cursor: pointer; }
+    .transition-all { transition: all 0.3s ease; }
+    
+    /* Gallery Styles */
+    .gallery-header {
+      margin-bottom: 3rem;
+      text-center;
+    }
+    
+    .gallery-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #00CED1, #6C5CE7, #FF6B9D);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .gallery-subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: rgba(255,255,255,0.6);
+    }
+    
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .template-card {
+      position: relative;
+      aspect-ratio: 1;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .template-card:hover {
+      transform: scale(1.05);
+      border-color: rgba(0,206,209,0.5);
+      box-shadow: 0 20px 40px rgba(0,206,209,0.2);
+    }
+    
+    .template-card:active {
+      transform: scale(0.95);
+    }
+    
+    .template-preview {
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    }
+    
+    .template-preview svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    
+    .template-card:hover .template-preview svg {
+      opacity: 1;
+    }
+    
+    .template-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+    }
+    
+    .template-card:hover .template-overlay {
+      opacity: 1;
+    }
+    
+    .template-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+    
+    .template-info {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    .template-emoji {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    /* Canvas Styles */
+    .canvas-container {
+      position: fixed;
+      inset: 0;
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: #1a1a1a;
+    }
+    
+    .btn {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    
+    .main-content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .tool-bar {
+      width: 80px;
+      background: #252525;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .tool-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .tool-btn svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    
+    .tool-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    
+    .tool-btn.active {
+      background: #00CED1;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0,206,209,0.3);
+    }
+    
+    .size-slider-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+    }
+    
+    .size-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 140px;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+    
+    .size-slider::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      border-radius: 2px;
+    }
+    
+    .size-slider::-moz-range-track {
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      border-radius: 2px;
+    }
+    
+    .size-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      cursor: grab;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+      margin-top: -12px;
+    }
+    
+    .size-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+    
+    .size-slider::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+    
+    .size-slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      cursor: grab;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+    }
+    
+    .size-slider::-moz-range-thumb:hover {
+      transform: scale(1.1);
+    }
+    
+    .size-slider::-moz-range-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+    
+    .canvas-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      overflow: auto;
+      padding: 2rem;
+    }
+    
+    .canvas-paper {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      padding: 3rem;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto;
+    }
+    
+    .canvas-svg-container {
+      cursor: crosshair;
+    }
+    
+    .bottom-palette {
+      background: #252525;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 1.25rem;
+    }
+    
+    .color-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    
+    .color-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .color-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .color-btn.active {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 3px white;
+    }
+    
+    .color-wheel-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .color-wheel-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .color-wheel-inner {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: #252525;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.875rem;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .info-label {
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.75rem;
+    }
+    
+    .info-value {
+      color: rgba(255,255,255,0.6);
+      font-family: monospace;
+    }
+    
+    .color-swatch {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .color-picker-popup {
+      position: fixed;
+      bottom: 6rem;
+      right: 2rem;
+      width: 320px;
+      background: #2a2a2a;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1.5rem;
+      z-index: 2000;
+    }
+    
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .picker-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: white;
+    }
+    
+    .picker-close {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.25rem;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .color-input-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .color-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      color: white;
+      font-family: monospace;
+      font-size: 0.875rem;
+    }
+    
+    .slider-group {
+      margin-top: 1rem;
+    }
+    
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .opacity-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      outline: none;
+    }
+    
+    .opacity-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      cursor: grab;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .opacity-slider::-webkit-slider-thumb:active {
+      cursor: grabbing;
+    }
+    
+    /* Toast Styles */
+    .toast {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2a2a2a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 3000;
+      animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-1rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .tool-bar {
+        width: 80px;
+        height: 100%;
+        flex-direction: column;
+        padding: 1rem 0;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        border-bottom: none;
+      }
+      
+      .main-content {
+        flex-direction: row;
+      }
+      
+      .size-slider-container {
+        flex-direction: column;
+        padding: 1.5rem 0;
+        flex: 1;
+      }
+      
+      .size-slider {
+        width: 120px;
+        height: 4px;
+        transform: rotate(-90deg);
+      }
+      
+      .canvas-paper {
+        padding: 1.5rem;
+      }
+      
+      .template-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      
+      .info-bar {
+        display: none;
+      }
+      
+      .color-picker-popup {
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+      }
+      
+      .tool-btn {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+    
+    /* Icon styles */
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React from CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useRef, useEffect } = React;
+
+    // Templates Data
+    const templates = [
+      {
+        id: 1,
+        name: "Butterfly",
+        emoji: "🦋",
+        category: "Nature",
+        difficulty: "medium",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><ellipse cx="120" cy="150" rx="80" ry="100" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="100" cy="130" r="25" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="130" cy="160" r="20" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="115" cy="180" r="15" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="130" cy="270" rx="70" ry="80" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="120" cy="250" r="20" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="140" cy="280" r="15" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="280" cy="150" rx="80" ry="100" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="300" cy="130" r="25" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="270" cy="160" r="20" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="285" cy="180" r="15" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="270" cy="270" rx="70" ry="80" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="280" cy="250" r="20" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="260" cy="280" r="15" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="200" cy="200" rx="20" ry="120" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="100" r="25" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 190 90 Q 170 60 165 50" fill="none" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><path d="M 210 90 Q 230 60 235 50" fill="none" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><circle cx="165" cy="50" r="5" fill="#1F2937"/><circle cx="235" cy="50" r="5" fill="#1F2937"/></svg>`
+      },
+      {
+        id: 2,
+        name: "Flower",
+        emoji: "🌸",
+        category: "Nature",
+        difficulty: "easy",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><ellipse cx="200" cy="120" rx="40" ry="60" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="270" cy="160" rx="40" ry="60" transform="rotate(45 270 160)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="290" cy="230" rx="40" ry="60" transform="rotate(90 290 230)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="270" cy="300" rx="40" ry="60" transform="rotate(135 270 300)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="200" cy="340" rx="40" ry="60" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="130" cy="300" rx="40" ry="60" transform="rotate(-135 130 300)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="110" cy="230" rx="40" ry="60" transform="rotate(-90 110 230)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="130" cy="160" rx="40" ry="60" transform="rotate(-45 130 160)" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="230" r="50" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="185" cy="215" r="8" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="215" cy="215" r="8" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="240" r="8" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="185" cy="240" r="6" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="215" cy="240" r="6" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/></svg>`
+      },
+      {
+        id: 3,
+        name: "Cat",
+        emoji: "🐱",
+        category: "Animals",
+        difficulty: "medium",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><path d="M 120 140 L 90 80 L 150 120 Z" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 110 120 L 95 90 L 130 115 Z" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 280 140 L 310 80 L 250 120 Z" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 290 120 L 305 90 L 270 115 Z" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="200" r="100" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="170" cy="180" rx="18" ry="25" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="230" cy="180" rx="18" ry="25" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="170" cy="185" rx="8" ry="12" fill="#1F2937"/><ellipse cx="230" cy="185" rx="8" ry="12" fill="#1F2937"/><circle cx="168" cy="180" r="3" fill="white"/><circle cx="228" cy="180" r="3" fill="white"/><path d="M 200 210 L 190 220 L 200 225 L 210 220 Z" fill="#FF6B9D" stroke="#1F2937" stroke-width="2"/><path d="M 200 225 Q 180 240 160 230" fill="none" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><path d="M 200 225 Q 220 240 240 230" fill="none" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><line x1="90" y1="195" x2="140" y2="190" stroke="#1F2937" stroke-width="2.5"/><line x1="95" y1="210" x2="140" y2="205" stroke="#1F2937" stroke-width="2.5"/><line x1="100" y1="225" x2="140" y2="220" stroke="#1F2937" stroke-width="2.5"/><line x1="310" y1="195" x2="260" y2="190" stroke="#1F2937" stroke-width="2.5"/><line x1="305" y1="210" x2="260" y2="205" stroke="#1F2937" stroke-width="2.5"/><line x1="300" y1="225" x2="260" y2="220" stroke="#1F2937" stroke-width="2.5"/><circle cx="135" cy="220" r="22" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="265" cy="220" r="22" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/></svg>`
+      },
+      {
+        id: 4,
+        name: "Car",
+        emoji: "🚗",
+        category: "Vehicles",
+        difficulty: "easy",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><rect x="80" y="220" width="240" height="80" rx="10" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 120 220 L 140 160 L 260 160 L 280 220 Z" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><rect x="135" y="175" width="50" height="40" rx="5" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><rect x="215" y="175" width="50" height="40" rx="5" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="140" cy="300" r="35" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="140" cy="300" r="20" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="140" cy="300" r="8" fill="#1F2937"/><circle cx="260" cy="300" r="35" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="260" cy="300" r="20" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="260" cy="300" r="8" fill="#1F2937"/><circle cx="310" cy="250" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="310" cy="270" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><line x1="200" y1="220" x2="200" y2="300" stroke="#1F2937" stroke-width="3"/><circle cx="220" cy="260" r="6" fill="#1F2937"/></svg>`
+      },
+      {
+        id: 5,
+        name: "Dinosaur",
+        emoji: "🦕",
+        category: "Animals",
+        difficulty: "hard",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><ellipse cx="200" cy="240" rx="100" ry="80" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="130" cy="190" rx="50" ry="60" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="95" cy="200" rx="25" ry="20" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 150 220 Q 160 210 170 220" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 290 240 Q 350 230 360 200" fill="none" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><ellipse cx="280" cy="245" rx="30" ry="25" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="310" cy="235" rx="25" ry="20" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="335" cy="220" rx="20" ry="15" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><rect x="150" y="300" width="30" height="50" rx="15" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="165" cy="355" rx="20" ry="12" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><rect x="220" y="300" width="30" height="50" rx="15" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><ellipse cx="235" cy="355" rx="20" ry="12" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="120" cy="180" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="120" cy="180" r="6" fill="#1F2937"/><circle cx="118" cy="178" r="2" fill="white"/><circle cx="85" cy="198" r="4" fill="#1F2937"/><path d="M 90 210 Q 95 218 100 210" fill="none" stroke="#1F2937" stroke-width="2"/><path d="M 180 180 L 190 160 L 200 180" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 205 180 L 215 155 L 225 180" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 230 185 L 240 165 L 250 185" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><path d="M 255 190 L 265 175 L 275 190" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="190" cy="250" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="220" cy="260" r="10" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="245" cy="250" r="8" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/></svg>`
+      },
+      {
+        id: 6,
+        name: "Crown",
+        emoji: "👑",
+        category: "Objects",
+        difficulty: "medium",
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-full max-w-2xl mx-auto"><path d="M 80 280 L 100 180 L 140 220 L 200 160 L 260 220 L 300 180 L 320 280 Z" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><rect x="80" y="280" width="240" height="40" fill="white" stroke="#1F2937" stroke-width="3" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="100,180 110,140 120,180" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="190,160 200,120 210,160" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="280,180 290,140 300,180" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="110" cy="150" r="14" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="110" cy="150" r="8" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="130" r="16" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="130" r="10" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="290" cy="150" r="14" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="290" cy="150" r="8" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="110" cy="300" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="110" cy="300" r="6" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="155" cy="300" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="155" cy="300" r="6" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="300" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="200" cy="300" r="6" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="245" cy="300" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="245" cy="300" r="6" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="290" cy="300" r="12" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><circle cx="290" cy="300" r="6" fill="white" stroke="#1F2937" stroke-width="1.5" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="140,240 150,230 160,240 150,250" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="200,240 210,230 220,240 210,250" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/><polygon points="260,240 270,230 280,240 270,250" fill="white" stroke="#1F2937" stroke-width="2" class="hover:opacity-80 transition-all cursor-pointer"/></svg>`
+      }
+    ];
+
+    const colorPalette = [
+      "#00CED1", "#00D9FF", "#7CFC00", "#90EE90",
+      "#FFD700", "#FFA500", "#FF6347", "#FF1493",
+      "#8B00FF", "#6C5CE7", "#FF6B9D", "#C77DFF"
+    ];
+
+    // Simple Icons as SVG
+    const Icons = {
+      X: () => <svg className="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+      Undo: () => <svg className="icon" viewBox="0 0 24 24"><path d="M9 14 L4 9 L9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>,
+      Redo: () => <svg className="icon" viewBox="0 0 24 24"><path d="M15 14 L20 9 L15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4H20"/></svg>,
+      Download: () => <svg className="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+      Brush: () => <svg className="icon" viewBox="0 0 24 24"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>,
+      Bucket: () => <svg className="icon" viewBox="0 0 24 24"><path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"/><path d="m5 2 5 5"/><path d="M2 13h15"/><path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/></svg>,
+      Spray: () => <svg className="icon" viewBox="0 0 24 24"><path d="M3 3h.01"/><path d="M7 5h.01"/><path d="M11 7h.01"/><path d="M3 7h.01"/><path d="M7 9h.01"/><path d="M3 11h.01"/><rect width="4" height="4" x="15" y="5"/><path d="m19 9 2 2v10c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V11l2-2"/><path d="m13 14 8-2"/><path d="m13 19 8-2"/></svg>,
+      Palette: () => <svg className="icon" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+    };
+
+    // Toast Component
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Gallery Component
+    function TemplateGallery({ onSelect }) {
+      return (
+        <div className="container min-h-screen">
+          <div className="gallery-header">
+            <h1 className="gallery-title">Creative Coloring Studio</h1>
+            <p className="gallery-subtitle">Choose your canvas and bring it to life with colors</p>
+          </div>
+          
+          <div className="template-grid">
+            {templates.map((template) => (
+              <div key={template.id} className="template-card" onClick={() => onSelect(template)}>
+                <div className="template-preview" dangerouslySetInnerHTML={{ __html: template.svg }} />
+                <div className="template-overlay">
+                  <div className="template-name">{template.name}</div>
+                  <div className="template-info">
+                    <span>{template.category}</span>
+                    <span>•</span>
+                    <span>{template.difficulty}</span>
+                  </div>
+                </div>
+                <div className="template-emoji">{template.emoji}</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', marginTop: '2rem' }}>
+            Designed for creative minds • Educational & fun
+          </div>
+        </div>
+      );
+    }
+
+    // Canvas Component
+    function ColoringCanvas({ template, onClose }) {
+      const canvasRef = useRef(null);
+      const svgRef = useRef(null);
+      const [selectedColor, setSelectedColor] = useState(colorPalette[0]);
+      const [selectedTool, setSelectedTool] = useState('brush');
+      const [brushSize, setBrushSize] = useState(30);
+      const [opacity, setOpacity] = useState(100);
+      const [history, setHistory] = useState([]);
+      const [redoHistory, setRedoHistory] = useState([]);
+      const [showColorPicker, setShowColorPicker] = useState(false);
+      const [isDrawing, setIsDrawing] = useState(false);
+      const [customColor, setCustomColor] = useState('#FF6B9D');
+
+      useEffect(() => {
+        if (canvasRef.current) {
+          svgRef.current = canvasRef.current.querySelector('svg');
+          const svgElements = canvasRef.current.querySelectorAll('path, circle, rect, polygon, ellipse');
+          svgElements.forEach((element) => {
+            element.addEventListener('click', handleElementClick);
+          });
+
+          return () => {
+            svgElements.forEach((element) => {
+              element.removeEventListener('click', handleElementClick);
+            });
+          };
+        }
+      }, [selectedColor, selectedTool, opacity]);
+
+      const saveState = () => {
+        if (canvasRef.current) {
+          setHistory((prev) => [...prev, canvasRef.current.innerHTML]);
+          setRedoHistory([]);
+        }
+      };
+
+      const handleElementClick = (e) => {
+        if (selectedTool === 'bucket') {
+          const element = e.target;
+          saveState();
+          element.style.fill = selectedColor;
+          element.style.opacity = (opacity / 100).toString();
+          element.style.transition = 'all 0.3s ease';
+        }
+      };
+
+      const getSVGCoordinates = (e) => {
+        if (!svgRef.current) return null;
+        
+        const svgRect = svgRef.current.getBoundingClientRect();
+        const viewBox = svgRef.current.viewBox.baseVal;
+        
+        const scaleX = viewBox.width / svgRect.width;
+        const scaleY = viewBox.height / svgRect.height;
+        
+        const x = (e.clientX - svgRect.left) * scaleX + viewBox.x;
+        const y = (e.clientY - svgRect.top) * scaleY + viewBox.y;
+        
+        return { x, y };
+      };
+
+      const handleMouseDown = (e) => {
+        if (selectedTool === 'brush' || selectedTool === 'spray') {
+          setIsDrawing(true);
+          saveState();
+          draw(e);
+        }
+      };
+
+      const handleMouseMove = (e) => {
+        if (isDrawing && (selectedTool === 'brush' || selectedTool === 'spray')) {
+          draw(e);
+        }
+      };
+
+      const handleMouseUp = () => {
+        setIsDrawing(false);
+      };
+
+      const draw = (e) => {
+        if (!svgRef.current) return;
+        
+        const coords = getSVGCoordinates(e);
+        if (!coords) return;
+        
+        if (selectedTool === 'brush') {
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", coords.x.toString());
+          circle.setAttribute("cy", coords.y.toString());
+          circle.setAttribute("r", (brushSize / 2).toString());
+          circle.setAttribute("fill", selectedColor);
+          circle.setAttribute("opacity", (opacity / 100).toString());
+          svgRef.current.appendChild(circle);
+        } else if (selectedTool === 'spray') {
+          const numDots = 10;
+          const sprayRadius = brushSize;
+          
+          for (let i = 0; i < numDots; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * sprayRadius;
+            const x = coords.x + Math.cos(angle) * distance;
+            const y = coords.y + Math.sin(angle) * distance;
+            
+            const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dot.setAttribute("cx", x.toString());
+            dot.setAttribute("cy", y.toString());
+            dot.setAttribute("r", "1");
+            dot.setAttribute("fill", selectedColor);
+            dot.setAttribute("opacity", (opacity / 100).toString());
+            svgRef.current.appendChild(dot);
+          }
+        }
+      };
+
+      const handleUndo = () => {
+        if (history.length > 0 && canvasRef.current) {
+          const currentState = canvasRef.current.innerHTML;
+          const previousState = history[history.length - 1];
+          
+          setRedoHistory((prev) => [...prev, currentState]);
+          canvasRef.current.innerHTML = previousState;
+          setHistory((prev) => prev.slice(0, -1));
+          
+          reattachListeners();
+        }
+      };
+
+      const handleRedo = () => {
+        if (redoHistory.length > 0 && canvasRef.current) {
+          const currentState = canvasRef.current.innerHTML;
+          const nextState = redoHistory[redoHistory.length - 1];
+          
+          setHistory((prev) => [...prev, currentState]);
+          canvasRef.current.innerHTML = nextState;
+          setRedoHistory((prev) => prev.slice(0, -1));
+          
+          reattachListeners();
+        }
+      };
+
+      const reattachListeners = () => {
+        if (canvasRef.current) {
+          const svgElements = canvasRef.current.querySelectorAll('path, circle, rect, polygon, ellipse');
+          svgElements.forEach((element) => {
+            element.addEventListener('click', handleElementClick);
+          });
+        }
+      };
+
+      const handleDownload = () => {
+        if (canvasRef.current) {
+          const svg = canvasRef.current.querySelector('svg');
+          if (svg) {
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = () => {
+              canvas.width = img.width;
+              canvas.height = img.height;
+              ctx.drawImage(img, 0, 0);
+              const pngFile = canvas.toDataURL('image/png');
+              
+              const downloadLink = document.createElement('a');
+              downloadLink.download = `${template.name}-${Date.now()}.png`;
+              downloadLink.href = pngFile;
+              downloadLink.click();
+              showToast('Artwork saved!');
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+          }
+        }
+      };
+
+      return (
+        <div className="canvas-container">
+          <div className="top-bar">
+            <div className="flex items-center gap-3">
+              <button onClick={onClose} className="btn">
+                <Icons.X />
+              </button>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{template.name}</span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <button onClick={handleUndo} disabled={history.length === 0} className="btn">
+                <Icons.Undo />
+              </button>
+              <button onClick={handleRedo} disabled={redoHistory.length === 0} className="btn">
+                <Icons.Redo />
+              </button>
+              <button onClick={handleDownload} className="btn">
+                <Icons.Download />
+              </button>
+            </div>
+          </div>
+          
+          <div className="main-content">
+            <div className="tool-bar">
+              <button
+                onClick={() => setSelectedTool('brush')}
+                className={`tool-btn ${selectedTool === 'brush' ? 'active' : ''}`}
+              >
+                <Icons.Brush />
+              </button>
+              
+              <button
+                onClick={() => setSelectedTool('bucket')}
+                className={`tool-btn ${selectedTool === 'bucket' ? 'active' : ''}`}
+              >
+                <Icons.Bucket />
+              </button>
+              
+              <button
+                onClick={() => setSelectedTool('spray')}
+                className={`tool-btn ${selectedTool === 'spray' ? 'active' : ''}`}
+              >
+                <Icons.Spray />
+              </button>
+              
+              <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.1)', margin: '0.5rem 0' }} />
+              
+              <div className="size-slider-container">
+                <input
+                  type="range"
+                  className="size-slider"
+                  min="5"
+                  max="100"
+                  step="5"
+                  value={brushSize}
+                  onChange={(e) => setBrushSize(Number(e.target.value))}
+                />
+              </div>
+            </div>
+            
+            <div className="canvas-area">
+              <div className="canvas-paper">
+                <div
+                  ref={canvasRef}
+                  className="canvas-svg-container"
+                  dangerouslySetInnerHTML={{ __html: template.svg }}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseUp}
+                  onTouchStart={(e) => {
+                    const touch = e.touches[0];
+                    const mouseEvent = {
+                      clientX: touch.clientX,
+                      clientY: touch.clientY
+                    };
+                    handleMouseDown(mouseEvent);
+                  }}
+                  onTouchMove={(e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = {
+                      clientX: touch.clientX,
+                      clientY: touch.clientY
+                    };
+                    handleMouseMove(mouseEvent);
+                  }}
+                  onTouchEnd={handleMouseUp}
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bottom-palette">
+            <div className="color-grid">
+              {colorPalette.map((color) => (
+                <button
+                  key={color}
+                  className={`color-btn ${selectedColor === color ? 'active' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => setSelectedColor(color)}
+                />
+              ))}
+              
+              <div style={{ width: '1px', height: '2.5rem', background: 'rgba(255,255,255,0.1)' }} />
+              
+              <button className="color-wheel-btn" onClick={() => setShowColorPicker(!showColorPicker)}>
+                <div className="color-wheel-inner">
+                  <Icons.Palette />
+                </div>
+              </button>
+            </div>
+            
+            <div className="info-bar">
+              <div className="info-item">
+                <div className="info-label">Color</div>
+                <div className="color-swatch" style={{ backgroundColor: selectedColor }} />
+                <div className="info-value">{selectedColor}</div>
+              </div>
+              
+              <div className="info-item">
+                <div className="info-label">Opacity</div>
+                <div className="info-value">{opacity}%</div>
+              </div>
+              
+              <div className="info-item">
+                <div className="info-label">Tool</div>
+                <div className="info-value" style={{ textTransform: 'capitalize' }}>{selectedTool}</div>
+              </div>
+              
+              <div className="info-item">
+                <div className="info-label">Size</div>
+                <div className="info-value">{brushSize}px</div>
+              </div>
+            </div>
+          </div>
+          
+          {showColorPicker && (
+            <div className="color-picker-popup">
+              <div className="picker-header">
+                <div className="picker-title">Color Picker</div>
+                <button className="picker-close" onClick={() => setShowColorPicker(false)}>×</button>
+              </div>
+              
+              <input
+                type="color"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                style={{ width: '100%', height: '180px', border: 'none', borderRadius: '0.5rem', cursor: 'pointer' }}
+              />
+              
+              <div className="color-input-group">
+                <div className="info-label">Hex</div>
+                <input
+                  type="text"
+                  className="color-input"
+                  value={selectedColor}
+                  onChange={(e) => setSelectedColor(e.target.value)}
+                />
+              </div>
+              
+              <div className="slider-group">
+                <div className="slider-label-row">
+                  <div className="info-label">Opacity</div>
+                  <div className="info-value">{opacity}%</div>
+                </div>
+                <input
+                  type="range"
+                  className="opacity-slider"
+                  min="10"
+                  max="100"
+                  step="10"
+                  value={opacity}
+                  onChange={(e) => setOpacity(Number(e.target.value))}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Main App
+    function App() {
+      const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+      return (
+        <>
+          {!selectedTemplate ? (
+            <TemplateGallery onSelect={setSelectedTemplate} />
+          ) : (
+            <ColoringCanvas
+              template={selectedTemplate}
+              onClose={() => setSelectedTemplate(null)}
+            />
+          )}
+        </>
+      );
+    }
+
+    // Render
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Visual Journey Through the History of Chemistry</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Nunito:ital,wght@0,400;0,700;0,800;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "chem-teal": "#0E9193",
+              "chem-dark-blue": "#1B2A41",
+              "chem-card-blue": "#1D3557",
+              "chem-text-grey": "#3C4756",
+              "chem-light-bg": "#F8F5F2",
+              "timeline-grey": "#CFCECD",
+              "chem-text-light": "rgba(60, 71, 86, 0.92)",
+            },
+            fontFamily: {
+              nunito: ["Nunito", "sans-serif"],
+              inter: ["Inter", "sans-serif"],
+            },
+            backgroundImage: {
+              "hero-chem": "url('./assets/hero-bg.png')",
+            },
+            screens: {
+              sm: "640px",
+              md: "768px",
+              lg: "1024px",
+              xl: "1280px",
+              "2xl": "1536px",
+            },
+            lineHeight: {
+              normal: "normal",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Global Typography Rule */
+      .font-nunito {
+        line-height: 1.3 !important;
+      }
+      .font-inter {
+        line-height: 1.3 !important;
+      }
+
+      /* Timeline Tabs (SECTION 3) */
+      .timeline-tab {
+        border-bottom: 2px solid #d1d5db;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .timeline-tab span {
+        color: rgba(255, 255, 255, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .timeline-tab.active-tab span,
+      .timeline-tab:hover span {
+        color: #1d3557;
+        transform: translateX(6px);
+      }
+
+      .timeline-tab.active-tab {
+        border-color: #fff;
+      }
+
+      /* --- ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+      .delay-500 {
+        transition-delay: 0.5s;
+      }
+
+      /* ===== SECTION 2: Interactive Ancient Tabs (NEW) ===== */
+      .ancient-tab {
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          background-color 0.25s ease, border-color 0.25s ease;
+      }
+      .ancient-tab.active-ancient {
+        border-color: rgba(14, 145, 147, 0.9);
+        background: rgba(14, 145, 147, 0.08);
+        box-shadow: 0 12px 30px rgba(27, 42, 65, 0.12);
+      }
+      .ancient-tab:focus-visible {
+        outline: 3px solid rgba(14, 145, 147, 0.45);
+        outline-offset: 4px;
+        border-radius: 14px;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-white antialiased text-chem-text-grey font-nunito !leading-normal selection:bg-chem-teal selection:text-white"
+  >
+    <!-- Main Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex items-center justify-center px-6 md:px-12 xl:px-24"
+      >
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-hero-chem bg-cover bg-center z-0"></div>
+
+        <!-- Content -->
+        <div
+          class="relative z-20 flex flex-col items-center gap-8 xl:gap-[53px] max-w-[1013px] text-center mt-10 border-0 lg:border-[10px] border-[#0E9193] lg:p-[40px]"
+        >
+          <h1
+            class="reveal font-extrabold text-4xl md:text-5xl xl:text-[64px] text-white !leading-normal drop-shadow-lg"
+          >
+            A Visual Journey Through the History of Chemistry
+          </h1>
+          <p
+            class="reveal delay-200 font-normal text-xl md:text-2xl xl:text-[30px] text-white !leading-normal drop-shadow-md"
+          >
+            From ancient discoveries to modern breakthroughs, chemistry has
+            shaped our world in extraordinary ways. Explore how ideas,
+            experiments, and scientists across time transformed this science.
+          </p>
+        </div>
+      </header>
+
+      <!-- SECTION 2: ANCIENT CHEMISTRY (UPDATED ONLY THIS SECTION) -->
+      <section
+        class="relative w-full py-16 xl:py-[100px] px-6 md:px-12 xl:px-[243px]"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-16 xl:mb-[150px]">
+          <h2
+            class="font-extrabold text-4xl md:text-5xl xl:text-[55px] text-chem-dark-blue mb-4 !leading-normal"
+          >
+            Where It All Began: Ancient Chemistry
+          </h2>
+          <div
+            class="text-chem-teal font-extrabold text-3xl md:text-4xl xl:text-[45px] mb-8 !leading-normal"
+          >
+            (3000 BC – 500 AD)
+          </div>
+          <p
+            class="font-normal text-xl md:text-2xl xl:text-[30px] text-chem-text-grey max-w-[1343px] mx-auto !leading-normal"
+          >
+            Chemistry started thousands of years ago with people experimenting
+            through daily life. Ancient civilizations discovered metals, created
+            dyes, invented medicines, and developed early chemical
+            techniques—long before chemistry became a science.
+          </p>
+        </div>
+
+        <!-- Content Grid (responsive + more interactive) -->
+        <div
+          class="flex flex-col xl:flex-row items-stretch justify-between gap-10 xl:gap-[120px]"
+          id="ancientSection"
+        >
+          <!-- Left: Interactive Tabs -->
+          <div class="reveal delay-100 w-full xl:max-w-[520px] h-full">
+            <!-- Mobile hint -->
+            <div
+              class="xl:hidden text-center text-sm md:text-base text-chem-text-grey mb-5"
+            >
+              Tap a card to explore • Swipe the image to switch
+            </div>
+
+            <!-- Tabs container -->
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4"
+              role="tablist"
+              aria-label="Ancient chemistry topics"
+              id="ancientTabs"
+            >
+              <!-- Tab 1 -->
+              <button
+                type="button"
+                class="ancient-tab timeline2-tab active-ancient border border-black/10 rounded-2xl p-5 md:p-6 bg-white text-left flex items-start gap-4 group hover:-translate-y-1"
+                data-tab="0"
+                role="tab"
+                aria-selected="true"
+              >
+                <div class="flex-1">
+                  <div
+                    class="font-bold text-xl md:text-2xl xl:text-[28px] text-black !leading-normal"
+                  >
+                    Egyptians
+                  </div>
+                  <div
+                    class="text-chem-text-grey font-semibold text-base md:text-lg xl:text-[18px]"
+                  >
+                    Mummification & cosmetics
+                  </div>
+                  <div
+                    class="mt-3 flex flex-wrap gap-2 text-xs md:text-sm"
+                    aria-hidden="true"
+                  >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Preservation</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Oils & resins</span
+                    >
+                  </div>
+                </div>
+                <span
+                  class="ml-2 mt-1 text-black/40 group-hover:text-chem-teal transition-colors"
+                  aria-hidden="true"
+                  >›</span
+                >
+              </button>
+
+              <!-- Tab 2 -->
+              <button
+                type="button"
+                class="ancient-tab timeline2-tab border border-black/10 rounded-2xl p-5 md:p-6 bg-white text-left flex items-start gap-4 group hover:-translate-y-1"
+                data-tab="1"
+                role="tab"
+                aria-selected="false"
+              >
+                <div class="flex-1">
+                  <div
+                    class="font-bold text-xl md:text-2xl xl:text-[28px] text-black !leading-normal"
+                  >
+                    India
+                  </div>
+                  <div
+                    class="text-chem-text-grey font-semibold text-base md:text-lg xl:text-[18px]"
+                  >
+                    Herbal medicine & metallurgy
+                  </div>
+                  <div
+                    class="mt-3 flex flex-wrap gap-2 text-xs md:text-sm"
+                    aria-hidden="true"
+                  >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Ayurveda</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Alloys</span
+                    >
+                  </div>
+                </div>
+                <span
+                  class="ml-2 mt-1 text-black/40 group-hover:text-chem-teal transition-colors"
+                  aria-hidden="true"
+                  >›</span
+                >
+              </button>
+
+              <!-- Tab 3 -->
+              <button
+                type="button"
+                class="ancient-tab timeline2-tab border border-black/10 rounded-2xl p-5 md:p-6 bg-white text-left flex items-start gap-4 group hover:-translate-y-1"
+                data-tab="2"
+                role="tab"
+                aria-selected="false"
+              >
+                <div class="flex-1">
+                  <div
+                    class="font-bold text-xl md:text-2xl xl:text-[28px] text-black !leading-normal"
+                  >
+                    China
+                  </div>
+                  <div
+                    class="text-chem-text-grey font-semibold text-base md:text-lg xl:text-[18px]"
+                  >
+                    Early gunpowder ingredients
+                  </div>
+                  <div
+                    class="mt-3 flex flex-wrap gap-2 text-xs md:text-sm"
+                    aria-hidden="true"
+                  >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Saltpeter</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Sulfur</span
+                    >
+                  </div>
+                </div>
+                <span
+                  class="ml-2 mt-1 text-black/40 group-hover:text-chem-teal transition-colors"
+                  aria-hidden="true"
+                  >›</span
+                >
+              </button>
+
+              <!-- Tab 4 -->
+              <button
+                type="button"
+                class="ancient-tab timeline2-tab border border-black/10 rounded-2xl p-5 md:p-6 bg-white text-left flex items-start gap-4 group hover:-translate-y-1"
+                data-tab="3"
+                role="tab"
+                aria-selected="false"
+              >
+                <div class="flex-1">
+                  <div
+                    class="font-bold text-xl md:text-2xl xl:text-[28px] text-black !leading-normal"
+                  >
+                    Greece
+                  </div>
+                  <div
+                    class="text-chem-text-grey font-semibold text-base md:text-lg xl:text-[18px]"
+                  >
+                    4-element theory
+                  </div>
+                  <div
+                    class="mt-3 flex flex-wrap gap-2 text-xs md:text-sm"
+                    aria-hidden="true"
+                  >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Air</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Fire</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Water</span
+                    >
+                    <span
+                      class="px-3 py-1 rounded-full bg-black/5 text-black/80"
+                      >Earth</span
+                    >
+                  </div>
+                </div>
+                <span
+                  class="ml-2 mt-1 text-black/40 group-hover:text-chem-teal transition-colors"
+                  aria-hidden="true"
+                  >›</span
+                >
+              </button>
+            </div>
+
+            <!-- Progress + Controls (Auto ON by default, no Auto button, no Tip text) -->
+            <div class="mt-6 flex items-center justify-between gap-4">
+              <div class="w-full">
+                <div
+                  class="flex items-center justify-between text-sm text-chem-text-grey mb-2"
+                >
+                  <span id="ancientCounter" class="font-semibold">1 / 4</span>
+                  <!-- Tip removed as requested -->
+                </div>
+                <div class="w-full h-2 rounded-full bg-black/10 overflow-hidden">
+                  <div
+                    id="ancientProgress"
+                    class="h-2 rounded-full bg-chem-teal transition-all duration-500"
+                    style="width: 25%"
+                  ></div>
+                </div>
+              </div>
+              <!-- Auto button removed as requested -->
+            </div>
+          </div>
+
+          <!-- Right: Image + Details -->
+          <div class="reveal delay-200 w-full xl:flex-1">
+            <div
+              class="w-full bg-white border border-black/10 rounded-3xl overflow-hidden shadow-sm"
+            >
+              <!-- Image area (swipeable on mobile) -->
+              <div
+                id="timeline2Content"
+                class="relative w-full aspect-[16/10] md:aspect-[16/9] xl:aspect-[16/10] overflow-hidden"
+              >
+                <img
+                  id="timeline2Image"
+                  src="./assets/mummification-and-cosmetics.jpeg"
+                  alt="Ancient Chemistry"
+                  class="w-full h-full object-cover transition-transform duration-700"
+                />
+
+                <!-- soft overlay + title -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none"
+                ></div>
+
+                <div class="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <div>
+                      <div
+                        id="timeline2Title"
+                        class="text-white font-extrabold text-xl md:text-2xl xl:text-[30px] !leading-normal"
+                      >
+                        Egyptians: Mummification & cosmetics
+                      </div>
+                      <div
+                        id="timeline2Subtitle"
+                        class="text-white/85 font-semibold text-sm md:text-base"
+                      >
+                        Practical chemistry for preservation and beauty.
+                      </div>
+                    </div>
+
+                    <!-- mini dots -->
+                    <div class="hidden md:flex items-center gap-2">
+                      <button
+                        type="button"
+                        class="ancient-dot w-2.5 h-2.5 rounded-full bg-white"
+                        data-dot="0"
+                        aria-label="Go to Egyptians"
+                      ></button>
+                      <button
+                        type="button"
+                        class="ancient-dot w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/70 transition"
+                        data-dot="1"
+                        aria-label="Go to India"
+                      ></button>
+                      <button
+                        type="button"
+                        class="ancient-dot w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/70 transition"
+                        data-dot="2"
+                        aria-label="Go to China"
+                      ></button>
+                      <button
+                        type="button"
+                        class="ancient-dot w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white/70 transition"
+                        data-dot="3"
+                        aria-label="Go to Greece"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Details -->
+              <div class="p-5 md:p-6">
+                <p
+                  id="timeline2Desc"
+                  class="text-chem-text-grey font-normal text-base md:text-lg xl:text-[18px] !leading-normal"
+                >
+                  Egyptians developed preservation techniques using salts, oils,
+                  and resins, and created early cosmetics and pigments.
+                </p>
+
+                <div class="mt-5 flex flex-wrap items-center gap-2">
+                  <span
+                    class="px-3 py-1 rounded-full bg-chem-teal/10 text-chem-teal font-bold text-xs md:text-sm"
+                    id="timeline2Tag1"
+                    >Hands-on methods</span
+                  >
+                  <span
+                    class="px-3 py-1 rounded-full bg-black/5 text-black/80 font-bold text-xs md:text-sm"
+                    id="timeline2Tag2"
+                    >Daily life chemistry</span
+                  >
+                </div>
+
+                <!-- Prev/Next -->
+                <div class="mt-6 flex items-center justify-between gap-4">
+                  <button
+                    type="button"
+                    id="ancientPrev"
+                    class="px-5 py-2.5 rounded-xl border border-black/15 font-bold hover:bg-black/5 transition"
+                  >
+                    Prev
+                  </button>
+
+                  <div class="text-sm text-chem-text-grey font-semibold">
+                    Swipe / click cards / use arrows
+                  </div>
+
+                  <button
+                    type="button"
+                    id="ancientNext"
+                    class="px-5 py-2.5 rounded-xl bg-chem-teal text-white font-bold hover:bg-chem-dark-blue transition"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p
+          class="text-center w-full font-bold italic text-2xl md:text-2xl xl:text-[30px] text-black mt-[80px]"
+        >
+          This era focused on practical uses—medicine, metalwork, dyes—not
+          scientific explanation yet.
+        </p>
+      </section>
+
+      <!-- SECTION 3: ALCHEMY TO SCIENCE (Teal BG) -->
+      <section
+        class="relative w-full bg-chem-teal py-16 xl:py-[100px] px-6 md:px-12 xl:px-24 text-white"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-20 xl:mb-[150px]">
+          <h2
+            class="font-extrabold text-4xl md:text-5xl xl:text-[55px] mb-4 !leading-normal"
+          >
+            From Alchemy to Science
+          </h2>
+          <p
+            class="font-normal text-xl md:text-2xl xl:text-[30px] max-w-[1343px] mx-auto !leading-normal"
+          >
+            The 17th and 18th centuries transformed chemistry into a real
+            science. Robert Boyle defined the scientific method, Antoine
+            Lavoisier discovered oxygen and modern naming systems, and early
+            laboratories began appearing with glassware we still recognize
+            today.
+          </p>
+        </div>
+
+        <!-- Timeline Visualization -->
+        <div
+          class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"
+        >
+          <!-- Left: Date List -->
+          <div
+            class="reveal delay-100 w-full lg:w-2/3 flex lg:justify-start justify-center flex-row gap-10 flex-wrap lg:gap-0 lg:flex-col"
+          >
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6 active-tab"
+              data-tab="0"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl lg:text-[40px] block"
+                >1600</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="1"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl lg:text-[40px] block"
+                >1700</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="2"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl lg:text-[40px] block"
+                >1800</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="3"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl lg:text-[40px] block"
+                >1900</span
+              >
+            </div>
+          </div>
+
+          <div class="reveal delay-200 w-full lg:pl-16 pt-0 lg:pt-4">
+            <div
+              id="timelineContent"
+              class="transition-opacity duration-500 opacity-100 space-y-2"
+            >
+              <h3
+                id="timelineTitle"
+                class="font-bold text-[40px] text-chem-card-blue mb-2 !leading-normal"
+              >
+                Scientific Method Introduced
+              </h3>
+
+              <p
+                id="timelineDesc"
+                class="font-normal text-[25px] text-white !leading-normal"
+              >
+                Robert Boyle promoted experimentation, observation, and
+                measurement in chemistry, moving the field away from alchemy and
+                toward a scientific approach.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ORGANIZING ELEMENTS -->
+      <section
+        class="relative w-full py-16 xl:py-[100px] px-6 md:px-12 xl:px-24"
+      >
+        <div class="reveal text-center mb-16">
+          <h2
+            class="font-extrabold text-4xl md:text-5xl xl:text-[55px] text-chem-dark-blue mb-8 !leading-normal"
+          >
+            Organizing the Elements
+          </h2>
+          <p
+            class="font-normal text-xl md:text-2xl xl:text-[30px] text-chem-text-grey max-w-[1377px] mx-auto !leading-normal"
+          >
+            Dmitri Mendeleev’s periodic table (1869) visually changed chemistry
+            forever. Elements were arranged by patterns and properties,
+            revealing hidden relationships. Early diagrams were hand-drawn,
+            colorful, and full of scientific symbols.
+          </p>
+        </div>
+
+        <!-- 3 Images Grid -->
+        <div
+          class="grid grid-cols-1 xl:grid-cols-3 gap-8 justify-items-center max-w-[1600px] mx-auto"
+        >
+          <div class="reveal delay-100 w-full overflow-hidden rounded-lg">
+            <img
+              src="./assets/org1.png"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <div class="reveal delay-200 w-full overflow-hidden rounded-lg">
+            <img
+              src="./assets/org2.png"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+          <div class="reveal delay-300 w-full overflow-hidden rounded-lg">
+            <img
+              src="./assets/org3.png"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: TOOLS & TECH -->
+      <section
+        class="relative w-full py-16 xl:py-[100px] px-6 md:px-12 xl:px-24"
+      >
+        <div class="reveal text-center mb-16">
+          <h2
+            class="font-extrabold text-4xl md:text-5xl xl:text-[55px] text-chem-dark-blue mb-8 !leading-normal"
+          >
+            Tools, Technology & Transformations
+          </h2>
+          <p
+            class="font-normal text-xl md:text-2xl xl:text-[30px] text-chem-text-grey max-w-[1377px] mx-auto !leading-normal"
+          >
+            During the 20th century, chemistry advanced faster than ever. New
+            tools like spectrometers and electron microscopes helped scientists
+            look deeper into materials. This era also gave birth to synthetic
+            plastics, modern medicines, and highly controlled laboratory
+            techniques. Chemistry became cleaner, more precise, and more
+            technology-driven.
+          </p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div
+          class="grid grid-cols-1 xl:grid-cols-3 gap-8 max-w-[1640px] h-full mx-auto"
+        >
+          <!-- Card 1: Plastics -->
+          <div
+            class="relative reveal delay-100 bg-chem-card-blue p-8 xl:py-[124px] xl:px-[52px] rounded-lg text-center flex flex-col items-center justify-center gap-8 xl:gap-[50px] hover:-translate-y-2 transition-transform duration-300"
+          >
+            <h3
+              class="font-bold italic text-2xl xl:text-[35px] text-chem-teal !leading-normal"
+            >
+              Plastics
+            </h3>
+            <p
+              class="font-normal text-xl xl:text-[25px] text-white !leading-normal"
+            >
+              New synthetic materials like plastics changed daily life — from
+              packaging to electronics and industry.
+            </p>
+
+            <hr
+              class="bg-white h-1 border w-[50%] bottom-14 absolute hidden xl:block"
+            />
+          </div>
+
+          <!-- Card 2: Medicines -->
+          <div
+            class="relative reveal delay-200 bg-chem-card-blue p-8 xl:py-[100px] xl:px-[34px] rounded-lg text-center flex flex-col items-center justify-center gap-8 xl:gap-[50px] hover:-translate-y-2 transition-transform duration-300"
+          >
+            <h3
+              class="font-bold italic text-2xl xl:text-[35px] text-chem-teal !leading-normal"
+            >
+              Medicines
+            </h3>
+            <p
+              class="font-normal text-xl xl:text-[25px] text-white !leading-normal"
+            >
+              Chemical research led to important medicines, vaccines, and
+              treatments that improved global health.
+            </p>
+
+            <hr
+              class="bg-white h-1 border w-[50%] bottom-14 absolute hidden xl:block"
+            />
+          </div>
+
+          <!-- Card 3: Lab Tech -->
+          <div
+            class="relative reveal delay-300 bg-chem-card-blue p-8 xl:py-[21px] rounded-lg text-center flex flex-col items-center justify-center gap-8 xl:gap-[50px] hover:-translate-y-2 transition-transform duration-300"
+          >
+            <h3
+              class="font-bold italic text-2xl xl:text-[35px] text-chem-teal max-w-[347px] !leading-normal"
+            >
+              Laboratory Technology
+            </h3>
+            <p
+              class="font-normal text-xl xl:text-[25px] text-white !leading-normal"
+            >
+              Modern tools such as spectrometers, electron microscopes, and
+              advanced glassware made experiments more accurate and reliable.
+            </p>
+
+            <hr
+              class="bg-white h-1 border w-[50%] bottom-14 absolute hidden xl:block"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 8: CHEMISTRY QUIZ -->
+      <section
+        class="relative w-full py-16 xl:py-[100px] px-6 md:px-12 xl:px-24 bg-chem-light-bg"
+      >
+        <div class="text-center mb-16 reveal">
+          <h2
+            class="font-extrabold text-4xl md:text-5xl xl:text-[55px] text-chem-dark-blue"
+          >
+            Test Your Chemistry Knowledge
+          </h2>
+          <p
+            class="font-normal text-xl md:text-2xl xl:text-[30px] text-chem-text-grey max-w-[1377px] mx-auto mt-4"
+          >
+            Try these fun questions and see how much you know about chemistry!
+          </p>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="max-w-[900px] mx-auto reveal space-y-12">
+          <div id="quizContainer" class="space-y-8">
+            <!-- Questions will be injected via JS -->
+          </div>
+
+          <!-- Quiz Result -->
+          <div
+            id="quizResult"
+            class="mt-8 text-center text-2xl font-bold text-chem-dark-blue hidden"
+          ></div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <section class="!bg-[#0E9193] w-full py-16 px-4 md:py-20 text-center">
+        <div class="reveal max-w-4xl mx-auto">
+          <h2
+            class="!font-extrabold text-3xl md:text-4xl xl:text-[48px] !mb-8 !text-white"
+          >
+            The Story of Matter Through Time
+          </h2>
+          <p
+            class="!font-nunito !font-normal text-base text-[18px] xl:text-[22px] !leading-normal !text-white"
+          >
+            From ancient alchemy to modern laboratories, chemistry’s visual
+            history reveals how humans learned to understand, transform, and
+            shape the world around them.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // ============================================
+      // TIMELINE 1: Modern Chemistry Evolution
+      // ============================================
+      const timelineData = [
+        {
+          title: "Scientific Method Introduced",
+          desc: "Robert Boyle promoted experimentation, observation, and measurement in chemistry, moving the field away from alchemy and toward a scientific approach.",
+        },
+        {
+          title: "Law of Conservation of Mass",
+          desc: "Antoine Lavoisier established that matter is neither created nor destroyed in chemical reactions, marking the birth of modern chemistry.",
+        },
+        {
+          title: "Atomic Theory Formulated",
+          desc: "John Dalton introduced atomic theory, explaining that all matter is made of atoms, providing a foundation for chemical structure and reactions.",
+        },
+        {
+          title: "Modern Atomic Structure Discovered",
+          desc: "Scientists discovered electrons, protons, and neutrons, leading to quantum theory and a deeper understanding of atomic behavior and chemical bonding.",
+        },
+      ];
+
+      // TAB LOGIC WITH FADE (SECTION 3)
+      const tabs = document.querySelectorAll(".timeline-tab");
+      const titleEl = document.getElementById("timelineTitle");
+      const descEl = document.getElementById("timelineDesc");
+      const contentContainer = document.getElementById("timelineContent");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const index = tab.getAttribute("data-tab");
+
+          tabs.forEach((t) => t.classList.remove("active-tab"));
+          tab.classList.add("active-tab");
+
+          contentContainer.style.opacity = "0";
+          contentContainer.style.transform = "translateY(10px)";
+
+          setTimeout(() => {
+            titleEl.textContent = timelineData[index].title;
+            descEl.textContent = timelineData[index].desc;
+
+            contentContainer.style.opacity = "1";
+            contentContainer.style.transform = "translateY(0)";
+          }, 300);
+        });
+      });
+
+      // ============================================
+      // TIMELINE 2: Ancient Chemistry (AUTO ON by default, no Auto button, no Tip text)
+      // ============================================
+      document.addEventListener("DOMContentLoaded", () => {
+        const ancientData = [
+          {
+            title: "Egyptians: Mummification & cosmetics",
+            subtitle: "Practical chemistry for preservation and beauty.",
+            desc: "Egyptians developed preservation techniques using salts, oils, and resins, and created early cosmetics and pigments.",
+            tag1: "Hands-on methods",
+            tag2: "Daily life chemistry",
+            img: "./assets/mummification-and-cosmetics.jpeg",
+          },
+          {
+            title: "India: Herbal medicine & metallurgy",
+            subtitle: "Healing traditions + early metal science.",
+            desc: "Ancient India advanced herbal preparations and contributed to metallurgy, including refining metals and experimenting with alloys.",
+            tag1: "Herbal remedies",
+            tag2: "Metalworking",
+            img: "./assets/herbal-medicine-metallurgy.jpeg",
+          },
+          {
+            title: "China: Early gunpowder ingredients",
+            subtitle: "Ingredients that changed history.",
+            desc: "Early experimentation with substances like saltpeter and sulfur contributed to discoveries that later influenced pyrotechnics and gunpowder.",
+            tag1: "Mineral mixtures",
+            tag2: "Experimental compounds",
+            img: "./assets/gunpowder.jpeg",
+          },
+          {
+            title: "Greece: 4-element theory",
+            subtitle: "An early attempt to explain matter.",
+            desc: "Greek thinkers proposed that all matter is made of four elements—earth, water, air, and fire—shaping early theories about materials.",
+            tag1: "Early theory",
+            tag2: "Nature & matter",
+            img: "./assets/4-element-theory.jpeg",
+          },
+        ];
+
+        const tabs2 = Array.from(document.querySelectorAll(".timeline2-tab"));
+        const dots = Array.from(document.querySelectorAll(".ancient-dot"));
+        const imgEl2 = document.getElementById("timeline2Image");
+        const content2 = document.getElementById("timeline2Content");
+
+        const t2Title = document.getElementById("timeline2Title");
+        const t2Subtitle = document.getElementById("timeline2Subtitle");
+        const t2Desc = document.getElementById("timeline2Desc");
+        const t2Tag1 = document.getElementById("timeline2Tag1");
+        const t2Tag2 = document.getElementById("timeline2Tag2");
+
+        const counterEl = document.getElementById("ancientCounter");
+        const progressEl = document.getElementById("ancientProgress");
+
+        const prevBtn = document.getElementById("ancientPrev");
+        const nextBtn = document.getElementById("ancientNext");
+        const ancientSection = document.getElementById("ancientSection");
+
+        // Preload images for smoother switching
+        ancientData.forEach((item) => {
+          const im = new Image();
+          im.src = item.img;
+        });
+
+        let activeIndex = 0;
+
+        // ✅ Auto-play ON by default (button removed)
+        let autoplay = true;
+        let autoplayTimer = null;
+
+        function stopAutoplay() {
+          clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+
+        function restartAutoplay() {
+          stopAutoplay();
+          autoplayTimer = setInterval(() => setActive(activeIndex + 1, false), 3500);
+        }
+
+        function setActive(i, userAction = true) {
+          if (i < 0) i = ancientData.length - 1;
+          if (i >= ancientData.length) i = 0;
+          activeIndex = i;
+
+          // Tabs state
+          tabs2.forEach((t, idx) => {
+            const isActive = idx === activeIndex;
+            t.classList.toggle("active-ancient", isActive);
+            t.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          // Dots state
+          dots.forEach((d, idx) => {
+            const isActive = idx === activeIndex;
+            d.classList.toggle("bg-white", isActive);
+            d.classList.toggle("bg-white/40", !isActive);
+          });
+
+          // Counter + progress
+          counterEl.textContent = `${activeIndex + 1} / ${ancientData.length}`;
+          progressEl.style.width = `${((activeIndex + 1) / ancientData.length) * 100}%`;
+
+          // Fade out
+          content2.style.opacity = "0";
+          content2.style.transform = "translateY(10px)";
+
+          // Slight image pop for interactivity
+          imgEl2.style.transform = "scale(1.02)";
+
+          setTimeout(() => {
+            const data = ancientData[activeIndex];
+
+            imgEl2.src = data.img;
+            t2Title.textContent = data.title;
+            t2Subtitle.textContent = data.subtitle;
+            t2Desc.textContent = data.desc;
+            t2Tag1.textContent = data.tag1;
+            t2Tag2.textContent = data.tag2;
+
+            // Fade in
+            content2.style.opacity = "1";
+            content2.style.transform = "translateY(0)";
+            imgEl2.style.transform = "scale(1)";
+          }, 220);
+
+          // Keep autoplay running; if user interacts, reset timing
+          if (autoplay && userAction) restartAutoplay();
+        }
+
+        // Click handlers
+        tabs2.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const index = Number(tab.getAttribute("data-tab"));
+            setActive(index);
+          });
+        });
+
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const index = Number(dot.getAttribute("data-dot"));
+            setActive(index);
+          });
+        });
+
+        prevBtn.addEventListener("click", () => setActive(activeIndex - 1));
+        nextBtn.addEventListener("click", () => setActive(activeIndex + 1));
+
+        // Keyboard navigation (when section is in focus)
+        ancientSection.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+            e.preventDefault();
+            setActive(activeIndex + 1);
+          }
+          if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            setActive(activeIndex - 1);
+          }
+        });
+        ancientSection.setAttribute("tabindex", "0"); // focusable
+
+        // Swipe on image (mobile)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        content2.addEventListener(
+          "touchstart",
+          (e) => {
+            const t = e.touches[0];
+            touchStartX = t.clientX;
+            touchStartY = t.clientY;
+          },
+          { passive: true }
+        );
+
+        content2.addEventListener(
+          "touchend",
+          (e) => {
+            const t = e.changedTouches[0];
+            const dx = t.clientX - touchStartX;
+            const dy = t.clientY - touchStartY;
+
+            // ignore mostly-vertical swipes
+            if (Math.abs(dy) > Math.abs(dx)) return;
+
+            if (dx > 40) setActive(activeIndex - 1);
+            if (dx < -40) setActive(activeIndex + 1);
+          },
+          { passive: true }
+        );
+
+        // Init
+        setActive(0, false);
+        restartAutoplay(); // ✅ start autoplay immediately
+      });
+
+      // ============================================
+      // SHARED: SCROLL REVEAL ANIMATION
+      // ============================================
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        }
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      /* ===============================
+         30 MCQs DATA
+      ================================ */
+
+      const quizData = [
+        { q: "Chemical symbol of water?", o: ["H2O", "O2", "CO2", "HO"], a: "H2O" },
+        { q: "Atomic number of Carbon?", o: ["6", "8", "12", "14"], a: "6" },
+        { q: "pH of pure water?", o: ["7", "5", "9", "0"], a: "7" },
+        { q: "Who discovered oxygen?", o: ["Lavoisier", "Dalton", "Boyle", "Curie"], a: "Lavoisier" },
+        { q: "NaCl is known as?", o: ["Salt", "Sugar", "Acid", "Base"], a: "Salt" },
+        { q: "Symbol of Sodium?", o: ["Na", "So", "S", "Sn"], a: "Na" },
+        { q: "Gas used in photosynthesis?", o: ["CO2", "O2", "N2", "H2"], a: "CO2" },
+        { q: "Atomic number of Oxygen?", o: ["8", "6", "16", "10"], a: "8" },
+        { q: "Who made periodic table?", o: ["Mendeleev", "Dalton", "Boyle", "Curie"], a: "Mendeleev" },
+        { q: "Symbol of Gold?", o: ["Au", "Ag", "Go", "Gd"], a: "Au" },
+        { q: "Chemical formula of CO2?", o: ["CO2", "CO", "C2O", "O2"], a: "CO2" },
+        { q: "Lightest element?", o: ["Hydrogen", "Helium", "Oxygen", "Carbon"], a: "Hydrogen" },
+        { q: "Symbol of Iron?", o: ["Fe", "Ir", "In", "F"], a: "Fe" },
+        { q: "pH less than 7 means?", o: ["Acidic", "Basic", "Neutral", "Salt"], a: "Acidic" },
+        { q: "Which is noble gas?", o: ["Neon", "Nitrogen", "Hydrogen", "Oxygen"], a: "Neon" },
+        { q: "Rusting needs?", o: ["Oxygen & Water", "Nitrogen", "CO2", "Hydrogen"], a: "Oxygen & Water" },
+        { q: "Symbol of Silver?", o: ["Ag", "Au", "Sn", "Si"], a: "Ag" },
+        { q: "Which is alkali metal?", o: ["Sodium", "Iron", "Copper", "Zinc"], a: "Sodium" },
+        { q: "HCl is?", o: ["Acid", "Base", "Salt", "Oxide"], a: "Acid" },
+        { q: "Chemical symbol of Potassium?", o: ["K", "P", "Pt", "Po"], a: "K" },
+        { q: "Which gas is used in balloons?", o: ["Helium", "Oxygen", "Nitrogen", "Hydrogen"], a: "Helium" },
+        { q: "Atomic number of Nitrogen?", o: ["7", "8", "6", "5"], a: "7" },
+        { q: "Most reactive metal?", o: ["Potassium", "Iron", "Gold", "Copper"], a: "Potassium" },
+        { q: "Chemical formula of ammonia?", o: ["NH3", "NO2", "N2H", "NH4"], a: "NH3" },
+        { q: "Which is base?", o: ["NaOH", "HCl", "H2SO4", "HNO3"], a: "NaOH" },
+        { q: "Symbol of Calcium?", o: ["Ca", "Cl", "Cu", "C"], a: "Ca" },
+        { q: "Who proposed atomic theory?", o: ["Dalton", "Newton", "Einstein", "Curie"], a: "Dalton" },
+        {
+          q: "Chemical name of baking soda?",
+          o: ["Sodium bicarbonate", "Calcium carbonate", "Salt", "Potassium nitrate"],
+          a: "Sodium bicarbonate",
+        },
+        { q: "Who is father of modern chemistry?", o: ["Lavoisier", "Dalton", "Curie", "Boyle"], a: "Lavoisier" },
+      ];
+
+      /* ===============================
+         QUIZ LOGIC
+      ================================ */
+
+      const TOTAL_QUESTIONS = 5;
+      const TOTAL_TIME = 30;
+
+      let selected = [];
+      let index = 0;
+      let score = 0;
+      let timeLeft = TOTAL_TIME;
+      let timer;
+
+      const quizContainer = document.getElementById("quizContainer");
+      const resultEl = document.getElementById("quizResult");
+
+      function shuffle(arr) {
+        return arr.sort(() => Math.random() - 0.5);
+      }
+
+      function renderStartScreen() {
+        quizContainer.innerHTML = `
+          <div class="bg-white rounded-lg p-10 shadow-md text-center space-y-6">
+            <h2 class="text-3xl font-bold text-chem-dark-blue">Chemistry Quiz</h2>
+            <p class="text-lg text-chem-text-grey">5 Random Questions • 30 Seconds</p>
+            <button
+              id="startQuizBtn"
+              class="bg-chem-teal text-white font-bold px-10 py-3 rounded-lg hover:bg-chem-dark-blue transition"
+            >
+              Start Quiz
+            </button>
+          </div>
+        `;
+
+        document.getElementById("startQuizBtn").addEventListener("click", startQuiz);
+      }
+
+      function startQuiz() {
+        selected = shuffle([...quizData]).slice(0, TOTAL_QUESTIONS);
+        index = 0;
+        score = 0;
+        timeLeft = TOTAL_TIME;
+        resultEl.classList.add("hidden");
+        startTimer();
+        renderQuestion();
+      }
+
+      function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => {
+          timeLeft--;
+          const t = document.getElementById("timer");
+          if (t) t.textContent = `⏱ ${timeLeft}s`;
+          if (timeLeft <= 0) finishQuiz();
+        }, 1000);
+      }
+
+      function renderQuestion() {
+        const q = selected[index];
+
+        quizContainer.innerHTML = `
+          <div class="bg-white rounded-lg p-6 shadow-md space-y-6">
+            <div class="flex justify-between font-bold">
+              <span>Question ${index + 1} / ${TOTAL_QUESTIONS}</span>
+              <span id="timer" class="text-chem-teal">⏱ ${timeLeft}s</span>
+            </div>
+
+            <h3 class="font-bold text-xl">${q.q}</h3>
+
+            <div class="space-y-3">
+              ${q.o
+                .map(
+                  (opt) => `
+                <label class="flex items-center gap-3 cursor-pointer">
+                  <input type="radio" name="opt" value="${opt}" class="accent-chem-teal">
+                  <span>${opt}</span>
+                </label>
+              `
+                )
+                .join("")}
+            </div>
+
+            <button
+              id="nextBtn"
+              disabled
+              class="bg-chem-teal text-white font-bold px-6 py-2 rounded-lg opacity-50 cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        `;
+
+        const nextBtn = document.getElementById("nextBtn");
+
+        document.querySelectorAll("input[name='opt']").forEach((radio) => {
+          radio.addEventListener("change", () => {
+            nextBtn.disabled = false;
+            nextBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          });
+        });
+
+        nextBtn.addEventListener("click", () => {
+          const selectedOpt = document.querySelector("input[name='opt']:checked");
+          if (selectedOpt && selectedOpt.value === q.a) score++;
+          index++;
+          index < TOTAL_QUESTIONS ? renderQuestion() : finishQuiz();
+        });
+      }
+
+      function finishQuiz() {
+        clearInterval(timer);
+        quizContainer.innerHTML = "";
+        resultEl.innerHTML = `
+          🎉 You scored ${score} / ${TOTAL_QUESTIONS}
+          <br>
+          <button
+            onclick="renderStartScreen()"
+            class="mt-6 bg-chem-teal text-white font-bold px-8 py-3 rounded-lg hover:bg-chem-dark-blue transition"
+          >
+            Retry Quiz
+          </button>
+        `;
+        resultEl.classList.remove("hidden");
+      }
+
+      renderStartScreen();
+    </script>
+  </body>
+</html>

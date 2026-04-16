@@ -1,0 +1,3181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genghis Khan - The Great Conqueror</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-darker: #050505;
+            --bg-card: #1a1a1a;
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --gold-dark: #b8941f;
+            --red: #8b0000;
+            --red-light: #cd5c5c;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --text-muted: #666666;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+        }
+
+        /* Background Canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            z-index: 10000;
+            box-shadow: 0 0 20px var(--gold);
+            transition: width 0.1s;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Section */
+        section {
+            min-height: 100vh;
+            padding: 10rem 0 6rem;
+            position: relative;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 0, 0, 0.2));
+            border: 1px solid var(--gold);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            line-height: 1.8;
+        }
+
+        /* ===== HERO ===== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-portrait {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--gold);
+            margin: 0 auto 2rem;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.6);
+            animation: portraitGlow 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes portraitGlow {
+            0%, 100% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.6); }
+            50% { box-shadow: 0 0 100px rgba(212, 175, 55, 0.9); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 0, 0, 0.2));
+            border: 2px solid var(--gold);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 400;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        /* ===== FACTS CARDS ===== */
+        #facts {
+            background: transparent;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .fact-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .fact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .fact-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .fact-content {
+            padding: 2rem;
+        }
+
+        .fact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .fact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .fact-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* ===== EMPIRE MAP ===== */
+        #empire-map {
+            background: transparent;
+        }
+
+        .map-container {
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        #mapCanvas {
+            width: 100%;
+            height: 700px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+            cursor: crosshair;
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .map-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .year-button {
+            padding: 1rem 2rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: var(--gold);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cinzel', serif;
+        }
+
+        .year-button:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .year-button.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        .map-info {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .map-info h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .map-info p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .map-tooltip {
+            position: absolute;
+            background: rgba(26, 26, 26, 0.95);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .map-tooltip.visible {
+            opacity: 1;
+        }
+
+        .map-tooltip h4 {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .map-tooltip p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ===== TIMELINE ===== */
+        #timeline {
+            background: transparent;
+        }
+
+        .timeline-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--gold), var(--red));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 30px;
+            height: 30px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 10px rgba(212, 175, 55, 0.2),
+            0 0 40px rgba(212, 175, 55, 0.6);
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        .timeline-content {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .timeline-content:hover::before {
+            left: 100%;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold);
+        }
+
+        .timeline-year {
+            font-size: 3rem;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-desc {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .timeline-icon {
+            font-size: 2rem;
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            opacity: 0.3;
+        }
+
+        /* ===== BATTLE SIMULATOR ===== */
+        #battle-game {
+            background: transparent;
+        }
+
+        .battle-simulator {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .army-selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .army-card {
+            background: rgba(26, 26, 26, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .army-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .army-card.selected {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .army-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .army-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .army-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .army-stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold-light);
+            display: block;
+        }
+
+        .stat-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .battle-btn {
+            padding: 1.5rem 4rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border: none;
+            border-radius: 100px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Cinzel', serif;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .battle-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(212, 175, 55, 0.6);
+        }
+
+        .battle-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .battle-result {
+            margin-top: 3rem;
+            padding: 3rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .battle-result.visible {
+            display: block;
+            animation: fadeIn 0.6s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .battle-winner {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* ===== ARCHERY GAME ===== */
+        #archery-game {
+            background: transparent;
+        }
+
+        .archery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .stat-label-game {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value-game {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #archeryCanvas {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            background: linear-gradient(180deg, #1a3a4a 0%, #0a1a2a 100%);
+            cursor: crosshair;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+            display: block;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .game-btn {
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border: none;
+            border-radius: 100px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Cinzel', serif;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(212, 175, 55, 0.6);
+        }
+
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .game-btn.secondary {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .game-instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .game-instructions p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .game-result {
+            margin-top: 2rem;
+            padding: 3rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            text-align: center;
+            animation: fadeIn 0.6s;
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .result-score {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0;
+            font-family: 'Cinzel', serif;
+        }
+
+        .result-message {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            #archeryCanvas {
+                height: 400px;
+            }
+
+            .game-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* ===== MILITARY TACTICS ===== */
+        #tactics {
+            background: transparent;
+        }
+
+        .tactics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tactic-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .tactic-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tactic-content {
+            padding: 2.5rem;
+        }
+
+        .tactic-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .tactic-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+        }
+
+        .tactic-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .tactic-desc {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            border: 2px solid var(--gold);
+            border-radius: 30px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 3rem;
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .modal-close:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+        }
+
+        .modal-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .modal-details {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .modal-detail-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .modal-detail-item::before {
+            content: '⚔️';
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== COMPARISON ===== */
+        #comparison {
+            background: transparent;
+        }
+
+        .comparison-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            overflow-x: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        th {
+            padding: 1.5rem;
+            text-align: left;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        td {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .empire-mongol {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* ===== LEGACY ===== */
+        #legacy {
+            background: transparent;
+        }
+
+        .legacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .legacy-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .legacy-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(212, 175, 55, 0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .legacy-card:hover::before {
+            opacity: 1;
+        }
+
+        .legacy-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .legacy-emoji {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .legacy-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .legacy-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* ===== QUIZ ===== */
+        #quiz {
+            background: transparent;
+        }
+
+        .quiz-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 30px;
+            padding: 4rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .quiz-question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .quiz-option {
+            padding: 1.5rem 2rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .quiz-option:hover:not(.correct):not(.wrong) {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            transform: translateX(8px);
+        }
+
+        .quiz-option.correct {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+            animation: correctPulse 0.6s;
+        }
+
+        .quiz-option.correct::before {
+            width: 5px;
+            background: #4caf50;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+            animation: wrongShake 0.5s;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .quiz-option.wrong::before {
+            width: 5px;
+            background: #f44336;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .quiz-score {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        #quizResult {
+            text-align: center;
+        }
+
+        .final-score {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0;
+            font-family: 'Cinzel', serif;
+        }
+
+        .btn {
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Cinzel', serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 60px rgba(212, 175, 55, 0.6);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: transparent;
+            padding: 5rem 0 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 2rem;
+            }
+
+            .timeline-dot {
+                left: 2rem;
+            }
+
+            .tactics-grid, .facts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .army-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+
+            #mapCanvas {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Background Canvas -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navigation -->
+<nav class="main-nav">
+    <div class="nav-content">
+        <a href="#hero" class="nav-logo">
+            <span>🏹</span>
+            <span>GENGHIS KHAN</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#facts">FACTS</a></li>
+            <li><a href="#empire-map">EMPIRE</a></li>
+            <li><a href="#timeline">TIMELINE</a></li>
+            <li><a href="#battle-game">GAME</a></li>
+            <li><a href="#tactics">TACTICS</a></li>
+            <li><a href="#legacy">LEGACY</a></li>
+            <li><a href="#quiz">QUIZ</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <div class="modal-close" id="modalClose">✕</div>
+        <span class="modal-icon" id="modalIcon"></span>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p class="modal-text" id="modalText"></p>
+        <div class="modal-details" id="modalDetails"></div>
+    </div>
+</div>
+
+<!-- Map Tooltip -->
+<div class="map-tooltip" id="mapTooltip">
+    <h4 id="tooltipTitle"></h4>
+    <p id="tooltipText"></p>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+    <div class="hero-content">
+        <div class="hero-portrait" id="heroPortrait"></div>
+        <div class="hero-badge">
+            <span>⚔️</span>
+            <span>1162 - 1227</span>
+        </div>
+        <h1>GENGHIS KHAN</h1>
+        <p class="hero-subtitle">
+            From nomadic warrior to founder of the largest contiguous empire in history.
+            Explore the conquests, tactics, and legacy of the Great Khan who reshaped the world.
+        </p>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🗺️</div>
+                <span class="stat-number" data-target="24">0</span>
+                <span class="stat-label">Million km²</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏛️</div>
+                <span class="stat-number" data-target="40">0</span>
+                <span class="stat-label">Nations Conquered</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🐎</div>
+                <span class="stat-number" data-target="200">0</span>
+                <span class="stat-label">K Cavalry Riders</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <span class="stat-number" data-target="110">0</span>
+                <span class="stat-label">Million People</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FACTS ===== -->
+<section id="facts">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 1</div>
+            <h2 class="section-title">The Man Behind the Legend</h2>
+            <p class="section-description">
+                Discover fascinating facts about Genghis Khan's life, personality, and achievements.
+            </p>
+        </div>
+
+        <div class="facts-grid" id="factsGrid"></div>
+    </div>
+</section>
+
+<!-- ===== EMPIRE MAP ===== -->
+<section id="empire-map">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 2</div>
+            <h2 class="section-title">The Mongol Empire</h2>
+            <p class="section-description">
+                Interactive map showing the empire's expansion from 1206 to 1279.
+                Hover over cities and territories to learn more.
+            </p>
+        </div>
+
+        <div class="map-container">
+            <canvas id="mapCanvas"></canvas>
+
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(212, 175, 55, 0.6);"></div>
+                    <span>Mongol Territory</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f4d03f;"></div>
+                    <span>Capital/Major Cities</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #8b0000;"></div>
+                    <span>Major Battles</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: transparent; border: 2px dashed var(--gold);"></div>
+                    <span>Conquest Routes</span>
+                </div>
+            </div>
+
+            <div class="map-controls">
+                <button class="year-button active" data-year="1206">1206</button>
+                <button class="year-button" data-year="1215">1215</button>
+                <button class="year-button" data-year="1220">1220</button>
+                <button class="year-button" data-year="1227">1227</button>
+                <button class="year-button" data-year="1279">1279 - Peak</button>
+            </div>
+
+            <div class="map-info" id="mapInfo">
+                <h3>1206 - Rise of the Great Khan</h3>
+                <p>Temüjin unites the Mongol tribes at a kurultai and is proclaimed Genghis Khan. The empire begins from the Mongolian steppes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section id="timeline">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 3</div>
+            <h2 class="section-title">Chronicle of Conquest</h2>
+            <p class="section-description">
+                Key battles, victories, and turning points that shaped the Mongol Empire.
+            </p>
+        </div>
+
+        <div class="timeline-wrapper" id="timelineContainer"></div>
+    </div>
+</section>
+
+<!-- ===== BATTLE SIMULATOR GAME ===== -->
+<section id="battle-game">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Interactive Game</div>
+            <h2 class="section-title">Battle Simulator</h2>
+            <p class="section-description">
+                Choose an opponent and simulate a historical battle. Who will emerge victorious?
+            </p>
+        </div>
+
+        <div class="battle-simulator">
+            <div class="army-selection">
+                <div class="army-card selected" data-army="mongol">
+                    <div class="army-icon">🏹</div>
+                    <h3 class="army-name">Mongol Horde</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Mobile cavalry masters</p>
+                    <div class="army-stats">
+                        <div class="army-stat">
+                            <span class="stat-value">95</span>
+                            <span class="stat-name">Speed</span>
+                        </div>
+                        <div class="army-stat">
+                            <span class="stat-value">90</span>
+                            <span class="stat-name">Tactics</span>
+                        </div>
+                        <div class="army-stat">
+                            <span class="stat-value">85</span>
+                            <span class="stat-name">Power</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="army-card" data-army="opponent">
+                    <div class="army-icon">🛡️</div>
+                    <h3 class="army-name">Enemy Army</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Select your opponent</p>
+                    <select id="opponentSelect" style="width: 100%; padding: 0.75rem; background: rgba(26,26,26,0.8); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; color: var(--text-primary); font-size: 1rem; margin-top: 1rem;">
+                        <option value="jin">Jin Dynasty (China)</option>
+                        <option value="khwarezmia">Khwarezmian Empire</option>
+                        <option value="rus">Kievan Rus</option>
+                        <option value="european">European Knights</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="battle-btn" id="startBattle">⚔️ START BATTLE ⚔️</button>
+
+            <div class="battle-result" id="battleResult">
+                <h3 class="battle-winner" id="battleWinner"></h3>
+                <p id="battleDescription" style="font-size: 1.2rem; color: var(--text-secondary); line-height: 1.8; max-width: 700px; margin: 0 auto;"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ARCHERY GAME ===== -->
+<section id="archery-game">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Mini Game</div>
+            <h2 class="section-title">Mongol Archery</h2>
+            <p class="section-description">
+                Master the composite bow! Aim with your mouse and click to shoot. Hit the targets to score points!
+            </p>
+        </div>
+
+        <div class="archery-container">
+            <div class="game-header">
+                <div class="game-stat">
+                    <span class="stat-label-game">Score</span>
+                    <span class="stat-value-game" id="archeryScore">0</span>
+                </div>
+                <div class="game-stat">
+                    <span class="stat-label-game">Arrows</span>
+                    <span class="stat-value-game" id="arrowsLeft">10</span>
+                </div>
+                <div class="game-stat">
+                    <span class="stat-label-game">Time</span>
+                    <span class="stat-value-game" id="timeLeft">60</span>
+                </div>
+            </div>
+
+            <canvas id="archeryCanvas"></canvas>
+
+            <div class="game-controls">
+                <button class="game-btn" id="startArchery">🏹 START GAME</button>
+                <button class="game-btn secondary" id="restartArchery" style="display: none;">PLAY AGAIN</button>
+            </div>
+
+            <div class="game-instructions">
+                <p>🎯 <strong>How to Play:</strong> Move mouse to aim • Click to shoot • Hit targets for points</p>
+                <p>💡 <strong>Scoring:</strong> Bullseye (50pts) • Inner ring (30pts) • Outer ring (10pts)</p>
+            </div>
+
+            <div class="game-result" id="archeryResult" style="display: none;">
+                <h3 class="result-title" id="resultTitle">Game Over!</h3>
+                <div class="result-score" id="resultScore">0</div>
+                <p class="result-message" id="resultMessage"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MILITARY TACTICS ===== -->
+<section id="tactics">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 4</div>
+            <h2 class="section-title">Military Innovation</h2>
+            <p class="section-description">
+                Revolutionary tactics that made the Mongols nearly unbeatable on the battlefield.
+            </p>
+        </div>
+
+        <div class="tactics-grid" id="tacticsGrid"></div>
+    </div>
+</section>
+
+<!-- ===== COMPARISON ===== -->
+<section id="comparison">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 5</div>
+            <h2 class="section-title">Empire Comparison</h2>
+            <p class="section-description">
+                How the Mongol Empire compared to other great empires in history.
+            </p>
+        </div>
+
+        <div class="comparison-container">
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Empire</th>
+                        <th>Peak Size (km²)</th>
+                        <th>% of World</th>
+                        <th>Population</th>
+                        <th>Duration</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="empire-mongol">
+                        <td>🏹 Mongol Empire</td>
+                        <td>24 million</td>
+                        <td>16.11%</td>
+                        <td>110 million</td>
+                        <td>1206-1368 (162 years)</td>
+                    </tr>
+                    <tr>
+                        <td>🏛️ Roman Empire</td>
+                        <td>5 million</td>
+                        <td>3.36%</td>
+                        <td>70 million</td>
+                        <td>27 BC-476 AD (503 years)</td>
+                    </tr>
+                    <tr>
+                        <td>👑 British Empire</td>
+                        <td>35.5 million</td>
+                        <td>23.84%</td>
+                        <td>458 million</td>
+                        <td>1583-1997 (414 years)</td>
+                    </tr>
+                    <tr>
+                        <td>☪️ Ottoman Empire</td>
+                        <td>5.2 million</td>
+                        <td>3.51%</td>
+                        <td>35 million</td>
+                        <td>1299-1922 (623 years)</td>
+                    </tr>
+                    <tr>
+                        <td>🦅 Persian Empire</td>
+                        <td>5.5 million</td>
+                        <td>3.68%</td>
+                        <td>50 million</td>
+                        <td>550-330 BC (220 years)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LEGACY ===== -->
+<section id="legacy">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 6</div>
+            <h2 class="section-title">Enduring Legacy</h2>
+            <p class="section-description">
+                How Genghis Khan's conquests permanently changed the world.
+            </p>
+        </div>
+
+        <div class="legacy-grid" id="legacyGrid"></div>
+    </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="quiz">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <div class="section-badge">Chapter 7</div>
+            <h2 class="section-title">Test Your Knowledge</h2>
+            <p class="section-description">
+                How well do you know the history of Genghis Khan and the Mongol Empire?
+            </p>
+        </div>
+
+        <div class="quiz-wrapper">
+            <div id="quizContainer">
+                <h3 class="quiz-question" id="quizQuestion"></h3>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-progress">
+                    <div>Question <span id="currentQ">1</span> of <span id="totalQ">7</span></div>
+                    <div class="quiz-score">Score: <span id="scoreDisplay">0</span>/7</div>
+                </div>
+            </div>
+
+            <div id="quizResult" style="display: none;">
+                <h3>Quiz Complete! 🏆</h3>
+                <div class="final-score" id="finalScore">0/7</div>
+                <p id="quizMessage" style="font-size: 1.35rem; color: var(--text-secondary); margin: 2rem 0;"></p>
+                <button class="btn" id="restartBtn">Try Again</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <h3 class="footer-title">The Great Khan 🏹</h3>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.8;">
+            An interactive exploration of history's greatest conqueror<br>
+            <em>"I am the punishment of God. If you had not committed great sins, God would not have sent a punishment like me upon you."</em>
+        </p>
+    </div>
+</footer>
+
+<script>
+    // ===== DATA =====
+    const factsData = [
+        {
+            icon: "👶",
+            title: "Orphaned at Nine",
+            image: "https://images.pexels.com/photos/1679769/pexels-photo-1679769.jpeg",
+            text: "Born as Temüjin, his father was poisoned when he was only 9 years old. His tribe abandoned him and his family, leaving them to survive in extreme poverty on the Mongolian steppes.",
+            details: [
+                "Father Yesügei was chieftain of the Borjigin tribe",
+                "Poisoned by rival Tatars at a feast",
+                "Family abandoned and lived in extreme poverty",
+                "Survived by hunting and gathering on the harsh steppes",
+                "This hardship forged his iron will and determination to unite the tribes"
+            ]
+        },
+        {
+            icon: "🕊️",
+            title: "Religious Tolerance",
+            image: "https://images.pexels.com/photos/35257293/pexels-photo-35257293.jpeg",
+            text: "Unlike most conquerors, Genghis Khan practiced religious freedom. He exempted religious leaders from taxes and protected places of worship, allowing Buddhism, Islam, Christianity, and other faiths to coexist peacefully.",
+            details: [
+                "Exempted all religious leaders from taxation",
+                "Protected temples, churches, mosques, and synagogues",
+                "Allowed complete freedom of worship across the empire",
+                "Consulted with religious scholars of all faiths for advice",
+                "This unprecedented tolerance helped maintain peace in conquered territories"
+            ]
+        },
+        {
+            icon: "⚖️",
+            title: "Revolutionary Laws",
+            image: "https://images.pexels.com/photos/12279956/pexels-photo-12279956.jpeg",
+            text: "The Yassa code promoted meritocracy over nobility, banned slavery of Mongols, guaranteed universal religious freedom, and established severe punishments for theft. Women had unprecedented property and divorce rights.",
+            details: [
+                "Merit-based promotions regardless of birth or social status",
+                "Death penalty for murder, serious theft, and betrayal",
+                "Women could own property, divorce, and refuse marriages",
+                "Banned kidnapping and selling Mongols as slaves",
+                "Created one of history's first codified legal systems"
+            ]
+        },
+        {
+            icon: "🐴",
+            title: "Master Horsemen",
+            image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800",
+            text: "Mongol children learned to ride before they could walk. Each warrior maintained 3-5 horses, allowing armies to travel 60-100 miles per day. Warriors could shoot arrows accurately while riding at full gallop.",
+            details: [
+                "Children learned archery from age 3, riding from age 4",
+                "Could shoot backwards while retreating (Parthian shot)",
+                "Horses were small, hardy Mongolian steppe ponies",
+                "Warriors rotated between horses to maintain incredible speed",
+                "Drank horse milk and blood to survive without supply lines"
+            ]
+        },
+        {
+            icon: "🧬",
+            title: "Genetic Superpower",
+            image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800",
+            text: "A 2003 genetic study found that 0.5% of the world's male population (approximately 16 million men) carry a Y-chromosome lineage traced directly back to Genghis Khan and his male relatives.",
+            details: [
+                "16 million men today carry his Y-chromosome marker",
+                "Represents 0.5% of the entire world's male population",
+                "His male-line descendants ruled empires for centuries",
+                "Genetic spread across Asia from Korea to the Middle East",
+                "One of the most successful genetic lineages in human history"
+            ]
+        },
+        {
+            icon: "🛤️",
+            title: "Silk Road Revival",
+            image: "https://images.pexels.com/photos/35269270/pexels-photo-35269270.jpeg",
+            text: "The Pax Mongolica made the Silk Road safer than ever before. Merchants could travel from Venice to Beijing without fear, facilitating unprecedented cultural and technological exchange between East and West.",
+            details: [
+                "Created the Yam postal/relay system with stations every 25 miles",
+                "Stationed troops along routes to protect merchants",
+                "Severely punished bandits and thieves with death",
+                "Merchants received special passports (paiza) for safe travel",
+                "Enabled transfer of technology: gunpowder, printing, compass to Europe"
+            ]
+        }
+    ];
+
+    const timelineData = [
+        { year: "1162", title: "Birth of Temüjin", desc: "Born into the Borjigin tribe on the Mongolian steppes. His father, Yesügei, a minor chieftain, was poisoned by rival Tatars when Temüjin was nine, leaving the family impoverished and abandoned by their tribe.", icon: "👶" },
+        { year: "1206", title: "Proclamation as Genghis Khan", desc: "After two decades of warfare and brilliant diplomacy, Temüjin unites all Mongol tribes. At a kurultai (great assembly), he is proclaimed 'Genghis Khan' meaning 'Universal Ruler' or 'Oceanic Ruler'.", icon: "👑" },
+        { year: "1211", title: "Invasion of Jin Dynasty", desc: "Genghis Khan launches a massive campaign against the Jin Dynasty in northern China with 90,000 cavalry, beginning decades of Mongol expansion that would reshape the entire world.", icon: "⚔️" },
+        { year: "1215", title: "Capture of Beijing", desc: "After a devastating year-long siege, the Mongols capture Zhongdu (Beijing). The city burns for a month. This marks the beginning of the end for the Jin Dynasty and establishes Mongol dominance in northern China.", icon: "🏛️" },
+        { year: "1219", title: "Khwarezmian Campaign", desc: "When the Khwarezmian Shah foolishly murders Mongol trade ambassadors, Genghis Khan responds with unprecedented fury. His campaign utterly destroys the Khwarezmian Empire, razing cities like Samarkand and Bukhara.", icon: "🔥" },
+        { year: "1223", title: "Battle of Kalka River", desc: "A Mongol reconnaissance force of just 20,000 warriors defeats 80,000 combined Russian princes and Cuman warriors. This victory demonstrates Mongol military superiority and sends shockwaves of terror through Europe.", icon: "⚡" },
+        { year: "1227", title: "Death of Genghis Khan", desc: "Dies during a campaign against the Western Xia, possibly from injuries sustained falling from his horse. He is buried in an unmarked grave that remains undiscovered to this day. His sons continue expanding the empire.", icon: "🌙" },
+        { year: "1241", title: "Europe's Narrow Escape", desc: "Mongol armies decisively defeat European forces at Legnica and Mohi, reaching the gates of Vienna. The sudden death of Great Khan Ögedei forces their return to Mongolia for succession, inadvertently saving Western Europe.", icon: "🛡️" }
+    ];
+
+    const tacticsData = [
+        {
+            icon: "🏹",
+            title: "Horse Archers",
+            image: "https://images.pexels.com/photos/30876954/pexels-photo-30876954.jpeg",
+            desc: "Mongol warriors mastered the nearly impossible skill of shooting arrows accurately while riding at full gallop, creating devastating mobile firepower that no enemy could match.",
+            details: [
+                "Each warrior maintained 3-5 horses for rapid sustained movement across vast distances",
+                "Could accurately shoot 6 arrows per minute while riding at full speed",
+                "Composite bows had an effective range of 300-350 yards, outranging most enemies",
+                "Perfected the feigned retreat to lure overconfident enemies into devastating ambushes",
+                "Children trained in archery from age 3, riding from age 4 - lifelong mastery"
+            ]
+        },
+        {
+            icon: "⚡",
+            title: "Lightning Warfare",
+            image: "https://images.pexels.com/photos/30457192/pexels-photo-30457192.jpeg",
+            desc: "Unmatched speed and mobility allowed Mongol armies to cover vast distances and strike where enemies thought impossible, often appearing weeks before scouts predicted.",
+            details: [
+                "Armies could travel 60-100 miles per day sustained for weeks",
+                "Coordinated simultaneous attacks across multiple fronts hundreds of miles apart",
+                "Used smoke signals, arrow messengers, and relay stations for instant communication",
+                "Supply lines stretched across entire continents using the Yam system",
+                "Relied on captured resources and horse products (milk, blood) for sustenance"
+            ]
+        },
+        {
+            icon: "🎯",
+            title: "Psychological Warfare",
+            image: "https://images.pexels.com/photos/353644/pexels-photo-353644.jpeg",
+            desc: "Spread calculated terror through strategic massacres and sophisticated propaganda, forcing many cities to surrender without fighting and saving Mongol lives.",
+            details: [
+                "Always offered generous surrender terms before attacking - submit or die",
+                "Publicized brutal punishments for cities that resisted as examples",
+                "Used extensive spy networks to spread fear and disinformation",
+                "Completely destroyed resisting cities, killing entire populations as warnings",
+                "Spared artisans, engineers, and useful specialists for the empire"
+            ]
+        },
+        {
+            icon: "🛡️",
+            title: "Decimal System",
+            image: "https://images.pexels.com/photos/10916183/pexels-photo-10916183.jpeg",
+            desc: "Revolutionary military organization into units of 10, 100, 1,000, and 10,000 (tumen) created maximum efficiency in command, control, and battlefield flexibility.",
+            details: [
+                "Clear chain of command with complete accountability at every level",
+                "Flexible formations adapted instantly to changing battlefield conditions",
+                "Pure meritocracy: promotions based solely on ability and results, not birth",
+                "Units could operate independently or coordinate seamlessly in massive armies",
+                "Commanders executed for cowardice, incompetence, or disobeying orders"
+            ]
+        },
+        {
+            icon: "🔥",
+            title: "Siege Technology",
+            image: "https://images.pexels.com/photos/30117465/pexels-photo-30117465.jpeg",
+            desc: "Adapted and vastly improved Chinese siege weapons and engineering techniques to conquer even the most formidable fortified cities that had stood for centuries.",
+            details: [
+                "Employed catapults, trebuchets, and early gunpowder weapons with devastating effect",
+                "Forced captured engineers and craftsmen to build and operate siege equipment",
+                "Diverted entire rivers to flood cities or cut off water supplies",
+                "Used captive populations as human shields and forced labor for assaults",
+                "Perfected techniques to systematically destroy walls and fortifications"
+            ]
+        },
+        {
+            icon: "🌍",
+            title: "Intelligence Network",
+            image: "https://images.pexels.com/photos/25626428/pexels-photo-25626428.jpeg",
+            desc: "Extensive spy networks gathered detailed information about enemies years before campaigns, giving Mongols crucial strategic and tactical advantages.",
+            details: [
+                "Merchants and traders doubled as intelligence gatherers across continents",
+                "Created detailed maps and comprehensive reports of enemy territories",
+                "Identified political divisions and rivalries to exploit with surgical precision",
+                "Diplomatic envoys assessed military capabilities, defenses, and weaknesses",
+                "Gathered intelligence for years before actual invasions began"
+            ]
+        }
+    ];
+
+    const legacyData = [
+        { emoji: "🛣️", title: "Silk Road Revival", image: "https://images.pexels.com/photos/28451400/pexels-photo-28451400.jpeg", text: "United vast territories under Pax Mongolica, making the Silk Road safe for trade and cultural exchange for the first time in centuries. This facilitated unprecedented flow of goods, ideas, and technology between East and West, laying groundwork for globalization." },
+        { emoji: "⚖️", title: "Legal Code", image: "https://images.pexels.com/photos/7821267/pexels-photo-7821267.jpeg", text: "Established the Yassa law code promoting meritocracy over nobility, banned slavery of Mongols, guaranteed universal religious freedom, and established severe punishments for theft and murder. Women gained unprecedented property and divorce rights for the era." },
+        { emoji: "📬", title: "Postal System", image: "https://images.pexels.com/photos/19130897/pexels-photo-19130897.jpeg", text: "Created the revolutionary Yam relay system with stations every 25 miles across the entire empire, enabling rapid communication from Korea to Eastern Europe. Messengers could travel 200 miles per day changing horses at each station, faster than any system until the telegraph." },
+        { emoji: "🌏", title: "Cultural Exchange", image: "https://images.pexels.com/photos/35255490/pexels-photo-35255490.jpeg", text: "Facilitated unprecedented exchange of ideas, technology, and goods between East and West. Paper, gunpowder, compass, and printing press spread to Europe, while Persian astronomy, mathematics, and medicine reached China. This exchange influenced the Renaissance." },
+        { emoji: "🧬", title: "Genetic Legacy", image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800", text: "Modern DNA studies suggest 0.5% of the world's male population (approximately 16 million men) carry Y-chromosome markers traced directly back to Genghis Khan and his male relatives, making it one of the most successful genetic lineages in human history." },
+        { emoji: "📚", title: "Religious Tolerance", image: "https://images.pexels.com/photos/35265974/pexels-photo-35265974.jpeg", text: "Unprecedented religious freedom throughout the empire. Protected all faiths equally, exempted religious leaders from taxes, and consulted scholars from Buddhism, Islam, Christianity, Taoism, and other religions, creating remarkable interfaith dialogue and cooperation." }
+    ];
+
+    const quizData = [
+        { q: "What was Genghis Khan's birth name?", options: ["Temüjin", "Kublai", "Ögedei", "Batu"], correct: 0 },
+        { q: "In what year was Genghis Khan proclaimed the Great Khan?", options: ["1200", "1206", "1215", "1220"], correct: 1 },
+        { q: "Approximately how large was the Mongol Empire at its peak?", options: ["12 million km²", "18 million km²", "24 million km²", "30 million km²"], correct: 2 },
+        { q: "What was the Mongol military organization unit of 10,000 called?", options: ["Jagun", "Minghan", "Tumen", "Arban"], correct: 2 },
+        { q: "Which empire did Genghis Khan destroy after they killed his ambassadors?", options: ["Jin Dynasty", "Song Dynasty", "Khwarezmian Empire", "Abbasid Caliphate"], correct: 2 },
+        { q: "What was the Pax Mongolica?", options: ["A peace treaty", "A period of stability and safe trade", "A military strategy", "A legal code"], correct: 1 },
+        { q: "How many horses did each Mongol warrior typically have?", options: ["1-2", "3-5", "6-8", "10+"], correct: 1 }
+    ];
+
+    const opponentData = {
+        jin: { name: "Jin Dynasty", power: 75, speed: 60, tactics: 70, description: "The Mongols' superior mobility and innovative tactics overwhelm the Jin's static defenses. Horse archers circle endlessly, raining arrows while avoiding direct engagement with Jin infantry. Cities fall one by one. Victory: Mongol Horde! 🏹" },
+        khwarezmia: { name: "Khwarezmian Empire", power: 80, speed: 65, tactics: 65, description: "Mongol psychological warfare and lightning raids systematically break Khwarezmian morale. Cities are offered surrender or total destruction. Terror spreads faster than armies. The empire is utterly annihilated. Victory: Mongol Horde! 🔥" },
+        rus: { name: "Kievan Rus", power: 70, speed: 55, tactics: 60, description: "At Kalka River, brilliant feigned retreats lure disorganized Russian princes and Cuman allies into devastating ambushes. Superior coordination and discipline crushes the fragmented alliance. Victory: Mongol Horde! ⚡" },
+        european: { name: "European Knights", power: 85, speed: 50, tactics: 55, description: "Heavy cavalry charges meet empty air as nimble Mongol horse archers scatter and reform instantly. Knights are exhausted by endless pursuit before Mongols close for the kill. Only Ögedei's death saves Europe. Victory: Mongol Horde! 🏆" }
+    };
+
+    // Map data with precise coordinates
+    const mapData = {
+        cities: [
+            { name: "Karakorum", x: 700, y: 250, year: 1206, info: "Capital of the Mongol Empire, founded by Genghis Khan" },
+            { name: "Beijing", x: 820, y: 300, year: 1215, info: "Captured after brutal siege in 1215, key to controlling China" },
+            { name: "Samarkand", x: 480, y: 280, year: 1220, info: "Major Silk Road city, destroyed and rebuilt by Mongols" },
+            { name: "Bukhara", x: 440, y: 290, year: 1220, info: "Ancient center of learning, sacked in 1220" },
+            { name: "Baghdad", x: 360, y: 320, year: 1258, info: "Abbasid capital, fell to Mongols in 1258 ending Islamic Golden Age" },
+            { name: "Kiev", x: 220, y: 240, year: 1240, info: "Destroyed by Batu Khan in 1240, European powers terrified" },
+            { name: "Hangzhou", x: 920, y: 350, year: 1276, info: "Southern Song capital, richest city in world when conquered" },
+            { name: "Khanbaliq", x: 820, y: 300, year: 1271, info: "New capital built by Kublai Khan (modern Beijing)" }
+        ],
+        battles: [
+            { name: "Battle of Yehuling", x: 780, y: 270, year: 1211, info: "First major victory against Jin Dynasty, 60,000 Jin killed" },
+            { name: "Siege of Zhongdu", x: 820, y: 300, year: 1215, info: "Beijing falls after year-long siege, city burns for month" },
+            { name: "Battle of Indus", x: 420, y: 360, year: 1221, info: "Devastating defeat of Khwarezmian forces" },
+            { name: "Battle of Kalka River", x: 260, y: 260, year: 1223, info: "20,000 Mongols defeat 80,000 Russians and Cumans" },
+            { name: "Battle of Legnica", x: 180, y: 220, year: 1241, info: "Polish and German forces annihilated, Europe in panic" },
+            { name: "Battle of Mohi", x: 200, y: 230, year: 1241, info: "Hungarian army destroyed, 65,000 killed in single day" }
+        ],
+        territories: [
+            { year: 1206, regions: [{x: 700, y: 250, r: 80, name: "Mongolia Core"}] },
+            { year: 1215, regions: [
+                    {x: 700, y: 250, r: 80, name: "Mongolia"},
+                    {x: 800, y: 280, r: 90, name: "Northern China"}
+                ]},
+            { year: 1220, regions: [
+                    {x: 700, y: 250, r: 80, name: "Mongolia"},
+                    {x: 800, y: 280, r: 90, name: "Northern China"},
+                    {x: 500, y: 270, r: 120, name: "Central Asia"}
+                ]},
+            { year: 1227, regions: [
+                    {x: 700, y: 250, r: 80, name: "Mongolia"},
+                    {x: 800, y: 280, r: 90, name: "Northern China"},
+                    {x: 500, y: 270, r: 120, name: "Central Asia"},
+                    {x: 380, y: 310, r: 100, name: "Persia"}
+                ]},
+            { year: 1279, regions: [
+                    {x: 700, y: 250, r: 80, name: "Mongolia"},
+                    {x: 850, y: 300, r: 140, name: "All China"},
+                    {x: 500, y: 270, r: 120, name: "Central Asia"},
+                    {x: 380, y: 310, r: 100, name: "Persia"},
+                    {x: 240, y: 240, r: 130, name: "Eastern Europe"}
+                ]}
+        ]
+    };
+
+    const mapInfo = {
+        1206: { title: "1206 - Rise of the Great Khan", desc: "Temüjin unites all Mongol tribes at a kurultai and is proclaimed Genghis Khan. The empire begins from the Mongolian steppes with Karakorum as capital, approximately 1 million km². The foundation for history's largest land empire is laid." },
+        1215: { title: "1215 - Conquest of Jin Dynasty", desc: "After capturing Beijing (Zhongdu) following a brutal siege, the Mongol Empire expands dramatically into northern China, reaching 4 million km². The Jin Dynasty begins its inevitable collapse as Mongols gain control of vital agricultural lands and trade routes." },
+        1220: { title: "1220 - Destruction of Khwarezmia", desc: "In retaliation for the murder of Mongol ambassadors, Genghis Khan leads a devastating campaign that utterly destroys the Khwarezmian Empire. Ancient cities like Samarkand and Bukhara are razed. The empire extends into Central Asia and Persia, reaching 8 million km²." },
+        1227: { title: "1227 - Death of Genghis Khan", desc: "Genghis Khan dies during a campaign against the Western Xia, possibly from injuries sustained in a fall from his horse. At his death, the empire spans from China to the Caspian Sea, approximately 12 million km². His sons and grandsons will continue the expansion." },
+        1279: { title: "1279 - Peak of the Mongol Empire", desc: "Under Genghis Khan's descendants, particularly Kublai Khan who conquers Southern Song China, the Mongol Empire reaches its maximum extent of 24 million km² - the largest contiguous land empire in history. It stretches from Korea to Hungary, encompassing 110 million people across dozens of cultures." }
+    };
+
+    // ===== BACKGROUND CANVAS =====
+    function initBackground() {
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.documentElement.scrollHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Particles
+        const particles = [];
+        const particleCount = 150;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Gradient background
+            const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 3, 0, canvas.width / 2, canvas.height / 3, canvas.width);
+            gradient.addColorStop(0, 'rgba(212, 175, 55, 0.03)');
+            gradient.addColorStop(0.5, 'rgba(139, 0, 0, 0.02)');
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw and update particles
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`;
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            });
+
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        drawParticles();
+    }
+
+    // HERO PORTRAIT - PHOTO
+    function createPortrait() {
+        const container = document.getElementById('heroPortrait');
+        container.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/YuanEmperorAlbumGenghisPortrait.jpg/500px-YuanEmperorAlbumGenghisPortrait.jpg" alt="Genghis Khan" style="width: 100%; height: 100%; object-fit: cover;">`;
+    }
+
+
+    // ===== FACT CARD IMAGES (SVG) =====
+    function createFactImage(icon, color1, color2) {
+        return `
+                <svg width="100%" height="100%" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="grad${icon}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="600" height="400" fill="url(#grad${icon})"/>
+                    <text x="300" y="220" font-size="120" text-anchor="middle" fill="rgba(255,255,255,0.2)">${icon}</text>
+                    <circle cx="100" cy="100" r="40" fill="rgba(212,175,55,0.1)"/>
+                    <circle cx="500" cy="300" r="60" fill="rgba(212,175,55,0.08)"/>
+                    <circle cx="450" cy="80" r="30" fill="rgba(255,255,255,0.05)"/>
+                </svg>
+            `;
+    }
+
+    // ===== TACTIC CARD IMAGES (SVG) =====
+    function createTacticImage(icon, pattern) {
+        const patterns = {
+            arrows: `<path d="M50,50 L550,350 M100,50 L550,300 M150,50 L550,250" stroke="rgba(212,175,55,0.2)" stroke-width="3" fill="none"/>`,
+            lightning: `<path d="M300,50 L250,200 L350,200 L300,350" stroke="rgba(212,175,55,0.3)" stroke-width="4" fill="none"/>`,
+            circles: `<circle cx="150" cy="150" r="80" stroke="rgba(212,175,55,0.2)" stroke-width="3" fill="none"/>
+                         <circle cx="450" cy="250" r="60" stroke="rgba(212,175,55,0.15)" stroke-width="3" fill="none"/>`,
+            grid: `<path d="M100,100 L500,100 M100,200 L500,200 M100,300 L500,300 M200,50 L200,350 M350,50 L350,350" stroke="rgba(212,175,55,0.15)" stroke-width="2"/>`,
+            waves: `<path d="M0,200 Q150,150 300,200 T600,200" stroke="rgba(212,175,55,0.2)" stroke-width="3" fill="none"/>
+                       <path d="M0,250 Q150,200 300,250 T600,250" stroke="rgba(212,175,55,0.15)" stroke-width="3" fill="none"/>`,
+            network: `<circle cx="150" cy="150" r="5" fill="rgba(212,175,55,0.3)"/>
+                         <circle cx="450" cy="150" r="5" fill="rgba(212,175,55,0.3)"/>
+                         <circle cx="300" cy="300" r="5" fill="rgba(212,175,55,0.3)"/>
+                         <line x1="150" y1="150" x2="450" y2="150" stroke="rgba(212,175,55,0.2)" stroke-width="2"/>
+                         <line x1="150" y1="150" x2="300" y2="300" stroke="rgba(212,175,55,0.2)" stroke-width="2"/>
+                         <line x1="450" y1="150" x2="300" y2="300" stroke="rgba(212,175,55,0.2)" stroke-width="2"/>`
+        };
+
+        return `
+                <svg width="100%" height="100%" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="tacticGrad${icon}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="600" height="400" fill="url(#tacticGrad${icon})"/>
+                    ${patterns[pattern]}
+                    <text x="300" y="220" font-size="100" text-anchor="middle" fill="rgba(212,175,55,0.15)">${icon}</text>
+                </svg>
+            `;
+    }
+
+    // ===== FACTS =====
+    function initFacts() {
+        const grid = document.getElementById('factsGrid');
+        const colors = [
+            ['#3a2a1a', '#2a1a0a'],
+            ['#2a3a2a', '#1a2a1a'],
+            ['#3a2a3a', '#2a1a2a'],
+            ['#2a2a3a', '#1a1a2a'],
+            ['#3a3a2a', '#2a2a1a'],
+            ['#2a3a3a', '#1a2a2a']
+        ];
+
+        factsData.forEach((fact, idx) => {
+            const card = document.createElement('div');
+            card.className = 'fact-card';
+            card.innerHTML = `
+                    <div class="fact-image" style="background-image: url('${fact.image || ''}'); background-size: cover; background-position: center;">
+       ${!fact.image ? createFactImage(fact.icon, colors[idx][0], colors[idx][1]) : ''}
+                    </div>
+                    <div class="fact-content">
+                        <span class="fact-icon">${fact.icon}</span>
+                        <h3 class="fact-title">${fact.title}</h3>
+                        <p class="fact-text">${fact.text}</p>
+                    </div>
+                `;
+            card.onclick = () => openModal(fact);
+            grid.appendChild(card);
+        });
+    }
+
+    // ===== EMPIRE MAP (Canvas) =====
+    function initMap() {
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('mapTooltip');
+        let currentYear = 1206;
+        let animationProgress = 0;
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawMap();
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function drawMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const scale = canvas.width / 1200;
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(212, 175, 55, 0.1)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 100 * scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 100 * scale) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+
+            // Draw landmass outline
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(50 * scale, 300 * scale);
+            ctx.quadraticCurveTo(150 * scale, 200 * scale, 400 * scale, 250 * scale);
+            ctx.quadraticCurveTo(700 * scale, 280 * scale, 1000 * scale, 260 * scale);
+            ctx.lineTo(1100 * scale, 280 * scale);
+            ctx.stroke();
+
+            // Draw territories
+            const territories = mapData.territories.find(t => t.year === currentYear);
+            if (territories) {
+                territories.regions.forEach((region, idx) => {
+                    const progress = Math.min(animationProgress / 100, 1);
+                    const currentRadius = region.r * scale * progress;
+
+                    const gradient = ctx.createRadialGradient(
+                        region.x * scale, region.y * scale, 0,
+                        region.x * scale, region.y * scale, currentRadius
+                    );
+                    gradient.addColorStop(0, 'rgba(212, 175, 55, 0.6)');
+                    gradient.addColorStop(0.7, 'rgba(212, 175, 55, 0.3)');
+                    gradient.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(region.x * scale, region.y * scale, currentRadius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Border
+                    ctx.strokeStyle = 'rgba(244, 208, 63, 0.8)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Label
+                    if (progress > 0.5) {
+                        ctx.fillStyle = 'rgba(212, 175, 55, 0.8)';
+                        ctx.font = `bold ${14 * scale}px Inter`;
+                        ctx.textAlign = 'center';
+                        ctx.fillText(region.name, region.x * scale, region.y * scale);
+                    }
+                });
+            }
+
+            // Draw conquest routes
+            ctx.strokeStyle = 'rgba(212, 175, 55, 0.5)';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 5]);
+            if (currentYear >= 1215) {
+                ctx.beginPath();
+                ctx.moveTo(700 * scale, 250 * scale);
+                ctx.lineTo(800 * scale, 280 * scale);
+                ctx.stroke();
+            }
+            if (currentYear >= 1220) {
+                ctx.beginPath();
+                ctx.moveTo(700 * scale, 250 * scale);
+                ctx.quadraticCurveTo(600 * scale, 240 * scale, 500 * scale, 270 * scale);
+                ctx.stroke();
+            }
+            if (currentYear >= 1227) {
+                ctx.beginPath();
+                ctx.moveTo(500 * scale, 270 * scale);
+                ctx.quadraticCurveTo(440 * scale, 280 * scale, 380 * scale, 310 * scale);
+                ctx.stroke();
+            }
+            if (currentYear >= 1279) {
+                ctx.beginPath();
+                ctx.moveTo(380 * scale, 310 * scale);
+                ctx.quadraticCurveTo(300 * scale, 270 * scale, 240 * scale, 240 * scale);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // Draw cities
+            mapData.cities.forEach(city => {
+                if (city.year <= currentYear) {
+                    ctx.fillStyle = '#f4d03f';
+                    ctx.strokeStyle = '#1a1a1a';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(city.x * scale, city.y * scale, 8 * scale, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // City name
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = `${12 * scale}px Inter`;
+                    ctx.textAlign = 'center';
+                    ctx.fillText(city.name, city.x * scale, (city.y - 15) * scale);
+                }
+            });
+
+            // Draw battles
+            mapData.battles.forEach(battle => {
+                if (battle.year <= currentYear) {
+                    ctx.fillStyle = '#8b0000';
+                    ctx.strokeStyle = '#ff0000';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(battle.x * scale, (battle.y - 10) * scale);
+                    ctx.lineTo((battle.x - 8) * scale, (battle.y + 8) * scale);
+                    ctx.lineTo((battle.x + 8) * scale, (battle.y + 8) * scale);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Pulsing effect
+                    const pulseSize = 5 + Math.sin(Date.now() / 300) * 3;
+                    ctx.fillStyle = 'rgba(139, 0, 0, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(battle.x * scale, battle.y * scale, pulseSize * scale, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Animate
+            if (animationProgress < 100) {
+                animationProgress += 2;
+                requestAnimationFrame(drawMap);
+            }
+        }
+
+        // Tooltip on hover
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / (canvas.width / 1200);
+            const y = (e.clientY - rect.top) / (canvas.height / 700);
+
+            let found = false;
+
+            // Check cities
+            mapData.cities.forEach(city => {
+                const dx = x - city.x;
+                const dy = y - city.y;
+                if (Math.sqrt(dx * dx + dy * dy) < 15 && city.year <= currentYear) {
+                    tooltip.querySelector('#tooltipTitle').textContent = city.name;
+                    tooltip.querySelector('#tooltipText').textContent = city.info;
+                    tooltip.style.left = e.clientX + 10 + 'px';
+                    tooltip.style.top = e.clientY + 10 + 'px';
+                    tooltip.classList.add('visible');
+                    found = true;
+                }
+            });
+
+            // Check battles
+            mapData.battles.forEach(battle => {
+                const dx = x - battle.x;
+                const dy = y - battle.y;
+                if (Math.sqrt(dx * dx + dy * dy) < 15 && battle.year <= currentYear) {
+                    tooltip.querySelector('#tooltipTitle').textContent = battle.name;
+                    tooltip.querySelector('#tooltipText').textContent = battle.info;
+                    tooltip.style.left = e.clientX + 10 + 'px';
+                    tooltip.style.top = e.clientY + 10 + 'px';
+                    tooltip.classList.add('visible');
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                tooltip.classList.remove('visible');
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+
+        // Year buttons
+        document.querySelectorAll('.year-button').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.year-button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentYear = parseInt(btn.getAttribute('data-year'));
+                animationProgress = 0;
+
+                // Update info
+                const info = mapInfo[currentYear];
+                document.getElementById('mapInfo').innerHTML = `
+                        <h3>${info.title}</h3>
+                        <p>${info.desc}</p>
+                    `;
+
+                drawMap();
+            };
+        });
+
+        drawMap();
+    }
+
+    // ===== TIMELINE =====
+    function initTimeline() {
+        const container = document.getElementById('timelineContainer');
+        timelineData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'timeline-item';
+            div.innerHTML = `
+                    <div class="timeline-content">
+                        <div class="timeline-icon">${item.icon}</div>
+                        <div class="timeline-year">${item.year}</div>
+                        <h3 class="timeline-title">${item.title}</h3>
+                        <p class="timeline-desc">${item.desc}</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                `;
+            container.appendChild(div);
+        });
+    }
+
+    // ===== BATTLE SIMULATOR =====
+    function initBattleGame() {
+        const mongol = { name: "Mongol Horde", power: 85, speed: 95, tactics: 90 };
+        let selectedOpponent = 'jin';
+
+        document.getElementById('startBattle').onclick = () => {
+            const opponent = opponentData[selectedOpponent];
+            const resultDiv = document.getElementById('battleResult');
+
+            document.getElementById('startBattle').disabled = true;
+            document.getElementById('startBattle').textContent = '⚔️ BATTLE IN PROGRESS... ⚔️';
+
+            setTimeout(() => {
+                const mongolScore = mongol.power + mongol.speed + mongol.tactics;
+                const opponentScore = opponent.power + opponent.speed + opponent.tactics;
+
+                const winner = mongolScore > opponentScore ? "MONGOL VICTORY!" : "OPPONENT WINS!";
+                document.getElementById('battleWinner').textContent = winner;
+                document.getElementById('battleDescription').textContent = opponent.description;
+                resultDiv.classList.add('visible');
+
+                document.getElementById('startBattle').disabled = false;
+                document.getElementById('startBattle').textContent = '⚔️ START BATTLE ⚔️';
+            }, 2000);
+        };
+
+        document.getElementById('opponentSelect').onchange = (e) => {
+            selectedOpponent = e.target.value;
+            document.getElementById('battleResult').classList.remove('visible');
+        };
+    }
+
+    // ===== TACTICS =====
+    function initTactics() {
+        const grid = document.getElementById('tacticsGrid');
+        const patterns = ['arrows', 'lightning', 'circles', 'grid', 'waves', 'network'];
+
+        tacticsData.forEach((tactic, idx) => {
+            const card = document.createElement('div');
+            card.className = 'tactic-card';
+            card.innerHTML = `
+                    <div class="tactic-image" style="background-image: url('${tactic.image || ''}'); background-size: cover; background-position: center;">
+                    ${!tactic.image ? createTacticImage(tactic.icon, patterns[idx]) : ''}
+                    </div>
+                    <div class="tactic-content">
+                        <span class="tactic-icon">${tactic.icon}</span>
+                        <h3 class="tactic-title">${tactic.title}</h3>
+                        <p class="tactic-desc">${tactic.desc}</p>
+                    </div>
+                `;
+            card.onclick = () => openModal(tactic);
+            grid.appendChild(card);
+        });
+    }
+
+    // ===== LEGACY =====
+    function initLegacy() {
+        const grid = document.getElementById('legacyGrid');
+        legacyData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'legacy-card';
+            card.innerHTML = `
+                    ${item.image ? `<div style="background-image: url('${item.image}'); background-size: cover; background-position: center; height: 200px; border-radius: 12px 12px 0 0; margin: -1.5rem -1.5rem 1.5rem -1.5rem;"></div>` : ''}
+                    <span class="legacy-emoji">${item.emoji}</span>
+                    <h3 class="legacy-title">${item.title}</h3>
+                    <p class="legacy-text">${item.text}</p>
+                `;
+            card.onclick = () => openModal(item);
+            grid.appendChild(card);
+        });
+    }
+
+    // ===== MODAL =====
+    function openModal(data) {
+        document.getElementById('modalIcon').textContent = data.icon || data.emoji;
+        document.getElementById('modalTitle').textContent = data.title;
+        document.getElementById('modalText').textContent = data.text;
+
+        const detailsContainer = document.getElementById('modalDetails');
+        if (data.details && data.details.length > 0) {
+            detailsContainer.innerHTML = data.details.map(detail =>
+                `<div class="modal-detail-item">${detail}</div>`
+            ).join('');
+            detailsContainer.style.display = 'block';
+        } else {
+            detailsContainer.style.display = 'none';
+        }
+
+        document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+    }
+
+    document.getElementById('modalClose').onclick = closeModal;
+    document.getElementById('modal').onclick = (e) => {
+        if (e.target.id === 'modal') closeModal();
+    };
+
+    // ===== QUIZ =====
+    let quizIndex = 0, quizScore = 0;
+
+    function initQuiz() {
+        document.getElementById('totalQ').textContent = quizData.length;
+        loadQuizQuestion();
+        document.getElementById('restartBtn').onclick = () => {
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('scoreDisplay').textContent = '0';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+            loadQuizQuestion();
+        };
+    }
+
+    function loadQuizQuestion() {
+        if (quizIndex >= quizData.length) {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'block';
+            document.getElementById('finalScore').textContent = `${quizScore}/${quizData.length}`;
+            const msg = quizScore === 7 ? "Perfect! You're a true Mongol historian! 🏹👑" :
+                quizScore >= 5 ? "Excellent! The Khan would be proud! ⚔️" :
+                    quizScore >= 3 ? "Good effort! Keep learning about the empire! 📚" :
+                        "Time to study more about the Great Khan! 🐎";
+            document.getElementById('quizMessage').textContent = msg;
+            return;
+        }
+
+        const q = quizData[quizIndex];
+        document.getElementById('quizQuestion').textContent = q.q;
+        document.getElementById('currentQ').textContent = quizIndex + 1;
+
+        const optionsContainer = document.getElementById('quizOptions');
+        optionsContainer.innerHTML = '';
+        q.options.forEach((opt, i) => {
+            const div = document.createElement('div');
+            div.className = 'quiz-option';
+            div.textContent = opt;
+            div.onclick = () => selectAnswer(i);
+            optionsContainer.appendChild(div);
+        });
+    }
+
+    function selectAnswer(selected) {
+        const q = quizData[quizIndex];
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.onclick = null);
+
+        options[q.correct].classList.add('correct');
+        if (selected === q.correct) {
+            quizScore++;
+            document.getElementById('scoreDisplay').textContent = quizScore;
+        } else {
+            options[selected].classList.add('wrong');
+        }
+
+        setTimeout(() => {
+            quizIndex++;
+            loadQuizQuestion();
+        }, 1800);
+    }
+
+    // ===== UTILITIES =====
+    function animateCounter(el, target, duration = 2000) {
+        let current = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+            } else {
+                el.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    function updateScrollProgress() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    }
+
+    window.addEventListener('scroll', updateScrollProgress);
+
+    // ===== GSAP ANIMATIONS =====
+    function initGSAP() {
+        if (!window.gsap || !window.ScrollTrigger) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.fact-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%'
+                },
+                x: index % 2 === 0 ? -100 : 100,
+                opacity: 0,
+                duration: 0.9,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.tactic-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.legacy-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'back.out(1.7)'
+            });
+        });
+
+        gsap.from('.battle-simulator', {
+            scrollTrigger: {
+                trigger: '.battle-simulator',
+                start: 'top 80%'
+            },
+            y: 80,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+    }
+
+    // ===== ARCHERY GAME =====
+    function initArcheryGame() {
+        const canvas = document.getElementById('archeryCanvas');
+        const ctx = canvas.getContext('2d');
+        const startBtn = document.getElementById('startArchery');
+        const restartBtn = document.getElementById('restartArchery');
+
+        let gameActive = false;
+        let score = 0;
+        let arrowsLeft = 10;
+        let timeLeft = 60;
+        let mouseX = 0;
+        let mouseY = 0;
+        let arrows = [];
+        let targets = [];
+        let particles = [];
+        let timer = null;
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Target class
+        class Target {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = canvas.width * 0.7 + Math.random() * (canvas.width * 0.25);
+                this.y = 100 + Math.random() * (canvas.height - 200);
+                this.radius = 40 + Math.random() * 30;
+                this.hit = false;
+                this.wobble = Math.random() * Math.PI * 2;
+                this.wobbleSpeed = 0.02 + Math.random() * 0.03;
+            }
+
+            update() {
+                this.wobble += this.wobbleSpeed;
+                this.y += Math.sin(this.wobble) * 0.5;
+            }
+
+            draw() {
+                if (this.hit) return;
+
+                // Target rings
+                ctx.fillStyle = '#ff0000';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.66, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#0000ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.33, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffff00';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.15, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Arrow class
+        class Arrow {
+            constructor(startX, startY, targetX, targetY) {
+                this.x = startX;
+                this.y = startY;
+                const angle = Math.atan2(targetY - startY, targetX - startX);
+                this.vx = Math.cos(angle) * 15;
+                this.vy = Math.sin(angle) * 15;
+                this.angle = angle;
+                this.active = true;
+                this.trail = [];
+            }
+
+            update() {
+                this.trail.push({ x: this.x, y: this.y });
+                if (this.trail.length > 10) this.trail.shift();
+
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.2; // Gravity
+                this.angle = Math.atan2(this.vy, this.vx);
+
+                if (this.x < 0 || this.x > canvas.width || this.y > canvas.height) {
+                    this.active = false;
+                }
+
+                // Check collision with targets
+                targets.forEach(target => {
+                    if (target.hit) return;
+                    const dx = this.x - target.x;
+                    const dy = this.y - target.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < target.radius) {
+                        target.hit = true;
+                        this.active = false;
+
+                        // Calculate score based on distance from center
+                        let points = 10;
+                        if (dist < target.radius * 0.15) points = 50; // Bullseye
+                        else if (dist < target.radius * 0.33) points = 40;
+                        else if (dist < target.radius * 0.66) points = 30;
+                        else points = 10;
+
+                        score += points;
+                        document.getElementById('archeryScore').textContent = score;
+
+                        // Create particles
+                        createParticles(this.x, this.y, points);
+
+                        // Respawn target after delay
+                        setTimeout(() => target.reset(), 1000);
+                    }
+                });
+            }
+
+            draw() {
+                // Trail
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.5)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                this.trail.forEach((point, i) => {
+                    if (i === 0) ctx.moveTo(point.x, point.y);
+                    else ctx.lineTo(point.x, point.y);
+                });
+                ctx.stroke();
+
+                // Arrow
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+
+                // Shaft
+                ctx.fillStyle = '#8B4513';
+                ctx.fillRect(-20, -2, 40, 4);
+
+                // Head
+                ctx.fillStyle = '#C0C0C0';
+                ctx.beginPath();
+                ctx.moveTo(20, 0);
+                ctx.lineTo(10, -5);
+                ctx.lineTo(10, 5);
+                ctx.closePath();
+                ctx.fill();
+
+                // Fletching
+                ctx.fillStyle = '#d4af37';
+                ctx.beginPath();
+                ctx.moveTo(-20, 0);
+                ctx.lineTo(-25, -5);
+                ctx.lineTo(-20, -2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(-20, 0);
+                ctx.lineTo(-25, 5);
+                ctx.lineTo(-20, 2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Particle class
+        class Particle {
+            constructor(x, y, points) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 8;
+                this.vy = (Math.random() - 0.5) * 8 - 5;
+                this.life = 60;
+                this.maxLife = 60;
+                this.points = points;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.3;
+                this.life--;
+            }
+
+            draw() {
+                const alpha = this.life / this.maxLife;
+
+                // Point text
+                if (this.life > 40) {
+                    ctx.fillStyle = `rgba(212, 175, 55, ${alpha})`;
+                    ctx.font = 'bold 24px Cinzel';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`+${this.points}`, this.x, this.y);
+                }
+
+                // Particle
+                ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles(x, y, points) {
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle(x, y, points));
+            }
+        }
+
+        function drawBow() {
+            if (!gameActive) return;
+
+            const bowX = canvas.width * 0.15;
+            const bowY = canvas.height / 2;
+
+            // Calculate angle to mouse
+            const dx = mouseX - bowX;
+            const dy = mouseY - bowY;
+            const angle = Math.atan2(dy, dx);
+
+            ctx.save();
+            ctx.translate(bowX, bowY);
+            ctx.rotate(angle);
+
+            // Bow
+            ctx.strokeStyle = '#8B4513';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.arc(0, 0, 40, -Math.PI / 2, Math.PI / 2);
+            ctx.stroke();
+
+            // String
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, -40);
+            ctx.lineTo(0, 40);
+            ctx.stroke();
+
+            // Grip
+            ctx.fillStyle = '#654321';
+            ctx.fillRect(-5, -10, 10, 20);
+
+            ctx.restore();
+
+            // Crosshair at mouse
+            ctx.strokeStyle = 'rgba(212, 175, 55, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(mouseX, mouseY, 20, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(mouseX - 25, mouseY);
+            ctx.lineTo(mouseX - 10, mouseY);
+            ctx.moveTo(mouseX + 10, mouseY);
+            ctx.lineTo(mouseX + 25, mouseY);
+            ctx.moveTo(mouseX, mouseY - 25);
+            ctx.lineTo(mouseX, mouseY - 10);
+            ctx.moveTo(mouseX, mouseY + 10);
+            ctx.lineTo(mouseX, mouseY + 25);
+            ctx.stroke();
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Sky gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#1a3a5a');
+            gradient.addColorStop(1, '#0a1a2a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Ground
+            ctx.fillStyle = '#2a4a2a';
+            ctx.fillRect(0, canvas.height * 0.8, canvas.width, canvas.height * 0.2);
+
+            // Update and draw targets
+            targets.forEach(target => {
+                target.update();
+                target.draw();
+            });
+
+            // Update and draw arrows
+            arrows = arrows.filter(arrow => arrow.active);
+            arrows.forEach(arrow => {
+                arrow.update();
+                arrow.draw();
+            });
+
+            // Update and draw particles
+            particles = particles.filter(p => p.life > 0);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw bow and crosshair
+            drawBow();
+
+            if (gameActive) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function startGame() {
+            gameActive = true;
+            score = 0;
+            arrowsLeft = 10;
+            timeLeft = 60;
+            arrows = [];
+            particles = [];
+            targets = [];
+
+            document.getElementById('archeryScore').textContent = '0';
+            document.getElementById('arrowsLeft').textContent = '10';
+            document.getElementById('timeLeft').textContent = '60';
+            document.getElementById('archeryResult').style.display = 'none';
+            startBtn.style.display = 'none';
+            restartBtn.style.display = 'none';
+
+            // Create targets
+            for (let i = 0; i < 3; i++) {
+                targets.push(new Target());
+            }
+
+            // Timer
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timeLeft').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+
+            gameLoop();
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(timer);
+
+            const resultDiv = document.getElementById('archeryResult');
+            document.getElementById('resultScore').textContent = score;
+
+            let message = '';
+            let title = '';
+            if (score >= 400) {
+                title = '🏆 LEGENDARY ARCHER! 🏆';
+                message = 'Genghis Khan himself would be impressed! You are a master of the Mongol bow!';
+            } else if (score >= 300) {
+                title = '⭐ EXPERT ARCHER! ⭐';
+                message = 'Excellent shooting! You would ride with the elite cavalry!';
+            } else if (score >= 200) {
+                title = '🎯 SKILLED WARRIOR! 🎯';
+                message = 'Good marksmanship! You could join the Mongol army!';
+            } else if (score >= 100) {
+                title = '🏹 BEGINNER ARCHER 🏹';
+                message = 'Not bad for a beginner. Keep practicing your aim!';
+            } else {
+                title = '🎪 PRACTICE MORE! 🎪';
+                message = 'Even Mongol children shoot better! Time to train harder!';
+            }
+
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultMessage').textContent = message;
+            resultDiv.style.display = 'block';
+            restartBtn.style.display = 'inline-block';
+        }
+
+        function shoot() {
+            if (!gameActive || arrowsLeft <= 0) return;
+
+            const bowX = canvas.width * 0.15;
+            const bowY = canvas.height / 2;
+
+            arrows.push(new Arrow(bowX, bowY, mouseX, mouseY));
+            arrowsLeft--;
+            document.getElementById('arrowsLeft').textContent = arrowsLeft;
+
+            if (arrowsLeft === 0) {
+                setTimeout(endGame, 2000);
+            }
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('click', shoot);
+
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+    }
+
+    // ===== INITIALIZE =====
+    window.addEventListener('load', () => {
+        initBackground();
+        createPortrait();
+
+        document.querySelectorAll('.stat-number').forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            animateCounter(el, target, 2000);
+        });
+
+        initFacts();
+        initMap();
+        initTimeline();
+        initBattleGame();
+        initArcheryGame();
+        initTactics();
+        initLegacy();
+        initQuiz();
+        initGSAP();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+

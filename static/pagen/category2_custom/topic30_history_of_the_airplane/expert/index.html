@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of Airplanes - Interactive Journey</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-plane"></i>
+                <span>Airplane History</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#timeline" class="nav-link">Timeline</a></li>
+                <li><a href="#gallery" class="nav-link">Airplanes</a></li>
+                <li><a href="#facts" class="nav-link">Facts</a></li>
+                <li><a href="#quiz" class="nav-link">Quiz</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-background">
+            <div class="clouds"></div>
+            <div class="airplane-hero"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">The History of</span>
+                <span class="title-line highlight">Airplanes</span>
+            </h1>
+            <p class="hero-subtitle">Journey through the evolution of airplanes from the Wright Brothers' 12-second flight to modern passenger jets carrying 800+ people</p>
+            
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="122">0</div>
+                    <div class="stat-label">Years of Flight</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="35300000">0</div>
+                    <div class="stat-label">Annual Flights</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="5" data-suffix="B">0</div>
+                    <div class="stat-label">Annual Passengers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="29039">0</div>
+                    <div class="stat-label">Commercial Aircraft</div>
+                </div>
+            </div>
+            
+            <div class="hero-actions">
+                <button class="cta-button primary" onclick="scrollToSection('timeline')">
+                    <span>Explore Timeline</span>
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+                <button class="cta-button secondary" onclick="scrollToSection('quiz')">
+                    <span>Take Quiz</span>
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Airplanes Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-header">
+                <h2 class="section-title">The Marvel of Human Flight</h2>
+                <p class="section-subtitle">From 12 seconds to global connectivity</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="content-text">
+                    <p>The story of aviation is one of humanity’s most remarkable achievements. In 1903, the Wright Brothers’ fragile biplane lifted off the ground for just 12 seconds, covering 120 feet. That brief moment at Kitty Hawk proved that powered, controlled flight was possible, forever changing the course of human history.</p>
+                    
+                    <p>Over the following decades, aviation advanced rapidly. The 1920s and 1930s saw the rise of commercial airlines, and iconic aircraft like the Douglas DC-3 made passenger air travel practical and reliable. During World War II, innovations in engines, aerodynamics, and long-range flying accelerated development, laying the groundwork for modern civil aviation. By 1952, the jet age had arrived with the de Havilland Comet, and in 1970 the Boeing 747 ushered in the era of the jumbo jet, opening the skies to millions of travelers.</p>
+                    
+                    <p>Modern airplanes are marvels of science and engineering. Built with lightweight composites and powered by highly efficient engines, today’s aircraft are guided by advanced avionics and safety systems. They operate on the timeless principles of lift, thrust, drag, and weight, but with technology that maximizes performance and minimizes risk.</p>
+                    
+                    <p>Today, aviation has grown into a global network that connects people, cultures, and economies. With more than 35 million flights annually across 67,300 routes, airplanes link over 4,000 airports worldwide and support a $1.1 trillion global economy. From a 12-second flight on the sands of Kitty Hawk to billions of passengers traveling across continents each year, the airplane has transformed not just how we move, but how we connect as a global community.</p>
+                </div>
+                
+                <div class="about-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Engineering Excellence</h3>
+                        <p>Precision components working in perfect harmony</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Safety First</h3>
+                        <p>The safest mode of transportation worldwide</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Economic Powerhouse</h3>
+                        <p>$1.1 trillion industry supporting 725 airlines across 4,072 airports</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Timeline Section -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">Airplane Timeline</h2>
+            <p class="section-subtitle">Interactive journey through key milestones in airplane development</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-grid">
+                    <div class="timeline-card" data-year="1903">
+                        <div class="card-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="card-year">1903</div>
+                        <div class="card-header">
+                            <h3>First Powered Flight</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>The Wright Brothers achieve the first sustained, controlled flight - just 12 seconds that changed the world forever!</p>
+                            <div class="card-image">
+                                <img src="./assets/images/first-powered-flight.jpg" alt="Wright Flyer">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-clock"></i> 12 seconds</span>
+                                <span><i class="fas fa-ruler"></i> 120 ft</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="1914">
+                        <div class="card-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="card-year">1914</div>
+                        <div class="card-header">
+                            <h3>First Commercial Flight</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>St. Petersburg-Tampa Airboat Line begins the world's first scheduled commercial airline service.</p>
+                            <div class="card-image">
+                                <img src="./assets/images/first-commercial-flight.webp" alt="First Commercial Flight">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-users"></i> 1 passenger</span>
+                                <span><i class="fas fa-ruler"></i> 23 miles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="1927">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="card-year">1927</div>
+                        <div class="card-header">
+                            <h3>Transatlantic Flight</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Charles Lindbergh's solo flight across the Atlantic in 33.5 hours - a feat that seemed impossible!</p>
+                            <div class="card-image">
+                                <img src="./assets/images/transatlantic-flight.jpg" alt="Spirit of St. Louis">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-clock"></i> 33.5 hours</span>
+                                <span><i class="fas fa-ruler"></i> 3,600 miles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="1939">
+                        <div class="card-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="card-year">1939</div>
+                        <div class="card-header">
+                            <h3>Jet Engine Invention</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>Hans von Ohain and Frank Whittle independently develop the first practical jet engines, revolutionizing aviation.</p>
+                            <div class="card-image">
+                                <img src="./assets/images/jet-engine.jpg" alt="Jet Engine">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-bolt"></i> 1,000+ hp</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 500+ mph</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="1969">
+                        <div class="card-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="card-year">1969</div>
+                        <div class="card-header">
+                            <h3>Supersonic Era</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>The Concorde breaks the sound barrier in commercial flight - crossing the Atlantic in just 3.5 hours!</p>
+                            <div class="card-image">
+                                <img src="./assets/images/supersonic-era.webp" alt="Concorde">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-tachometer-alt"></i> Mach 2.02</span>
+                                <span><i class="fas fa-clock"></i> 3.5 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="1970">
+                        <div class="card-icon">
+                            <i class="fas fa-plane-departure"></i>
+                        </div>
+                        <div class="card-year">1970</div>
+                        <div class="card-header">
+                            <h3>Boeing 747 Jumbo Jet</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>The Boeing 747 "Jumbo Jet" revolutionizes air travel with its massive size and capacity, becoming the "Queen of the Skies".</p>
+                            <div class="card-image">
+                                <img src="./assets/images/boeing-747.jpeg" alt="Boeing 747">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-users"></i> 335 passengers</span>
+                                <span><i class="fas fa-clock"></i> 6.5 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="2005">
+                        <div class="card-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="card-year">2005</div>
+                        <div class="card-header">
+                            <h3>Giant of the Skies</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>The Airbus A380 - the world's largest passenger aircraft carrying up to 853 people!</p>
+                            <div class="card-image">
+                                <img src="./assets/images/airbus-a380.jpg" alt="Airbus A380">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-users"></i> 853 passengers</span>
+                                <span><i class="fas fa-clock"></i> 7.5 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card" data-year="2019">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="card-year">2019</div>
+                        <div class="card-header">
+                            <h3>Electric Flight Era</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>The first commercial electric airplane flights begin, marking a new era of sustainable aviation technology.</p>
+                            <div class="card-image">
+                                <img src="./assets/images/first-electric-airplane.webp" alt="Electric Airplane">
+                            </div>
+                            <div class="card-stats">
+                                <span><i class="fas fa-battery-full"></i> Electric</span>
+                                <span><i class="fas fa-leaf"></i> Zero emissions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aircraft Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Iconic Airplanes</h2>
+            <p class="section-subtitle">Explore legendary airplanes that shaped the history of flight</p>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="early">Early Era</button>
+                <button class="filter-btn" data-filter="ww2">World War II</button>
+                <button class="filter-btn" data-filter="jet">Jet Age</button>
+                <button class="filter-btn" data-filter="modern">Modern</button>
+            </div>
+
+            <div class="aircraft-grid">
+                <div class="aircraft-card" data-category="early">
+                    <div class="card-image">
+                        <img src="./assets/images/first-powered-flight.jpg" alt="Wright Flyer">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="wright-flyer">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Wright Flyer <button class="mobile-info-btn" data-aircraft="wright-flyer"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>1903 - First powered aircraft</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-clock"></i> 12 seconds</span>
+                            <span><i class="fas fa-ruler"></i> 120 ft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aircraft-card" data-category="early">
+                    <div class="card-image">
+                        <img src="./assets/images/transatlantic-flight.jpg" alt="Spirit of St. Louis">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="spirit-st-louis">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Spirit of St. Louis <button class="mobile-info-btn" data-aircraft="spirit-st-louis"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>1927 - Transatlantic pioneer</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-clock"></i> 33.5 hours</span>
+                            <span><i class="fas fa-ruler"></i> 3,600 miles</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aircraft-card" data-category="ww2">
+                    <div class="card-image">
+                        <img src="./assets/images/spitfire.webp" alt="Supermarine Spitfire">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="spitfire">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Supermarine Spitfire <button class="mobile-info-btn" data-aircraft="spitfire"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>1936 - Battle of Britain hero</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-tachometer-alt"></i> 370 mph</span>
+                            <span><i class="fas fa-ruler"></i> 36 ft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aircraft-card" data-category="jet">
+                    <div class="card-image">
+                        <img src="./assets/images/supersonic-era.webp" alt="Concorde">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="concorde">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Concorde <button class="mobile-info-btn" data-aircraft="concorde"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>1969 - Supersonic passenger jet</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-tachometer-alt"></i> Mach 2.04</span>
+                            <span><i class="fas fa-users"></i> 100 passengers</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aircraft-card" data-category="modern">
+                    <div class="card-image">
+                        <img src="./assets/images/boeing-747.jpeg" alt="Boeing 747">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="boeing-747">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Boeing 747 <button class="mobile-info-btn" data-aircraft="boeing-747"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>1969 - Queen of the Skies</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-users"></i> 416 passengers</span>
+                            <span><i class="fas fa-ruler"></i> 231 ft</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aircraft-card" data-category="modern">
+                    <div class="card-image">
+                        <img src="./assets/images/airbus-a380.jpg" alt="Airbus A380">
+                        <div class="card-overlay">
+                            <button class="view-details" data-aircraft="airbus-a380">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Airbus A380 <button class="mobile-info-btn" data-aircraft="airbus-a380"><i class="fas fa-info-circle"></i></button></h3>
+                        <p>2005 - World's largest passenger jet</p>
+                        <div class="card-stats">
+                            <span><i class="fas fa-users"></i> 853 passengers</span>
+                            <span><i class="fas fa-ruler"></i> 239 ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Fun Facts Section -->
+    <section id="facts" class="facts-section">
+        <div class="container">
+            <h2 class="section-title">Amazing Airplane Facts</h2>
+            <p class="section-subtitle">Discover incredible facts about airplane history</p>
+            
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>12 Seconds</h3>
+                    <p>The Wright Brothers' first flight lasted only 12 seconds and covered 120 feet - shorter than the wingspan of a Boeing 747!</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Mach 2.04</h3>
+                    <p>The Concorde could fly at twice the speed of sound, crossing the Atlantic in just 3.5 hours instead of 8 hours.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>853 Passengers</h3>
+                    <p>The Airbus A380 can carry up to 853 passengers, making it the world's largest passenger aircraft.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>100,000 Flights</h3>
+                    <p>Every day, there are over 100,000 commercial flights worldwide, carrying millions of passengers.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-ruler"></i>
+                    </div>
+                    <h3>239 Feet</h3>
+                    <p>The Airbus A380 is 239 feet long - longer than a football field and as tall as a 7-story building.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Jet Engine Power</h3>
+                    <p>A single jet engine on a Boeing 777 airplane produces more than 100,000 horsepower - equivalent to 1,000 cars!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <h2 class="section-title">Airplane Knowledge Quiz</h2>
+            <p class="section-subtitle">Test your airplane knowledge and see how much you've learned!</p>
+            
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-progress">
+                        <div class="progress-bar-quiz">
+                            <div class="progress-fill-quiz"></div>
+                        </div>
+                        <span class="progress-text">Question <span id="current-question">1</span> of <span id="total-questions">5</span></span>
+                    </div>
+                    <div class="quiz-score">
+                        <div class="score-display">
+                            <i class="fas fa-trophy"></i>
+                            <span id="current-score">0</span>
+                        </div>
+                        <span class="score-label">Score</span>
+                    </div>
+                </div>
+
+                <div class="quiz-content">
+                    <div class="question-container">
+                        <h3 id="question-text">Loading question...</h3>
+                        <div class="question-image" id="question-image">
+                            <img src="" alt="" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div class="answers-container" id="answers-container">
+                        <!-- Answers will be populated by JavaScript -->
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button id="next-question" class="quiz-btn next-btn" disabled>
+                            <span>Next Question</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button id="restart-quiz" class="quiz-btn restart-btn" style="display: none;">
+                            <i class="fas fa-redo"></i>
+                            <span>Take Quiz Again</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quiz-results" id="quiz-results" style="display: none;">
+                    <div class="results-content">
+                        <div class="results-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3 id="results-title">Congratulations!</h3>
+                        <div class="final-score">
+                            <span id="final-score">0</span>
+                            <span class="score-out-of">/ 5</span>
+                        </div>
+                        <p id="results-message">You're an aviation expert!</p>
+                        <div class="results-actions">
+                            <button id="retake-quiz" class="quiz-btn retake-btn">
+                                <i class="fas fa-redo"></i>
+                                <span>Retake Quiz</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Airplane History. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Aircraft Detail Modal -->
+    <div id="aircraft-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

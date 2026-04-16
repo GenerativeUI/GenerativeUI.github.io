@@ -1,0 +1,3898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of Tea | An Interactive Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2D5A27;
+            --primary-light: #4A7C43;
+            --primary-dark: #1A3A17;
+            --secondary: #D4A574;
+            --secondary-light: #E8C9A8;
+            --accent: #8B4513;
+            --cream: #FDF8F3;
+            --cream-dark: #F5EDE3;
+            --text-dark: #2C2C2C;
+            --text-light: #666666;
+            --white: #FFFFFF;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.75;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .script-font {
+            font-family: 'Pinyon Script', cursive;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(253, 248, 243, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            padding: 0.7rem 2rem;
+            border-bottom: 1px solid rgba(45, 90, 39, 0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .logo span {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            letter-spacing: 0.03em;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5C15 5 5 15 5 30s10 25 25 25 25-10 25-25S45 5 30 5zm0 45c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z' fill='%232D5A27' fill-opacity='1'/%3E%3C/svg%3E");
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 span {
+            color: var(--secondary);
+            font-family: 'Pinyon Script', cursive;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tea-cup-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .tea-cup {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--secondary-light), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tea-cup::before {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background: linear-gradient(145deg, #8B6914, #654B0F);
+            border-radius: 50%;
+            animation: teaSwirl 8s ease-in-out infinite;
+        }
+
+        .tea-cup i {
+            font-size: 6rem;
+            color: var(--white);
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        @keyframes teaSwirl {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .floating-leaf {
+            position: absolute;
+            font-size: 2rem;
+            color: var(--primary);
+            animation: floatLeaf 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .leaf-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .leaf-2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .leaf-3 { bottom: 20%; left: 5%; animation-delay: 2s; }
+        .leaf-4 { bottom: 10%; right: 10%; animation-delay: 3s; }
+
+        @keyframes floatLeaf {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .era-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .era-btn.active, .era-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+            transform: translateX(50px);
+        }
+
+        .timeline-item:nth-child(even).visible {
+            transform: translateX(0);
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 450px;
+            margin: 0 2rem;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* World Regions Section */
+        .regions-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a472a 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .regions-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5C15 5 5 15 5 30s10 25 25 25 25-10 25-25S45 5 30 5zm0 45c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .regions-section .section-label {
+            background: var(--secondary);
+            color: var(--primary-dark);
+        }
+
+        .regions-section .section-title {
+            color: var(--white);
+        }
+
+        .regions-section .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .regions-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .regions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 1200px) {
+            .regions-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .region-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 1.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .region-card:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .region-card.active {
+            background: rgba(212, 165, 116, 0.2);
+            border-color: var(--secondary);
+        }
+
+        .region-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .region-flag {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .region-card-title {
+            flex: 1;
+        }
+
+        .region-card-title h3 {
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 0.25rem;
+        }
+
+        .region-card-title span {
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        .region-card p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .region-card-stats {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .region-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .region-stat i {
+            color: var(--secondary);
+        }
+
+
+        /* Tea Types Section */
+        .tea-types-section {
+            background: var(--cream);
+        }
+
+        .tea-types-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tea-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--white);
+            color: var(--text-dark);
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .tea-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tea-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tea-card-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .tea-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .tea-card:hover .tea-card-image img {
+            transform: scale(1.1);
+        }
+
+        .tea-card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--white);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tea-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .tea-card-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tea-card-origin {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tea-card-content p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tea-card-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--cream-dark);
+            margin-top: auto;
+        }
+
+        .tea-stat {
+            text-align: center;
+        }
+
+        .tea-stat-value {
+            display: block;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .tea-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        /* Brewing Guide Section */
+        .brewing-section {
+            background: linear-gradient(135deg, var(--white) 0%, var(--cream-dark) 100%);
+        }
+
+        .brewing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .brewing-guide {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .brewing-guide h3 {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tea-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .tea-select-btn {
+            padding: 0.6rem 0.5rem;
+            border: 2px solid var(--cream-dark);
+            background: var(--cream);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .tea-select-btn:hover, .tea-select-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tea-select-btn i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .tea-select-btn span {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .brewing-params {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .param-box {
+            background: var(--cream);
+            border-radius: 14px;
+            padding: 1.1rem;
+            text-align: center;
+        }
+
+        .param-box i {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .param-value {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: block;
+            letter-spacing: -0.01em;
+        }
+
+        .param-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .brewing-timer {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .timer-display {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .timer-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .timer-btn.start {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .timer-btn.start:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .timer-btn.reset {
+            background: var(--cream-dark);
+            color: var(--text-dark);
+        }
+
+        .timer-btn.reset:hover {
+            background: var(--secondary-light);
+        }
+
+        .brewing-tips {
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 2.5rem;
+        }
+
+        .brewing-tips h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .tip-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .tip-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content h4 {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .tip-content p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Culture Section */
+        .culture-section {
+            background: var(--cream);
+        }
+
+        .culture-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .culture-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .culture-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border: none;
+            background: var(--white);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .culture-tab:hover, .culture-tab.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .culture-tab img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .culture-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .culture-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .culture-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .culture-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        .culture-info h3 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .culture-info > p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .ceremony-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .ceremony-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .ceremony-step:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .step-content p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+        }
+
+        .quiz-section .section-label {
+            background: var(--secondary);
+            color: var(--primary-dark);
+        }
+
+        .quiz-section .section-title {
+            color: var(--white);
+        }
+
+        .quiz-section .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            padding: 1.25rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--secondary);
+        }
+
+        .quiz-option.selected {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border-color: var(--secondary);
+        }
+
+        .quiz-option.correct {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .quiz-option.incorrect {
+            background: #f44336;
+            border-color: #f44336;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .quiz-result {
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-result.active {
+            display: block;
+        }
+
+        .result-score {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 5.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: var(--cream);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .modal-content {
+            padding: 2rem;
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .modal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-content p {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            background: var(--cream);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .detail-item strong {
+            display: block;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Region Modal (Dark Theme) */
+        .region-modal {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a472a 100%);
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .region-modal .modal-close {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .region-modal .modal-close:hover {
+            background: var(--secondary);
+            color: var(--primary-dark);
+        }
+
+        .region-modal-header {
+            padding: 2.5rem 2.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .region-modal-flag {
+            font-size: 4.5rem;
+            line-height: 1;
+        }
+
+        .region-modal-title h2 {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .region-modal-title span {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .region-modal-body {
+            padding: 2rem 2.5rem 2.5rem;
+        }
+
+        .region-modal-body > p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+        }
+
+        .region-modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .region-modal-teas {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .region-modal-teas h4 {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .region-tea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .region-tea-tag {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .region-modal-facts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .region-modal-facts .fact-item {
+            background: rgba(255,255,255,0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .region-modal-facts .fact-item i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+        }
+
+        .region-modal-facts .fact-item span {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Timeline Modal */
+        .timeline-modal {
+            max-width: 650px;
+        }
+
+        .timeline-modal-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 2.5rem;
+            position: relative;
+        }
+
+        .timeline-modal .modal-close {
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+        }
+
+        .timeline-modal .modal-close:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .timeline-modal-year {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+        }
+
+        .timeline-modal-header h2 {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-modal-header .era-badge {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-modal-body {
+            padding: 2rem 2.5rem;
+        }
+
+        .timeline-modal-body p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-modal-impact {
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .timeline-modal-impact h4 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .impact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .impact-item i {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 600px) {
+            .region-modal-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .region-modal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .timeline-modal-header,
+            .timeline-modal-body,
+            .region-modal-header,
+            .region-modal-body {
+                padding: 1rem;
+            }
+
+            .region-modal-header h2,
+            .timeline-modal-header h2 {
+                font-size: 1.35rem;
+            }
+
+            .region-modal-body p,
+            .timeline-modal-body p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 5rem 1.5rem 3.5rem;
+            }
+
+            .hero-content p {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .tea-cup-container {
+                width: 280px;
+                height: 280px;
+            }
+
+            .brewing-container {
+                grid-template-columns: 1fr;
+            }
+
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav, nav.scrolled {
+                padding: 0.6rem 1rem;
+            }
+
+            .logo i { font-size: 1.5rem; }
+            .logo span { font-size: 1.35rem; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 0.75rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a { font-size: 0.9rem; }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-container {
+                padding: 4rem 1.25rem 3rem;
+            }
+
+            .hero-content h1 { font-size: clamp(2rem, 6vw, 2.8rem); }
+            .hero-content p { font-size: 1rem; margin-bottom: 1.5rem; }
+            .hero-stats { gap: 1.25rem; margin-bottom: 1.75rem; }
+            .stat-number { font-size: 2.2rem; }
+            .stat-label { font-size: 0.75rem; }
+            .btn { padding: 0.85rem 1.5rem; font-size: 0.9rem; }
+
+            .section-header { margin-bottom: 2.5rem; }
+            .section-label { padding: 0.4rem 1rem; font-size: 0.7rem; margin-bottom: 0.6rem; }
+            .section-title { font-size: clamp(1.75rem, 5vw, 2.5rem); margin-bottom: 0.6rem; }
+            .section-subtitle { font-size: 0.95rem; line-height: 1.65; }
+
+            .timeline-controls { gap: 0.5rem; margin-bottom: 2rem; }
+            .era-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item, .timeline-item:nth-child(even) {
+                padding-left: 50px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                margin: 0;
+            }
+
+            .timeline-year { font-size: 1.1rem; }
+            .timeline-content h3 { font-size: 1.1rem; }
+            .timeline-content p { font-size: 0.85rem; }
+
+            .tea-filter { gap: 0.5rem; margin-bottom: 2rem; }
+            .filter-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+
+            .tea-grid { gap: 1.25rem; }
+            .tea-card-content { padding: 1.1rem; }
+            .tea-card-content h3 { font-size: 1.25rem; }
+            .tea-card-origin { font-size: 0.8rem; margin-bottom: 0.6rem; }
+            .tea-card-content p { font-size: 0.88rem; margin-bottom: 1rem; }
+            .tea-card-badge { top: 0.6rem; right: 0.6rem; padding: 0.35rem 0.75rem; font-size: 0.7rem; }
+            .tea-stat-value { font-size: 0.95rem; }
+            .tea-stat-label { font-size: 0.65rem; }
+
+            .brewing-container { gap: 2rem; }
+            .brewing-guide { padding: 1.5rem; }
+            .brewing-guide h3 { font-size: 1.1rem; margin-bottom: 1rem; }
+            .tea-selector { gap: 0.4rem; margin-bottom: 1rem; }
+            .tea-select-btn { padding: 0.5rem 0.4rem; }
+            .tea-select-btn i { font-size: 1rem; }
+            .tea-select-btn span { font-size: 0.7rem; }
+            .param-box { padding: 0.9rem; }
+            .param-value { font-size: 1.4rem; }
+            .param-label { font-size: 0.7rem; }
+            .timer-display { font-size: 2.8rem; margin-bottom: 0.75rem; }
+            .timer-btn { width: 44px; height: 44px; font-size: 0.9rem; }
+
+            .brewing-tips { padding: 1.5rem; }
+            .brewing-tips h3 { font-size: 1.2rem; margin-bottom: 1rem; }
+            .tip-card { padding: 0.9rem; margin-bottom: 0.75rem; }
+            .tip-icon { width: 42px; height: 42px; font-size: 1.1rem; }
+            .tip-content h4 { font-size: 0.9rem; }
+            .tip-content p { font-size: 0.8rem; }
+
+            .culture-tabs { gap: 0.5rem; margin-bottom: 2rem; }
+            .culture-tab { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
+            .culture-info h3 { font-size: 1.75rem; margin-bottom: 0.75rem; }
+            .culture-info > p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .ceremony-step { padding: 0.75rem; }
+            .step-number { width: 34px; height: 34px; font-size: 0.9rem; }
+            .step-content p { font-size: 0.85rem; }
+
+            .tea-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brewing-params {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-container {
+                padding: 1.25rem;
+            }
+
+            .quiz-progress { margin-bottom: 1.5rem; }
+            .progress-text { font-size: 0.8rem; }
+            .quiz-question { font-size: 1.1rem; }
+            .quiz-option { padding: 0.85rem 1rem; font-size: 0.9rem; }
+            .result-score { font-size: 4rem; }
+            .result-message { font-size: 1rem; }
+
+            .regions-grid { gap: 1rem; margin-bottom: 2rem; }
+            .region-card { padding: 1.25rem; }
+            .region-flag { font-size: 2rem; }
+            .region-card-title h3 { font-size: 1.15rem; }
+            .region-card-title span { font-size: 0.8rem; }
+            .region-card p { font-size: 0.85rem; margin-bottom: 0.75rem; }
+            .region-stat { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .tea-cup-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .tea-cup i {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 3rem 0.85rem;
+            }
+
+            nav, nav.scrolled {
+                padding: 0.5rem 0.85rem;
+            }
+
+            .logo i { font-size: 1.35rem; }
+            .logo span { font-size: 1.2rem; }
+
+            .hero-container {
+                padding: 3rem 0.85rem 2.5rem;
+            }
+
+            .hero-content h1 { font-size: clamp(1.75rem, 7vw, 2.4rem); }
+            .hero-content p { font-size: 0.9rem; margin-bottom: 1.25rem; }
+            .stat-number { font-size: 1.9rem; }
+            .stat-label { font-size: 0.7rem; }
+            .btn { padding: 0.75rem 1.25rem; font-size: 0.85rem; }
+
+            .section-header { margin-bottom: 1.75rem; }
+            .section-label { padding: 0.35rem 0.85rem; font-size: 0.65rem; }
+            .section-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+            .section-subtitle { font-size: 0.88rem; }
+
+            .timeline-controls { margin-bottom: 1.5rem; }
+            .era-btn { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+            .timeline { padding: 1.25rem 0; }
+            .timeline-year { font-size: 1rem; }
+            .timeline-content h3 { font-size: 1rem; }
+            .timeline-content p { font-size: 0.8rem; }
+
+            .tea-filter { margin-bottom: 1.5rem; }
+            .filter-btn { padding: 0.45rem 0.85rem; font-size: 0.8rem; }
+            .tea-grid { gap: 1rem; grid-template-columns: 1fr; }
+            .tea-card-image { height: 160px; }
+            .tea-card-content { padding: 0.9rem; }
+            .tea-card-content h3 { font-size: 1.1rem; }
+            .tea-card-content p { font-size: 0.82rem; }
+            .tea-stat-value { font-size: 0.9rem; }
+
+            .tea-cup-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .tea-cup i {
+                font-size: 4rem;
+            }
+
+            .brewing-guide { padding: 1.25rem; }
+            .brewing-guide h3 { font-size: 1rem; }
+            .param-box { padding: 0.75rem; }
+            .param-value { font-size: 1.25rem; }
+            .timer-display { font-size: 2.4rem; }
+            .timer-btn { width: 40px; height: 40px; font-size: 0.85rem; }
+
+            .brewing-tips { padding: 1.25rem; }
+            .brewing-tips h3 { font-size: 1.1rem; }
+            .tip-card { padding: 0.75rem; }
+
+            .culture-tab { padding: 0.6rem 1rem; font-size: 0.88rem; }
+            .culture-info h3 { font-size: 1.5rem; }
+            .culture-info > p { font-size: 0.88rem; }
+            .culture-image img { height: 280px; }
+
+            .quiz-container { padding: 1rem; }
+            .progress-text { font-size: 0.75rem; }
+            .quiz-question { font-size: 1rem; }
+            .quiz-option { padding: 0.75rem 0.9rem; font-size: 0.85rem; }
+            .result-score { font-size: 3.2rem; }
+            .result-message { font-size: 0.95rem; }
+
+            .region-card { padding: 1rem; }
+            .region-flag { font-size: 1.75rem; }
+            .region-card-title h3 { font-size: 1.05rem; }
+            .region-card p { font-size: 0.8rem; }
+
+            .modal-details {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content { padding: 1.5rem; max-width: 95%; }
+            .modal-header h2 { font-size: 1.5rem; }
+            .modal-details p { font-size: 0.88rem; }
+
+            .scroll-top { bottom: 1.25rem; right: 1.25rem; width: 44px; height: 44px; }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Tea History</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#regions">Regions</a></li>
+                <li><a href="#types">Tea Types</a></li>
+                <li><a href="#brewing">Brewing</a></li>
+                <li><a href="#culture">Culture</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>The Ancient Art of <span>Tea</span></h1>
+                <p>Embark on a journey through 5,000 years of history, culture, and tradition. Discover how a simple leaf transformed civilizations and connected the world.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="yearsCounter">0</span>
+                        <span class="stat-label">Years of History</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="countriesCounter">0</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="varietiesCounter">0</span>
+                        <span class="stat-label">Varieties</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#timeline" class="btn btn-primary">
+                        <i class="fas fa-clock"></i>
+                        Explore Timeline
+                    </a>
+                    <a href="#types" class="btn btn-secondary">
+                        <i class="fas fa-seedling"></i>
+                        Discover Teas
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <i class="floating-leaf leaf-1 fas fa-leaf"></i>
+                <i class="floating-leaf leaf-2 fas fa-leaf"></i>
+                <i class="floating-leaf leaf-3 fas fa-leaf"></i>
+                <i class="floating-leaf leaf-4 fas fa-leaf"></i>
+                <div class="tea-cup-container">
+                    <div class="tea-cup">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section" id="timeline">
+        <div class="section-header">
+            <span class="section-label">Journey Through Time</span>
+            <h2 class="section-title">The History of Tea</h2>
+            <p class="section-subtitle">From ancient Chinese legends to modern global culture, trace the remarkable journey of tea through the ages.</p>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-controls">
+                <button class="era-btn active" data-era="all">All Eras</button>
+                <button class="era-btn" data-era="ancient">Ancient (2737 BC - 500 AD)</button>
+                <button class="era-btn" data-era="medieval">Medieval (500 - 1500)</button>
+                <button class="era-btn" data-era="colonial">Colonial (1500 - 1900)</button>
+                <button class="era-btn" data-era="modern">Modern (1900 - Present)</button>
+            </div>
+            <div class="timeline" id="timeline-content">
+                <div class="timeline-item" data-era="ancient">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">2737 BC</span>
+                        <h3>The Legend Begins</h3>
+                        <p>According to Chinese legend, Emperor Shen Nung discovered tea when leaves from a wild tree blew into his pot of boiling water. He was captivated by the pleasant aroma and found the resulting drink refreshing.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="ancient">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">59 BC</span>
+                        <h3>First Written Record</h3>
+                        <p>The first known written reference to tea appears in a Chinese document describing how to properly prepare and serve tea. Tea was initially used as a medicinal beverage before becoming a daily drink.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="ancient">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">350 AD</span>
+                        <h3>Tea Becomes Popular</h3>
+                        <p>Tea drinking spreads throughout Chinese society. The first dictionary reference to tea appears, describing it as "a beverage made from boiled leaves." Tea gardens begin to flourish across China.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="medieval">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">760 AD</span>
+                        <h3>The Classic of Tea</h3>
+                        <p>Lu Yu writes "Cha Jing" (The Classic of Tea), the first definitive book about tea. This masterpiece describes the cultivation, preparation, and appreciation of tea, elevating it to an art form.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="medieval">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">805 AD</span>
+                        <h3>Tea Reaches Japan</h3>
+                        <p>Buddhist monks bring tea seeds from China to Japan. Tea becomes central to Japanese monastery life and eventually evolves into the refined Japanese tea ceremony (Chanoyu).</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="medieval">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1191 AD</span>
+                        <h3>Zen and Tea Unite</h3>
+                        <p>Zen priest Eisai promotes tea drinking in Japan for its medicinal properties. He writes "Kissa Yōjōki" (How to Stay Healthy by Drinking Tea), spreading tea culture among samurai and nobility.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="colonial">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1610</span>
+                        <h3>Tea Arrives in Europe</h3>
+                        <p>Dutch traders bring the first shipment of Chinese tea to Europe. Initially expensive and rare, tea was consumed mainly by royalty and the wealthy elite as a status symbol.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="colonial">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1662</span>
+                        <h3>British Tea Tradition Begins</h3>
+                        <p>Portuguese Princess Catherine of Braganza marries King Charles II of England, bringing her love of tea to the British court. Tea drinking becomes fashionable among British aristocracy.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="colonial">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1773</span>
+                        <h3>Boston Tea Party</h3>
+                        <p>American colonists protest British tea taxes by dumping 342 chests of tea into Boston Harbor. This pivotal event helped spark the American Revolution and changed global politics.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="colonial">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1823</span>
+                        <h3>Indian Tea Discovery</h3>
+                        <p>Robert Bruce discovers native tea plants growing wild in Assam, India. This discovery leads to the establishment of British tea plantations in India, breaking China's monopoly on tea production.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="colonial">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1840</span>
+                        <h3>Afternoon Tea Tradition</h3>
+                        <p>Anna, the 7th Duchess of Bedford, introduces the custom of "afternoon tea" in England to bridge the gap between lunch and late dinner. This tradition quickly spreads throughout British society.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="modern">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1904</span>
+                        <h3>Iced Tea Invention</h3>
+                        <p>At the St. Louis World's Fair, tea merchant Richard Blechynden serves chilled tea on a hot day, popularizing iced tea in America. Today, 85% of tea consumed in the US is iced.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="modern">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1908</span>
+                        <h3>Tea Bag Revolution</h3>
+                        <p>New York tea merchant Thomas Sullivan accidentally invents the tea bag when customers steep tea samples he sent in silk pouches. This innovation transforms how the world brews tea.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="modern">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">1980s</span>
+                        <h3>Bubble Tea Emerges</h3>
+                        <p>Taiwan invents bubble tea (boba), combining tea with milk and chewy tapioca pearls. This playful creation spawns a global phenomenon, especially popular among younger generations.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-era="modern">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-year">Today</span>
+                        <h3>Global Tea Culture</h3>
+                        <p>Tea is the world's second most consumed beverage after water. Over 3 billion cups are drunk daily worldwide, with specialty teas, matcha lattes, and artisanal blends driving a tea renaissance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tea Regions Section -->
+    <section class="regions-section" id="regions">
+        <div class="section-header">
+            <span class="section-label">Global Journey</span>
+            <h2 class="section-title">Tea Around the World</h2>
+            <p class="section-subtitle">From ancient China to modern-day Kenya, discover 11 countries that shaped tea culture. Click any region to explore its unique tea heritage.</p>
+        </div>
+        <div class="regions-container">
+            <div class="regions-grid" id="regionsGrid">
+                <!-- Region cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tea Types Section -->
+    <section class="tea-types-section" id="types">
+        <div class="section-header">
+            <span class="section-label">Discover</span>
+            <h2 class="section-title">Types of Tea</h2>
+            <p class="section-subtitle">True teas come from the Camellia sinensis plant, while herbal infusions offer caffeine-free alternatives from around the world.</p>
+        </div>
+        <div class="tea-types-container">
+            <div class="tea-filter">
+                <button class="filter-btn active" data-filter="all">All Teas</button>
+                <button class="filter-btn" data-filter="traditional">Traditional</button>
+                <button class="filter-btn" data-filter="oxidized">Oxidized</button>
+                <button class="filter-btn" data-filter="specialty">Specialty</button>
+                <button class="filter-btn" data-filter="herbal">Herbal</button>
+            </div>
+            <div class="tea-grid" id="teaGrid">
+                <!-- Tea cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Brewing Guide Section -->
+    <section class="brewing-section" id="brewing">
+        <div class="section-header">
+            <span class="section-label">Master the Art</span>
+            <h2 class="section-title">Perfect Brewing Guide</h2>
+            <p class="section-subtitle">Learn the ideal temperature, time, and techniques to brew the perfect cup of tea every time.</p>
+        </div>
+        <div class="brewing-container">
+            <div class="brewing-guide">
+                <h3><i class="fas fa-magic"></i> Brewing Calculator</h3>
+                <div class="tea-selector" id="teaSelector">
+                    <button class="tea-select-btn active" data-tea="green">
+                        <i class="fas fa-leaf"></i>
+                        <span>Green</span>
+                    </button>
+                    <button class="tea-select-btn" data-tea="black">
+                        <i class="fas fa-coffee"></i>
+                        <span>Black</span>
+                    </button>
+                    <button class="tea-select-btn" data-tea="white">
+                        <i class="fas fa-cloud"></i>
+                        <span>White</span>
+                    </button>
+                    <button class="tea-select-btn" data-tea="oolong">
+                        <i class="fas fa-yin-yang"></i>
+                        <span>Oolong</span>
+                    </button>
+                    <button class="tea-select-btn" data-tea="puerh">
+                        <i class="fas fa-mountain"></i>
+                        <span>Pu-erh</span>
+                    </button>
+                    <button class="tea-select-btn" data-tea="herbal">
+                        <i class="fas fa-spa"></i>
+                        <span>Herbal</span>
+                    </button>
+                </div>
+                <div class="brewing-params">
+                    <div class="param-box">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span class="param-value" id="tempValue">175°F</span>
+                        <span class="param-label">Water Temperature</span>
+                    </div>
+                    <div class="param-box">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span class="param-value" id="timeValue">2-3 min</span>
+                        <span class="param-label">Steep Time</span>
+                    </div>
+                </div>
+                <div class="brewing-timer">
+                    <div class="timer-display" id="timerDisplay">03:00</div>
+                    <div class="timer-controls">
+                        <button class="timer-btn reset" id="resetBtn">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="timer-btn start" id="startBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="brewing-tips">
+                <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-tint"></i></div>
+                    <div class="tip-content">
+                        <h4>Use Fresh, Filtered Water</h4>
+                        <p>The quality of water greatly affects taste. Avoid distilled or heavily chlorinated water.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-temperature-low"></i></div>
+                    <div class="tip-content">
+                        <h4>Preheat Your Teapot</h4>
+                        <p>Rinse your teapot with hot water before brewing to maintain optimal temperature.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div class="tip-content">
+                        <h4>Measure Carefully</h4>
+                        <p>Use about 2 grams (1 teaspoon) of loose leaf tea per 8 oz cup for best results.</p>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-sync"></i></div>
+                    <div class="tip-content">
+                        <h4>Multiple Steepings</h4>
+                        <p>Quality loose leaf tea can be steeped 3-5 times. Each infusion reveals new flavors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Section -->
+    <section class="culture-section" id="culture">
+        <div class="section-header">
+            <span class="section-label">Traditions</span>
+            <h2 class="section-title">Tea Ceremonies & Culture</h2>
+            <p class="section-subtitle">Discover the rich ceremonial traditions that transformed tea drinking into a spiritual and artistic practice.</p>
+        </div>
+        <div class="culture-container">
+            <div class="culture-tabs">
+                <button class="culture-tab active" data-culture="japanese">
+                    <span>🇯🇵</span>
+                    Japanese Chanoyu
+                </button>
+                <button class="culture-tab" data-culture="chinese">
+                    <span>🇨🇳</span>
+                    Chinese Gongfu
+                </button>
+                <button class="culture-tab" data-culture="british">
+                    <span>🇬🇧</span>
+                    British Afternoon Tea
+                </button>
+                <button class="culture-tab" data-culture="moroccan">
+                    <span>🇲🇦</span>
+                    Moroccan Mint Tea
+                </button>
+            </div>
+            <div class="culture-content active" id="japanese">
+                <div class="culture-grid">
+                    <div class="culture-image">
+                        <img src="images/japanese-ceremony.png" alt="Japanese Tea Ceremony">
+                    </div>
+                    <div class="culture-info">
+                        <h3>Japanese Tea Ceremony (茶道)</h3>
+                        <p>Chanoyu, meaning "the way of tea," is a choreographic ritual of preparing and serving Japanese green tea (matcha). Rooted in Zen Buddhism, it embodies four principles: harmony (wa), respect (kei), purity (sei), and tranquility (jaku).</p>
+                        <div class="ceremony-steps">
+                            <div class="ceremony-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Purification</h4>
+                                    <p>Guests cleanse their hands and mouths at the tsukubai (stone basin) before entering.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Preparation</h4>
+                                    <p>The host meticulously cleans each utensil with graceful, precise movements.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Whisking</h4>
+                                    <p>Matcha powder is whisked with hot water using a bamboo whisk (chasen) until frothy.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Appreciation</h4>
+                                    <p>The bowl is presented, admired, and consumed in three sips with gratitude.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="culture-content" id="chinese">
+                <div class="culture-grid">
+                    <div class="culture-image">
+                        <img src="images/chinese-ceremony.png" alt="Chinese Gongfu Tea">
+                    </div>
+                    <div class="culture-info">
+                        <h3>Chinese Gongfu Tea (工夫茶)</h3>
+                        <p>Gongfu cha, meaning "making tea with skill," is a traditional Chinese tea preparation method that emphasizes the quality of tea leaves and the art of brewing. It involves small teapots, multiple short infusions, and careful attention to water temperature and timing.</p>
+                        <div class="ceremony-steps">
+                            <div class="ceremony-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Warming</h4>
+                                    <p>Hot water is poured over the Yixing clay teapot and cups to warm them.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Rinsing</h4>
+                                    <p>The first infusion is discarded to "awaken" the leaves and remove impurities.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Multiple Steepings</h4>
+                                    <p>Tea is steeped for 20-30 seconds, with each subsequent steep slightly longer.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Appreciation</h4>
+                                    <p>Guests savor the aroma and taste, noting how flavors evolve with each infusion.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="culture-content" id="british">
+                <div class="culture-grid">
+                    <div class="culture-image">
+                        <img src="images/british-tea.png" alt="British Afternoon Tea">
+                    </div>
+                    <div class="culture-info">
+                        <h3>British Afternoon Tea</h3>
+                        <p>Introduced in the 1840s by Anna, Duchess of Bedford, afternoon tea became a beloved British institution. This elegant affair bridges the gap between lunch and dinner, featuring tea served with a tiered selection of savories and sweets.</p>
+                        <div class="ceremony-steps">
+                            <div class="ceremony-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Setting</h4>
+                                    <p>Fine bone china, silver service, and crisp linens create an elegant atmosphere.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Sandwiches</h4>
+                                    <p>Finger sandwiches with cucumber, smoked salmon, and egg salad are served first.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Scones</h4>
+                                    <p>Warm scones with clotted cream and jam follow—the cream first debate continues!</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Pastries</h4>
+                                    <p>Delicate cakes, tarts, and petit fours conclude the experience.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="culture-content" id="moroccan">
+                <div class="culture-grid">
+                    <div class="culture-image">
+                        <img src="images/moroccan-tea.png" alt="Moroccan Mint Tea">
+                    </div>
+                    <div class="culture-info">
+                        <h3>Moroccan Mint Tea (Atay)</h3>
+                        <p>Known as "Moroccan whiskey," this sweet mint tea is central to Moroccan hospitality. The dramatic pouring from height creates a frothy top and cools the tea. Refusing a cup is considered impolite—guests traditionally drink three cups.</p>
+                        <div class="ceremony-steps">
+                            <div class="ceremony-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Preparation</h4>
+                                    <p>Chinese gunpowder green tea is combined with fresh spearmint and sugar.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>First Steep</h4>
+                                    <p>The first steep is poured back into the pot to mix the flavors thoroughly.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>The Pour</h4>
+                                    <p>Tea is poured from a height of 12+ inches to aerate and create foam.</p>
+                                </div>
+                            </div>
+                            <div class="ceremony-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Three Cups</h4>
+                                    <p>"The first glass is gentle as life, the second strong as love, the third bitter as death."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section" id="quiz">
+        <div class="section-header">
+            <span class="section-label">Test Your Knowledge</span>
+            <h2 class="section-title">Tea Trivia Challenge</h2>
+            <p class="section-subtitle">Think you know your tea? Put your knowledge to the test with our interactive quiz!</p>
+        </div>
+        <div class="quiz-container">
+            <div class="quiz-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span class="progress-text" id="progressText">Question 1/10</span>
+            </div>
+            <div id="quizContent">
+                <div class="quiz-question" id="questionContainer">
+                    <h3 id="questionText">Loading question...</h3>
+                    <div class="quiz-options" id="optionsContainer">
+                        <!-- Options will be generated by JavaScript -->
+                    </div>
+                </div>
+                <div class="quiz-nav">
+                    <button class="btn btn-secondary" id="prevBtn" style="visibility: hidden;">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" id="nextBtn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="quiz-result" id="quizResult">
+                <div class="result-score" id="resultScore">0/10</div>
+                <div class="result-message" id="resultMessage">Great job!</div>
+                <button class="btn btn-primary" id="restartBtn">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Tea Detail Modal -->
+    <div class="modal-overlay" id="teaModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-content">
+                <h2 id="modalTitle">Tea Name</h2>
+                <div class="modal-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> <span id="modalOrigin">Origin</span></span>
+                    <span><i class="fas fa-leaf"></i> <span id="modalType">Type</span></span>
+                </div>
+                <p id="modalDesc">Description goes here...</p>
+                <div class="modal-details">
+                    <div class="detail-item">
+                        <strong>Caffeine Level</strong>
+                        <span id="modalCaffeine">Medium</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Best Time</strong>
+                        <span id="modalTime">Morning</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Flavor Profile</strong>
+                        <span id="modalFlavor">Earthy, Smooth</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Health Benefits</strong>
+                        <span id="modalHealth">Antioxidants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Region Detail Modal -->
+    <div class="modal-overlay" id="regionModal">
+        <div class="modal region-modal">
+            <button class="modal-close" id="regionModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="region-modal-header">
+                <span class="region-modal-flag" id="regionModalFlag">🇨🇳</span>
+                <div class="region-modal-title">
+                    <h2 id="regionModalTitle">China</h2>
+                    <span><i class="fas fa-calendar-alt"></i> <span id="regionModalPeriod">2737 BC - Present</span></span>
+                </div>
+            </div>
+            <div class="region-modal-body">
+                <p id="regionModalDesc">Description here...</p>
+                <div class="region-modal-grid">
+                    <div class="region-modal-teas">
+                        <h4><i class="fas fa-leaf"></i> Famous Teas</h4>
+                        <div class="region-tea-tags" id="regionModalTeas">
+                            <!-- Tea tags will be generated -->
+                        </div>
+                    </div>
+                    <div class="region-modal-facts" id="regionModalFacts">
+                        <!-- Facts will be generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Detail Modal -->
+    <div class="modal-overlay" id="timelineModal">
+        <div class="modal timeline-modal">
+            <button class="modal-close" id="timelineModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="timeline-modal-header">
+                <span class="timeline-modal-year" id="timelineModalYear">2737 BC</span>
+                <h2 id="timelineModalTitle">The Legend Begins</h2>
+                <div class="era-badge">
+                    <i class="fas fa-clock"></i>
+                    <span id="timelineModalEra">Ancient Era</span>
+                </div>
+            </div>
+            <div class="timeline-modal-body">
+                <p id="timelineModalDesc">Description here...</p>
+                <div class="timeline-modal-impact">
+                    <h4><i class="fas fa-bolt"></i> Historical Impact</h4>
+                    <div class="impact-list" id="timelineModalImpact">
+                        <!-- Impact items will be generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // Data
+        // ============================================
+        
+        const teaTypes = [
+            {
+                id: 'green',
+                name: 'Green Tea',
+                origin: 'China & Japan',
+                category: 'traditional',
+                oxidation: '0-5%',
+                caffeine: 'Low-Medium',
+                temp: '175°F',
+                image: 'images/green-tea.png',
+                description: 'Green tea is minimally oxidized, preserving its natural green color and delicate flavors. The leaves are quickly heated after harvesting to prevent oxidation.',
+                fullDesc: 'Green tea has been consumed in China for over 3,000 years. The leaves are picked, quickly heated (either pan-fired or steamed), and then dried. This process preserves the natural antioxidants called catechins, particularly EGCG, which has been studied extensively for its health benefits. Famous varieties include Dragon Well (Longjing) from China and Sencha from Japan.',
+                flavor: 'Fresh, grassy, vegetal, sweet',
+                time: 'Morning or afternoon',
+                health: 'High in antioxidants, supports metabolism',
+                featured: true,
+                icon: 'fa-leaf'
+            },
+            {
+                id: 'black',
+                name: 'Black Tea',
+                origin: 'China, India, Sri Lanka',
+                category: 'oxidized',
+                oxidation: '100%',
+                caffeine: 'High',
+                temp: '212°F',
+                image: 'images/black-tea.png',
+                description: 'Fully oxidized tea with bold, robust flavors. Black tea was developed for export as it maintained freshness during long sea voyages.',
+                fullDesc: 'Black tea undergoes complete oxidation, which turns the leaves dark and develops complex flavors. It became the dominant tea in Western markets due to its ability to stay fresh during long shipping routes. Major varieties include Assam and Darjeeling from India, Ceylon from Sri Lanka, and Keemun from China. Black tea forms the base for iconic blends like Earl Grey and English Breakfast.',
+                flavor: 'Bold, malty, sometimes fruity or smoky',
+                time: 'Morning (best with breakfast)',
+                health: 'Supports heart health, contains theaflavins',
+                featured: true,
+                icon: 'fa-mug-hot'
+            },
+            {
+                id: 'oolong',
+                name: 'Oolong Tea',
+                origin: 'China & Taiwan',
+                category: 'oxidized',
+                oxidation: '15-85%',
+                caffeine: 'Medium',
+                temp: '190°F',
+                image: 'images/oolong-tea.png',
+                description: 'Partially oxidized tea that bridges the gap between green and black teas. Oolong offers remarkable complexity and can be re-steeped many times.',
+                fullDesc: 'Oolong tea represents the most complex category of teas, with oxidation levels ranging from 15% to 85%. The leaves are often rolled or twisted, and the craftsmanship involved is considered an art form. Famous oolongs include Tie Guan Yin (Iron Goddess of Mercy), Da Hong Pao (Big Red Robe), and high-mountain Taiwanese oolongs. Each steeping reveals new flavors.',
+                flavor: 'Floral, fruity, creamy, toasty',
+                time: 'Afternoon',
+                health: 'Supports weight management, rich in antioxidants',
+                featured: true,
+                icon: 'fa-yin-yang'
+            },
+            {
+                id: 'white',
+                name: 'White Tea',
+                origin: 'Fujian, China',
+                category: 'traditional',
+                oxidation: '0-5%',
+                caffeine: 'Low-Medium',
+                temp: '175°F',
+                image: 'images/white-tea.png',
+                description: 'The most delicate tea, made from young buds and leaves with minimal processing. White tea has subtle, sweet flavors.',
+                fullDesc: 'White tea is the least processed of all teas, traditionally made from young leaf buds covered in fine white hairs. It originated in Fujian Province, China, during the Song Dynasty. The leaves are simply withered and dried, preserving their natural sweetness and high antioxidant content. Silver Needle (Bai Hao Yin Zhen) and White Peony (Bai Mu Dan) are prized varieties.',
+                flavor: 'Subtle, sweet, floral, honey-like',
+                time: 'Any time',
+                health: 'Highest antioxidant content, anti-aging properties',
+                featured: true,
+                icon: 'fa-feather'
+            },
+            {
+                id: 'puerh',
+                name: 'Pu-erh Tea',
+                origin: 'Yunnan, China',
+                category: 'specialty',
+                oxidation: 'Post-fermented',
+                caffeine: 'Medium-High',
+                temp: '212°F',
+                image: 'images/puerh-tea.png',
+                description: 'Aged, fermented tea from Yunnan province. Pu-erh improves with age like fine wine and can be stored for decades.',
+                fullDesc: 'Pu-erh is unique among teas due to its microbial fermentation and aging process. It comes from the large-leaf tea trees of Yunnan Province and has been produced for over 2,000 years. Raw (Sheng) Pu-erh ages naturally over decades, while Ripe (Shou) Pu-erh undergoes accelerated fermentation. Vintage Pu-erh cakes are highly collectible and can fetch thousands of dollars.',
+                flavor: 'Earthy, smooth, woody, complex',
+                time: 'After meals (aids digestion)',
+                health: 'Supports digestion, cholesterol management',
+                featured: true,
+                icon: 'fa-wine-bottle'
+            },
+            {
+                id: 'matcha',
+                name: 'Matcha',
+                origin: 'Japan',
+                category: 'specialty',
+                oxidation: '0%',
+                caffeine: 'High',
+                temp: '175°F',
+                image: 'images/matcha.png',
+                description: 'Stone-ground green tea powder used in Japanese tea ceremonies. You consume the entire leaf, maximizing health benefits.',
+                fullDesc: 'Matcha is made from shade-grown tea leaves that are stone-ground into a fine powder. The shading process increases chlorophyll and L-theanine content, giving matcha its vibrant green color and unique calming-yet-energizing effect. Used in Japanese tea ceremonies since the 12th century, matcha has recently gained global popularity in lattes, desserts, and health drinks.',
+                flavor: 'Umami, vegetal, creamy, slightly bitter',
+                time: 'Morning (sustained energy)',
+                health: 'Extremely high in antioxidants, L-theanine for focus',
+                featured: true,
+                icon: 'fa-mortar-pestle'
+            },
+            {
+                id: 'yellow',
+                name: 'Yellow Tea',
+                origin: 'China',
+                category: 'traditional',
+                oxidation: '5-10%',
+                caffeine: 'Low-Medium',
+                temp: '170°F',
+                image: 'images/yellow-tea.png',
+                description: 'One of the rarest teas in the world, yellow tea undergoes a unique "sealed yellowing" process that creates a mellow, smooth flavor.',
+                fullDesc: 'Yellow tea is among the rarest and most prized teas, produced in limited quantities in China. After picking, the leaves undergo a unique "men huan" (sealed yellowing) process where they are wrapped and gently heated, allowing slight oxidation that removes the grassy taste of green tea. Famous varieties include Junshan Yinzhen (君山银针) from Hunan and Huoshan Huangya from Anhui. The production is so labor-intensive that few tea masters still practice this art.',
+                flavor: 'Mellow, sweet, nutty, slightly floral',
+                time: 'Afternoon',
+                health: 'Gentle on stomach, rich in polyphenols',
+                icon: 'fa-sun'
+            },
+            {
+                id: 'jasmine',
+                name: 'Jasmine Tea',
+                origin: 'Fujian, China',
+                category: 'specialty',
+                oxidation: 'Varies',
+                caffeine: 'Medium',
+                temp: '180°F',
+                image: 'images/jasmine-tea.png',
+                description: 'Green or white tea scented with fresh jasmine blossoms over several nights, creating an intoxicating floral aroma.',
+                fullDesc: 'Jasmine tea has been produced in China since the Song Dynasty (960-1279). The scenting process involves layering tea leaves with fresh jasmine flowers at night when they release their fragrance, then removing the wilted flowers in the morning. This process is repeated 4-7 times for premium grades. The most famous is Jasmine Pearl (茉莉龙珠), where leaves are hand-rolled into small pearls that unfurl beautifully when steeped.',
+                flavor: 'Fragrant, floral, sweet, refreshing',
+                time: 'Any time',
+                health: 'Stress relief, digestive aid, antimicrobial',
+                icon: 'fa-spa'
+            },
+            {
+                id: 'darjeeling',
+                name: 'Darjeeling',
+                origin: 'West Bengal, India',
+                category: 'oxidized',
+                oxidation: '70-90%',
+                caffeine: 'Medium-High',
+                temp: '200°F',
+                image: 'images/darjeeling.png',
+                description: 'Known as the "Champagne of teas," Darjeeling grows in the Himalayan foothills and has a distinctive muscatel grape flavor.',
+                fullDesc: 'Darjeeling tea is grown on 87 estates in the misty Himalayan foothills at elevations of 3,000-7,000 feet. The unique terroir—cool temperatures, high altitude, and abundant rainfall—creates its signature muscatel (musky grape) flavor found nowhere else. Harvests are categorized as "flushes": First Flush (spring) is light and floral, Second Flush (summer) has the prized muscatel character, and Autumn Flush is more robust. Only tea from this region can legally be called Darjeeling.',
+                flavor: 'Muscatel, floral, astringent, complex',
+                time: 'Afternoon',
+                health: 'Heart health, bone strength, antioxidants',
+                icon: 'fa-mountain'
+            },
+            {
+                id: 'chai',
+                name: 'Masala Chai',
+                origin: 'India',
+                category: 'specialty',
+                oxidation: '100% (base)',
+                caffeine: 'Medium-High',
+                temp: '212°F',
+                image: 'images/masala-chai.png',
+                description: 'A beloved Indian spiced tea made with black tea, milk, and aromatic spices like cardamom, cinnamon, ginger, and cloves.',
+                fullDesc: 'Masala Chai has roots in Ayurvedic tradition, where spiced beverages were used for healing. When the British introduced black tea cultivation to India in the 1830s, locals combined it with traditional spices and milk to create the chai we know today. Each family and region has their own recipe—common spices include cardamom, cinnamon, ginger, black pepper, and cloves. Street vendors called "chai wallahs" are an iconic part of Indian life, serving freshly brewed chai from roadside stalls.',
+                flavor: 'Spicy, warming, creamy, aromatic',
+                time: 'Morning or afternoon',
+                health: 'Anti-inflammatory, digestive, immune-boosting',
+                icon: 'fa-pepper-hot'
+            },
+            {
+                id: 'rooibos',
+                name: 'Rooibos',
+                origin: 'South Africa',
+                category: 'herbal',
+                oxidation: 'N/A (herbal)',
+                caffeine: 'None',
+                temp: '212°F',
+                image: 'images/rooibos.png',
+                description: 'A caffeine-free herbal tea from South Africa with a naturally sweet, nutty flavor. Also known as "red bush" tea.',
+                fullDesc: 'Rooibos (ROY-boss) comes from the Aspalathus linearis plant, which grows exclusively in the Cederberg mountains of South Africa. Indigenous Khoisan people have used it for centuries. The needle-like leaves are harvested, bruised, and left to oxidize in the sun, developing their characteristic red color. Green rooibos (unoxidized) is also available. Rooibos is naturally caffeine-free and low in tannins, making it ideal for children and those sensitive to caffeine.',
+                flavor: 'Sweet, nutty, vanilla, honey-like',
+                time: 'Any time (caffeine-free)',
+                health: 'Rich in antioxidants, supports bone health, caffeine-free',
+                icon: 'fa-seedling'
+            },
+            {
+                id: 'earlgrey',
+                name: 'Earl Grey',
+                origin: 'England',
+                category: 'oxidized',
+                oxidation: '100%',
+                caffeine: 'Medium-High',
+                temp: '200°F',
+                image: 'images/earl-grey.png',
+                description: 'A classic British blend of black tea flavored with oil of bergamot, a citrus fruit from Italy, creating a distinctive aromatic experience.',
+                fullDesc: 'Earl Grey is named after Charles Grey, the 2nd Earl Grey and British Prime Minister in the 1830s. Legend says a Chinese mandarin created the blend to offset lime in the local water. The key ingredient is bergamot oil, extracted from the rind of the bergamot orange grown in Calabria, Italy. Traditionally made with Chinese Keemun or Ceylon black tea, modern variations include Lady Grey (with additional citrus), London Fog (with vanilla and steamed milk), and green or white tea versions.',
+                flavor: 'Citrusy, floral, aromatic, slightly bitter',
+                time: 'Afternoon',
+                health: 'Mood enhancement, digestive aid, antioxidants',
+                icon: 'fa-lemon'
+            },
+            {
+                id: 'genmaicha',
+                name: 'Genmaicha',
+                origin: 'Japan',
+                category: 'traditional',
+                oxidation: '0%',
+                caffeine: 'Low',
+                temp: '175°F',
+                image: 'images/genmaicha.png',
+                description: 'Japanese green tea mixed with roasted brown rice, some of which pops like popcorn. Known as "popcorn tea" for its toasty aroma.',
+                fullDesc: 'Genmaicha was originally created as a way to stretch expensive tea leaves by adding cheap roasted rice. It was historically called "the people\'s tea" as it was affordable for lower classes. The roasted rice gives it a distinctive toasty, nutty flavor that balances the vegetal notes of green tea. Some grains pop during roasting, resembling popcorn—hence its nickname. The rice also reduces caffeine content per cup, making it a popular choice for evening drinking in Japan.',
+                flavor: 'Toasty, nutty, savory, mild',
+                time: 'Evening (lower caffeine)',
+                health: 'Digestive aid, blood sugar regulation, relaxation',
+                icon: 'fa-wheat-awn'
+            },
+            {
+                id: 'lapsang',
+                name: 'Lapsang Souchong',
+                origin: 'Wuyi Mountains, China',
+                category: 'oxidized',
+                oxidation: '100%',
+                caffeine: 'Medium',
+                temp: '200°F',
+                image: 'images/lapsang-souchong.png',
+                description: 'The world\'s first black tea, famous for its bold smoky flavor from being dried over pinewood fires.',
+                fullDesc: 'Lapsang Souchong (正山小种) is considered the original black tea, created in the Wuyi Mountains of Fujian Province during the Qing Dynasty. According to legend, villagers fleeing an army left their tea leaves to wither too long. To expedite drying, they smoked the leaves over pinewood fires—accidentally creating a unique smoky tea that became popular with European traders. Authentic Lapsang from Zhengshan uses local pine wood, while the strongest versions (Tarry Lapsang) are intensely smoky.',
+                flavor: 'Smoky, pine, campfire, bold',
+                time: 'Morning',
+                health: 'Antioxidants, metabolism support, heart health',
+                icon: 'fa-fire'
+            },
+            {
+                id: 'chamomile',
+                name: 'Chamomile',
+                origin: 'Egypt & Europe',
+                category: 'herbal',
+                oxidation: 'N/A (herbal)',
+                caffeine: 'None',
+                temp: '212°F',
+                image: 'images/chamomile.png',
+                description: 'A beloved herbal infusion made from dried chamomile flowers, known for its calming properties and gentle, apple-like sweetness.',
+                fullDesc: 'Chamomile has been used for over 5,000 years, dating back to ancient Egypt where it was dedicated to the sun god Ra. The name comes from Greek "khamaimelon" meaning "earth apple" due to its apple-like aroma. Two main varieties exist: German chamomile (Matricaria chamomilla) used in teas, and Roman chamomile used in aromatherapy. It contains apigenin, a compound that binds to brain receptors promoting relaxation. Traditionally used to soothe digestive issues, reduce anxiety, and promote sleep.',
+                flavor: 'Floral, apple-like, honey, mild',
+                time: 'Evening (promotes sleep)',
+                health: 'Sleep aid, anxiety relief, anti-inflammatory',
+                icon: 'fa-moon'
+            },
+            {
+                id: 'yerba',
+                name: 'Yerba Mate',
+                origin: 'South America',
+                category: 'herbal',
+                oxidation: 'N/A (herbal)',
+                caffeine: 'High',
+                temp: '160°F',
+                image: 'images/yerba-mate.png',
+                description: 'A traditional South American drink made from the leaves of the holly tree, known for providing sustained energy without the jitters of coffee.',
+                fullDesc: 'Yerba Mate has been consumed by the Guaraní people of Paraguay for centuries before Spanish colonization. It\'s made from the leaves of Ilex paraguariensis, a species of holly native to the subtropical forests of South America. Traditionally drunk from a gourd (mate) through a metal straw (bombilla), it\'s central to social gatherings in Argentina, Uruguay, Paraguay, and southern Brazil. It contains caffeine plus theobromine and theophylline, creating a balanced stimulating effect often described as "the strength of coffee, the health benefits of tea, and the euphoria of chocolate."',
+                flavor: 'Earthy, grassy, slightly bitter, vegetal',
+                time: 'Morning or afternoon',
+                health: 'Energy boost, mental clarity, rich in nutrients',
+                icon: 'fa-bolt'
+            }
+        ];
+
+        const regionData = [
+            {
+                id: 'china',
+                title: 'China',
+                flag: '🇨🇳',
+                period: '2737 BC - Present',
+                shortDesc: 'The birthplace of tea with 5,000 years of history and the Gongfu ceremony tradition.',
+                desc: 'The birthplace of tea, China has cultivated and enjoyed tea for over 5,000 years. Home to legendary teas like Dragon Well (Longjing), Pu-erh, and Tie Guan Yin, Chinese tea culture emphasizes harmony, respect, and the art of living.',
+                teas: ['Dragon Well', 'Pu-erh', 'Tie Guan Yin', 'Keemun', 'Lapsang Souchong'],
+                stats: { production: '#1 Producer', cups: '2.6M tons/year' },
+                facts: [
+                    { icon: 'fa-seedling', text: 'Produces over 2.6 million tons of tea annually' },
+                    { icon: 'fa-star', text: 'Famous for green, oolong, and pu-erh teas' },
+                    { icon: 'fa-history', text: 'Gongfu tea ceremony originated here' }
+                ]
+            },
+            {
+                id: 'japan',
+                title: 'Japan',
+                flag: '🇯🇵',
+                period: '805 AD - Present',
+                shortDesc: 'Home of matcha and the meditative Chanoyu tea ceremony.',
+                desc: 'Tea arrived in Japan via Buddhist monks in the 9th century. Japan developed its own distinct tea culture, including the meditative tea ceremony (Chanoyu) and unique teas like matcha, sencha, and gyokuro.',
+                teas: ['Matcha', 'Sencha', 'Gyokuro', 'Genmaicha', 'Hojicha'],
+                stats: { production: '#10 Producer', cups: '100K tons/year' },
+                facts: [
+                    { icon: 'fa-om', text: 'Home of the formal tea ceremony (Chanoyu)' },
+                    { icon: 'fa-mortar-pestle', text: 'Invented matcha preparation method' },
+                    { icon: 'fa-leaf', text: 'Produces mainly green tea varieties' }
+                ]
+            },
+            {
+                id: 'india',
+                title: 'India',
+                flag: '🇮🇳',
+                period: '1823 - Present',
+                shortDesc: 'Second largest producer, famous for Darjeeling and Assam teas.',
+                desc: 'Native tea plants were discovered in Assam in 1823. The British developed massive tea plantations, making India the world\'s second-largest tea producer. Famous for robust Assam and delicate Darjeeling teas.',
+                teas: ['Darjeeling', 'Assam', 'Nilgiri', 'Masala Chai'],
+                stats: { production: '#2 Producer', cups: '1.4M tons/year' },
+                facts: [
+                    { icon: 'fa-globe', text: 'Second largest tea producer globally' },
+                    { icon: 'fa-crown', text: 'Darjeeling called "Champagne of teas"' },
+                    { icon: 'fa-mug-hot', text: 'Chai culture is integral to daily life' }
+                ]
+            },
+            {
+                id: 'uk',
+                title: 'United Kingdom',
+                flag: '🇬🇧',
+                period: '1662 - Present',
+                shortDesc: 'Created afternoon tea tradition and iconic blends like Earl Grey.',
+                desc: 'Tea became fashionable in Britain after Catherine of Braganza brought her tea-drinking habit from Portugal. The British created unique traditions like afternoon tea and developed iconic blends like Earl Grey and English Breakfast.',
+                teas: ['Earl Grey', 'English Breakfast', 'Irish Breakfast', 'Lady Grey'],
+                stats: { consumption: '165M cups/day', tradition: 'Since 1662' },
+                facts: [
+                    { icon: 'fa-coffee', text: 'Drinks 165 million cups daily' },
+                    { icon: 'fa-cookie', text: 'Afternoon tea tradition since 1840s' },
+                    { icon: 'fa-blender', text: 'Created many famous tea blends' }
+                ]
+            },
+            {
+                id: 'morocco',
+                title: 'Morocco',
+                flag: '🇲🇦',
+                period: '18th Century - Present',
+                shortDesc: 'Famous for sweet mint tea poured dramatically from height.',
+                desc: 'Moroccan mint tea (Atay) is central to hospitality and daily life. Chinese gunpowder green tea is combined with fresh spearmint and generous amounts of sugar, poured dramatically from height into small glasses.',
+                teas: ['Moroccan Mint', 'Gunpowder Green'],
+                stats: { tradition: 'Symbol of hospitality', cups: '3 cups ritual' },
+                facts: [
+                    { icon: 'fa-hands', text: 'Tea is a symbol of hospitality' },
+                    { icon: 'fa-glass-whiskey', text: 'Three cups are traditionally served' },
+                    { icon: 'fa-user', text: 'Men traditionally prepare and serve tea' }
+                ]
+            },
+            {
+                id: 'turkey',
+                title: 'Turkey',
+                flag: '🇹🇷',
+                period: '1900s - Present',
+                shortDesc: 'Highest per capita tea consumption in the world.',
+                desc: 'Turkey has the highest per capita tea consumption in the world. Turkish tea (çay) is brewed strong using a double teapot (çaydanlık) and served in distinctive tulip-shaped glasses throughout the day.',
+                teas: ['Turkish Black Tea (Çay)', 'Rize Tea'],
+                stats: { consumption: '#1 Per Capita', cups: '7+ cups/day' },
+                facts: [
+                    { icon: 'fa-trophy', text: 'Highest tea consumption per capita' },
+                    { icon: 'fa-mountain', text: 'Black tea from Rize region' },
+                    { icon: 'fa-wine-glass', text: 'Tea served in tulip-shaped glasses' }
+                ]
+            },
+            {
+                id: 'srilanka',
+                title: 'Sri Lanka',
+                flag: '🇱🇰',
+                period: '1867 - Present',
+                shortDesc: 'Ceylon tea renowned for its bright, crisp character.',
+                desc: 'After a coffee blight destroyed plantations, Sri Lanka (then Ceylon) turned to tea. Today, Ceylon tea is renowned worldwide for its bright, crisp character and distinctive flavor profiles from different elevations.',
+                teas: ['Ceylon Black', 'Ceylon Green', 'Ceylon White'],
+                stats: { production: '#4 Producer', export: '15% of GDP' },
+                facts: [
+                    { icon: 'fa-industry', text: 'Fourth largest tea producer' },
+                    { icon: 'fa-mountain', text: 'High-grown teas are most prized' },
+                    { icon: 'fa-dollar-sign', text: 'Tea accounts for 15% of export revenue' }
+                ]
+            },
+            {
+                id: 'kenya',
+                title: 'Kenya',
+                flag: '🇰🇪',
+                period: '1903 - Present',
+                shortDesc: 'World\'s largest tea exporter with bright, strong flavors.',
+                desc: 'Kenya began commercial tea production in 1903 and is now the world\'s largest tea exporter. Kenyan tea is known for its bright, coppery color and strong flavor, primarily used in blends.',
+                teas: ['Kenyan Black', 'Purple Tea'],
+                stats: { export: '#1 Exporter', production: '500K tons/year' },
+                facts: [
+                    { icon: 'fa-shipping-fast', text: 'World\'s largest tea exporter' },
+                    { icon: 'fa-cogs', text: 'CTC method predominates' },
+                    { icon: 'fa-chart-line', text: 'Tea is major economic driver' }
+                ]
+            },
+            {
+                id: 'taiwan',
+                title: 'Taiwan',
+                flag: '🇹🇼',
+                period: '1860s - Present',
+                shortDesc: 'World-renowned for premium high-mountain oolong teas.',
+                desc: 'Taiwan produces some of the world\'s finest and most expensive oolong teas. The island\'s high mountains, misty climate, and skilled artisans create uniquely complex teas. Taiwanese tea culture blends Chinese traditions with local innovations.',
+                teas: ['Alishan Oolong', 'Dong Ding', 'Oriental Beauty', 'Li Shan', 'Milk Oolong'],
+                stats: { specialty: 'Premium Oolongs', altitude: '1000-2600m' },
+                facts: [
+                    { icon: 'fa-mountain', text: 'High-mountain teas grown above 1000m' },
+                    { icon: 'fa-gem', text: 'Oriental Beauty sold for $250+/lb' },
+                    { icon: 'fa-award', text: 'Pioneered modern bubble tea in 1980s' }
+                ]
+            },
+            {
+                id: 'russia',
+                title: 'Russia',
+                flag: '🇷🇺',
+                period: '1638 - Present',
+                shortDesc: 'Rich tea culture centered around the iconic samovar.',
+                desc: 'Tea arrived in Russia via the Silk Road in 1638 and became deeply embedded in Russian culture. The samovar, a traditional heated metal container, became the centerpiece of Russian hospitality. Russians traditionally drink very strong tea, often sweetened with jam.',
+                teas: ['Russian Caravan', 'Krasnodar Tea'],
+                stats: { tradition: 'Samovar Culture', consumption: '#4 Globally' },
+                facts: [
+                    { icon: 'fa-fire', text: 'Samovar is iconic cultural symbol' },
+                    { icon: 'fa-candy-cane', text: 'Tea sweetened with jam (varenye)' },
+                    { icon: 'fa-route', text: 'Tea arrived via ancient Silk Road' }
+                ]
+            },
+            {
+                id: 'vietnam',
+                title: 'Vietnam',
+                flag: '🇻🇳',
+                period: '1880s - Present',
+                shortDesc: 'Fifth largest tea producer with unique lotus-scented teas.',
+                desc: 'Vietnam has a centuries-old tea tradition and is now the world\'s fifth-largest tea producer. Vietnamese tea culture features unique preparations like lotus tea, where green tea is scented inside lotus flowers overnight, and egg coffee variations.',
+                teas: ['Lotus Tea', 'Thai Nguyen Green', 'Snow Shan'],
+                stats: { production: '#5 Producer', specialty: 'Lotus Tea' },
+                facts: [
+                    { icon: 'fa-spa', text: 'Famous for lotus-scented tea' },
+                    { icon: 'fa-leaf', text: 'Ancient wild tea trees in the north' },
+                    { icon: 'fa-industry', text: 'Fifth largest producer globally' }
+                ]
+            }
+        ];
+
+        const timelineData = [
+            {
+                id: 'legend',
+                year: '2737 BC',
+                title: 'The Legend Begins',
+                era: 'ancient',
+                eraLabel: 'Ancient Era',
+                shortDesc: 'According to Chinese legend, Emperor Shen Nung discovered tea when leaves from a wild tree blew into his pot of boiling water.',
+                fullDesc: 'According to Chinese legend, Emperor Shen Nung, known as the "Divine Farmer," discovered tea around 2737 BC. While boiling water under a Camellia sinensis tree, leaves blew into his pot. Intrigued by the pleasant aroma, he tasted the infusion and found it refreshing. Shen Nung was also credited with testing hundreds of herbs for medicinal properties, and he declared tea a healing beverage.',
+                impact: [
+                    'Established tea as a medicinal beverage in Chinese culture',
+                    'Created the foundation for 5,000 years of tea tradition',
+                    'Tea became integral to Chinese philosophy and daily life'
+                ]
+            },
+            {
+                id: 'written',
+                year: '59 BC',
+                title: 'First Written Record',
+                era: 'ancient',
+                eraLabel: 'Ancient Era',
+                shortDesc: 'The first known written reference to tea appears in a Chinese document.',
+                fullDesc: 'The earliest credible written record of tea appeared in a Chinese document from 59 BC, describing how servants should prepare and serve tea. This document, a contract for a servant, specified tea-related duties, indicating that tea drinking was already an established practice among Chinese aristocracy. Tea was initially consumed primarily for its medicinal properties.',
+                impact: [
+                    'Documented proof of tea\'s established role in Chinese society',
+                    'Showed tea was valued enough to include in legal contracts',
+                    'Marked transition from wild harvesting to cultivation'
+                ]
+            },
+            {
+                id: 'popular',
+                year: '350 AD',
+                title: 'Tea Becomes Popular',
+                era: 'ancient',
+                eraLabel: 'Ancient Era',
+                shortDesc: 'Tea drinking spreads throughout Chinese society and becomes a daily beverage.',
+                fullDesc: 'By 350 AD, tea had evolved from a medicinal drink to a daily beverage enjoyed across Chinese social classes. The first dictionary reference to tea appeared, describing it as "a beverage made from boiled leaves." Tea gardens began flourishing across China, and tea became associated with Chinese identity, philosophy, and social customs.',
+                impact: [
+                    'Tea transitioned from medicine to everyday beverage',
+                    'Commercial tea cultivation began in earnest',
+                    'Tea drinking became a social and cultural practice'
+                ]
+            },
+            {
+                id: 'classic',
+                year: '760 AD',
+                title: 'The Classic of Tea',
+                era: 'medieval',
+                eraLabel: 'Medieval Era',
+                shortDesc: 'Lu Yu writes "Cha Jing," the first definitive book about tea.',
+                fullDesc: 'Lu Yu (733-804 AD), often called the "Sage of Tea," wrote the Cha Jing (茶經) or "The Classic of Tea" around 760-780 AD. This masterpiece, consisting of three volumes and ten chapters, covered everything from tea plant cultivation to water quality, brewing techniques, and the philosophy of tea appreciation. It elevated tea preparation to an art form and established standards still referenced today.',
+                impact: [
+                    'Established tea preparation as a refined art form',
+                    'Created standardized methods for cultivation and brewing',
+                    'Elevated tea\'s cultural and spiritual significance'
+                ]
+            },
+            {
+                id: 'japan',
+                year: '805 AD',
+                title: 'Tea Reaches Japan',
+                era: 'medieval',
+                eraLabel: 'Medieval Era',
+                shortDesc: 'Buddhist monks bring tea seeds from China to Japan.',
+                fullDesc: 'In 805 AD, Japanese Buddhist monk Saichō returned from studying in China, bringing tea seeds with him. Tea quickly became central to monastery life, used by monks to stay alert during long meditation sessions. This began Japan\'s unique tea culture, which would eventually evolve into the highly ritualized Japanese tea ceremony (Chanoyu).',
+                impact: [
+                    'Introduced tea to Japanese culture via Buddhism',
+                    'Tea became tool for meditation and spiritual practice',
+                    'Laid groundwork for Japanese tea ceremony traditions'
+                ]
+            },
+            {
+                id: 'zen',
+                year: '1191 AD',
+                title: 'Zen and Tea Unite',
+                era: 'medieval',
+                eraLabel: 'Medieval Era',
+                shortDesc: 'Zen priest Eisai promotes tea drinking for its medicinal properties.',
+                fullDesc: 'Zen priest Eisai (1141-1215) wrote "Kissa Yōjōki" (喫茶養生記) or "How to Stay Healthy by Drinking Tea" in 1191. This influential text promoted tea\'s health benefits and helped spread tea culture among samurai warriors and the nobility. Eisai is credited with establishing the foundation for matcha preparation in Japan.',
+                impact: [
+                    'Connected tea drinking with Zen Buddhist philosophy',
+                    'Popularized tea among Japanese samurai class',
+                    'Introduced matcha preparation methods to Japan'
+                ]
+            },
+            {
+                id: 'europe',
+                year: '1610',
+                title: 'Tea Arrives in Europe',
+                era: 'colonial',
+                eraLabel: 'Colonial Era',
+                shortDesc: 'Dutch traders bring the first shipment of Chinese tea to Europe.',
+                fullDesc: 'In 1610, Dutch East India Company ships brought the first commercial shipment of Chinese tea to Europe via Java. Initially extremely expensive, tea was consumed mainly by royalty and wealthy elite as a status symbol. The Dutch introduced tea to other European countries, and it gradually became a fashionable beverage among the upper classes.',
+                impact: [
+                    'Began European tea trade that shaped global commerce',
+                    'Tea became luxury status symbol among European elite',
+                    'Created demand that would drive colonial expansion'
+                ]
+            },
+            {
+                id: 'british',
+                year: '1662',
+                title: 'British Tea Tradition Begins',
+                era: 'colonial',
+                eraLabel: 'Colonial Era',
+                shortDesc: 'Catherine of Braganza brings tea drinking to the British court.',
+                fullDesc: 'When Portuguese Princess Catherine of Braganza married King Charles II in 1662, she brought her love of tea to the British court. Her influence made tea drinking fashionable among British aristocracy. This marked the beginning of Britain\'s legendary tea culture, which would grow to define national identity.',
+                impact: [
+                    'Established tea as fashionable in British high society',
+                    'Began Britain\'s transformation into a tea-drinking nation',
+                    'Created market demand that drove British colonial tea trade'
+                ]
+            },
+            {
+                id: 'boston',
+                year: '1773',
+                title: 'Boston Tea Party',
+                era: 'colonial',
+                eraLabel: 'Colonial Era',
+                shortDesc: 'American colonists protest British tea taxes in a pivotal historical event.',
+                fullDesc: 'On December 16, 1773, American colonists in Boston, Massachusetts, protested British taxation without representation by boarding three ships and dumping 342 chests of East India Company tea into Boston Harbor. This act of defiance, organized by the Sons of Liberty, helped spark the American Revolution and changed the course of world history.',
+                impact: [
+                    'Became pivotal catalyst for American Revolution',
+                    'Shaped American preference for coffee over tea',
+                    'Demonstrated tea\'s role in global political struggles'
+                ]
+            },
+            {
+                id: 'india',
+                year: '1823',
+                title: 'Indian Tea Discovery',
+                era: 'colonial',
+                eraLabel: 'Colonial Era',
+                shortDesc: 'Native tea plants discovered in Assam, India.',
+                fullDesc: 'In 1823, Scottish explorer Robert Bruce discovered native Camellia sinensis var. assamica tea plants growing wild in Assam, India. This discovery was revolutionary—it meant the British could cultivate tea in their own colony, breaking China\'s monopoly. By the 1840s, the first Assam tea plantations were established, transforming India into a major tea producer.',
+                impact: [
+                    'Broke China\'s centuries-long monopoly on tea production',
+                    'Established India as major global tea producer',
+                    'Created Assam and Darjeeling tea industries'
+                ]
+            },
+            {
+                id: 'afternoon',
+                year: '1840',
+                title: 'Afternoon Tea Tradition',
+                era: 'colonial',
+                eraLabel: 'Colonial Era',
+                shortDesc: 'The Duchess of Bedford introduces the custom of afternoon tea.',
+                fullDesc: 'Anna Maria Russell, the 7th Duchess of Bedford, introduced the custom of "afternoon tea" around 1840. Feeling hungry during the long gap between lunch and the fashionably late dinner (served around 8-9 PM), she began requesting tea and light snacks in her private chambers. The practice spread quickly through British society and became an enduring tradition.',
+                impact: [
+                    'Created the iconic British afternoon tea tradition',
+                    'Established teatime as important social occasion',
+                    'Influenced global tea service and hospitality customs'
+                ]
+            },
+            {
+                id: 'iced',
+                year: '1904',
+                title: 'Iced Tea Invention',
+                era: 'modern',
+                eraLabel: 'Modern Era',
+                shortDesc: 'Richard Blechynden popularizes iced tea at the St. Louis World\'s Fair.',
+                fullDesc: 'At the 1904 St. Louis World\'s Fair, tea merchant Richard Blechynden struggled to sell hot tea during a heat wave. In desperation, he poured his tea over ice—and iced tea became an instant sensation. Today, approximately 85% of tea consumed in the United States is served cold, making America the birthplace of this refreshing innovation.',
+                impact: [
+                    'Created America\'s most popular tea preparation method',
+                    'Revolutionized tea consumption for warm climates',
+                    'Spawned multi-billion dollar ready-to-drink tea industry'
+                ]
+            },
+            {
+                id: 'teabag',
+                year: '1908',
+                title: 'Tea Bag Revolution',
+                era: 'modern',
+                eraLabel: 'Modern Era',
+                shortDesc: 'Thomas Sullivan accidentally invents the tea bag.',
+                fullDesc: 'In 1908, New York tea merchant Thomas Sullivan began sending tea samples to customers in small silk pouches for convenience. Customers mistakenly steeped the entire pouch rather than emptying the leaves into a pot. Recognizing the potential, Sullivan developed the concept, and the tea bag was born—transforming how the world brews tea.',
+                impact: [
+                    'Revolutionized tea preparation for convenience',
+                    'Made tea accessible to mass consumer markets',
+                    'Changed tea industry manufacturing and packaging'
+                ]
+            },
+            {
+                id: 'bubble',
+                year: '1980s',
+                title: 'Bubble Tea Emerges',
+                era: 'modern',
+                eraLabel: 'Modern Era',
+                shortDesc: 'Taiwan invents bubble tea, combining tea with chewy tapioca pearls.',
+                fullDesc: 'In the 1980s, Taiwanese tea shops began experimenting with cold tea drinks. The invention of bubble tea (also called boba) is attributed to either Chun Shui Tang teahouse or Hanlin Tea Room in Taiwan. By combining tea, milk, and chewy tapioca pearls, they created a playful drink that became a global phenomenon, especially popular among younger generations.',
+                impact: [
+                    'Created entirely new category of tea beverages',
+                    'Spawned global bubble tea shop industry worth billions',
+                    'Introduced tea culture to younger generations worldwide'
+                ]
+            },
+            {
+                id: 'today',
+                year: 'Today',
+                title: 'Global Tea Culture',
+                era: 'modern',
+                eraLabel: 'Modern Era',
+                shortDesc: 'Tea is the world\'s second most consumed beverage after water.',
+                fullDesc: 'Today, tea is the second most consumed beverage in the world after water. Over 3 billion cups are drunk daily across the globe. The industry has seen a renaissance with specialty teas, artisanal blends, matcha lattes, and wellness teas driving growth. From ancient traditions to modern innovations, tea continues to evolve while connecting people across cultures.',
+                impact: [
+                    'Over 3 billion cups consumed daily worldwide',
+                    'Specialty tea market growing at 5%+ annually',
+                    'Tea culture bridges traditional and modern lifestyles'
+                ]
+            }
+        ];
+
+        const quizQuestions = [
+            {
+                question: 'According to legend, who discovered tea?',
+                options: ['Emperor Shen Nung', 'Confucius', 'Buddha', 'Marco Polo'],
+                correct: 0
+            },
+            {
+                question: 'What year was tea first brought to Europe?',
+                options: ['1492', '1610', '1776', '1823'],
+                correct: 1
+            },
+            {
+                question: 'What plant do all true teas come from?',
+                options: ['Camellia japonica', 'Camellia sinensis', 'Coffea arabica', 'Mentha piperita'],
+                correct: 1
+            },
+            {
+                question: 'What distinguishes black tea from green tea?',
+                options: ['Different plants', 'Oxidation level', 'Growing region', 'Harvest time'],
+                correct: 1
+            },
+            {
+                question: 'Which country has the highest per capita tea consumption?',
+                options: ['China', 'United Kingdom', 'Turkey', 'Japan'],
+                correct: 2
+            },
+            {
+                question: 'When did the Boston Tea Party occur?',
+                options: ['1765', '1773', '1789', '1812'],
+                correct: 1
+            },
+            {
+                question: 'What is the Japanese tea ceremony called?',
+                options: ['Gongfu', 'Chanoyu', 'Atay', 'Samovar'],
+                correct: 1
+            },
+            {
+                question: 'Which tea is known as the "Champagne of teas"?',
+                options: ['Assam', 'Darjeeling', 'Ceylon', 'Keemun'],
+                correct: 1
+            },
+            {
+                question: 'Who invented the tea bag?',
+                options: ['Thomas Lipton', 'Thomas Sullivan', 'Robert Bruce', 'Richard Blechynden'],
+                correct: 1
+            },
+            {
+                question: 'What country is famous for Pu-erh tea?',
+                options: ['Japan', 'India', 'China', 'Taiwan'],
+                correct: 2
+            }
+        ];
+
+        const brewingData = {
+            green: { temp: '175°F (80°C)', time: '2-3 min', timerSeconds: 150 },
+            black: { temp: '212°F (100°C)', time: '3-5 min', timerSeconds: 240 },
+            white: { temp: '175°F (80°C)', time: '4-5 min', timerSeconds: 270 },
+            oolong: { temp: '190°F (88°C)', time: '3-5 min', timerSeconds: 240 },
+            puerh: { temp: '212°F (100°C)', time: '3-5 min', timerSeconds: 240 },
+            herbal: { temp: '212°F (100°C)', time: '5-7 min', timerSeconds: 360 }
+        };
+
+        // ============================================
+        // DOM Elements
+        // ============================================
+        
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.getElementById('navLinks');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        const teaGrid = document.getElementById('teaGrid');
+        const teaModal = document.getElementById('teaModal');
+        const modalClose = document.getElementById('modalClose');
+
+        // ============================================
+        // Initialize App
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initCounters();
+            initTimeline();
+            initMap();
+            initTeaCards();
+            initBrewing();
+            initCulture();
+            initQuiz();
+            initScrollTop();
+        });
+
+        // ============================================
+        // Navigation
+        // ============================================
+        
+        function initNavigation() {
+            // Scroll behavior
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+
+            // Smooth scroll for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // Animated Counters
+        // ============================================
+        
+        function initCounters() {
+            const counters = [
+                { el: document.getElementById('yearsCounter'), target: 5000, suffix: '+' },
+                { el: document.getElementById('countriesCounter'), target: 160, suffix: '+' },
+                { el: document.getElementById('varietiesCounter'), target: 3000, suffix: '+' }
+            ];
+
+            const observerOptions = { threshold: 0.5 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        counters.forEach(counter => animateCounter(counter));
+                        observer.disconnect();
+                    }
+                });
+            }, observerOptions);
+
+            observer.observe(document.querySelector('.hero-stats'));
+        }
+
+        function animateCounter({ el, target, suffix }) {
+            let current = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    el.textContent = target.toLocaleString() + suffix;
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.floor(current).toLocaleString() + suffix;
+                }
+            }, 30);
+        }
+
+        // ============================================
+        // Timeline
+        // ============================================
+        
+        const timelineModal = document.getElementById('timelineModal');
+        const timelineModalClose = document.getElementById('timelineModalClose');
+        
+        function initTimeline() {
+            // Era filter buttons
+            document.querySelectorAll('.era-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterTimeline(btn.dataset.era);
+                });
+            });
+
+            // Intersection Observer for animation
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            timelineItems.forEach(item => observer.observe(item));
+            
+            // Click handlers for timeline items
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                content.addEventListener('click', () => {
+                    const year = content.querySelector('.timeline-year').textContent;
+                    const title = content.querySelector('h3').textContent;
+                    showTimelineModal(year, title);
+                });
+            });
+            
+            // Close timeline modal
+            timelineModalClose.addEventListener('click', () => timelineModal.classList.remove('active'));
+            timelineModal.addEventListener('click', (e) => {
+                if (e.target === timelineModal) timelineModal.classList.remove('active');
+            });
+        }
+
+        function filterTimeline(era) {
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                if (era === 'all' || item.dataset.era === era) {
+                    item.style.display = 'flex';
+                    setTimeout(() => item.classList.add('visible'), 100);
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('visible');
+                }
+            });
+        }
+        
+        function showTimelineModal(year, title) {
+            const event = timelineData.find(e => e.year === year || e.title === title);
+            if (!event) return;
+            
+            document.getElementById('timelineModalYear').textContent = event.year;
+            document.getElementById('timelineModalTitle').textContent = event.title;
+            document.getElementById('timelineModalEra').textContent = event.eraLabel;
+            document.getElementById('timelineModalDesc').textContent = event.fullDesc;
+            
+            // Render impact points
+            document.getElementById('timelineModalImpact').innerHTML = event.impact.map(item => `
+                <div class="impact-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${item}</span>
+                </div>
+            `).join('');
+            
+            timelineModal.classList.add('active');
+        }
+
+        // ============================================
+        // Tea Regions
+        // ============================================
+        
+        const regionModal = document.getElementById('regionModal');
+        const regionModalClose = document.getElementById('regionModalClose');
+        
+        function initMap() {
+            renderRegionCards();
+            
+            // Close region modal
+            regionModalClose.addEventListener('click', () => regionModal.classList.remove('active'));
+            regionModal.addEventListener('click', (e) => {
+                if (e.target === regionModal) regionModal.classList.remove('active');
+            });
+        }
+
+        function renderRegionCards() {
+            const grid = document.getElementById('regionsGrid');
+            const statIcons = {
+                production: 'fa-industry',
+                cups: 'fa-mug-hot',
+                consumption: 'fa-chart-line',
+                tradition: 'fa-landmark',
+                export: 'fa-ship',
+                specialty: 'fa-gem',
+                altitude: 'fa-mountain'
+            };
+            
+            grid.innerHTML = regionData.map(region => `
+                <div class="region-card" data-region="${region.id}">
+                    <div class="region-card-header">
+                        <span class="region-flag">${region.flag}</span>
+                        <div class="region-card-title">
+                            <h3>${region.title}</h3>
+                            <span>${region.period}</span>
+                        </div>
+                    </div>
+                    <p>${region.shortDesc}</p>
+                    <div class="region-card-stats">
+                        ${Object.entries(region.stats).map(([key, value]) => `
+                            <div class="region-stat">
+                                <i class="fas ${statIcons[key] || 'fa-info-circle'}"></i>
+                                ${value}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.region-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    showRegionModal(card.dataset.region);
+                });
+            });
+        }
+
+        function showRegionModal(regionId) {
+            const region = regionData.find(r => r.id === regionId);
+            if (!region) return;
+
+            document.getElementById('regionModalFlag').textContent = region.flag;
+            document.getElementById('regionModalTitle').textContent = region.title;
+            document.getElementById('regionModalPeriod').textContent = region.period;
+            document.getElementById('regionModalDesc').textContent = region.desc;
+            
+            // Render teas
+            document.getElementById('regionModalTeas').innerHTML = region.teas.map(tea => 
+                `<span class="region-tea-tag">${tea}</span>`
+            ).join('');
+            
+            // Render facts
+            document.getElementById('regionModalFacts').innerHTML = region.facts.map(fact => `
+                <div class="fact-item">
+                    <i class="fas ${fact.icon}"></i>
+                    <span>${fact.text}</span>
+                </div>
+            `).join('');
+
+            regionModal.classList.add('active');
+        }
+
+        // ============================================
+        // Tea Cards
+        // ============================================
+        
+        function initTeaCards() {
+            renderTeaCards(teaTypes);
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.dataset.filter;
+                    const filtered = filter === 'all' 
+                        ? teaTypes 
+                        : teaTypes.filter(t => t.category === filter);
+                    renderTeaCards(filtered);
+                });
+            });
+
+            // Modal close
+            modalClose.addEventListener('click', () => teaModal.classList.remove('active'));
+            teaModal.addEventListener('click', (e) => {
+                if (e.target === teaModal) teaModal.classList.remove('active');
+            });
+        }
+
+        function renderTeaCards(teas) {
+            teaGrid.innerHTML = teas.map(tea => `
+                <div class="tea-card" data-tea="${tea.id}">
+                    <div class="tea-card-image">
+                        <img src="${tea.image}" alt="${tea.name}">
+                        <span class="tea-card-badge">${tea.category}</span>
+                    </div>
+                    <div class="tea-card-content">
+                        <h3>${tea.name}</h3>
+                        <div class="tea-card-origin">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${tea.origin}
+                        </div>
+                        <p>${tea.description}</p>
+                        <div class="tea-card-stats">
+                            <div class="tea-stat">
+                                <span class="tea-stat-value">${tea.oxidation}</span>
+                                <span class="tea-stat-label">Oxidation</span>
+                            </div>
+                            <div class="tea-stat">
+                                <span class="tea-stat-value">${tea.caffeine}</span>
+                                <span class="tea-stat-label">Caffeine</span>
+                            </div>
+                            <div class="tea-stat">
+                                <span class="tea-stat-value">${tea.temp}</span>
+                                <span class="tea-stat-label">Brew Temp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.tea-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const tea = teaTypes.find(t => t.id === card.dataset.tea);
+                    showTeaModal(tea);
+                });
+            });
+        }
+
+        function showTeaModal(tea) {
+            document.getElementById('modalImage').src = tea.image;
+            document.getElementById('modalTitle').textContent = tea.name;
+            document.getElementById('modalOrigin').textContent = tea.origin;
+            document.getElementById('modalType').textContent = tea.category;
+            document.getElementById('modalDesc').textContent = tea.fullDesc;
+            document.getElementById('modalCaffeine').textContent = tea.caffeine;
+            document.getElementById('modalTime').textContent = tea.time;
+            document.getElementById('modalFlavor').textContent = tea.flavor;
+            document.getElementById('modalHealth').textContent = tea.health;
+            teaModal.classList.add('active');
+        }
+
+        // ============================================
+        // Brewing Timer
+        // ============================================
+        
+        let timerInterval = null;
+        let timerSeconds = 180;
+        let isRunning = false;
+
+        function initBrewing() {
+            const startBtn = document.getElementById('startBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const timerDisplay = document.getElementById('timerDisplay');
+
+            // Tea selector
+            document.querySelectorAll('.tea-select-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tea-select-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    updateBrewingParams(btn.dataset.tea);
+                });
+            });
+
+            startBtn.addEventListener('click', () => {
+                if (isRunning) {
+                    pauseTimer();
+                    startBtn.innerHTML = '<i class="fas fa-play"></i>';
+                } else {
+                    startTimer();
+                    startBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }
+                isRunning = !isRunning;
+            });
+
+            resetBtn.addEventListener('click', () => {
+                resetTimer();
+            });
+        }
+
+        function updateBrewingParams(teaType) {
+            const data = brewingData[teaType];
+            document.getElementById('tempValue').textContent = data.temp;
+            document.getElementById('timeValue').textContent = data.time;
+            timerSeconds = data.timerSeconds;
+            resetTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    playTimerSound();
+                    document.getElementById('startBtn').innerHTML = '<i class="fas fa-play"></i>';
+                    isRunning = false;
+                    return;
+                }
+                timerSeconds--;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            const activeBtn = document.querySelector('.tea-select-btn.active');
+            const teaType = activeBtn ? activeBtn.dataset.tea : 'green';
+            timerSeconds = brewingData[teaType].timerSeconds;
+            updateTimerDisplay();
+            document.getElementById('startBtn').innerHTML = '<i class="fas fa-play"></i>';
+            isRunning = false;
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function playTimerSound() {
+            // Create a simple beep using Web Audio API
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.5);
+            } catch (e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // ============================================
+        // Culture Tabs
+        // ============================================
+        
+        function initCulture() {
+            document.querySelectorAll('.culture-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.culture-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.culture-content').forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.culture).classList.add('active');
+                });
+            });
+        }
+
+        // ============================================
+        // Quiz
+        // ============================================
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answers = [];
+
+        function initQuiz() {
+            renderQuestion();
+            
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+        }
+
+        function renderQuestion() {
+            const q = quizQuestions[currentQuestion];
+            document.getElementById('questionText').textContent = q.question;
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1}/${quizQuestions.length}`;
+            document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = q.options.map((opt, i) => `
+                <div class="quiz-option ${answers[currentQuestion] === i ? 'selected' : ''}" data-index="${i}">
+                    <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                    <span>${opt}</span>
+                </div>
+            `).join('');
+
+            optionsContainer.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', () => selectAnswer(parseInt(opt.dataset.index)));
+            });
+
+            // Update navigation
+            document.getElementById('prevBtn').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
+            document.getElementById('nextBtn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Finish' : 'Next';
+            document.getElementById('nextBtn').innerHTML = currentQuestion === quizQuestions.length - 1 
+                ? 'Finish <i class="fas fa-check"></i>' 
+                : 'Next <i class="fas fa-arrow-right"></i>';
+        }
+
+        function selectAnswer(index) {
+            answers[currentQuestion] = index;
+            document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector(`[data-index="${index}"]`).classList.add('selected');
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) {
+                alert('Please select an answer!');
+                return;
+            }
+
+            if (currentQuestion === quizQuestions.length - 1) {
+                showResults();
+            } else {
+                currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function showResults() {
+            score = answers.filter((ans, i) => ans === quizQuestions[i].correct).length;
+            
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizResult').classList.add('active');
+            document.getElementById('resultScore').textContent = `${score}/${quizQuestions.length}`;
+            
+            let message = '';
+            const percentage = (score / quizQuestions.length) * 100;
+            if (percentage >= 90) message = 'Tea Master! Exceptional knowledge! 🏆';
+            else if (percentage >= 70) message = 'Tea Connoisseur! Well done! 🎉';
+            else if (percentage >= 50) message = 'Tea Enthusiast! Good effort! ☕';
+            else message = 'Tea Beginner! Keep learning! 📚';
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizResult').classList.remove('active');
+            renderQuestion();
+        }
+
+        // ============================================
+        // Scroll to Top
+        // ============================================
+        
+        function initScrollTop() {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ============================================
+        // Keyboard Navigation
+        // ============================================
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close all modals
+                teaModal.classList.remove('active');
+                regionModal.classList.remove('active');
+                timelineModal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

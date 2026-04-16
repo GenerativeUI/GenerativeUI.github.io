@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Dean - The Legendary Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #202124;
+            --bg-card: #292a2d;
+            --primary: #4285f4;
+            --secondary: #ea4335;
+            --accent: #34a853;
+            --warning: #fbbc04;
+            --error: #ea4335;
+            --text: #e8eaed;
+            --text-muted: #9aa0a6;
+            --google-blue: #4285f4;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc04;
+            --google-green: #34a853;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #202124 0%, #292a2d 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .nav-sidebar {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        .nav-dot:hover {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .nav-dot::after {
+            content: attr(title);
+            position: absolute;
+            right: calc(100% + 15px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 30, 50, 0.95);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        .nav-dot:hover::after { opacity: 1; }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Disable gradient for modal title - emojis will show in color */
+        #modalTitle {
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: inherit !important;
+            background-clip: initial !important;
+            color: var(--text) !important;
+        }
+
+        /* Also for spans in other headings */
+        h1 span,
+        h2 span,
+        h3 span,
+        h4 span {
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            color: initial !important;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        #hero {
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .hero-image {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            aspect-ratio: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.1) contrast(1.1);
+        }
+
+        .hero-content {
+            text-align: left;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--accent);
+            min-height: 3rem;
+            margin: 2rem 0;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Interactive Cards */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .interactive-card {
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card:hover::before { transform: scaleX(1); }
+
+        .interactive-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* MapReduce Visualizer */
+        .visualizer-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            padding: 2rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .flow-step:last-child::after { display: none; }
+
+        .flow-step:hover {
+            transform: scale(1.05);
+            background: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .data-nodes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .data-node {
+            padding: 0.75rem 1.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Code Editor */
+        .code-editor {
+            background: #1e1e2e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .editor-header {
+            background: #2a2a3e;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .editor-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .editor-dot.red { background: #ff5f56; }
+        .editor-dot.yellow { background: #ffbd2e; }
+        .editor-dot.green { background: #27c93f; }
+
+        .editor-content {
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        button {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Neural Network Viz */
+        .nn-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .nn-layers {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .nn-layer {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .neuron {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .neuron:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+        }
+
+        .neuron.active {
+            background: linear-gradient(135deg, var(--accent), #10b981);
+            animation: neuronPulse 1s ease-in-out;
+        }
+
+        @keyframes neuronPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Quiz */
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .question-card {
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--accent);
+        }
+
+        .option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error);
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            .hero-grid { grid-template-columns: 1fr; }
+            .interactive-grid { grid-template-columns: 1fr; }
+            .process-flow { grid-template-columns: 1fr; }
+            .flow-step::after { content: '↓'; right: auto; top: 100%; left: 50%; }
+            .nav-sidebar { display: none; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Impact Counter */
+        .impact-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .impact-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .impact-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+    
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
+            max-width: 40px !important;
+            max-height: 40px !important;
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 50% !important;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+        }
+
+        .modal-close:hover {
+            background: var(--secondary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-interactive {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--google-blue), var(--google-green));
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .tech-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            padding: 1rem;
+            background: rgba(66, 133, 244, 0.1);
+            border: 1px solid var(--google-blue);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(66, 133, 244, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .tech-item.active {
+            background: rgba(52, 168, 83, 0.2);
+            border-color: var(--google-green);
+        }
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Z-INDEX FIX: Neural Network Lines BEHIND Neurons
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Ensure SVG is behind */
+svg.nn-svg,
+.nn-svg {
+    z-index: -1 !important;  /* Negative = behind everything */
+}
+
+/* Ensure neurons are above */
+section div[style*="border-radius: 50%"],
+section div[style*="border-radius:50%"],
+section div[style*="border-radius: 100%"] {
+    position: relative !important;
+    z-index: 10 !important;  /* Above lines */
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NUCLEAR EMOJI FIX - MAXIMUM VISIBILITY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.emoji,
+h1 .emoji,
+h2 .emoji,
+h3 .emoji,
+.modal .emoji,
+.modal-content .emoji,
+.modal-content h1 .emoji,
+.modal-content h2 .emoji,
+.modal-content h3 .emoji {
+    /* Complete reset */
+    all: initial !important;
+
+    /* Rebuild */
+    display: inline-block !important;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji" !important;
+
+    /* HUGE */
+    font-size: 3em !important;
+    line-height: 1 !important;
+
+    /* Black with white glow */
+    color: #000 !important;
+
+    /* No gradients */
+    background: transparent !important;
+    -webkit-text-fill-color: #000 !important;
+    -webkit-background-clip: initial !important;
+
+    /* Break out */
+    position: relative !important;
+    z-index: 999999 !important;
+
+    /* NUCLEAR filters */
+    filter: 
+        contrast(5) 
+        saturate(5) 
+        brightness(3) 
+        drop-shadow(0 0 4px white)
+        drop-shadow(0 0 8px white) !important;
+
+    /* Spacing */
+    margin: 0 0.2em !important;
+
+    /* Force emoji */
+    font-variant-emoji: emoji !important;
+
+    /* Massive glow */
+    text-shadow: 
+        0 0 3px rgba(255,255,255,1),
+        0 0 6px rgba(255,255,255,1),
+        0 0 10px rgba(255,255,255,0.9),
+        0 0 15px rgba(255,255,255,0.8),
+        0 0 20px rgba(255,255,255,0.6),
+        0 0 30px rgba(255,255,255,0.4) !important;
+}
+
+</style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav-sidebar">
+        <div class="nav-dot active" onclick="scrollToSection(0)" title="Home"></div>
+        <div class="nav-dot" onclick="scrollToSection(1)" title="MapReduce"></div>
+        <div class="nav-dot" onclick="scrollToSection(2)" title="TensorFlow"></div>
+        <div class="nav-dot" onclick="scrollToSection(3)" title="Distributed"></div>
+        <div class="nav-dot" onclick="scrollToSection(4)" title="Code Race"></div>
+        <div class="nav-dot" onclick="scrollToSection(5)" title="Projects"></div>
+        <div class="nav-dot" onclick="scrollToSection(6)" title="Impact"></div>
+        <div class="nav-dot" onclick="scrollToSection(7)" title="Quiz"></div>
+    </nav>
+
+
+    <!-- Section 1: Hero -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <!-- Photo -->
+                <div class="hero-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Jeff_Dean_at_Purdue_Engineering_%28May_2024%29_-_img_02.jpg"
+                         alt="Jeff Dean - Google Senior Fellow"
+                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                </div>
+
+                <!-- Content -->
+                <div class="hero-content">
+                    <div class="badge">⚡ GOOGLE SENIOR FELLOW & HEAD OF AI</div>
+                    <h1>JEFF DEAN</h1>
+                    <p style="font-size: 1.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        The Legendary Engineer Behind Google's Infrastructure
+                    </p>
+                    <p class="typing-text" id="typingText"></p>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="25">0</div>
+                            <div class="stat-label">Years at Google</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="1000">0</div>
+                            <div class="stat-label">+ Patents</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="100">0</div>
+                            <div class="stat-label">Billion+ Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="50">0</div>
+                            <div class="stat-label">+ Major Systems</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Facts -->
+            <div style="margin-top: 4rem;">
+                <div class="glass" style="padding: 3rem;">
+                    <h3 style="text-align: center; margin-bottom: 2rem;">🌟 Quick Facts</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎓</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">PhD Computer Science</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">University of Washington, 1996</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏆</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">ACM & IEEE Fellow</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Highest honors in computing</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📚</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">200,000+ Citations</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Most cited papers in CS</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚀</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Employee #20</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Joined Google in 1999</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: MapReduce Interactive Visualizer -->
+    <section id="mapreduce">
+        <div class="container">
+            <h2><span>🗺️</span> MapReduce Visualizer</h2>
+            <p class="section-subtitle">
+                Experience the revolutionary programming model that changed big data forever
+            </p>
+
+            <div class="visualizer-container">
+                <h3>How MapReduce Works</h3>
+
+                <!-- Process Flow -->
+                <div class="process-flow">
+                    <div class="flow-step" onclick="animateMapPhase()">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📥</div>
+                        <h4 style="margin-bottom: 1rem;">1. INPUT</h4>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Split data across multiple nodes</p>
+                        <div id="inputData" class="data-nodes">
+                            <div class="data-node">doc1.txt</div>
+                            <div class="data-node">doc2.txt</div>
+                            <div class="data-node">doc3.txt</div>
+                        </div>
+                    </div>
+
+                    <div class="flow-step" onclick="animateMapPhase()">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
+                        <h4 style="margin-bottom: 1rem;">2. MAP</h4>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Process each piece in parallel</p>
+                        <div id="mapData" class="data-nodes"></div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                        <h4 style="margin-bottom: 1rem;">3. REDUCE</h4>
+                        <p style="font-size: 0.875rem; color: var(--text-muted);">Combine results</p>
+                        <div id="reduceData" class="data-nodes"></div>
+                    </div>
+                </div>
+
+                <button onclick="runMapReduceDemo()" style="display: block; margin: 2rem auto;">
+                    ▶ Run Simulation
+                </button>
+
+                <!-- Interactive Word Count -->
+                <div style="margin-top: 3rem;">
+                    <h3><span>🎮</span> Try It Yourself: Word Counter</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                        Enter text below and watch MapReduce process it in real-time:
+                    </p>
+                    <textarea id="mrInput" placeholder="Jeff Dean created MapReduce at Google. MapReduce processes big data efficiently. Google uses MapReduce for search indexing...">Jeff Dean created MapReduce at Google. MapReduce revolutionized big data processing. Google Search uses MapReduce to index billions of web pages. TensorFlow and BigTable also use distributed computing concepts.</textarea>
+                    <button onclick="processMapReduce()" style="margin-top: 1rem;">
+                        ⚡ Process with MapReduce
+                    </button>
+                    <div id="mrResults" style="margin-top: 2rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: TensorFlow Neural Network Playground -->
+    <section id="tensorflow">
+        <div class="container">
+            <h2><span>🤖</span> TensorFlow Neural Network Playground</h2>
+            <p class="section-subtitle">
+                Interactive demo of the ML framework that powers billions of AI applications
+            </p>
+
+            <div class="nn-container">
+                <h3>Simple Neural Network</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                    Click "Train Network" to see neurons activate as the network learns
+                </p>
+
+                <!-- Neural Network Visualization -->
+                <div class="nn-layers">
+                    <div class="nn-layer">
+                        <h4 style="margin-bottom: 1rem;">Input Layer</h4>
+                        <div class="neuron" data-layer="input" data-index="0">I₁</div>
+                        <div class="neuron" data-layer="input" data-index="1">I₂</div>
+                        <div class="neuron" data-layer="input" data-index="2">I₃</div>
+                    </div>
+
+                    <div class="nn-layer">
+                        <h4 style="margin-bottom: 1rem;">Hidden Layer</h4>
+                        <div class="neuron" data-layer="hidden" data-index="0">H₁</div>
+                        <div class="neuron" data-layer="hidden" data-index="1">H₂</div>
+                        <div class="neuron" data-layer="hidden" data-index="2">H₃</div>
+                        <div class="neuron" data-layer="hidden" data-index="3">H₄</div>
+                    </div>
+
+                    <div class="nn-layer">
+                        <h4 style="margin-bottom: 1rem;">Output Layer</h4>
+                        <div class="neuron" data-layer="output" data-index="0">O₁</div>
+                        <div class="neuron" data-layer="output" data-index="1">O₂</div>
+                    </div>
+                </div>
+
+                <button onclick="trainNetwork()" style="display: block; margin: 2rem auto;">
+                    🎯 Train Network
+                </button>
+
+                <div id="trainingStatus" style="text-align: center; margin-top: 2rem; font-size: 1.1rem;"></div>
+
+                <!-- Training Progress -->
+                <div style="margin-top: 3rem; padding: 2rem; background: rgba(59, 130, 246, 0.1); border-radius: 16px;">
+                    <h4 style="margin-bottom: 1rem;">Training Metrics</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center;">
+                        <div>
+                            <div style="font-size: 2rem; color: var(--accent); font-weight: 700;" id="accuracy">0%</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Accuracy</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; color: var(--primary); font-weight: 700;" id="epoch">0</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Epochs</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; color: var(--secondary); font-weight: 700;" id="loss">1.00</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">Loss</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 3.5: Distributed System Canvas Simulator -->
+    <section id="distributed-sim" style="background: radial-gradient(circle at 30% 70%, rgba(139, 92, 246, 0.1), transparent);">
+        <div class="container">
+            <h2><span>🌐</span> Distributed System Simulator</h2>
+            <p class="section-subtitle">
+                Watch how Jeff Dean's systems distribute work across thousands of servers
+            </p>
+
+            <div class="glass" style="padding: 3rem;">
+                <canvas id="distCanvas" width="1200" height="500" style="width: 100%; max-width: 1200px; height: auto; border-radius: 12px; background: rgba(0,0,0,0.3); display: block; margin: 0 auto;"></canvas>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+                    <button onclick="startDistributedSim()" style="padding: 1rem 2rem;">
+                        ▶ Start Simulation
+                    </button>
+                    <button onclick="addServer()" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent), #10b981);">
+                        ➕ Add Server
+                    </button>
+                    <button onclick="sendRequest()" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--warning), #f59e0b);">
+                        📤 Send Request
+                    </button>
+                    <button onclick="clearSimulation()" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--error), #ef4444);">
+                        🔄 Reset
+                    </button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; text-align: center;">
+                    <div style="padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px;">
+                        <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="serverCount">3</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Active Servers</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px;">
+                        <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent);" id="requestCount">0</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Total Requests</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(245, 158, 11, 0.1); border-radius: 12px;">
+                        <div style="font-size: 2.5rem; font-weight: 800; color: var(--warning);" id="throughput">0</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Req/sec</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px;">
+                    <h4 style="margin-bottom: 1rem;">💡 How it works:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            🔵 <strong>Blue circles</strong> = Servers (can handle multiple requests)
+                        </li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            🟢 <strong>Green dots</strong> = Requests being processed
+                        </li>
+                        <li style="padding: 0.5rem 0;">
+                            ⚡ <strong>Load balancing</strong> = Requests distributed evenly across servers
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3.75: Code Race Game -->
+    <section id="code-race" style="background: radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.1), transparent);">
+        <div class="container">
+            <h2><span>🏁</span> Code Optimization Race</h2>
+            <p class="section-subtitle">
+                Race to optimize code like Jeff Dean! Make the fastest algorithm win
+            </p>
+
+            <div class="glass" style="padding: 3rem;">
+                <canvas id="raceCanvas" width="1200" height="400" style="width: 100%; max-width: 1200px; height: auto; border-radius: 12px; background: rgba(0,0,0,0.3); display: block; margin: 0 auto;"></canvas>
+
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button onclick="startRace()" style="padding: 1rem 3rem; font-size: 1.2rem;">
+                        🏁 Start Race!
+                    </button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; border: 2px solid var(--primary);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐌 O(n²)</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Bubble Sort</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Slow but simple</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(245, 158, 11, 0.2); border-radius: 12px; border: 2px solid var(--warning);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⚡ O(n log n)</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Quick Sort</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Fast average case</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(16, 185, 129, 0.2); border-radius: 12px; border: 2px solid var(--accent);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚀 O(n)</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Counting Sort</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Jeff Dean's optimization!</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px;">
+                    <p style="text-align: center; font-size: 1.1rem;">
+                        <span>🏆</span> <strong>Winner: Counting Sort Won!</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Section 4: Revolutionary Projects -->
+    <section id="projects">
+        <div class="container">
+            <h2><span>💻</span> Revolutionary Projects</h2>
+            <p class="section-subtitle">
+                Systems that revolutionized computing and serve billions of users daily
+            </p>
+
+            <div class="interactive-grid">
+                <div class="interactive-card" onclick="showProjectDetails('mapreduce')">
+                    <div class="card-icon">🗺️</div>
+                    <div class="card-title">MapReduce</div>
+                    <div class="card-desc">
+                        Revolutionary programming model for processing massive datasets across thousands of machines. 
+                        Inspired Apache Hadoop, Spark, and the entire big data ecosystem.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Distributed Computing</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">2004</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">200k+ Citations</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="showProjectDetails('bigtable')">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">BigTable</div>
+                    <div class="card-desc">
+                        Distributed NoSQL database storing petabytes of data. Powers Gmail, Google Maps, YouTube, and more. 
+                        The foundation of modern cloud databases.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.2); border-radius: 12px; font-size: 0.875rem;">NoSQL</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.2); border-radius: 12px; font-size: 0.875rem;">2006</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.2); border-radius: 12px; font-size: 0.875rem;">Petabytes</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="showProjectDetails('tensorflow')">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-title">TensorFlow</div>
+                    <div class="card-desc">
+                        World's most popular ML framework with 180k+ GitHub stars. Powers Google Search, Photos, Translate, 
+                        and millions of AI applications worldwide.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Machine Learning</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">2015</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Open Source</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="showProjectDetails('spanner')">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-title">Spanner</div>
+                    <div class="card-desc">
+                        First globally distributed database with strong consistency. Uses atomic clocks for synchronization 
+                        across continents. Powers critical Google services.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.2); border-radius: 12px; font-size: 0.875rem;">Global Scale</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.2); border-radius: 12px; font-size: 0.875rem;">2012</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.2); border-radius: 12px; font-size: 0.875rem;">SQL</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="showProjectDetails('tpu')">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">TPU (Tensor Processing Unit)</div>
+                    <div class="card-desc">
+                        Custom-built AI accelerator chips. 15-30x faster than GPUs for ML workloads. 
+                        Enabled AlphaGo, Google Translate, and next-gen AI.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.2); border-radius: 12px; font-size: 0.875rem;">Hardware</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.2); border-radius: 12px; font-size: 0.875rem;">2016</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(239, 68, 68, 0.2); border-radius: 12px; font-size: 0.875rem;">30x Faster</span>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="showProjectDetails('protobuf')">
+                    <div class="card-icon">📦</div>
+                    <div class="card-title">Protocol Buffers</div>
+                    <div class="card-desc">
+                        Language-neutral data serialization. Industry standard used by millions of developers. 
+                        10-100x smaller and faster than XML/JSON.
+                    </div>
+                    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Serialization</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Open Source</span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); border-radius: 12px; font-size: 0.875rem;">Efficient</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Global Impact Calculator -->
+    <section id="impact">
+        <div class="container">
+            <h2><span>🌍</span> Global Impact Calculator</h2>
+            <p class="section-subtitle">
+                Calculate how Jeff Dean's technologies impact the world every second
+            </p>
+
+            <div class="glass" style="padding: 3rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem;">Real-Time Impact</h3>
+
+                <div class="impact-display">
+                    <div class="impact-item">
+                        <div class="impact-number" id="searches">0</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Google Searches</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Using MapReduce</div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-number" id="mlRequests">0</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">ML Inferences</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Powered by TensorFlow</div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-number" id="dataStored">0</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">TB Data Stored</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">In BigTable/Spanner</div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-number" id="users">0</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Active Users</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Benefiting Right Now</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(16, 185, 129, 0.1); border-radius: 16px;">
+                    <div style="font-size: 1.2rem; margin-bottom: 1rem;">📊 Total Systems Served:</div>
+                    <div style="font-size: 3.5rem; font-weight: 800; color: var(--accent);" id="totalSystems">0</div>
+                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        Requests processed since you opened this page
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Interactive Quiz -->
+    <section id="quiz">
+        <div class="container">
+            <h2><span>🎯</span> Test Your Knowledge</h2>
+            <p class="section-subtitle">
+                How well do you know Jeff Dean's legendary contributions to computer science?
+            </p>
+
+            <div class="quiz-container">
+                <div class="question-card" id="quizCard">
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options-grid" id="optionsContainer"></div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-size: 1.2rem;">
+                        Question <span id="currentQ">1</span> of <span id="totalQ">5</span>
+                    </div>
+                    <button onclick="nextQuestion()" id="nextBtn" style="display: none;">
+                        Next Question →
+                    </button>
+                </div>
+
+                <div class="score-display" id="scoreDisplay" style="display: none;">
+                    <h3 style="margin-bottom: 1rem;">🏆 Quiz Complete!</h3>
+                    <div class="score-number"><span id="finalScore">0</span>/5</div>
+                    <p style="margin-top: 1rem; font-size: 1.2rem;" id="scoreMessage"></p>
+                    <button onclick="restartQuiz()" style="margin-top: 2rem;">
+                        🔄 Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        // ===== TYPING EFFECT =====
+        const phrases = [
+            "Creator of MapReduce, BigTable, Spanner",
+            "Lead architect of TensorFlow",
+            "Builder of systems serving billions",
+            "Pioneer of large-scale machine learning",
+            "The Chuck Norris of programming"
+        ];
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const typingText = document.getElementById('typingText');
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(typeEffect, 500);
+            } else {
+                setTimeout(typeEffect, isDeleting ? 30 : 100);
+            }
+        }
+
+        // ===== COUNTER ANIMATION =====
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + (target >= 100 ? '+' : '');
+            }, 16);
+        }
+
+        // ===== MAPREDUCE DEMO =====
+        function runMapReduceDemo() {
+            const inputData = document.getElementById('inputData');
+            const mapData = document.getElementById('mapData');
+            const reduceData = document.getElementById('reduceData');
+
+            // Animate input
+            const docs = ['doc1', 'doc2', 'doc3'];
+
+            // Clear previous
+            mapData.innerHTML = '';
+            reduceData.innerHTML = '';
+
+            // MAP phase
+            setTimeout(() => {
+                const words = ['hello', 'world', 'hello', 'jeff', 'dean', 'world'];
+                words.forEach((word, i) => {
+                    setTimeout(() => {
+                        const node = document.createElement('div');
+                        node.className = 'data-node';
+                        node.textContent = `("${word}", 1)`;
+                        mapData.appendChild(node);
+                    }, i * 200);
+                });
+            }, 500);
+
+            // REDUCE phase
+            setTimeout(() => {
+                const results = [
+                    '("hello", 2)',
+                    '("world", 2)',
+                    '("jeff", 1)',
+                    '("dean", 1)'
+                ];
+                results.forEach((result, i) => {
+                    setTimeout(() => {
+                        const node = document.createElement('div');
+                        node.className = 'data-node';
+                        node.style.background = 'rgba(16, 185, 129, 0.3)';
+                        node.style.borderColor = 'var(--accent)';
+                        node.textContent = result;
+                        reduceData.appendChild(node);
+                    }, i * 300);
+                });
+            }, 2500);
+        }
+
+        function processMapReduce() {
+            const input = document.getElementById('mrInput').value;
+            const results = document.getElementById('mrResults');
+
+            if (!input.trim()) {
+                results.innerHTML = '<p style="color: var(--error);">Please enter some text!</p>';
+                return;
+            }
+
+            // MAP phase
+            const words = input.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .split(/\s+/)
+                .filter(w => w.length > 0);
+
+            // REDUCE phase
+            const wordCount = {};
+            words.forEach(word => {
+                wordCount[word] = (wordCount[word] || 0) + 1;
+            });
+
+            // Sort by count
+            const sorted = Object.entries(wordCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 15);
+
+            // Display results
+            let html = '<div style="padding: 2rem; background: rgba(0,0,0,0.3); border-radius: 16px;">';
+            html += '<h4 style="margin-bottom: 1.5rem; color: var(--accent);">✅ MapReduce Results (Top 15 Words):</h4>';
+
+            sorted.forEach(([word, count], index) => {
+                const percentage = (count / words.length * 100);
+                html += `
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; animation: fadeInUp 0.5s ease ${index * 0.05}s backwards;">
+                        <div style="width: 30px; text-align: right; color: var(--text-muted); font-weight: 600;">${index + 1}</div>
+                        <div style="width: 150px; font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600;">${word}</div>
+                        <div style="flex: 1; height: 24px; background: rgba(59,130,246,0.2); border-radius: 12px; overflow: hidden;">
+                            <div style="width: ${Math.min(percentage * 3, 100)}%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 1s ease ${index * 0.05}s;"></div>
+                        </div>
+                        <div style="width: 60px; text-align: right; font-weight: 700; color: var(--text);">${count}</div>
+                    </div>
+                `;
+            });
+
+            html += `<div style="margin-top: 2rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border: 1px solid var(--accent);">
+                <strong>📊 Statistics:</strong><br>
+                Total words: ${words.length} | Unique words: ${Object.keys(wordCount).length} | 
+                Processing time: ~${(words.length / 1000).toFixed(2)}ms (simulated)
+            </div>`;
+            html += '</div>';
+
+            results.innerHTML = html;
+        }
+
+        // ===== NEURAL NETWORK TRAINING =====
+        let trainingActive = false;
+
+        function trainNetwork() {
+            if (trainingActive) return;
+            trainingActive = true;
+
+            const neurons = document.querySelectorAll('.neuron');
+            const statusDiv = document.getElementById('trainingStatus');
+            const accuracyDiv = document.getElementById('accuracy');
+            const epochDiv = document.getElementById('epoch');
+            const lossDiv = document.getElementById('loss');
+
+            let epoch = 0;
+            let accuracy = 0;
+            let loss = 1.0;
+
+            statusDiv.innerHTML = '<span style="color: var(--warning);">🔄 Training in progress...</span>';
+
+            const trainingInterval = setInterval(() => {
+                // Randomly activate neurons
+                neurons.forEach(neuron => {
+                    if (Math.random() > 0.5) {
+                        neuron.classList.add('active');
+                        setTimeout(() => neuron.classList.remove('active'), 500);
+                    }
+                });
+
+                // Update metrics
+                epoch++;
+                accuracy = Math.min(99, accuracy + Math.random() * 5);
+                loss = Math.max(0.01, loss - Math.random() * 0.1);
+
+                epochDiv.textContent = epoch;
+                accuracyDiv.textContent = accuracy.toFixed(1) + '%';
+                lossDiv.textContent = loss.toFixed(2);
+
+                if (epoch >= 20) {
+                    clearInterval(trainingInterval);
+                    statusDiv.innerHTML = '<span style="color: var(--accent);">✅ Training complete! Model ready for inference.</span>';
+                    trainingActive = false;
+                }
+            }, 200);
+        }
+
+        // ===== IMPACT CALCULATOR =====
+        function startImpactCounter() {
+            const searchesEl = document.getElementById('searches');
+            const mlRequestsEl = document.getElementById('mlRequests');
+            const dataStoredEl = document.getElementById('dataStored');
+            const usersEl = document.getElementById('users');
+            const totalEl = document.getElementById('totalSystems');
+
+            let searches = 0;
+            let mlRequests = 0;
+            let dataStored = 0;
+            let users = 2000000000; // 2 billion base
+            let total = 0;
+
+            setInterval(() => {
+                searches += Math.floor(Math.random() * 10000 + 5000);
+                mlRequests += Math.floor(Math.random() * 50000 + 20000);
+                dataStored += Math.random() * 10 + 5;
+                users += Math.floor(Math.random() * 100);
+                total += searches + mlRequests;
+
+                searchesEl.textContent = (searches / 1000).toFixed(1) + 'K';
+                mlRequestsEl.textContent = (mlRequests / 1000).toFixed(1) + 'K';
+                dataStoredEl.textContent = dataStored.toFixed(1);
+                usersEl.textContent = (users / 1000000).toFixed(1) + 'M';
+                totalEl.textContent = (total / 1000000).toFixed(2) + 'M';
+            }, 1000);
+        }
+
+        // ===== QUIZ =====
+        const quizData = [
+            {
+                question: "What year did Jeff Dean join Google?",
+                options: ["1998", "1999", "2000", "2001"],
+                correct: 1,
+                explanation: "Jeff Dean joined Google in 1999 as one of the earliest employees (around #20)."
+            },
+            {
+                question: "Which technology did Jeff Dean NOT co-create?",
+                options: ["MapReduce", "BigTable", "React", "TensorFlow"],
+                correct: 2,
+                explanation: "React was created by Facebook (Meta). Jeff Dean created MapReduce, BigTable, and led TensorFlow development."
+            },
+            {
+                question: "What does TPU stand for?",
+                options: ["Total Processing Unit", "Tensor Processing Unit", "Tech Power Unit", "Turbo Performance Unit"],
+                correct: 1,
+                explanation: "TPU stands for Tensor Processing Unit - custom AI accelerator chips designed by Google."
+            },
+            {
+                question: "How much faster are TPUs compared to GPUs for ML workloads?",
+                options: ["2-5x", "5-10x", "15-30x", "50-100x"],
+                correct: 2,
+                explanation: "TPUs are 15-30x faster than GPUs for machine learning workloads, enabling breakthroughs like AlphaGo."
+            },
+            {
+                question: "Which honor did Jeff Dean receive?",
+                options: ["Nobel Prize", "Turing Award", "ACM Fellow", "Fields Medal"],
+                correct: 2,
+                explanation: "Jeff Dean is an ACM Fellow and IEEE Fellow - the highest honors in computer science."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById('questionText').textContent = q.question;
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('totalQ').textContent = quizData.length;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((option, index) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.textContent = option;
+                div.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(div);
+            });
+
+            answered = false;
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function selectAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestion];
+            const options = document.querySelectorAll('.option');
+
+            options[selected].classList.add(selected === q.correct ? 'correct' : 'incorrect');
+            options[q.correct].classList.add('correct');
+
+            if (selected === q.correct) {
+                score++;
+            }
+
+            // Show explanation
+            const explanation = document.createElement('div');
+            explanation.style.cssText = 'margin-top: 1.5rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 1px solid var(--primary);';
+            explanation.innerHTML = `<strong>💡 Explanation:</strong><br>${q.explanation}`;
+            document.getElementById('optionsContainer').appendChild(explanation);
+
+            if (currentQuestion < quizData.length - 1) {
+                document.getElementById('nextBtn').style.display = 'block';
+            } else {
+                setTimeout(showResults, 1500);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('quizCard').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('scoreDisplay').style.display = 'block';
+            document.getElementById('finalScore').textContent = score;
+
+            let message = '';
+            if (score === 5) message = '🎉 Perfect! You know Jeff Dean like a legend!';
+            else if (score >= 3) message = '👍 Great job! You know your tech history!';
+            else message = '📚 Keep learning about computer science pioneers!';
+
+            document.getElementById('scoreMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quizCard').style.display = 'block';
+            document.getElementById('scoreDisplay').style.display = 'none';
+            loadQuestion();
+        }
+
+        // ===== PROJECT DETAILS WITH INTERACTIVE MODALS =====
+        function showProjectDetails(project) {
+            const modal = document.getElementById('projectModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            const projectData = {
+                'mapreduce': {
+                    title: '🗺️ MapReduce',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            Published in 2004, MapReduce revolutionized big data processing by enabling automatic 
+                            parallelization and distribution across thousands of machines.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(234, 67, 53, 0.1); border-left: 4px solid var(--google-red); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Impact:</strong> 200,000+ citations | Processes petabytes daily at Google
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">⚡ Live Performance Comparison</h4>
+                            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                                Click to see how MapReduce handles different data sizes:
+                            </p>
+                            <div class="tech-showcase">
+                                <div class="tech-item" onclick="simulateMapReduce(1)">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                                    <div>1 GB</div>
+                                </div>
+                                <div class="tech-item" onclick="simulateMapReduce(10)">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                                    <div>10 GB</div>
+                                </div>
+                                <div class="tech-item" onclick="simulateMapReduce(100)">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗄️</div>
+                                    <div>100 GB</div>
+                                </div>
+                                <div class="tech-item" onclick="simulateMapReduce(1000)">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏢</div>
+                                    <div>1 TB</div>
+                                </div>
+                            </div>
+                            <div id="mrProgress" style="margin-top: 1.5rem;"></div>
+                        </div>
+                    `
+                },
+                'bigtable': {
+                    title: '📊 BigTable',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            Distributed storage system designed to scale to petabytes of data. 
+                            Powers Gmail, Google Maps, YouTube, and 100+ Google services.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(66, 133, 244, 0.1); border-left: 4px solid var(--google-blue); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Scale:</strong> Exabytes of data | Millions of queries per second
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">💾 Storage Capacity Simulator</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                                <div style="text-align: center; padding: 1rem; background: rgba(66, 133, 244, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2rem; color: var(--google-blue); font-weight: 800;" id="btRows">0</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">Rows Stored</div>
+                                </div>
+                                <div style="text-align: center; padding: 1rem; background: rgba(52, 168, 83, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2rem; color: var(--google-green); font-weight: 800;" id="btSize">0</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">TB Data</div>
+                                </div>
+                                <div style="text-align: center; padding: 1rem; background: rgba(251, 188, 4, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2rem; color: var(--google-yellow); font-weight: 800;" id="btQPS">0</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted);">Queries/sec</div>
+                                </div>
+                            </div>
+                            <button onclick="simulateBigTable()" style="width: 100%; padding: 1rem; margin-top: 1rem;">
+                                🚀 Start Writing Data
+                            </button>
+                        </div>
+                    `
+                },
+                'tensorflow': {
+                    title: '🤖 TensorFlow',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            World's most popular ML framework with 180,000+ GitHub stars. 
+                            Powers Google Search, Photos, Translate, and millions of AI applications.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(251, 188, 4, 0.1); border-left: 4px solid var(--google-yellow); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Usage:</strong> Millions of developers | Billions of inferences daily
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">🎯 Model Training Progress</h4>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Epoch: <strong id="tfEpoch">0</strong>/100</span>
+                                    <span>Accuracy: <strong id="tfAcc">0%</strong></span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="tfProgress" style="width: 0%">0%</div>
+                                </div>
+                            </div>
+                            <button onclick="trainTFModel()" style="width: 100%; padding: 1rem;">
+                                🎓 Train Model
+                            </button>
+                        </div>
+                    `
+                },
+                'spanner': {
+                    title: '🌐 Spanner',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            First globally distributed database with strong consistency. 
+                            Uses atomic clocks for time synchronization across continents.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(52, 168, 83, 0.1); border-left: 4px solid var(--google-green); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Reliability:</strong> 99.999% availability | Global transactions
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">🌍 Global Datacenter Sync</h4>
+                            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                                Select datacenters to see sync latency:
+                            </p>
+                            <div class="tech-showcase">
+                                <div class="tech-item" onclick="toggleDC(this, 'us')">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🇺🇸</div>
+                                    <div>US East</div>
+                                </div>
+                                <div class="tech-item" onclick="toggleDC(this, 'eu')">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🇪🇺</div>
+                                    <div>Europe</div>
+                                </div>
+                                <div class="tech-item" onclick="toggleDC(this, 'asia')">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🇯🇵</div>
+                                    <div>Asia</div>
+                                </div>
+                                <div class="tech-item" onclick="toggleDC(this, 'au')">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🇦🇺</div>
+                                    <div>Australia</div>
+                                </div>
+                            </div>
+                            <div id="spannerSync" style="margin-top: 1rem; text-align: center; font-size: 1.2rem;"></div>
+                        </div>
+                    `
+                },
+                'tpu': {
+                    title: '⚡ TPU (Tensor Processing Unit)',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            Custom AI accelerator chips. 15-30x faster than GPUs for ML workloads. 
+                            Enabled AlphaGo, Google Translate, and next-gen AI.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(234, 67, 53, 0.1); border-left: 4px solid var(--google-red); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Performance:</strong> 30x faster | 200 petaFLOPS
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">⚡ TPU vs GPU Speed Test</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎮 GPU</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="gpuSpeed" style="width: 0%; background: rgba(234, 67, 53, 0.8);">0%</div>
+                                    </div>
+                                    <div style="margin-top: 0.5rem; color: var(--text-muted);" id="gpuTime">0ms</div>
+                                </div>
+                                <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⚡ TPU</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="tpuSpeed" style="width: 0%; background: rgba(52, 168, 83, 0.8);">0%</div>
+                                    </div>
+                                    <div style="margin-top: 0.5rem; color: var(--text-muted);" id="tpuTime">0ms</div>
+                                </div>
+                            </div>
+                            <button onclick="compareTPU()" style="width: 100%; padding: 1rem;">
+                                🏁 Run Speed Test
+                            </button>
+                        </div>
+                    `
+                },
+                'protobuf': {
+                    title: '📦 Protocol Buffers',
+                    content: `
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                            Language-neutral data serialization. 10-100x smaller and faster than XML. 
+                            Industry standard for efficient data exchange.
+                        </p>
+                        <div style="padding: 1.5rem; background: rgba(66, 133, 244, 0.1); border-left: 4px solid var(--google-blue); border-radius: 8px; margin-bottom: 1.5rem;">
+                            <strong>📊 Efficiency:</strong> 100x faster | 10x smaller than XML
+                        </div>
+                        <div class="modal-interactive">
+                            <h4 style="margin-bottom: 1rem;">📊 Size Comparison</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                                <div style="padding: 1.5rem; background: rgba(234, 67, 53, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--google-red);" id="xmlSize">1000</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">KB - XML</div>
+                                </div>
+                                <div style="padding: 1.5rem; background: rgba(251, 188, 4, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--google-yellow);" id="jsonSize">500</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">KB - JSON</div>
+                                </div>
+                                <div style="padding: 1.5rem; background: rgba(52, 168, 83, 0.1); border-radius: 8px;">
+                                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--google-green);" id="pbSize">100</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">KB - Protobuf</div>
+                                </div>
+                            </div>
+                            <button onclick="compareProtobuf()" style="width: 100%; padding: 1rem; margin-top: 1rem;">
+                                📏 Compare Sizes
+                            </button>
+                        </div>
+                    `
+                }
+            };
+
+            const data = projectData[project];
+            title.textContent = data.title;
+            body.innerHTML = data.content;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('active');
+        }
+
+        // Interactive functions for modals
+        function simulateMapReduce(size) {
+            const progress = document.getElementById('mrProgress');
+            const time = size / 10;
+            progress.innerHTML = `
+                <div style="padding: 1rem; background: rgba(52, 168, 83, 0.1); border-radius: 8px;">
+                    <strong>✅ Processing ${size} GB of data...</strong><br>
+                    <span style="color: var(--text-muted);">Distributed across 1000 nodes</span><br>
+                    <span style="color: var(--google-green); font-size: 1.5rem; font-weight: 700;">${time} seconds</span>
+                </div>
+            `;
+        }
+
+        function simulateBigTable() {
+            let rows = 0, size = 0, qps = 0;
+            const interval = setInterval(() => {
+                rows += Math.floor(Math.random() * 1000000);
+                size += Math.random() * 10;
+                qps += Math.floor(Math.random() * 100000);
+                document.getElementById('btRows').textContent = (rows / 1000000).toFixed(1) + 'M';
+                document.getElementById('btSize').textContent = size.toFixed(1);
+                document.getElementById('btQPS').textContent = (qps / 1000).toFixed(0) + 'K';
+                if (size > 100) clearInterval(interval);
+            }, 100);
+        }
+
+        function trainTFModel() {
+            let epoch = 0;
+            const interval = setInterval(() => {
+                epoch += 2;
+                const acc = Math.min(98, 60 + epoch / 2 + Math.random() * 5);
+                document.getElementById('tfEpoch').textContent = epoch;
+                document.getElementById('tfAcc').textContent = acc.toFixed(1) + '%';
+                document.getElementById('tfProgress').style.width = epoch + '%';
+                document.getElementById('tfProgress').textContent = epoch + '%';
+                if (epoch >= 100) clearInterval(interval);
+            }, 100);
+        }
+
+        let selectedDCs = [];
+        function toggleDC(el, dc) {
+            el.classList.toggle('active');
+            const idx = selectedDCs.indexOf(dc);
+            if (idx > -1) selectedDCs.splice(idx, 1);
+            else selectedDCs.push(dc);
+
+            if (selectedDCs.length >= 2) {
+                document.getElementById('spannerSync').innerHTML = 
+                    `<span style="color: var(--google-green); font-weight: 700;">⚡ Sync latency: ${(selectedDCs.length * 50 + Math.random() * 50).toFixed(0)}ms</span>`;
+            }
+        }
+
+        function compareTPU() {
+            let gpu = 0, tpu = 0;
+            const gpuInterval = setInterval(() => {
+                gpu += 1;
+                document.getElementById('gpuSpeed').style.width = gpu + '%';
+                document.getElementById('gpuSpeed').textContent = gpu + '%';
+                document.getElementById('gpuTime').textContent = (gpu * 10) + 'ms';
+                if (gpu >= 100) clearInterval(gpuInterval);
+            }, 50);
+
+            const tpuInterval = setInterval(() => {
+                tpu += 3;
+                if (tpu > 100) tpu = 100;
+                document.getElementById('tpuSpeed').style.width = tpu + '%';
+                document.getElementById('tpuSpeed').textContent = tpu + '%';
+                document.getElementById('tpuTime').textContent = Math.floor(tpu * 3.33) + 'ms';
+                if (tpu >= 100) clearInterval(tpuInterval);
+            }, 50);
+        }
+
+        function compareProtobuf() {
+            const xml = Math.floor(Math.random() * 500 + 800);
+            const json = Math.floor(xml * 0.5);
+            const pb = Math.floor(xml * 0.1);
+            document.getElementById('xmlSize').textContent = xml;
+            document.getElementById('jsonSize').textContent = json;
+            document.getElementById('pbSize').textContent = pb;
+        }
+
+        // ===== NAVIGATION =====
+        function scrollToSection(index) {
+            const sections = document.querySelectorAll('section');
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+
+            document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const scrollPos = window.scrollY + window.innerHeight / 2;
+
+            sections.forEach((section, index) => {
+                const top = section.offsetTop;
+                const bottom = top + section.offsetHeight;
+
+                if (scrollPos >= top && scrollPos < bottom) {
+                    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        });
+
+        // ===== INITIALIZE =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start typing effect
+            typeEffect();
+
+            // Animate counters when hero section visible
+            const heroSection = document.querySelector('#hero');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.stat-number').forEach(counter => {
+                            if (counter.textContent === '0') {
+                                animateCounter(counter);
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(heroSection);
+
+            // Start impact calculator
+            setTimeout(startImpactCounter, 1000);
+
+            // Load first quiz question
+            loadQuestion();
+
+            // Auto-run MapReduce demo once
+            setTimeout(runMapReduceDemo, 2000);
+        });
+    
+        // ===== DISTRIBUTED SYSTEM SIMULATOR =====
+        const distCanvas = document.getElementById('distCanvas');
+        const distCtx = distCanvas ? distCanvas.getContext('2d') : null;
+
+        let servers = [];
+        let requests = [];
+        let totalRequests = 0;
+        let simRunning = false;
+
+        class Server {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 40;
+                this.load = 0;
+                this.maxLoad = 5;
+                this.color = '#3b82f6';
+            }
+
+            draw() {
+                if (!distCtx) return;
+                // Server circle
+                distCtx.beginPath();
+                distCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                distCtx.fillStyle = this.load > 3 ? '#f59e0b' : this.color;
+                distCtx.fill();
+                distCtx.strokeStyle = '#fff';
+                distCtx.lineWidth = 3;
+                distCtx.stroke();
+
+                // Load indicator
+                distCtx.fillStyle = '#fff';
+                distCtx.font = 'bold 16px Arial';
+                distCtx.textAlign = 'center';
+                distCtx.textBaseline = 'middle';
+                distCtx.fillText(this.load + '/' + this.maxLoad, this.x, this.y);
+            }
+        }
+
+        class Request {
+            constructor(target) {
+                this.x = 100;
+                this.y = 250;
+                this.targetServer = target;
+                this.speed = 5;
+                this.radius = 8;
+                this.completed = false;
+            }
+
+            update() {
+                const dx = this.targetServer.x - this.x;
+                const dy = this.targetServer.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 5) {
+                    this.completed = true;
+                    return;
+                }
+
+                this.x += (dx / dist) * this.speed;
+                this.y += (dy / dist) * this.speed;
+            }
+
+            draw() {
+                if (!distCtx) return;
+                distCtx.beginPath();
+                distCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                distCtx.fillStyle = '#10b981';
+                distCtx.fill();
+                distCtx.strokeStyle = '#fff';
+                distCtx.lineWidth = 2;
+                distCtx.stroke();
+            }
+        }
+
+        function initDistributedSim() {
+            if (!distCanvas) return;
+            servers = [
+                new Server(400, 250),
+                new Server(700, 150),
+                new Server(700, 350)
+            ];
+            updateServerCount();
+        }
+
+        function startDistributedSim() {
+            if (!distCanvas) return;
+            simRunning = true;
+            if (servers.length === 0) initDistributedSim();
+            animateDistSim();
+
+            // Auto-send requests
+            const interval = setInterval(() => {
+                if (!simRunning) {
+                    clearInterval(interval);
+                    return;
+                }
+                sendRequest();
+            }, 1000);
+        }
+
+        function animateDistSim() {
+            if (!distCtx || !simRunning) return;
+
+            distCtx.clearRect(0, 0, distCanvas.width, distCanvas.height);
+
+            // Draw servers
+            servers.forEach(server => {
+                server.draw();
+            });
+
+            // Update and draw requests
+            requests = requests.filter(req => {
+                if (!req.completed) {
+                    req.update();
+                    req.draw();
+                    return true;
+                }
+                // Complete request
+                if (req.targetServer.load > 0) {
+                    req.targetServer.load--;
+                }
+                return false;
+            });
+
+            // Draw connections
+            distCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            distCtx.lineWidth = 1;
+            for (let i = 0; i < servers.length; i++) {
+                for (let j = i + 1; j < servers.length; j++) {
+                    distCtx.beginPath();
+                    distCtx.moveTo(servers[i].x, servers[i].y);
+                    distCtx.lineTo(servers[j].x, servers[j].y);
+                    distCtx.stroke();
+                }
+            }
+
+            requestAnimationFrame(animateDistSim);
+        }
+
+        function addServer() {
+            if (!distCanvas) return;
+            const x = 300 + Math.random() * 600;
+            const y = 100 + Math.random() * 300;
+            servers.push(new Server(x, y));
+            updateServerCount();
+        }
+
+        function sendRequest() {
+            if (!distCanvas || servers.length === 0) return;
+
+            // Find server with lowest load
+            let target = servers[0];
+            servers.forEach(server => {
+                if (server.load < target.load) {
+                    target = server;
+                }
+            });
+
+            if (target.load < target.maxLoad) {
+                requests.push(new Request(target));
+                target.load++;
+                totalRequests++;
+                updateRequestCount();
+            }
+        }
+
+        function clearSimulation() {
+            simRunning = false;
+            servers = [];
+            requests = [];
+            totalRequests = 0;
+            if (distCtx) distCtx.clearRect(0, 0, distCanvas.width, distCanvas.height);
+            updateServerCount();
+            updateRequestCount();
+        }
+
+        function updateServerCount() {
+            const el = document.getElementById('serverCount');
+            if (el) el.textContent = servers.length;
+        }
+
+        function updateRequestCount() {
+            const el = document.getElementById('requestCount');
+            if (el) el.textContent = totalRequests;
+            const throughput = document.getElementById('throughput');
+            if (throughput) throughput.textContent = Math.floor(totalRequests / 10);
+        }
+
+        // ===== CODE RACE GAME =====
+        const raceCanvas = document.getElementById('raceCanvas');
+        const raceCtx = raceCanvas ? raceCanvas.getContext('2d') : null;
+
+        class Racer {
+            constructor(name, color, complexity, y) {
+                this.name = name;
+                this.color = color;
+                this.complexity = complexity; // multiplier for speed
+                this.x = 50;
+                this.y = y;
+                this.width = 60;
+                this.height = 40;
+                this.speed = 2 / complexity;
+                this.finished = false;
+            }
+
+            update() {
+                if (!this.finished) {
+                    this.x += this.speed;
+                    if (this.x >= raceCanvas.width - 100) {
+                        this.finished = true;
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            draw() {
+                if (!raceCtx) return;
+                // Car body
+                raceCtx.fillStyle = this.color;
+                raceCtx.fillRect(this.x, this.y, this.width, this.height);
+
+                // Label
+                raceCtx.fillStyle = '#fff';
+                raceCtx.font = 'bold 14px Arial';
+                raceCtx.textAlign = 'center';
+                raceCtx.fillText(this.name, this.x + this.width / 2, this.y - 10);
+
+                // Complexity
+                raceCtx.font = '10px Arial';
+                raceCtx.fillText('O(n' + (this.complexity > 1.5 ? '²)' : this.complexity > 1 ? ' log n)' : ')'), 
+                                 this.x + this.width / 2, this.y + this.height + 15);
+            }
+        }
+
+        let racers = [];
+        let raceInProgress = false;
+
+        function startRace() {
+            if (!raceCanvas || raceInProgress) return;
+
+            raceInProgress = true;
+            racers = [
+                new Racer('Bubble', '#3b82f6', 2, 80),
+                new Racer('Quick', '#f59e0b', 1.3, 180),
+                new Racer('Counting', '#10b981', 1, 280)
+            ];
+
+            // const winnerEl = document.getElementById('raceWinner');
+            // if (winnerEl) winnerEl.textContent = 'Racing...';
+
+            animateRace();
+        }
+
+        function animateRace() {
+            if (!raceCtx) return;
+
+            raceCtx.clearRect(0, 0, raceCanvas.width, raceCanvas.height);
+
+            // Draw finish line
+            raceCtx.strokeStyle = '#fff';
+            raceCtx.lineWidth = 3;
+            raceCtx.setLineDash([10, 10]);
+            raceCtx.beginPath();
+            raceCtx.moveTo(raceCanvas.width - 100, 0);
+            raceCtx.lineTo(raceCanvas.width - 100, raceCanvas.height);
+            raceCtx.stroke();
+            raceCtx.setLineDash([]);
+
+            // Draw track lanes
+            raceCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            raceCtx.lineWidth = 1;
+            [120, 220].forEach(y => {
+                raceCtx.beginPath();
+                raceCtx.moveTo(0, y);
+                raceCtx.lineTo(raceCanvas.width, y);
+                raceCtx.stroke();
+            });
+
+            let allFinished = true;
+            let winner = null;
+
+            racers.forEach(racer => {
+                const finished = racer.update();
+                racer.draw();
+
+                if (finished && !winner) {
+                    winner = racer;
+                }
+                if (!racer.finished) {
+                    allFinished = false;
+                }
+            });
+
+            if (winner) {
+                // const winnerEl = document.getElementById('raceWinner');
+                // if (winnerEl) winnerEl.textContent = winner.name + ' Sort Won! 🏆';
+            }
+
+            if (!allFinished) {
+                requestAnimationFrame(animateRace);
+            } else {
+                // Auto-restart after 2 seconds
+                setTimeout(() => {
+                    raceInProgress = false;
+                    startRace();
+                }, 2000);
+            }
+        }
+
+
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NEURAL NETWORK - Final Fix
+// ═══════════════════════════════════════════════════════════════════════════
+(function() {
+    console.log('%c╔═══════════════════════════════════════════════╗', 'color:#4285f4;font-weight:bold');
+    console.log('%c║   NEURAL NETWORK FINAL FIX                   ║', 'color:#4285f4;font-weight:bold');
+    console.log('%c╚═══════════════════════════════════════════════╝', 'color:#4285f4;font-weight:bold');
+
+    function drawLines() {
+        console.log('\n🔍 [NN] Starting...');
+
+        // Find section
+        let section = null;
+        document.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach(h => {
+            if (h.textContent.match(/simple.*neural|neural.*network/i) && !section) {
+                section = h.closest('section') || h.parentElement;
+                console.log('✓ Found section');
+            }
+        });
+
+        if (!section) return;
+
+        // Find neurons - ROBUST
+        const neurons = [];
+        section.querySelectorAll('div').forEach(div => {
+            const s = div.getAttribute('style') || '';
+            const c = window.getComputedStyle(div);
+
+            const hasRound = s.match(/border-radius.*?(50%|100%)/) || c.borderRadius.includes('50%');
+            const w = parseInt(c.width);
+            const h = parseInt(c.height);
+            const hasSize = w > 40 && h > 40 && w < 200 && h < 200;
+            const visible = c.display !== 'none';
+
+            if (hasRound && hasSize && visible) {
+                neurons.push(div);
+                // Add z-index to neurons
+                div.style.position = 'relative';
+                div.style.zIndex = '10';
+                console.log(`  ✓ Neuron ${neurons.length}: ${w}×${h}px`);
+            }
+        });
+
+        console.log(`📊 Found ${neurons.length} neurons`);
+
+        if (neurons.length < 9) {
+            console.log('❌ Need 9 neurons');
+            return;
+        }
+
+        // Position section
+        section.style.position = 'relative';
+
+        // Remove old
+        const old = section.querySelector('svg.nn-svg');
+        if (old) old.remove();
+
+        // Create SVG with NEGATIVE z-index
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'nn-svg');
+        svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
+
+        svg.innerHTML = '<defs><linearGradient id="grad1"><stop offset="0%" stop-color="#4285f4" stop-opacity="0.6"/><stop offset="100%" stop-color="#ea4335" stop-opacity="0.6"/></linearGradient></defs>';
+
+        // Helper
+        const getPos = (el) => {
+            const r = el.getBoundingClientRect();
+            const sr = section.getBoundingClientRect();
+            return { x: r.left + r.width/2 - sr.left, y: r.top + r.height/2 - sr.top };
+        };
+
+        // Group
+        const inp = neurons.slice(0, 3);
+        const hid = neurons.slice(3, 7);
+        const out = neurons.slice(7, 9);
+
+        let n = 0;
+
+        // Draw
+        inp.forEach(i => {
+            const p1 = getPos(i);
+            hid.forEach(h => {
+                const p2 = getPos(h);
+                const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                l.setAttribute('x1', p1.x);
+                l.setAttribute('y1', p1.y);
+                l.setAttribute('x2', p2.x);
+                l.setAttribute('y2', p2.y);
+                l.setAttribute('stroke', 'url(#grad1)');
+                l.setAttribute('stroke-width', '3');
+                l.setAttribute('stroke-linecap', 'round');
+                svg.appendChild(l);
+                n++;
+            });
+        });
+
+        hid.forEach(h => {
+            const p1 = getPos(h);
+            out.forEach(o => {
+                const p2 = getPos(o);
+                const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                l.setAttribute('x1', p1.x);
+                l.setAttribute('y1', p1.y);
+                l.setAttribute('x2', p2.x);
+                l.setAttribute('y2', p2.y);
+                l.setAttribute('stroke', 'url(#grad1)');
+                l.setAttribute('stroke-width', '3');
+                l.setAttribute('stroke-linecap', 'round');
+                svg.appendChild(l);
+                n++;
+            });
+        });
+
+        section.insertBefore(svg, section.firstChild);
+
+        console.log(`%c✅ SUCCESS! Drew ${n} lines BEHIND neurons`, 'color:#0f9d58;font-weight:bold;font-size:14px');
+    }
+
+    // Try multiple times
+    [300, 800, 1500, 2500, 4000, 6000].forEach((d, i) => {
+        setTimeout(() => {
+            console.log(`[NN] Attempt ${i+1}`);
+            drawLines();
+        }, d);
+    });
+
+    window.addEventListener('load', () => setTimeout(drawLines, 1000));
+    window.addEventListener('resize', () => setTimeout(drawLines, 200));
+})();
+
+</script>
+
+    <!-- Modal -->
+    <div id="projectModal" class="modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" style="margin: 0;">Project Title</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO ATTRIBUTION - REQUIRED BY CC BY 3.0 -->
+    <div style="padding: 2rem; background: rgba(66, 133, 244, 0.1); border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); margin-top: 3rem; text-align: center;">
+        <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem;">Photo Credit</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+            <strong>Jeff Dean at Purdue Engineering (May 2024)</strong><br>
+            <a href="https://commons.wikimedia.org/wiki/File:Jeff_Dean_at_Purdue_Engineering_(May_2024)_-_img_02.jpg" target="_blank" style="color: var(--primary);">Purdue Engineering</a><br>
+            <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" style="color: var(--secondary);">CC BY 3.0</a>
+            <br><small>No modifications made</small>
+        </p>
+    </div>
+
+</body>
+</html>

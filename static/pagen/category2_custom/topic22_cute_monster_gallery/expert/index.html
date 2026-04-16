@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Monster Gallery | Explore the World of Adorable Creatures</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0e17;
+            --bg-card: #1a1926;
+            --accent-pink: #ff6b9d;
+            --accent-purple: #c44dff;
+            --accent-cyan: #00d4ff;
+            --accent-yellow: #ffd93d;
+            --accent-green: #6bcb77;
+            --text-primary: #ffffff;
+            --text-muted: #a0a0b0;
+            --gradient-hero: linear-gradient(135deg, #ff6b9d 0%, #c44dff 50%, #00d4ff 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,107,157,0.1) 0%, rgba(196,77,255,0.1) 100%);
+            --radius-sm: 12px;
+            --radius-lg: 24px;
+            --shadow-glow: 0 0 40px rgba(255,107,157,0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            overflow: hidden;
+            background-image: url('images/hero-background.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,107,157,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(196,77,255,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 20% 90%, rgba(0,212,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 600;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-monsters {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .hero-monster {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-card);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .hero-monster:nth-child(1) { animation-delay: 0s; }
+        .hero-monster:nth-child(2) { animation-delay: 0.2s; }
+        .hero-monster:nth-child(3) { animation-delay: 0.4s; }
+        .hero-monster:nth-child(4) { animation-delay: 0.6s; }
+        .hero-monster:nth-child(5) { animation-delay: 0.8s; }
+
+        .hero-monster:hover {
+            transform: scale(1.2);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--accent-pink);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-indicator span::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 2px;
+            animation: scroll 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes scroll {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 24px; }
+        }
+
+        /* ===== SECTION STYLES ===== */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== INTERACTIVE GALLERY ===== */
+        .gallery-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .gallery-search {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .gallery-search:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(255,107,157,0.2);
+        }
+
+        .gallery-search::placeholder {
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gradient-hero);
+            color: white;
+            border-color: transparent;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .gallery-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(255,107,157,0.3);
+        }
+
+        .gallery-card-img {
+            height: 200px;
+            background: var(--gradient-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-card:hover .gallery-card-img img {
+            transform: scale(1.08);
+        }
+
+        .gallery-card-body {
+            padding: 24px;
+        }
+
+        .gallery-card-category {
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .gallery-card-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .gallery-card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 24px;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            max-width: 600px;
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-img {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-card);
+            overflow: hidden;
+        }
+
+        .lightbox-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lightbox-body {
+            padding: 32px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-card);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            background: var(--accent-pink);
+        }
+
+        /* ===== ENCYCLOPEDIA ===== */
+        .encyclopedia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .encyclopedia-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .encyclopedia-card:hover {
+            border-color: rgba(255,107,157,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .encyclopedia-header {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: var(--transition);
+        }
+
+        .encyclopedia-header:hover {
+            background: rgba(255,107,157,0.05);
+        }
+
+        .encyclopedia-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .encyclopedia-icon.pokemon { background: linear-gradient(135deg, #ffd93d, #ff6b6b); }
+        .encyclopedia-icon.digimon { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .encyclopedia-icon.yokai { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .encyclopedia-icon.sanrio { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+        .encyclopedia-icon.sumikko { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .encyclopedia-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+        }
+
+        .encyclopedia-year {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            margin-top: 4px;
+        }
+
+        .encyclopedia-toggle {
+            margin-left: auto;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .encyclopedia-card.expanded .encyclopedia-toggle {
+            transform: rotate(180deg);
+        }
+
+        .encyclopedia-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .encyclopedia-card.expanded .encyclopedia-body {
+            max-height: 1200px;
+        }
+
+        .encyclopedia-content {
+            padding: 0 24px 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .encyclopedia-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .encyclopedia-fact {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255,107,157,0.08);
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+        }
+
+        .encyclopedia-fact span:first-child {
+            font-size: 1.25rem;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+                transform: none;
+            }
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 48px;
+            position: relative;
+            align-items: flex-start;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item, .timeline-item:nth-child(odd) {
+                flex-direction: row;
+                padding-left: 50px;
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient-hero);
+            border: 4px solid var(--bg-dark);
+            flex-shrink: 0;
+            z-index: 1;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-dot:hover {
+            transform: translateX(-50%) scale(1.3);
+            box-shadow: var(--shadow-glow);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-dot {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-content {
+            width: calc(50% - 40px);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-content {
+                width: 100%;
+                margin: 0 !important;
+            }
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .timeline-content {
+            cursor: pointer;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(255,107,157,0.3);
+        }
+
+        .timeline-content .click-hint {
+            font-size: 0.75rem;
+            color: var(--accent-pink);
+            margin-top: 12px;
+            opacity: 0.8;
+        }
+
+        /* Timeline Dialog */
+        .timeline-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 24px;
+        }
+
+        .timeline-dialog.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .timeline-dialog-content {
+            max-width: 560px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid rgba(255,107,157,0.2);
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .timeline-dialog.active .timeline-dialog-content {
+            transform: scale(1);
+        }
+
+        .timeline-dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .timeline-dialog-year {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline-dialog-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-dialog-close:hover {
+            background: var(--accent-pink);
+        }
+
+        .timeline-dialog-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .timeline-dialog-body {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .timeline-dialog-body p {
+            margin-bottom: 16px;
+        }
+
+        .timeline-dialog-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dialog-fact {
+            background: rgba(255,107,157,0.08);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 16px;
+            border-left: 4px solid var(--accent-pink);
+        }
+
+        .timeline-dialog-fact strong {
+            color: var(--text-primary);
+        }
+
+        /* ===== SCIENCE SECTION ===== */
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .science-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+
+        .science-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,212,255,0.3);
+        }
+
+        .science-card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(196,77,255,0.2));
+        }
+
+        .science-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .science-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .baby-schema-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .baby-schema-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .baby-schema-list li::before {
+            content: '✓';
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* ===== MONSTER CREATOR ===== */
+        .creator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .creator-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .creator-preview {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 350px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 24px;
+        }
+
+        .creator-monster {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .creator-monster.shape-oval { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
+        .creator-monster.shape-square { border-radius: 24px; }
+
+        .creator-monster .eyes {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .creator-monster .eye {
+            width: 30px;
+            height: 40px;
+            background: #1a1926;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .creator-monster .eye.eye-dots { width: 12px; height: 12px; }
+        .creator-monster .eye.eye-surprised { width: 28px; height: 45px; }
+
+        .creator-monster .mouth {
+            position: absolute;
+            bottom: 30%;
+            width: 40px;
+            height: 20px;
+            border: 3px solid #1a1926;
+            border-top: none;
+            border-radius: 0 0 40px 40px;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .creator-monster .blush {
+            position: absolute;
+            top: 48%;
+            width: 30px;
+            height: 14px;
+            background: rgba(255, 150, 180, 0.5);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .creator-monster .blush.left { left: 8%; }
+        .creator-monster .blush.right { right: 8%; left: auto; }
+
+        .creator-monster.horns::before,
+        .creator-monster.horns::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            width: 20px;
+            height: 30px;
+            background: inherit;
+            border-radius: 50%;
+            transform: rotate(-20deg);
+            z-index: 1;
+        }
+
+        .creator-monster.horns::before {
+            left: 20%;
+            transform: rotate(-30deg);
+        }
+
+        .creator-monster.horns::after {
+            right: 20%;
+            left: auto;
+            transform: rotate(30deg);
+        }
+
+        .creator-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .creator-controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .creator-controls-grid { grid-template-columns: 1fr; }
+        }
+
+        .control-group {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .control-group input[type="color"] {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-hero);
+            cursor: pointer;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .control-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--accent-pink);
+        }
+
+        .creator-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .creator-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.2);
+            background: var(--bg-card);
+            color: white;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .creator-btn:hover {
+            background: var(--gradient-hero);
+            border-color: transparent;
+        }
+
+        .creator-btn.primary {
+            background: var(--gradient-hero);
+            border-color: transparent;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--text-muted);
+        }
+
+        .no-results span {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Cute Monster Gallery</h1>
+            <p>Explore the fascinating world of adorable creatures—from Japanese kawaii origins to the science of why we find monsters irresistibly cute.</p>
+            <div class="hero-monsters">
+                <div class="hero-monster" title="Pikachu">⚡</div>
+                <div class="hero-monster" title="Digimon">🐲</div>
+                <div class="hero-monster" title="Yo-kai">👻</div>
+                <div class="hero-monster" title="Rilakkuma">🐻</div>
+                <div class="hero-monster" title="Sumikko">🐸</div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Interactive Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Explore</div>
+                <h2 class="section-title">Monster Gallery</h2>
+                <p class="section-desc">Browse our collection of famous cute monsters. Use the search and filters to find your favorites.</p>
+            </div>
+            <div class="gallery-controls">
+                <input type="text" class="gallery-search" id="gallerySearch" placeholder="Search monsters...">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="pokemon">Pokémon</button>
+                <button class="filter-btn" data-filter="digimon">Digimon</button>
+                <button class="filter-btn" data-filter="yokai">Yo-kai</button>
+                <button class="filter-btn" data-filter="sanrio">Sanrio</button>
+                <button class="filter-btn" data-filter="other">Other</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <span>😢</span>
+                <p>No monsters found. Try a different search or filter!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monster Encyclopedia -->
+    <section id="encyclopedia">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Knowledge</div>
+                <h2 class="section-title">Monster Encyclopedia</h2>
+                <p class="section-desc">Learn about the most iconic cute monster franchises in pop culture. Click any card to collapse or expand.</p>
+            </div>
+            <div class="encyclopedia-grid">
+                <div class="encyclopedia-card expanded">
+                    <div class="encyclopedia-header">
+                        <div class="encyclopedia-icon pokemon">⚡</div>
+                        <div>
+                            <div class="encyclopedia-title">Pokémon</div>
+                            <div class="encyclopedia-year">1996 • Game Freak / Nintendo</div>
+                        </div>
+                        <span class="encyclopedia-toggle">▼</span>
+                    </div>
+                    <div class="encyclopedia-body">
+                        <div class="encyclopedia-content">
+                            <p>Pokémon revolutionized cute monster design globally. Pikachu was specifically designed to be cute—lead designer Ken Sugimori brought in female staff like Atsuko Nishida when he struggled with "cute" from a boy's perspective. Nishida based Pikachu on a squirrel (she wanted one as a pet!), with electricity-holding cheeks and yellow color for the electric motif.</p>
+                            <p>The franchise is the highest-grossing media property of all time, with over 1,000 species across nine generations. The anime has run continuously since 1997 with over 1,200 episodes. Pokémon uses "mukokuseki" (culturally ambiguous) design—creatures have no obvious national identity, enabling worldwide appeal.</p>
+                            <div class="encyclopedia-fact">
+                                <span>💡</span>
+                                <span><strong>Design secret:</strong> The name combines "pika-pika" (Japanese for glittering) with "chu" (mouse squeak). The team repeatedly asked to "make it even cuter" during development.</span>
+                            </div>
+                            <div class="encyclopedia-fact">
+                                <span>📊</span>
+                                <span><strong>Impact:</strong> Pokémon GO became the fastest mobile game to reach $1 billion in revenue (7 months). The trading card game has sold over 52 billion cards worldwide.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="encyclopedia-card expanded">
+                    <div class="encyclopedia-header">
+                        <div class="encyclopedia-icon digimon">🐲</div>
+                        <div>
+                            <div class="encyclopedia-title">Digimon</div>
+                            <div class="encyclopedia-year">1997 • WiZ / Bandai</div>
+                        </div>
+                        <span class="encyclopedia-toggle">▼</span>
+                    </div>
+                    <div class="encyclopedia-body">
+                        <div class="encyclopedia-content">
+                            <p>Digimon (Digital Monsters) began as virtual pet toys designed to look cute and iconic on small screens. The franchise sold 14 million virtual pet units by 2004 and expanded into anime, manga, games, and trading cards. Creatures were specifically engineered for small-screen appeal with bold, recognizable silhouettes.</p>
+                            <p>Unlike Tamagotchi's care-focused gameplay, Digimon emphasized evolution and battling—players could connect devices to fight. The 1999 anime Digimon Adventure introduced Agumon, Gabumon, and Patamon to a global audience. Digimon have multiple evolution stages (Rookie, Champion, Ultimate, Mega), allowing dramatic visual transformations while maintaining recognizable traits.</p>
+                            <div class="encyclopedia-fact">
+                                <span>📱</span>
+                                <span><strong>Origin:</strong> Originally designed for Tamagotchi-style virtual pet devices—cuteness was essential for the tiny LCD display.</span>
+                            </div>
+                            <div class="encyclopedia-fact">
+                                <span>🔄</span>
+                                <span><strong>Evolution:</strong> Each Digimon can "digivolve" through multiple forms, creating a progression from cute Rookie to powerful Mega—satisfying both cuteness and power fantasies.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="encyclopedia-card expanded">
+                    <div class="encyclopedia-header">
+                        <div class="encyclopedia-icon yokai">👻</div>
+                        <div>
+                            <div class="encyclopedia-title">Yo-kai Watch</div>
+                            <div class="encyclopedia-year">2012 • Level-5</div>
+                        </div>
+                        <span class="encyclopedia-toggle">▼</span>
+                    </div>
+                    <div class="encyclopedia-body">
+                        <div class="encyclopedia-content">
+                            <p>Yo-kai Watch features spirits and supernatural creatures from Japanese folklore, reimagined as cute, collectible characters. At its peak, it was one of Japan's most popular monster-catching franchises, with games, anime, manga, films, and Bandai-produced toys. The blend of traditional yōkai mythology with kawaii aesthetics created massive appeal.</p>
+                            <p>Jibanyan—a cat spirit based on the bakeneko legend—became the mascot and one of the most recognizable characters. The franchise spawned four animated films and a live-action adaptation. Yo-kai are invisible to humans until the protagonist gets a special watch; the concept of "everyday problems caused by spirits" made folklore relatable to modern life.</p>
+                            <div class="encyclopedia-fact">
+                                <span>🇯🇵</span>
+                                <span><strong>Cultural blend:</strong> Traditional Japanese spirits (yōkai) redesigned with oversized eyes and round proportions for modern kawaii appeal.</span>
+                            </div>
+                            <div class="encyclopedia-fact">
+                                <span>🐱</span>
+                                <span><strong>Jibanyan:</strong> A former house cat who died and became a Yo-kai. His catchphrase "Nya!" and lovable design made him a merchandise phenomenon rivaling Pikachu in Japan.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="encyclopedia-card expanded">
+                    <div class="encyclopedia-header">
+                        <div class="encyclopedia-icon sanrio">🐱</div>
+                        <div>
+                            <div class="encyclopedia-title">Sanrio (Hello Kitty)</div>
+                            <div class="encyclopedia-year">1974 • Shintaro Tsuji</div>
+                        </div>
+                        <span class="encyclopedia-toggle">▼</span>
+                    </div>
+                    <div class="encyclopedia-body">
+                        <div class="encyclopedia-content">
+                            <p>Sanrio founder Shintaro Tsuji discovered that adding cute designs to mundane products increased sales. Hello Kitty (1974) was the first systematically merchandised kawaii character—a white cat with a bow and notably absent mouth that allows endless emotional projection. This launched the commercial kawaii phenomenon.</p>
+                            <p>Sanrio's roster has grown to include My Melody, Cinnamoroll, Kuromi, and Pompompurin. Hello Kitty alone generates over $8 billion annually in licensed merchandise. The character is officially a British girl named Kitty White who lives in London—Sanrio created an elaborate backstory to support global marketing. The brand has collaborated with luxury fashion houses and appears on 50,000+ product types.</p>
+                            <div class="encyclopedia-fact">
+                                <span>🎀</span>
+                                <span><strong>Design choice:</strong> Hello Kitty has no mouth—viewers project their own emotions onto her, creating deeper connection.</span>
+                            </div>
+                            <div class="encyclopedia-fact">
+                                <span>🌍</span>
+                                <span><strong>Global reach:</strong> Hello Kitty has her own theme park (Sanrio Puroland in Tokyo), airline (EVA Air Hello Kitty jets), and has appeared in over 130 countries.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="encyclopedia-card expanded">
+                    <div class="encyclopedia-header">
+                        <div class="encyclopedia-icon sumikko">🐸</div>
+                        <div>
+                            <div class="encyclopedia-title">Sumikko Gurashi</div>
+                            <div class="encyclopedia-year">2012 • San-X</div>
+                        </div>
+                        <span class="encyclopedia-toggle">▼</span>
+                    </div>
+                    <div class="encyclopedia-body">
+                        <div class="encyclopedia-content">
+                            <p>"Corner-dwelling creatures" (Sumikko Gurashi) that appeal to those who feel like outsiders. These anxious, shy characters prefer hiding in corners—a relatable metaphor for social anxiety. Main characters include Shirokuma (a polar bear afraid of the cold), Penguin? (unsure if it's a penguin), Tonkatsu (a piece of pork cutlet with a bone), and Neko (a stray cat).</p>
+                            <p>San-X, the same company behind Rilakkuma, created Sumikko in 2012. Rilakkuma alone earned ¥250 billion by 2016. The "creepy-cute" (kimo-kawaii) aesthetic embraces imperfection—characters have anxieties, uncertainties, and quirks that make them endearing. The franchise includes games, films, and extensive stationery and plush merchandise.</p>
+                            <div class="encyclopedia-fact">
+                                <span>🏠</span>
+                                <span><strong>Psychology:</strong> Corner-dwelling reflects a cultural comfort with vulnerability and imperfection—key to kawaii's "aesthetics of vulnerability."</span>
+                            </div>
+                            <div class="encyclopedia-fact">
+                                <span>🐻</span>
+                                <span><strong>San-X siblings:</strong> Rilakkuma (relaxed bear) and Korilakkuma (small white bear) are from the same company. The zipper on Rilakkuma's back remains a mystery—it's never been shown open.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">History</div>
+                <h2 class="section-title">Evolution of Cute Monsters</h2>
+                <p class="section-desc">From postwar Japan to global phenomenon—the timeline of kawaii monster culture.</p>
+            </div>
+            <div class="timeline" id="timelineContainer"></div>
+        </div>
+    </section>
+
+    <!-- Science of Cuteness -->
+    <section id="science">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Psychology</div>
+                <h2 class="section-title">The Science of Cuteness</h2>
+                <p class="section-desc">Why do we find monsters adorable? Discover the neuroscience and psychology behind our love for cute creatures.</p>
+            </div>
+            <div class="science-grid">
+                <div class="science-card">
+                    <div class="science-card-icon">🧠</div>
+                    <h3>Baby Schema Effect</h3>
+                    <p>Features like large eyes, big heads, round faces, and soft bodies trigger innate caregiving instincts. Our orbitofrontal cortex activates within 1/7 of a second—followed by empathy and compassion. It's evolutionary: cuteness improves species survival.</p>
+                    <ul class="baby-schema-list">
+                        <li>Oversized eyes relative to face</li>
+                        <li>Large head-to-body ratio</li>
+                        <li>Round, soft features</li>
+                        <li>Small nose and mouth</li>
+                    </ul>
+                </div>
+                <div class="science-card">
+                    <div class="science-card-icon">🔄</div>
+                    <h3>Kimo-Kawaii</h3>
+                    <p>Japanese "creepy-cute" embraces the ambivalent nature of cuteness. Cuteness involves "malformation and exaggeration of infantile aesthetic"—monstrous features can still trigger cute responses. It acts as a "sweet coating" that transforms strange creatures into endearing ones.</p>
+                </div>
+                <div class="science-card">
+                    <div class="science-card-icon">🛡️</div>
+                    <h3>Aesthetics of Vulnerability</h3>
+                    <p>Kawaii emerged as "a revolutionary aesthetics of vulnerability" against adult life's harshness. Post-WWII Japan longed for simplicity and innocence. Celebrating imperfection—corner-dwelling, anxiety, shyness—creates connection through shared vulnerability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monster Creator -->
+    <section id="creator">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Create</div>
+                <h2 class="section-title">Monster Creator</h2>
+                <p class="section-desc">Design your own cute monster using the principles of kawaii design. Experiment with colors and features!</p>
+            </div>
+            <div class="creator-container">
+                <div class="creator-preview">
+                    <div class="creator-monster" id="creatorMonster"></div>
+                </div>
+                <div class="creator-controls">
+                    <div class="creator-controls-grid">
+                        <div class="control-group">
+                            <label>Body Shape</label>
+                            <select id="bodyShape" onchange="updateCreator()">
+                                <option value="round">Round</option>
+                                <option value="oval">Oval</option>
+                                <option value="square">Square</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Body Size</label>
+                            <input type="range" id="bodySize" min="140" max="240" value="200">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Body Color</label>
+                        <input type="color" id="bodyColor" value="#ff6b9d">
+                    </div>
+                    <div class="creator-controls-grid">
+                        <div class="control-group">
+                            <label>Eye Style</label>
+                            <select id="eyeStyle" onchange="updateCreator()">
+                                <option value="anime">Anime</option>
+                                <option value="dots">Dots</option>
+                                <option value="surprised">Surprised</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Eye Size</label>
+                            <input type="range" id="eyeSize" min="16" max="44" value="30">
+                        </div>
+                    </div>
+                    <div class="creator-controls-grid">
+                        <div class="control-group">
+                            <label>Eye Color</label>
+                            <input type="color" id="eyeColor" value="#1a1926">
+                        </div>
+                        <div class="control-group">
+                            <label>Mouth Style</label>
+                            <select id="mouthStyle" onchange="updateCreator()">
+                                <option value="smile">Smile</option>
+                                <option value="neutral">Neutral</option>
+                                <option value="big">Big Grin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Accessories</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;">
+                                <input type="checkbox" id="addHorns" onchange="updateCreator()"> Horns
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;">
+                                <input type="checkbox" id="addBlush" onchange="updateCreator()"> Blush
+                            </label>
+                        </div>
+                    </div>
+                    <div class="creator-buttons">
+                        <button class="creator-btn primary" onclick="randomizeMonster()">🎲 Randomize</button>
+                        <button class="creator-btn" onclick="resetCreator()">↺ Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content">
+            <div class="lightbox-img" id="lightboxImg"></div>
+            <div class="lightbox-body">
+                <h3 id="lightboxTitle"></h3>
+                <p id="lightboxDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Dialog -->
+    <div class="timeline-dialog" id="timelineDialog">
+        <div class="timeline-dialog-content">
+            <div class="timeline-dialog-header">
+                <span class="timeline-dialog-year" id="timelineDialogYear"></span>
+                <button class="timeline-dialog-close" onclick="closeTimelineDialog()">×</button>
+            </div>
+            <h2 class="timeline-dialog-title" id="timelineDialogTitle"></h2>
+            <div class="timeline-dialog-body" id="timelineDialogBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== TIMELINE DATA =====
+        const timelineData = [
+            {
+                year: '1952',
+                title: 'Astro Boy',
+                desc: 'Osamu Tezuka\'s Astro Boy featured huge eyes and innocent appearance—a milestone in cute character design that influenced decades of anime.',
+                detail: 'Osamu Tezuka, often called the "God of Manga," created Astro Boy (Tetsuwan Atomu) as a manga in 1952. The character\'s oversized eyes—inspired by Disney\'s Bambi—became a defining trait of Japanese anime. Tezuka\'s "star system" of reusable character designs and his emphasis on expressive, childlike features laid the foundation for the kawaii aesthetic. The 1963 anime adaptation was Japan\'s first successful animated TV series, exporting the cute-robot archetype worldwide.',
+                fact: 'Tezuka deliberately gave Astro Boy large eyes to convey emotion more effectively on small TV screens—a design choice that became industry standard.'
+            },
+            {
+                year: '1974',
+                title: 'Hello Kitty',
+                desc: 'Sanrio launched the first systematically merchandised kawaii character. Kawaii emerged from teenage girls\' round handwriting (marui-ji) as rebellious self-expression.',
+                detail: 'Sanrio founder Shintaro Tsuji discovered that adding cute designs to mundane products dramatically increased sales. Hello Kitty—designed by Yuko Shimizu—debuted on a vinyl coin purse. The character has no mouth, allowing viewers to project their own emotions onto her. Kawaii culture itself emerged from mid-1970s Japan when teenage girls began using round, childlike handwriting (marui-ji) in notebooks as rebellious self-expression against rigid adult expectations.',
+                fact: 'Hello Kitty is not a cat—she\'s a British girl named Kitty White who lives in London. Her birthday is November 1st.'
+            },
+            {
+                year: '1988',
+                title: 'My Neighbor Totoro',
+                desc: 'Studio Ghibli\'s forest spirit Totoro blended nature, whimsy, and Japanese folklore into an enduring cute monster icon.',
+                detail: 'Hayao Miyazaki\'s My Neighbor Totoro (Tonari no Totoro) introduced the giant, fluffy forest spirit that would become one of animation\'s most beloved creatures. Totoro embodies the "soft monster" archetype—large, round, and comforting rather than frightening. The design draws from tanuki (raccoon dogs) and owls from Japanese folklore. The film\'s success proved that cute, nature-connected creatures could carry profound emotional weight and appeal across all ages.',
+                fact: 'Totoro\'s name comes from "tororu," a mispronunciation of "troll" by Mei, the younger sister. The character has no dialogue in the film.'
+            },
+            {
+                year: '1996',
+                title: 'Tamagotchi',
+                desc: 'Bandai\'s virtual pet created a global craze, proving cute digital creatures could form emotional bonds with users.',
+                detail: 'Created by Aki Maita and Akihiro Yokoi, Tamagotchi ("egg watch") launched in Japan on November 23, 1996. The handheld device housed a digital creature that required feeding, play, and care—or it would "die." At peak, 15 units sold per minute in North America. Over 100 million units have shipped worldwide. The concept pioneered "digital pet" bonding and influenced later monster-collecting games. Its cute, simple character designs were optimized for tiny LCD displays.',
+                fact: 'The original Tamagotchi had only 3 buttons. The death mechanic sparked controversy—some schools banned them for causing student distress.'
+            },
+            {
+                year: '1996',
+                title: 'Pokémon',
+                desc: 'Global breakthrough with mukokuseki (culturally ambiguous) design. Colorful creatures with oversized eyes proved cute monsters could transcend cultural boundaries.',
+                detail: 'Pokémon Red and Green launched in Japan in February 1996. Creator Satoshi Tajiri drew from his childhood insect-collecting hobby. The 151 original creatures used "mukokuseki"—culturally neutral design—allowing global appeal. Pikachu, designed by Atsuko Nishida and inspired by squirrels, became the mascot after the anime chose it as Ash\'s starter. The franchise\'s "Gotta Catch \'Em All" philosophy turned monster collection into a social phenomenon. Pokémon is now the highest-grossing media franchise of all time.',
+                fact: 'Pikachu was almost cut from the anime—the producers initially considered Clefairy as the mascot before switching to the electric mouse.'
+            },
+            {
+                year: '1997',
+                title: 'Digimon Virtual Pets',
+                desc: 'Virtual pet craze brought cute digital monsters to pocket devices. Designed for small-screen appeal with iconic silhouettes.',
+                detail: 'Bandai and WiZ released the Digital Monster virtual pet in 1997, capitalizing on the Tamagotchi boom. Unlike Tamagotchi\'s care-focused gameplay, Digimon emphasized evolution and battling. The creatures were designed to be instantly recognizable on tiny LCD screens—bold shapes, high contrast. By March 2004, 14 million units sold; by 2005, over 24 million. The franchise expanded to anime (1999), games, and trading cards. Agumon, Patamon, and Gabumon became iconic cute-monster designs.',
+                fact: 'Digimon stands for "Digital Monsters." The original virtual pet had 5 evolution stages and could connect to battle other devices.'
+            },
+            {
+                year: '1997',
+                title: 'Pokémon Anime',
+                desc: 'The anime series propelled Pikachu to global stardom and cemented the monster-collecting genre in pop culture.',
+                detail: 'The Pokémon anime premiered in Japan in April 1997, with Pikachu as Ash Ketchum\'s starter—a deliberate choice to boost the electric mouse\'s popularity. The show\'s formula of friendship, adventure, and "evolution" resonated worldwide. By 2000, it was the highest-rated kids\' show in the U.S. The anime\'s success drove game sales, merchandise, and the trading card game. Pikachu\'s voice—"Pika pika!"—became one of the most recognizable sounds in entertainment.',
+                fact: 'Ash has been 10 years old for over 25 years. The anime has run continuously since 1997 with over 1,200 episodes.'
+            },
+            {
+                year: '2003',
+                title: 'Rilakkuma',
+                desc: 'San-X\'s relaxed bear became a ¥250 billion phenomenon. The zipper on his back and perpetual relaxation resonated with stressed Japanese workers.',
+                detail: 'San-X launched Rilakkuma ("relax bear") in 2003. The honey-colored bear with a mysterious zipper on his back embodies "relaxation" (riraku). He\'s always lying down, often with a yellow bird (Kiiroitori) and a small bear (Korilakkuma). By 2016, the character had earned ¥250 billion in merchandise. Rilakkuma appealed to overworked Japanese adults seeking comfort and escape. The design philosophy: cute creatures don\'t need to do anything—they just exist, and that\'s enough.',
+                fact: 'No one knows what\'s inside Rilakkuma\'s zipper—it\'s never been shown. Fans speculate it\'s another, smaller Rilakkuma.'
+            },
+            {
+                year: '2012',
+                title: 'Yo-kai Watch & Sumikko Gurashi',
+                desc: 'Yo-kai Watch and Sumikko Gurashi brought folklore and outsider psychology to cute monsters. Kimo-kawaii (creepy-cute) gained mainstream acceptance.',
+                detail: 'Yo-kai Watch (Level-5, 2012) reimagined traditional Japanese spirits (yōkai) as collectible cute characters. Jibanyan, a cat spirit, became the mascot. At its peak, it rivaled Pokémon in Japan. Sumikko Gurashi (San-X, 2012) features "corner-dwelling creatures"—anxious, shy characters who prefer hiding in corners. Both embraced "kimo-kawaii" (creepy-cute): finding charm in the strange and imperfect. The corner-dweller concept resonated with those who feel like outsiders.',
+                fact: 'Sumikko\'s Penguin? character is unsure if it\'s actually a penguin—identity anxiety as a cute design element.'
+            },
+            {
+                year: '2016',
+                title: 'Pokémon GO',
+                desc: 'Augmented reality brought cute monsters into the real world, creating a global phenomenon and record-breaking mobile success.',
+                detail: 'Niantic\'s Pokémon GO launched in July 2016, using AR to place Pokémon in real-world locations. Within weeks, it became the most downloaded mobile game in history. Players walked billions of kilometers hunting creatures. The game proved that decades-old cute monster designs could drive unprecedented engagement when combined with new technology. It also sparked concerns about safety, trespassing, and addiction—demonstrating the powerful hold these characters have on users.',
+                fact: 'Pokémon GO generated $1 billion in revenue within 7 months—faster than any mobile game in history.'
+            }
+        ];
+
+        // ===== GALLERY DATA =====
+        const galleryData = [
+            { id: 1, name: 'Pikachu', category: 'pokemon', image: 'pikachu-style.png', desc: 'Electric-type mascot. Designed by Atsuko Nishida, inspired by squirrels. Yellow for electricity, cheeks store power.' },
+            { id: 2, name: 'Eevee', category: 'pokemon', image: 'eevee-style.png', desc: 'Evolution Pokémon with unstable genetics. Can evolve into 8 different forms. Embodies adaptability.' },
+            { id: 3, name: 'Jigglypuff', category: 'pokemon', image: 'jigglypuff-style.png', desc: 'Balloon Pokémon. Sings lullabies that put listeners to sleep. Round design maximizes cuteness.' },
+            { id: 4, name: 'Agumon', category: 'digimon', image: 'agumon-style.png', desc: 'Rookie-level Digimon. Small dinosaur with fire breath. Partner to Tai in Digimon Adventure.' },
+            { id: 5, name: 'Patamon', category: 'digimon', image: 'patamon-style.png', desc: 'Flying Digimon with large ears. Evolves into Angemon. Designed for small-screen recognition.' },
+            { id: 6, name: 'Jibanyan', category: 'yokai', image: 'jibanyan-style.png', desc: 'Charming cat Yo-kai. Based on bakeneko folklore. Mascot of Yo-kai Watch franchise.' },
+            { id: 7, name: 'Komasan', category: 'yokai', image: 'komasan-style.png', desc: 'Lion dog Yo-kai. Speaks in formal Japanese. Represents komainu guardian statues.' },
+            { id: 8, name: 'Hello Kitty', category: 'sanrio', image: 'hello-kitty-style.png', desc: 'No-mouth design allows emotional projection. First merchandised kawaii character (1974).' },
+            { id: 9, name: 'Rilakkuma', category: 'sanrio', image: 'rilakkuma-style.png', desc: 'Relaxed bear with zipper. Earned ¥250B. Represents stress relief and comfort.' },
+            { id: 10, name: 'Shirokuma', category: 'other', image: 'shirokuma-sumikko.png', desc: 'Sumikko Gurashi polar bear. Afraid of cold despite being a polar bear. Corner-dweller.' },
+            { id: 11, name: 'Penguin?', category: 'other', image: 'penguin-sumikko.png', desc: 'Sumikko character unsure if penguin. Identity anxiety as cute design element.' },
+            { id: 12, name: 'Totoro', category: 'other', image: 'totoro-style.png', desc: 'Studio Ghibli forest spirit. 1988. Blends nature, whimsy, and Japanese folklore.' }
+        ];
+
+        // ===== GALLERY RENDER =====
+        function renderGallery(filter = 'all', search = '') {
+            const grid = document.getElementById('galleryGrid');
+            const noResults = document.getElementById('noResults');
+            const filtered = galleryData.filter(m => {
+                const matchFilter = filter === 'all' || m.category === filter;
+                const matchSearch = !search || m.name.toLowerCase().includes(search.toLowerCase()) || m.desc.toLowerCase().includes(search.toLowerCase());
+                return matchFilter && matchSearch;
+            });
+
+            grid.innerHTML = filtered.map(m => `
+                <div class="gallery-card" data-id="${m.id}" onclick="openLightbox(${m.id})">
+                    <div class="gallery-card-img">
+                        <img src="images/${m.image}" alt="${m.name}">
+                    </div>
+                    <div class="gallery-card-body">
+                        <div class="gallery-card-category">${m.category}</div>
+                        <div class="gallery-card-title">${m.name}</div>
+                        <div class="gallery-card-desc">${m.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+        }
+
+        renderGallery();
+
+        document.getElementById('gallerySearch').addEventListener('input', (e) => {
+            const filter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+            renderGallery(filter, e.target.value);
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const search = document.getElementById('gallerySearch').value;
+                renderGallery(btn.dataset.filter, search);
+            });
+        });
+
+        function openLightbox(id) {
+            const m = galleryData.find(x => x.id === id);
+            if (!m) return;
+            document.getElementById('lightboxImg').innerHTML = `<img src="images/${m.image}" alt="${m.name}">`;
+            document.getElementById('lightboxTitle').textContent = m.name;
+            document.getElementById('lightboxDesc').textContent = m.desc;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+        // ===== TIMELINE RENDER & DIALOG =====
+        function renderTimeline() {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = timelineData.map((item, i) => `
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content" data-index="${i}" onclick="openTimelineDialog(${i})">
+                        <div class="timeline-year">${item.year}</div>
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-desc">${item.desc}</div>
+                        <div class="click-hint">Click for more details</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openTimelineDialog(index) {
+            const item = timelineData[index];
+            document.getElementById('timelineDialogYear').textContent = item.year;
+            document.getElementById('timelineDialogTitle').textContent = item.title;
+            document.getElementById('timelineDialogBody').innerHTML = `
+                <p>${item.detail}</p>
+                <div class="timeline-dialog-fact">
+                    <strong>Did you know?</strong> ${item.fact}
+                </div>
+            `;
+            document.getElementById('timelineDialog').classList.add('active');
+        }
+
+        function closeTimelineDialog() {
+            document.getElementById('timelineDialog').classList.remove('active');
+        }
+
+        document.getElementById('timelineDialog').addEventListener('click', (e) => {
+            if (e.target.id === 'timelineDialog') closeTimelineDialog();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('timelineDialog').classList.contains('active')) {
+                closeTimelineDialog();
+            }
+        });
+
+        renderTimeline();
+
+        // ===== ENCYCLOPEDIA TOGGLE =====
+        document.querySelectorAll('.encyclopedia-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('expanded');
+            });
+        });
+
+        // ===== MONSTER CREATOR =====
+        const creatorDefaults = {
+            bodyShape: 'round', bodySize: 200, color: '#ff6b9d',
+            eyeStyle: 'anime', eyeSize: 30, eyeColor: '#1a1926',
+            mouth: 'smile', horns: false, blush: false
+        };
+
+        function getCreatorState() {
+            return {
+                bodyShape: document.getElementById('bodyShape').value,
+                bodySize: parseInt(document.getElementById('bodySize').value),
+                color: document.getElementById('bodyColor').value,
+                eyeStyle: document.getElementById('eyeStyle').value,
+                eyeSize: parseInt(document.getElementById('eyeSize').value),
+                eyeColor: document.getElementById('eyeColor').value,
+                mouth: document.getElementById('mouthStyle').value,
+                horns: document.getElementById('addHorns').checked,
+                blush: document.getElementById('addBlush').checked
+            };
+        }
+
+        function setCreatorState(s) {
+            document.getElementById('bodyShape').value = s.bodyShape;
+            document.getElementById('bodySize').value = s.bodySize;
+            document.getElementById('bodyColor').value = s.color;
+            document.getElementById('eyeStyle').value = s.eyeStyle;
+            document.getElementById('eyeSize').value = s.eyeSize;
+            document.getElementById('eyeColor').value = s.eyeColor;
+            document.getElementById('mouthStyle').value = s.mouth;
+            document.getElementById('addHorns').checked = s.horns;
+            document.getElementById('addBlush').checked = s.blush;
+        }
+
+        function updateCreator() {
+            const m = document.getElementById('creatorMonster');
+            const s = getCreatorState();
+            const size = s.bodySize;
+
+            m.style.background = s.color;
+            m.style.width = size + 'px';
+            m.style.height = size + 'px';
+
+            let classes = 'creator-monster';
+            if (s.bodyShape !== 'round') classes += ' shape-' + s.bodyShape;
+            if (s.horns) classes += ' horns';
+            m.className = classes;
+
+            let eyeW = 30, eyeH = 40;
+            if (s.eyeStyle === 'dots') { eyeW = 12; eyeH = 12; }
+            else if (s.eyeStyle === 'surprised') { eyeW = 28; eyeH = 45; }
+            else { eyeW = Math.min(44, s.eyeSize); eyeH = Math.min(55, eyeW * 1.3); }
+            const eyeGap = Math.max(18, 52 - eyeW / 2);
+            const eyeClass = s.eyeStyle === 'anime' ? '' : ' eye-' + s.eyeStyle;
+            const eyeStyle = `width:${eyeW}px;height:${eyeH}px;background:${s.eyeColor}`;
+
+            const eyeHtml = `<div class="eyes" style="gap:${eyeGap}px"><div class="eye${eyeClass}" style="${eyeStyle}"></div><div class="eye${eyeClass}" style="${eyeStyle}"></div></div>`;
+
+            const mouthColor = s.eyeColor;
+            let mouthHtml = '';
+            if (s.mouth === 'smile') {
+                mouthHtml = `<div class="mouth" style="bottom:30%;width:40px;height:20px;border:3px solid ${mouthColor};border-top:none;border-radius:0 0 40px 40px"></div>`;
+            } else if (s.mouth === 'big') {
+                mouthHtml = `<div class="mouth" style="bottom:25%;width:60px;height:30px;border:4px solid ${mouthColor};border-top:none;border-radius:0 0 50px 50px"></div>`;
+            } else {
+                mouthHtml = `<div class="mouth" style="bottom:32%;width:24px;height:4px;background:${mouthColor};border:none;border-radius:2px"></div>`;
+            }
+
+            let extraHtml = s.blush ? '<div class="blush left"></div><div class="blush right"></div>' : '';
+
+            m.innerHTML = eyeHtml + mouthHtml + extraHtml;
+        }
+
+        function randomizeMonster() {
+            const shapes = ['round', 'oval', 'square'];
+            const colors = ['#ff6b9d', '#c44dff', '#00d4ff', '#ffd93d', '#6bcb77', '#ff9f43', '#a29bfe'];
+            const eyeColors = ['#1a1926', '#2d3436', '#636e72'];
+            const mouths = ['smile', 'neutral', 'big'];
+            const eyeStyles = ['anime', 'dots', 'surprised'];
+
+            setCreatorState({
+                bodyShape: shapes[Math.floor(Math.random() * shapes.length)],
+                bodySize: 160 + Math.floor(Math.random() * 60),
+                color: colors[Math.floor(Math.random() * colors.length)],
+                eyeStyle: eyeStyles[Math.floor(Math.random() * eyeStyles.length)],
+                eyeSize: 20 + Math.floor(Math.random() * 20),
+                eyeColor: eyeColors[Math.floor(Math.random() * eyeColors.length)],
+                mouth: mouths[Math.floor(Math.random() * mouths.length)],
+                horns: Math.random() > 0.6,
+                blush: Math.random() > 0.5
+            });
+            updateCreator();
+        }
+
+        function resetCreator() {
+            setCreatorState(creatorDefaults);
+            updateCreator();
+        }
+
+        ['bodyColor', 'bodySize', 'eyeSize', 'eyeColor'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', updateCreator);
+        });
+
+        updateCreator();
+    </script>
+</body>
+</html>

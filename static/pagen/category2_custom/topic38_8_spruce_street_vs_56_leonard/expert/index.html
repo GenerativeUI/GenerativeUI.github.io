@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NYC Towers: 8 Spruce vs 56 Leonard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Lora:wght@700&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "nyc-dark": "#0D1B2A",
+              "nyc-copper": "#D87A4A",
+              "nyc-grey": "#6F6F6F",
+              "nyc-charcoal": "#2F3640",
+              "nyc-light": "#F7F7F9",
+            },
+            fontFamily: {
+              lora: ["Lora", "serif"],
+              poppins: ["Poppins", "sans-serif"],
+              inter: ["Inter", "sans-serif"],
+            },
+            backgroundImage: {
+              "hero-gradient":
+                "linear-gradient(70.04deg, rgba(44, 86, 130, 0.56) 66.32%, rgba(45, 93, 144, 0.07) 90.12%)",
+              "arch-gradient": "rgba(44, 86, 130, 0.7)",
+            },
+            fontSize: {
+              "hero-title": ["60px", "77px"],
+              "section-title": ["55px", "70px"],
+              "card-title": ["40px", "48px"],
+              "body-lg": ["30px", "46px"],
+              "body-md": ["23px", "39px"],
+            },
+            spacing: {
+              "15px": "15px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Custom styles for specific design elements */
+      .corner-border-tl {
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        width: 202px;
+        height: 167px;
+        border-top: 15px solid #d87a4a;
+        border-left: 15px solid #d87a4a;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .corner-border-br {
+        position: absolute;
+        bottom: -15px;
+        right: -15px;
+        width: 202px;
+        height: 167px;
+        border-bottom: 15px solid #d87a4a;
+        border-right: 15px solid #d87a4a;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .amenity-divider {
+        width: 4px;
+        background-color: #d87a4a;
+        height: 100%;
+        min-height: 345px;
+        border-left: 15px solid #d87a4a;
+      }
+
+      /* --- ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white antialiased text-nyc-charcoal selection:bg-nyc-copper selection:text-white"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header class="relative w-full h-[600px] md:h-[800px] lg:h-screen">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+          <img
+            src="./assets/hero-bg.png"
+            alt="NYC Skyline"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Content -->
+        <div
+          class="relative h-full flex flex-col justify-center px-6 md:px-12 lg:px-[209px]"
+        >
+          <div
+            class="max-w-[976px] space-y-6 border-[4px] border-[#D87A4A] p-5"
+          >
+            <h1
+              class="reveal font-lora !leading-normal font-bold text-4xl md:text-5xl lg:text-hero-title text-white !leading-[1.1]"
+            >
+              New York’s Most Striking Towers: 8 Spruce Street vs 56 Leonard
+            </h1>
+
+            <p
+              class="reveal delay-100 font-poppins !leading-normal font-medium text-lg md:text-2xl text-white max-w-[994px]"
+            >
+              Explore the design, architecture, and urban impact of two of New
+              York’s most recognizable skyscrapers.
+            </p>
+
+            <!-- CTA Button (Functional Scroll) -->
+            <a
+              href="#about"
+              class="reveal delay-200 bg-nyc-copper text-white font-poppins font-semibold text-xl xl:text-body-lg px-12 py-6 hover:bg-[#c56b3e] transition-all duration-300 inline-block w-auto hover:translate-x-2"
+            >
+              Explore more
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- SECTION 2: ABOUT THE BUILDINGS -->
+      <section
+        id="about"
+        class="relative w-full py-20 lg:py-32 px-6 lg:px-[150px]"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-24">
+          <h2
+            class="font-lora font-bold text-2xl xl:text-3xl xl:text-section-title text-nyc-dark mb-4"
+          >
+            About the Buildings
+          </h2>
+          <p
+            class="font-poppins font-medium text-lg xl:text-body-lg text-nyc-grey max-w-[910px] mx-auto"
+          >
+            A quick look at the design, style, and purpose of each tower.
+          </p>
+        </div>
+
+        <!-- Comparison Grid -->
+        <div class="grid grid-cols-1 gap-20 lg:gap-[150px]">
+          <!-- 8 Spruce Street -->
+          <div
+            class="flex justify-between xl:flex-row flex-col gap-5 xl:gap-10"
+          >
+            <!-- Image with Corner Border -->
+            <div class="reveal delay-100 overflow-hidden">
+              <img
+                src="./assets/building-one.png"
+                alt="8 Spruce Street"
+                class="w-full h-full lg:max-h-[525px] transition-transform duration-700 transform hover:translate-y-4"
+              />
+            </div>
+
+            <!-- Details -->
+            <div
+              class="reveal delay-200 flex flex-col xl:justify-center xl:items-end"
+            >
+              <div class="">
+                <h3
+                  class="font-inter w-full text-left font-bold text-2xl xl:text-3xl lg:text-card-title text-nyc-charcoal mb-8"
+                >
+                  8 Spruce Street
+                </h3>
+                <ul
+                  class="flex flex-col gap-5 text-nyc-copper font-poppins font-medium text-lg xl:text-2xl list-disc pl-6 marker:text-nyc-copper"
+                >
+                  <li>Completed: 2011</li>
+                  <li>Height: 870 ft</li>
+                  <li>Architect: Frank Gehry</li>
+                  <li>Known for: Wavy stainless-steel curves</li>
+                  <li>Category: Luxury residential</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 56 Leonard Street -->
+          <div class="flex justify-between xl:flex-row flex-col-reverse gap-10">
+            <!-- Details -->
+            <div class="reveal delay-100">
+              <h3
+                class="font-inter w-full text-left font-bold text-2xl xl:text-3xl lg:text-card-title text-nyc-charcoal mb-8"
+              >
+                56 Leonard Street
+              </h3>
+              <div
+                class="flex flex-col gap-5 text-nyc-copper font-poppins font-medium text-lg xl:text-2xl list-disc pl-6 marker:text-nyc-copper"
+              >
+                <li>Completed: 2017</li>
+                <li>Height: 821 ft</li>
+                <li>Architect: Herzog & de Meuron</li>
+                <li>Known for: Jenga-style stacked design</li>
+                <li>Category: Ultra-luxury residential</li>
+              </div>
+            </div>
+
+            <!-- Image with Corner Border -->
+            <div class="reveal delay-200 overflow-hidden">
+              <img
+                src="./assets/building-two.png"
+                alt="56 Leonard Street"
+                class="w-full h-full lg:max-h-[525px] transition-transform duration-700 transform hover:-translate-y-4"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: ARCHITECTURE & DESIGN -->
+      <section
+        class="relative w-full bg-nyc-dark py-24 lg:py-32 px-6 lg:px-[150px]"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-20">
+          <h2
+            class="font-lora font-bold text-2xl xl:text-5xl xl:text-section-title text-nyc-copper mb-6"
+          >
+            Architecture & Design
+          </h2>
+          <p
+            class="font-poppins font-medium text-lg xl:text-3xl text-white max-w-[958px] mx-auto"
+          >
+            Both skyscrapers stand out in NYC for their bold and innovative
+            architectural approaches.
+          </p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-[150px]">
+          <!-- 8 Spruce -->
+          <div class="reveal delay-100">
+            <div class="mb-8 overflow-hidden">
+              <img
+                src="./assets/arc-one.png"
+                alt="8 Spruce Detail"
+                class="w-full h-full xl:max-h-[495px] transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+
+            <h3
+              class="font-inter font-bold text-2xl lg:text-card-title text-white mb-6"
+            >
+              8 Spruce Street
+            </h3>
+            <ul
+              class="flex flex-col gap-5 text-white font-poppins font-medium text-lg xl:text-2xl list-disc pl-6 marker:text-white ml-5"
+            >
+              <li>Sculptural, fluid form</li>
+              <li>Reflective metal waves</li>
+              <li>Soft, organic curves</li>
+              <li>Gehry’s signature style: movement + texture</li>
+            </ul>
+          </div>
+
+          <!-- 56 Leonard -->
+          <div class="reveal delay-200">
+            <div class="mb-8 overflow-hidden">
+              <img
+                src="./assets/arc-two.png"
+                alt="56 Leonard Detail"
+                class="w-full h-full xl:max-h-[495px] transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+
+            <h3
+              class="font-inter font-bold text-2xl xl:text-3xl lg:text-card-title text-white mb-6"
+            >
+              56 Leonard Street
+            </h3>
+            <ul
+              class="flex flex-col gap-5 text-white font-poppins font-medium text-lg xl:text-2xl list-disc pl-6 marker:text-white ml-5"
+            >
+              <li>Floating stacked cubes</li>
+              <li>Modern, geometric, sharp edges</li>
+              <li>Minimalist glass look</li>
+              <li>Strong visual contrast in skyline</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: LIVING EXPERIENCE -->
+      <section class="relative w-full py-24 lg:py-32 px-6 lg:px-[150px]">
+        <div class="reveal text-center mb-24">
+          <h2
+            class="font-lora font-bold text-2xl xl:text-3xl xl:text-section-title text-nyc-dark"
+          >
+            Living Experience (Amenities & Lifestyle)
+          </h2>
+        </div>
+
+        <!-- Amenities Lists Side by Side with Divider -->
+        <div
+          class="flex flex-col lg:flex-row justify-center items-stretch gap-12 lg:gap-[131px] mb-24"
+        >
+          <!-- 8 Spruce List -->
+          <div
+            class="reveal delay-100 flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-5"
+          >
+            <h3
+              class="font-inter font-bold text-2xl xl:text-3xl lg:text-card-title text-nyc-charcoal mb-4"
+            >
+              8 Spruce Street Amenities
+            </h3>
+            <ul
+              class="flex flex-col gap-5 font-poppins font-medium text-lg xl:text-2xl text-left text-nyc-copper list-disc marker:text-nyc-copper pl-6"
+            >
+              <li>Rental Units</li>
+              <li>School at the Base</li>
+              <li>Health Club</li>
+              <li>Indoor Pool</li>
+              <li>Community Spaces</li>
+            </ul>
+          </div>
+
+          <!-- Central Divider -->
+          <div
+            class="reveal delay-200 hidden lg:block w-[10px] bg-nyc-copper shrink-0 rounded-sm origin-top transition-transform duration-1000"
+          ></div>
+
+          <!-- 56 Leonard List -->
+          <div
+            class="reveal delay-300 flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-5"
+          >
+            <h3
+              class="font-inter font-bold text-2xl xl:text-3xl lg:text-card-title text-nyc-charcoal mb-4"
+            >
+              56 Leonard Amenities
+            </h3>
+            <ul
+              class="flex flex-col gap-5 font-poppins font-medium text-lg xl:text-2xl text-nyc-copper list-disc marker:text-nyc-copper pl-6"
+            >
+              <li>Ultra-Luxury Condos</li>
+              <li>Private Terraces</li>
+              <li>High-End Finishes</li>
+              <li>75-Foot Infinity Pool</li>
+              <li>75-Foot Infinity Pool</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive -->
+      <!-- SECTION: Design Your Own Tower -->
+      <section
+        id="tower-calc"
+        class="relative w-full bg-gradient-to-br from-[#0D1B2A] via-[#132A44] to-[#0D1B2A] py-20 px-6 lg:px-[150px]"
+      >
+        <!-- Header -->
+        <div class="text-center mb-20 reveal">
+          <h2
+            class="font-lora font-bold text-3xl xl:text-section-title text-nyc-copper mb-6"
+          >
+            Design Your Own NYC Tower
+          </h2>
+          <p
+            class="font-poppins font-medium text-lg xl:text-body-lg text-white/80 max-w-[900px] mx-auto"
+          >
+            Build a custom skyscraper and instantly visualize its scale &
+            impact.
+          </p>
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+          <!-- LEFT: FORM (Glass Card) -->
+          <div
+            class="reveal lg:col-span-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl"
+          >
+            <h3 class="font-inter font-bold text-xl text-white mb-8">
+              Tower Inputs
+            </h3>
+
+            <div class="flex flex-col gap-5">
+              <div>
+                <label class="text-white/80 font-poppins">Height (ft)</label>
+                <input
+                  id="height"
+                  type="number"
+                  placeholder="900"
+                  class="mt-2 w-full rounded-lg bg-white/90 p-3 focus:outline-none focus:ring-2 focus:ring-nyc-copper"
+                />
+              </div>
+
+              <div>
+                <label class="text-white/80 font-poppins">Floors</label>
+                <input
+                  id="floors"
+                  type="number"
+                  placeholder="70"
+                  class="mt-2 w-full rounded-lg bg-white/90 p-3 focus:outline-none focus:ring-2 focus:ring-nyc-copper"
+                />
+              </div>
+
+              <div>
+                <label class="text-white/80 font-poppins"
+                  >Units per Floor</label
+                >
+                <input
+                  id="unitsPerFloor"
+                  type="number"
+                  placeholder="6"
+                  class="mt-2 w-full rounded-lg bg-white/90 p-3 focus:outline-none focus:ring-2 focus:ring-nyc-copper"
+                />
+              </div>
+
+              <button
+                onclick="calculateTower()"
+                class="mt-6 bg-nyc-copper text-white font-semibold py-3 rounded-xl hover:scale-105 transition-all"
+              >
+                Generate Tower
+              </button>
+            </div>
+          </div>
+
+
+          <!-- RIGHT: RESULTS -->
+          <div
+            id="resultCard"
+            class="reveal lg:col-span-1 !text-white rounded-2xl p-8 shadow-2xl opacity-60 transition-all backdrop-blur-xl bg-white/10 border border-white/20"
+          >
+            <h3
+              class="!text-white font-inter font-bold text-xl text-nyc-dark mb-6"
+            >
+              Tower Stats
+            </h3>
+
+            <div
+              class="!text-white space-y-6 font-poppins text-lg text-nyc-dark"
+            >
+              <div class="flex justify-between">
+                <span>🏢 Total Units</span>
+                <span id="totalUnits" class="font-bold">—</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span>👥 Population</span>
+                <span id="population" class="font-bold">—</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span>📏 Avg Floor Height</span>
+                <span id="floorHeight" class="font-bold">— ft</span>
+              </div>
+            </div>
+
+            <div class="mt-8 h-1 w-full bg-nyc-copper rounded-full"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: NEIGHBORHOODS (Light Grey BG) -->
+
+      <!-- FOOTER -->
+      <footer class="w-full bg-nyc-dark py-24 px-6 text-center">
+        <div class="reveal">
+          <h2
+            class="font-lora font-bold text-2xl xl:text-section-title text-nyc-copper mb-8"
+          >
+            Choose the Tower That Fits Your Life
+          </h2>
+          <p
+            class="font-poppins font-medium text-lg xl:text-body-lg text-white"
+          >
+            Your style. Your neighborhood. Your skyline.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- SCRIPT FOR ANIMATIONS -->
+    <script>
+      // Initialize Intersection Observer
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              // Unobserve to animate only once
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1, // Trigger when 10% visible
+          rootMargin: "0px 0px -50px 0px", // Slight offset
+        }
+      );
+
+      // Start observing
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      //
+      // Interactive
+      function calculateTower() {
+        const height = +document.getElementById("height").value;
+        const floors = +document.getElementById("floors").value;
+        const unitsPerFloor = +document.getElementById("unitsPerFloor").value;
+
+        if (!height || !floors || !unitsPerFloor) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        const totalUnits = floors * unitsPerFloor;
+        const population = Math.round(totalUnits * 2.5);
+        const avgFloorHeight = (height / floors).toFixed(1);
+
+        // Update text
+        totalUnitsEl = document.getElementById("totalUnits");
+        populationEl = document.getElementById("population");
+        floorHeightEl = document.getElementById("floorHeight");
+
+        totalUnitsEl.innerText = totalUnits;
+        populationEl.innerText = population;
+        floorHeightEl.innerText = avgFloorHeight;
+
+        // Activate result card
+        const card = document.getElementById("resultCard");
+        card.classList.remove("opacity-60");
+        card.classList.add("scale-105");
+
+        // Tower Visual Height (dynamic)
+        const tower = document.getElementById("towerVisual");
+        const visualHeight = Math.min(420, floors * 6); // limit height
+        tower.style.height = visualHeight + "px";
+      }
+    </script>
+  </body>
+</html>

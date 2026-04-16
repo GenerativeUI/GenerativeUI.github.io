@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History of France for Kids</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Fredoka+One&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "french-blue": "#0055A4",
+              "french-red": "#EF4135",
+              "french-red-dark": "#E11F3E",
+              "kids-orange": "#FD9D19",
+              "kids-teal": "#2FC6B7",
+              "kids-yellow": "#FFD901",
+              "text-grey": "#7A7D82",
+              "border-grey": "#6F6A6A",
+            },
+            fontFamily: {
+              fredoka: ['"Fredoka One"', "cursive"],
+              poppins: ["Poppins", "sans-serif"],
+              comic: ['"Comic Neue"', "cursive"],
+            },
+            backgroundImage: {
+              "hero-pattern":
+                "url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop')",
+              "paper-texture":
+                "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
+            },
+            boxShadow: {
+              card: "0px 10px 20px rgba(0, 0, 0, 0.1)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* --- ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+
+      /* Custom Shapes */
+      .blob-shape-1 {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      }
+      .font-fredoka,
+      .font-poppins,
+      .font-comic {
+        line-height: 1.3 !important;
+      }
+
+      .tab-btn {
+        border: 3px solid #6f6a6a;
+        transition: all 0.3s ease;
+      }
+      .tab-btn:hover {
+        transform: scale(1.05);
+      }
+      .tab-btn.active-tab {
+        border-color: #ffd901 !important;
+        background-color: #fffbeb;
+      }
+      .tab-btn span {
+        color: #6f6a6a;
+      }
+      .tab-btn.active-tab span {
+        color: black;
+      }
+
+      .custom-shape-divider-top-1765525581 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+      }
+      .custom-shape-divider-top-1765525581 svg {
+        position: relative;
+        display: block;
+        width: calc(177% + 1.3px);
+        height: 209px;
+      }
+      .custom-shape-divider-top-1765525581 .shape-fill {
+        fill: #ffffff;
+      }
+
+      /* Interactive */
+
+      .castle-btn {
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-family: "Comic Neue";
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .castle-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .symbol-btn {
+        background: #ffd901;
+        padding: 14px;
+        border-radius: 14px;
+        font-family: "Comic Neue";
+        font-weight: bold;
+        transition: all 0.2s ease;
+      }
+
+      .symbol-btn:hover {
+        transform: scale(1.08);
+        background: #ffea61;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased bg-white selection:bg-kids-yellow selection:text-black"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex flex-col justify-center px-4 md:px-8 lg:px-24"
+      >
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="./assets/hero-bg.png"
+            alt="Paris Background"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Content -->
+        <div
+          class="relative z-20 max-w-4xl pt-20 lg:pt-0 text-center lg:text-left mx-auto lg:mx-0"
+        >
+          <h1
+            class="reveal font-fredoka text-4xl md:text-6xl lg:text-[75px] lg:leading-[91px] text-french-blue mb-6 drop-shadow-md bg-white/60 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none rounded-xl p-4 lg:p-0"
+          >
+            Welcome to the<br />History of France!
+          </h1>
+          <p
+            class="reveal delay-100 font-poppins font-bold text-lg md:text-2xl xl:text-[30px] text-white max-w-3xl mx-auto lg:mx-0 drop-shadow-lg"
+          >
+            Travel back in time and explore castles, kings, queens, revolutions,
+            and French culture.
+          </p>
+        </div>
+      </header>
+
+      <!-- SECTION 2: TIMELINE & ORIGINS -->
+      <section
+        id="timeline-section"
+        class="relative bg-white w-full pt-16 px-4 md:pt-24 md:px-12 lg:pt-32 lg:px-24"
+      >
+        <!-- Timeline Header -->
+        <div class="reveal text-center mb-16 max-w-5xl mx-auto">
+          <h2
+            class="font-fredoka text-3xl md:text-5xl xl:text-[64px] text-french-red mb-6"
+          >
+            A Fun Journey Through<br />France’s History!
+          </h2>
+          <p
+            class="font-poppins text-text-grey text-base md:text-xl xl:text-[30px] leading-relaxed"
+          >
+            Let’s explore how France changed over time—starting from ancient
+            warriors to castles, kings, revolutions, and the modern world we see
+            today!
+          </p>
+        </div>
+
+        <!-- Interactive Timeline Buttons -->
+        <div
+          class="reveal delay-100 flex flex-wrap justify-center items-center gap-6 lg:gap-10 mb-24 relative z-10"
+        >
+          <div
+            class="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-border-grey -z-10"
+          ></div>
+
+          <button
+            data-tab="0"
+            class="tab-btn bg-white px-8 py-4 rounded-xl shadow-card cursor-pointer"
+          >
+            <span class="font-comic font-bold text-2xl xl:text-[40px]"
+              >500 AD</span
+            >
+          </button>
+
+          <button
+            data-tab="1"
+            class="tab-btn bg-white px-8 py-4 rounded-xl shadow-card cursor-pointer"
+          >
+            <span class="font-comic font-bold text-2xl xl:text-[40px]"
+              >500–1500</span
+            >
+          </button>
+
+          <button
+            data-tab="2"
+            class="tab-btn bg-white px-8 py-4 rounded-xl shadow-card cursor-pointer"
+          >
+            <span class="font-comic font-bold text-2xl xl:text-[40px]"
+              >1500–1600s</span
+            >
+          </button>
+
+          <button
+            data-tab="3"
+            class="tab-btn bg-white px-8 py-4 rounded-xl shadow-card cursor-pointer"
+          >
+            <span class="font-comic font-bold text-2xl xl:text-[40px]"
+              >1789</span
+            >
+          </button>
+
+          <button
+            data-tab="4"
+            class="tab-btn bg-white px-8 py-4 rounded-xl shadow-card cursor-pointer"
+          >
+            <span class="font-comic font-bold text-2xl xl:text-[40px]"
+              >1800s</span
+            >
+          </button>
+        </div>
+
+        <!-- Content Container -->
+        <div
+          id="tabContentWrapper"
+          class="transition-opacity duration-500 opacity-100"
+        >
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-[1600px] mx-auto"
+          >
+            <!--Tab Text -->
+            <div
+              class="reveal delay-200 text-center lg:text-left order-2 lg:order-1"
+            >
+              <h3
+                id="tabTitle"
+                class="font-fredoka text-3xl md:text-4xl xl:text-[55px] text-black mb-4"
+              >
+                Ancient Gaul & Romans (Before 500 AD)
+              </h3>
+
+              <p
+                id="tabDesc"
+                class="font-poppins text-text-grey text-lg xl:text-[30px] mb-6"
+              >
+                This was the time of brave Gauls and the Roman Empire.
+              </p>
+
+              <p
+                id="tabQuote"
+                class="font-comic font-bold text-2xl xl:text-[48px] text-french-blue"
+              >
+                "Gauls and Romans: The First French People!"
+              </p>
+            </div>
+
+            <!-- Image -->
+            <div
+              class="reveal delay-300 relative order-1 lg:order-2 flex justify-center"
+            >
+              <img
+                id="tabImage"
+                src="./assets/gaul-and-romans.jpeg"
+                class="z-10 w-full max-h-[693px] transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: KINGS & QUEENS (Orange Background) -->
+      <section
+        class="relative bg-[#FF751F] w-full !pt-1 py-24 px-4 md:px-12 lg:px-24 mt-12 bg-cover bg-no-repeat overflow-hidden"
+      >
+        <div class="custom-shape-divider-top-1765525581">
+          <svg
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+              class="shape-fill"
+            ></path>
+          </svg>
+        </div>
+        <!-- Content -->
+        <div class="max-w-[1600px] mx-auto mt-[250px]">
+          <!-- Header -->
+          <div class="reveal text-center mb-16">
+            <h2 class="font-fredoka text-4xl xl:text-[64px] text-white mb-7">
+              Famous Kings, Queens & Heroes
+            </h2>
+            <div
+              class="w-full max-w-2xl mx-auto border-b-4 border-dashed border-white opacity-60"
+            ></div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-7 lg:gap-10 pt-7">
+            <!-- Charlemagne -->
+            <div class="reveal delay-100 flex flex-col items-center group">
+              <div
+                class="bg-white p-4 rounded-[40px] shadow-xl w-full max-w-[400px] aspect-square flex items-center justify-center mb-6 transition-transform duration-300 group-hover:-translate-y-3 group-hover:rotate-1"
+              >
+                <div
+                  class="w-full h-full rounded-[30px] overflow-hidden bg-blue-100"
+                >
+                  <img
+                    src="./assets/king-one.png"
+                    onclick="openModal(
+    'Charlemagne',
+    'Charlemagne was a powerful king who united much of Europe and loved learning.',
+    './assets/king-one.png'
+  )"
+                    class="cursor-pointer"
+                  />
+                </div>
+              </div>
+              <span
+                class="font-comic font-bold text-3xl xl:text-[48px] text-white"
+                >Charlemagne</span
+              >
+            </div>
+
+            <!-- Joan of Arc -->
+            <div class="reveal delay-200 flex flex-col items-center group">
+              <div
+                class="bg-white p-4 rounded-[40px] shadow-xl w-full max-w-[400px] aspect-square flex items-center justify-center mb-6 transition-transform duration-300 group-hover:-translate-y-3 group-hover:-rotate-1"
+              >
+                <div
+                  class="w-full h-full rounded-[30px] overflow-hidden bg-red-100"
+                >
+                  <img
+                    src="./assets/king-two.png"
+                    class="w-full h-full max-h-[480px] object-cover"
+                    onclick="openModal(
+  'Joan of Arc',
+  'Joan of Arc was a brave young girl who led French soldiers in battles and helped France during the Hundred Years’ War. She is a true hero!',
+  './assets/king-two.png'
+)"
+                    class="cursor-pointer"
+                  />
+                </div>
+              </div>
+              <span
+                class="font-comic font-bold text-3xl xl:text-[48px] text-white"
+                >Joan of Arc</span
+              >
+            </div>
+
+            <!-- Louis XIV -->
+            <div class="reveal delay-300 flex flex-col items-center group">
+              <div
+                class="bg-white p-4 rounded-[40px] shadow-xl w-full max-w-[400px] aspect-square flex items-center justify-center mb-6 transition-transform duration-300 group-hover:-translate-y-3 group-hover:rotate-1"
+              >
+                <div
+                  class="w-full h-full rounded-[30px] overflow-hidden bg-yellow-100"
+                >
+                  <img
+                    src="./assets/king-three.png"
+                    class="w-full h-full max-h-[480px] object-cover"
+                    onclick="openModal(
+  'Louis XIV',
+  'Louis XIV was called the Sun King. He built the famous Palace of Versailles and made France very powerful and beautiful.',
+  './assets/king-three.png'
+)"
+                    class="cursor-pointer"
+                  />
+                </div>
+              </div>
+              <span
+                class="font-comic font-bold text-3xl xl:text-[48px] text-white"
+                >Louis XIV</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Interactive -->
+
+      <section
+        class="bg-kids-teal w-full py-24 px-4 md:px-12 lg:px-24 text-center"
+      >
+        <h2 class="font-fredoka text-4xl text-white mb-6">
+          Guess the French Symbol! 🇫🇷
+        </h2>
+
+        <p class="font-comic text-xl text-white mb-10">
+          Click the correct symbol and learn a fun fact!
+        </p>
+
+        <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+          <!-- Symbol Display -->
+          <div
+            id="symbolBox"
+            class="text-[90px] mb-6 transition-transform duration-300"
+          >
+            🗼
+          </div>
+
+          <!-- Options -->
+          <div class="grid grid-cols-2 gap-4">
+            <button onclick="checkAnswer('Eiffel Tower')" class="symbol-btn">
+              Eiffel Tower
+            </button>
+            <button onclick="checkAnswer('Castle')" class="symbol-btn">
+              Castle
+            </button>
+            <button onclick="checkAnswer('Bread')" class="symbol-btn">
+              Bread
+            </button>
+            <button onclick="checkAnswer('Flag')" class="symbol-btn">
+              Flag
+            </button>
+          </div>
+
+          <p
+            id="symbolMessage"
+            class="font-comic text-xl mt-6 min-h-[32px]"
+          ></p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: FUN FACTS (Dark Blue Background) -->
+      <section
+        class="relative bg-[#1800AD] w-full !pt-16 py-40 lg:py-56 px-4 md:px-12 lg:px-24 bg-cover bg-no-repeat"
+      >
+        <!-- Content -->
+        <div class="relative z-10 max-w-[1600px] mx-auto">
+          <!-- Header -->
+          <div class="reveal text-center mb-20 text-white">
+            <h2 class="font-fredoka text-4xl xl:text-[64px] mb-6">
+              Fun Facts About France!
+            </h2>
+            <div
+              class="w-full max-w-4xl mx-auto border-b-4 border-dashed border-white mb-8"
+            ></div>
+            <p
+              class="font-poppins text-lg xl:text-[30px] max-w-6xl mx-auto leading-relaxed"
+            >
+              France has many surprising and exciting facts! Here are three fun
+              things about France’s history and culture.
+            </p>
+          </div>
+
+          <!-- Framed Pictures Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
+            <!-- Fact 1 -->
+            <div class="reveal delay-100 flex flex-col items-center group">
+              <div
+                class="transition-transform duration-500 group-hover:scale-105"
+              >
+                <img
+                  src="./assets/first-hot-air-ballon.png"
+                  class="w-full h-full max-h-[500px]"
+                  onclick="openModal(
+  'First Hot Air Balloon',
+  'In 1783, the Montgolfier brothers launched the very first hot air balloon in France. People could float in the sky for the first time!',
+  './assets/first-hot-air-ballon.png'
+)
+"
+                  class="cursor-pointer"
+                />
+              </div>
+              <span
+                class="font-comic font-bold text-2xl xl:text-[35px] text-white text-center mt-5"
+                >France Launched the First Hot Air Balloon!</span
+              >
+            </div>
+
+            <!-- Fact 2 -->
+            <div class="reveal delay-200 flex flex-col items-center group">
+              <div
+                class="transition-transform duration-500 group-hover:scale-105"
+              >
+                <img
+                  src="./assets/fun-two.png"
+                  class="w-full h-full max-h-[500px]"
+                  onclick="openModal(
+  'Louvre Museum',
+  'The Louvre in Paris is the biggest art museum in the world. It has thousands of amazing paintings, including the famous Mona Lisa!',
+  './assets/fun-two.png'
+)"
+                  class="cursor-pointer"
+                />
+              </div>
+              <span
+                class="font-comic font-bold text-2xl xl:text-[35px] text-white text-center mt-5"
+                >The Biggest Art Museum in the World!</span
+              >
+            </div>
+
+            <!-- Fact 3 -->
+            <div class="reveal delay-300 flex flex-col items-center group">
+              <div
+                class="transition-transform duration-500 group-hover:scale-105"
+              >
+                <img
+                  src="./assets/race.png"
+                  class="w-full h-full max-h-[500px]"
+                  onclick="openModal(
+  'Tour de France',
+  'The Tour de France is the world’s biggest and most famous bicycle race. Cyclists ride through mountains, villages, and cities in France!',
+  './assets/race.png'
+)"
+                  class="cursor-pointer"
+                />
+              </div>
+              <span
+                class="font-comic font-bold text-2xl xl:text-[35px] text-white text-center mt-5"
+                >The Tour de France is the biggest bike race on Earth</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Wave (White) -->
+        <div
+          class="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0]"
+        >
+          <svg
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            class="w-full h-[80px] lg:h-[150px] fill-white"
+          >
+            <path
+              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+              transform="scale(1, -1) translate(0, -120)"
+            ></path>
+          </svg>
+        </div>
+      </section>
+
+      <!-- SECTION 5: MUST-SEE PLACES -->
+      <section class="relative bg-white w-full py-24 px-4 md:px-12 lg:px-24">
+        <!-- Header -->
+        <div class="reveal text-center mb-24 max-w-5xl mx-auto">
+          <h2 class="font-fredoka text-4xl xl:text-[64px] text-french-red mb-6">
+            Must-See Places in France!
+          </h2>
+          <p class="font-poppins text-text-grey text-lg lg:text-[28px]">
+            France is full of amazing buildings and places that tell stories
+            from the past. Here are three famous landmarks every kid should
+            know!
+          </p>
+        </div>
+
+        <div class="max-w-[1600px] mx-auto space-y-24 lg:space-y-32">
+          <!-- Item 1: Eiffel Tower (Right Image) -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center group"
+          >
+            <!-- Text -->
+            <div class="reveal text-center lg:text-left order-2 lg:order-1">
+              <h3 class="font-fredoka text-4xl xl:text-[64px] text-black mb-4">
+                The Eiffel Tower
+              </h3>
+              <p
+                class="font-poppins text-text-grey text-lg xl:text-[24px] leading-relaxed lg:max-w-[550px]"
+              >
+                Built in 1889, the Eiffel Tower is one of the most famous
+                structures in the world. Millions of people visit it every year!
+              </p>
+            </div>
+            <!-- Image -->
+            <div
+              class="reveal delay-200 relative order-1 lg:order-2 flex justify-center"
+            >
+              <img
+                src="./assets/eiffel.png"
+                class="w-full h-full max-h-[600px] lg:max-h-[801px] transition-transform duration-700 group-hover:scale-105 group-hover:rotate-2"
+              />
+            </div>
+          </div>
+
+          <!-- Item 2: Versailles (Left Image) -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center group"
+          >
+            <!-- Image -->
+            <div class="reveal relative order-1 flex justify-center">
+              <img
+                src="./assets/vallise.png"
+                class="w-full h-full max-h-[600px] lg:max-h-[801px] transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-2"
+              />
+            </div>
+            <!-- Text -->
+            <div class="reveal delay-200 text-center lg:text-left order-2">
+              <h3 class="font-fredoka text-4xl xl:text-[64px] text-black mb-4">
+                Palace of Versailles
+              </h3>
+              <p
+                class="font-poppins text-text-grey text-lg xl:text-[24px] leading-relaxed lg:max-w-[550px]"
+              >
+                A giant golden palace where French kings once lived! It has huge
+                gardens and beautiful rooms full of history.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 3: Mont Saint-Michel (Right Image) -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center group"
+          >
+            <!-- Text -->
+            <div class="reveal text-center lg:text-left order-2 lg:order-1">
+              <h3 class="font-fredoka text-4xl xl:text-[64px] text-black mb-4">
+                Mont Saint-Michel
+              </h3>
+              <p
+                class="font-poppins text-text-grey text-lg xl:text-[24px] leading-relaxed lg:max-w-[550px]"
+              >
+                A magical island with a giant castle on top! When the tide
+                rises, the island looks like it’s floating on water.
+              </p>
+            </div>
+            <!-- Image -->
+            <div
+              class="reveal delay-200 relative order-1 lg:order-2 flex justify-center"
+            >
+              <img
+                src="./assets/mont-saint.png"
+                class="w-full h-full max-h-[600px] lg:max-h-[801px] transition-transform duration-700 group-hover:scale-105 group-hover:rotate-2"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Spacer -->
+      <section class="!bg-[#0E9193] w-full py-16 px-4 md:py-20 text-center">
+        <div class="reveal max-w-5xl mx-auto">
+          <h2
+            class="font-fredoka font-normal text-3xl md:text-4xl xl:text-[48px] !mb-8 !text-white"
+          >
+            France’s Story Is Full of Adventure!
+          </h2>
+          <p
+            class="font-poppins text-white text-base text-[18px] xl:text-[22px] !leading-normal"
+          >
+            From brave knights and grand castles to revolutions and famous
+            landmarks, France’s history is a fun journey through time. Keep
+            exploring and keep learning!
+          </p>
+        </div>
+      </section>
+
+      <div
+        id="infoModal"
+        class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50"
+      >
+        <div class="bg-white rounded-2xl p-6 max-w-md text-center relative">
+          <button
+            onclick="closeModal()"
+            class="absolute top-3 right-4 text-2xl"
+          >
+            ❌
+          </button>
+
+          <img
+            id="modalImage"
+            class="w-full h-48 object-contain mb-4 rounded-xl"
+          />
+
+          <h3 id="modalTitle" class="font-fredoka text-3xl mb-3"></h3>
+          <p id="modalText" class="font-comic text-xl text-gray-700"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+      // 1. TIMELINE DATA
+      const tabData = [
+        {
+          title: "Ancient Gaul & Romans (Before 500 AD)",
+          desc: "Brave Gauls and mighty Romans shaped the early French lands.",
+          quote: `"Gauls: France Begins Here!"`,
+          img: "./assets/gaul-and-romans.jpeg",
+        },
+        {
+          title: "Middle Ages — Castles and Knights(500-1500)",
+          desc: "Knights, kings, and queens ruled the land. Mighty castles were built, and villagers lived close to their lords.",
+          quote: `"Medieval Magic: Castles, Knights, and Royal Adventures!"`,
+          img: "./assets/castles-and-knights.jpeg",
+        },
+        {
+          title: "Renaissance — Art and Science(1500s)",
+          desc: "Artists, inventors, and thinkers brought new ideas. Famous paintings and buildings were created, and science thrived.",
+          quote: `“Renaissance Wonders: Painting, Science, and Creativity!”`,
+          img: "./assets/renaissance.jpeg",
+        },
+        {
+          title: "French Revolution(1789)",
+          desc: "The people of France fought for freedom and equality. The revolution changed the country forever.",
+          quote: `“Liberty, Equality, and Fraternity: France Stands Up!”`,
+          img: "./assets/french-revolution.jpeg",
+        },
+        {
+          title: "Modern France — Inventions and Culture(1800s)",
+          desc: "France became modern with railways, inventions, and amazing culture. The Eiffel Tower and famous art were part of this era.",
+          quote: `Modern Marvels: Eiffel Tower, Inventions, and Culture!”`,
+          img: "./assets/modern-france.jpeg",
+        },
+      ];
+
+      // 2. TIMELINE LOGIC WITH SMOOTH FADE
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabContentWrapper = document.getElementById("tabContentWrapper");
+      const tabTitle = document.getElementById("tabTitle");
+      const tabDesc = document.getElementById("tabDesc");
+      const tabQuote = document.getElementById("tabQuote");
+      const tabImage = document.getElementById("tabImage");
+
+      // Default active tab
+      tabBtns[0].classList.add("active-tab");
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const index = btn.getAttribute("data-tab");
+
+          // Visual feedback for buttons
+          tabBtns.forEach((b) => b.classList.remove("active-tab"));
+          btn.classList.add("active-tab");
+
+          // Animate Content Change (Fade Out -> Change -> Fade In)
+          tabContentWrapper.style.opacity = "0";
+          tabContentWrapper.style.transform = "translateY(10px)";
+
+          setTimeout(() => {
+            // Update Text/Image
+            tabTitle.textContent = tabData[index].title;
+            tabDesc.textContent = tabData[index].desc;
+            tabQuote.textContent = tabData[index].quote;
+            tabImage.src = tabData[index].img;
+
+            // Fade In
+            tabContentWrapper.style.opacity = "1";
+            tabContentWrapper.style.transform = "translateY(0)";
+          }, 300); // 300ms matches the fade-out duration approximately
+        });
+      });
+
+      // 3. SCROLL REVEAL OBSERVER
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        }
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // Game
+      const symbols = [
+        {
+          icon: "🗼",
+          answer: "Eiffel Tower",
+          info: "Correct! The Eiffel Tower is the most famous landmark in France 🇫🇷",
+        },
+        {
+          icon: "🏰",
+          answer: "Castle",
+          info: "Yes! Castles were very important in medieval France 🏰",
+        },
+        {
+          icon: "🥖",
+          answer: "Bread",
+          info: "Yummy! France is famous for its delicious bread 🥖",
+        },
+        {
+          icon: "🇫🇷",
+          answer: "Flag",
+          info: "Correct! Blue, White and Red are France’s colors 🇫🇷",
+        },
+      ];
+
+      let current = 0;
+
+      const symbolBox = document.getElementById("symbolBox");
+      const msg = document.getElementById("symbolMessage");
+
+      function loadSymbol() {
+        symbolBox.textContent = symbols[current].icon;
+        msg.textContent = "";
+      }
+
+      function checkAnswer(selected) {
+        if (selected === symbols[current].answer) {
+          msg.textContent = symbols[current].info;
+          msg.className = "font-comic text-xl mt-6 text-green-600";
+          symbolBox.style.transform = "scale(1.2)";
+
+          setTimeout(() => {
+            symbolBox.style.transform = "scale(1)";
+            current = (current + 1) % symbols.length;
+            loadSymbol();
+          }, 1500);
+        } else {
+          msg.textContent = "Oops! Try again 😊";
+          msg.className = "font-comic text-xl mt-6 text-red-500";
+        }
+      }
+
+      loadSymbol();
+      // Modal
+      const modal = document.getElementById("infoModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalText = document.getElementById("modalText");
+      const modalImage = document.getElementById("modalImage");
+
+      function openModal(title, text, img) {
+        modalTitle.textContent = title;
+        modalText.textContent = text;
+        modalImage.src = img;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+
+      function showMapInfo(title, text, img) {
+        openModal(title, text, img);
+      }
+    </script>
+  </body>
+</html>

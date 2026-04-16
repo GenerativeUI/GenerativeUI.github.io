@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build Your Emergency Go-Bag</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@800&family=Roboto+Flex:opsz,wght@8..144,800&family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "bag-red": "#B52D37",
+              "bag-blue-light": "#D6EFF7",
+              "text-dark": "#2C2C2C",
+              "text-grey": "#6F6F6F",
+            },
+            fontFamily: {
+              flex: ["Roboto Flex", "sans-serif"],
+              sans: ["Roboto", "sans-serif"],
+              condensed: ["Roboto Condensed", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* --- ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+
+      /* Interactive */
+      .item {
+        background: #f3f4f6;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: grab;
+        text-align: center;
+        user-select: none;
+      }
+
+      .item:active {
+        cursor: grabbing;
+      }
+
+      #bag .item {
+        background: #ffecec;
+      }
+
+      .item {
+        position: relative;
+      }
+
+      .remove-btn {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: #b52d37;
+        color: white;
+        font-size: 14px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      #bag .item .remove-btn {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased bg-white font-sans text-text-dark selection:bg-bag-red selection:text-white"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO (Blue Gradient/Solid) -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex flex-col lg:flex-row items-center justify-center px-6 md:px-12 lg:px-24 py-16 lg:py-0 overflow-hidden bg-bag-blue-light"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/hero-bg.png')] bg-cover bg-center bg-no-repeat"
+        ></div>
+
+        <!-- Content Area -->
+        <div class="relative z-20 w-full lg:w-3/5 text-center lg:text-left">
+          <h1
+            class="reveal font-flex font-extrabold text-3xl md:text-4xl xl:text-[70px] lg:leading-normal text-text-dark mb-6"
+          >
+            BUILD YOUR <span class="text-bag-red">EMERGENCY</span> GO-BAG
+          </h1>
+
+          <div class="lg:max-w-[90%] h-1 bg-bag-red mb-8"></div>
+
+          <p
+            class="reveal delay-100 font-sans font-medium text-lg md:text-xl xl:text-[25px] !leading-normal text-text-grey max-w-2xl mx-auto lg:mx-0 mb-10"
+          >
+            Be ready before disaster strikes. Learn what to pack, why it
+            matters, and how to stay prepared in any emergency.
+          </p>
+
+          <!-- Functional Button -->
+          <a
+            href="#definition"
+            class="reveal delay-200 bg-bag-red hover:bg-red-700 transition-all duration-300 text-white font-condensed font-extrabold text-xl xl:text-[28px] px-8 py-5 lg:px-12 lg:py-8 inline-flex items-center justify-center hover:scale-105 shadow-lg"
+          >
+            EXPLORE MORE
+          </a>
+        </div>
+
+        <!-- Floating Backpack Image -->
+        <div class="reveal delay-300 relative z-20 hidden xl:block">
+          <img
+            src="./assets/hero-img.png"
+            alt="Emergency Bag"
+            class="max-h-[500px] md:max-h-[600px] lg:max-h-[571px] object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-105 hover:rotate-2"
+          />
+        </div>
+      </header>
+
+      <!-- SECTION 2: DEFINITION -->
+      <section
+        id="definition"
+        class="relative bg-white py-16 px-6 md:py-24 md:px-12 lg:py-32 lg:px-24"
+      >
+        <div class="reveal max-w-[1237px] mx-auto text-center">
+          <h2
+            class="font-flex font-extrabold text-3xl md:text-5xl xl:text-[60px] lg:leading-[70px] text-text-dark mb-8 uppercase"
+          >
+            WHAT IS AN <span class="text-bag-red">EMERGENCY</span> GO-BAG
+          </h2>
+          <p
+            class="font-sans font-medium text-base md:text-lg xl:text-[25px] !leading-normal text-text-grey mb-16"
+          >
+            An emergency go-bag is a backpack filled with essential items you’ll
+            need during a disaster. It helps you evacuate quickly and stay safe
+            for at least 72 hours. A good go-bag ensures you have food, water,
+            first aid, tools, and important documents ready to grab anytime.
+          </p>
+          <!-- Center Image -->
+          <div class="reveal delay-200">
+            <img
+              src="./assets/bag.png"
+              alt="Go Bag Items"
+              class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: CHECKLIST (Red Section) -->
+      <section
+        class="relative py-16 px-6 md:py-24 md:px-12 lg:py-32 lg:px-24 text-white overflow-hidden bg-bag-red"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/line-bg.png')] bg-cover bg-center bg-no-repeat"
+        ></div>
+
+        <!-- Content -->
+        <div class="relative z-10">
+          <div class="reveal text-center mb-16">
+            <h2
+              class="font-flex font-extrabold text-3xl md:text-5xl xl:text-[60px] lg:leading-[70px] mb-6 uppercase"
+            >
+              WHAT TO PACK IN YOUR GO-BAG
+            </h2>
+            <p
+              class="font-sans font-medium text-lg xl:text-[25px] opacity-90 mb-10"
+            >
+              Use this simple checklist to pack everything you might need during
+              an emergency.
+            </p>
+            <h3
+              class="font-flex font-extrabold text-2xl xl:text-[35px] tracking-wide"
+            >
+              Checklist Categories:
+            </h3>
+          </div>
+
+          <!-- Grid for categories -->
+          <div
+            class="max-w-[1516px] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-8"
+          >
+            <!-- Category 1 -->
+            <div
+              class="reveal delay-100 p-4 border border-white/20 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <h4 class="font-flex font-extrabold text-xl xl:text-[24px] mb-6">
+                1. Essentials
+              </h4>
+              <ul
+                class="space-y-4 font-sans font-medium text-lg xl:text-[20px] opacity-90"
+              >
+                <li>• Water bottles</li>
+                <li>• Non-perishable food</li>
+                <li>• Medications</li>
+                <li>• First-aid kit</li>
+              </ul>
+            </div>
+
+            <!-- Category 2 -->
+            <div
+              class="reveal delay-200 p-4 border border-white/20 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <h4
+                class="font-flex font-extrabold text-xl xl:text-[24px] mb-6 whitespace-nowrap"
+              >
+                2. Tools & Safety
+              </h4>
+              <ul
+                class="space-y-4 font-sans font-medium text-lg xl:text-[20px] opacity-90"
+              >
+                <li>• Flashlight</li>
+                <li>• Batteries</li>
+                <li>• Whistle</li>
+                <li>• Multi-tool</li>
+                <li>• Power bank</li>
+              </ul>
+            </div>
+
+            <!-- Category 3 -->
+            <div
+              class="reveal delay-300 p-4 border border-white/20 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <h4 class="font-flex font-extrabold text-xl xl:text-[24px] mb-6">
+                3. Personal Items
+              </h4>
+              <ul
+                class="space-y-4 font-sans font-medium text-lg xl:text-[20px] opacity-90"
+              >
+                <li>• Clothes</li>
+                <li>• Hygiene supplies</li>
+                <li>• Important documents</li>
+                <li>• Cash</li>
+              </ul>
+            </div>
+
+            <!-- Category 4 -->
+            <div
+              class="reveal delay-400 p-4 border border-white/20 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <h4 class="font-flex font-extrabold text-xl xl:text-[24px] mb-6">
+                4. Communication
+              </h4>
+              <ul
+                class="space-y-4 font-sans font-medium text-lg xl:text-[20px] opacity-90"
+              >
+                <li>• Radio</li>
+                <li>• Emergency numbers</li>
+                <li>• Chargers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: LOCATION (Split Layout) -->
+
+      <!-- SECTION 5: MAINTENANCE (Cards) -->
+      <section
+        class="relative bg-white py-16 px-6 md:py-24 md:px-12 lg:py-32 lg:px-24"
+      >
+        <div class="reveal text-center max-w-[1257px] mx-auto mb-16">
+          <h2
+            class="font-flex font-extrabold text-3xl md:text-5xl xl:text-[60px] lg:leading-[70px] text-text-dark mb-8 uppercase"
+          >
+            REMEMBER TO CHECK YOUR
+            <span class="text-bag-red">BAG</span> REGULARLY
+          </h2>
+          <p
+            class="font-sans font-medium text-base md:text-lg xl:text-[25px] !leading-normal text-text-grey"
+          >
+            Your emergency kit needs regular updates. Replace expired food,
+            refresh water, and change batteries every 6 months.
+          </p>
+        </div>
+
+        <div
+          class="max-w-[1648px] mx-auto grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8"
+        >
+          <!-- Card 1 -->
+          <div
+            class="reveal delay-100 bg-white border shadow-lg rounded-xl p-10 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300"
+          >
+            <img
+              src="./assets/replace-icon.png"
+              alt="Icon"
+              class="w-24 h-24 mb-8"
+            />
+            <h3
+              class="font-flex font-extrabold text-xl xl:text-[35px] text-text-dark !leading-normal"
+            >
+              Replace Food & Water
+            </h3>
+          </div>
+          <!-- Card 2 -->
+          <div
+            class="reveal delay-200 bg-white border shadow-lg rounded-xl p-10 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300"
+          >
+            <img
+              src="./assets/file-icon.png"
+              alt="Icon"
+              class="w-24 h-24 mb-8"
+            />
+            <h3
+              class="font-flex font-extrabold text-xl xl:text-[35px] text-text-dark !leading-normal"
+            >
+              Check Documents Once a year
+            </h3>
+          </div>
+          <!-- Card 3 -->
+          <div
+            class="reveal delay-300 bg-white border shadow-lg rounded-xl p-10 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300"
+          >
+            <img
+              src="./assets/battery-icon.png"
+              alt="Icon"
+              class="w-24 h-24 mb-8"
+            />
+            <h3
+              class="font-flex font-extrabold text-xl xl:text-[35px] text-text-dark !leading-normal"
+            >
+              Update Batteries Every 6 months
+            </h3>
+          </div>
+          <!-- Card 4 -->
+          <div
+            class="reveal delay-400 bg-white border shadow-lg rounded-xl p-10 flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300"
+          >
+            <img
+              src="./assets/family-icon.png"
+              alt="Icon"
+              class="w-24 h-24 mb-8"
+            />
+            <h3
+              class="font-flex font-extrabold text-xl xl:text-[35px] text-text-dark !leading-normal"
+            >
+              Family Needs Check
+            </h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: ORGANIZATION (Red Steps) -->
+      <section
+        class="relative py-20 px-6 md:px-12 lg:px-24 text-white overflow-hidden bg-bag-red"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/line-bg.png')] bg-cover bg-center bg-no-repeat"
+        ></div>
+
+        <!-- Content -->
+        <div class="relative z-10">
+          <div class="reveal text-center max-w-[1134px] mx-auto mb-20">
+            <h2
+              class="font-flex font-extrabold text-3xl md:text-5xl xl:text-[60px] lg:leading-[70px] mb-8 uppercase"
+            >
+              KEEP EVERYTHING SIMPLE & ORGANIZED
+            </h2>
+            <p
+              class="font-sans font-medium text-base md:text-lg xl:text-[25px] opacity-90"
+            >
+              Being organized makes caring for your family easier during an
+              emergency. Use labeled baskets and drawer dividers to save time.
+            </p>
+          </div>
+
+          <div
+            class="max-w-[1306px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24"
+          >
+            <!-- Step 1 -->
+            <div
+              class="reveal delay-100 flex flex-col items-center text-center"
+            >
+              <div
+                class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-xl hover:scale-110 transition-transform duration-300"
+              >
+                <span class="font-flex font-extrabold text-[40px] text-bag-red"
+                  >1</span
+                >
+              </div>
+              <h3
+                class="font-flex font-extrabold text-2xl xl:text-[35px] mb-4 uppercase"
+              >
+                Labeled Baskets
+              </h3>
+              <p
+                class="font-sans font-medium text-lg xl:text-[25px] opacity-80 leading-tight"
+              >
+                Keep diapers, creams, and wipes organized
+              </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div
+              class="reveal delay-200 flex flex-col items-center text-center"
+            >
+              <div
+                class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-xl hover:scale-110 transition-transform duration-300"
+              >
+                <span class="font-flex font-extrabold text-[40px] text-bag-red"
+                  >2</span
+                >
+              </div>
+              <h3
+                class="font-flex font-extrabold text-2xl xl:text-[35px] mb-4 uppercase"
+              >
+                Drawer Dividers
+              </h3>
+              <p
+                class="font-sans font-medium text-lg xl:text-[25px] opacity-80 leading-tight"
+              >
+                Separate baby clothes for easy access
+              </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div
+              class="reveal delay-300 flex flex-col items-center text-center"
+            >
+              <div
+                class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-xl hover:scale-110 transition-transform duration-300"
+              >
+                <span class="font-flex font-extrabold text-[40px] text-bag-red"
+                  >3</span
+                >
+              </div>
+              <h3
+                class="font-flex font-extrabold text-2xl xl:text-[35px] mb-4 uppercase whitespace-nowrap"
+              >
+                Night-Time Basket
+              </h3>
+              <p
+                class="font-sans font-medium text-lg xl:text-[25px] opacity-80 leading-tight"
+              >
+                Swaddle, wipes, burp cloths ready to go
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white py-10 lg:py-28 px-6 md:px-12 lg:px-24">
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="font-flex font-extrabold text-4xl xl:text-[55px] text-text-dark text-center mb-6"
+          >
+            Pack Your Emergency Go-Bag
+          </h2>
+
+          <p class="text-xl text-text-grey text-center mb-16">
+            Drag essential items into the bag and see if you’re truly prepared.
+          </p>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <!-- ITEMS -->
+            <div>
+              <h3 class="font-flex font-extrabold text-2xl mb-6">
+                Available Items
+              </h3>
+
+              <div id="items" class="grid grid-cols-2 gap-4">
+                <div
+                  class="item"
+                  draggable="true"
+                  data-essential="true"
+                  data-purpose="Hydration is critical to survive at least 72 hours."
+                >
+                  Water
+                </div>
+                <div
+                  class="item"
+                  draggable="true"
+                  data-essential="true"
+                  data-purpose="Used to treat injuries and prevent infection."
+                >
+                  First Aid Kit
+                </div>
+                <div
+                  class="item"
+                  draggable="true"
+                  data-essential="true"
+                  data-purpose="Helps during power outages or night evacuations."
+                >
+                  Flashlight
+                </div>
+                <div
+                  class="item"
+                  draggable="true"
+                  data-essential="true"
+                  data-purpose="Provides energy when food access is limited."
+                >
+                  Food
+                </div>
+                <div
+                  class="item"
+                  draggable="true"
+                  data-essential="true"
+                  data-purpose="Required for ongoing health conditions."
+                >
+                  Medications
+                </div>
+
+                <div class="item" draggable="true" data-essential="false">
+                  Book
+                </div>
+                <div class="item" draggable="true" data-essential="false">
+                  Toys
+                </div>
+                <div class="item" draggable="true" data-essential="false">
+                  Extra Shoes
+                </div>
+              </div>
+            </div>
+
+            <!-- BAG -->
+            <div>
+              <h3 class="font-flex font-extrabold text-2xl mb-6">
+                Your Go-Bag
+              </h3>
+
+              <div
+                id="bag"
+                class="min-h-[300px] border-4 border-dashed border-bag-red rounded-2xl p-6 flex flex-wrap gap-4 items-start"
+              >
+                <p class="text-text-grey w-full">Drop items here</p>
+              </div>
+
+              <button
+                id="checkBtn"
+                class="mt-8 bg-bag-red text-white px-10 py-4 font-condensed font-extrabold text-xl rounded-xl hover:opacity-90 transition"
+              >
+                Check Readiness
+              </button>
+
+              <p id="result" class="mt-6 text-xl font-extrabold"></p>
+              <div
+                id="instructions"
+                class="mt-6 p-6 bg-yellow-50 border-l-4 border-yellow-500 text-left hidden rounded-xl"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: FOOTER -->
+      <footer class="bg-bag-blue-light py-20 px-6 text-center">
+        <div class="reveal max-w-[1179px] mx-auto">
+          <h2
+            class="font-flex font-extrabold text-3xl md:text-5xl xl:text-[60px] lg:leading-[70px] text-text-dark mb-6 uppercase"
+          >
+            STAY READY. <span class="text-bag-red">STAY SAFE</span>
+          </h2>
+          <p
+            class="font-sans font-medium text-lg md:text-xl xl:text-[25px] text-text-grey"
+          >
+            Small steps today make a big difference tomorrow. Keep your home and
+            family prepared for emergencies.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- SCRIPT FOR ANIMATIONS -->
+    <script>
+      // Intersection Observer for Scroll Reveal
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              // Unobserve to animate only once
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1, // Trigger when 10% visible
+          rootMargin: "0px 0px -50px 0px", // Offset for better mobile experience
+        }
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+      // Interactive
+
+      const items = document.querySelectorAll(".item");
+      const bag = document.getElementById("bag");
+      const itemsContainer = document.getElementById("items");
+      const checkBtn = document.getElementById("checkBtn");
+      const result = document.getElementById("result");
+      const instructions = document.getElementById("instructions");
+
+      let draggedItem = null;
+
+      items.forEach((item) => {
+        item.addEventListener("dragstart", () => {
+          draggedItem = item;
+          item.classList.add("opacity-50");
+        });
+
+        item.addEventListener("dragend", () => {
+          item.classList.remove("opacity-50");
+          draggedItem = null;
+        });
+
+        // CLICK TO REMOVE FROM BAG
+        item.addEventListener("click", () => {
+          if (bag.contains(item)) {
+            itemsContainer.appendChild(item);
+          }
+        });
+      });
+
+      bag.addEventListener("dragover", (e) => e.preventDefault());
+      itemsContainer.addEventListener("dragover", (e) => e.preventDefault());
+
+      bag.addEventListener("drop", () => {
+        if (draggedItem && !bag.contains(draggedItem)) {
+          bag.appendChild(draggedItem);
+          addRemoveButton(draggedItem);
+        }
+      });
+
+      itemsContainer.addEventListener("drop", () => {
+        if (draggedItem && bag.contains(draggedItem)) {
+          itemsContainer.appendChild(draggedItem);
+          removeRemoveButton(draggedItem);
+        }
+      });
+
+      checkBtn.addEventListener("click", () => {
+        const packedItems = bag.querySelectorAll(".item");
+        const essentialItems = [...items].filter(
+          (i) => i.dataset.essential === "true"
+        );
+
+        const packedEssential = [...packedItems].filter(
+          (i) => i.dataset.essential === "true"
+        );
+
+        instructions.innerHTML = "";
+        instructions.classList.add("hidden");
+
+        if (packedEssential.length === essentialItems.length) {
+          result.textContent = "✅ You are WELL PREPARED for an emergency!";
+          result.style.color = "green";
+        } else {
+          result.textContent = "⚠️ Some essential items are missing!";
+          result.style.color = "orange";
+
+          instructions.classList.remove("hidden");
+          instructions.innerHTML = `
+        <h4 class="font-extrabold text-lg mb-3 text-yellow-700">
+          Missing Essential Items & Why You Need Them:
+        </h4>
+        <ul class="space-y-2 text-text-dark"></ul>
+      `;
+
+          const list = instructions.querySelector("ul");
+
+          essentialItems.forEach((item) => {
+            if (!bag.contains(item)) {
+              const li = document.createElement("li");
+              li.innerHTML = `
+            <strong>${item.textContent.trim()}:</strong>
+            ${item.dataset.purpose}
+          `;
+              list.appendChild(li);
+            }
+          });
+        }
+      });
+
+      function addRemoveButton(item) {
+        if (item.querySelector(".remove-btn")) return;
+
+        const btn = document.createElement("span");
+        btn.className = "remove-btn";
+        btn.innerHTML = "✕";
+
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          document.getElementById("items").appendChild(item);
+        });
+
+        item.appendChild(btn);
+      }
+
+      function removeRemoveButton(item) {
+        const btn = item.querySelector(".remove-btn");
+        if (btn) btn.remove();
+      }
+    </script>
+  </body>
+</html>

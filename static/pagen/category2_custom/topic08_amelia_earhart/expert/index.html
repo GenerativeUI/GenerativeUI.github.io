@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amelia Earhart - Aviation Legend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sky-blue: #00a8e8;
+            --sunset: #ff6b35;
+            --gold: #ffd700;
+            --deep-blue: #003459;
+            --bg-dark: #0a1628;
+            --bg-darker: #050b14;
+            --text-light: #e8eaed;
+            --text-muted: #9aa0a6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #050b14 0%, #0a1628 50%, #1a2a3a 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .nav-sidebar {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 1.5rem 0.75rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--sky-blue);
+            transform: scale(1.4);
+            box-shadow: 0 0 15px var(--sky-blue);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            min-height: auto;
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+        }
+
+        #hero {
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 1.4rem;
+            background: linear-gradient(135deg, rgba(0, 168, 232, 0.2), rgba(255, 107, 53, 0.2));
+            border: 1px solid rgba(0, 168, 232, 0.4);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 168, 232, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 168, 232, 0.6); }
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--sky-blue) 50%, var(--sunset) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 2.2rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--sky-blue);
+            background: rgba(0, 168, 232, 0.05);
+            box-shadow: 0 12px 40px rgba(0, 168, 232, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--sky-blue), var(--sunset));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 168, 232, 0.3);
+            border: 2px solid var(--sky-blue);
+            max-height: 520px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            max-height: 520px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%) contrast(1.1);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid var(--sunset);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--sunset);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .radio-container {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(101, 67, 33, 0.3));
+            border: 3px solid #8b4513;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5), 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .radio-display {
+            background: #1a3a1a;
+            border: 3px solid #2a5a2a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            font-family: 'Courier New', monospace;
+            min-height: 150px;
+            box-shadow: inset 0 0 30px rgba(0, 255, 0, 0.2);
+        }
+
+        .radio-text {
+            color: #00ff00;
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 2;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .morse-input {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .morse-button {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.6rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .morse-button.dot-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+        }
+
+        .morse-button.dash-btn {
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: #fff;
+        }
+
+        .morse-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .morse-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .morse-controls button {
+            padding: 1rem 2rem;
+            background: rgba(0, 168, 232, 0.2);
+            border: 2px solid var(--sky-blue);
+            border-radius: 12px;
+            color: var(--sky-blue);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .morse-controls button:hover {
+            background: rgba(0, 168, 232, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .morse-hint {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 168, 232, 0.05);
+            border: 1px solid rgba(0, 168, 232, 0.3);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .game-difficulty {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .difficulty-btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .difficulty-btn.active {
+            background: var(--sky-blue);
+            border-color: var(--sky-blue);
+            color: var(--bg-dark);
+        }
+
+        .mission-btn {
+            padding: 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .mission-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .flight-simulator {
+            position: relative;
+            height: 450px;
+            background: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 50%, #b8dce8 100%);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 3px solid var(--sky-blue);
+            cursor: none;
+        }
+
+        .plane-player {
+            position: absolute;
+            font-size: 3rem;
+            transition: all 0.05s ease;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(0, 168, 232, 0.8));
+            z-index: 100;
+        }
+
+        .obstacle {
+            position: absolute;
+            font-size: 2.5rem;
+            pointer-events: none;
+        }
+
+        .obstacle.pickup {
+            animation: moveObstacle 4s linear, bounce 0.5s ease-in-out infinite !important;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes moveObstacle {
+            from { left: 100%; }
+            to { left: -10%; }
+        }
+
+        .game-hud {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 10;
+        }
+
+        .hud-item {
+            padding: 1rem 1.5rem;
+            background: rgba(10, 22, 40, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .hud-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .hud-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .game-over-screen {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .game-over-screen.show {
+            display: flex;
+        }
+
+        .world-map-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #1a2a3a;
+            border: 3px solid var(--sky-blue);
+        }
+
+        #worldMapCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--sunset);
+            border-radius: 50%;
+            border: 3px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.5) !important;
+            z-index: 100;
+        }
+
+        .map-tooltip {
+            position: absolute;
+            background: rgba(10, 22, 40, 0.95);
+            border: 2px solid var(--sky-blue);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .map-tooltip.visible {
+            opacity: 1;
+        }
+
+        .map-legend {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .timeline-interactive {
+            margin: 3rem auto;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .timeline-slider {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--sky-blue), var(--sunset));
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 168, 232, 0.8);
+        }
+
+        .timeline-slider::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--sky-blue), var(--sunset));
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 168, 232, 0.8);
+        }
+
+        .timeline-content-display {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            min-height: 280px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .timeline-year-big {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--sky-blue);
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            min-height: 60px;
+        }
+
+        .timeline-event-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            min-height: 45px;
+        }
+
+        .timeline-event-desc {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .mystery-grid {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+
+            .timeline-interactive {
+                width: 100%;
+            }
+
+            .quiz-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--sky-blue);
+            box-shadow: 0 20px 60px rgba(0, 168, 232, 0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-info {
+            padding: 1.2rem;
+        }
+
+        .photo-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--sky-blue);
+        }
+
+        .photo-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .records-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .records-grid {
+                grid-template-columns: 1fr; /* 1 на мобілці */
+            }
+        }
+
+        .record-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .record-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 168, 232, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .record-card:hover::before {
+            left: 100%;
+        }
+
+        .record-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--sunset);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+        }
+
+        .record-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .record-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sunset);
+            margin-bottom: 1rem;
+        }
+
+        .record-desc {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .mystery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .mystery-grid {
+                grid-template-columns: 1fr; /* 1 на мобілці */
+            }
+        }
+
+        .theory-card {
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 220px; /* ФІКСОВАНА МІНІМАЛЬНА ВИСОТА */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .theory-card:hover,
+        .theory-card.active {
+            border-color: var(--sunset);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        .theory-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        .theory-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sunset);
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            min-height: 45px;
+        }
+
+        .theory-desc {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            flex-grow: 1;
+        }
+
+        .theory-details {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(10, 22, 40, 0.8);
+            border: 2px solid var(--sunset);
+            border-radius: 20px;
+            display: none;
+            min-height: 150px;
+        }
+
+        .theory-details.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-wrapper {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-question {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+            color: var(--sky-blue);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1.25rem;
+            min-height: 320px;
+        }
+
+        .quiz-option {
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            min-height: 70px; /* ФІКСОВАНА ВИСОТА */
+            display: flex;
+            align-items: center;
+        }
+
+        .quiz-option:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+
+        .quiz-option.quiz-correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+
+        .quiz-option.quiz-wrong {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.modal-active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-dark);
+            border: 2px solid var(--sky-blue);
+            border-radius: 30px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 3rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 107, 53, 0.2);
+            border: 2px solid var(--sunset);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--sunset);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--sunset);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .btn {
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, var(--sky-blue), var(--sunset));
+            border: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--bg-dark);
+            box-shadow: 0 10px 40px rgba(0, 168, 232, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 60px rgba(0, 168, 232, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 6rem;
+        }
+
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-sidebar {
+                display: none;
+            }
+            .morse-input {
+                flex-direction: column;
+                align-items: center;
+            }
+            .morse-button {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="stars" id="starsContainer"></div>
+
+<nav class="nav-sidebar">
+    <div class="nav-dot active"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+</nav>
+
+<section id="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div>
+                <div class="hero-badge">
+                    ✈️ AVIATION LEGEND
+                </div>
+
+                <h1>AMELIA EARHART</h1>
+
+                <p class="hero-subtitle">
+                    First woman to fly solo across the Atlantic. Record-breaking pilot. Symbol of courage. Her 1937 disappearance remains one of history's greatest mysteries.
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-box glass">
+                        <span class="stat-number">1932</span>
+                        <div class="stat-label">Atlantic Solo</div>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number">7</span>
+                        <div class="stat-label">World Records</div>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number">29000</span>
+                        <div class="stat-label">Miles Flown</div>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number">1937</span>
+                        <div class="stat-label">Disappeared</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Amelia_Earhart_standing_under_nose_of_her_Lockheed_Model_10-E_Electra%2C_small_%28cropped%29.jpg" alt="Amelia Earhart">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="radio">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">INTERACTIVE EXPERIENCE</div>
+            <h2>Morse Code Radio</h2>
+            <p class="section-description">
+                Decode Amelia's last radio transmission! Use DOT and DASH buttons to input morse code.
+            </p>
+        </div>
+
+        <div class="glass radio-container">
+            <div class="radio-display">
+                <div class="radio-text" id="morseDisplay">READY TO RECEIVE...</div>
+            </div>
+
+            <div class="morse-input">
+                <button class="morse-button dot-btn" id="dotBtn">DOT<br>·</button>
+                <button class="morse-button dash-btn" id="dashBtn">DASH<br>—</button>
+            </div>
+
+            <div class="morse-controls">
+                <button id="morseSpace">SPACE</button>
+                <button id="morseBackspace">BACKSPACE</button>
+                <button id="morseClear">CLEAR</button>
+                <button id="morseCheck" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #10b981;">CHECK</button>
+            </div>
+
+            <div class="morse-hint">
+                <h3 style="color: #ffd700; margin-bottom: 1rem; font-size: 1.5rem;">📻 SECRET MESSAGE</h3>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">Last words: "We are running north and south"</p>
+                <p style="font-size: 0.95rem; color: #9aa0a6;">
+                    <strong>Morse Guide:</strong> A: ·— | E: · | H: ···· | L: ·—·· | P: ·——·<br>
+                    Try to spell: <span style="color: #ffd700;">HELP</span>
+                </p>
+                <div id="morseResult" style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: 700; color: #ffd700;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="simulator">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 1</div>
+            <h2>Flight Simulator</h2>
+            <p class="section-description">
+                Fly through obstacles! Avoid clouds, birds, and storms. Choose difficulty!
+            </p>
+        </div>
+
+        <div class="glass" style="padding: 2rem;">
+            <div class="game-difficulty">
+                <button class="difficulty-btn mission-btn active" data-mission="atlantic">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌊</div>
+                    <div>Atlantic 1932</div>
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem;">First solo crossing</div>
+                </button>
+                <button class="difficulty-btn mission-btn" data-mission="pacific">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌴</div>
+                    <div>Pacific 1935</div>
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem;">Hawaii to California</div>
+                </button>
+                <button class="difficulty-btn mission-btn" data-mission="world">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌍</div>
+                    <div>World Flight 1937</div>
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem;">The final journey</div>
+                </button>
+            </div>
+
+            <div class="flight-simulator" id="gameCanvas">
+                <div class="plane-player" id="playerPlane">✈️</div>
+
+                <div class="game-hud">
+                    <div class="hud-item">
+                        <div class="hud-label">DISTANCE</div>
+                        <div class="hud-value" id="gameDistance">0 km</div>
+                    </div>
+                    <div class="hud-item">
+                        <div class="hud-label">FUEL</div>
+                        <div class="hud-value" id="gameFuel">100%</div>
+                    </div>
+                    <div class="hud-item">
+                        <div class="hud-label">PROGRESS</div>
+                        <div class="hud-value" id="gameProgress">0%</div>
+                    </div>
+                </div>
+
+                <div class="game-over-screen" id="gameOverScreen">
+                    <div style="text-align: center; padding: 2rem;">
+                        <h2 style="font-size: 2.5rem; color: #ff6b35; margin-bottom: 1rem;">FLIGHT ENDED</h2>
+                        <div style="font-size: 3.5rem; font-weight: 900; margin: 1rem 0;">
+                            <span style="background: linear-gradient(135deg, #00a8e8, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="finalScore">0</span>
+                        </div>
+                        <p id="gameMessage" style="font-size: 1.05rem; line-height: 1.6; margin: 0 auto; max-width: 500px;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn" id="startGame">START FLIGHT</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="map">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 2</div>
+            <h2>Flight Routes</h2>
+            <p class="section-description">
+                Interactive world map showing Amelia's famous flights.
+            </p>
+        </div>
+
+        <div class="glass" style="padding: 2rem;">
+            <div class="world-map-container">
+                <canvas id="worldMapCanvas"></canvas>
+                <div class="map-tooltip" id="mapTooltip"></div>
+            </div>
+
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span style="font-size: 2rem;">🛫</span>
+                    <div>
+                        <div style="font-weight: 600; color: #00a8e8;">Departure Points</div>
+                        <div style="font-size: 0.85rem; color: #9aa0a6;">Journey starts</div>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span style="font-size: 2rem;">🛬</span>
+                    <div>
+                        <div style="font-weight: 600; color: #ff6b35;">Arrivals</div>
+                        <div style="font-size: 0.85rem; color: #9aa0a6;">Successful landings</div>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span style="font-size: 2rem;">❓</span>
+                    <div>
+                        <div style="font-weight: 600; color: #ef4444;">Last Known</div>
+                        <div style="font-size: 0.85rem; color: #9aa0a6;">July 2, 1937</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="timeline">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 3</div>
+            <h2>Life Timeline</h2>
+            <p class="section-description">
+                Slide through Amelia's journey from childhood to legend.
+            </p>
+        </div>
+
+        <div class="glass timeline-interactive" style="padding: 2rem;">
+            <input type="range" class="timeline-slider" id="timelineSlider" min="0" max="6" step="1" value="0">
+            <div class="timeline-content-display" id="timelineDisplay"></div>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 4</div>
+            <h2>Photo Gallery</h2>
+            <p class="section-description">
+                Rare photographs from Amelia's incredible journey.
+            </p>
+        </div>
+
+        <div class="photo-gallery">
+            <div class="photo-card" onclick="openPhotoModal(0)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Neta_amelia_kinner_airster_s.jpg" alt="Amelia">
+                <div class="photo-info">
+                    <div class="photo-title">The Aviatrix</div>
+                    <div class="photo-desc">Official portrait, 1935.</div>
+                </div>
+            </div>
+
+            <div class="photo-card" onclick="openPhotoModal(1)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Amelia_Earhart_%2812835319215%29.jpg" alt="Amelia">
+                <div class="photo-info">
+                    <div class="photo-title">Ready for Flight</div>
+                    <div class="photo-desc">In her iconic leather jacket.</div>
+                </div>
+            </div>
+
+            <div class="photo-card" onclick="openPhotoModal(2)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Lockheed_Vega_5B_of_Amelia_Earhart_c1932.jpg" alt="Amelia">
+                <div class="photo-info">
+                    <div class="photo-title">After Atlantic</div>
+                    <div class="photo-desc">May 1932 triumph.</div>
+                </div>
+            </div>
+
+            <div class="photo-card" onclick="openPhotoModal(3)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Earhart_locations.png" alt="Amelia">
+                <div class="photo-info">
+                    <div class="photo-title">The Electra</div>
+                    <div class="photo-desc">Before final flight.</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- закінчення photo-gallery -->
+
+    <!-- Attribution block -->
+    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; font-size: 0.85rem; color: #9aa0a6; line-height: 1.8;">
+        <p style="margin: 0;">
+            <strong>Image Credits:</strong><br>
+            "The Aviatrix" via <a href="https://commons.wikimedia.org" target="_blank" style="color: #00a8e8;">Wikimedia Commons</a> (public domain).<br>
+            "Ready for Flight" via <a href="https://commons.wikimedia.org/wiki/File:Amelia_Earhart_(1928)_3531921529.jpg" target="_blank" style="color: #00a8e8;">Wikimedia Commons</a>, licensed under <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" style="color: #00a8e8;">CC BY 2.0</a>.<br>
+            "Earhart locations map" via <a href="https://commons.wikimedia.org/wiki/File:Earhartlocations.png" target="_blank" style="color: #00a8e8;">Wikimedia Commons</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" style="color: #00a8e8;">CC BY 4.0</a>.<br>
+            All other images are in the public domain.
+        </p>
+    </div>
+
+    </div>
+</section>
+
+<section id="records">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 5</div>
+            <h2>Aviation Records</h2>
+            <p class="section-description">
+                Click to discover the records Amelia shattered.
+            </p>
+        </div>
+
+        <div class="records-grid">
+            <div class="record-card" onclick="openRecordModal(0)">
+                <div class="record-icon">🏆</div>
+                <div class="record-title">First Woman Solo Atlantic</div>
+                <div class="record-desc">May 20-21, 1932. 15 hours of courage.</div>
+            </div>
+
+            <div class="record-card" onclick="openRecordModal(1)">
+                <div class="record-icon">⏱️</div>
+                <div class="record-title">Speed Record</div>
+                <div class="record-desc">181 mph in 1930. Absolute limit.</div>
+            </div>
+
+            <div class="record-card" onclick="openRecordModal(2)">
+                <div class="record-icon">📏</div>
+                <div class="record-title">Altitude Record</div>
+                <div class="record-desc">14,000 feet in 1931.</div>
+            </div>
+
+            <div class="record-card" onclick="openRecordModal(3)">
+                <div class="record-icon">🌊</div>
+                <div class="record-title">Pacific Solo</div>
+                <div class="record-desc">Hawaii to California, 1935.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="mystery">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 6</div>
+            <h2>The Mystery</h2>
+            <p class="section-description">
+                July 2, 1937. Amelia vanished.
+            </p>
+        </div>
+
+        <div class="glass" style="padding: 2rem;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="font-size: 5rem; margin-bottom: 1rem;">❓</div>
+                <h3 style="font-size: 2.5rem; color: #ff6b35; margin-bottom: 1rem;">DISAPPEARED</h3>
+                <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">
+                    Last radio: "We are running north and south."
+                </p>
+            </div>
+
+            <div class="mystery-grid">
+                <div class="theory-card" onclick="showTheory(0)">
+                    <div class="theory-emoji">🌊</div>
+                    <div class="theory-title">Crashed at Sea</div>
+                    <div class="theory-desc">Official theory: Ran out of fuel.</div>
+                </div>
+
+                <div class="theory-card" onclick="showTheory(1)">
+                    <div class="theory-emoji">🏝️</div>
+                    <div class="theory-title">Castaway</div>
+                    <div class="theory-desc">Landed on Gardner Island.</div>
+                </div>
+
+                <div class="theory-card" onclick="showTheory(2)">
+                    <div class="theory-emoji">🕵️</div>
+                    <div class="theory-title">Spy Mission</div>
+                    <div class="theory-desc">Secret reconnaissance.</div>
+                </div>
+
+                <div class="theory-card" onclick="showTheory(3)">
+                    <div class="theory-emoji">🔍</div>
+                    <div class="theory-title">Survived</div>
+                    <div class="theory-desc">New identity theory.</div>
+                </div>
+            </div>
+
+            <div class="theory-details" id="theoryDetails"></div>
+        </div>
+    </div>
+</section>
+
+<section id="quiz">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">CHAPTER 7</div>
+            <h2>Test Knowledge</h2>
+            <p class="section-description">
+                How well do you know Amelia's story?
+            </p>
+        </div>
+
+        <div class="quiz-wrapper glass" style="padding: 4rem;">
+            <div id="quizContainer">
+                <h3 class="quiz-question" id="quizQuestion"></h3>
+                <div class="quiz-options" id="quizOptions"></div>
+            </div>
+
+            <div id="quizResult" style="display: none; text-align: center;">
+                <h3 style="font-size: 2.5rem; margin-bottom: 1rem; color: #00a8e8;">Complete!</h3>
+                <div style="font-size: 6rem; font-weight: 900; background: linear-gradient(135deg, #00a8e8, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 2rem 0;"><span id="quizScore"></span>/5</div>
+                <p id="quizMessage" style="font-size: 1.3rem; margin-bottom: 2rem; color: #9aa0a6;"></p>
+                <button class="btn" id="restartQuiz">Try Again</button>
+            </div>
+
+            <div class="quiz-progress">
+                <div style="color: #9aa0a6;">
+                    Question <span id="currentQ">1</span> of 5
+                </div>
+                <div style="color: #00a8e8; font-weight: 700; font-size: 1.1rem;">
+                    Score: <span id="scoreDisplay">0</span>/5
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p style="color: #9aa0a6;">
+            An interactive tribute to Amelia Earhart (1897-1937)<br>
+            Pioneer, aviator, inspiration.
+        </p>
+    </div>
+</footer>
+
+<div class="modal" id="photoModal">
+    <div class="modal-content">
+        <div class="modal-close" onclick="closeModal('photoModal')">×</div>
+        <div id="photoModalContent"></div>
+    </div>
+</div>
+
+<div class="modal" id="recordModal">
+    <div class="modal-content">
+        <div class="modal-close" onclick="closeModal('recordModal')">×</div>
+        <div id="recordModalContent"></div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        'use strict';
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        const navDots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('section');
+
+        navDots.forEach(function(dot, i) {
+            dot.addEventListener('click', function() {
+                sections[i].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            let current = 0;
+            sections.forEach(function(section, i) {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    current = i;
+                }
+            });
+
+            navDots.forEach(function(dot, i) {
+                if (i === current) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        });
+
+        const morseCode = {
+            'A': '·—', 'B': '—···', 'C': '—·—·', 'D': '—··', 'E': '·', 'F': '··—·',
+            'G': '——·', 'H': '····', 'I': '··', 'J': '·———', 'K': '—·—', 'L': '·—··',
+            'M': '——', 'N': '—·', 'O': '———', 'P': '·——·', 'Q': '——·—', 'R': '·—·',
+            'S': '···', 'T': '—', 'U': '··—', 'V': '···—', 'W': '·——', 'X': '—··—',
+            'Y': '—·——', 'Z': '——··'
+        };
+
+        let currentMorse = '';
+        let currentText = '';
+
+        const morseDisplay = document.getElementById('morseDisplay');
+        const dotBtn = document.getElementById('dotBtn');
+        const dashBtn = document.getElementById('dashBtn');
+
+        function decodeMorse(morse) {
+            for (let letter in morseCode) {
+                if (morseCode[letter] === morse) {
+                    return letter;
+                }
+            }
+            return '';
+        }
+
+        dotBtn.addEventListener('click', function() {
+            currentMorse += '·';
+            updateMorseDisplay();
+        });
+
+        dashBtn.addEventListener('click', function() {
+            currentMorse += '—';
+            updateMorseDisplay();
+        });
+
+        document.getElementById('morseSpace').addEventListener('click', function() {
+            if (currentMorse) {
+                const letter = decodeMorse(currentMorse);
+                if (letter) {
+                    currentText += letter;
+                }
+                currentMorse = '';
+                updateMorseDisplay();
+            }
+        });
+
+        document.getElementById('morseBackspace').addEventListener('click', function() {
+            if (currentMorse.length > 0) {
+                currentMorse = currentMorse.slice(0, -1);
+            } else if (currentText.length > 0) {
+                currentText = currentText.slice(0, -1);
+            }
+            updateMorseDisplay();
+        });
+
+        document.getElementById('morseClear').addEventListener('click', function() {
+            currentMorse = '';
+            currentText = '';
+            updateMorseDisplay();
+            document.getElementById('morseResult').textContent = '';
+        });
+
+        document.getElementById('morseCheck').addEventListener('click', function() {
+            const result = document.getElementById('morseResult');
+            if (currentText.includes('HELP')) {
+                result.textContent = '✅ SUCCESS! Distress signal decoded!';
+                result.style.color = '#10b981';
+            } else if (currentText.length > 0) {
+                result.textContent = 'You spelled: ' + currentText + '. Try HELP!';
+                result.style.color = '#ffd700';
+            } else {
+                result.textContent = 'Enter morse code first!';
+                result.style.color = '#ef4444';
+            }
+        });
+
+        function updateMorseDisplay() {
+            if (currentText || currentMorse) {
+                morseDisplay.textContent = currentText + ' ' + currentMorse;
+            } else {
+                morseDisplay.textContent = 'READY TO RECEIVE...';
+            }
+        }
+
+
+
+        // Mission selection
+        document.querySelectorAll('.mission-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (!gameActive) {
+                    document.querySelectorAll('.mission-btn').forEach(function(b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                    currentMission = btn.getAttribute('data-mission');
+                }
+            });
+        });
+
+        let obstacles = [];
+        let gameInterval = null;
+        let gameLoopId = null;
+
+        function startFlightGame() {
+            if (gameActive) return;
+
+            const mission = missions[currentMission];
+
+            gameActive = true;
+            gameDistance = 0;
+            gameFuel = 100;
+            missionStartTime = Date.now();
+
+            // Оновити HUD
+            document.getElementById('gameDistance').textContent = '0 km';
+            document.getElementById('gameFuel').textContent = '100%';
+            document.getElementById('gameProgress').textContent = '0%';
+            document.getElementById('gameOverScreen').classList.remove('show');
+            document.getElementById('startGame').style.display = 'none';
+
+            // Змінити фон
+            document.getElementById('gameCanvas').style.background = mission.background;
+
+            // Spawn obstacles
+            gameInterval = setInterval(function() {
+                if (!gameActive) return;
+
+                const isPickup = Math.random() < 0.3; // 30% шанс pickup
+                const obstacle = document.createElement('div');
+                obstacle.className = 'obstacle' + (isPickup ? ' pickup' : '');
+
+                if (isPickup) {
+                    const pickupType = mission.pickupTypes[Math.floor(Math.random() * mission.pickupTypes.length)];
+                    obstacle.textContent = pickupType;
+                    obstacle.setAttribute('data-type', pickupType);
+                } else {
+                    const obstacleType = mission.obstacleTypes[Math.floor(Math.random() * mission.obstacleTypes.length)];
+                    obstacle.textContent = obstacleType;
+                }
+
+                obstacle.style.top = Math.random() * 380 + 'px';
+                obstacle.style.left = '100%';
+                obstacle.style.animation = 'moveObstacle 4s linear';
+
+                document.getElementById('gameCanvas').appendChild(obstacle);
+                obstacles.push(obstacle);
+
+                setTimeout(function() {
+                    if (obstacle.parentElement) {
+                        obstacle.remove();
+                        obstacles = obstacles.filter(function(o) { return o !== obstacle; });
+                    }
+                }, 4000);
+            }, 1500);
+
+            // Game loop
+            function updateGameLoop() {
+                if (!gameActive) return;
+
+                const mission = missions[currentMission];
+                const elapsed = (Date.now() - missionStartTime) / 1000;
+
+                // Оновити дистанцію
+                gameDistance = Math.min(mission.distance, (elapsed / mission.duration) * mission.distance);
+                document.getElementById('gameDistance').textContent = Math.floor(gameDistance) + ' km';
+
+                // Витрата палива
+                gameFuel -= mission.fuelConsumption / 60;
+                gameFuel = Math.max(0, gameFuel);
+                document.getElementById('gameFuel').textContent = Math.floor(gameFuel) + '%';
+
+                // Progress
+                const progress = (gameDistance / mission.distance) * 100;
+                document.getElementById('gameProgress').textContent = Math.floor(progress) + '%';
+
+                // Перевірка завершення
+                if (gameFuel <= 0) {
+                    endGame(false);
+                    return;
+                } else if (gameDistance >= mission.distance) {
+                    endGame(true);
+                    return;
+                }
+
+                gameLoopId = requestAnimationFrame(updateGameLoop);
+            }
+
+            updateGameLoop();
+
+            // Collision detection
+            const collisionCheck = setInterval(function() {
+                if (!gameActive) {
+                    clearInterval(collisionCheck);
+                    return;
+                }
+
+                const planeRect = document.getElementById('playerPlane').getBoundingClientRect();
+
+                obstacles.forEach(function(obstacle) {
+                    const obstacleRect = obstacle.getBoundingClientRect();
+
+                    if (!(planeRect.right < obstacleRect.left ||
+                        planeRect.left > obstacleRect.right ||
+                        planeRect.bottom < obstacleRect.top ||
+                        planeRect.top > obstacleRect.bottom)) {
+
+                        if (obstacle.classList.contains('pickup')) {
+                            const type = obstacle.getAttribute('data-type');
+
+                            if (type === '⛽') {
+                                gameFuel = Math.min(100, gameFuel + 15);
+                                document.getElementById('gameFuel').textContent = Math.floor(gameFuel) + '%';
+                            } else if (type === '📡') {
+                                gameDistance += 100;
+                            }
+
+                            obstacle.remove();
+                            obstacles = obstacles.filter(function(o) { return o !== obstacle; });
+                        } else {
+                            // Obstacle hit
+                            gameFuel -= 10;
+                            document.getElementById('gameFuel').textContent = Math.floor(gameFuel) + '%';
+                            obstacle.remove();
+                            obstacles = obstacles.filter(function(o) { return o !== obstacle; });
+
+                            if (gameFuel <= 0) {
+                                endGame(false);
+                            }
+                        }
+                    }
+                });
+            }, 50);
+        }
+
+        function endGame(success) {
+            gameActive = false;
+            clearInterval(gameInterval);
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+
+            obstacles.forEach(function(obstacle) { obstacle.remove(); });
+            obstacles = [];
+
+            const mission = missions[currentMission];
+
+            document.getElementById('finalScore').textContent = Math.floor(gameDistance) + ' km';
+            document.getElementById('gameMessage').textContent = success
+                ? mission.successMessage
+                : mission.failMessage;
+
+            document.getElementById('gameOverScreen').classList.add('show');
+            document.getElementById('startGame').style.display = 'inline-block';
+
+            // Скинути фон
+            document.getElementById('gameCanvas').style.background = 'linear-gradient(180deg, #87ceeb 0%, #e0f6ff 50%, #b8dce8 100%)';
+        }
+
+        document.getElementById('startGame').addEventListener('click', startFlightGame);
+
+        const gameCanvas = document.getElementById('gameCanvas');
+        const playerPlane = document.getElementById('playerPlane');
+
+        gameCanvas.addEventListener('mousemove', function(e) {
+            if (!gameActive) return;
+
+            const rect = gameCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - 25;
+            const y = e.clientY - rect.top - 25;
+
+            playerPlane.style.left = Math.max(0, Math.min(x, rect.width - 50)) + 'px';
+            playerPlane.style.top = Math.max(0, Math.min(y, rect.height - 50)) + 'px';
+        });
+
+        const mapCanvas = document.getElementById('worldMapCanvas');
+        const mapCtx = mapCanvas.getContext('2d');
+        const mapTooltip = document.getElementById('mapTooltip');
+
+        const flights = [
+            // 1932 Atlantic Solo (blue route)
+            { lat: 47.6, lon: -52.7, name: 'Newfoundland', info: 'May 20, 1932 - Departure', emoji: '🛫', route: 'atlantic' },
+            { lat: 55.0, lon: -8.2, name: 'Ireland', info: 'May 21, 1932 - 15 hours later', emoji: '🛬', route: 'atlantic' },
+
+            // 1935 Pacific Solo (orange route)
+            { lat: 21.3, lon: -157.8, name: 'Honolulu', info: 'January 11, 1935', emoji: '🛫', route: 'pacific' },
+            { lat: 37.8, lon: -122.3, name: 'Oakland', info: 'January 12, 1935 - 18 hours', emoji: '🛬', route: 'pacific' },
+
+            // 1937 World Flight (red route) - KEY POINTS ONLY
+            { lat: 25.8, lon: -80.2, name: 'Miami', info: 'June 1, 1937 - Start', emoji: '🛫', route: 'world' },
+            { lat: -8.0, lon: -34.9, name: 'Natal, Brazil', info: 'Atlantic crossing point', emoji: '✈️', route: 'world' },
+            { lat: 14.7, lon: -17.4, name: 'Dakar, Senegal', info: 'Africa arrival', emoji: '✈️', route: 'world' },
+            { lat: 24.9, lon: 67.0, name: 'Karachi', info: 'India', emoji: '✈️', route: 'world' },
+            { lat: 1.3, lon: 103.8, name: 'Singapore', info: 'Southeast Asia hub', emoji: '✈️', route: 'world' },
+            { lat: -12.4, lon: 130.8, name: 'Darwin, Australia', info: 'Pacific preparation', emoji: '✈️', route: 'world' },
+            { lat: -6.6, lon: 147.0, name: 'Lae, New Guinea', info: 'June 29 - Final departure', emoji: '🛫', route: 'world' },
+            { lat: 0.8, lon: -176.6, name: 'Howland Island', info: 'July 2, 1937 - Lost', emoji: '❓', route: 'world' }
+        ];
+
+        function latLonToCanvas(lat, lon, width, height) {
+            const x = (lon + 180) * (width / 360);
+            const latRad = lat * Math.PI / 180;
+            const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
+            const y = (height / 2) - (width * mercN / (2 * Math.PI));
+            return { x: x, y: y };
+        }
+
+        function drawWorldMap() {
+            const width = mapCanvas.width;
+            const height = mapCanvas.height;
+
+            // Ocean gradient
+            const oceanGradient = mapCtx.createLinearGradient(0, 0, 0, height);
+            oceanGradient.addColorStop(0, '#1a3a4a');
+            oceanGradient.addColorStop(1, '#0f2535');
+            mapCtx.fillStyle = oceanGradient;
+            mapCtx.fillRect(0, 0, width, height);
+
+            // Helper function
+            function drawContinent(points) {
+                mapCtx.beginPath();
+                const first = latLonToCanvas(points[0][0], points[0][1], width, height);
+                mapCtx.moveTo(first.x, first.y);
+
+                for (let i = 1; i < points.length; i++) {
+                    const point = latLonToCanvas(points[i][0], points[i][1], width, height);
+                    mapCtx.lineTo(point.x, point.y);
+                }
+                mapCtx.closePath();
+                mapCtx.fill();
+            }
+
+            mapCtx.fillStyle = '#2d5a3a';
+            mapCtx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            mapCtx.shadowBlur = 10;
+
+            // NORTH AMERICA - покращені пропорції
+            const northAmerica = [
+                [70, -170], [65, -140], [60, -135], [55, -130], // Alaska
+                [49, -123], [45, -124], [40, -124], [35, -120], // West Coast
+                [32, -117], [28, -110], [26, -97], [28, -90], [30, -82], // South
+                [33, -80], [37, -76], [40, -74], [42, -71], // East Coast
+                [45, -68], [47, -60], [50, -56], [55, -62], [60, -65], // Canada East
+                [65, -75], [70, -85], [72, -100], [70, -120], [70, -170]
+            ];
+            drawContinent(northAmerica);
+
+            // SOUTH AMERICA - покращені пропорції
+            const southAmerica = [
+                [12, -72], [8, -74], [2, -76], [-5, -78], [-12, -77], // Colombia-Ecuador-Peru
+                [-18, -71], [-25, -70], [-35, -72], [-45, -73], [-55, -68], // Chile
+                [-55, -65], [-50, -60], [-42, -58], [-35, -56], // Argentina South
+                [-30, -52], [-23, -43], [-15, -39], [-8, -35], // Brazil East
+                [-2, -40], [2, -52], [8, -62], [12, -72]
+            ];
+            drawContinent(southAmerica);
+
+            // EUROPE - покращені пропорції
+            const europe = [
+                [71, 25], [70, 28], [65, 30], [60, 28], [58, 22], // Scandinavia
+                [56, 12], [54, 8], [52, 4], [51, -1], [50, -5], // North Sea/UK
+                [48, -4], [43, -2], [40, -9], [36, -6], // Iberia
+                [37, 0], [38, 8], [40, 18], [42, 28], // Mediterranean
+                [45, 28], [48, 32], [52, 38], [56, 40], [60, 48], [65, 50], [71, 25]
+            ];
+            drawContinent(europe);
+
+            // AFRICA - покращені пропорції
+            const africa = [
+                [37, -6], [35, 6], [32, 18], [30, 32], [25, 38], // North
+                [15, 42], [10, 48], [4, 42], [-5, 40], [-12, 40], // East
+                [-20, 35], [-28, 32], [-34, 24], [-35, 18], // South-East
+                [-32, 16], [-28, 14], [-20, 12], [-10, 10], [0, 9], // South-West
+                [8, 8], [12, 2], [18, -5], [25, -12], [32, -16], [37, -6]
+            ];
+            drawContinent(africa);
+
+            // ASIA - ЗМЕНШЕНА і покращена
+            const asia = [
+                [72, 50], [70, 65], [68, 85], [65, 105], [62, 125], // Siberia
+                [58, 145], [52, 155], [48, 145], [42, 135], [35, 135], // Far East
+                [30, 125], [25, 115], [20, 105], [15, 100], [10, 98], // China
+                [5, 95], [8, 80], [12, 72], [18, 65], [22, 58], // SE Asia/India
+                [28, 52], [35, 48], [40, 45], [48, 45], [55, 50], [65, 55], [72, 50]
+            ];
+            drawContinent(asia);
+
+            // AUSTRALIA - покращені пропорції
+            const australia = [
+                [-11, 142], [-15, 145], [-20, 149], [-26, 153], // East
+                [-32, 152], [-35, 150], [-37, 145], [-38, 138], // South-East
+                [-35, 133], [-32, 128], [-28, 123], [-24, 114], // South-West
+                [-20, 114], [-16, 122], [-12, 130], [-11, 142]
+            ];
+            drawContinent(australia);
+
+            mapCtx.shadowBlur = 0;
+
+            // Grid lines
+            mapCtx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            mapCtx.lineWidth = 1;
+            for (let i = 0; i <= 12; i++) {
+                mapCtx.beginPath();
+                mapCtx.moveTo(0, i * height / 12);
+                mapCtx.lineTo(width, i * height / 12);
+                mapCtx.stroke();
+
+                mapCtx.beginPath();
+                mapCtx.moveTo(i * width / 12, 0);
+                mapCtx.lineTo(i * width / 12, height);
+                mapCtx.stroke();
+            }
+
+            // Flight paths with better styling
+            // Flight paths - 3 separate routes with different colors
+            mapCtx.lineWidth = 3;
+            mapCtx.setLineDash([8, 4]);
+            mapCtx.shadowBlur = 8;
+
+// Group flights by route
+            const routes = {
+                atlantic: flights.filter(f => f.route === 'atlantic'),
+                pacific: flights.filter(f => f.route === 'pacific'),
+                world: flights.filter(f => f.route === 'world')
+            };
+
+// Draw Atlantic (blue)
+            mapCtx.strokeStyle = 'rgba(0, 168, 232, 0.8)';
+            mapCtx.shadowColor = 'rgba(0, 168, 232, 0.6)';
+            for (let i = 0; i < routes.atlantic.length - 1; i++) {
+                const start = latLonToCanvas(routes.atlantic[i].lat, routes.atlantic[i].lon, width, height);
+                const end = latLonToCanvas(routes.atlantic[i+1].lat, routes.atlantic[i+1].lon, width, height);
+                mapCtx.beginPath();
+                mapCtx.moveTo(start.x, start.y);
+                mapCtx.lineTo(end.x, end.y);
+                mapCtx.stroke();
+            }
+
+// Draw Pacific (orange)
+            mapCtx.strokeStyle = 'rgba(255, 107, 53, 0.8)';
+            mapCtx.shadowColor = 'rgba(255, 107, 53, 0.6)';
+            for (let i = 0; i < routes.pacific.length - 1; i++) {
+                const start = latLonToCanvas(routes.pacific[i].lat, routes.pacific[i].lon, width, height);
+                const end = latLonToCanvas(routes.pacific[i+1].lat, routes.pacific[i+1].lon, width, height);
+                mapCtx.beginPath();
+                mapCtx.moveTo(start.x, start.y);
+                mapCtx.lineTo(end.x, end.y);
+                mapCtx.stroke();
+            }
+
+// Draw World Flight (red)
+            mapCtx.strokeStyle = 'rgba(239, 68, 68, 0.8)';
+            mapCtx.shadowColor = 'rgba(239, 68, 68, 0.6)';
+            for (let i = 0; i < routes.world.length - 1; i++) {
+                const start = latLonToCanvas(routes.world[i].lat, routes.world[i].lon, width, height);
+                const end = latLonToCanvas(routes.world[i+1].lat, routes.world[i+1].lon, width, height);
+                mapCtx.beginPath();
+                mapCtx.moveTo(start.x, start.y);
+                mapCtx.lineTo(end.x, end.y);
+                mapCtx.stroke();
+            }
+
+            // Create markers with better visibility
+            const container = document.querySelector('.world-map-container');
+            container.querySelectorAll('.map-marker').forEach(function(m) { m.remove(); });
+
+            flights.forEach(function(flight, i) {
+                const pos = latLonToCanvas(flight.lat, flight.lon, width, height);
+                const marker = document.createElement('div');
+                marker.className = 'map-marker';
+                marker.style.left = pos.x + 'px';
+                marker.style.top = pos.y + 'px';
+                marker.textContent = flight.emoji;
+                marker.style.fontSize = '1.5rem';
+                marker.style.zIndex = '100';
+
+                if (i === flights.length - 1) {
+                    marker.style.background = '#ef4444';
+                    marker.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.8)';
+                }
+
+                marker.addEventListener('mouseenter', function(e) {
+                    mapTooltip.innerHTML = '<h4 style="color: #ff6b35; margin-bottom: 0.5rem; font-size: 1.2rem;">' + flight.name + '</h4><p style="margin: 0; font-size: 0.95rem;">' + flight.info + '</p>';
+                    const rect = container.getBoundingClientRect();
+                    mapTooltip.style.left = Math.min(e.clientX - rect.left + 20, width - 220) + 'px';
+                    mapTooltip.style.top = Math.min(e.clientY - rect.top + 20, height - 100) + 'px';
+                    mapTooltip.classList.add('visible');
+                });
+
+                marker.addEventListener('mouseleave', function() {
+                    mapTooltip.classList.remove('visible');
+                });
+
+                container.appendChild(marker);
+            });
+        }
+
+
+        function resizeMap() {
+            const container = document.querySelector('.world-map-container');
+            mapCanvas.width = container.clientWidth;
+            mapCanvas.height = 500;
+            drawWorldMap();
+        }
+
+        const timelineData = [
+            {
+                year: '1897',
+                title: 'Birth & Childhood',
+                desc: 'Born July 24 in Atchison, Kansas. Her grandmother disapproved of "bloomers" and boyish behavior. From age 7, Amelia collected newspaper clippings about successful women in male-dominated fields. She climbed trees, hunted rats, and built a homemade roller coaster. Her childhood nickname was "Meeley."'
+            },
+            {
+                year: '1920',
+                title: 'First Flight',
+                desc: 'December 28, 1920: A 10-minute plane ride at Long Beach airfield changed everything. "By the time I had got two or three hundred feet off the ground, I knew I had to fly." She took flying lessons from pioneer aviatrix Neta Snook and bought her first plane—a bright yellow Kinner Airster she nicknamed "The Canary." To pay for lessons, she worked as a truck driver, photographer, and stenographer.'
+            },
+            {
+                year: '1928',
+                title: 'Atlantic Passenger',
+                desc: 'June 17-18, 1928: First woman to fly across the Atlantic—as a passenger. Pilot Wilmer Stultz flew while Earhart kept the flight log. She called herself "a sack of potatoes" because she did nothing. Despite this, she became instantly famous and wrote a book about the experience. The fame frustrated her: "I was just baggage, like a sack of potatoes." She vowed to cross solo.'
+            },
+            {
+                year: '1932',
+                title: 'Solo Atlantic Hero',
+                desc: 'May 20-21, 1932: First woman to fly solo nonstop across the Atlantic! 15 hours from Newfoundland to Ireland in her red Lockheed Vega. She faced icy conditions, mechanical problems, and flames from the exhaust manifold. She intended to land in Paris but came down in a pasture in Northern Ireland. A farmhand asked, "Have you flown far?" She replied, "From America." She received the Distinguished Flying Cross—the first woman to earn it.'
+            },
+            {
+                year: '1935',
+                title: 'Pacific Solo & Records',
+                desc: 'January 11-12, 1935: First person (male or female) to fly solo from Hawaii to California—2,408 miles over the Pacific in 18 hours. Many had died attempting this route. She also set the women\'s speed record at 181.18 mph (1930) and altitude record at 18,415 feet in an autogiro (1931). She became a visiting professor at Purdue University advising female students on careers and aeronautical engineering.'
+            },
+            {
+                year: '1937',
+                title: 'Final Flight',
+                desc: 'June 1-July 2, 1937: Attempted to circumnavigate the globe at the equator—29,000 miles. With navigator Fred Noonan in a twin-engine Lockheed Electra. After completing 22,000 miles across South America, Africa, India, and Southeast Asia, they departed Lae, New Guinea on June 29 for Howland Island. Last radio transmission July 2: "We are running north and south." They vanished. The largest search in naval history found nothing.'
+            },
+            {
+                year: 'Legacy',
+                title: 'Eternal Inspiration',
+                desc: 'Declared legally dead January 5, 1939. Her disappearance remains one of history\'s greatest mysteries—spawning theories from crash-and-sink to castaway survival on Nikumaroro Island. She wrote: "Women must try to do things as men have tried. When they fail, their failure must be but a challenge to others." Her courage inspired generations. She proved women could match men in aviation and beyond. Her spirit endures.'
+            }
+        ];
+
+        function updateTimeline(index) {
+            const data = timelineData[index];
+            document.getElementById('timelineDisplay').innerHTML = '<div class="timeline-year-big">' + data.year + '</div><div class="timeline-event-title">' + data.title + '</div><div class="timeline-event-desc">' + data.desc + '</div>';
+        }
+
+        document.getElementById('timelineSlider').addEventListener('input', function(e) {
+            updateTimeline(parseInt(e.target.value));
+        });
+
+        const photoDetails = [
+            {
+                title: 'The Aviatrix',
+                year: '1935',
+                desc: 'Official portrait captured at the peak of her fame. By 1935, Amelia was the most famous female pilot in the world. She had already conquered the Atlantic solo (1932) and set multiple aviation records. This photograph shows her confidence and determination that inspired millions of women. She often said: "The most difficult thing is the decision to act, the rest is merely tenacity."',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Neta_amelia_kinner_airster_s.jpg'
+            },
+            {
+                title: 'Ready for Flight',
+                year: '1928',
+                desc: 'Amelia in her iconic leather flight jacket and goggles. This was taken shortly after her 1928 transatlantic flight as a passenger—the journey that made her famous overnight despite her frustration at not piloting. She wore practical clothing that challenged 1920s gender norms. Her fashion choices influenced women worldwide. She later designed her own clothing line emphasizing comfort and functionality for active women.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Amelia_Earhart_%2812835319215%29.jpg'
+            },
+            {
+                title: 'After Atlantic Solo',
+                year: '1932',
+                desc: 'Amelia stands beside her red Lockheed Vega 5B after completing the historic solo Atlantic crossing on May 20-21, 1932. The 15-hour flight from Newfoundland to Ireland was plagued with problems: flames from a cracked exhaust manifold, ice forming on the wings, and instrument failures. She intended to land in Paris (like Lindbergh) but mechanical issues forced her down in a pasture in Derry, Northern Ireland. A farmer asked, "Have you flown far?" She casually replied, "From America." She became the first woman to receive the Distinguished Flying Cross.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Lockheed_Vega_5B_of_Amelia_Earhart_c1932.jpg'
+            },
+            {
+                title: 'World Flight Route',
+                year: '1937',
+                desc: 'This map shows Amelia\'s planned circumnavigation route at the equator—approximately 29,000 miles, the longest anyone had attempted. The red line traces her actual path from Miami (June 1) through South America, Africa, India, Southeast Asia, to Lae, New Guinea (June 29). The blue section shows the intended route to Howland Island in the Pacific—a tiny 1.6-mile-long speck where she and navigator Fred Noonan vanished on July 2, 1937. Their last verified position was 100 miles from Howland. The U.S. Navy and Coast Guard conducted a massive 17-day search covering 250,000 square miles. Nothing was found.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Earhart_locations.png'
+            }
+        ];
+
+
+        window.openPhotoModal = function(index) {
+            const modal = document.getElementById('photoModal');
+            const content = document.getElementById('photoModalContent');
+            const photo = photoDetails[index];
+
+            content.innerHTML = `
+        <div style="text-align: center;">
+            <img src="${photo.img}" alt="${photo.title}" style="
+                max-width: 100%;
+                max-height: 50vh;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                border-radius: 12px;
+                margin-bottom: 1rem;
+                box-shadow: 0 20px 60px rgba(0, 168, 232, 0.4);
+            ">
+            <p style="font-size: 0.8rem; color: #9aa0a6; margin-bottom: 2rem;">
+                Historical images via <a href="https://commons.wikimedia.org" target="_blank" style="color: #00a8e8; text-decoration: none;">Wikimedia Commons</a> (public domain).
+            </p>
+            <h2 style="font-size: 2rem; color: #00a8e8; margin-bottom: 0.5rem;">${photo.title}</h2>
+            <p style="font-size: 1.1rem; color: #ffd700; font-weight: 600; margin-bottom: 1.5rem;">${photo.year}</p>
+            <p style="font-size: 1.05rem; line-height: 1.9; color: #e8eaed; text-align: left; max-width: 800px; margin: 0 auto;">${photo.desc}</p>
+        </div>
+    `;
+
+            modal.classList.add('modal-active');
+        };
+
+        const recordDetails = [
+            {
+                title: 'First Woman Solo Atlantic',
+                icon: '🌊',
+                details: 'May 20-21, 1932: Exactly five years after Charles Lindbergh\'s crossing, Amelia became the first woman to fly solo across the Atlantic Ocean. She departed Harbour Grace, Newfoundland at 7:12 PM and landed in a pasture near Derry, Northern Ireland 14 hours 56 minutes later. The flight was treacherous—flames shot from a cracked exhaust manifold, ice formed on the wings causing altitude loss, the altimeter failed, and severe weather forced her off course. She intended to reach Paris but fuel concerns and mechanical problems made Ireland the safer choice. President Herbert Hoover awarded her the Distinguished Flying Cross. Congress awarded her the Gold Medal of the National Geographic Society. She became an international icon overnight.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/Amelia_Earhart_-_GPN-2002-000211.jpg'
+            },
+            {
+                title: 'Speed Record',
+                icon: '⚡',
+                details: 'July 1930: Amelia set the women\'s world speed record at 181.18 mph (291.59 km/h) flying a Lockheed Vega. This record stood for years and proved that women pilots could match men in technical skill and nerve. During this period, she also became the first woman to fly an autogiro (a predecessor to the helicopter) and set altitude records in the same aircraft. The aviation industry was dominated by men who doubted women\'s capabilities. Each record Amelia broke shattered stereotypes and opened doors for future female aviators. She often said, "Women must try to do things as men have tried."',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Lockheed_Vega_5B%2C_Amelia_Earhart_-_DPLA_-_17901a4d2c93d49987e58e0b46efd42c_%28page_15%29.jpg'
+            },
+            {
+                title: 'Altitude Record',
+                icon: '📈',
+                details: 'April 8, 1931: Amelia reached 18,415 feet (5,613 meters) in a Pitcairn PCA-2 autogiro, setting a world altitude record for rotorcraft. The autogiro was a dangerous, unstable aircraft—part airplane, part helicopter. At such altitudes, the air becomes thin, making breathing difficult and temperatures plummet below freezing. Pilots faced hypoxia (oxygen deprivation), disorientation, and potential engine failure. Amelia had no pressurized cabin or supplemental oxygen. This record demonstrated not just skill but extraordinary physical and mental toughness. The same year, she made the first transcontinental flight in an autogiro, flying from New Jersey to California.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Lockheed_Vega_5B%2C_Amelia_Earhart_-_DPLA_-_17901a4d2c93d49987e58e0b46efd42c_%28page_6%29.jpg'
+            },
+            {
+                title: 'Pacific Solo',
+                icon: '🌴',
+                details: 'January 11-12, 1935: Amelia became the first person—man or woman—to fly solo from Hawaii to California, covering 2,408 miles across the Pacific Ocean in 18 hours. This route was considered one of the most dangerous in the world. Several pilots had died attempting it, including a crash just weeks before Amelia\'s flight. Navy officials tried to discourage her, citing the extreme danger. She departed Honolulu with no radio contact for most of the journey—if her engine failed, rescue was nearly impossible. She landed in Oakland to a crowd of thousands. This achievement, combined with her Atlantic crossing, made her the only person to have soloed both the Atlantic and Pacific oceans.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/7/72/Amelia_Earhart_standing_under_nose_of_her_Lockheed_Model_10-E_Electra%2C_small_%28cropped%29.jpg'
+            }
+        ];
+
+
+        window.openRecordModal = function(index) {
+            const modal = document.getElementById('recordModal');
+            const content = document.getElementById('recordModalContent');
+            const record = recordDetails[index];
+
+            content.innerHTML = `
+        <div style="text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1.5rem;">${record.icon}</div>
+            <h2 style="font-size: 2.2rem; color: #ff6b35; margin-bottom: 2rem;">${record.title}</h2>
+            <img src="${record.img}" alt="${record.title}" style="
+                max-width: 100%;
+                max-height: 45vh;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                border-radius: 12px;
+                margin-bottom: 1rem;
+                box-shadow: 0 20px 60px rgba(255, 107, 53, 0.4);
+            ">
+            <p style="font-size: 0.8rem; color: #9aa0a6; margin-bottom: 2rem;">
+                Historical images via <a href="https://commons.wikimedia.org" target="_blank" style="color: #ff6b35; text-decoration: none;">Wikimedia Commons</a> (public domain).
+            </p>
+            <p style="font-size: 1.05rem; line-height: 1.9; color: #e8eaed; text-align: left; max-width: 800px; margin: 0 auto;">${record.details}</p>
+        </div>
+    `;
+
+            modal.classList.add('modal-active');
+        };
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('modal-active');
+        };
+
+        const theories = [
+            { title: 'Crashed at Sea', details: 'Most accepted: ran out of fuel and crashed near Howland. Navy searched 250,000 square miles. Most experts believe this.' },
+            { title: 'Castaway', details: 'Bones found 1940s on Nikumaroro could match. Artifacts: sextant box, aluminum, shoe. Landed, survived days, died. Compelling alternative.' },
+            { title: 'Captured', details: 'Spy mission theory. Japanese capture claimed. No credible evidence in records. Most historians doubt this.' },
+            { title: 'Survived', details: 'Conspiracy: returned, lived in New Jersey. Woman named Bolam. Thoroughly debunked. Zero evidence. Popular myth.' }
+        ];
+
+        window.showTheory = function(index) {
+            const cards = document.querySelectorAll('.theory-card');
+            const details = document.getElementById('theoryDetails');
+
+            cards.forEach(function(card, i) {
+                if (i === index) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+
+            details.innerHTML = '<h3 style="font-size: 2rem; color: #ff6b35; margin-bottom: 1.5rem;">' + theories[index].title + '</h3><p style="font-size: 1.1rem; line-height: 1.9;">' + theories[index].details + '</p>';
+            details.classList.add('active');
+        };
+
+        const quizData = [
+            { q: "In what year did Amelia fly solo across the Atlantic?", opts: ["1928", "1932", "1935", "1937"], correct: 1 },
+            { q: "What nickname did she give herself on first Atlantic crossing?", opts: ["A sack of potatoes", "The flying lady", "Sky queen", "Atlantic bird"], correct: 0 },
+            { q: "Which ocean did she fly solo in 1935?", opts: ["Atlantic", "Pacific", "Indian", "Arctic"], correct: 1 },
+            { q: "Who was her navigator on the final flight?", opts: ["Charles Lindbergh", "Fred Noonan", "George Putnam", "Paul Mantz"], correct: 1 },
+            { q: "What was she attempting when she disappeared?", opts: ["Atlantic crossing", "Pacific crossing", "World circumnavigation", "Speed record"], correct: 2 }
+        ];
+
+        let currentQuestion = 0;
+        let quizScoreCount = 0;
+
+        function loadQuiz() {
+            if (currentQuestion >= quizData.length) {
+                document.getElementById('quizContainer').style.display = 'none';
+                document.getElementById('quizResult').style.display = 'block';
+                document.getElementById('quizScore').textContent = String(quizScoreCount);
+
+                let msg = quizScoreCount === 5 ? "Perfect! Expert! ✈️" :
+                    quizScoreCount >= 3 ? "Great job! 🌟" :
+                        "Keep learning! 📚";
+                document.getElementById('quizMessage').textContent = msg;
+                return;
+            }
+
+            const q = quizData[currentQuestion];
+            document.getElementById('quizQuestion').textContent = q.q;
+            document.getElementById('currentQ').textContent = String(currentQuestion + 1);
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+
+            q.opts.forEach(function(opt, i) {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.textContent = opt;
+                div.onclick = function() { selectQuizAnswer(i); };
+                optionsContainer.appendChild(div);
+            });
+        }
+
+        function selectQuizAnswer(selected) {
+            const q = quizData[currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+
+            options.forEach(function(opt) { opt.onclick = null; });
+
+            options[q.correct].classList.add('quiz-correct');
+            if (selected === q.correct) {
+                quizScoreCount++;
+                document.getElementById('scoreDisplay').textContent = String(quizScoreCount);
+            } else {
+                options[selected].classList.add('quiz-wrong');
+            }
+
+            setTimeout(function() {
+                currentQuestion++;
+                loadQuiz();
+            }, 1800);
+        }
+
+        document.getElementById('restartQuiz').addEventListener('click', function() {
+            currentQuestion = 0;
+            quizScoreCount = 0;
+            document.getElementById('scoreDisplay').textContent = '0';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+            loadQuiz();
+        });
+
+        window.addEventListener('load', function() {
+            createStars();
+            resizeMap();
+            updateTimeline(0);
+            loadQuiz();
+        });
+
+        window.addEventListener('resize', resizeMap);
+    })();
+
+    // Mission configurations
+    const missions = {
+        atlantic: {
+            name: "Atlantic Crossing 1932",
+            distance: 3200,
+            duration: 180,  // секунд (3 хвилини)
+            fuelConsumption: 0.3,
+            obstacleTypes: ['⛈️', '🌫️', '☁️'],
+            pickupTypes: ['⛽'],
+            background: 'linear-gradient(180deg, #4a5f7a 0%, #2c3e50 50%, #1a252f 100%)',
+            successMessage: "You crossed the Atlantic! On May 21, 1932, Amelia became the first woman to fly solo across the Atlantic Ocean.",
+            failMessage: "Lost in the storm... Amelia's actual flight faced severe weather and mechanical issues."
+        },
+        pacific: {
+            name: "Pacific Solo 1935",
+            distance: 3875,
+            duration: 240,
+            fuelConsumption: 0.4,
+            obstacleTypes: ['⛈️', '🌊', '🌫️', '☁️'],
+            pickupTypes: ['⛽', '📡'],
+            background: 'linear-gradient(180deg, #87ceeb 0%, #4a90e2 50%, #2c5f8d 100%)',
+            successMessage: "You reached California! In 1935, Amelia became the first person to fly solo from Hawaii to the U.S. mainland.",
+            failMessage: "The Pacific is unforgiving... Many considered this flight too dangerous."
+        },
+        world: {
+            name: "Final Flight 1937",
+            distance: 4200,
+            duration: 300,
+            fuelConsumption: 0.55,
+            obstacleTypes: ['⛈️', '🌊', '🌫️', '☁️', '⚡'],
+            pickupTypes: ['⛽', '📡'],
+            background: 'linear-gradient(180deg, #2c3e50 0%, #1a252f 50%, #0a0e14 100%)',
+            successMessage: "Against all odds, you reached Howland Island! In reality, Amelia never made it. Her last transmission: 'We are running north and south.'",
+            failMessage: "Signal lost... July 2, 1937. Amelia Earhart disappeared over the Pacific Ocean. The mystery remains unsolved."
+        }
+    };
+
+    let currentMission = 'atlantic';
+    let gameActive = false;
+    let gameDistance = 0;
+    let gameFuel = 100;
+    let missionStartTime = 0;
+
+</script>
+
+</body>
+</html>

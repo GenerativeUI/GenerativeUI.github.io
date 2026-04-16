@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puppy Growth & Tangent Slopes</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+
+<!-------------------------------------------- Banner Section ------------------------------------------------>
+
+
+<div class="header-main" style="background-image: url('images/Puppies.jpg');">
+   <div class="header-main-box-one">
+     <h1>Learn Slopes & Tangents <span>with Puppy Growth</span></h1>
+     <p>Discover how math comes to life through the story of a growing puppy. This interactive experience helps learners see how a curve shows overall growth, while a tangent line explains what’s happening at one exact moment. By moving the slider, students can explore how growth speed changes over time in a simple and visual way.</p>
+   </div>
+
+<p class="spacer-one"></p>
+
+  <div class="header-main-box-two">
+   <ul class="header-list-btn">
+     <li><a href="#experiment" class="btn-primary">Explore Growth in Action</a></li>
+   </ul>
+     <img src="images/Ad.png" class="down-arrow">
+  </div>
+
+<p class="spacer-two"></p>
+
+</div>
+
+
+<!-------------------------------------------- Early Growth ------------------------------------------------>
+
+<div class="cs-early-growth">
+  <div class="cs-early-growth-container">
+    <img src="images/Paws.png">
+    <h3>The Early Growth Journey of a Puppy</h3>
+    <h5>Big changes happen in the very first weeks</h5>
+    <p>In the early stages of life, puppies grow quickly as their bodies and senses begin to develop. Their bones strengthen, muscles form, and movement becomes more confident each week. This rapid growth is why the curve rises steeply at the beginning of the graph. Proper care, rest, and nutrition are especially important during this stage. These early changes set the foundation for healthy growth later on.</p>
+  </div>
+</div>
+
+<!-------------------------------------------- Four Tabs ------------------------------------------------>
+
+<div class="cs-points-tabs">
+
+<div class="cs-points-tabs-container">
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Growth Curve</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Tangent Line</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Slope</button>
+</div>
+
+<div id="London" class="tabcontent">
+
+  <div class="tab-inside-image">
+    <img src="images/Gc.jpg">
+  </div>
+
+  <div class="tab-inside-div">
+    <h3>Growth Curve</h3>
+<ul>
+          <li><strong>Size:</strong> Shows how the puppy’s size changes over time, not all at once.</li>
+          <li><strong>Growth:</strong> Curves because growth is fast at some ages and slower at others.</li>
+          <li><strong>Development:</strong> Helps us see the overall story of the puppy’s development.</li>
+
+        </ul>
+  </div>
+
+
+ 
+</div>
+
+
+
+<div id="Paris" class="tabcontent">
+
+  <div class="tab-inside-image">
+    <img src="images/Tl.jpg">
+  </div>
+
+  <div class="tab-inside-div">
+    <h3>Tangent Line</h3>
+<ul>
+          <li><strong>Size:</strong> Touches the growth curve at exactly one point.</li>
+          <li><strong>Growth:</strong> Shows what is happening at one specific moment in time.</li>
+          <li><strong>Development:</strong> Helps us understand the puppy’s growth right now.</li>
+
+        </ul>
+  </div>
+
+</div>
+
+
+<div id="Tokyo" class="tabcontent">
+
+  <div class="tab-inside-image">
+    <img src="images/Sl.jpg">
+  </div>
+
+  <div class="tab-inside-div">
+    <h3>Slope</h3>
+<ul>
+          <li><strong>Size:</strong> Tells us how fast the puppy is growing at a certain age.</li>
+          <li><strong>Growth:</strong> A steeper slope means faster growth.</li>
+          <li><strong>Development:</strong> A flatter slope means slower growth or a growth pause.</li>
+
+        </ul>
+  </div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-------------------------------------------- Javascript Widget ------------------------------------------------>
+
+
+
+<section class="widget-section" id="experiment">
+  <div class="widget-section-text-content">
+  <h1>Explore Growth <span>in Action</span></h1>
+  <h4>Adjust the slope and tangent to see how change happens in real time</h4>
+  <p>Use the interactive controls to move along the puppy’s growth curve and explore how math describes change. As you adjust the tangent point, notice how the slope changes and what it tells you about growth speed at that moment. A steeper line means faster growth, while a flatter line shows slower development. Watch the puppy respond as you explore, making the connection between math and real-life growth easy to understand. This hands-on activity helps turn abstract concepts into clear, visual learning.</p>
+</div>
+  <div class="widget-container">
+ 
+    <div class="graph-side">
+      <canvas id="graph" width="500" height="350"></canvas>
+      <label class="graph-label">
+        Puppy Age (weeks):
+        <input type="range" id="ageSlider" min="1" max="52" value="10">
+        <span id="ageValue">10</span>
+      </label>
+    </div>
+
+    <div class="puppy-side">
+      <img id="puppy" src="images/Puppyimg.png" alt="Growing Puppy">
+      <p id="growthText">Growing steadily 🐾</p>
+    </div>
+  </div>
+ <div class="cs-graph-curve-work">
+  <p>The curve shows how a puppy grows over time. The tangent line touches the curve at one point. Its slope tells us how fast the puppy is growing at that exact age.</p>
+</div>
+</section>
+
+
+
+<!-------------------------------------------- First 3 Cards Boxes ------------------------------------------------>
+
+<div class="cs-sep-card-one"></div>
+
+<section class="cards" id="learngrowth">
+
+  <div class="card">
+    <img src="images/Box1.jpg">
+    <div class="cs-cards-container">
+    <h4>From Tiny Pup to Growing Explorer</h4>
+    <h5>Early puppy growth happens quickly</h5>
+    <p>In the first few weeks, puppies grow very fast as their bodies develop and strengthen. Bones, muscles, and senses are forming rapidly. This fast growth is why the curve rises steeply during early stages. Proper care and nutrition are especially important at this time.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/Box2.jpg">
+    <div class="cs-cards-container">
+    <h4>Growth Starts to Slow Down</h4>
+    <h5>Not all growth happens at the same speed</h5>
+    <p>As puppies get older, their growth begins to slow. They still grow, but not as quickly as before. This change creates a gentler curve and a less steep slope. Slower growth is a natural and healthy part of development.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/Box3.jpg">
+    <div class="cs-cards-container">
+    <h4>Healthy Growth Needs Balance</h4>
+    <h5>Growth speed matters, not just size</h5>
+    <p>Growing too fast or too slow can affect a puppy’s health. Balanced food, rest, and activity help support steady growth. In math, this balance appears as a smooth curve without sharp jumps. Healthy growth is steady and controlled.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-------------------------------------------- Last 3 Cards Boxes ------------------------------------------------>
+
+<div class="cs-sep-card-two"></div>
+
+<section class="cards" id="learngrowth">
+
+  <div class="card">
+    <img src="images/Box4.jpg">
+    <div class="cs-cards-container">
+    <h4>Every Puppy Grows Differently</h4>
+    <h5>No two growth paths are exactly the same</h5>
+    <p>Different puppies grow at different rates depending on breed, care, and environment. That’s why curves and slopes can look different for each puppy. Math helps us understand these differences and compare growth patterns clearly.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/Box5.jpg">
+    <div class="cs-cards-container">
+    <h4>Puppy Nutrition and Age</h4>
+    <h5>Fueling healthy growth at every stage</h5>
+    <p>As puppies grow, their nutritional needs change with age and activity level. Younger puppies need energy-rich food to support rapid growth and development. As growth slows, balanced nutrition helps maintain strength and overall health.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="images/Box6.jpg">
+    <div class="cs-cards-container">
+    <h4>For Healthy Skin and Teeth</h4>
+    <h5>Strong care for a happy and growing puppy</h5>
+    <p>Healthy skin and strong teeth are important signs of a growing puppy’s well-being. Good nutrition and regular care help keep a puppy’s coat shiny and skin comfortable. Teething is a normal part of growth and helps puppies develop strong, healthy teeth.</p>
+    </div>
+  </div>
+
+</section>
+
+<div class="cs-sep-card-three"></div>
+
+<!-------------------------------------------- Animated Puppy Image Box ------------------------------------------------>
+
+<div class="cs-puppy-run-box">
+
+  <div class="cs-puppy-run-img">
+    <img src="images/Puppyruning.jpg" class="puppy-runing">
+    <p>Caring for a growing puppy requires patience, attention, and lots of love. Provide balanced nutrition to support healthy bones, muscles, and energy levels. Make sure puppies get enough rest, as sleep plays a big role in growth and development. Regular play and gentle exercise help build strength and coordination. Keep their living space clean and safe to protect them from illness. Early checkups and basic grooming help prevent future health problems. Most importantly, consistent care and affection help puppies grow into happy, healthy dogs.</p>
+  </div>
+
+</div>
+
+
+<!-------------------------------------------- Parallax Section ------------------------------------------------>
+
+    <div class="cs-parallax-sec" style="background-image:url('images/Dog2.jpg');">
+    <div class="cs-parallax-sec-container-main">
+     <div class="cs-parallax-sec-container">
+       <div class="cs-parallax-sec-one">
+             <h3>Understanding Puppy Growth</h3>
+             <p>Puppy growth is a gradual journey that happens in different stages over time. In the early weeks, puppies grow quickly as their bodies and senses develop. As they get older, growth slows and becomes more steady and balanced. Healthy food, rest, and care support smooth and consistent growth. Watching how puppies grow helps us understand change and development more clearly.</p>
+       </div>
+
+       <div class="cs-parallax-sec-two">
+          <img src="images/think.jpg">
+       </div>
+     </div>
+    </div>
+    </div>
+
+<footer class="cs-footer-main">
+  <div class="footer-container">
+  <img src="images/Pawsign.png">
+  <p>Discover how math comes to life through the story of a growing puppy. This interactive experience helps learners see how a curve shows overall growth, while a tangent line explains what’s happening at one exact moment.</p>
+<div class="footer-line"></div>
+  <p>Copyright© 2025 All rights reserved</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

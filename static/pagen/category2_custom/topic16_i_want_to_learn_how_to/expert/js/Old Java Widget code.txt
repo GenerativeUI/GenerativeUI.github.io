@@ -1,0 +1,61 @@
+let currentStep = 0;
+const totalSteps = 4;
+
+const messages = [
+  "Great! Warm up completed 💪",
+  "Nice! Hands are placed correctly ✋",
+  "Awesome! Kick up gently 🚀",
+  "Perfect! Hold and breathe 🧘"
+];
+
+function doStep(step) {
+  if (step !== currentStep) return;
+
+  currentStep++;
+
+  document.getElementById("stepMessage").innerText = messages[step];
+  document.getElementById("progressBar").style.width =
+    (currentStep / totalSteps) * 100 + "%";
+
+  if (currentStep === totalSteps) {
+    completeHandstand();
+  }
+}
+
+function completeHandstand() {
+  const mode = document.getElementById("modeSelect").value;
+  const kid = document.getElementById("kid");
+
+  kid.classList.remove("thinking");
+  kid.src = "images/kid_handstand.png";
+
+  if (mode === "wall") {
+    kid.classList.add("wall-handstand");
+    document.getElementById("statusText").innerText =
+      "Wall-supported handstand achieved 🧱";
+  } else {
+    kid.classList.add("free-handstand", "balance");
+    document.getElementById("statusText").innerText =
+      "Free balance handstand! Amazing 🤸‍♂️";
+  }
+}
+
+
+
+
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();

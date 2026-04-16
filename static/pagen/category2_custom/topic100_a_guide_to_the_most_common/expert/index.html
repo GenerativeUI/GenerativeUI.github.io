@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Herb Guide: Common Herbs & Their Uses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #4CAF50;
+            --accent: #8BC34A;
+            --light: #F1F8E9;
+            --dark: #1B5E20;
+            --text: #333333;
+            --culinary: #FF9800;
+            --medicinal: #2196F3;
+            --aromatic: #9C27B0;
+            --tea: #009688;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f7f0 100%);
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 700;
+            color: #0fa61a;
+            font-size: 26px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(rgba(27, 94, 32, 0.95), rgba(46, 125, 50, 0.95)), url('https://images.unsplash.com/photo-1600623277864-6eb39aafa0bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+            animation: leafFloat 3s infinite ease-in-out;
+        }
+        
+        @keyframes leafFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            min-width: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            padding: 1.2rem 0;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .main-nav a{
+            font-size: 18px;
+        }
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background: linear-gradient(135deg, var(--light), #e8f5e9);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+        }
+        
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+            font-size: 36px;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        .section p{
+            font-size: 18px;
+        }
+        /* Herb Cards */
+        .herb-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        
+        .herb-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .herb-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .herb-header {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .herb-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .herb-card:hover .herb-image {
+            transform: scale(1.1);
+        }
+        
+        .herb-categories {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .category-tag {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .culinary-tag { background: rgba(255, 152, 0, 0.85); }
+        .medicinal-tag { background: rgba(33, 150, 243, 0.85); }
+        .aromatic-tag { background: rgba(156, 39, 176, 0.85); }
+        .tea-tag { background: rgba(0, 150, 136, 0.85); }
+        
+        .herb-content {
+            padding: 2rem;
+        }
+        
+        .herb-name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .herb-scientific {
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .herb-description {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .herb-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .detail-label {
+            font-size: 16px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* Uses Grid */
+        .uses-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .use-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .use-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .culinary-card:before { background: var(--culinary); }
+        .medicinal-card:before { background: var(--medicinal); }
+        .aromatic-card:before { background: var(--aromatic); }
+        .tea-card:before { background: var(--tea); }
+        
+        .use-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .use-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            height: 80px;
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .culinary-icon { background: rgba(255, 152, 0, 0.1); color: var(--culinary); }
+        .medicinal-icon { background: rgba(33, 150, 243, 0.1); color: var(--medicinal); }
+        .aromatic-icon { background: rgba(156, 39, 176, 0.1); color: var(--aromatic); }
+        .tea-icon { background: rgba(0, 150, 136, 0.1); color: var(--tea); }
+        
+        /* Growing Guide */
+        .growing-guide {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .guide-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        /* Herb Finder */
+        .herb-finder {
+            background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.8rem 1.8rem;
+            border: 2px solid var(--secondary);
+            background: white;
+            color: var(--dark);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+        }
+        
+        /* Recipes */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recipe-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .recipe-content {
+            padding: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark), #144018);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .header-stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-box {
+                min-width: 120px;
+                padding: 1rem;
+            }
+            
+            .main-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .herb-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .growing-guide {
+                padding: 2rem;
+            }
+        }
+        
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>Complete Herb Guide</h1>
+            </div>
+            <p class="tagline">Discover the most common herbs, their medicinal benefits, culinary uses, and practical growing tips for your garden.</p>
+            
+            <div class="header-stats">
+                <div class="stat-box">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Herbs Covered</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Usage Categories</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Natural</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav class="container main-nav">
+            <a href="#herbs" class="nav-link active"><i class="fas fa-seedling"></i> Herb Directory</a>
+            <a href="#uses" class="nav-link"><i class="fas fa-mortar-pestle"></i> Common Uses</a>
+            <a href="#growing" class="nav-link"><i class="fas fa-spa"></i> Growing Guide</a>
+            <a href="#recipes" class="nav-link"><i class="fas fa-utensils"></i> Herb Recipes</a>
+            <a href="#finder" class="nav-link"><i class="fas fa-search"></i> Find by Use</a>
+        </nav>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Herb Directory -->
+        <section id="herbs" class="section">
+            <h2 class="section-title">Common Herbs Directory</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #666;">Click on any herb to learn more about its uses, benefits, and growing requirements. Hover over cards for detailed information.</p>
+            
+            <div class="herb-cards" id="herbCards">
+                <!-- Herb cards will be generated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Common Uses -->
+        <section id="uses" class="section">
+            <h2 class="section-title">Common Herb Uses</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #666;">Herbs serve multiple purposes from culinary to medicinal applications. Here are the most common categories:</p>
+            
+            <div class="uses-grid">
+                <div class="use-card culinary-card">
+                    <div class="use-icon culinary-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Culinary Uses</h3>
+                    <p>Enhance flavor in cooking, baking, and beverages. Common in international cuisines like Italian, Mediterranean, and Asian dishes.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem; color: #666;"><strong>Common herbs:</strong> Basil, Rosemary, Thyme, Oregano</p>
+                    </div>
+                </div>
+                
+                <div class="use-card medicinal-card">
+                    <div class="use-icon medicinal-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Medicinal Benefits</h3>
+                    <p>Traditional remedies for digestion, inflammation, sleep, and respiratory issues. Used in teas, tinctures, and supplements.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem; color: #666;"><strong>Common herbs:</strong> Chamomile, Peppermint, Echinacea, Ginger</p>
+                    </div>
+                </div>
+                
+                <div class="use-card aromatic-card">
+                    <div class="use-icon aromatic-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Aromatic Uses</h3>
+                    <p>Essential oils, potpourri, natural air fresheners, and aromatherapy. Many herbs release pleasant scents when crushed or heated.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem; color: #666;"><strong>Common herbs:</strong> Lavender, Sage, Rosemary, Mint</p>
+                    </div>
+                </div>
+                
+                <div class="use-card tea-card">
+                    <div class="use-icon tea-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <h3>Herbal Teas</h3>
+                    <p>Infusions made from leaves, flowers, or roots. Popular for relaxation, digestion, and as caffeine-free alternatives to traditional tea.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem; color: #666;"><strong>Common herbs:</strong> Chamomile, Peppermint, Lemon Balm, Hibiscus</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Growing Guide -->
+        <section id="growing" class="section">
+            <h2 class="section-title">Herb Growing Guide</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #666;">Essential tips for growing healthy herbs at home, whether in your garden or in containers.</p>
+            
+            <div class="growing-guide">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--dark);">Getting Started with Herb Gardening</h3>
+                
+                <div class="guide-steps">
+                    <div class="guide-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Choose Location</h4>
+                            <p>Most herbs need 6+ hours of sunlight. Mediterranean herbs prefer full sun, while some tolerate partial shade.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Soil Preparation</h4>
+                            <p>Use well-draining soil mixed with compost. Herbs generally prefer slightly alkaline to neutral pH.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Watering</h4>
+                            <p>Water when soil feels dry 1-2 inches deep. Overwatering causes root rot. Water at base, not leaves.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4>Harvesting</h4>
+                            <p>Harvest in morning after dew dries. Cut no more than 1/3 of plant. Regular pruning encourages growth.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: #f9f9f9; border-radius: 12px;">
+                    <h4 style="color: var(--dark); margin-bottom: 1rem;">Quick Reference: Herb Types</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Annual Herbs</p>
+                            <p style="font-size: 16px;">Complete life cycle in one season: Basil, Cilantro, Dill</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Perennial Herbs</p>
+                            <p style="font-size: 16px;">Return yearly: Rosemary, Thyme, Sage, Mint</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">Biennial Herbs</p>
+                            <p style="font-size: 16px;">Two-year cycle: Parsley, Caraway</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Herb Recipes -->
+        <section id="recipes" class="section">
+            <h2 class="section-title">Simple Herb Recipes</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #666;">Easy recipes to make the most of your fresh herbs. Perfect for beginners and experienced cooks alike.</p>
+            
+            <div class="recipes-grid">
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="recipe-content">
+                        <h3>Classic Basil Pesto</h3>
+                        <p><strong>Ingredients:</strong> 2 cups fresh basil, 1/2 cup olive oil, 1/3 cup pine nuts, 2 garlic cloves, 1/2 cup Parmesan</p>
+                        <p><strong>Instructions:</strong> Blend all ingredients until smooth. Store in refrigerator for up to 1 week.</p>
+                        <p style="margin-top: 1rem; font-size: 16px; color: #666;"><strong>Uses:</strong> Pasta sauce, sandwich spread, marinade</p>
+                    </div>
+                </div>
+                
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="recipe-content">
+                        <h3>Fresh Mint Lemonade</h3>
+                        <p><strong>Ingredients:</strong> 1 cup fresh mint, 1 cup lemon juice, 1/2 cup honey, 6 cups water, ice</p>
+                        <p><strong>Instructions:</strong> Muddle mint with honey. Add lemon juice and water. Strain and serve over ice.</p>
+                        <p style="margin-top: 1rem; font-size: 16px; color: #666;"><strong>Benefits:</strong> Refreshing, digestive aid, cooling</p>
+                    </div>
+                </div>
+                
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background-image: url('https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="recipe-content">
+                        <h3>Calming Herbal Tea</h3>
+                        <p><strong>Ingredients:</strong> 1 tbsp chamomile, 1 tbsp lavender, 1 tsp lemon balm, honey to taste</p>
+                        <p><strong>Instructions:</strong> Steep herbs in hot water for 5-7 minutes. Strain and add honey if desired.</p>
+                        <p style="margin-top: 1rem; font-size: 16px; color: #666;"><strong>Benefits:</strong> Promotes relaxation and better sleep</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Herb Finder -->
+        <section id="finder" class="section">
+            <h2 class="section-title">Find Herbs by Use</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #666;">Looking for herbs for a specific purpose? Use the filters below to find the perfect herbs for your needs.</p>
+            
+            <div class="herb-finder">
+                <div class="filter-container">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-leaf"></i> All Herbs
+                    </button>
+                    <button class="filter-btn" data-filter="culinary">
+                        <i class="fas fa-utensils"></i> Culinary
+                    </button>
+                    <button class="filter-btn" data-filter="medicinal">
+                        <i class="fas fa-heartbeat"></i> Medicinal
+                    </button>
+                    <button class="filter-btn" data-filter="tea">
+                        <i class="fas fa-mug-hot"></i> Tea Herbs
+                    </button>
+                    <button class="filter-btn" data-filter="easy">
+                        <i class="fas fa-seedling"></i> Easy to Grow
+                    </button>
+                    <button class="filter-btn" data-filter="indoor">
+                        <i class="fas fa-home"></i> Indoor Herbs
+                    </button>
+                </div>
+                
+                <div id="filterResults" class="herb-cards">
+                    <!-- Filtered results will appear here -->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-leaf"></i> Herb Guide</h3>
+                    <p>Your comprehensive guide to common herbs, their uses, benefits, and cultivation. Perfect for gardeners, cooks, and natural remedy enthusiasts.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3><i class="fas fa-link"></i> Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#herbs"><i class="fas fa-chevron-right"></i> Herb Directory</a></li>
+                        <li><a href="#uses"><i class="fas fa-chevron-right"></i> Common Uses</a></li>
+                        <li><a href="#growing"><i class="fas fa-chevron-right"></i> Growing Guide</a></li>
+                        <li><a href="#recipes"><i class="fas fa-chevron-right"></i> Herb Recipes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3><i class="fas fa-info-circle"></i> Important Notes</h3>
+                    <p style="font-size: 16px; line-height: 1.6; color: #bdc3c7;">While herbs have traditional uses, always consult with a healthcare professional before using herbs medicinally, especially if pregnant, nursing, or taking medications.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Complete Herb Guide</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Herb Data
+        const herbsData = [
+            {
+                id: 1,
+                name: "Basil",
+                scientific: "Ocimum basilicum",
+                categories: ["culinary", "medicinal", "easy", "annual"],
+                image: "./images/lavi-perchik-KSJm1IOKLBU-unsplash.jpg",
+                description: "Aromatic herb essential in Mediterranean cuisine, particularly Italian dishes like pesto, pasta, and Caprese salad.",
+                uses: {
+                    culinary: ["Pesto", "Italian dishes", "Tomato sauces", "Salads", "Thai cuisine"],
+                    medicinal: ["Anti-inflammatory", "Antioxidant", "Digestive aid", "Stress relief"],
+                    other: ["Aromatherapy", "Natural insect repellent"]
+                },
+                growing: {
+                    sunlight: "Full sun (6+ hours daily)",
+                    water: "Regular watering, keep soil moist",
+                    difficulty: "Easy",
+                    season: "Annual, warm weather",
+                    indoor: "Yes, with sufficient light"
+                },
+                keyBenefits: ["Rich in antioxidants", "Anti-inflammatory properties", "Supports digestion"]
+            },
+            {
+                id: 2,
+                name: "Mint",
+                scientific: "Mentha spp.",
+                categories: ["culinary", "medicinal", "tea", "easy", "perennial"],
+                image: "./images/eleanor-chen-IytUViSv3GQ-unsplash.jpg",
+                description: "Refreshing herb known for its cooling properties and digestive benefits. Many varieties including peppermint and spearmint.",
+                uses: {
+                    culinary: ["Teas", "Mojitos", "Desserts", "Middle Eastern dishes", "Sauces"],
+                    medicinal: ["Digestive aid", "Headache relief", "Respiratory issues", "Nausea relief"],
+                    other: ["Aromatherapy", "Natural breath freshener", "Insect repellent"]
+                },
+                growing: {
+                    sunlight: "Partial to full sun",
+                    water: "Keep soil consistently moist",
+                    difficulty: "Very easy (invasive)",
+                    season: "Perennial",
+                    indoor: "Yes, but needs space"
+                },
+                keyBenefits: ["Aids digestion", "Relieves headaches", "Clears sinuses", "Cooling effect"]
+            },
+            {
+                id: 3,
+                name: "Rosemary",
+                scientific: "Salvia rosmarinus",
+                categories: ["culinary", "medicinal", "aromatic", "perennial"],
+                image: "./images/photo-1623249635395-0e03e7449ac8.avif",
+                description: "Woody herb with pine-like aroma, excellent for meats and memory support. Symbol of remembrance.",
+                uses: {
+                    culinary: ["Roasts", "Bread", "Marinades", "Potatoes", "Soups"],
+                    medicinal: ["Memory enhancement", "Anti-inflammatory", "Circulation", "Hair growth"],
+                    other: ["Aromatherapy", "Hair rinse", "Natural cleaner", "Insect repellent"]
+                },
+                growing: {
+                    sunlight: "Full sun",
+                    water: "Drought tolerant, let soil dry between watering",
+                    difficulty: "Easy",
+                    season: "Perennial in warm climates",
+                    indoor: "Yes, with bright light"
+                },
+                keyBenefits: ["Improves memory", "Anti-inflammatory", "Stimulates circulation", "Antioxidant"]
+            },
+            {
+                id: 4,
+                name: "Thyme",
+                scientific: "Thymus vulgaris",
+                categories: ["culinary", "medicinal", "easy", "perennial"],
+                image: "./images/anja-junghans-qjuJBB5BsAY-unsplash.jpg",
+                description: "Small-leafed herb with antimicrobial properties, essential in French cuisine and traditional medicine.",
+                uses: {
+                    culinary: ["Soups", "Stews", "Roasts", "Vegetables", "Stuffing"],
+                    medicinal: ["Respiratory health", "Antiseptic", "Antioxidant", "Cough relief"],
+                    other: ["Natural preservative", "Cough syrup", "Mouthwash"]
+                },
+                growing: {
+                    sunlight: "Full sun",
+                    water: "Drought tolerant, well-drained soil",
+                    difficulty: "Easy",
+                    season: "Perennial",
+                    indoor: "Yes, with bright light"
+                },
+                keyBenefits: ["Antimicrobial", "Respiratory support", "Rich in antioxidants", "Digestive aid"]
+            },
+            {
+                id: 5,
+                name: "Parsley",
+                scientific: "Petroselinum crispum",
+                categories: ["culinary", "medicinal", "easy", "biennial"],
+                image: "./images/magdalena-olszewska-9rt6gV_IjhA-unsplash.jpg",
+                description: "Versatile herb rich in vitamins A, C, and K, often used as garnish but packed with nutritional benefits.",
+                uses: {
+                    culinary: ["Garnish", "Salads", "Sauces", "Middle Eastern dishes", "Soup"],
+                    medicinal: ["Diuretic", "Rich in vitamins", "Breath freshener", "Anti-inflammatory"],
+                    other: ["Detoxification", "Skin health", "Bone health"]
+                },
+                growing: {
+                    sunlight: "Partial to full sun",
+                    water: "Keep soil consistently moist",
+                    difficulty: "Easy",
+                    season: "Biennial, grown as annual",
+                    indoor: "Yes"
+                },
+                keyBenefits: ["Rich in vitamins", "Diuretic properties", "Antioxidant", "Supports bone health"]
+            },
+            {
+                id: 6,
+                name: "Lavender",
+                scientific: "Lavandula angustifolia",
+                categories: ["medicinal", "aromatic", "tea", "perennial"],
+                image: "./images/photo-1611625105602-42ee06be977e.avif",
+                description: "Fragrant herb known for its calming properties and beautiful purple flowers. Used in aromatherapy and skincare.",
+                uses: {
+                    culinary: ["Baking", "Teas", "Honey infusions", "Cocktails"],
+                    medicinal: ["Calming", "Sleep aid", "Headache relief", "Antiseptic", "Anti-anxiety"],
+                    other: ["Aromatherapy", "Sachets", "Skincare", "Sleep pillows"]
+                },
+                growing: {
+                    sunlight: "Full sun",
+                    water: "Drought tolerant, well-drained soil",
+                    difficulty: "Medium",
+                    season: "Perennial",
+                    indoor: "Possible with very bright light"
+                },
+                keyBenefits: ["Promotes relaxation", "Improves sleep", "Reduces anxiety", "Antiseptic properties"]
+            },
+            {
+                id: 7,
+                name: "Chamomile",
+                scientific: "Matricaria chamomilla",
+                categories: ["medicinal", "tea", "easy", "annual"],
+                image: "./images/photo-1654450288144-ff490e975f40.avif",
+                description: "Daisy-like herb famous for its calming tea that promotes sleep and relaxation. Gentle enough for children.",
+                uses: {
+                    culinary: ["Teas", "Desserts", "Cocktails", "Baking"],
+                    medicinal: ["Sleep aid", "Calming", "Digestive aid", "Anti-inflammatory", "Skin soothing"],
+                    other: ["Skincare", "Hair rinse", "Bath soaks", "Compresses"]
+                },
+                growing: {
+                    sunlight: "Full sun to partial shade",
+                    water: "Moderate, well-drained soil",
+                    difficulty: "Easy",
+                    season: "Annual",
+                    indoor: "Yes"
+                },
+                keyBenefits: ["Promotes sleep", "Reduces anxiety", "Aids digestion", "Anti-inflammatory", "Skin soothing"]
+            },
+            {
+                id: 8,
+                name: "Cilantro/Coriander",
+                scientific: "Coriandrum sativum",
+                categories: ["culinary", "medicinal", "easy", "annual"],
+                image: "./images/photo-1608797178894-bf7c596932da.avif",
+                description: "Leaves (cilantro) and seeds (coriander) used in global cuisines with detoxifying properties. Polarizing flavor.",
+                uses: {
+                    culinary: ["Salsas", "Curries", "Asian dishes", "Middle Eastern cuisine", "Marinades"],
+                    medicinal: ["Detoxification", "Heavy metal chelation", "Digestive aid", "Anti-inflammatory"],
+                    other: ["Natural preservative", "Cholesterol management"]
+                },
+                growing: {
+                    sunlight: "Partial to full sun",
+                    water: "Keep soil moist",
+                    difficulty: "Easy (bolts quickly)",
+                    season: "Cool weather annual",
+                    indoor: "Yes"
+                },
+                keyBenefits: ["Detoxifying", "Aids digestion", "Anti-inflammatory", "Rich in antioxidants"]
+            },
+            {
+                id: 9,
+                name: "Oregano",
+                scientific: "Origanum vulgare",
+                categories: ["culinary", "medicinal", "easy", "perennial"],
+                image: "./images/photo-1688633767797-455f59c98272.avif",
+                description: "Pungent herb essential in Mediterranean cooking with strong antimicrobial properties. Often used dried.",
+                uses: {
+                    culinary: ["Italian dishes", "Pizza", "Tomato sauces", "Greek cuisine", "Marinades"],
+                    medicinal: ["Antimicrobial", "Antioxidant", "Anti-inflammatory", "Respiratory support"],
+                    other: ["Natural preservative", "Essential oil"]
+                },
+                growing: {
+                    sunlight: "Full sun",
+                    water: "Drought tolerant",
+                    difficulty: "Very easy",
+                    season: "Perennial",
+                    indoor: "Yes, with bright light"
+                },
+                keyBenefits: ["Powerful antimicrobial", "Rich in antioxidants", "Anti-inflammatory", "Respiratory support"]
+            },
+            {
+                id: 10,
+                name: "Sage",
+                scientific: "Salvia officinalis",
+                categories: ["culinary", "medicinal", "aromatic", "perennial"],
+                image: "./images/photo-1639412290613-9acae1500e5b.avif",
+                description: "Fuzzy-leaved herb with earthy flavor, traditionally used for wisdom and cleansing. Native to Mediterranean.",
+                uses: {
+                    culinary: ["Stuffing", "Poultry", "Butters", "Sausages", "Tea"],
+                    medicinal: ["Memory enhancement", "Sore throat", "Anti-inflammatory", "Menopausal symptoms"],
+                    other: ["Smudging", "Natural deodorant", "Hair darkening"]
+                },
+                growing: {
+                    sunlight: "Full sun",
+                    water: "Drought tolerant",
+                    difficulty: "Easy",
+                    season: "Perennial",
+                    indoor: "Yes, with bright light"
+                },
+                keyBenefits: ["Memory support", "Sore throat relief", "Anti-inflammatory", "Antioxidant"]
+            }
+        ];
+
+        // Initialize Herb Cards
+        function initializeHerbCards() {
+            const herbCards = document.getElementById('herbCards');
+            const filterResults = document.getElementById('filterResults');
+            
+            herbsData.forEach(herb => {
+                const herbCard = createHerbCard(herb);
+                herbCards.appendChild(herbCard.cloneNode(true));
+                filterResults.appendChild(herbCard);
+            });
+        }
+
+        // Create Herb Card Element
+        function createHerbCard(herb) {
+            const card = document.createElement('div');
+            card.className = 'herb-card fade-in';
+            card.setAttribute('data-categories', herb.categories.join(' '));
+            
+            // Determine primary category for color coding
+            const primaryCategory = herb.categories[0];
+            
+            card.innerHTML = `
+                <div class="herb-header">
+                    <img src="${herb.image}" alt="${herb.name}" class="herb-image" onerror="this.src='https://images.unsplash.com/photo-1566380625366-10e2ee8e6c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    <div class="herb-categories">
+                        ${herb.categories.map(cat => `
+                            <span class="category-tag ${cat}-tag">
+                                ${cat.charAt(0).toUpperCase() + cat.slice(1)}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="herb-content">
+                    <div class="herb-name">
+                        <h3>${herb.name}</h3>
+                        <i class="fas fa-leaf" style="color: var(--accent);"></i>
+                    </div>
+                    <p class="herb-scientific">${herb.scientific}</p>
+                    <p class="herb-description">${herb.description}</p>
+                    
+                    <div class="herb-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Growing</span>
+                            <span class="detail-value">${herb.growing.difficulty}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Light</span>
+                            <span class="detail-value">${herb.growing.sunlight.split('(')[0].trim()}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Water</span>
+                            <span class="detail-value">${herb.growing.water.split(',')[0]}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Season</span>
+                            <span class="detail-value">${herb.growing.season.split(',')[0]}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <h4 style="font-size: 19px; margin-bottom: 0.5rem; color: var(--dark);">Key Uses:</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            ${herb.uses.culinary.slice(0, 3).map(use => `
+                                <span style="background: #e8f5e9; color: var(--dark); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 14px;">
+                                    ${use}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Initialize Herb Finder
+        function initializeHerbFinder() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    const filterResults = document.getElementById('filterResults');
+                    
+                    // Clear filter results
+                    filterResults.innerHTML = '';
+                    
+                    // Filter and display results
+                    if (filter === 'all') {
+                        herbsData.forEach(herb => {
+                            const herbCard = createHerbCard(herb);
+                            filterResults.appendChild(herbCard);
+                        });
+                    } else {
+                        const filteredHerbs = herbsData.filter(herb => 
+                            herb.categories.includes(filter) || 
+                            (filter === 'indoor' && herb.growing.indoor === 'Yes') ||
+                            (filter === 'easy' && herb.growing.difficulty === 'Easy')
+                        );
+                        
+                        if (filteredHerbs.length > 0) {
+                            filteredHerbs.forEach(herb => {
+                                const herbCard = createHerbCard(herb);
+                                filterResults.appendChild(herbCard);
+                            });
+                        } else {
+                            filterResults.innerHTML = `
+                                <div style="text-align: center; padding: 3rem; grid-column: 1/-1;">
+                                    <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                                    <h3>No herbs found for this filter</h3>
+                                    <p>Try selecting a different category or browse all herbs.</p>
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    // Trigger animations for new cards
+                    setTimeout(() => {
+                        document.querySelectorAll('.fade-in').forEach(el => {
+                            el.classList.add('visible');
+                        });
+                    }, 100);
+                });
+            });
+        }
+
+        // Add smooth scrolling for navigation
+        function initializeSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    // Update active navigation link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Add scroll animations
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Also observe other elements
+            document.querySelectorAll('.use-card, .guide-step, .recipe-card').forEach(el => {
+                el.classList.add('fade-in');
+                observer.observe(el);
+            });
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHerbCards();
+            initializeHerbFinder();
+            initializeSmoothScrolling();
+            initializeScrollAnimations();
+            
+            // Make initial cards visible
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 300);
+            
+            // Update active nav link based on scroll position
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPosition = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

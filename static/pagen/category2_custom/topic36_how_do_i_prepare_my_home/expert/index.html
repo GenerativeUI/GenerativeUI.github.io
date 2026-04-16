@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earthquake Preparedness Guide</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "quake-blue": "#0F227B",
+              "quake-dark": "#0A1931",
+              "quake-yellow": "#FFC947",
+              "text-grey": "#6F6F6F",
+            },
+            fontFamily: {
+              oswald: ["Oswald", "sans-serif"],
+              poppins: ["Poppins", "sans-serif"],
+            },
+            backgroundImage: {
+              "hero-pattern": "url('./assets/hero-bg.png')",
+            },
+            boxShadow: {
+              card: "0px 0px 20px rgba(255, 255, 255, 0.25)",
+              item: "0px 0px 5px rgba(0, 0, 0, 0.25)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .font-oswald {
+        line-height: 1.2 !important;
+      }
+      .font-poppins {
+        line-height: 1.3 !important;
+      }
+
+      /* --- ANIMATION CLASSES --- */
+      /* Initial State: Hidden and slightly down */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      /* Active State: Visible and in place */
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased bg-white font-poppins text-quake-dark selection:bg-quake-yellow selection:text-quake-dark"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex items-center px-4 md:px-12 lg:px-24"
+      >
+        <!-- Background -->
+        <div class="absolute inset-0 z-0">
+          <img src="./assets/hero-bg.png" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-20 max-w-4xl mt-12 lg:mt-0 lg:ml-20">
+          <h1
+            class="reveal font-oswald font-bold text-4xl md:text-6xl xl:text-[80px] lg:leading-[119px] text-white mb-6 uppercase"
+          >
+            how do I prepare my home for
+            <span class="text-quake-yellow">earthquakes</span>
+          </h1>
+
+          <!-- <h1
+            class="reveal font-oswald font-bold text-4xl md:text-6xl xl:text-[80px] lg:leading-[119px] text-white mb-6 uppercase"
+          >
+            how do I prepare my
+            <span class="text-quake-yellow">home for earthquakes</span>
+          </h1> -->
+          <p
+            class="reveal delay-100 font-poppins font-medium text-lg xl:text-[30px] !leading-[1.3] text-white mb-10 max-w-3xl"
+          >
+            Learn the essential steps to protect your family, secure your home,
+            and build confidence before an earthquake strikes.
+          </p>
+
+          <!-- Button -->
+          <a href="#origins">
+            <button
+              class="reveal delay-200 bg-quake-blue text-white font-oswald font-medium text-xl xl:text-[30px] px-10 py-4 lg:px-20 lg:py-8 flex items-center gap-2 hover:bg-blue-900 transition-all duration-300 uppercase tracking-wide hover:translate-x-2"
+            >
+              Explore More
+            </button>
+          </a>
+        </div>
+      </header>
+
+       <!-- SECTION 6: DROP, COVER, HOLD ON -->
+      <section
+        style="
+          background-image: url('./assets/two-dot-bg.png');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%;
+        "
+        class="relative bg-white w-full py-24 px-4 md:px-12 lg:px-24"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-20">
+          <h2
+            class="font-oswald font-bold text-4xl xl:text-[60px] text-quake-dark mb-4 uppercase"
+          >
+            Stay Safe When an
+            <span class="text-quake-blue">Earthquake</span> Strikes
+          </h2>
+          <!-- Yellow Line -->
+          <div
+            class="w-[150px] lg:w-[554px] h-[10px] bg-quake-yellow mx-auto my-6"
+          ></div>
+
+          <p
+            class="font-poppins !leading-normal font-medium text-lg xl:text-[24px] text-text-grey max-w-5xl mx-auto"
+          >
+            When shaking begins, act fast. The “Drop, Cover, Hold On” technique
+            protects you from falling objects—your biggest risk during a quake.
+          </p>
+        </div>
+
+        <!-- Steps -->
+        <div
+          class="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 relative"
+        >
+          <!-- Dashed Line (Desktop Only) -->
+          <div
+            class="hidden md:block absolute top-[50px] left-[16%] w-[68%] h-0 border-t-[5px] border-dashed border-quake-blue z-0 opacity-50"
+          ></div>
+
+          <!-- Step 1 -->
+          <div
+            class="reveal delay-100 relative z-10 flex flex-col items-center text-center"
+          >
+            <div
+              class="w-[100px] h-[100px] bg-quake-blue rounded-full flex items-center justify-center shadow-lg mb-8 hover:scale-110 transition-transform duration-300"
+            >
+              <span class="font-poppins font-black text-[35px] text-white"
+                >1</span
+              >
+            </div>
+            <h3
+              class="font-oswald font-bold text-3xl xl:text-[33px] text-quake-dark mb-4 uppercase"
+            >
+              Drop
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey !leading-normal"
+            >
+              Drop onto hands and knees so you’re stable.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div
+            class="reveal delay-200 relative z-10 flex flex-col items-center text-center"
+          >
+            <div
+              class="w-[100px] h-[100px] bg-quake-blue rounded-full flex items-center justify-center shadow-lg mb-8 hover:scale-110 transition-transform duration-300"
+            >
+              <span class="font-poppins font-black text-[35px] text-white"
+                >2</span
+              >
+            </div>
+            <h3
+              class="font-oswald font-bold text-3xl xl:text-[33px] text-quake-dark mb-4 uppercase"
+            >
+              Cover
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey !leading-normal"
+            >
+              Protect your head and take cover under sturdy furniture.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div
+            class="reveal delay-300 relative z-10 flex flex-col items-center text-center"
+          >
+            <div
+              class="w-[100px] h-[100px] bg-quake-blue rounded-full flex items-center justify-center shadow-lg mb-8 hover:scale-110 transition-transform duration-300"
+            >
+              <span class="font-poppins font-black text-[35px] text-white"
+                >3</span
+              >
+            </div>
+            <h3
+              class="font-oswald font-bold text-3xl xl:text-[33px] text-quake-dark mb-4 uppercase"
+            >
+              Hold On
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey !leading-normal"
+            >
+              Hold on until the shaking fully stops.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: CHECKLIST (Blue Background) -->
+      <section
+        class="relative bg-quake-blue w-full py-24 px-4 md:px-12 lg:px-24"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-20">
+          <h2
+            class="font-oswald font-bold text-4xl xl:text-[60px] text-white mb-4 uppercase"
+          >
+            Earthquake Safety <span class="text-quake-yellow"> Checklist </span>
+          </h2>
+          <!-- Yellow Line -->
+          <div
+            class="w-[150px] lg:w-[363px] h-[10px] bg-quake-yellow mx-auto my-6"
+          ></div>
+
+          <p
+            class="font-poppins !leading-normal font-medium text-lg xl:text-[24px] text-white max-w-5xl mx-auto"
+          >
+            Make your home safer in minutes. Go through this checklist to reduce
+            hazards before an earthquake occurs.
+          </p>
+        </div>
+
+        <!-- Grid -->
+        <div
+          class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12"
+        >
+          <!-- Item 1: Furniture -->
+          <div
+            class="reveal delay-100 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/shield-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Secure Heavy Furniture
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Anchor bookshelves, cabinets & TVs
+            </p>
+          </div>
+
+          <!-- Item 2: Exits -->
+          <div
+            class="reveal delay-200 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/exit-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Emergency Exits
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Keep pathways clear at all times
+            </p>
+          </div>
+
+          <!-- Item 3: Child Safety -->
+          <div
+            class="reveal delay-300 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/safety-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Child Safety
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Remove falling hazards from kids’ rooms
+            </p>
+          </div>
+
+          <!-- Item 4: Electrical -->
+          <div
+            class="reveal delay-100 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/labor-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Electrical Safety
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Keep cords organized & out of the way
+            </p>
+          </div>
+
+          <!-- Item 5: Lights -->
+          <div
+            class="reveal delay-200 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/bulb-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Emergency Lights
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Place flashlights in easy-to-reach spots
+            </p>
+          </div>
+
+          <!-- Item 6: Wall Hangings -->
+          <div
+            class="reveal delay-300 bg-white rounded-[10px] shadow-card p-10 flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src="./assets/frame-icon.png"
+              alt="Icon"
+              class="w-full h-full max-w-[87px] max-h-[87px] mb-6"
+            />
+            <h3
+              class="font-oswald font-bold text-2xl xl:text-[30px] text-quake-dark mb-4 uppercase"
+            >
+              Fasten Wall Hangings
+            </h3>
+            <p
+              class="font-poppins font-medium text-lg xl:text-[22px] text-text-grey"
+            >
+              Use proper hooks for mirrors & frames
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: GO-BAG -->
+      <section
+        style="
+          background-image: url('./assets/dot-full-bg.png');
+          background-repeat: no-repeat;
+          background-position: right top;
+          background-size: 10%;
+        "
+        class="relative bg-white w-full py-24 px-4 md:px-12 lg:px-24"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-20">
+          <h2
+            class="font-oswald font-bold text-4xl xl:text-[60px] text-quake-dark mb-4 uppercase"
+          >
+            Prepare Your Emergency <span class="text-quake-blue">Go-Bag</span>
+          </h2>
+          <!-- Yellow Line -->
+          <div
+            class="w-[150px] lg:w-[679px] h-[10px] bg-quake-yellow mx-auto my-6"
+          ></div>
+
+          <p
+            class="font-poppins !leading-normal font-medium text-lg xl:text-[24px] text-text-grey max-w-6xl mx-auto leading-relaxed"
+          >
+            A well-packed emergency kit helps you stay safe if you must leave
+            your home quickly after an earthquake. Keep it in an easy-to-reach
+            place and make sure all family members know where it is.
+          </p>
+        </div>
+
+        <!-- Grid Items -->
+        <div
+          class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16"
+        >
+          <!-- Item: Water -->
+          <div class="reveal delay-100 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/water-bottles.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Water Bottles
+            </h3>
+          </div>
+
+          <!-- Item: Food -->
+          <div class="reveal delay-200 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img src="./assets/food.png" class="w-full h-full object-cover" />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Non-Perishable Food
+            </h3>
+          </div>
+
+          <!-- Item: First Aid -->
+          <div class="reveal delay-300 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/toolkit.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              First-Aid Kit
+            </h3>
+          </div>
+
+          <!-- Item: Flashlight -->
+          <div class="reveal delay-400 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/batteries.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Flashlight & Batteries
+            </h3>
+          </div>
+
+          <!-- Item: Clothing -->
+          <div class="reveal delay-100 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/warm-clothing.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Warm Clothing
+            </h3>
+          </div>
+
+          <!-- Item: Whistle -->
+          <div class="reveal delay-200 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/whistle.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Whistle
+            </h3>
+          </div>
+
+          <!-- Item: Meds -->
+          <div class="reveal delay-300 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/medication.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Medication
+            </h3>
+          </div>
+
+          <!-- Item: Power Bank -->
+          <div class="reveal delay-400 flex flex-col items-center group">
+            <div
+              class="w-full bg-white shadow-item rounded-[20px] p-4 mb-4 group-hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/power-bank.png"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3
+              class="font-oswald font-semibold text-2xl xl:text-[30px] text-quake-dark"
+            >
+              Power Bank
+            </h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: EMERGENCY PLAN (Image BG) -->
+      <section
+        class="relative bg-[url('./assets/hero-bg.png')] bg-cover bg-center bg-no-repeat w-full py-24 px-4 md:px-12 lg:px-24"
+      >
+        <div class="relative z-20 max-w-[1600px] mx-auto text-white">
+          <!-- Header -->
+          <div class="reveal text-center mb-20">
+            <h2
+              class="font-oswald font-bold text-4xl xl:text-[60px] mb-4 uppercase"
+            >
+              Create a Family <span class="text-quake-yellow"> Emergency </span>
+              Plan
+            </h2>
+            <!-- Yellow Line -->
+            <div
+              class="w-[150px] lg:w-[363px] h-[10px] bg-quake-yellow mx-auto my-8"
+            ></div>
+
+            <p
+              class="font-poppins !leading-normal font-medium text-lg xl:text-[30px] max-w-5xl mx-auto"
+            >
+              Earthquakes can disrupt communication, so planning ahead is
+              essential. Make sure everyone in your home knows what to do, where
+              to go, and how to stay connected.
+            </p>
+          </div>
+
+          <!-- 4 Column Plan -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center"
+          >
+            <!-- Contact List -->
+            <div class="reveal delay-100 flex flex-col items-center">
+              <img
+                src="./assets/call-icon.png"
+                class="w-14 h-14 mb-6 object-contain hover:scale-110 transition-transform"
+              />
+              <h3 class="font-oswald font-bold text-2xl xl:text-[33px] mb-4">
+                Contact List
+              </h3>
+              <p
+                class="font-poppins font-medium text-lg xl:text-[22px] !leading-normal"
+              >
+                Save important numbers and keep copies accessible.
+              </p>
+            </div>
+
+            <!-- Meeting Spot -->
+            <div class="reveal delay-200 flex flex-col items-center">
+              <img
+                src="./assets/location-icon.png"
+                class="w-14 h-14 mb-6 object-contain hover:scale-110 transition-transform"
+              />
+              <h3 class="font-oswald font-bold text-2xl xl:text-[33px] mb-4">
+                Meeting Spot
+              </h3>
+              <p
+                class="font-poppins font-medium text-lg xl:text-[22px] !leading-normal"
+              >
+                Choose a safe outdoor place for everyone to gather.
+              </p>
+            </div>
+
+            <!-- Communication -->
+            <div class="reveal delay-300 flex flex-col items-center">
+              <img
+                src="./assets/chat-icon.png"
+                class="w-14 h-14 mb-6 object-contain hover:scale-110 transition-transform"
+              />
+              <h3 class="font-oswald font-bold text-2xl xl:text-[33px] mb-4">
+                Communication Plan
+              </h3>
+              <p
+                class="font-poppins font-medium text-lg xl:text-[22px] !leading-normal"
+              >
+                Decide how you’ll reach each other if phones fail.
+              </p>
+            </div>
+
+            <!-- Pet Plan -->
+            <div class="reveal delay-400 flex flex-col items-center">
+              <img
+                src="./assets/todo-icon.png"
+                class="w-14 h-14 mb-6 object-contain hover:scale-110 transition-transform"
+              />
+              <h3 class="font-oswald font-bold text-2xl xl:text-[33px] mb-4">
+                Pet Plan
+              </h3>
+              <p
+                class="font-poppins font-medium text-lg xl:text-[22px] !leading-normal"
+              >
+                Include pets in your evacuation and safety strategy.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 8: INTERACTIVE EARTHQUAKE PREP -->
+      <section class="bg-gray-50 py-20 px-4 lg:px-24">
+        <div class="max-w-6xl mx-auto">
+          <!-- Title -->
+          <div class="text-center mb-14">
+            <h2 class="font-oswald text-4xl xl:text-[60px] uppercase mb-4">
+              Interactive
+              <span class="text-quake-blue">Earthquake Trainer</span>
+            </h2>
+            <p class="text-text-grey text-lg xl:text-[24px]">
+              Adjust intensity & test your real‑life earthquake response
+            </p>
+          </div>
+
+          <!-- MAGNITUDE CARD -->
+          <div class="bg-white rounded-xl shadow-lg p-8 mb-16">
+            <h3 class="font-oswald text-2xl mb-4 uppercase">
+              Earthquake Intensity Simulator
+            </h3>
+
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <input
+                type="range"
+                min="1"
+                max="9"
+                value="5"
+                id="magSlider"
+                class="w-full accent-quake-yellow"
+              />
+
+              <div
+                class="bg-quake-blue text-white rounded-xl p-6 min-w-[260px] text-center"
+              >
+                <p class="text-sm uppercase opacity-80">Magnitude</p>
+                <p id="magValue" class="text-5xl font-black">5</p>
+                <p id="magAdvice" class="text-sm mt-2 opacity-90">
+                  Moderate shaking – stay alert
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: FOOTER -->
+      <section
+        class="bg-quake-blue w-full py-16 px-4 md:py-20 text-center text-white"
+      >
+        <div class="reveal">
+          <h2
+            class="font-oswald font-bold text-4xl xl:text-[60px] mb-6 uppercase"
+          >
+            Stay Ready. Stay <span class="text-quake-yellow"> Protected</span>
+          </h2>
+
+          <p
+            class="font-poppins font-medium !leading-normal text-lg xl:text-[24px] max-w-5xl mx-auto"
+          >
+            Small steps today can keep your home and family safe during an
+            earthquake. Preparation saves lives.
+          </p>
+        </div>
+
+        <div class="max-w-[60%] h-0.5 bg-white mt-8 mx-auto"></div>
+      </section>
+    </div>
+
+    <!-- SCRIPT FOR ANIMATIONS -->
+    <script>
+      // Initialize Intersection Observer for Scroll Reveal
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              // Unobserve to animate only once
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1, // Trigger when 10% visible
+          rootMargin: "0px 0px -50px 0px", // Slight offset to trigger before full bottom
+        }
+      );
+
+      // Start observing
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // SLIDER FUNCTIONALITY
+      // -----------------------------
+      /* ---------------------------
+   MAGNITUDE SLIDER
+---------------------------- */
+      // const magSlider = document.getElementById("magSlider");
+      const magValue = document.getElementById("magValue");
+      const magAdvice = document.getElementById("magAdvice");
+
+      const advice = {
+        1: "Minor shaking – usually harmless",
+        3: "Light shaking – stay calm",
+        5: "Moderate shaking – secure objects",
+        7: "Strong shaking – Drop, Cover, Hold On",
+        9: "Violent shaking – immediate danger",
+      };
+
+      magSlider.addEventListener("input", () => {
+        magValue.textContent = magSlider.value;
+        magAdvice.textContent =
+          advice[magSlider.value] || "Be alert & cautious";
+      });
+    </script>
+  </body>
+</html>

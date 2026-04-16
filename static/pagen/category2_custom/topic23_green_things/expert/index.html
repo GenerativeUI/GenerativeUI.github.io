@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Things — Nature, Science & Sustainability</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-50: #f0fdf4;
+            --green-100: #dcfce7;
+            --green-200: #bbf7d0;
+            --green-300: #86efac;
+            --green-400: #4ade80;
+            --green-500: #22c55e;
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --green-800: #166534;
+            --green-900: #14532d;
+            --green-950: #052e16;
+            --forest: #0d2818;
+            --mint: #b8e0d2;
+            --sage: #7eb09b;
+            --cream: #faf8f5;
+            --charcoal: #1a1f1c;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --shadow: 0 4px 24px rgba(22, 163, 74, 0.08);
+            --shadow-hover: 0 12px 40px rgba(22, 163, 74, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background: linear-gradient(165deg, var(--cream) 0%, var(--green-50) 50%, var(--mint) 100%);
+            color: var(--charcoal);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Lightweight background - no SVG pattern to avoid scroll repaints */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse 80% 50% at 20% 90%, rgba(34, 197, 94, 0.05), transparent),
+                        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(126, 176, 155, 0.06), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation - solid bg for scroll performance (no backdrop-filter) */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+            padding: 12px 24px;
+            margin: 0 -24px 32px -24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        nav a {
+            color: var(--green-800);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        nav a:hover {
+            background: var(--green-100);
+        }
+
+        .nav-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            border-radius: 8px;
+        }
+
+        .nav-toggle:hover {
+            background: var(--green-100);
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--green-700);
+            border-radius: 1px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                padding-top: 12px;
+            }
+
+            nav.nav-open ul {
+                display: flex;
+            }
+
+            nav a {
+                display: block;
+                padding: 12px 0;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            nav ul { display: flex !important; }
+        }
+
+        @media (max-width: 640px) {
+            nav a { font-size: 0.9rem; }
+        }
+
+        /* Header */
+        header {
+            padding: 32px 0 48px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--green-700), var(--green-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--green-800);
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Live Clock Widget - solid bg, no backdrop-filter */
+        .clock-widget {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.1);
+            margin-top: 20px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .clock-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--green-500);
+            border-radius: 50%;
+        }
+
+        .clock-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--green-800);
+        }
+
+        .clock-date {
+            font-size: 0.85rem;
+            color: var(--green-600);
+            opacity: 0.8;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 64px;
+            padding: 40px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--forest);
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            color: var(--green-800);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cards - solid bg, lighter shadow for scroll perf */
+        .card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: 0 2px 12px rgba(22, 163, 74, 0.06);
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(22, 163, 74, 0.12);
+        }
+
+        /* Section 1: Photosynthesis Spectrum */
+        .spectrum-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .spectrum-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .spectrum-visual {
+            background: linear-gradient(90deg, 
+                #1a0a2e 0%, 
+                #4a0080 15%, 
+                #0066ff 30%, 
+                #00ff88 50%, 
+                #ffff00 65%, 
+                #ff6600 80%, 
+                #ff0000 100%);
+            height: 80px;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spectrum-absorption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0,0,0,0.6) 15%, 
+                rgba(0,0,0,0.6) 35%, 
+                transparent 45%, 
+                transparent 55%, 
+                rgba(0,0,0,0.3) 65%, 
+                rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+        }
+
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--green-700);
+        }
+
+        .spectrum-info {
+            padding: 20px;
+        }
+
+        .wavelength-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, #6b21a8, #3b82f6, #22c55e, #eab308, #ef4444);
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+
+        .wavelength-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--green-500);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .wavelength-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--green-700);
+            text-align: center;
+        }
+
+        .absorption-status {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .absorption-high {
+            background: var(--green-100);
+            color: var(--green-800);
+        }
+
+        .absorption-low {
+            background: var(--green-200);
+            color: var(--green-800);
+        }
+
+        /* Chloroplast diagram - CSS illustration */
+        .chloroplast-diagram {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, var(--green-100), var(--green-200));
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .chloroplast-outer {
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(180deg, var(--green-300), var(--green-500));
+            border-radius: 40px 40px 40px 40px / 60px 60px 60px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .chloroplast-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .thylakoid {
+            width: 50px;
+            height: 12px;
+            background: var(--green-600);
+            border-radius: 6px;
+            opacity: 0.9;
+        }
+
+        .diagram-label {
+            font-size: 0.8rem;
+            color: var(--green-700);
+            font-weight: 500;
+            margin-top: 12px;
+        }
+
+        /* Section 2: Plant Care Guide */
+        .plant-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .plant-btn {
+            padding: 12px 20px;
+            border: 2px solid var(--green-300);
+            background: white;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--green-800);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plant-btn:hover,
+        .plant-btn.active {
+            background: var(--green-500);
+            color: white;
+            border-color: var(--green-500);
+        }
+
+        .plant-detail {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .plant-detail.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .plant-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .plant-stat {
+            background: var(--green-50);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .plant-stat-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .plant-stat-label {
+            font-size: 0.8rem;
+            color: var(--green-700);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plant-stat-value {
+            font-weight: 600;
+            color: var(--forest);
+            margin-top: 4px;
+        }
+
+        /* Section 4: Green Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .tip-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tip-info-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--green-400);
+            background: var(--green-50);
+            color: var(--green-700);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .tip-info-btn:hover {
+            background: var(--green-200);
+            border-color: var(--green-600);
+        }
+
+        .tip-card .tip-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--green-400), var(--green-600));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .tip-card .tip-title {
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .tip-card .tip-content {
+            font-size: 0.95rem;
+            color: var(--green-800);
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .tip-card .tip-expand {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--green-200);
+        }
+
+        .tip-card.tip-expanded .tip-expand {
+            display: block;
+        }
+
+        .tip-card .tip-more {
+            font-size: 0.9rem;
+            color: var(--green-700);
+            line-height: 1.5;
+        }
+
+        /* Section 5: Environmental Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-grid--3col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid--3col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--green-600);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--green-800);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--green-100);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green-400), var(--green-600));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Image placeholders - styled as visual cards */
+        .img-placeholder {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, var(--green-100), var(--green-200));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green-700);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius);
+        }
+
+        /* Section background images with overlay - full viewport width */
+        .section-bg {
+            position: relative;
+        }
+
+        .section-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .section-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.82);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .section-bg > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-bg-photosynthesis::after { background-image: url(images/photosynthesis.png); }
+        .section-bg-forest::after { background-image: url(images/forest.png); }
+        .section-bg-plants::after { background-image: url(images/indoor-plants.png); }
+        .section-bg-living::after { background-image: url(images/green-living.png); }
+        .section-bg-planet::after { background-image: url(images/planet.png); }
+        .section-bg-tech::after { background-image: url(images/green-tech.png); }
+        .section-bg-foods::after { background-image: url(images/green-foods.png); }
+
+        /* Header hero background - full width */
+        .header-bg {
+            position: relative;
+            padding: 40px 24px 48px;
+            margin: 0 -24px 32px -24px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .header-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background-image: url(images/hero.png);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            pointer-events: none;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.78), rgba(250,248,245,0.95));
+            z-index: -1;
+            pointer-events: none;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .header-bg > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glossary */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .glossary-item {
+            background: var(--green-50);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 2px solid var(--green-200);
+        }
+
+        .glossary-term {
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 6px;
+        }
+
+        .glossary-def {
+            font-size: 0.9rem;
+            color: var(--green-800);
+        }
+
+        /* Recycling Guide */
+        .recycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .recycle-btn {
+            padding: 16px;
+            border: 2px solid var(--green-200);
+            background: white;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .recycle-btn:hover {
+            border-color: var(--green-500);
+            background: var(--green-50);
+        }
+
+        .recycle-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: var(--radius);
+            display: none;
+        }
+
+        .recycle-result.show {
+            display: block;
+        }
+
+        .recycle-yes { background: var(--green-100); border-left: 4px solid var(--green-600); }
+        .recycle-no { background: #fef2f2; border-left: 4px solid #dc2626; }
+        .recycle-maybe { background: #fefce8; border-left: 4px solid #ca8a04; }
+
+        /* Quiz */
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: 2px solid var(--green-200);
+            background: white;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--green-400);
+        }
+
+        .quiz-option.correct { border-color: var(--green-600); background: var(--green-100); }
+        .quiz-option.wrong { border-color: #dc2626; background: #fef2f2; }
+
+        .quiz-score {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--green-700);
+            margin-top: 16px;
+        }
+
+        /* Certifications */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .cert-card {
+            padding: 20px;
+            background: var(--green-50);
+            border-radius: var(--radius);
+            border: 1px solid var(--green-200);
+        }
+
+        .cert-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .cert-name {
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 4px;
+        }
+
+        .cert-desc {
+            font-size: 0.9rem;
+            color: var(--green-800);
+        }
+
+        /* Green Calendar - 3 per row */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calendar-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: var(--green-50);
+            border-radius: var(--radius);
+        }
+
+        .calendar-date {
+            font-weight: 700;
+            color: var(--green-700);
+            font-size: 1.1rem;
+            min-width: 60px;
+        }
+
+        .calendar-name {
+            font-weight: 600;
+            color: var(--forest);
+        }
+
+        .calendar-desc {
+            font-size: 0.85rem;
+            color: var(--green-800);
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            section {
+                padding: 24px 0;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .calc-result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav id="mainNav">
+            <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu">
+                <li><a href="#photosynthesis">Science</a></li>
+                <li><a href="#psychology">Psychology</a></li>
+                <li><a href="#plant-care">Plants</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#recycling">Recycling</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#glossary">Glossary</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#calendar">Calendar</a></li>
+                <li><a href="#dashboard">Facts</a></li>
+                <li><a href="#green-tech">Tech</a></li>
+                <li><a href="#green-foods">Foods</a></li>
+            </ul>
+        </nav>
+        <header class="header-bg">
+            <h1 class="logo">Green Things</h1>
+            <p class="tagline">Nature · Science · Sustainability</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px;">
+                <div class="clock-widget">
+                    <div class="clock-icon"></div>
+                    <div>
+                        <div class="clock-time" id="clockTime">--:--:--</div>
+                        <div class="clock-date" id="clockDate">Loading...</div>
+                    </div>
+                </div>
+                <div class="clock-widget" style="background: linear-gradient(135deg, var(--green-500), var(--green-700)); color: white;">
+                    <div style="font-size: 1.5rem;">🌍</div>
+                    <div>
+                        <div class="clock-time" id="earthDayCount" style="color: white;">--</div>
+                        <div class="clock-date" style="color: rgba(255,255,255,0.9);">days until Earth Day</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 1: Why Plants Are Green -->
+        <section id="photosynthesis" class="section-bg section-bg-photosynthesis">
+            <div class="section-header">
+                <h2 class="section-title">Why Plants Are Green</h2>
+                <p class="section-desc">Chlorophyll absorbs blue (435nm) and red (670nm) light but reflects green—making plants appear green. Explore the spectrum below.</p>
+            </div>
+            <div class="card">
+                <div class="spectrum-container">
+                    <div>
+                        <div class="spectrum-visual">
+                            <div class="spectrum-absorption"></div>
+                        </div>
+                        <div class="spectrum-labels">
+                            <span>400nm</span>
+                            <span>500nm</span>
+                            <span>600nm</span>
+                            <span>700nm</span>
+                        </div>
+                        <p style="margin-top: 16px; font-size: 0.9rem; color: var(--green-700);">Dark areas = absorbed by chlorophyll. Green (500–600nm) is reflected.</p>
+                    </div>
+                    <div class="spectrum-info">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px;">Adjust wavelength (nm):</label>
+                        <input type="range" id="wavelengthSlider" class="wavelength-slider" min="400" max="700" value="550">
+                        <div class="wavelength-value" id="wavelengthValue">550 nm</div>
+                        <div class="absorption-status absorption-low" id="absorptionStatus">Low absorption — reflected (green light)</div>
+                    </div>
+                    <div>
+                        <div class="chloroplast-diagram">
+                            <div class="chloroplast-outer"><div class="chloroplast-inner">
+                                <div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div>
+                            </div></div>
+                            <span class="diagram-label">Chloroplast · Thylakoids</span>
+                        </div>
+                        <p style="margin-top: 12px; font-size: 0.85rem;">Photosynthesis occurs in chloroplasts. Light reactions in thylakoids produce ATP & NADPH; dark reactions in stroma fix CO₂ into glucose.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 28px; padding: 24px; background: var(--green-50); border-radius: var(--radius);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--forest);">The Photosynthesis Equation</h3>
+                    <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; background: white; padding: 16px; border-radius: 8px; margin-bottom: 12px;">6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂</p>
+                    <p style="font-size: 0.9rem; color: var(--green-800);">Carbon dioxide + water + sunlight produce glucose (sugar) + oxygen. Chlorophyll-a has a magnesium ion at its center—essential for capturing light. Plants also use carotenoids (orange/yellow) and anthocyanins (red/purple) for additional light absorption.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Green Color Psychology -->
+        <section id="psychology" class="section-bg section-bg-forest">
+            <div class="section-header">
+                <h2 class="section-title">Why Green Feels Good</h2>
+                <p class="section-desc">Green sits at 555nm—the wavelength our eyes are most sensitive to. It's the most restful color for the human eye and dominates nature.</p>
+            </div>
+            <div class="card">
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="stat-card">
+                        <div class="stat-number">555nm</div>
+                        <div class="stat-label">Peak eye sensitivity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Growth</div>
+                        <div class="stat-label">Renewal & rebirth</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Balance</div>
+                        <div class="stat-label">Harmony & calm</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Health</div>
+                        <div class="stat-label">Vitality symbol</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.95rem; color: var(--green-800);">Viewing green relaxes muscles, reduces stress, and can aid recovery. It's linked to permission ("green light"), money, and environmental movements worldwide. Forest bathing (shinrin-yoku) uses green spaces for therapeutic benefits.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Plant Care Guide -->
+        <section id="plant-care" class="section-bg section-bg-plants">
+            <div class="section-header">
+                <h2 class="section-title">Indoor Plant Care Guide</h2>
+                <p class="section-desc">Select a plant to see its watering schedule, light needs, and care tips. Overwatering is the #1 cause of indoor plant death.</p>
+            </div>
+            <div class="card">
+                <div class="plant-selector">
+                    <button class="plant-btn active" data-plant="pothos">Pothos</button>
+                    <button class="plant-btn" data-plant="snake">Snake Plant</button>
+                    <button class="plant-btn" data-plant="monstera">Monstera</button>
+                    <button class="plant-btn" data-plant="succulent">Succulent</button>
+                    <button class="plant-btn" data-plant="fern">Boston Fern</button>
+                    <button class="plant-btn" data-plant="ficus">Ficus</button>
+                    <button class="plant-btn" data-plant="peace">Peace Lily</button>
+                    <button class="plant-btn" data-plant="spider">Spider Plant</button>
+                </div>
+                <div id="plantDetails">
+                    <div class="plant-detail active" data-plant="pothos">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 7–10 days</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Low to bright indirect</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Average (40–60%)</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Water when top 2 inches of soil are dry. Tolerates neglect. Yellow leaves = overwatering.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="snake">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 2–4 weeks</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Low to bright</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Low (tolerates dry)</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Drought-tolerant. Water sparingly—let soil dry completely between waterings. North-facing windows work.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="monstera">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 1–2 weeks</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Bright indirect</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">High (60%+)</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Loves humidity. Mist leaves or use a pebble tray. East or west window ideal. Wipe leaves monthly.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="succulent">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 2–3 weeks</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Bright direct</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Low</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">South-facing window. Soak and dry method: water thoroughly, then wait until soil is bone dry.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="fern">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 3–5 days</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Indirect, no direct sun</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">High (50%+)</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Keep soil consistently moist. Bathroom or kitchen ideal. Brown tips = low humidity.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="ficus">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 7–10 days</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Bright indirect</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Moderate</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Avoid moving—ficus dislikes change. Water when top inch is dry. Dropping leaves = stress from move or draft.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="peace">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 5–7 days</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Low to medium indirect</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Moderate to high</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Drooping leaves = needs water. Popular houseplant. Toxic to pets—keep away from cats and dogs.</p>
+                    </div>
+                    <div class="plant-detail" data-plant="spider">
+                        <div class="plant-detail-grid">
+                            <div class="plant-stat"><div class="plant-stat-icon">💧</div><div class="plant-stat-label">Water</div><div class="plant-stat-value">Every 7–10 days</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">☀️</div><div class="plant-stat-label">Light</div><div class="plant-stat-value">Bright indirect</div></div>
+                            <div class="plant-stat"><div class="plant-stat-icon">🌡️</div><div class="plant-stat-label">Humidity</div><div class="plant-stat-value">Average</div></div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 0.95rem;">Produces baby plantlets (spiderettes)—easy to propagate. May remove some VOCs in lab conditions (real-world impact minimal). Brown tips = fluoride in tap water—use filtered.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Green Living Tips -->
+        <section id="tips" class="section-bg section-bg-living">
+            <div class="section-header">
+                <h2 class="section-title">Green Living Tips</h2>
+                <p class="section-desc">Click the info icon for more details. Small changes add up—global resource use could rise 60% by 2060 without action.</p>
+            </div>
+            <div class="tips-grid">
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🚴</div>
+                    <div class="tip-title">Transport</div>
+                    <div class="tip-content">Switch one car trip per week to walking, cycling, or transit.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Saves ~260 kg CO₂/year. 80% of global energy still comes from fossil fuels—every trip counts.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">💡</div>
+                    <div class="tip-title">Energy</div>
+                    <div class="tip-content">Switch to LED bulbs and unplug devices when not in use.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">LEDs use 75% less energy. Phantom drain from standby devices adds ~5–10% to bills.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🥗</div>
+                    <div class="tip-title">Diet</div>
+                    <div class="tip-content">Reduce meat, especially beef. One meat-free day = big impact.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Beef produces ~27 kg CO₂ per kg. Plant-based proteins are 10–50× lower. Vegan diet ≈ 1,500 kg CO₂/year less than high-meat.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">♻️</div>
+                    <div class="tip-title">Waste</div>
+                    <div class="tip-content">Compost food scraps. Avoid single-use plastics.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Food waste in landfills produces methane. Composting returns nutrients to soil. Reusable bags save ~500 bags/year per person.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🌱</div>
+                    <div class="tip-title">Plants</div>
+                    <div class="tip-content">Add indoor plants—they filter air and boost wellbeing.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Plants may remove some VOCs in lab conditions, but real-world impact is minimal. They still boost wellbeing and add life to your space. Snake plants and pothos are low-maintenance—start with one and expand.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🛒</div>
+                    <div class="tip-title">Shopping</div>
+                    <div class="tip-content">Buy local, seasonal produce. Choose products with FSC, Organic, or Fair Trade labels.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Local food reduces transport emissions. Seasonal produce needs less energy (no heated greenhouses). Certifications ensure environmental and social standards.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🏠</div>
+                    <div class="tip-title">Home</div>
+                    <div class="tip-content">Insulate, use programmable thermostats, and fix leaks.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Heating/cooling is ~50% of home energy. Lower thermostat 1°C in winter = ~7% savings. Seal drafts and insulate attics for big impact.</div>
+                    </div>
+                </div>
+                <div class="card tip-card" data-tip>
+                    <button class="tip-info-btn" type="button" aria-label="More info">ℹ</button>
+                    <div class="tip-icon">🌳</div>
+                    <div class="tip-title">Green Spaces</div>
+                    <div class="tip-content">Spend time in parks and nature. Support urban tree planting.</div>
+                    <div class="tip-expand">
+                        <div class="tip-more">Forest bathing reduces cortisol. Urban trees cool cities, filter air, and absorb CO₂. One mature tree absorbs ~22 kg CO₂/year.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Recycling Guide -->
+        <section id="recycling">
+            <div class="section-header">
+                <h2 class="section-title">Recycling Guide</h2>
+                <p class="section-desc">Plastic codes 1–7 identify resin type, not recyclability. Most programs accept #1 and #2. Check locally—facilities vary.</p>
+            </div>
+            <div class="card">
+                <p style="margin-bottom: 16px; font-weight: 500;">Select an item to see if it's typically recyclable:</p>
+                <div class="recycle-grid">
+                    <button class="recycle-btn" data-recycle="pet">#1 PET · Bottles</button>
+                    <button class="recycle-btn" data-recycle="hdpe">#2 HDPE · Jugs</button>
+                    <button class="recycle-btn" data-recycle="pvc">#3 PVC</button>
+                    <button class="recycle-btn" data-recycle="ldpe">#4 LDPE · Bags</button>
+                    <button class="recycle-btn" data-recycle="pp">#5 PP · Containers</button>
+                    <button class="recycle-btn" data-recycle="ps">#6 PS · Styrofoam</button>
+                    <button class="recycle-btn" data-recycle="other">#7 Other</button>
+                    <button class="recycle-btn" data-recycle="paper">Paper</button>
+                    <button class="recycle-btn" data-recycle="glass">Glass</button>
+                </div>
+                <div class="recycle-result" id="recycleResult"></div>
+            </div>
+        </section>
+
+        <!-- Section: Green Quiz -->
+        <section id="quiz">
+            <div class="section-header">
+                <h2 class="section-title">Green Knowledge Quiz</h2>
+                <p class="section-desc">Random questions each time. Refresh for a new set. Click an answer to see if you're right.</p>
+            </div>
+            <div class="card">
+                <div id="quizContainer"></div>
+                <div class="quiz-score" id="quizScore"></div>
+                <button type="button" id="quizRetryBtn" style="display:none; margin-top: 16px; padding: 12px 24px; background: var(--green-600); color: white; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer;">Try Again (New Questions)</button>
+            </div>
+        </section>
+
+        <!-- Section: Green Glossary -->
+        <section id="glossary">
+            <div class="section-header">
+                <h2 class="section-title">Green Glossary</h2>
+                <p class="section-desc">Key terms and definitions for green living and sustainability.</p>
+            </div>
+            <div class="card">
+                <div class="glossary-grid">
+                    <div class="glossary-item" data-term="chlorophyll">
+                        <div class="glossary-term">Chlorophyll</div>
+                        <div class="glossary-def">Green pigment in chloroplasts that absorbs light for photosynthesis. Contains magnesium. Reflects green (500–600nm), absorbs blue and red.</div>
+                    </div>
+                    <div class="glossary-item" data-term="photosynthesis">
+                        <div class="glossary-term">Photosynthesis</div>
+                        <div class="glossary-def">Process by which plants convert CO₂ and water into glucose using sunlight. Occurs in chloroplasts. Produces oxygen as byproduct.</div>
+                    </div>
+                    <div class="glossary-item" data-term="carbon-footprint">
+                        <div class="glossary-term">Carbon Footprint</div>
+                        <div class="glossary-def">Total greenhouse gas emissions caused by an individual, organization, or product. Measured in kg or tons of CO₂ equivalent per year.</div>
+                    </div>
+                    <div class="glossary-item" data-term="biodiversity">
+                        <div class="glossary-term">Biodiversity</div>
+                        <div class="glossary-def">Variety of life—species, ecosystems, genetic diversity. Essential for ecosystem health. WWF reports 73% wildlife decline since 1970.</div>
+                    </div>
+                    <div class="glossary-item" data-term="circular-economy">
+                        <div class="glossary-term">Circular Economy</div>
+                        <div class="glossary-def">Economic model that eliminates waste: reuse, repair, recycle. Contrasts with linear "take-make-dispose" model.</div>
+                    </div>
+                    <div class="glossary-item" data-term="vocs">
+                        <div class="glossary-term">VOCs</div>
+                        <div class="glossary-def">Volatile Organic Compounds—gases from paints, cleaners, furniture. Lab studies showed some plants can remove them in sealed chambers; real-world impact is minimal.</div>
+                    </div>
+                    <div class="glossary-item" data-term="par">
+                        <div class="glossary-term">PAR</div>
+                        <div class="glossary-def">Photosynthetically Active Radiation—light wavelengths 400–700nm that plants use for photosynthesis.</div>
+                    </div>
+                    <div class="glossary-item" data-term="wishcycling">
+                        <div class="glossary-term">Wishcycling</div>
+                        <div class="glossary-def">Putting unrecyclable items in recycling bins hoping they'll be recycled. Contaminates batches; check local rules.</div>
+                    </div>
+                    <div class="glossary-item" data-term="thylakoid">
+                        <div class="glossary-term">Thylakoid</div>
+                        <div class="glossary-def">Membrane-bound compartments inside chloroplasts where light reactions of photosynthesis occur. Stack into grana.</div>
+                    </div>
+                    <div class="glossary-item" data-term="stroma">
+                        <div class="glossary-term">Stroma</div>
+                        <div class="glossary-def">Fluid filling chloroplasts. Site of the Calvin cycle (dark reactions) where CO₂ is fixed into glucose.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Green Certifications -->
+        <section id="certifications">
+            <div class="section-header">
+                <h2 class="section-title">Green Certifications</h2>
+                <p class="section-desc">Look for these labels when shopping for sustainable products.</p>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">🌲</div>
+                    <div class="cert-name">FSC</div>
+                    <div class="cert-desc">Forest Stewardship Council—paper and wood from responsibly managed forests. Chain-of-custody traced.</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🤝</div>
+                    <div class="cert-name">Fair Trade</div>
+                    <div class="cert-desc">Guarantees minimum prices for producers, safe conditions, no child labor. Covers coffee, cocoa, produce, and more.</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon" style="font-weight:700;font-size:1.8rem;">B</div>
+                    <div class="cert-name">B Corp</div>
+                    <div class="cert-desc">Companies meeting high social and environmental standards. B Impact Assessment score 80+. Recertified every 3 years.</div>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🌿</div>
+                    <div class="cert-name">Organic</div>
+                    <div class="cert-desc">No synthetic pesticides or fertilizers. Soil health, biodiversity, and animal welfare standards. USDA, EU, or national bodies certify.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Green Calendar -->
+        <section id="calendar">
+            <div class="section-header">
+                <h2 class="section-title">Green Calendar</h2>
+                <p class="section-desc">Key environmental awareness dates. Mark your calendar and take action.</p>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-item">
+                    <span class="calendar-date">Apr 22</span>
+                    <div>
+                        <div class="calendar-name">Earth Day</div>
+                        <div class="calendar-desc">Global day for environmental action. 1B+ people participate.</div>
+                    </div>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">Jun 5</span>
+                    <div>
+                        <div class="calendar-name">World Environment Day</div>
+                        <div class="calendar-desc">UN-led day. Different host country each year.</div>
+                    </div>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">Mar 21</span>
+                    <div>
+                        <div class="calendar-name">International Day of Forests</div>
+                        <div class="calendar-desc">Celebrates forests and raises awareness of deforestation.</div>
+                    </div>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">Sep 22</span>
+                    <div>
+                        <div class="calendar-name">World Car-Free Day</div>
+                        <div class="calendar-desc">Promotes walking, cycling, and public transport.</div>
+                    </div>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">Oct 4</span>
+                    <div>
+                        <div class="calendar-name">World Animal Day</div>
+                        <div class="calendar-desc">Biodiversity and animal welfare awareness.</div>
+                    </div>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">Jun 8</span>
+                    <div>
+                        <div class="calendar-name">World Oceans Day</div>
+                        <div class="calendar-desc">Raises awareness for ocean conservation and marine life.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Environmental Dashboard -->
+        <section id="dashboard" class="section-bg section-bg-planet">
+            <div class="section-header">
+                <h2 class="section-title">Environmental Snapshot</h2>
+                <p class="section-desc">Key data from UNEP, WWF Living Planet Report 2024, and climate science. Wildlife populations down 73% since 1970.</p>
+            </div>
+            <div class="dashboard-grid dashboard-grid--3col">
+                <div class="card stat-card">
+                    <div class="stat-number">73%</div>
+                    <div class="stat-label">Wildlife decline (1970–2020)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 73%"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">41.6B</div>
+                    <div class="stat-label">Global CO₂ tons (2024)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">Resource use rise by 2060 (no action)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">1.5°C</div>
+                    <div class="stat-label">Paris target at risk</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label">Energy from fossil fuels (global)</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 80%"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">22 kg</div>
+                    <div class="stat-label">CO₂ absorbed per tree/year (mature)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Green Technology -->
+        <section id="green-tech" class="section-bg section-bg-tech">
+            <div class="section-header">
+                <h2 class="section-title">Green Tech</h2>
+                <p class="section-desc">Renewable energy and efficiency are key to decarbonization. Solar and wind are now the cheapest new electricity in most regions.</p>
+            </div>
+            <div class="card">
+                <div class="tips-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">☀️</div>
+                        <div class="tip-title">Solar PV</div>
+                        <div class="tip-content">Costs dropped 90% since 2010. Rooftop solar pays back in 5–10 years in sunny regions.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">💨</div>
+                        <div class="tip-title">Wind</div>
+                        <div class="tip-content">Onshore wind is among the cheapest electricity sources. Offshore expanding rapidly.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🔋</div>
+                        <div class="tip-title">EVs</div>
+                        <div class="tip-content">Electric vehicles emit less over lifecycle than ICE. Grid decarbonization improves this further.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🏠</div>
+                        <div class="tip-title">Heat Pumps</div>
+                        <div class="tip-content">3–4× more efficient than gas furnaces. Key for building decarbonization.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Green Foods -->
+        <section id="green-foods" class="section-bg section-bg-foods">
+            <div class="section-header">
+                <h2 class="section-title">Planet-Friendly Green Foods</h2>
+                <p class="section-desc">Low-carbon, nutrient-dense options. Plant-based foods typically have 10–50× lower emissions than animal products.</p>
+            </div>
+            <div class="card">
+                <div class="tips-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🥬</div>
+                        <div class="tip-title">Leafy Greens</div>
+                        <div class="tip-content">Kale, spinach, lettuce—very low footprint. Grow easily in gardens. Rich in iron, vitamins.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🥦</div>
+                        <div class="tip-title">Broccoli</div>
+                        <div class="tip-content">~0.5 kg CO₂ per kg. High in fiber, vitamin C. Choose local and seasonal.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🥒</div>
+                        <div class="tip-title">Cucumbers</div>
+                        <div class="tip-content">Low emissions. Hydrating. Avoid plastic wrap—buy loose when possible.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🥑</div>
+                        <div class="tip-title">Avocados</div>
+                        <div class="tip-content">Moderate footprint (water-intensive). Still far lower than cheese or beef. Source responsibly.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🫛</div>
+                        <div class="tip-title">Peas & Legumes</div>
+                        <div class="tip-content">Lentils, chickpeas, peas fix nitrogen in soil. Protein-rich, very low emissions.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🍃</div>
+                        <div class="tip-title">Zucchini</div>
+                        <div class="tip-content">Very low footprint. Prolific in home gardens. Versatile—raw, grilled, or baked.</div>
+                    </div>
+                    <div class="tip-card" style="cursor: default;">
+                        <div class="tip-icon">🌿</div>
+                        <div class="tip-title">Green Beans</div>
+                        <div class="tip-content">Low emissions, good protein. Buy fresh and local when in season. Freeze surplus.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Mobile nav toggle
+        (function() {
+            const nav = document.getElementById('mainNav');
+            const toggle = nav && nav.querySelector('.nav-toggle');
+            const menu = document.getElementById('navMenu');
+            if (!toggle || !menu) return;
+            toggle.addEventListener('click', function() {
+                const open = nav.classList.toggle('nav-open');
+                toggle.setAttribute('aria-expanded', open);
+            });
+            menu.querySelectorAll('a').forEach(function(a) {
+                a.addEventListener('click', function() {
+                    nav.classList.remove('nav-open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        })();
+
+        // Live Clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('clockTime').textContent = time;
+            document.getElementById('clockDate').textContent = date;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Earth Day countdown
+        function updateEarthDay() {
+            const now = new Date();
+            let earthDay = new Date(now.getFullYear(), 3, 22); // Apr 22
+            if (now > earthDay) earthDay = new Date(now.getFullYear() + 1, 3, 22);
+            const diff = Math.ceil((earthDay - now) / (1000 * 60 * 60 * 24));
+            document.getElementById('earthDayCount').textContent = diff;
+        }
+        updateEarthDay();
+
+        // Wavelength Slider - Chlorophyll absorption
+        const slider = document.getElementById('wavelengthSlider');
+        const wavelengthValue = document.getElementById('wavelengthValue');
+        const absorptionStatus = document.getElementById('absorptionStatus');
+
+        function updateAbsorption() {
+            const nm = parseInt(slider.value);
+            wavelengthValue.textContent = nm + ' nm';
+            const isAbsorbed = (nm >= 400 && nm <= 480) || (nm >= 620 && nm <= 700);
+            if (isAbsorbed) {
+                absorptionStatus.textContent = 'High absorption — used for photosynthesis';
+                absorptionStatus.className = 'absorption-status absorption-high';
+            } else {
+                absorptionStatus.textContent = 'Low absorption — reflected (green light)';
+                absorptionStatus.className = 'absorption-status absorption-low';
+            }
+        }
+
+        slider.addEventListener('input', updateAbsorption);
+        updateAbsorption();
+
+        // Plant Care Guide - Tab switching
+        document.querySelectorAll('.plant-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.plant-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.plant-detail').forEach(d => d.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelector(`.plant-detail[data-plant="${btn.dataset.plant}"]`).classList.add('active');
+            });
+        });
+
+        // Green Tips - Expand on click (info icon toggles inline content)
+        document.querySelectorAll('.tip-info-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                btn.closest('.tip-card').classList.toggle('tip-expanded');
+            });
+        });
+
+        // Recycling Guide
+        const recycleData = {
+            pet: { status: 'yes', msg: '#1 PET (water/soda bottles) — Widely accepted. Rinse, remove caps. One of the easiest to recycle.' },
+            hdpe: { status: 'yes', msg: '#2 HDPE (milk jugs, detergent) — Widely accepted. Rinse before recycling.' },
+            pvc: { status: 'maybe', msg: '#3 PVC — Difficult to recycle. Many programs don\'t accept. Check locally.' },
+            ldpe: { status: 'maybe', msg: '#4 LDPE (bags, wrap) — Can clog machines. Many stores have bag take-back. Check local rules.' },
+            pp: { status: 'maybe', msg: '#5 PP (yogurt, straws) — Increasingly accepted. Check your program.' },
+            ps: { status: 'no', msg: '#6 PS (Styrofoam) — Rarely accepted. Avoid when possible. Lightweight but not recyclable in most areas.' },
+            other: { status: 'no', msg: '#7 Other — Usually not recyclable. Includes mixed plastics, BPA. Avoid.' },
+            paper: { status: 'yes', msg: 'Paper & cardboard — Widely recycled. Keep dry. No food contamination. Flatten boxes.' },
+            glass: { status: 'yes', msg: 'Glass — Recyclable infinitely. Rinse. Some programs want by color. Check locally.' }
+        };
+
+        document.querySelectorAll('.recycle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.recycle;
+                const data = recycleData[key];
+                const result = document.getElementById('recycleResult');
+                result.className = 'recycle-result show recycle-' + data.status;
+                result.textContent = data.msg;
+            });
+        });
+
+        // Quiz - 55-question pool, random 5 per session
+        const QUIZ_POOL = [
+            { q: "Why do plants appear green?", options: ["Chlorophyll absorbs green light", "Chlorophyll reflects green light", "Plants produce green pigment only"], correct: 1 },
+            { q: "Which plastic codes are most widely recycled?", options: ["#3 and #6", "#1 and #2", "#5 and #7"], correct: 1 },
+            { q: "What does FSC certify?", options: ["Organic food", "Responsibly managed forests", "Carbon-neutral products"], correct: 1 },
+            { q: "Overwatering causes most indoor plant deaths because:", options: ["Plants need constant moisture", "Roots need oxygen; waterlogged soil suffocates them", "Tap water has too much chlorine"], correct: 1 },
+            { q: "Photosynthesis produces:", options: ["CO₂ and water", "Glucose and oxygen", "Nitrogen and methane"], correct: 1 },
+            { q: "What wavelength does chlorophyll absorb most strongly?", options: ["Green (550nm)", "Blue and red (435nm, 670nm)", "Yellow (580nm)"], correct: 1 },
+            { q: "Where does photosynthesis occur in plant cells?", options: ["Nucleus", "Chloroplasts", "Mitochondria"], correct: 1 },
+            { q: "Which plastic is rarely recyclable?", options: ["#1 PET", "#2 HDPE", "#6 PS (Styrofoam)"], correct: 2 },
+            { q: "What does Fair Trade certify?", options: ["Forest management", "Fair prices and conditions for producers", "Organic farming"], correct: 1 },
+            { q: "A mature tree absorbs roughly how much CO₂ per year?", options: ["5 kg", "22 kg", "100 kg"], correct: 1 },
+            { q: "What is wishcycling?", options: ["Recycling correctly", "Putting unrecyclable items in the bin hoping they'll be recycled", "Composting"], correct: 1 },
+            { q: "Which diet has the lowest carbon footprint?", options: ["High meat", "Average", "Vegan"], correct: 2 },
+            { q: "PAR stands for:", options: ["Plant Absorption Rate", "Photosynthetically Active Radiation", "Pollution Absorption Ratio"], correct: 1 },
+            { q: "What causes brown tips on spider plant leaves?", options: ["Overwatering", "Fluoride in tap water", "Too much light"], correct: 1 },
+            { q: "The stroma is where:", options: ["Light reactions occur", "The Calvin cycle fixes CO₂ into glucose", "Chlorophyll is stored"], correct: 1 },
+            { q: "Global wildlife populations have declined by about ___ since 1970.", options: ["30%", "73%", "95%"], correct: 1 },
+            { q: "LED bulbs use about ___ less energy than incandescent.", options: ["25%", "75%", "50%"], correct: 1 },
+            { q: "Which plant tolerates low light?", options: ["Monstera only", "Snake plant and pothos", "Succulents only"], correct: 1 },
+            { q: "Beef produces roughly ___ kg CO₂ per kg of meat.", options: ["5", "27", "50"], correct: 1 },
+            { q: "Earth Day is celebrated on:", options: ["March 21", "April 22", "June 5"], correct: 1 },
+            { q: "What does B Corp measure?", options: ["Only profits", "Social and environmental impact", "Carbon emissions only"], correct: 1 },
+            { q: "Heat pumps are ___ more efficient than gas furnaces.", options: ["1–2×", "3–4×", "10×"], correct: 1 },
+            { q: "Which food has the lowest carbon footprint?", options: ["Beef", "Broccoli", "Avocado (imported)"], correct: 1 },
+            { q: "Thylakoids are found in:", options: ["Mitochondria", "Chloroplasts", "Cell membrane"], correct: 1 },
+            { q: "World Oceans Day is on:", options: ["April 22", "May 22", "June 8"], correct: 2 },
+            { q: "The magnesium ion in chlorophyll is essential for:", options: ["Water absorption", "Capturing light", "Root growth"], correct: 1 },
+            { q: "Which is generally NOT recyclable in most areas?", options: ["Glass", "Paper", "Styrofoam (#6)"], correct: 2 },
+            { q: "Forest bathing (shinrin-yoku) helps reduce:", options: ["Water usage", "Cortisol and stress", "CO₂ emissions"], correct: 1 },
+            { q: "Lowering thermostat 1°C in winter saves about ___ on heating.", options: ["2%", "7%", "15%"], correct: 1 },
+            { q: "Carotenoids give plants ___ colors.", options: ["Green", "Orange and yellow", "Blue"], correct: 1 },
+            { q: "Which plant needs high humidity?", options: ["Snake plant", "Boston fern", "Succulent"], correct: 1 },
+            { q: "The Paris Agreement targets limiting warming to:", options: ["2°C only", "1.5°C", "3°C"], correct: 1 },
+            { q: "Organic certification ensures:", options: ["Fair wages", "No synthetic pesticides/fertilizers", "Recycled packaging"], correct: 1 },
+            { q: "Phantom drain from standby devices adds ~___ to electricity bills.", options: ["2%", "5–10%", "25%"], correct: 1 },
+            { q: "Lentils and peas ___ nitrogen in soil.", options: ["Remove", "Fix", "Neutralize"], correct: 1 },
+            { q: "World Car-Free Day promotes:", options: ["Electric cars only", "Walking, cycling, transit", "Carpooling only"], correct: 1 },
+            { q: "Solar panel costs dropped ~___ since 2010.", options: ["30%", "60%", "90%"], correct: 2 },
+            { q: "Which plastic code is for PET bottles?", options: ["#2", "#1", "#5"], correct: 1 },
+            { q: "VOCs are removed by some plants. VOCs stand for:", options: ["Very Organic Compounds", "Volatile Organic Compounds", "Vegetable Origin Chemicals"], correct: 1 },
+            { q: "The Calvin cycle occurs in the:", options: ["Thylakoid", "Stroma", "Nucleus"], correct: 1 },
+            { q: "Switching one car trip per week to walking/cycling saves ~___ kg CO₂/year.", options: ["50", "260", "500"], correct: 1 },
+            { q: "Reusable bags save ~___ plastic bags per person per year.", options: ["50", "500", "1000"], correct: 1 },
+            { q: "Heating and cooling account for ~___ of home energy.", options: ["25%", "50%", "75%"], correct: 1 },
+            { q: "Which plant is toxic to pets?", options: ["Pothos", "Peace lily", "Both"], correct: 2 },
+            { q: "Circular economy aims to:", options: ["Increase production", "Eliminate waste via reuse and recycle", "Reduce prices"], correct: 1 },
+            { q: "International Day of Forests is:", options: ["February 2", "March 21", "May 22"], correct: 1 },
+            { q: "EVs emit ___ over their lifecycle than gasoline cars.", options: ["More", "Less", "The same"], correct: 1 },
+            { q: "Composting returns nutrients to:", options: ["Water", "Soil", "Air"], correct: 1 },
+            { q: "Green light (500–600nm) is ___ by chlorophyll.", options: ["Absorbed", "Reflected", "Stored"], correct: 1 },
+            { q: "Ficus plants dislike:", options: ["Bright light", "Being moved", "Dry soil"], correct: 1 },
+            { q: "World Environment Day is on:", options: ["April 22", "May 22", "June 5"], correct: 2 },
+            { q: "Zucchini has a ___ carbon footprint.", options: ["High", "Very low", "Moderate"], correct: 1 },
+            { q: "B Corp recertifies every ___ years.", options: ["1", "3", "5"], correct: 1 },
+            { q: "Food waste in landfills produces:", options: ["CO₂ only", "Methane", "Oxygen"], correct: 1 },
+            { q: "The visible light spectrum for photosynthesis is:", options: ["300–500nm", "400–700nm", "500–900nm"], correct: 1 },
+            { q: "Succulents prefer:", options: ["Frequent watering", "Soak and dry method", "Constant moisture"], correct: 1 },
+            { q: "Resource use could rise ___ by 2060 without action.", options: ["20%", "60%", "100%"], correct: 1 },
+            { q: "Which certification traces wood through the supply chain?", options: ["Fair Trade", "FSC", "Organic"], correct: 1 },
+            { q: "Green at 555nm is the wavelength our eyes are most ___ to.", options: ["Resistant", "Sensitive", "Blind"], correct: 1 },
+        ];
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function renderQuiz() {
+            const selected = shuffleArray(QUIZ_POOL).slice(0, 5);
+            const container = document.getElementById('quizContainer');
+            const scoreEl = document.getElementById('quizScore');
+            const retryBtn = document.getElementById('quizRetryBtn');
+            container.innerHTML = '';
+            scoreEl.textContent = '';
+            retryBtn.style.display = 'none';
+
+            let quizScore = 0;
+
+            selected.forEach((item, i) => {
+                const indices = item.options.map((_, j) => j);
+                const shuffledIndices = shuffleArray(indices);
+                const options = shuffledIndices.map(j => item.options[j]);
+                const correctIdx = shuffledIndices.indexOf(item.correct);
+
+                const div = document.createElement('div');
+                div.className = 'quiz-question';
+                div.style.marginTop = i > 0 ? '24px' : '0';
+                div.dataset.q = i;
+                div.dataset.correct = correctIdx;
+                div.innerHTML = `<p style="font-weight: 600; margin-bottom: 12px;">${i + 1}. ${item.q}</p>` +
+                    options.map((opt, j) => `<button class="quiz-option" data-ans="${j}">${opt}</button>`).join('');
+                container.appendChild(div);
+            });
+
+            container.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', function() {
+                    const question = this.closest('.quiz-question');
+                    if (question.dataset.answered === 'true') return;
+                    question.dataset.answered = 'true';
+                    const correctIdx = parseInt(question.dataset.correct);
+                    const isCorrect = parseInt(this.dataset.ans) === correctIdx;
+                    if (isCorrect) quizScore++;
+                    this.classList.add(isCorrect ? 'correct' : 'wrong');
+                    if (!isCorrect) {
+                        const correctOpt = question.querySelector(`.quiz-option[data-ans="${correctIdx}"]`);
+                        if (correctOpt) correctOpt.classList.add('correct');
+                    }
+                    question.querySelectorAll('.quiz-option').forEach(o => { o.style.pointerEvents = 'none'; });
+                    const total = selected.length;
+                    const answered = container.querySelectorAll('.quiz-question[data-answered="true"]').length;
+                    if (answered === total) {
+                        scoreEl.textContent = `Score: ${quizScore}/${total} — ${quizScore === total ? 'Perfect! 🌟' : 'Keep learning!'}`;
+                        retryBtn.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        renderQuiz();
+        document.getElementById('quizRetryBtn').addEventListener('click', renderQuiz);
+
+    </script>
+</body>
+</html>

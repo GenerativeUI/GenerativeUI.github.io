@@ -1,0 +1,3010 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Darwin Mini‑App — Evolution & Selection</title>
+    <meta name="description" content="Interactive single‑page mini‑app: Voyage, Evolution Playground, Selection Lab, Survival Game, Quiz & Certificate." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Playfair+Display:wght@500..900&display=swap" rel="stylesheet" />
+
+    <style>
+        :root{
+            --bg: #f7f9ff;
+            --panel: rgba(255,255,255,.78);
+            --panelSolid: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+            --muted2:#64748b;
+            --border: rgba(2,6,23,.10);
+            --shadow: 0 18px 60px rgba(2,6,23,.12);
+            --shadow2: 0 12px 26px rgba(2,6,23,.10);
+            --primary: #2563eb;
+            --secondary:#7c3aed;
+            --accent:#f59e0b;
+            --success:#10b981;
+            --danger:#ef4444;
+            --r: 22px;
+            --r2: 16px;
+            --max: 1200px;
+            --focus: 0 0 0 4px rgba(37,99,235,.22);
+        }
+        @media (prefers-color-scheme: dark){
+            :root{
+                --bg:#0a1020;
+                --panel: rgba(15,23,42,.72);
+                --panelSolid:#0f172a;
+                --text:#e5e7eb;
+                --muted:#b6c2d1;
+                --muted2:#94a3b8;
+                --border: rgba(226,232,240,.10);
+                --shadow: 0 18px 60px rgba(0,0,0,.40);
+                --shadow2: 0 12px 26px rgba(0,0,0,.38);
+                --focus: 0 0 0 4px rgba(96,165,250,.22);
+            }
+        }
+        *{ box-sizing:border-box; }
+        html,body{ height:100%; }
+        body{
+            margin:0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color:var(--text);
+            background:
+                    radial-gradient(900px 700px at 15% 10%, rgba(124,58,237,.18), transparent 60%),
+                    radial-gradient(900px 700px at 85% 20%, rgba(37,99,235,.18), transparent 60%),
+                    radial-gradient(900px 700px at 50% 85%, rgba(245,158,11,.10), transparent 55%),
+                    var(--bg);
+            overflow-x:hidden;
+            line-height:1.55;
+        }
+        h1,h2,h3{ font-family: "Playfair Display", ui-serif, Georgia, serif; margin:0; letter-spacing:-.02em; }
+        a{ color:inherit; }
+        .container{ max-width:var(--max); margin:0 auto; padding:0 20px; }
+        .muted{ color:var(--muted); }
+        .small{ font-size:12px; color:var(--muted2); font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+        .sr-only{
+            position:absolute !important;
+            width:1px; height:1px; padding:0; margin:-1px;
+            overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+        }
+        .skip{
+            position:absolute; left:14px; top:14px;
+            background:var(--panelSolid);
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:10px 12px;
+            box-shadow:var(--shadow2);
+            transform: translateY(-140%);
+            transition: transform .18s ease;
+            z-index: 999999;
+            text-decoration:none;
+            font-weight:900;
+        }
+        .skip:focus{ transform: translateY(0); outline:none; box-shadow: var(--focus), var(--shadow2); }
+
+        /* Buttons */
+        .btn{
+            border:0; cursor:pointer;
+            border-radius:999px;
+            padding:12px 16px;
+            font-weight:900;
+            letter-spacing:.02em;
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            text-decoration:none;
+            outline:none;
+            transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+            user-select:none;
+            white-space:nowrap;
+        }
+        .btn:hover{ transform: translateY(-2px); }
+        .btn:active{ transform: translateY(0); }
+        .btn:focus-visible{ box-shadow: var(--focus), var(--shadow2); }
+        .btn.primary{
+            color:#fff;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 16px 40px rgba(37,99,235,.28);
+        }
+        .btn.ghost{
+            color:var(--text);
+            background:var(--panel);
+            border:1px solid var(--border);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow2);
+        }
+        .btn.danger{
+            color:#fff;
+            background: linear-gradient(135deg, var(--danger), #c026d3);
+            box-shadow: 0 16px 40px rgba(239,68,68,.22);
+        }
+
+        /* Nav */
+        nav{
+            position:fixed;
+            inset: 0 0 auto 0;
+            z-index:1000;
+            padding:14px 0;
+            background:transparent;
+            transition: padding .2s ease, background .2s ease, box-shadow .2s ease;
+        }
+        nav.scrolled{
+            padding:8px 0;
+            background: rgba(255,255,255,.65);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 30px rgba(2,6,23,.10);
+        }
+        @media (prefers-color-scheme: dark){
+            nav.scrolled{ background: rgba(2,6,23,.62); }
+        }
+        .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
+        .brand{ display:flex; align-items:center; gap:10px; font-weight:950; letter-spacing:.6px; user-select:none; }
+        .brand .dot{
+            width:12px; height:12px; border-radius:50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 14px 30px rgba(37,99,235,.25);
+        }
+        .nav-links{
+            display:flex; gap:10px;
+            list-style:none; padding:0; margin:0;
+            align-items:center;
+        }
+        .nav-links a{
+            text-decoration:none;
+            color:var(--muted);
+            font-weight:900;
+            font-size:13px;
+            padding:10px 12px;
+            border-radius:14px;
+            transition: background .16s ease, color .16s ease;
+            outline:none;
+        }
+        .nav-links a:hover{ color:var(--text); background: rgba(2,6,23,.06); }
+        @media (prefers-color-scheme: dark){
+            .nav-links a:hover{ background: rgba(226,232,240,.08); }
+        }
+        .nav-links a:focus-visible{ box-shadow: var(--focus); }
+
+        .menu-btn{
+            display:none;
+            border:1px solid var(--border);
+            background:var(--panel);
+            backdrop-filter: blur(16px);
+            color:var(--text);
+            border-radius:14px;
+            padding:10px 12px;
+            font-weight:900;
+            cursor:pointer;
+            box-shadow: var(--shadow2);
+            outline:none;
+            gap:10px;
+            align-items:center;
+        }
+        .menu-btn:focus-visible{ box-shadow: var(--focus), var(--shadow2); }
+        .mobile-panel{
+            display:none;
+            margin-top:10px;
+            background:var(--panel);
+            backdrop-filter: blur(16px);
+            border:1px solid var(--border);
+            border-radius:18px;
+            box-shadow: var(--shadow);
+            padding:10px;
+        }
+        .mobile-panel a{
+            display:block;
+            padding:12px 12px;
+            border-radius:14px;
+            text-decoration:none;
+            color:var(--muted);
+            font-weight:900;
+        }
+        .mobile-panel a:hover{ background: rgba(2,6,23,.06); color:var(--text); }
+        @media (max-width: 980px){
+            .nav-links{ display:none; }
+            .menu-btn{ display:inline-flex; }
+            .mobile-panel.open{ display:block; }
+        }
+
+        /* Hero */
+        header.hero{
+            min-height: 100vh;
+            padding:110px 0 56px;
+            position:relative;
+            overflow:hidden;
+        }
+        canvas#bgParticles{
+            position:absolute;
+            inset:0;
+            width:100%;
+            height:100%;
+            opacity:.95;
+            pointer-events:none;
+            z-index:0;
+        }
+        header.hero > .container{
+            position:relative;
+            z-index:2;
+        }
+        .hero-grid{
+            display:grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap:22px;
+            align-items:center;
+        }
+        @media (max-width:980px){
+            .hero-grid{ grid-template-columns:1fr; }
+        }
+        .heroCard{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: calc(var(--r) + 10px);
+            box-shadow: var(--shadow);
+            padding:34px;
+            position:relative;
+            overflow:hidden;
+            backdrop-filter: blur(18px);
+        }
+        .heroCard::before{
+            content:"";
+            position:absolute;
+            inset:-2px;
+            background:
+                    radial-gradient(900px 650px at 20% 10%, rgba(37,99,235,.22), transparent 60%),
+                    radial-gradient(900px 650px at 80% 30%, rgba(124,58,237,.18), transparent 60%),
+                    radial-gradient(900px 650px at 60% 100%, rgba(245,158,11,.10), transparent 60%);
+            pointer-events:none;
+            opacity:.9;
+        }
+        .heroInner{ position:relative; }
+        .badge{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            padding:10px 14px;
+            border-radius:999px;
+            background: rgba(255,255,255,.55);
+            border:1px solid var(--border);
+            font-weight:950;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+            font-size:12px;
+            color:var(--muted);
+            backdrop-filter: blur(12px);
+        }
+        @media (prefers-color-scheme: dark){
+            .badge{ background: rgba(2,6,23,.45); }
+        }
+        .title{ margin-top:16px; font-size: clamp(44px, 5vw, 76px); line-height:1.05; }
+        .subtitle{ margin-top:12px; color:var(--muted); font-size:16px; max-width:60ch; font-weight:650; }
+        .heroActions{ margin-top:20px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+        .heroMeta{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
+        .chip{
+            background: rgba(255,255,255,.62);
+            border:1px solid var(--border);
+            border-radius:999px;
+            padding:8px 12px;
+            font-weight:950;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 24px rgba(2,6,23,.10);
+            font-size:12px;
+            letter-spacing:.06em;
+            text-transform:uppercase;
+            user-select:none;
+            color:var(--text);
+        }
+        @media (prefers-color-scheme: dark){
+            .chip{ background: rgba(2,6,23,.45); }
+        }
+
+        .portrait{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: calc(var(--r) + 10px);
+            box-shadow: var(--shadow);
+            padding:18px;
+            overflow:hidden;
+            position:relative;
+            backdrop-filter: blur(16px);
+        }
+        .portraitTop{ display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
+        figure.avatar{
+            margin:0;
+            width:100%;
+            aspect-ratio:1 / 1;
+            border-radius:24px;
+            overflow:hidden;
+            border:1px solid var(--border);
+            background:
+                    radial-gradient(180px 180px at 40% 30%, rgba(37,99,235,.22), transparent 60%),
+                    radial-gradient(180px 180px at 70% 60%, rgba(124,58,237,.18), transparent 60%),
+                    linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.25));
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        @media (prefers-color-scheme: dark){
+            figure.avatar{
+                background:
+                        radial-gradient(180px 180px at 40% 30%, rgba(37,99,235,.22), transparent 60%),
+                        radial-gradient(180px 180px at 70% 60%, rgba(124,58,237,.18), transparent 60%),
+                        linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.45));
+            }
+        }
+        figure.avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transform: scale(1.03);
+            transition: transform .45s ease;
+            opacity:.98;
+            display:block;
+        }
+        figure.avatar:hover img{ transform: scale(1.07) rotate(1deg); }
+
+        .miniStats{
+            margin-top:12px;
+            display:grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap:10px;
+        }
+        .pill{
+            border:1px solid var(--border);
+            background: rgba(255,255,255,.55);
+            border-radius:16px;
+            padding:12px;
+            backdrop-filter: blur(12px);
+        }
+        @media (prefers-color-scheme: dark){
+            .pill{ background: rgba(2,6,23,.45); }
+        }
+        .pill .k{
+            font-size:11px;
+            letter-spacing:.14em;
+            text-transform:uppercase;
+            color:var(--muted2);
+            font-weight:950;
+            margin-bottom:6px;
+        }
+        .pill .v{
+            font-weight:950;
+            font-size:14px;
+            color:var(--text);
+        }
+
+        /* Sections */
+        section{ padding:80px 0; }
+        .sectionHead{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:12px;
+            flex-wrap:wrap;
+            margin-bottom:18px;
+        }
+        .sectionHead h2{ font-size: clamp(28px, 3.2vw, 46px); }
+        .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+        @media (max-width:980px){ .grid2{ grid-template-columns:1fr; } }
+
+        .card{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: var(--r);
+            box-shadow: var(--shadow);
+            padding:18px;
+            overflow:hidden;
+            backdrop-filter: blur(16px);
+        }
+        .row{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+
+        /* Voyage */
+        .mapWrap{
+            position:relative;
+            border-radius: var(--r);
+            overflow:hidden;
+            border:1px solid var(--border);
+            background: linear-gradient(180deg, rgba(224,242,254,.85), rgba(219,234,254,.65), rgba(224,231,255,.65));
+            min-height: 420px;
+        }
+        @media (prefers-color-scheme: dark){
+            .mapWrap{ background: linear-gradient(180deg, rgba(2,6,23,.55), rgba(15,23,42,.45), rgba(30,41,59,.35)); }
+        }
+        canvas#voyageCanvas{
+            position:absolute;
+            inset:0;
+            width:100%;
+            height:100%;
+            opacity:.95;
+        }
+        .ship{
+            position:absolute;
+            z-index:2;
+            font-size:34px;
+            filter: drop-shadow(0 12px 18px rgba(2,6,23,.35));
+            user-select:none;
+            pointer-events:none;
+            transform: translate(-50%,-50%);
+        }
+        .marker{
+            position:absolute;
+            width:46px; height:46px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background: rgba(255,255,255,.82);
+            border:2px solid rgba(37,99,235,.65);
+            box-shadow: 0 14px 30px rgba(2,6,23,.20);
+            cursor:pointer;
+            z-index:4;
+            transition: transform .15s ease, border-color .15s ease;
+            user-select:none;
+            outline:none;
+            font-weight:950;
+        }
+        @media (prefers-color-scheme: dark){
+            .marker{ background: rgba(2,6,23,.55); }
+        }
+        .marker:hover{ transform: translateY(-2px) scale(1.06); border-color: rgba(245,158,11,.8); }
+        .marker:focus-visible{ box-shadow: var(--focus), 0 14px 30px rgba(2,6,23,.20); }
+
+        /* Canvas blocks */
+        .canvasBox{
+            border-radius: var(--r2);
+            border:1px solid var(--border);
+            background: rgba(255,255,255,.45);
+            overflow:hidden;
+        }
+        @media (prefers-color-scheme: dark){
+            .canvasBox{ background: rgba(2,6,23,.35); }
+        }
+        .canvasBox canvas{ width:100%; display:block; }
+
+        /* Controls */
+        label{ font-weight:950; }
+        input[type="range"]{ width:100%; }
+        select, input[type="text"]{
+            padding:10px 12px;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            font-weight:900;
+            outline:none;
+        }
+        select:focus-visible, input[type="text"]:focus-visible{ box-shadow: var(--focus); }
+        .sliderGrid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px; }
+        @media (max-width:700px){ .sliderGrid{ grid-template-columns:1fr; } }
+        .sliderCard{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: 18px;
+            padding:14px;
+            box-shadow: var(--shadow2);
+        }
+        .sliderRow{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
+        .valueTag{
+            font-size:12px;
+            font-weight:950;
+            color: var(--primary);
+            background: rgba(37,99,235,.10);
+            border:1px solid rgba(37,99,235,.18);
+            padding:6px 10px;
+            border-radius:999px;
+            white-space:nowrap;
+        }
+
+        /* Species cards */
+        .speciesGrid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px; }
+        @media (max-width:720px){ .speciesGrid{ grid-template-columns:1fr; } }
+        .species{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: 18px;
+            padding:14px;
+            box-shadow: var(--shadow2);
+            cursor:pointer;
+            transition: transform .15s ease, border-color .15s ease;
+            outline:none;
+            position:relative;
+            overflow:hidden;
+            text-align:left;
+        }
+        .species:hover{ transform: translateY(-2px); border-color: rgba(37,99,235,.35); }
+        .species:focus-visible{ box-shadow: var(--focus), var(--shadow2); }
+        .fit{
+            font-weight:950;
+            font-size:12px;
+            padding:6px 10px;
+            border-radius:999px;
+            border:1px solid var(--border);
+            background: rgba(255,255,255,.55);
+        }
+        @media (prefers-color-scheme: dark){
+            .fit{ background: rgba(2,6,23,.45); }
+        }
+        .fit.good{ color: var(--success); border-color: rgba(16,185,129,.25); }
+        .fit.ok{ color: var(--accent); border-color: rgba(245,158,11,.25); }
+        .fit.bad{ color: var(--danger); border-color: rgba(239,68,68,.25); }
+
+        /* Game */
+        .arena{
+            position:relative;
+            min-height: 420px;
+            border-radius: var(--r);
+            background: linear-gradient(135deg, rgba(16,185,129,.18), rgba(37,99,235,.10));
+            border:1px solid var(--border);
+            overflow:hidden;
+            box-shadow: var(--shadow);
+        }
+        .creature{
+            position:absolute;
+            font-size:34px;
+            user-select:none;
+            cursor:pointer;
+            filter: drop-shadow(0 12px 18px rgba(2,6,23,.25));
+            transition: transform .16s ease, opacity .25s ease;
+            outline:none;
+            border:0;
+            background:transparent;
+        }
+        .creature:hover{ transform: translateY(-2px) scale(1.08); }
+        .creature:focus-visible{ box-shadow: var(--focus); border-radius: 10px; }
+
+        /* Quiz */
+        .quizCard{
+            background: var(--panel);
+            border:1px solid var(--border);
+            border-radius: var(--r);
+            box-shadow: var(--shadow);
+            padding:18px;
+        }
+        .progress{
+            height:10px;
+            border-radius:999px;
+            background: rgba(100,116,139,.18);
+            overflow:hidden;
+            border:1px solid var(--border);
+        }
+        .bar{
+            height:100%;
+            width:0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width .25s ease;
+        }
+        .answers{ margin-top:14px; display:grid; gap:10px; }
+        .answer{
+            border:1px solid var(--border);
+            background: rgba(255,255,255,.55);
+            border-radius:16px;
+            padding:12px 12px;
+            cursor:pointer;
+            font-weight:900;
+            color:var(--text);
+            transition: transform .15s ease, border-color .15s ease;
+            outline:none;
+            text-align:left;
+        }
+        @media (prefers-color-scheme: dark){
+            .answer{ background: rgba(2,6,23,.45); }
+        }
+        .answer:hover{ transform: translateY(-1px); border-color: rgba(37,99,235,.28); }
+        .answer:focus-visible{ box-shadow: var(--focus); }
+        .answer.correct{
+            border-color: rgba(16,185,129,.35);
+            background: rgba(16,185,129,.14);
+        }
+        .answer.wrong{
+            border-color: rgba(239,68,68,.35);
+            background: rgba(239,68,68,.12);
+        }
+
+        /* Modal + Toast */
+        .modal{
+            position:fixed;
+            inset:0;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:18px;
+            background: rgba(2,6,23,.62);
+            z-index: 10000;
+        }
+        .modal.open{ display:flex; }
+        .modalBox{
+            width: min(860px, 100%);
+            background: var(--panelSolid);
+            border-radius: 22px;
+            border:1px solid var(--border);
+            box-shadow: 0 40px 120px rgba(0,0,0,.45);
+            padding:18px;
+            position:relative;
+            max-height: 86vh;
+            overflow:auto;
+        }
+        .modalClose{
+            position:absolute;
+            right:14px; top:14px;
+            width:42px; height:42px;
+            border-radius:12px;
+            border:1px solid var(--border);
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+            cursor:pointer;
+            font-weight:950;
+            color: var(--text);
+            outline:none;
+        }
+        .modalClose:focus-visible{ box-shadow: var(--focus); }
+        #modalImg{
+            width:100%;
+            border-radius:16px;
+            border:1px solid var(--border);
+            display:none;
+            margin-top:6px;
+            max-height: 380px;
+            object-fit: cover;
+        }
+        #modalCredit{ display:none; margin-top:10px; }
+        .toast{
+            position:fixed;
+            right:14px; top:14px;
+            z-index:10001;
+            display:grid;
+            gap:10px;
+        }
+        .toastItem{
+            background: var(--panelSolid);
+            border:1px solid var(--border);
+            border-radius:18px;
+            padding:12px 14px;
+            box-shadow: var(--shadow2);
+            font-weight:950;
+            color: var(--text);
+            max-width: 440px;
+        }
+
+        footer{ padding:50px 0 70px; color:var(--muted2); }
+        footer .fine{ font-size:12px; font-weight:750; line-height:1.6; text-align: center; }
+
+        @media (prefers-reduced-motion: reduce){
+            *{ scroll-behavior:auto !important; }
+        }
+    </style>
+</head>
+
+<body>
+<a class="skip" href="#main">Перейти до контенту</a>
+
+<nav id="nav">
+    <div class="container">
+        <div class="nav-row">
+            <div class="brand" aria-label="Site brand">
+                <span class="dot" aria-hidden="true"></span>
+                <span>Darwin Mini‑App</span>
+            </div>
+
+            <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobilePanel" type="button">
+                Меню <span aria-hidden="true">☰</span>
+            </button>
+
+            <ul class="nav-links" aria-label="Primary">
+                <li><a href="#voyage">Voyage</a></li>
+                <li><a href="#evolution">Evolution Playground</a></li>
+                <li><a href="#lab">Selection Lab</a></li>
+                <li><a href="#game">Survival Game</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+            </ul>
+        </div>
+
+        <div class="mobile-panel" id="mobilePanel" aria-label="Mobile navigation">
+            <a href="#voyage">Voyage</a>
+            <a href="#evolution">Evolution Playground</a>
+            <a href="#lab">Selection Lab</a>
+            <a href="#game">Survival Game</a>
+            <a href="#quiz">Quiz</a>
+        </div>
+    </div>
+</nav>
+
+<main id="main">
+    <!-- HERO -->
+    <header class="hero">
+        <canvas id="bgParticles" aria-hidden="true"></canvas>
+
+        <div class="container">
+            <div class="hero-grid">
+                <div class="heroCard">
+                    <div class="heroInner">
+                        <div class="badge">
+                            <span aria-hidden="true">🧬</span>
+                            Highly interactive evolution mini‑app
+                        </div>
+
+                        <h1 class="title">Charles Darwin</h1>
+                        <p class="subtitle">
+                            Click on markers, run evolution simulations, change the environment, and see
+                            how selection “reshapes” populations.
+                        </p>
+
+                        <div class="heroActions">
+                            <a class="btn primary" href="#evolution">Launch Evolution Playground <span aria-hidden="true">→</span></a>
+                            <a class="btn ghost" href="#lab">Open Selection Lab</a>
+                            <button class="btn ghost" id="reduceMotionToggle" type="button">Motion Auto</button>
+                        </div>
+
+                        <div class="heroMeta" aria-label="Quick highlights">
+                            <div class="chip">Evolution simulator</div>
+                            <div class="chip">Interactive modals + images</div>
+                            <div class="chip">Autosave</div>
+                            <div class="chip">Certificate PNG</div>
+                        </div>
+
+                        <p class="muted" style="margin:14px 0 0; font-weight:700;">
+                        </p>
+                    </div>
+                </div>
+
+                <aside class="portrait">
+                    <div class="portraitTop">
+                        <div class="small">Portrait</div>
+                        <div class="small">1809–1882</div>
+                    </div>
+
+                    <figure class="avatar">
+                        <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/640px-Charles_Darwin_seated_crop.jpg"
+                                alt="Portrait of Charles Darwin"
+                                loading="lazy"
+                                referrerpolicy="no-referrer"
+                        />
+                    </figure>
+
+                    <div class="miniStats" role="list" aria-label="Quick facts">
+                        <div class="pill" role="listitem">
+                            <div class="k">Core idea</div>
+                            <div class="v">Natural selection</div>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <div class="k">Mechanism</div>
+                            <div class="v">Heritable variation</div>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <div class="k">You can do</div>
+                            <div class="v">Run generations</div>
+                        </div>
+                        <div class="pill" role="listitem">
+                            <div class="k">Output</div>
+                            <div class="v">Graphs & trends</div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </header>
+
+    <!-- VOYAGE -->
+    <section id="voyage">
+        <div class="container">
+            <div class="sectionHead">
+                <div>
+                    <h2>Voyage: interactive route</h2>
+                    <p class="muted" style="margin:6px 0 0; font-weight:650;">
+                        Click on the markers to open a modal window with a photo and a brief description.
+                    </p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn ghost" id="openCreditsBtn" type="button">Image credits</button>
+                    <button class="btn ghost" id="mapAutopilotBtn" type="button">Autopilot On</button>
+                </div>
+            </div>
+
+            <div class="grid2">
+                <div class="card">
+                    <div class="row">
+                        <h3 style="margin:0; font-size:22px;">Map canvas</h3>
+                        <div class="small">educational visualization</div>
+                    </div>
+
+                    <div class="mapWrap" id="mapWrap" aria-label="Voyage map">
+                        <canvas id="voyageCanvas" aria-hidden="true"></canvas>
+                        <div class="ship" id="ship" aria-hidden="true">⛵</div>
+
+                        <button class="marker" style="left:10%; top:28%;" data-stop="plymouth" aria-label="Open Plymouth marker">1</button>
+                        <button class="marker" style="left:22%; top:46%;" data-stop="capeverde" aria-label="Open Cape Verde marker">2</button>
+                        <button class="marker" style="left:32%; top:58%;" data-stop="brazil" aria-label="Open Brazil marker">3</button>
+                        <button class="marker" style="left:44%; top:70%;" data-stop="patagonia" aria-label="Open Patagonia marker">4</button>
+                        <button class="marker" style="left:56%; top:56%;" data-stop="galapagos" aria-label="Open Galápagos marker">5</button>
+                        <button class="marker" style="left:72%; top:46%;" data-stop="tahiti" aria-label="Open Tahiti marker">6</button>
+                        <button class="marker" style="left:84%; top:62%;" data-stop="australia" aria-label="Open Australia marker">7</button>
+                    </div>
+
+                    <p class="muted" style="margin:12px 0 0; font-weight:650;">
+                        This is a training visualization, not an exact travel track.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size:22px;">Micro‑timeline</h3>
+                    <p class="muted" style="margin:8px 0 0; font-weight:650;">
+                        Move the slider — it affects the position of the ship and the “intensity of the ocean.”
+                    </p>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <div class="sliderRow">
+                            <div style="font-weight:950;">Voyage time</div>
+                            <div class="valueTag" id="timeTag">0</div>
+                        </div>
+                        <label class="sr-only" for="timeScrub">Voyage time scrub</label>
+                        <input id="timeScrub" type="range" min="0" max="100" value="0" />
+                        <div class="small">0 departure — 100 return</div>
+                    </div>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <div class="row">
+                            <div>
+                                <div class="small">Accessibility</div>
+                                <div style="font-weight:950;">High contrast overlay</div>
+                            </div>
+                            <button class="btn ghost" id="contrastBtn" type="button">Off</button>
+                        </div>
+                        <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                            Helps with readability on some monitors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVOLUTION PLAYGROUND -->
+    <section id="evolution">
+        <div class="container">
+            <div class="sectionHead">
+                <div>
+                    <h2>Evolution Playground</h2>
+                    <p class="muted" style="margin:6px 0 0; font-weight:650;">
+                        Simulation: trait distribution → selection → survival → reproduction.
+                    </p>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="btn primary" id="evoStepBtn" type="button">Step 1 generation</button>
+                    <button class="btn ghost" id="evoRunBtn" type="button">Run</button>
+                    <button class="btn ghost" id="evoResetBtn" type="button">Reset</button>
+                </div>
+            </div>
+
+            <div class="grid2">
+                <div class="card">
+                    <div class="row">
+                        <div>
+                            <div class="small">Distribution</div>
+                            <div style="font-weight:950; font-size:18px;">Trait histogram</div>
+                        </div>
+                        <div class="small" id="evoStats">Gen 0 · Mean — · N —</div>
+                    </div>
+
+                    <div class="canvasBox" style="margin-top:12px;">
+                        <canvas id="evoHist" height="170"></canvas>
+                    </div>
+
+                    <div class="canvasBox" style="margin-top:12px;">
+                        <canvas id="evoTrend" height="140"></canvas>
+                    </div>
+
+                    <p class="muted" style="margin:12px 0 0; font-weight:650;">
+                        Top — histogram. Bottom — average value (trend).
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size:22px;">Selection controls</h3>
+
+                    <div class="sliderGrid">
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Mode</div>
+                                <div class="valueTag" id="modeTag">Directional</div>
+                            </div>
+                            <label class="sr-only" for="evoMode">Selection mode</label>
+                            <select id="evoMode">
+                                <option value="directional" selected>Directional</option>
+                                <option value="stabilizing">Stabilizing</option>
+                                <option value="disruptive">Disruptive</option>
+                                <option value="neutral">Neutral drift</option>
+                            </select>
+                            <div class="small">How fitness depends on the trait.</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Target trait</div>
+                                <div class="valueTag" id="targetTag">70</div>
+                            </div>
+                            <label class="sr-only" for="evoTarget">Target trait</label>
+                            <input id="evoTarget" type="range" min="0" max="100" value="70" />
+                            <div class="small">Where selection pulls (or pushes away from).</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Strength</div>
+                                <div class="valueTag" id="strengthTag">55</div>
+                            </div>
+                            <label class="sr-only" for="evoStrength">Selection strength</label>
+                            <input id="evoStrength" type="range" min="0" max="100" value="55" />
+                            <div class="small">Higher = harsher selection.</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Mutation</div>
+                                <div class="valueTag" id="mutationTag">12</div>
+                            </div>
+                            <label class="sr-only" for="evoMutation">Mutation</label>
+                            <input id="evoMutation" type="range" min="0" max="40" value="12" />
+                            <div class="small">Trait noise during reproduction.</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Population</div>
+                                <div class="valueTag" id="popTag">180</div>
+                            </div>
+                            <label class="sr-only" for="evoPop">Population</label>
+                            <input id="evoPop" type="range" min="40" max="500" value="180" />
+                            <div class="small">Smaller N = more drift.</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="row">
+                                <div>
+                                    <div class="small">Extra</div>
+                                    <div style="font-weight:950;">Sonify the mean</div>
+                                </div>
+                                <button class="btn ghost" id="soundBtn" type="button">Off</button>
+                            </div>
+                            <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                                Optional WebAudio tone that shifts with mean trait.
+                            </p>
+                        </div>
+
+                        <div class="sliderCard" style="margin-top:12px;">
+                            <div class="row">
+                                <div>
+                                    <div class="small">Interpretation</div>
+                                    <div style="font-weight:950;">What should be observed?</div>
+                                </div>
+                                <button class="btn ghost" id="evoHelpBtn" type="button">Open</button>
+                            </div>
+                            <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                                The distribution moves when selection + heritable variation combine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECTION LAB -->
+    <section id="lab">
+        <div class="container">
+            <div class="sectionHead">
+                <div>
+                    <h2>Selection Lab</h2>
+                    <p class="muted" style="margin:6px 0 0; font-weight:650;">
+                        Fast what‑if tool: adjust pressures and see which traits become advantaged.
+                    </p>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="btn primary" id="labReroll" type="button">New generation</button>
+                    <button class="btn ghost" id="labReset" type="button">Reset</button>
+                </div>
+            </div>
+
+            <div class="grid2">
+                <div class="card">
+                    <div class="row">
+                        <div>
+                            <div class="small">Environment</div>
+                            <div style="font-weight:950; font-size:18px;" id="envTitle">Current environment</div>
+                        </div>
+                        <div class="small" id="genLabel">Gen 1</div>
+                    </div>
+
+                    <p class="muted" id="envDesc" style="margin:10px 0 0; font-weight:650;">
+                        Mixed food, variable rainfall, moderate competition, moderate predators.
+                    </p>
+
+                    <div class="sliderGrid">
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Food hardness</div>
+                                <div class="valueTag" id="foodTag">50</div>
+                            </div>
+                            <label class="sr-only" for="food">Food hardness</label>
+                            <input id="food" type="range" min="0" max="100" value="50" />
+                            <div class="small">0 soft fruit — 100 hard seeds</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Drought</div>
+                                <div class="valueTag" id="droughtTag">50</div>
+                            </div>
+                            <label class="sr-only" for="drought">Drought</label>
+                            <input id="drought" type="range" min="0" max="100" value="50" />
+                            <div class="small">0 wet season — 100 extreme drought</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Competition</div>
+                                <div class="valueTag" id="competitionTag">50</div>
+                            </div>
+                            <label class="sr-only" for="competition">Competition</label>
+                            <input id="competition" type="range" min="0" max="100" value="50" />
+                            <div class="small">Higher reduces resources per bird</div>
+                        </div>
+
+                        <div class="sliderCard">
+                            <div class="sliderRow">
+                                <div style="font-weight:950;">Predators</div>
+                                <div class="valueTag" id="predatorsTag">50</div>
+                            </div>
+                            <label class="sr-only" for="predators">Predators</label>
+                            <input id="predators" type="range" min="0" max="100" value="50" />
+                            <div class="small">Higher punishes slow/conspicuous traits</div>
+                        </div>
+                    </div>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <div class="row">
+                            <div>
+                                <div class="small">Lab tips</div>
+                                <div style="font-weight:950;">Click any species</div>
+                            </div>
+                            <button class="btn ghost" id="labExplainBtn" type="button">Explain</button>
+                        </div>
+                        <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                            Each card opens a modal with an image and an action suggestion.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="row">
+                        <div>
+                            <div class="small">Candidate traits</div>
+                            <div style="font-weight:950; font-size:18px;">Who thrives?</div>
+                        </div>
+                        <button class="btn ghost" id="labCompareBtn" type="button">Compare top 2</button>
+                    </div>
+
+                    <div class="speciesGrid" id="speciesGrid"></div>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <div class="row">
+                            <div>
+                                <div class="small">Evolution minichart</div>
+                                <div style="font-weight:950;">Beak distribution lab</div>
+                            </div>
+                            <div class="small" id="labEvoStats">Mean —</div>
+                        </div>
+
+                        <div class="canvasBox" style="margin-top:10px;">
+                            <canvas id="labEvoCanvas" height="140"></canvas>
+                        </div>
+
+                        <div class="row" style="margin-top:12px;">
+                            <button class="btn ghost" id="labEvoStepBtn" type="button">Step</button>
+                            <button class="btn ghost" id="labEvo10Btn" type="button">Run 10</button>
+                            <button class="btn ghost" id="labEvoResetBtn" type="button">Reset pop</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SURVIVAL GAME -->
+    <section id="game">
+        <div class="container">
+            <div class="sectionHead">
+                <div>
+                    <h2>Survival Game</h2>
+                    <p class="muted" style="margin:6px 0 0; font-weight:650;">
+                        Spawn a population, apply pressure, reproduce survivors with mutation.
+                    </p>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="btn primary" id="spawnBtn" type="button">Spawn</button>
+                    <button class="btn ghost" id="runRoundBtn" type="button">Run round</button>
+                    <button class="btn ghost" id="clearArenaBtn" type="button">Clear</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="arena" id="arena" aria-label="Survival arena"></div>
+
+                <div class="row" style="margin-top:12px;">
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                        <label class="small" for="pressureSelect">Pressure</label>
+                        <select id="pressureSelect">
+                            <option value="none">None (observe drift)</option>
+                            <option value="drought">Drought (hard food)</option>
+                            <option value="predators">Predators (speed matters)</option>
+                            <option value="competition">Competition (efficiency matters)</option>
+                        </select>
+
+                        <button class="btn ghost" id="spawnMoreBtn" type="button">+10</button>
+                        <button class="btn ghost" id="toggleDriftBtn" type="button">Drift On</button>
+                    </div>
+
+                    <div class="small" id="gameStats">Population 0 · Survivors 0 · Round 0</div>
+                </div>
+
+                <div class="sliderCard" style="margin-top:12px;">
+                    <div class="row">
+                        <div>
+                            <div class="small">Trainer</div>
+                            <div style="font-weight:950;">Show “why” panel</div>
+                        </div>
+                        <button class="btn ghost" id="whyBtn" type="button">Open</button>
+                    </div>
+                    <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                        Click creatures to inspect traits and confirm the pressure effect.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ + CERT -->
+    <section id="quiz">
+        <div class="container">
+            <div class="sectionHead">
+                <div>
+                    <h2>Quiz & Certificate</h2>
+                    <p class="muted" style="margin:6px 0 0; font-weight:650;">
+                        Short quiz for retention + PNG certificate generator.
+                    </p>
+                </div>
+                <button class="btn ghost" id="resetQuizBtn" type="button">Reset quiz</button>
+            </div>
+
+            <div class="grid2">
+                <div class="quizCard">
+                    <div class="row">
+                        <div class="small" id="qLabel">Question 1/6</div>
+                        <div class="small" id="scoreLabel">Score 0</div>
+                    </div>
+
+                    <div class="progress" aria-label="Quiz progress" style="margin-top:10px;">
+                        <div class="bar" id="qBar"></div>
+                    </div>
+
+                    <h3 style="margin-top:14px;" id="qText"></h3>
+                    <div class="answers" id="answers"></div>
+
+                    <p class="muted" id="quizHint" style="margin:12px 0 0; font-weight:650;">
+                        Tip: answers lock after selection.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="font-size:22px;">Certificate generator</h3>
+                    <p class="muted" style="margin:8px 0 0; font-weight:650;">
+                        Enter a name and download a PNG certificate (includes quiz score).
+                    </p>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <label class="small" for="certName">Name on certificate</label>
+                        <input id="certName" type="text" placeholder="Your name" style="width:100%; margin-top:8px;" />
+                        <div class="row" style="margin-top:12px;">
+                            <button class="btn primary" id="downloadCertBtn" type="button">Download PNG</button>
+                            <button class="btn ghost" id="copyShareBtn" type="button">Copy share text</button>
+                        </div>
+                        <p class="small" style="margin-top:10px;">Date: <span id="certDate"></span></p>
+                    </div>
+
+                    <div class="sliderCard" style="margin-top:12px;">
+                        <div class="row">
+                            <div>
+                                <div class="small">Data</div>
+                                <div style="font-weight:950;">Autosave progress</div>
+                            </div>
+                            <button class="btn ghost" id="resetSaveBtn" type="button">Clear saved</button>
+                        </div>
+                        <p class="muted" style="margin:10px 0 0; font-weight:650;">
+                            Saves lab + evolution + quiz (best‑effort).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="fine">
+                Built as a single, highly interactive HTML mini‑app with strong visual priority and full responsiveness.
+            </div>
+        </div>
+    </footer>
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modalBox">
+        <button class="modalClose" id="modalClose" type="button" aria-label="Close dialog">✕</button>
+
+        <img
+                id="modalImg"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                alt=""
+        />
+
+        <div id="modalCredit" class="small"></div>
+        <h3 id="modalTitle" style="margin-top:12px;"></h3>
+        <p class="muted" id="modalBody" style="margin-top:10px;"></p>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn ghost" id="modalCopyBtn" type="button">Copy text</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+    "use strict";
+
+    /* ------------------------- Utilities -------------------------- */
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const now = () => (performance && performance.now ? performance.now() : Date.now());
+
+    function toast(msg, ttl = 2800){
+        const host = $("#toast");
+        if(!host) return;
+        const el = document.createElement("div");
+        el.className = "toastItem";
+        el.textContent = msg;
+        host.appendChild(el);
+        setTimeout(() => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(-6px)";
+            el.style.transition = "opacity .2s ease, transform .2s ease";
+            setTimeout(() => el.remove(), 260);
+        }, ttl);
+    }
+
+    function safe(fn){
+        try { fn(); }
+        catch(err){
+            console.error(err);
+            toast("A module failed. Check console.");
+        }
+    }
+
+    function randn(){
+        // Box–Muller
+        let u = 0, v = 0;
+        while(u === 0) u = Math.random();
+        while(v === 0) v = Math.random();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    /* ------------------------- Preferences -------------------------- */
+    const Prefs = {
+        reduceMotionOverride: null, // null=Auto, true=On, false=Off
+        hiContrast: false,
+        autopilot: true,
+        drift: true,
+        sound: false,
+
+        get reduceMotion(){
+            if(this.reduceMotionOverride === true) return true;
+            if(this.reduceMotionOverride === false) return false;
+            return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+        },
+
+        load(){
+            try{
+                const raw = localStorage.getItem("darwin.prefs");
+                if(!raw) return;
+                const p = JSON.parse(raw);
+                if(!p || typeof p !== "object") return;
+                this.reduceMotionOverride = (p.reduceMotionOverride ?? null);
+                this.hiContrast = !!p.hiContrast;
+                this.autopilot = (p.autopilot ?? true);
+                this.drift = (p.drift ?? true);
+                this.sound = (p.sound ?? false);
+            }catch{}
+        },
+
+        save(){
+            try{
+                localStorage.setItem("darwin.prefs", JSON.stringify({
+                    reduceMotionOverride: this.reduceMotionOverride,
+                    hiContrast: this.hiContrast,
+                    autopilot: this.autopilot,
+                    drift: this.drift,
+                    sound: this.sound
+                }));
+            }catch{}
+        }
+    };
+
+    function setContrast(on){
+        Prefs.hiContrast = !!on;
+        document.documentElement.style.filter = Prefs.hiContrast ? "contrast(1.12) saturate(1.04)" : "none";
+        const btn = $("#contrastBtn");
+        if(btn) btn.textContent = Prefs.hiContrast ? "On" : "Off";
+        Prefs.save();
+    }
+
+    /* ------------------------- Modal -------------------------- */
+    const Modal = (() => {
+        let lastFocus = null;
+        let queue = [];
+        let idx = 0;
+
+        function open(itemOrList){
+            const modal = $("#modal");
+            const t = $("#modalTitle");
+            const b = $("#modalBody");
+            if(!modal || !t || !b) return;
+
+            queue = Array.isArray(itemOrList) ? itemOrList : [itemOrList];
+            idx = 0;
+            lastFocus = document.activeElement;
+
+            renderCurrent();
+            modal.classList.add("open");
+            $("#modalClose")?.focus?.();
+        }
+
+        function renderCurrent(){
+            const item = queue[idx] || {};
+            const t = $("#modalTitle");
+            const b = $("#modalBody");
+            const img = $("#modalImg");
+            const credit = $("#modalCredit");
+            const nextBtn = $("#modalNextBtn");
+
+            if(t) t.textContent = item.title || "Details";
+            if(b) b.textContent = item.body || "";
+
+            if(img){
+                const url = item.imageUrl;
+                if(url){
+                    img.style.display = "block";
+                    img.alt = item.imageAlt || item.title || "Image";
+                    img.src = url;
+                    img.onerror = () => {
+                        img.style.display = "none";
+                        img.removeAttribute("src");
+                    };
+                }else{
+                    img.style.display = "none";
+                    img.removeAttribute("src");
+                }
+            }
+
+            if(credit){
+                if(item.imageCreditHtml){
+                    credit.style.display = "block";
+                    credit.innerHTML = item.imageCreditHtml;
+                }else{
+                    credit.style.display = "none";
+                    credit.innerHTML = "";
+                }
+            }
+
+            if(nextBtn){
+                nextBtn.disabled = queue.length <= 1;
+                nextBtn.textContent = (queue.length <= 1) ? "Next" : `Next (${idx+1}/${queue.length})`;
+            }
+        }
+
+        function next(){
+            if(!queue.length) return;
+            idx = (idx + 1) % queue.length;
+            renderCurrent();
+        }
+
+        function close(){
+            const modal = $("#modal");
+            if(!modal) return;
+            modal.classList.remove("open");
+            lastFocus?.focus?.();
+        }
+
+        function init(){
+            const modal = $("#modal");
+            if(!modal) return;
+
+            modal.addEventListener("click", (e) => {
+                if(e.target === modal) close();
+            });
+
+            $("#modalClose")?.addEventListener("click", close);
+            $("#modalNextBtn")?.addEventListener("click", next);
+
+            $("#modalCopyBtn")?.addEventListener("click", async () => {
+                const title = $("#modalTitle")?.textContent || "";
+                const body = $("#modalBody")?.textContent || "";
+                const text = (title + "\n\n" + body).trim();
+                try{
+                    await navigator.clipboard.writeText(text);
+                    toast("Modal text copied.");
+                }catch{
+                    prompt("Copy this text:", text);
+                }
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if(e.key === "Escape" && modal.classList.contains("open")) close();
+                if(e.key === "ArrowRight" && modal.classList.contains("open")) next();
+            });
+        }
+
+        return { init, open, close };
+    })();
+
+    /* ------------------------- Nav -------------------------- */
+    function initNav(){
+        const nav = $("#nav");
+        const menuBtn = $("#menuBtn");
+        const mobilePanel = $("#mobilePanel");
+
+        const onScroll = () => {
+            if(!nav) return;
+            nav.classList.toggle("scrolled", window.scrollY > 8);
+        };
+        window.addEventListener("scroll", onScroll, { passive:true });
+        onScroll();
+
+        $$("a[href^='#']").forEach(a => {
+            a.addEventListener("click", (e) => {
+                const href = a.getAttribute("href");
+                if(!href || href === "#") return;
+                const target = $(href);
+                if(!target) return;
+
+                e.preventDefault();
+                target.scrollIntoView({ behavior: Prefs.reduceMotion ? "auto" : "smooth", block: "start" });
+
+                if(mobilePanel?.classList.contains("open")){
+                    mobilePanel.classList.remove("open");
+                    menuBtn?.setAttribute("aria-expanded", "false");
+                }
+            });
+        });
+
+        menuBtn?.addEventListener("click", () => {
+            if(!mobilePanel) return;
+            const open = !mobilePanel.classList.contains("open");
+            mobilePanel.classList.toggle("open", open);
+            menuBtn.setAttribute("aria-expanded", String(open));
+        });
+    }
+
+    /* ------------------------- Hero particles -------------------------- */
+    function initHeroParticles(){
+        const canvas = $("#bgParticles");
+        if(!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if(!ctx) return;
+
+        let w = 0, h = 0, dpr = 1;
+        const pts = [];
+        const N = 85;
+
+        function resize(){
+            dpr = clamp(window.devicePixelRatio || 1, 1, 2);
+            w = canvas.clientWidth;
+            h = canvas.clientHeight;
+            canvas.width = Math.floor(w * dpr);
+            canvas.height = Math.floor(h * dpr);
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+        }
+
+        function reset(){
+            pts.length = 0;
+            for(let i=0;i<N;i++){
+                pts.push({
+                    x: Math.random()*w,
+                    y: Math.random()*h,
+                    vx: (Math.random()-0.5)*0.35,
+                    vy: (Math.random()-0.5)*0.35,
+                    r: 1.3 + Math.random()*1.4
+                });
+            }
+        }
+
+        function draw(){
+            ctx.clearRect(0,0,w,h);
+
+            const staticOnly = Prefs.reduceMotion;
+            for(const p of pts){
+                if(!staticOnly){
+                    p.x += p.vx; p.y += p.vy;
+                    if(p.x<0 || p.x>w) p.vx *= -1;
+                    if(p.y<0 || p.y>h) p.vy *= -1;
+                }
+                ctx.fillStyle = "rgba(255,255,255,.22)";
+                ctx.beginPath();
+                ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                ctx.fill();
+            }
+
+            for(let i=0;i<pts.length;i++){
+                for(let j=i+1;j<pts.length;j++){
+                    const a = pts[i], b = pts[j];
+                    const dx = a.x-b.x, dy = a.y-b.y;
+                    const dist = Math.hypot(dx,dy);
+                    if(dist < 130){
+                        const t = 1 - dist/130;
+                        ctx.strokeStyle = `rgba(255,255,255,${0.14*t})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x,a.y);
+                        ctx.lineTo(b.x,b.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            if(!Prefs.reduceMotion) requestAnimationFrame(draw);
+        }
+
+        const ro = new ResizeObserver(() => { resize(); reset(); if(Prefs.reduceMotion) draw(); });
+        ro.observe(canvas);
+        resize(); reset();
+        if(Prefs.reduceMotion) draw(); else requestAnimationFrame(draw);
+    }
+
+    /* ------------------------- Voyage canvas -------------------------- */
+    function initVoyage(){
+        const wrap = $("#mapWrap");
+        const canvas = $("#voyageCanvas");
+        const ship = $("#ship");
+        const timeScrub = $("#timeScrub");
+        const timeTag = $("#timeTag");
+        const autopilotBtn = $("#mapAutopilotBtn");
+        if(!wrap || !canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        if(!ctx) return;
+
+        const creditHtml = `Image: <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>`;
+
+        const stops = {
+            plymouth: {
+                title: "Plymouth, England",
+                body: "Departure: constraints, instruments, careful note‑taking. Observations accumulate before big theories.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Crepuscular_rays_over_Plymouth_Sound_crop.jpg/640px-Crepuscular_rays_over_Plymouth_Sound_crop.jpg",
+                imageAlt: "HMS Beagle",
+                imageCreditHtml: creditHtml
+            },
+            capeverde: {
+                title: "Cape Verde",
+                body: "Volcanic layers encourage long‑timescale thinking: gradual processes can build massive change.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Fogo%2C_Cape_Verde_Islands.jpg/640px-Fogo%2C_Cape_Verde_Islands.jpg",
+                imageAlt: "Fogo volcano, Cape Verde",
+                imageCreditHtml: creditHtml
+            },
+            brazil: {
+                title: "Brazil",
+                body: "High biodiversity + local variation: why do similar habitats host different forms?",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Sweet_Bread_Mountain.jpg/640px-Sweet_Bread_Mountain.jpg",
+                imageAlt: "Amazon rainforest",
+                imageCreditHtml: creditHtml
+            },
+            patagonia: {
+                title: "Patagonia",
+                body: "Fossils vs living species suggest continuity and replacement through time — hints of descent with modification.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Otaria_flavescens_-Patagonia-8.jpg/640px-Otaria_flavescens_-Patagonia-8.jpg",
+                imageAlt: "Glyptodon illustration",
+                imageCreditHtml: creditHtml
+            },
+            galapagos: {
+                title: "Galápagos Islands",
+                body: "Islands are nature’s lab: isolation + resources amplify divergence across populations.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Lobo_marino_%28Zalophus_californianus_wollebaeki%29%2C_Punta_Pitt%2C_isla_de_San_Crist%C3%B3bal%2C_islas_Gal%C3%A1pagos%2C_Ecuador%2C_2015-07-24%2C_DD_11.JPG/640px-Lobo_marino_%28Zalophus_californianus_wollebaeki%29%2C_Punta_Pitt%2C_isla_de_San_Crist%C3%B3bal%2C_islas_Gal%C3%A1pagos%2C_Ecuador%2C_2015-07-24%2C_DD_11.JPG",
+                imageAlt: "Galápagos tortoises",
+                imageCreditHtml: creditHtml
+            },
+            tahiti: {
+                title: "Tahiti",
+                body: "Distant islands highlight dispersal limits and how geography shapes population structure over time.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Tahiti_ISS007_14626.jpg/640px-Tahiti_ISS007_14626.jpg",
+                imageAlt: "Tahiti from above",
+                imageCreditHtml: creditHtml
+            },
+            australia: {
+                title: "Australia",
+                body: "Distinct fauna invites a deeper question: how does isolation influence evolutionary pathways?",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/United_States_firefighters_in_Australia_-_44.jpg/640px-United_States_firefighters_in_Australia_-_44.jpg",
+                imageAlt: "Kangaroo and joey",
+                imageCreditHtml: creditHtml
+            }
+        };
+
+        $$(".marker", wrap).forEach(btn => {
+            btn.addEventListener("click", () => {
+                const key = btn.getAttribute("data-stop");
+                const item = stops[key] || { title: "Stop", body: "—" };
+                Modal.open(item);
+            });
+        });
+
+        // --- Route from markers (ship goes through circles) ---
+        const routeOrder = ["plymouth","capeverde","brazil","patagonia","galapagos","tahiti","australia"];
+        const markerEls = $$(".marker", wrap);
+
+        let routePts = [];      // px points
+        let routeSeg = [];      // segment lengths
+        let routeTotal = 1;
+
+        const lerp = (a,b,t) => a + (b-a)*t;
+        const smooth = (t) => t*t*(3-2*t); // smoothstep
+
+        function buildRoute(){
+            routePts = routeOrder.map(key => {
+                const el = markerEls.find(m => m.getAttribute("data-stop") === key);
+                if(!el) return null;
+                const lx = parseFloat(el.style.left || "0"); // %
+                const ty = parseFloat(el.style.top || "0");  // %
+                return { x: w * (lx/100), y: h * (ty/100) };
+            }).filter(Boolean);
+
+            routeSeg = [];
+            routeTotal = 0;
+            for(let i=0;i<routePts.length-1;i++){
+                const a = routePts[i], b = routePts[i+1];
+                const len = Math.hypot(b.x-a.x, b.y-a.y);
+                routeSeg.push(len);
+                routeTotal += len;
+            }
+            routeTotal = Math.max(1, routeTotal);
+        }
+
+        function pointOnRoute(t01){
+            if(routePts.length < 2) return { x: w*0.1, y: h*0.3, angle: 0 };
+
+            let d = clamp(t01, 0, 1) * routeTotal;
+
+            for(let i=0;i<routeSeg.length;i++){
+                const len = routeSeg[i];
+                if(d > len){ d -= len; continue; }
+
+                const a = routePts[i], b = routePts[i+1];
+                const t = smooth(len ? (d/len) : 0);
+                const x = lerp(a.x, b.x, t);
+                const y = lerp(a.y, b.y, t);
+                const angle = Math.atan2(b.y-a.y, b.x-a.x);
+                return { x, y, angle };
+            }
+
+            const lastA = routePts[routePts.length-2];
+            const lastB = routePts[routePts.length-1];
+            return { x: lastB.x, y: lastB.y, angle: Math.atan2(lastB.y-lastA.y, lastB.x-lastA.x) };
+        }
+
+        let w = 0, h = 0, dpr = 1;
+        let t0 = now();
+        let scrub = 0; // 0..1
+
+        function resize(){
+            dpr = clamp(window.devicePixelRatio || 1, 1, 2);
+            w = canvas.clientWidth;
+            h = canvas.clientHeight;
+            canvas.width = Math.floor(w*dpr);
+            canvas.height = Math.floor(h*dpr);
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+            buildRoute();
+        }
+
+        function draw(){
+            ctx.clearRect(0,0,w,h);
+
+            const t = (now() - t0) / 1000;
+            const phase = Prefs.autopilot ? (t * 0.031) : scrub;
+
+            // ocean lines
+            const intensity = 0.7 + 0.8*(phase % 1);
+            for(let k=0;k<5;k++){
+                ctx.beginPath();
+                const yBase = h*(0.20 + k*0.16);
+                for(let x=0;x<=w;x+=10){
+                    const y = yBase + Math.sin(x*0.012 + t*0.9 + k*0.35) * (10 + k*0.16) * intensity;
+                    if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+                }
+                ctx.strokeStyle = `rgba(37,99,235,${0.10 + k*0.05})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // ship position
+            if(ship){
+                const p = (phase % 1 + 1) % 1; // 0..1
+                const pos = pointOnRoute(p);
+                ship.style.left = pos.x + "px";
+                ship.style.top = pos.y + "px";
+                ship.style.transform = `translate(-50%,-50%) rotate(${pos.angle}rad)`;
+            }
+
+            if(!Prefs.reduceMotion) requestAnimationFrame(draw);
+        }
+
+        const ro = new ResizeObserver(() => { resize(); if(Prefs.reduceMotion) draw(); });
+        ro.observe(canvas);
+        resize();
+        if(Prefs.reduceMotion) draw(); else requestAnimationFrame(draw);
+
+        timeScrub?.addEventListener("input", () => {
+            const v = Number(timeScrub.value) / 100;
+            scrub = v;
+            if(timeTag) timeTag.textContent = String(Math.round(v*100));
+            Prefs.autopilot = false;
+            if(autopilotBtn) autopilotBtn.textContent = "Autopilot Off";
+            Prefs.save();
+            if(Prefs.reduceMotion) draw();
+        }, { passive:true });
+
+        autopilotBtn?.addEventListener("click", () => {
+            Prefs.autopilot = !Prefs.autopilot;
+            autopilotBtn.textContent = Prefs.autopilot ? "Autopilot On" : "Autopilot Off";
+            Prefs.save();
+            toast(Prefs.autopilot ? "Autopilot enabled." : "Autopilot disabled (use the slider).");
+        });
+
+        $("#openCreditsBtn")?.addEventListener("click", () => {
+            Modal.open({
+                title: "Image credits",
+                body: "This page uses publicly hosted images from Wikimedia Commons where indicated in each modal credit line.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/640px-Charles_Darwin_seated_crop.jpg",
+                imageAlt: "Charles Darwin portrait",
+                imageCreditHtml: creditHtml
+            });
+        });
+    }
+
+    /* ------------------------- Global toggles -------------------------- */
+    function initGlobalToggles(){
+        const btn = $("#reduceMotionToggle");
+        const render = () => {
+            if(!btn) return;
+            let label = "Auto";
+            if(Prefs.reduceMotionOverride === true) label = "On";
+            if(Prefs.reduceMotionOverride === false) label = "Off";
+            btn.textContent = "Motion " + label;
+        };
+        render();
+
+        btn?.addEventListener("click", () => {
+            if(Prefs.reduceMotionOverride === null) Prefs.reduceMotionOverride = true;
+            else if(Prefs.reduceMotionOverride === true) Prefs.reduceMotionOverride = false;
+            else Prefs.reduceMotionOverride = null;
+
+            Prefs.save();
+            render();
+            toast("Motion preference updated (reload to fully apply).");
+        });
+
+        $("#contrastBtn")?.addEventListener("click", () => setContrast(!Prefs.hiContrast));
+    }
+
+    /* ------------------------- Evolution Playground -------------------------- */
+    function initEvolutionPlayground(){
+        const hist = $("#evoHist");
+        const trend = $("#evoTrend");
+        if(!hist || !trend) return;
+
+        const evoMode = $("#evoMode");
+        const evoTarget = $("#evoTarget");
+        const evoStrength = $("#evoStrength");
+        const evoMutation = $("#evoMutation");
+        const evoPop = $("#evoPop");
+
+        const modeTag = $("#modeTag");
+        const targetTag = $("#targetTag");
+        const strengthTag = $("#strengthTag");
+        const mutationTag = $("#mutationTag");
+        const popTag = $("#popTag");
+        const stats = $("#evoStats");
+
+        const stepBtn = $("#evoStepBtn");
+        const runBtn = $("#evoRunBtn");
+        const resetBtn = $("#evoResetBtn");
+        const helpBtn = $("#evoHelpBtn");
+        const soundBtn = $("#soundBtn");
+
+        // Lock CSS height so DPR-resize doesn't change layout height
+        const BASE_HIST_H = Number(hist.getAttribute("height") || 170);
+        const BASE_TREND_H = Number(trend.getAttribute("height") || 140);
+        hist.style.height = BASE_HIST_H + "px";
+        trend.style.height = BASE_TREND_H + "px";
+
+        let audioCtx = null;
+        let osc = null;
+
+        function setSound(on){
+            Prefs.sound = !!on;
+            if(soundBtn) soundBtn.textContent = Prefs.sound ? "On" : "Off";
+            Prefs.save();
+
+            if(!Prefs.sound){
+                try{ osc?.stop(); }catch{}
+                osc = null;
+                try{ audioCtx?.close(); }catch{}
+                audioCtx = null;
+                toast("Sound off.");
+                return;
+            }
+
+            try{
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                gain.gain.value = 0.02; // subtle
+                osc.type = "sine";
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                toast("Sound on (mean pitch).");
+            }catch{
+                Prefs.sound = false;
+                if(soundBtn) soundBtn.textContent = "Off";
+                toast("WebAudio not available.");
+            }
+        }
+
+        soundBtn?.addEventListener("click", () => setSound(!Prefs.sound));
+
+        const state = {
+            gen: 0,
+            values: [],
+            meanHistory: [],
+            running: false,
+            lastTick: 0
+        };
+
+        function readControls(){
+            const mode = evoMode?.value || "directional";
+            const target = Number(evoTarget?.value ?? 70);
+            const strength = Number(evoStrength?.value ?? 55);
+            const mutation = Number(evoMutation?.value ?? 12);
+            const popN = Number(evoPop?.value ?? 180);
+
+            if(modeTag) modeTag.textContent = mode === "neutral" ? "Neutral" : (mode[0].toUpperCase()+mode.slice(1));
+            if(targetTag) targetTag.textContent = String(target);
+            if(strengthTag) strengthTag.textContent = String(strength);
+            if(mutationTag) mutationTag.textContent = String(mutation);
+            if(popTag) popTag.textContent = String(popN);
+
+            return { mode, target, strength, mutation, popN };
+        }
+
+        function pushMean(){
+            const mean = state.values.reduce((a,b)=>a+b,0) / Math.max(1, state.values.length);
+            state.meanHistory.push(mean);
+            if(state.meanHistory.length > 260) state.meanHistory.shift();
+            if(stats){
+                stats.textContent = `Gen ${state.gen} · Mean ${mean.toFixed(1)} · N ${state.values.length}`;
+            }
+            if(Prefs.sound && osc){
+                const f = 180 + (mean/100)*520; // 180..700
+                try{ osc.frequency.setTargetAtTime(f, audioCtx.currentTime, 0.02); }catch{}
+            }
+        }
+
+        function initPop(){
+            const cfg = readControls();
+            state.values = Array.from({length: cfg.popN}, () => clamp(50 + randn()*14, 0, 100));
+            state.gen = 0;
+            state.meanHistory = [];
+            pushMean();
+        }
+
+        function fitnessProb(x, cfg){
+            const d = Math.abs(x - cfg.target);     // 0..100
+            const dn = d / 100;                     // 0..1
+            const s = cfg.strength / 100;           // 0..1
+            const base = 0.85;
+
+            if(cfg.mode === "neutral") return 0.72;
+
+            if(cfg.mode === "directional"){
+                return clamp(base - dn*(0.95*s), 0.05, 0.98);
+            }
+
+            if(cfg.mode === "stabilizing"){
+                const dd = dn*dn;
+                return clamp(base - dd*(1.25*s), 0.05, 0.98);
+            }
+
+            if(cfg.mode === "disruptive"){
+                // middle (near target) is penalized; extremes benefit
+                const middle = 1 - dn; // high near target
+                return clamp(0.30 + dn*0.90 - middle*(0.55*s), 0.05, 0.98);
+            }
+
+            return 0.70;
+        }
+
+        function step(){
+            const cfg = readControls();
+
+            // adapt population size
+            if(state.values.length !== cfg.popN){
+                const cur = state.values.slice(0, cfg.popN);
+                while(cur.length < cfg.popN) cur.push(clamp(50 + randn()*14, 0, 100));
+                state.values = cur;
+            }
+
+            // selection
+            const survivors = state.values.filter(v => Math.random() < fitnessProb(v, cfg));
+            const survCount = survivors.length;
+
+            // reproduce
+            const next = [];
+            const mut = cfg.mutation;
+            for(let i=0;i<cfg.popN;i++){
+                const parent = survivors.length
+                    ? survivors[Math.floor(Math.random()*survivors.length)]
+                    : state.values[Math.floor(Math.random()*state.values.length)];
+                next.push(clamp(parent + randn()*(mut/6), 0, 100));
+            }
+
+            state.values = next;
+            state.gen += 1;
+            pushMean();
+            drawAll();
+
+            if(survCount < Math.max(4, Math.round(cfg.popN*0.05))){
+                toast(`Bottleneck! Survivors ${survCount}/${cfg.popN}`);
+            }
+        }
+
+        function drawHistogram(){
+            const ctx = hist.getContext("2d");
+            if(!ctx) return;
+
+            const cssW = hist.clientWidth;
+            const cssH = BASE_HIST_H; // fixed CSS height
+            const dpr = clamp(window.devicePixelRatio || 1, 1, 2);
+
+            hist.width = Math.max(1, Math.floor(cssW * dpr));
+            hist.height = Math.max(1, Math.floor(cssH * dpr));
+
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+            ctx.clearRect(0,0,cssW,cssH);
+
+            const bins = 28;
+            const counts = Array(bins).fill(0);
+            for(const v of state.values){
+                const idx = Math.min(bins-1, Math.floor((v/100)*bins));
+                counts[idx]++;
+            }
+            const maxC = Math.max(...counts, 1);
+
+            // grid
+            ctx.strokeStyle = "rgba(100,116,139,.16)";
+            ctx.lineWidth = 1;
+            for(let i=0;i<4;i++){
+                const y = cssH - 18 - (i/3)*(cssH-26);
+                ctx.beginPath();
+                ctx.moveTo(10,y);
+                ctx.lineTo(cssW-10,y);
+                ctx.stroke();
+            }
+
+            const bw = (cssW-20) / bins;
+            for(let i=0;i<bins;i++){
+                const barH = (counts[i]/maxC)*(cssH-30);
+                const x = 10 + i*bw;
+                const y = cssH - 12 - barH;
+                ctx.fillStyle = "rgba(37,99,235,.55)";
+                ctx.fillRect(x+1, y, Math.max(2,bw-2), barH);
+            }
+        }
+
+        function drawTrend(){
+            const ctx = trend.getContext("2d");
+            if(!ctx) return;
+
+            const cssW = trend.clientWidth;
+            const cssH = BASE_TREND_H; // fixed CSS height
+            const dpr = clamp(window.devicePixelRatio || 1, 1, 2);
+
+            trend.width = Math.max(1, Math.floor(cssW * dpr));
+            trend.height = Math.max(1, Math.floor(cssH * dpr));
+
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+            ctx.clearRect(0,0,cssW,cssH);
+
+            // axes
+            ctx.strokeStyle = "rgba(100,116,139,.18)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(10,10);
+            ctx.lineTo(10,cssH-10);
+            ctx.lineTo(cssW-10,cssH-10);
+            ctx.stroke();
+
+            const data = state.meanHistory;
+            if(data.length < 2) return;
+
+            ctx.strokeStyle = "rgba(124,58,237,.9)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for(let i=0;i<data.length;i++){
+                const x = 10 + (i/(data.length-1))*(cssW-20);
+                const y = (cssH-10) - (data[i]/100)*(cssH-20);
+                if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+            }
+            ctx.stroke();
+
+            const last = data[data.length-1];
+            const lx = cssW-10;
+            const ly = (cssH-10) - (last/100)*(cssH-20);
+
+            ctx.fillStyle = "rgba(124,58,237,.35)";
+            ctx.beginPath();
+            ctx.arc(lx,ly,8,0,Math.PI*2);
+            ctx.fill();
+
+            ctx.fillStyle = "rgba(124,58,237,.95)";
+            ctx.beginPath();
+            ctx.arc(lx,ly,3.2,0,Math.PI*2);
+            ctx.fill();
+        }
+
+        function drawAll(){
+            drawHistogram();
+            drawTrend();
+            saveProgress();
+        }
+
+        function toggleRun(){
+            state.running = !state.running;
+            if(runBtn) runBtn.textContent = state.running ? "Pause" : "Run";
+            toast(state.running ? "Running…" : "Paused.");
+            if(state.running) loop();
+        }
+
+        function loop(){
+            if(!state.running) return;
+            if(Prefs.reduceMotion){
+                step();
+                setTimeout(loop, 260);
+                return;
+            }
+            const t = now();
+            if(t - state.lastTick > 220){
+                state.lastTick = t;
+                step();
+            }
+            requestAnimationFrame(loop);
+        }
+
+        stepBtn?.addEventListener("click", step);
+        runBtn?.addEventListener("click", toggleRun);
+        resetBtn?.addEventListener("click", () => {
+            state.running = false;
+            if(runBtn) runBtn.textContent = "Run";
+            initPop();
+            drawAll();
+            toast("Evolution reset.");
+        });
+
+        helpBtn?.addEventListener("click", () => {
+            Modal.open({
+                title: "How to read Evolution Playground",
+                body:
+                    "Directional: mean moves toward the target.\n" +
+                    "Stabilizing: distribution narrows around the target.\n" +
+                    "Disruptive: extremes can become more common; middle becomes less fit.\n" +
+                    "Neutral drift: mean wanders randomly (stronger in small populations).",
+                imageUrl:
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/640px-Charles_Darwin_seated_crop.jpg",
+                imageAlt: "Charles Darwin portrait",
+                imageCreditHtml: `Image: <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>`
+            });
+        });
+
+        [evoMode, evoTarget, evoStrength, evoMutation, evoPop].forEach(el => {
+            el?.addEventListener("input", () => {
+                drawAll();
+            }, { passive:true });
+        });
+
+        // redraw on viewport resize (avoids RO loop on canvas internal resizing)
+        window.addEventListener("resize", () => drawAll(), { passive: true });
+
+        // init
+        readControls();
+        initPop();
+        drawAll();
+
+        // expose for autosave
+        window.DARWINEVO = state;
+    }
+
+    /* ------------------------- Selection Lab + mini evolution -------------------------- */
+    function initLab(){
+        const grid = $("#speciesGrid");
+        if(!grid) return;
+
+        const sFood = $("#food");
+        const sDrought = $("#drought");
+        const sComp = $("#competition");
+        const sPred = $("#predators");
+
+        const tags = {
+            food: $("#foodTag"),
+            drought: $("#droughtTag"),
+            competition: $("#competitionTag"),
+            predators: $("#predatorsTag")
+        };
+
+        const genLabel = $("#genLabel");
+        const envTitle = $("#envTitle");
+        const envDesc = $("#envDesc");
+
+        const creditHtml = `Image: <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>`;
+
+        const state = {
+            gen: 1,
+            env: { food: 50, drought: 50, competition: 50, predators: 50 }
+        };
+
+        const species = [
+            {
+                id: "small-soft",
+                icon: "🐦",
+                name: "Small beak (soft-food specialist)",
+                prefs: { food: 15, drought: 35, competition: 55, predators: 55 },
+                tip: "Try lowering Food hardness below 30.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/GalapagosTortoises.jpg/960px-GalapagosTortoises.jpg",
+                imageAlt: "Galápagos image"
+            },
+            {
+                id: "big-hard",
+                icon: "🦜",
+                name: "Large beak (hard-seed cracker)",
+                prefs: { food: 85, drought: 75, competition: 55, predators: 45 },
+                tip: "Try raising Food hardness above 70 and Drought above 65.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Glyptodon_olddrawing.png/960px-Glyptodon_olddrawing.png",
+                imageAlt: "Historical illustration"
+            },
+            {
+                id: "fast-alert",
+                icon: "🪶",
+                name: "Fast & alert (predator evader)",
+                prefs: { food: 45, drought: 50, competition: 45, predators: 85 },
+                tip: "Increase Predators above 70 to reward speed/alertness.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Amazon_CIAT_%2822929%29.jpg/960px-Amazon_CIAT_%2822929%29.jpg",
+                imageAlt: "Ecosystem"
+            },
+            {
+                id: "efficient",
+                icon: "🐤",
+                name: "Efficient forager (competition winner)",
+                prefs: { food: 55, drought: 55, competition: 85, predators: 45 },
+                tip: "Increase Competition above 70 to reward efficiency.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PSM_V57_D097_HMS_Beagle_in_the_Strait_of_Magellan.png/960px-PSM_V57_D097_HMS_Beagle_in_the_Strait_of_Magellan.png",
+                imageAlt: "HMS Beagle"
+            }
+        ];
+
+        function fitScore(sp){
+            const e = state.env;
+            const d =
+                Math.abs(e.food - sp.prefs.food) * 1.2 +
+                Math.abs(e.drought - sp.prefs.drought) * 1.0 +
+                Math.abs(e.competition - sp.prefs.competition) * 0.9 +
+                Math.abs(e.predators - sp.prefs.predators) * 1.1;
+
+            // 0..~400 -> map to 0..100
+            return clamp(100 - d / 3.2, 0, 100);
+        }
+
+        function fitBadge(score){
+            if(score >= 70) return { cls: "good", label: "Thriving" };
+            if(score >= 45) return { cls: "ok", label: "Struggling" };
+            return { cls: "bad", label: "Failing" };
+        }
+
+        function envSummary(){
+            const e = state.env;
+            const hard = e.food >= 65 ? "hard seeds dominate" : (e.food <= 35 ? "soft fruit dominates" : "mixed resources");
+            const wet = e.drought >= 65 ? "severe drought" : (e.drought <= 35 ? "wet season" : "variable rainfall");
+            const comp = e.competition >= 65 ? "high competition" : (e.competition <= 35 ? "low competition" : "moderate competition");
+            const pred = e.predators >= 65 ? "high predation" : (e.predators <= 35 ? "low predation" : "moderate predators");
+            return `Food: ${hard}. Climate: ${wet}. ${comp}. ${pred}.`;
+        }
+
+        function readSliders(){
+            state.env.food = Number(sFood?.value ?? state.env.food);
+            state.env.drought = Number(sDrought?.value ?? state.env.drought);
+            state.env.competition = Number(sComp?.value ?? state.env.competition);
+            state.env.predators = Number(sPred?.value ?? state.env.predators);
+        }
+
+        function render(){
+            readSliders();
+
+            if(tags.food) tags.food.textContent = String(state.env.food);
+            if(tags.drought) tags.drought.textContent = String(state.env.drought);
+            if(tags.competition) tags.competition.textContent = String(state.env.competition);
+            if(tags.predators) tags.predators.textContent = String(state.env.predators);
+
+            if(genLabel) genLabel.textContent = `Gen ${state.gen}`;
+            if(envTitle) envTitle.textContent = "Current environment";
+            if(envDesc) envDesc.textContent = envSummary();
+
+            grid.innerHTML = "";
+
+            const ranked = species
+                .map(sp => ({ sp, score: fitScore(sp) }))
+                .sort((a,b) => b.score - a.score);
+
+            ranked.forEach(({ sp, score }) => {
+                const badge = fitBadge(score);
+                const el = document.createElement("button");
+                el.className = "species";
+                el.type = "button";
+                el.innerHTML = `
+            <div class="row">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:22px;">${sp.icon}</div>
+                <div style="font-weight:950;">${sp.name}</div>
+              </div>
+              <div class="fit ${badge.cls}">${badge.label}</div>
+            </div>
+            <div class="muted" style="margin-top:10px; font-weight:650;">
+              ${sp.tip}
+            </div>
+            <div class="small" style="margin-top:10px;">Click for details + image</div>
+          `;
+                el.addEventListener("click", () => {
+                    Modal.open({
+                        title: sp.name,
+                        body: `Fitness score: ${score.toFixed(0)}/100.\n\nSuggested action: ${sp.tip}`,
+                        imageUrl: sp.imageUrl,
+                        imageAlt: sp.imageAlt,
+                        imageCreditHtml: creditHtml
+                    });
+                });
+                grid.appendChild(el);
+            });
+
+            // keep lab mini evolution in sync with food hardness (target line)
+            drawLabEvolution(true);
+
+            saveProgress();
+        }
+
+        // Explain + compare modals
+        $("#labExplainBtn")?.addEventListener("click", () => {
+            Modal.open({
+                title: "How the Selection Lab works",
+                body:
+                    "Each card has a preferred “sweet spot” across Food, Drought, Competition, Predators.\n" +
+                    "Move sliders to see which traits best match the environment.\n\n" +
+                    "This is a simplified model designed for intuition, not a full ecological simulator.",
+                imageUrl:
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/640px-Charles_Darwin_seated_crop.jpg",
+                imageAlt: "Charles Darwin portrait",
+                imageCreditHtml: creditHtml
+            });
+        });
+
+        $("#labCompareBtn")?.addEventListener("click", () => {
+            const ranked = species
+                .map(sp => ({ sp, score: fitScore(sp) }))
+                .sort((a,b) => b.score - a.score)
+                .slice(0,2);
+
+            const body = ranked
+                .map((r, i) => `${i+1}) ${r.sp.name} — ${r.score.toFixed(0)}/100`)
+                .join("\n");
+
+            Modal.open({
+                title: "Top 2 right now",
+                body,
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/GalapagosTortoises.jpg/960px-GalapagosTortoises.jpg",
+                imageAlt: "Galápagos image",
+                imageCreditHtml: creditHtml
+            });
+        });
+
+        // --- Lab mini evolution: beak distribution ---
+        const labCanvas = $("#labEvoCanvas");
+        const labStats = $("#labEvoStats");
+        let labPop = [];
+        const POPN = 160;
+        const BASE_LAB_H = Number(labCanvas?.getAttribute("height") || 140);
+        if(labCanvas) labCanvas.style.height = BASE_LAB_H + "px";
+
+        function labPopInit(){
+            labPop = Array.from({ length: POPN }, () => clamp(50 + randn()*12, 0, 100));
+        }
+
+        function labSelectionProb(beak){
+            const target = state.env.food; // 0..100
+            const intensity = 0.010 + (state.env.drought/100)*0.030; // drought amplifies selection
+            const dist = Math.abs(beak - target);
+            return clamp(1 - dist*intensity, 0.05, 0.98);
+        }
+
+        function labStep(){
+            const survivors = labPop.filter(b => Math.random() < labSelectionProb(b));
+            const surv = survivors.length;
+            const mut = 1.8 + (state.env.competition/100)*2.2; // competition increases variance/noise
+            const next = [];
+            for(let i=0;i<POPN;i++){
+                const parent = survivors.length
+                    ? survivors[Math.floor(Math.random()*survivors.length)]
+                    : labPop[Math.floor(Math.random()*labPop.length)];
+                next.push(clamp(parent + randn()*mut, 0, 100));
+            }
+            labPop = next;
+            return surv;
+        }
+
+        function drawLabEvolution(showOnly = false){
+            if(!labCanvas) return;
+            const ctx = labCanvas.getContext("2d");
+            if(!ctx) return;
+
+            const cssW = labCanvas.clientWidth;
+            const cssH = BASE_LAB_H; // fixed CSS height to avoid layout growth loop
+            const dpr = clamp(window.devicePixelRatio || 1, 1, 2);
+
+            labCanvas.width = Math.max(1, Math.floor(cssW * dpr));
+            labCanvas.height = Math.max(1, Math.floor(cssH * dpr));
+
+            ctx.setTransform(dpr,0,0,dpr,0,0);
+            ctx.clearRect(0,0,cssW,cssH);
+
+            const bins = 22;
+            const counts = Array(bins).fill(0);
+            for(const b of labPop){
+                const idx = Math.min(bins-1, Math.floor((b/100)*bins));
+                counts[idx]++;
+            }
+            const maxC = Math.max(...counts, 1);
+
+            // grid
+            ctx.strokeStyle = "rgba(100,116,139,.16)";
+            ctx.lineWidth = 1;
+            for(let i=0;i<4;i++){
+                const y = cssH - 18 - (i/3)*(cssH-26);
+                ctx.beginPath();
+                ctx.moveTo(10,y);
+                ctx.lineTo(cssW-10,y);
+                ctx.stroke();
+            }
+
+            // target marker
+            const target = state.env.food;
+            const tx = 10 + (target/100)*(cssW-20);
+            ctx.strokeStyle = "rgba(245,158,11,.75)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(tx, 8);
+            ctx.lineTo(tx, cssH-10);
+            ctx.stroke();
+
+            // bars
+            const bw = (cssW-20)/bins;
+            for(let i=0;i<bins;i++){
+                const barH = (counts[i]/maxC)*(cssH-30);
+                const x = 10 + i*bw;
+                const y = cssH - 12 - barH;
+                ctx.fillStyle = "rgba(37,99,235,.50)";
+                ctx.fillRect(x+1, y, Math.max(2,bw-2), barH);
+            }
+
+            const mean = labPop.reduce((a,b)=>a+b,0) / Math.max(1, labPop.length);
+            if(labStats) labStats.textContent = `Mean ${mean.toFixed(1)} · Target ${target}`;
+
+            if(!showOnly) saveProgress();
+        }
+
+        $("#labEvoStepBtn")?.addEventListener("click", () => {
+            const surv = labStep();
+            drawLabEvolution(false);
+            toast(`Lab evolution: survivors ${surv}/${POPN}`);
+        });
+
+        $("#labEvo10Btn")?.addEventListener("click", () => {
+            let last = null;
+            for(let i=0;i<10;i++) last = labStep();
+            drawLabEvolution(false);
+            toast(`Lab evolution: 10 generations. Last survivors ${last}/${POPN}`);
+        });
+
+        $("#labEvoResetBtn")?.addEventListener("click", () => {
+            labPopInit();
+            drawLabEvolution(false);
+            toast("Lab population reset.");
+        });
+
+        $("#labReroll")?.addEventListener("click", () => {
+            state.gen += 1;
+            render();
+            toast("New generation simulated.");
+        });
+
+        $("#labReset")?.addEventListener("click", () => {
+            state.gen = 1;
+            state.env = { food: 50, drought: 50, competition: 50, predators: 50 };
+            if(sFood) sFood.value = "50";
+            if(sDrought) sDrought.value = "50";
+            if(sComp) sComp.value = "50";
+            if(sPred) sPred.value = "50";
+            labPopInit();
+            render();
+            toast("Lab reset.");
+        });
+
+        [sFood, sDrought, sComp, sPred].forEach(inp => {
+            inp?.addEventListener("input", () => render(), { passive:true });
+        });
+
+        window.addEventListener("resize", () => drawLabEvolution(true), { passive: true });
+
+        labPopInit();
+        render();
+
+        window.DARWINLAB = state;
+    }
+
+    /* ------------------------- Survival game -------------------------- */
+    function initGame(){
+        const arena = $("#arena");
+        const stats = $("#gameStats");
+        const pressureSel = $("#pressureSelect");
+        if(!arena || !stats || !pressureSel) return;
+
+        const creditHtml = `Image: <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>`;
+        const icons = ["🐛","🦋","🦎","🐟","🐁","🦀","🕊️","🐇","🦔","🦜"];
+
+        const state = {
+            round: 0,
+            population: []
+        };
+
+        function setStats(){
+            const alive = state.population.filter(p => p.alive).length;
+            stats.textContent = `Population ${state.population.length} · Survivors ${alive} · Round ${state.round}`;
+        }
+
+        function clearArena(){
+            state.population = [];
+            arena.innerHTML = "";
+            state.round = 0;
+            setStats();
+            saveProgress();
+        }
+
+        function spawn(n = 18){
+            const rect = arena.getBoundingClientRect();
+            const w = rect.width || 900;
+            const h = rect.height || 420;
+
+            for(let i=0;i<n;i++){
+                const el = document.createElement("button");
+                el.type = "button";
+                el.className = "creature";
+                el.textContent = icons[(state.population.length + i) % icons.length];
+                el.style.left = (Math.random()*(w-40) + 10) + "px";
+                el.style.top = (Math.random()*(h-40) + 10) + "px";
+
+                const p = {
+                    el,
+                    alive: true,
+                    beakHard: Math.random(),   // 0..1
+                    speed: Math.random(),      // 0..1
+                    efficiency: Math.random()  // 0..1
+                };
+
+                el.addEventListener("click", () => {
+                    Modal.open({
+                        title: "Creature details",
+                        body:
+                            `Traits:\n` +
+                            `• Hard-food: ${Math.round(p.beakHard*100)}\n` +
+                            `• Speed: ${Math.round(p.speed*100)}\n` +
+                            `• Efficiency: ${Math.round(p.efficiency*100)}\n\n` +
+                            `Try changing pressure, then run a round.`,
+                        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Amazon_CIAT_%2822929%29.jpg/960px-Amazon_CIAT_%2822929%29.jpg",
+                        imageAlt: "Ecosystem",
+                        imageCreditHtml: creditHtml
+                    });
+                });
+
+                state.population.push(p);
+                arena.appendChild(el);
+            }
+
+            setStats();
+            toast(`Spawned ${n}.`);
+            saveProgress();
+        }
+
+        let driftRAF = null;
+        function driftMove(){
+            if(Prefs.reduceMotion || !Prefs.drift) return;
+            if(driftRAF) cancelAnimationFrame(driftRAF);
+
+            const rect = arena.getBoundingClientRect();
+            const w = rect.width || 900;
+            const h = rect.height || 420;
+
+            const step = () => {
+                if(!Prefs.drift) return;
+                for(const p of state.population){
+                    if(!p.alive) continue;
+                    const x = parseFloat(p.el.style.left) || 0;
+                    const y = parseFloat(p.el.style.top) || 0;
+                    const nx = clamp(x + (Math.random()-0.5)*2.4, 6, w-26);
+                    const ny = clamp(y + (Math.random()-0.5)*2.4, 6, h-26);
+                    p.el.style.left = nx + "px";
+                    p.el.style.top = ny + "px";
+                }
+                driftRAF = requestAnimationFrame(step);
+            };
+            driftRAF = requestAnimationFrame(step);
+        }
+
+        function survivalProb(p, pressure){
+            if(pressure === "drought"){
+                // hard food: beakHard matters most
+                return clamp(0.15 + 0.85*p.beakHard, 0.05, 0.98);
+            }
+            if(pressure === "predators"){
+                return clamp(0.15 + 0.85*p.speed, 0.05, 0.98);
+            }
+            if(pressure === "competition"){
+                return clamp(0.15 + 0.85*p.efficiency, 0.05, 0.98);
+            }
+            return 0.75;
+        }
+
+        function runRound(){
+            const pressure = pressureSel.value;
+            if(!state.population.length){
+                toast("Spawn first.");
+                return;
+            }
+
+            state.round += 1;
+
+            // select survivors
+            for(const p of state.population){
+                if(!p.alive) continue;
+                const ok = Math.random() < survivalProb(p, pressure);
+                if(!ok){
+                    p.alive = false;
+                    p.el.style.opacity = "0.18";
+                }
+            }
+
+            const survivors = state.population.filter(p => p.alive);
+            const alive = survivors.length;
+
+            // reproduce (small number of births)
+            const births = Math.min(10, Math.max(0, 22 - alive));
+            const mutate = (x) => clamp(x + (Math.random()-0.5)*0.20, 0, 1);
+
+            const rect = arena.getBoundingClientRect();
+            const w = rect.width || 900;
+            const h = rect.height || 420;
+
+            for(let i=0;i<births;i++){
+                const parent = survivors.length
+                    ? survivors[Math.floor(Math.random()*survivors.length)]
+                    : state.population[Math.floor(Math.random()*state.population.length)];
+
+                const el = document.createElement("button");
+                el.type = "button";
+                el.className = "creature";
+                el.textContent = icons[(state.population.length + i) % icons.length];
+                el.style.left = (Math.random()*(w-40) + 10) + "px";
+                el.style.top = (Math.random()*(h-40) + 10) + "px";
+
+                const child = {
+                    el,
+                    alive: true,
+                    beakHard: mutate(parent.beakHard),
+                    speed: mutate(parent.speed),
+                    efficiency: mutate(parent.efficiency)
+                };
+
+                el.addEventListener("click", () => {
+                    Modal.open({
+                        title: "Creature details",
+                        body:
+                            `Traits:\n` +
+                            `• Hard-food: ${Math.round(child.beakHard*100)}\n` +
+                            `• Speed: ${Math.round(child.speed*100)}\n` +
+                            `• Efficiency: ${Math.round(child.efficiency*100)}\n`,
+                        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/PSM_V57_D097_HMS_Beagle_in_the_Strait_of_Magellan.png/960px-PSM_V57_D097_HMS_Beagle_in_the_Strait_of_Magellan.png",
+                        imageAlt: "HMS Beagle",
+                        imageCreditHtml: creditHtml
+                    });
+                });
+
+                state.population.push(child);
+                arena.appendChild(el);
+            }
+
+            setStats();
+            toast("Selection round completed.");
+            saveProgress();
+        }
+
+        $("#spawnBtn")?.addEventListener("click", () => { clearArena(); spawn(18); driftMove(); });
+        $("#spawnMoreBtn")?.addEventListener("click", () => { spawn(10); driftMove(); });
+        $("#runRoundBtn")?.addEventListener("click", () => { runRound(); driftMove(); });
+        $("#clearArenaBtn")?.addEventListener("click", clearArena);
+
+        $("#toggleDriftBtn")?.addEventListener("click", () => {
+            Prefs.drift = !Prefs.drift;
+            $("#toggleDriftBtn").textContent = `Drift ${Prefs.drift ? "On" : "Off"}`;
+            Prefs.save();
+            if(Prefs.drift) driftMove();
+        });
+
+        $("#whyBtn")?.addEventListener("click", () => {
+            Modal.open({
+                title: "Why panel",
+                body:
+                    "Drought rewards hard-food trait.\n" +
+                    "Predators reward speed.\n" +
+                    "Competition rewards efficiency.\n\n" +
+                    "Click creatures to inspect traits and confirm the pressure effect.",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/640px-Charles_Darwin_seated_crop.jpg",
+                imageAlt: "Galápagos image",
+                imageCreditHtml: creditHtml
+            });
+        });
+
+        // init labels + drift
+        setStats();
+        driftMove();
+
+        window.DARWINGAME = state;
+    }
+
+    /* ------------------------- Quiz -------------------------- */
+    function initQuiz(){
+        const qText = $("#qText");
+        const answers = $("#answers");
+        const qLabel = $("#qLabel");
+        const scoreLabel = $("#scoreLabel");
+        const qBar = $("#qBar");
+        if(!qText || !answers || !qLabel || !scoreLabel || !qBar) return;
+
+        const questions = [
+            {
+                q: "What does natural selection require?",
+                a: ["Random outcomes only", "Heritable variation + differential survival", "Perfect adaptation instantly", "A single mutation always wins"],
+                c: 1
+            },
+            {
+                q: "Why are islands powerful for evolutionary reasoning?",
+                a: ["They stop evolution", "They remove geography", "They isolate populations and amplify differences", "They guarantee identical climates"],
+                c: 2
+            },
+            {
+                q: "In drought with hard seeds, which trait is often favored?",
+                a: ["Smaller beaks", "Larger/stronger beaks", "Bright colors", "Lower efficiency"],
+                c: 1
+            },
+            {
+                q: "Selection acts directly on",
+                a: ["Populations", "Individuals (changing populations over time)", "Only fossils", "Only the environment"],
+                c: 1
+            },
+            {
+                q: "What can happen even without selection pressure?",
+                a: ["Nothing changes", "Genetic drift and random fluctuation", "Every trait improves", "All species converge"],
+                c: 1
+            },
+            {
+                q: "This site’s fitness scores represent",
+                a: ["Moral value", "Match between traits and environment", "Physical size", "Guaranteed survival"],
+                c: 1
+            }
+        ];
+
+        const state = { i: 0, score: 0, locked: false };
+
+        function render(){
+            const total = questions.length;
+            const item = questions[state.i];
+
+            qLabel.textContent = `Question ${state.i+1}/${total}`;
+            scoreLabel.textContent = `Score ${state.score}`;
+            qBar.style.width = `${Math.round((state.i/total)*100)}%`;
+
+            state.locked = false;
+            qText.textContent = item.q;
+            answers.innerHTML = "";
+
+            item.a.forEach((text, idx) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "answer";
+                btn.textContent = `${String.fromCharCode(65+idx)}. ${text}`;
+                btn.addEventListener("click", () => pick(idx, btn));
+                answers.appendChild(btn);
+            });
+
+            saveProgress();
+        }
+
+        function pick(idx, btn){
+            if(state.locked) return;
+            state.locked = true;
+
+            const item = questions[state.i];
+            const btns = $$(".answer", answers);
+            const correctBtn = btns[item.c];
+
+            if(idx === item.c){
+                btn.classList.add("correct");
+                state.score += 1;
+                toast("Correct.");
+            }else{
+                btn.classList.add("wrong");
+                correctBtn?.classList.add("correct");
+                toast("Not quite — correct answer highlighted.");
+            }
+
+            btns.forEach(b => b.disabled = true);
+
+            setTimeout(() => {
+                state.i += 1;
+                if(state.i >= questions.length){
+                    qText.textContent = `Finished! Score ${state.score}/${questions.length}`;
+                    qBar.style.width = "100%";
+                    answers.innerHTML = "";
+                    toast("Quiz completed. Generate your certificate!");
+                    saveProgress();
+                    return;
+                }
+                render();
+            }, 1150);
+        }
+
+        $("#resetQuizBtn")?.addEventListener("click", () => {
+            state.i = 0;
+            state.score = 0;
+            state.locked = false;
+            render();
+            toast("Quiz reset.");
+        });
+
+        render();
+        window.DARWINQUIZ = state;
+    }
+
+    /* ------------------------- Certificate -------------------------- */
+    function initCertificate(){
+        const certDate = $("#certDate");
+        const nameInput = $("#certName");
+        const dlBtn = $("#downloadCertBtn");
+        const copyBtn = $("#copyShareBtn");
+        if(!certDate || !nameInput || !dlBtn || !copyBtn) return;
+
+        certDate.textContent = new Date().toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
+
+        function buildPNG(name, scoreText){
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = 1400;
+            canvas.height = 900;
+
+            // background
+            const g = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+            g.addColorStop(0, "#ffffff");
+            g.addColorStop(1, "#f1f5f9");
+            ctx.fillStyle = g;
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+
+            // borders
+            ctx.strokeStyle = "#2563eb";
+            ctx.lineWidth = 26;
+            ctx.strokeRect(18,18,canvas.width-36,canvas.height-36);
+            ctx.strokeStyle = "#7c3aed";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(56,56,canvas.width-112,canvas.height-112);
+
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "900 72px Playfair Display, serif";
+            ctx.fillText("Certificate of Completion", canvas.width/2, 190);
+
+            ctx.fillStyle = "#475569";
+            ctx.font = "700 28px Inter, sans-serif";
+            ctx.fillText("This certifies that", canvas.width/2, 270);
+
+            ctx.fillStyle = "#2563eb";
+            ctx.font = "900 76px Playfair Display, serif";
+            ctx.fillText(name, canvas.width/2, 370);
+
+            // underline
+            ctx.strokeStyle = "#2563eb";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(280, 395);
+            ctx.lineTo(canvas.width-280, 395);
+            ctx.stroke();
+
+            ctx.fillStyle = "#475569";
+            ctx.font = "650 26px Inter, sans-serif";
+            ctx.fillText("has completed the Darwin Evolution Mini‑App experience", canvas.width/2, 470);
+            ctx.fillText("and demonstrated understanding of natural selection.", canvas.width/2, 510);
+
+            if(scoreText){
+                ctx.fillStyle = "#0f172a";
+                ctx.font = "900 30px Inter, sans-serif";
+                ctx.fillText(scoreText, canvas.width/2, 565);
+            }
+
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "800 26px Inter, sans-serif";
+            ctx.fillText(`Date: ${certDate.textContent}`, canvas.width/2, 640);
+
+            // corner marks
+            ctx.font = "900 46px Inter, sans-serif";
+            ctx.fillStyle = "#7c3aed";
+            ctx.fillText("✦", 120, 130);
+            ctx.fillText("✦", canvas.width-120, 130);
+            ctx.fillStyle = "#f59e0b";
+            ctx.fillText("✦", 120, canvas.height-90);
+            ctx.fillText("✦", canvas.width-120, canvas.height-90);
+
+            return canvas;
+        }
+
+        dlBtn.addEventListener("click", () => {
+            const name = (nameInput.value || "").trim() || "Participant";
+            const quiz = window.DARWINQUIZ;
+            const scoreText = quiz ? `Quiz score: ${quiz.score}/6` : "";
+            const canvas = buildPNG(name, scoreText);
+
+            canvas.toBlob((blob) => {
+                if(!blob){
+                    toast("Could not generate image.");
+                    return;
+                }
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `Darwin-Certificate-${name.replace(/\\s+/g,"-")}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+                toast("Certificate downloaded.");
+            });
+        });
+
+        copyBtn.addEventListener("click", async () => {
+            const name = (nameInput.value || "").trim() || "Participant";
+            const quiz = window.DARWINQUIZ;
+            const score = quiz ? `${quiz.score}/6` : "—";
+            const text = `${name} completed the Darwin Evolution Mini‑App. Quiz score: ${score}.`;
+            try{
+                await navigator.clipboard.writeText(text);
+                toast("Share text copied.");
+            }catch{
+                prompt("Copy this text:", text);
+            }
+        });
+    }
+
+    /* ------------------------- Save / Load progress -------------------------- */
+    function saveProgress(){
+        try{
+            const lab = window.DARWINLAB;
+            const evo = window.DARWINEVO;
+            const game = window.DARWINGAME;
+            const quiz = window.DARWINQUIZ;
+
+            const payload = {
+                ts: Date.now(),
+                prefs: {
+                    reduceMotionOverride: Prefs.reduceMotionOverride,
+                    hiContrast: Prefs.hiContrast,
+                    autopilot: Prefs.autopilot,
+                    drift: Prefs.drift,
+                    sound: Prefs.sound
+                },
+                lab: lab ? { gen: lab.gen, env: lab.env } : null,
+                evo: evo ? { gen: evo.gen, meanHistory: (evo.meanHistory || []).slice(-120) } : null,
+                game: game ? { round: game.round, pop: game.population?.length ?? 0 } : null,
+                quiz: quiz ? { i: quiz.i, score: quiz.score } : null
+            };
+
+            localStorage.setItem("darwin.progress", JSON.stringify(payload));
+        }catch{}
+    }
+
+    function loadProgress(){
+        try{
+            const raw = localStorage.getItem("darwin.progress");
+            if(!raw) return null;
+            const data = JSON.parse(raw);
+            if(!data || !data.ts) return null;
+            // keep for ~7 days
+            if(Date.now() - data.ts > 1000*60*60*24*7) return null;
+            return data;
+        }catch{
+            return null;
+        }
+    }
+
+    function initSaveControls(){
+        $("#resetSaveBtn")?.addEventListener("click", () => {
+            try{ localStorage.removeItem("darwin.progress"); }catch{}
+            toast("Saved data cleared.");
+        });
+    }
+
+    /* ------------------------- Boot -------------------------- */
+    safe(() => Prefs.load());
+    safe(() => Modal.init());
+    safe(() => initNav());
+    safe(() => setContrast(Prefs.hiContrast));
+    safe(() => initGlobalToggles());
+    safe(() => initHeroParticles());
+    safe(() => initVoyage());
+    safe(() => initEvolutionPlayground());
+    safe(() => initLab());
+    safe(() => initGame());
+    safe(() => initQuiz());
+    safe(() => initCertificate());
+    safe(() => initSaveControls());
+
+    // restore some labels from prefs
+    safe(() => {
+        const driftBtn = $("#toggleDriftBtn");
+        if(driftBtn) driftBtn.textContent = `Drift ${Prefs.drift ? "On" : "Off"}`;
+
+        const apBtn = $("#mapAutopilotBtn");
+        if(apBtn) apBtn.textContent = `Autopilot ${Prefs.autopilot ? "On" : "Off"}`;
+
+        const sBtn = $("#soundBtn");
+        if(sBtn) sBtn.textContent = Prefs.sound ? "On" : "Off";
+    });
+
+    // optional: show a toast if data exists (no invasive restore)
+    safe(() => {
+        const data = loadProgress();
+        if(data) toast("Saved progress found (autosave enabled).");
+    });
+
+    // autosave
+    setInterval(saveProgress, 25000);
+    window.addEventListener("beforeunload", saveProgress);
+</script>
+</body>
+</html>
+

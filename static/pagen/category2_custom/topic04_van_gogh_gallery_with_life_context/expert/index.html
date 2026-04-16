@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vincent van Gogh — Life & Art Journey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore Vincent van Gogh's iconic paintings through an immersive journey. Each artwork reveals a moment in his life—filter by period, compare masterpieces, test your knowledge, and discover the story behind every brushstroke." />
+    <meta name="author" content="Van Gogh Immersive Gallery" />
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #fbbf24;
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(148, 163, 184, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(180deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .starfield {
+            background-image:
+                    radial-gradient(circle at 15% 20%, rgba(251, 191, 36, 0.15) 0, transparent 40%),
+                    radial-gradient(circle at 85% 10%, rgba(56, 189, 248, 0.12) 0, transparent 50%),
+                    radial-gradient(circle at 50% 85%, rgba(34, 197, 94, 0.08) 0, transparent 45%);
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
+            z-index: 1;
+            mix-blend-mode: soft-light;
+        }
+
+        .gallery-card {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(251, 191, 36, 0.25);
+        }
+
+        .gallery-card img {
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .tag-pill {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .tag-pill:hover {
+            border-color: var(--primary);
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(251, 191, 36, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .modal-backdrop {
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(12px);
+        }
+
+        .compare-slot {
+            min-height: 200px;
+            border: 2px dashed rgba(148, 163, 184, 0.3);
+            transition: all 0.3s;
+        }
+
+        .compare-slot.filled {
+            border-color: var(--primary);
+            border-style: solid;
+        }
+
+.compare-slot img {
+  object-fit: contain !important;
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+
+        .color-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        #hero-canvas {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .quote-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-item {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            position: absolute;
+            inset: 0;
+        }
+
+        .quote-item.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 30;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        #backToTop.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-4px);
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(251, 191, 36, 0.2);
+            border-top-color: #fbbf24;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        kbd {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 0.75rem;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            border-radius: 8px;
+            white-space: nowrap;
+            font-size: 11px;
+            margin-bottom: 8px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        nav a {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .quote-dot {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .quote-dot:hover {
+            transform: scale(1.4);
+            opacity: 1;
+            background: #fbbf24 !important;
+        }
+
+        .quote-dot.active {
+            background: #fbbf24 !important;
+            transform: scale(1.3);
+            opacity: 1;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+        }
+
+        .card-glow:hover {
+            animation: pulse-glow 2s infinite;
+        }
+
+        .modal-content-animated {
+            animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .parallax-section {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+    
+/* Fixed quiz image size - no jumping */
+#quizImage {
+  height: 450px !important;
+  object-fit: contain !important;
+  background-color: rgba(15, 23, 42, 0.95);
+}
+
+/* Stable quiz container */
+.quiz-image-container {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Quiz image - forced fixed height */
+#quizImage {
+  height: 450px !important;
+  max-height: 450px !important;
+  object-fit: contain !important;
+  background-color: #0f172a !important;
+}
+</style>
+</head>
+<body class="min-h-screen text-slate-100">
+
+<div id="loader">
+    <div class="loader-spinner"></div>
+</div>
+
+<div class="noise"></div>
+
+<div class="relative z-10">
+
+    <header id="hero" class="relative starfield overflow-hidden min-h-screen flex items-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/60"></div>
+
+        <nav class="absolute top-0 left-0 right-0 z-20 max-w-7xl mx-auto flex items-center justify-between px-6 py-6">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+                    <span class="text-slate-950 font-black text-lg">VG</span>
+                </div>
+                <span class="font-semibold tracking-wide">Van Gogh Journey</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+                <a href="#gallery" class="hover:text-amber-300 transition-colors">Gallery</a>
+                <a href="#timeline" class="hover:text-amber-300 transition-colors">Timeline</a>
+                <a href="#compare" class="hover:text-amber-300 transition-colors">Compare</a>
+                <a href="#quiz" class="hover:text-amber-300 transition-colors">Quiz</a>
+                <a href="#quotes" class="hover:text-amber-300 transition-colors">Letters</a>
+            </div>
+        </nav>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center pt-20">
+            <div id="hero-text" class="space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs uppercase tracking-widest">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Immersive Art Experience
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+                    Journey through
+                    <span class="gradient-text block">Van Gogh's world</span>
+                </h1>
+
+                <p class="text-slate-300 text-base md:text-lg max-w-xl leading-relaxed">
+                    Each painting reveals a chapter of Vincent's tumultuous life. Explore iconic works paired with the cities, struggles, and breakthroughs that shaped them.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <button id="scrollToGallery" class="btn-primary inline-flex items-center gap-2">
+                        Explore gallery
+                        <span>↓</span>
+                    </button>
+                    <button id="scrollToQuiz" class="glass px-6 py-3 rounded-full hover:border-amber-300 transition-all">
+                        Take the quiz
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6 pt-6 border-t border-slate-700/50">
+                    <div>
+                        <div class="text-2xl font-bold text-amber-300">12</div>
+                        <div class="text-xs text-slate-400">Masterpieces</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-emerald-300">5</div>
+                        <div class="text-xs text-slate-400">Life periods</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-sky-300">800+</div>
+                        <div class="text-xs text-slate-400">Letters to Theo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hero-canvas" class="relative">
+                <div class="glass rounded-3xl p-6 shadow-2xl">
+                    <div class="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-amber-400/30 blur-3xl"></div>
+                    <div class="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-sky-400/20 blur-3xl"></div>
+
+                    <div class="relative space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-semibold">Starry Night Over the Rhône</h3>
+                            <span class="text-xs text-slate-400">1888 · Arles</span>
+                        </div>
+
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-700/70">
+                            <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1200px-Starry_Night_Over_the_Rhone.jpg"
+                                    alt="Starry Night Over the Rhône"
+                                    class="w-full h-full object-cover"
+                                    loading="eager"
+                            />
+                        </div>
+
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Painted during his happiest months in the Yellow House, this work bridges reality with imagination—gas lamps reflected on water become stars on earth.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]">Night sky</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]">Arles period</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]">Hopeful</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-20 space-y-24">
+
+        <section id="gallery" class="space-y-8 parallax-section">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Explore the collection</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Filter paintings by location or mood, then click any card to discover the story behind it. Hover to see Vincent's color choices.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <select id="filterLocation"
+                            class="glass px-4 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        <option value="all">All locations</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Arles">Arles</option>
+                        <option value="Saint-Rémy">Saint-Rémy</option>
+                        <option value="Auvers-sur-Oise">Auvers-sur-Oise</option>
+                    </select>
+
+                    <select id="filterMood"
+                            class="glass px-4 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        <option value="all">All moods</option>
+                        <option value="hopeful">Hopeful</option>
+                        <option value="restless">Restless</option>
+                        <option value="introspective">Introspective</option>
+                        <option value="dark">Dark</option>
+                        <option value="energetic">Energetic</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="galleryGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="0"
+                         data-location="Arles"
+                         data-mood="hopeful"
+                         data-title="Starry Night Over the Rhône"
+                         data-year="1888"
+                         data-place="Arles, France"
+                         data-context="Painted shortly after moving to the Yellow House, Vincent was filled with optimism. He wrote to Theo about wanting to paint the night 'more richly colored than day.' The gas lamps reflected on water become stars on earth."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1200px-Starry_Night_Over_the_Rhone.jpg"
+                         data-colors="#1e3a5f,#f4a831,#8ab8d9,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1200px-Starry_Night_Over_the_Rhone.jpg" alt="Starry Night Over the Rhône" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Starry Night Over the Rhône</h3>
+                                <p class="text-slate-300">1888 · Arles</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-emerald-400 text-slate-950 font-semibold text-[10px]">Hopeful</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            An early exploration of night skies with reflections. The calm water contrasts the intense inner search described in his letters.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Paintings featuring night scenes">Night scenes</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Before his most famous night painting">Pre–Starry Night</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="1"
+                         data-location="Saint-Rémy"
+                         data-mood="restless"
+                         data-title="The Starry Night"
+                         data-year="1889"
+                         data-place="Saint-Rémy-de-Provence, France"
+                         data-context="Painted from memory in the asylum, not from the actual view. The turbulent sky mirrors his mental state while the quiet village below represents an imagined peace he couldn't reach."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
+                         data-colors="#4a6fa5,#f4c542,#2b2a29,#c9ab5a">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="The Starry Night" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">The Starry Night</h3>
+                                <p class="text-slate-300">1889 · Saint-Rémy</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-sky-400 text-slate-950 font-semibold text-[10px]">Restless</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            The most analyzed painting in art history. Often read as a visual diary from the asylum, balancing chaos above with imagined peace below.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Painted during his stay at the asylum">Asylum period</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="One of the most recognized artworks worldwide">Iconic</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="2"
+                         data-location="Arles"
+                         data-mood="introspective"
+                         data-title="Bedroom in Arles"
+                         data-year="1888"
+                         data-place="Arles, France"
+                         data-context="Vincent painted his own bedroom three times, each version slightly different. He wanted it to evoke 'rest,' yet the tilted perspective and vibrating lines hint at ongoing anxiety."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg/1200px-Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg"
+                         data-colors="#4a7ba7,#f4c542,#6b9e78,#d4a76a">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg/1200px-Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg" alt="Bedroom in Arles" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Bedroom in Arles</h3>
+                                <p class="text-slate-300">1888 · Arles</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-purple-400 text-slate-950 font-semibold text-[10px]">Introspective</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            A self-portrait without his face. The simple bed, chair, and paintings on the wall turn the room into a diary of his inner world.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Interior scene">Interior</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Vincent's home and studio in Arles">Yellow House</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="3"
+                         data-location="Auvers-sur-Oise"
+                         data-mood="dark"
+                         data-title="Wheatfield with Crows"
+                         data-year="1890"
+                         data-place="Auvers-sur-Oise, France"
+                         data-context="Romanticized as his 'last painting' (though not confirmed), this work combines stormy skies, diverging paths, and circling crows—symbols of uncertainty and looming darkness."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg/1200px-Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg"
+                         data-colors="#2a4d7c,#f4c542,#8b7355,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg/1200px-Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg" alt="Wheatfield with Crows" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Wheatfield with Crows</h3>
+                                <p class="text-slate-300">1890 · Auvers</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-rose-400 text-slate-950 font-semibold text-[10px]">Dark</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Divided paths and gathering storms are read as metaphors for Vincent's state of mind in his final months near Paris.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Painted in his last year of life">Final year</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Rich in symbolic meaning">Symbolic</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="4"
+                         data-location="Paris"
+                         data-mood="hopeful"
+                         data-title="Self-Portrait with Grey Felt Hat"
+                         data-year="1887"
+                         data-place="Paris, France"
+                         data-context="In Paris, Vincent absorbed Impressionism and pointillism. The radiating brushstrokes behind his head feel like thought-lines or an aura, revealing how he saw himself: fragile yet intensely alive."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/d/dd/Van_Gogh_Self-Portrait_with_Grey_Felt_Hat_1886-87_Rijksmuseum.jpg"
+                         data-colors="#6b8ba4,#f4a542,#2b3e50,#a67b5b">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Van_Gogh_Self-Portrait_with_Grey_Felt_Hat_1886-87_Rijksmuseum.jpg" alt="Self-Portrait with Grey Felt Hat" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Self-Portrait with Grey Felt Hat</h3>
+                                <p class="text-slate-300">1887 · Paris</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-amber-300 text-slate-950 font-semibold text-[10px]">Hopeful</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            One of many Paris self-portraits where Vincent used his face as a testbed for new color theories and brushwork techniques.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Portrait of the artist by himself">Self-portrait</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Created during his time in Paris">Paris period</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="5"
+                         data-location="Netherlands"
+                         data-mood="introspective"
+                         data-title="The Potato Eaters"
+                         data-year="1885"
+                         data-place="Nuenen, Netherlands"
+                         data-context="Before Paris, Vincent painted this dark-toned scene of peasant life. He wanted it rough and unpolished—closer to the earth and labor than academic 'beauty.' Critics found it clumsy; he considered it his most heartfelt work."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg/1200px-Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg"
+                         data-colors="#3e2723,#6d4c41,#8d6e63,#4e342e">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg/1200px-Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg" alt="The Potato Eaters" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">The Potato Eaters</h3>
+                                <p class="text-slate-300">1885 · Netherlands</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-amber-700 text-white font-semibold text-[10px]">Introspective</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            A tribute to rural life he knew well. Dark palette reflects the earth and toil, not prettiness.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="From his early artistic years">Early work</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Depicting rural workers">Peasant life</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="6"
+                         data-location="Arles"
+                         data-mood="energetic"
+                         data-title="Sunflowers"
+                         data-year="1888"
+                         data-place="Arles, France"
+                         data-context="Vincent painted multiple sunflower still lifes to decorate the Yellow House before Gauguin's arrival. For him, they symbolized gratitude and the southern sun's power."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Vincent_Willem_van_Gogh_127.jpg/1200px-Vincent_Willem_van_Gogh_127.jpg"
+                         data-colors="#f4c542,#d4a373,#8b7355,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Vincent_Willem_van_Gogh_127.jpg/1200px-Vincent_Willem_van_Gogh_127.jpg" alt="Sunflowers" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Sunflowers</h3>
+                                <p class="text-slate-300">1888 · Arles</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-yellow-400 text-slate-950 font-semibold text-[10px]">Energetic</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Explosive yellows celebrating southern light. These became his signature and a symbol of optimism.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Non-living subject matter">Still life</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="One of his most recognized works">Iconic</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="7"
+                         data-location="Saint-Rémy"
+                         data-mood="introspective"
+                         data-title="Irises"
+                         data-year="1889"
+                         data-place="Saint-Rémy-de-Provence, France"
+                         data-context="Painted in the first week at the asylum. The irises are rendered with close observation, a form of therapy and meditation during a turbulent time."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/1200px-Irises-Vincent_van_Gogh.jpg"
+                         data-colors="#4a6fa5,#8ab8d9,#6b9e78,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Irises-Vincent_van_Gogh.jpg/1200px-Irises-Vincent_van_Gogh.jpg" alt="Irises" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Irises</h3>
+                                <p class="text-slate-300">1889 · Saint-Rémy</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-indigo-400 text-slate-950 font-semibold text-[10px]">Introspective</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            A study in blues and greens, offering calm amidst inner chaos. Therapy through observation.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="From the asylum garden">Garden</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Created during his asylum stay">Asylum period</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="8"
+                         data-location="Arles"
+                         data-mood="energetic"
+                         data-title="Café Terrace at Night"
+                         data-year="1888"
+                         data-place="Arles, France"
+                         data-context="One of the first paintings where Vincent used the night as subject without black. The gas-lit terrace glows like a beacon, capturing the warmth of community and southern nights."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg/1200px-Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg"
+                         data-colors="#f4c542,#4a6fa5,#d4a76a,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg/1200px-Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg" alt="Café Terrace at Night" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Café Terrace at Night</h3>
+                                <p class="text-slate-300">1888 · Arles</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-yellow-400 text-slate-950 font-semibold text-[10px]">Energetic</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Pioneering use of artificial light at night. The cobalt sky and warm yellows create vibrant contrast.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Nocturnal scenes">Night scenes</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Depicting city life">Urban life</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="9"
+                         data-location="Auvers-sur-Oise"
+                         data-mood="introspective"
+                         data-title="The Church at Auvers"
+                         data-year="1890"
+                         data-place="Auvers-sur-Oise, France"
+                         data-context="Painted in the last weeks of his life. The church's gothic silhouette against a deep blue sky conveys both reverence and disquiet—a powerful symbol of his search for meaning."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/a/ad/Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg"
+                         data-colors="#4a6fa5,#8ab8d9,#6b9e78,#d4a76a">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg" alt="The Church at Auvers" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">The Church at Auvers</h3>
+                                <p class="text-slate-300">1890 · Auvers</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-indigo-400 text-slate-950 font-semibold text-[10px]">Introspective</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Gothic architecture against turbulent blue sky. A meditation on faith, doubt, and finality.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Featuring buildings">Architecture</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Created near the end of his life">Final months</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="10"
+                         data-location="Arles"
+                         data-mood="energetic"
+                         data-title="The Yellow House"
+                         data-year="1888"
+                         data-place="Arles, France"
+                         data-context="Vincent's dream home and studio, where he hoped to build an artists' community. Painted in bright, optimistic tones just before Gauguin's arrival—and their eventual fallout."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg/1200px-Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg"
+                         data-colors="#f4c542,#4a6fa5,#8ab8d9,#2b2a29">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg/1200px-Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg" alt="The Yellow House" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">The Yellow House</h3>
+                                <p class="text-slate-300">1888 · Arles</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-amber-400 text-slate-950 font-semibold text-[10px]">Energetic</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Symbol of Vincent's ambitions and subsequent heartbreak. The bright yellow facade mirrors his hope.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Architectural subject">Architecture</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="His home in Arles">Yellow House</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="gallery-card glass rounded-2xl overflow-hidden cursor-pointer card-glow" data-index="11"
+                         data-location="Saint-Rémy"
+                         data-mood="introspective"
+                         data-title="Olive Trees"
+                         data-year="1889"
+                         data-place="Saint-Rémy-de-Provence, France"
+                         data-context="From the asylum garden, Vincent painted olive trees as symbols of resilience. Their twisted trunks and silver-green leaves became a recurring motif during his recovery attempts."
+                         data-img="https://upload.wikimedia.org/wikipedia/commons/e/e8/Van_Gogh_The_Olive_Trees..jpg"
+                         data-colors="#6b9e78,#c0c0c0,#a67b5b,#4a6fa5">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Van_Gogh_The_Olive_Trees..jpg" alt="Olive Trees" class="w-full h-full object-cover" loading="lazy"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
+                            <div>
+                                <h3 class="font-semibold leading-tight">Olive Trees</h3>
+                                <p class="text-slate-300">1889 · Saint-Rémy</p>
+                            </div>
+                            <span class="px-2 py-1 rounded-full bg-emerald-400 text-slate-950 font-semibold text-[10px]">Introspective</span>
+                        </div>
+                    </div>
+                    <div class="p-4 space-y-2">
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Gnarled olive trees as metaphors for endurance. Their twisted forms mirror Vincent's inner struggles.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Garden scenery">Garden</span>
+                            <span class="tag-pill px-2 py-1 rounded-full text-[10px]" data-tooltip="Natural subjects">Nature</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="timeline" class="space-y-8 parallax-section">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Life timeline</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Drag the slider to explore Vincent's journey through five key periods. Watch how the paintings in this gallery map to each phase.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-6 space-y-5">
+                <input id="timelineRange" type="range" min="0" max="4" step="1" value="0"
+                       class="w-full h-2 bg-slate-700 rounded-full appearance-none cursor-pointer accent-amber-400"
+                       style="background: linear-gradient(to right, #fbbf24 0%, #fbbf24 0%, #334155 0%, #334155 100%);" />
+
+                <div class="flex justify-between text-xs">
+                    <button data-range="0" class="timeline-label hover:text-amber-300 transition-colors">Netherlands</button>
+                    <button data-range="1" class="timeline-label hover:text-amber-300 transition-colors">Paris</button>
+                    <button data-range="2" class="timeline-label hover:text-amber-300 transition-colors">Arles</button>
+                    <button data-range="3" class="timeline-label hover:text-amber-300 transition-colors">Saint-Rémy</button>
+                    <button data-range="4" class="timeline-label hover:text-amber-300 transition-colors">Auvers</button>
+                </div>
+
+                <div id="timelineContent" class="text-sm space-y-3 pt-4 border-t border-slate-700/50"></div>
+            </div>
+        </section>
+
+        <section id="compare" class="space-y-8 parallax-section">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Compare paintings</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Hold <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd> on Mac) and click two paintings from the gallery above. The system will analyze differences in period, mood, and color.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div id="compareSlotA" class="compare-slot glass rounded-xl p-4 flex flex-col items-center justify-center text-center text-slate-400 text-sm">
+                        <div>
+                            <p class="mb-2">Ctrl + Click a painting</p>
+                            <p class="text-xs text-slate-500">First selection</p>
+                        </div>
+                    </div>
+
+                    <div id="compareSlotB" class="compare-slot glass rounded-xl p-4 flex flex-col items-center justify-center text-center text-slate-400 text-sm">
+                        <div>
+                            <p class="mb-2">Ctrl + Click another</p>
+                            <p class="text-xs text-slate-500">Second selection</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="compareResult" class="mt-6 space-y-4 hidden">
+                    <h3 class="text-lg font-semibold text-amber-300">Analysis</h3>
+                    <div class="grid sm:grid-cols-3 gap-4 text-sm">
+                        <div class="glass rounded-lg p-3">
+                            <div class="text-xs text-slate-400 mb-1">Period difference</div>
+                            <div id="comparePeriod" class="font-semibold"></div>
+                        </div>
+                        <div class="glass rounded-lg p-3">
+                            <div class="text-xs text-slate-400 mb-1">Mood contrast</div>
+                            <div id="compareMood" class="font-semibold"></div>
+                        </div>
+                        <div class="glass rounded-lg p-3">
+                            <div class="text-xs text-slate-400 mb-1">Color shift</div>
+                            <div id="compareColor" class="font-semibold"></div>
+                        </div>
+                    </div>
+                    <button id="compareReset" class="btn-primary text-sm">
+                        Reset comparison
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="space-y-8 parallax-section">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Test your knowledge</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Can you match each painting to the correct period of Vincent's life? Study the brushwork, colors, and subject matter for clues.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-6 grid md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="text-[11px] uppercase tracking-widest text-slate-400">Question</div>
+                    <h3 id="quizTitle" class="text-lg font-semibold"></h3>
+                    <p id="quizHint" class="text-xs text-slate-400">
+                        Examine the colors, technique, and mood. Then pick the period that fits best.
+                    </p>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button class="quiz-option tag-pill px-3 py-1.5 rounded-full text-xs hover:bg-amber-300/10 hover:border-amber-300 transition-all" data-period="Netherlands">Netherlands</button>
+                        <button class="quiz-option tag-pill px-3 py-1.5 rounded-full text-xs hover:bg-amber-300/10 hover:border-amber-300 transition-all" data-period="Paris">Paris</button>
+                        <button class="quiz-option tag-pill px-3 py-1.5 rounded-full text-xs hover:bg-amber-300/10 hover:border-amber-300 transition-all" data-period="Arles">Arles</button>
+                        <button class="quiz-option tag-pill px-3 py-1.5 rounded-full text-xs hover:bg-amber-300/10 hover:border-amber-300 transition-all" data-period="Saint-Rémy">Saint-Rémy</button>
+                        <button class="quiz-option tag-pill px-3 py-1.5 rounded-full text-xs hover:bg-amber-300/10 hover:border-amber-300 transition-all" data-period="Auvers-sur-Oise">Auvers</button>
+                    </div>
+
+                    <div id="quizFeedback" class="text-xs"></div>
+
+                    <button id="quizNext" class="btn-primary text-sm inline-flex items-center gap-2">Next painting <span class="ml-2">→</span>
+                    </button>
+
+                    <div class="pt-4 border-t border-slate-700/50">
+                        <div class="text-xs text-slate-400 mb-2">Your score</div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-2xl font-bold text-emerald-300" id="quizCorrect">0</div>
+                            <div class="text-slate-500">/</div>
+                            <div class="text-2xl font-bold text-slate-400" id="quizTotal">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden border border-slate-700/70">
+                    <img id="quizImage" src="" alt="" class="w-full h-[450px] object-contain bg-slate-900" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <p id="quizMeta" class="text-xs text-slate-200"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quotes" class="space-y-8 parallax-section">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Letters to Theo</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        Vincent wrote over 800 letters to his brother Theo. These excerpts reveal his thoughts on art, color, and the struggles behind each masterpiece.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-8 quote-carousel relative min-h-[200px]">
+                <div class="quote-item active">
+                    <blockquote class="text-lg md:text-xl font-serif italic text-slate-200 mb-4">
+                        "I often think that the night is more alive and more richly colored than the day."
+                    </blockquote>
+                    <cite class="text-sm text-slate-400">— Letter to Theo, September 1888</cite>
+                </div>
+
+                <div class="quote-item">
+                    <blockquote class="text-lg md:text-xl font-serif italic text-slate-200 mb-4">
+                        "What would life be if we had no courage to attempt anything?"
+                    </blockquote>
+                    <cite class="text-sm text-slate-400">— Letter to Theo, December 1881</cite>
+                </div>
+
+                <div class="quote-item">
+                    <blockquote class="text-lg md:text-xl font-serif italic text-slate-200 mb-4">
+                        "I put my heart and soul into my work, and have lost my mind in the process."
+                    </blockquote>
+                    <cite class="text-sm text-slate-400">— Letter to Theo, July 1890</cite>
+                </div>
+
+                <div class="quote-item">
+                    <blockquote class="text-lg md:text-xl font-serif italic text-slate-200 mb-4">
+                        "Great things are not done by impulse, but by a series of small things brought together."
+                    </blockquote>
+                    <cite class="text-sm text-slate-400">— Letter to Theo, October 1882</cite>
+                </div>
+
+                <div class="quote-item">
+                    <blockquote class="text-lg md:text-xl font-serif italic text-slate-200 mb-4">
+                        "I dream my painting and I paint my dream."
+                    </blockquote>
+                    <cite class="text-sm text-slate-400">— Letter to Theo, 1888</cite>
+                </div>
+
+                <div class="flex justify-center gap-2 mt-6">
+                    <button class="quote-dot h-2 w-2 rounded-full bg-slate-600 hover:bg-amber-400 transition-all" data-index="0"></button>
+                    <button class="quote-dot h-2 w-2 rounded-full bg-slate-600 hover:bg-amber-400 transition-all" data-index="1"></button>
+                    <button class="quote-dot h-2 w-2 rounded-full bg-slate-600 hover:bg-amber-400 transition-all" data-index="2"></button>
+                    <button class="quote-dot h-2 w-2 rounded-full bg-slate-600 hover:bg-amber-400 transition-all" data-index="3"></button>
+                    <button class="quote-dot h-2 w-2 rounded-full bg-slate-600 hover:bg-amber-400 transition-all" data-index="4"></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-8 pb-12 parallax-section">
+            <div class="max-w-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">How to explore</h2>
+                <p class="text-slate-400 leading-relaxed">
+                    This gallery is designed as an interactive journey. Each feature connects you deeper to Vincent's life and art.
+                </p>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <div class="glass rounded-2xl p-5 border border-slate-700/70">
+                    <div class="h-10 w-10 rounded-full bg-amber-400/20 flex items-center justify-center mb-4">
+                        <span class="text-2xl">🗺️</span>
+                    </div>
+                    <h3 class="font-semibold mb-2 text-amber-300">Filter by place</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Compare what Vincent painted in different cities. The shift from Dutch earth tones to Parisian brightness tells its own story.
+                    </p>
+                </div>
+
+                <div class="glass rounded-2xl p-5 border border-slate-700/70">
+                    <div class="h-10 w-10 rounded-full bg-emerald-400/20 flex items-center justify-center mb-4">
+                        <span class="text-2xl">🎭</span>
+                    </div>
+                    <h3 class="font-semibold mb-2 text-emerald-300">Mood as guide</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Mood tags help you find emotional patterns. What makes a painting "restless" versus "hopeful"? The answer lies in the brushwork.
+                    </p>
+                </div>
+
+                <div class="glass rounded-2xl p-5 border border-slate-700/70">
+                    <div class="h-10 w-10 rounded-full bg-sky-400/20 flex items-center justify-center mb-4">
+                        <span class="text-2xl">📖</span>
+                    </div>
+                    <h3 class="font-semibold mb-2 text-sky-300">Read the context</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Click any painting to see the moment in Vincent's life when it was created—turning art history into a human story.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800/60 py-6 text-center">
+        <p class="text-xs text-slate-500">
+            An immersive journey through Vincent van Gogh's art and life.
+            <br />
+            All images courtesy of Wikimedia Commons · Public Domain
+        </p>
+    </footer>
+
+</div>
+
+<button id="backToTop" class="glass h-12 w-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-amber-400/30 transition-all">
+    <span class="text-amber-300 text-xl">↑</span>
+</button>
+
+<div id="modalBackdrop" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center px-4">
+    <div class="absolute inset-0 bg-slate-950/90" id="modalBackdropArea"></div>
+
+    <div id="modalContent" class="relative z-10 max-w-4xl w-full glass rounded-3xl overflow-hidden shadow-2xl modal-content-animated">
+        <div class="flex justify-between items-center px-6 py-4 border-b border-slate-700/70">
+            <div>
+                <h3 id="modalTitle" class="text-base md:text-lg font-semibold"></h3>
+                <p id="modalMeta" class="text-xs text-slate-400"></p>
+            </div>
+            <button id="modalClose" class="text-slate-400 hover:text-amber-300 text-2xl leading-none px-2 py-1 rounded-full hover:bg-slate-800/60 transition-all">
+                ✕
+            </button>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-0">
+            <div class="relative aspect-[4/3] md:aspect-auto overflow-hidden">
+                <img id="modalImage" src="" alt="" class="w-full h-full object-cover" />
+            </div>
+
+            <div class="p-6 space-y-4">
+                <p id="modalContext" class="text-sm text-slate-200 leading-relaxed"></p>
+
+                <div>
+                    <div class="text-xs text-slate-400 mb-2">Color palette</div>
+                    <div id="modalColors" class="flex gap-2"></div>
+                </div>
+
+                <p class="text-xs text-slate-400 pt-4 border-t border-slate-700/50">
+                    After closing, try comparing this work with another or filtering by period to see how it fits into Vincent's journey.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('hidden');
+        }, 1000);
+
+        const smoothScroll = (target) => {
+            target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        document.getElementById('scrollToGallery')?.addEventListener('click', () => {
+            smoothScroll(document.getElementById('gallery'));
+        });
+
+        document.getElementById('scrollToQuiz')?.addEventListener('click', () => {
+            smoothScroll(document.getElementById('quiz'));
+        });
+
+        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                smoothScroll(document.getElementById(targetId));
+            });
+        });
+
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const filterLocation = document.getElementById('filterLocation');
+        const filterMood = document.getElementById('filterMood');
+        const cards = Array.from(document.querySelectorAll('.gallery-card'));
+
+        function applyFilters() {
+            const loc = filterLocation.value;
+            const mood = filterMood.value;
+
+            cards.forEach(card => {
+                const cLoc = card.dataset.location;
+                const cMood = card.dataset.mood;
+                const matchLoc = (loc === 'all') || (cLoc === loc);
+                const matchMood = (mood === 'all') || (cMood === mood);
+                card.style.display = (matchLoc && matchMood) ? '' : 'none';
+            });
+        }
+
+        filterLocation?.addEventListener('change', applyFilters);
+        filterMood?.addEventListener('change', applyFilters);
+
+        const locationToPeriod = {
+            'Netherlands': 0,
+            'Paris': 1,
+            'Arles': 2,
+            'Saint-Rémy': 3,
+            'Auvers-sur-Oise': 4,
+        };
+
+        const exploredPeriods = new Set();
+
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalBackdropArea = document.getElementById('modalBackdropArea');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMeta = document.getElementById('modalMeta');
+        const modalImage = document.getElementById('modalImage');
+        const modalContext = document.getElementById('modalContext');
+        const modalColors = document.getElementById('modalColors');
+
+        function openModal(card) {
+            const title = card.dataset.title;
+            const year = card.dataset.year;
+            const place = card.dataset.place;
+            const img = card.dataset.img;
+            const context = card.dataset.context;
+            const colors = (card.dataset.colors || '').split(',');
+
+            modalTitle.textContent = title;
+            modalMeta.textContent = `${year} · ${place}`;
+            modalImage.src = img;
+            modalImage.alt = title;
+            modalContext.textContent = context;
+
+            modalColors.innerHTML = '';
+            colors.forEach(c => {
+                const dot = document.createElement('div');
+                dot.className = 'color-dot';
+                dot.style.backgroundColor = c.trim();
+                modalColors.appendChild(dot);
+            });
+
+            modalBackdrop.classList.remove('hidden');
+
+            const loc = card.dataset.location;
+            const periodIndex = locationToPeriod[loc];
+            if (typeof periodIndex === 'number') {
+                exploredPeriods.add(periodIndex);
+            }
+        }
+
+        function closeModal() {
+            modalBackdrop.classList.add('hidden');
+            modalImage.src = '';
+        }
+
+        let compareSlots = { A: null, B: null };
+
+        function fillCompareSlot(card) {
+            const slotA = document.getElementById('compareSlotA');
+            const slotB = document.getElementById('compareSlotB');
+
+            if (!compareSlots.A) {
+                compareSlots.A = card;
+                slotA.innerHTML = `
+            <img src="${card.dataset.img}" class="w-full h-48 object-contain rounded-lg mb-2 bg-slate-900" />
+            <p class="text-xs font-semibold">${card.dataset.title}</p>
+            <p class="text-[10px] text-slate-500">${card.dataset.year} · ${card.dataset.location}</p>
+          `;
+                slotA.classList.add('filled');
+            } else if (!compareSlots.B) {
+                compareSlots.B = card;
+                slotB.innerHTML = `
+            <img src="${card.dataset.img}" class="w-full h-48 object-contain rounded-lg mb-2 bg-slate-900" />
+            <p class="text-xs font-semibold">${card.dataset.title}</p>
+            <p class="text-[10px] text-slate-500">${card.dataset.year} · ${card.dataset.location}</p>
+          `;
+                slotB.classList.add('filled');
+                runComparison();
+            }
+        }
+
+        function runComparison() {
+            const result = document.getElementById('compareResult');
+            const periodDiv = document.getElementById('comparePeriod');
+            const moodDiv = document.getElementById('compareMood');
+            const colorDiv = document.getElementById('compareColor');
+
+            const A = compareSlots.A;
+            const B = compareSlots.B;
+
+            const periodA = locationToPeriod[A.dataset.location];
+            const periodB = locationToPeriod[B.dataset.location];
+            const periodDiff = Math.abs(periodA - periodB);
+
+            periodDiv.textContent = periodDiff === 0 ? 'Same period' : `${periodDiff} period(s) apart`;
+            moodDiv.textContent = A.dataset.mood === B.dataset.mood ? 'Same mood' : `${A.dataset.mood} vs ${B.dataset.mood}`;
+
+            const colorsA = (A.dataset.colors || '').split(',');
+            const colorsB = (B.dataset.colors || '').split(',');
+            const avgA = colorsA.length > 0 ? colorsA[0] : '#000';
+            const avgB = colorsB.length > 0 ? colorsB[0] : '#000';
+
+            colorDiv.innerHTML = `
+          <div class="flex items-center gap-2">
+            <div class="h-6 w-6 rounded-full" style="background:${avgA}"></div>
+            <span class="text-[10px]">→</span>
+            <div class="h-6 w-6 rounded-full" style="background:${avgB}"></div>
+          </div>
+        `;
+
+            result.classList.remove('hidden');
+        }
+
+        document.getElementById('compareReset')?.addEventListener('click', () => {
+            compareSlots = { A: null, B: null };
+            document.getElementById('compareSlotA').innerHTML = `
+          <div>
+            <p class="mb-2">Ctrl + Click a painting</p>
+            <p class="text-xs text-slate-500">First selection</p>
+          </div>
+        `;
+            document.getElementById('compareSlotB').innerHTML = `
+          <div>
+            <p class="mb-2">Ctrl + Click another</p>
+            <p class="text-xs text-slate-500">Second selection</p>
+          </div>
+        `;
+            document.getElementById('compareSlotA').classList.remove('filled');
+            document.getElementById('compareSlotB').classList.remove('filled');
+            document.getElementById('compareResult').classList.add('hidden');
+        });
+
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    fillCompareSlot(card);
+                } else {
+                    openModal(card);
+                }
+            });
+        });
+
+        modalClose?.addEventListener('click', closeModal);
+        modalBackdropArea?.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modalBackdrop.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        const timelineRange = document.getElementById('timelineRange');
+        const timelineContent = document.getElementById('timelineContent');
+        const labels = Array.from(document.querySelectorAll('.timeline-label'));
+
+        const timelineData = [
+            {
+                title: 'Netherlands · Early years (up to 1885)',
+                text: 'Dark earth tones, peasant life, rural spirituality. Works like "The Potato Eaters" show Vincent wrestling with honest, hard lives without idealizing them.'
+            },
+            {
+                title: 'Paris · Color explodes (1886–1888)',
+                text: 'Surrounded by Impressionists, he brightens his palette and experiments with pointillism. Self-portraits turn his face into a color laboratory.'
+            },
+            {
+                title: 'Arles · Yellow House (1888–1889)',
+                text: 'Dream of an artist community in the south. Interiors like "Bedroom in Arles" and night scenes bridge his search for rest and visual intensity.'
+            },
+            {
+                title: 'Saint-Rémy · Asylum period (1889–1890)',
+                text: 'From the clinic, Vincent paints cypresses, swirling skies, enclosed gardens. "The Starry Night" belongs here—distant yet obsessed with the world.'
+            },
+            {
+                title: 'Auvers-sur-Oise · Final months (1890)',
+                text: 'Outside Paris, he paints fields and village scenes at high speed. "Wheatfield with Crows" is a visual essay on uncertainty, not just a landscape.'
+            }
+        ];
+
+        function renderTimeline(idx) {
+            const item = timelineData[idx];
+            if (!item || !timelineContent) return;
+
+            timelineContent.innerHTML = `
+          <h3 class="font-semibold mb-2">${item.title}</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">${item.text}</p>
+        `;
+
+            labels.forEach(btn => {
+                btn.classList.toggle('text-amber-300', btn.dataset.range === String(idx));
+            });
+
+            const pct = (idx / 4) * 100;
+            timelineRange.style.background = `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${pct}%, #334155 ${pct}%, #334155 100%)`;
+        }
+
+        timelineRange?.addEventListener('input', () => {
+            renderTimeline(Number(timelineRange.value));
+        });
+
+        labels.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = Number(btn.dataset.range || 0);
+                timelineRange.value = String(val);
+                renderTimeline(val);
+            });
+        });
+
+        renderTimeline(0);
+
+        const quizData = [
+            {
+                title: 'The Potato Eaters',
+                location: 'Netherlands',
+                year: '1885',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg/800px-Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg',
+                explanation: 'Dark earth tones and peasant life are typical of his early Dutch phase.'
+            },
+            {
+                title: 'Self-Portrait with Grey Felt Hat',
+                location: 'Paris',
+                year: '1887',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg/1200px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg',
+                explanation: 'Pointillist strokes and vibrant contrasts mark his Paris years.'
+            },
+            {
+                title: 'Bedroom in Arles',
+                location: 'Arles',
+                year: '1888',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg/800px-Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg',
+                explanation: 'Yellow House interior and flat planes point to Arles.'
+            },
+            {
+                title: 'The Starry Night',
+                location: 'Saint-Rémy',
+                year: '1889',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
+                explanation: 'Painted from the asylum with turbulent skies typical of Saint-Rémy.'
+            },
+            {
+                title: 'Wheatfield with Crows',
+                location: 'Auvers-sur-Oise',
+                year: '1890',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg/1200px-Vincent_van_Gogh_%281853-1890%29_-_Wheat_Field_with_Crows_%281890%29.jpg',
+                explanation: 'Fields and gathering storms link to his final months in Auvers.'
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizCorrectCount = 0;
+        let quizTotalCount = 0;
+
+        const quizTitle = document.getElementById('quizTitle');
+        const quizImage = document.getElementById('quizImage');
+        const quizMeta = document.getElementById('quizMeta');
+        const quizFeedback = document.getElementById('quizFeedback');
+        const quizNext = document.getElementById('quizNext');
+        const quizOptions = Array.from(document.querySelectorAll('.quiz-option'));
+        const quizCorrectEl = document.getElementById('quizCorrect');
+        const quizTotalEl = document.getElementById('quizTotal');
+
+        function renderQuiz(idx) {
+            const item = quizData[idx];
+            if (!item) return;
+
+            quizTitle.textContent = item.title;
+            quizImage.src = item.img;
+            quizImage.alt = item.title;
+            quizMeta.textContent = `${item.year} · ??? — Make your guess`;
+            quizFeedback.textContent = '';
+            quizFeedback.className = 'text-xs';
+
+            quizOptions.forEach(btn => {
+                btn.classList.remove('border-amber-300', 'bg-amber-300/10');
+            });
+        }
+
+        quizOptions.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const guess = btn.dataset.period;
+                const correct = quizData[currentQuizIndex].location;
+
+                quizOptions.forEach(b => {
+                    b.classList.remove('border-amber-300', 'bg-amber-300/10');
+                });
+                btn.classList.add('border-amber-300', 'bg-amber-300/10');
+
+                quizTotalCount++;
+
+                if (guess === correct) {
+                    quizCorrectCount++;
+                    quizFeedback.textContent = `✓ Correct! This belongs to ${correct}. ${quizData[currentQuizIndex].explanation}`;
+                    quizFeedback.className = 'text-xs text-emerald-300';
+                    quizMeta.textContent = `${quizData[currentQuizIndex].year} · ${correct}`;
+                } else {
+                    quizFeedback.textContent = `✗ Not quite. This is from ${correct}. ${quizData[currentQuizIndex].explanation}`;
+                    quizFeedback.className = 'text-xs text-rose-300';
+                    quizMeta.textContent = `${quizData[currentQuizIndex].year} · ${correct}`;
+                }
+
+                quizCorrectEl.textContent = quizCorrectCount;
+                quizTotalEl.textContent = quizTotalCount;
+            });
+        });
+
+        quizNext?.addEventListener('click', () => {
+            currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
+            renderQuiz(currentQuizIndex);
+        });
+
+        renderQuiz(currentQuizIndex);
+
+        const quoteItems = Array.from(document.querySelectorAll('.quote-item'));
+        const quoteDots = Array.from(document.querySelectorAll('.quote-dot'));
+        let currentQuoteIndex = 0;
+        let quoteInterval;
+
+        function showQuote(idx) {
+            quoteItems.forEach((item, i) => {
+                item.classList.toggle('active', i === idx);
+            });
+            quoteDots.forEach((dot, i) => {
+                if (i === idx) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        quoteDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                currentQuoteIndex = i;
+                showQuote(i);
+                clearInterval(quoteInterval);
+                quoteInterval = setInterval(() => {
+                    currentQuoteIndex = (currentQuoteIndex + 1) % quoteItems.length;
+                    showQuote(currentQuoteIndex);
+                }, 6000);
+            });
+        });
+
+        quoteInterval = setInterval(() => {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quoteItems.length;
+            showQuote(currentQuoteIndex);
+        }, 6000);
+
+        showQuote(0);
+
+        if (window.gsap && window.ScrollTrigger) {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('#hero-text', {
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            gsap.from('#hero-canvas', {
+                y: 60,
+                opacity: 0,
+                duration: 1,
+                delay: 0.2,
+                ease: 'power3.out'
+            });
+
+            gsap.from('.gallery-card', {
+                scrollTrigger: {
+                    trigger: '#galleryGrid',
+                    start: 'top 80%'
+                },
+                y: 50,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.7,
+                ease: 'power3.out'
+            });
+
+            document.querySelectorAll('.parallax-section').forEach(section => {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%'
+                    },
+                    y: 40,
+                    opacity: 0,
+                    duration: 0.7,
+                    ease: 'power3.out'
+                });
+            });
+
+            gsap.to('#hero', {
+                scrollTrigger: {
+                    trigger: '#hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                },
+                y: 200,
+                opacity: 0.3
+            });
+        }
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (window.gsap) {
+                    gsap.to(link, {
+                        y: -2,
+                        duration: 0.2,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+
+            link.addEventListener('mouseleave', () => {
+                if (window.gsap) {
+                    gsap.to(link, {
+                        y: 0,
+                        duration: 0.2,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-primary, .quiz-option, .timeline-label').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.pointerEvents = 'none';
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                if (window.gsap) {
+                    gsap.to(ripple, {
+                        scale: 2,
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power2.out',
+                        onComplete: () => ripple.remove()
+                    });
+                } else {
+                    setTimeout(() => ripple.remove(), 600);
+                }
+            });
+        });
+
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            if (img.complete) return;
+            imageObserver.observe(img);
+        });
+
+        console.log('%c🎨 Van Gogh Journey', 'font-size: 20px; font-weight: bold; color: #fbbf24;');
+        console.log('%cExplore the interactive gallery and discover Vincent\'s world.', 'font-size: 12px; color: #94a3b8;');
+    });
+</script>
+</body>
+</html>

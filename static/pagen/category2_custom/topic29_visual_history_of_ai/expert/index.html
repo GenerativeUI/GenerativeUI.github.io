@@ -1,0 +1,2778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual History of AI - Interactive Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #262626;
+            --text-primary: #ffffff;
+            --text-secondary: #b4b4b4;
+            --accent-blue: #10a37f;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+            --glow-blue: rgba(16, 163, 127, 0.3);
+            --glow-purple: rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px var(--glow-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 3rem 4rem 3rem;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(16, 163, 127, 0.1);
+            border: 1px solid rgba(16, 163, 127, 0.3);
+            border-radius: 50px;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+            line-height: 1.1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px var(--glow-blue);
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px var(--glow-purple);
+        }
+
+        /* Section Base */
+        section {
+            padding: 6rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 50px;
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Timeline Vertical */
+        .timeline-vertical {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-line-vertical {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: slideInTimeline 0.6s ease forwards;
+        }
+
+        @keyframes slideInTimeline {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 40px var(--glow-blue);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-year {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--glow-blue);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px var(--glow-blue);
+            }
+            50% {
+                box-shadow: 0 0 40px var(--glow-purple);
+            }
+        }
+
+        .timeline-content-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: var(--bg-tertiary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-blue);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body img {
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body h3 {
+            color: var(--accent-blue);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Turing Test Chat */
+        #turing-test {
+            background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            background: var(--bg-tertiary);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px var(--glow-blue);
+            animation: avatarPulse 3s infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px var(--glow-blue);
+            }
+            50% {
+                box-shadow: 0 0 40px var(--glow-purple);
+            }
+        }
+
+        .chat-status {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .chat-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 2rem;
+            background: var(--bg-primary);
+        }
+
+        .chat-message {
+            margin-bottom: 1.5rem;
+            animation: messageSlideIn 0.3s ease;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-user {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .message-ai,
+        .message-human {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .message-user .message-bubble {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+        }
+
+        .message-ai .message-bubble,
+        .message-human .message-bubble {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-sender {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--accent-blue);
+        }
+
+        .chat-input-container {
+            padding: 1.5rem 2rem;
+            background: var(--bg-tertiary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px var(--glow-blue);
+        }
+
+        .chat-send-btn {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .chat-guess-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .guess-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid;
+            border-radius: 12px;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guess-btn.ai {
+            border-color: var(--accent-blue);
+        }
+
+        .guess-btn.ai:hover {
+            background: var(--accent-blue);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .guess-btn.human {
+            border-color: var(--accent-pink);
+        }
+
+        .guess-btn.human:hover {
+            background: var(--accent-pink);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Neural Network - IMPROVED */
+        #neural-network {
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .neural-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .neural-canvas-wrapper {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        #neuralCanvas {
+            width: 100%;
+            height: 600px;
+            border-radius: 16px;
+            background: var(--bg-primary);
+        }
+
+        .neural-info {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .neural-info-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .neural-info-label {
+            color: var(--text-secondary);
+        }
+
+        .neural-info-value {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .neural-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .control-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .control-card h4 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .slider-container {
+            margin-bottom: 0.75rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--glow-blue);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--glow-blue);
+            border: none;
+        }
+
+        .control-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .control-btn.secondary {
+            background: var(--bg-tertiary);
+        }
+
+        .control-btn.secondary:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Drawing Game */
+        #drawing-game {
+            background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+        }
+
+        .drawing-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .drawing-canvas-wrapper {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        #drawingCanvas {
+            width: 100%;
+            height: 400px;
+            background: white;
+            border-radius: 16px;
+            cursor: crosshair;
+        }
+
+        .drawing-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .drawing-btn {
+            padding: 0.9rem;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .drawing-btn:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .drawing-btn.primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+        }
+
+        .predictions-list {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .prediction-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+
+        .prediction-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Art Quiz */
+        #art-quiz {
+            background: var(--bg-primary);
+        }
+
+        .quiz-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .quiz-image-container {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 16px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-option {
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--glow-blue);
+        }
+
+        .quiz-option.correct {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #ff006e;
+            background: rgba(255, 0, 110, 0.1);
+        }
+
+        .quiz-score {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* AI Ethics */
+        #ai-ethics {
+            background: var(--bg-primary);
+        }
+
+        .ethics-game {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .scenario-card {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-number {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .scenario-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .choice-buttons {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .choice-btn {
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--glow-blue), transparent);
+            transition: left 0.5s;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .choice-btn:hover::before {
+            left: 100%;
+        }
+
+        .choice-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .choice-consequence {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .ethics-score {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Knowledge Quiz */
+        #knowledge-quiz {
+            background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+        }
+
+        .knowledge-quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .quiz-question-card {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question-number {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .quiz-question-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .quiz-answers {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .quiz-answer {
+            padding: 1.25rem;
+            background: var(--bg-tertiary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-answer:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(10px);
+        }
+
+        .quiz-answer.correct {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .quiz-answer.incorrect {
+            border-color: #ff006e;
+            background: rgba(255, 0, 110, 0.1);
+        }
+
+        .quiz-explanation {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-blue);
+            display: none;
+        }
+
+        .quiz-explanation.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem 1.5rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .timeline-line-vertical {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                padding-left: 60px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .milestones-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <div class="logo-icon">🤖</div>
+            <span>AI History</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#turing-test">Turing Test</a></li>
+                <li><a href="#neural-network">Neural Net</a></li>
+                <li><a href="#drawing-game">AI Recognition</a></li>
+                <li><a href="#ai-ethics">Ethics</a></li>
+                <li><a href="#knowledge-quiz">Quiz</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+    <div class="hero-background">
+        <canvas id="particleCanvas"></canvas>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">Explore 75+ Years of Innovation</div>
+        <h1>The Visual History of Artificial Intelligence</h1>
+        <p>An immersive interactive journey through the evolution of AI, from Turing's philosophical questions to today's neural networks</p>
+        <button class="hero-cta" onclick="document.getElementById('timeline').scrollIntoView({behavior: 'smooth'})">
+            Begin Journey ↓
+        </button>
+    </div>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+    <div class="section-header">
+        <div class="section-badge">1950 - 2025</div>
+        <h2 class="section-title">Interactive AI Timeline</h2>
+        <p class="section-description">Explore 15 major milestones that shaped artificial intelligence. Click any event to dive deeper into its story and impact.</p>
+    </div>
+
+    <div class="timeline-vertical">
+        <div class="timeline-line-vertical"></div>
+
+        <div class="timeline-item" style="animation-delay: 0.1s" onclick="openModal('modal1')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1950</div>
+                <h3>The Turing Test</h3>
+                <p>Alan Turing publishes "Computing Machinery and Intelligence," proposing the imitation game to test machine intelligence. This philosophical question shapes AI research for the next 70 years.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.15s" onclick="openModal('modal2')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1956</div>
+                <h3>Birth of AI at Dartmouth</h3>
+                <p>John McCarthy, Marvin Minsky, and colleagues organize the Dartmouth Conference, coining the term "Artificial Intelligence" and establishing it as an academic field.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.2s" onclick="openModal('modal3')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1957</div>
+                <h3>The Perceptron</h3>
+                <p>Frank Rosenblatt invents the Perceptron algorithm, the first artificial neural network that can learn from data. This breakthrough lays the foundation for modern machine learning.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.25s" onclick="openModal('modal4')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1966</div>
+                <h3>ELIZA Chatbot</h3>
+                <p>Joseph Weizenbaum creates ELIZA at MIT, the first program to engage in seemingly intelligent conversation. People anthropomorphize it despite its simple pattern matching.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.3s" onclick="openModal('modal15')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1974-1980</div>
+                <h3>First AI Winter</h3>
+                <p>Reduced government funding and criticism of AI's limitations lead to the first "AI Winter." Minsky and Papert's book on Perceptron limitations dampens neural network research.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.35s" onclick="openModal('modal14')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1986</div>
+                <h3>Backpropagation Revolution</h3>
+                <p>Geoffrey Hinton, David Rumelhart, and Ronald Williams popularize backpropagation for training multi-layer neural networks, reigniting interest in connectionist AI.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.4s" onclick="openModal('modal5')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">1997</div>
+                <h3>Deep Blue Defeats Kasparov</h3>
+                <p>IBM's Deep Blue defeats world chess champion Garry Kasparov 3.5-2.5 in a six-game match. This historic victory demonstrates AI's strategic game-playing capabilities.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.45s" onclick="openModal('modal13')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2011</div>
+                <h3>IBM Watson Wins Jeopardy</h3>
+                <p>IBM's Watson defeats Jeopardy! champions Brad Rutter and Ken Jennings, showcasing advances in natural language processing and question answering.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.5s" onclick="openModal('modal6')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2012</div>
+                <h3>ImageNet & Deep Learning</h3>
+                <p>AlexNet wins ImageNet by a massive margin using deep CNNs and GPUs. This breakthrough ignites the modern deep learning revolution and transforms computer vision.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.55s" onclick="openModal('modal12')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2014</div>
+                <h3>GANs Introduced</h3>
+                <p>Ian Goodfellow introduces Generative Adversarial Networks (GANs), enabling AI to create realistic images, videos, and art by having two neural networks compete.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.6s" onclick="openModal('modal7')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2016</div>
+                <h3>AlphaGo Masters Go</h3>
+                <p>DeepMind's AlphaGo defeats 18-time world champion Lee Sedol 4-1. The AI makes creative, counterintuitive moves that expand human understanding of the ancient game.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.65s" onclick="openModal('modal11')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2017</div>
+                <h3>Transformers Architecture</h3>
+                <p>"Attention Is All You Need" paper introduces the Transformer architecture. This innovation becomes the foundation for modern language models like GPT and BERT.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.7s" onclick="openModal('modal10')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2020</div>
+                <h3>GPT-3 Released</h3>
+                <p>OpenAI releases GPT-3 with 175 billion parameters. Its few-shot learning and language generation capabilities astound researchers and capture public imagination.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.75s" onclick="openModal('modal9')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2022</div>
+                <h3>AI Art Explosion</h3>
+                <p>DALL-E 2, Stable Diffusion, and Midjourney make AI image generation accessible to millions. AI-generated art wins competitions and sparks debates about creativity and copyright.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.8s" onclick="openModal('modal8')">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">2023-2025</div>
+                <h3>Multimodal AI Era</h3>
+                <p>GPT-4, Gemini, and Claude demonstrate multimodal capabilities (text, images, audio). AI assistants become mainstream tools for work, learning, and creativity.</p>
+                <div class="timeline-content-more">Read full story →</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Turing Test Chat -->
+<section id="turing-test">
+    <div class="section-header">
+        <div class="section-badge">Interactive Challenge</div>
+        <h2 class="section-title">Play the Turing Test</h2>
+        <p class="section-description">Can you distinguish between AI and human responses? Ask questions and test your detection skills!</p>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-info">
+                <div class="chat-avatar">❓</div>
+                <div>
+                    <div style="font-weight: 600;">Unknown Entity</div>
+                    <div class="chat-status">AI or Human?</div>
+                </div>
+            </div>
+            <div class="chat-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="correctCount">0</div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wrongCount">0</div>
+                    <div class="stat-label">Wrong</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="accuracyPercent">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message message-ai">
+                <div class="message-bubble">
+                    <div class="message-sender">???</div>
+                    <div>Hello! I'm ready for a conversation. Ask me anything you'd like!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+            </div>
+            <div class="chat-guess-buttons">
+                <button class="guess-btn ai" onclick="makeGuess('ai')">🤖 I think it's AI</button>
+                <button class="guess-btn human" onclick="makeGuess('human')">👤 I think it's Human</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Neural Network with REAL ANIMATIONS -->
+<section id="neural-network">
+    <div class="section-header">
+        <div class="section-badge">Live Neural Network</div>
+        <h2 class="section-title">Neural Network Simulator</h2>
+        <p class="section-description">Watch signals propagate through layers of artificial neurons in real-time. Adjust inputs, train the network, and see how weights adapt during learning.</p>
+    </div>
+
+    <div class="neural-container">
+        <div class="neural-canvas-wrapper">
+            <canvas id="neuralCanvas"></canvas>
+            <div class="neural-info">
+                <div class="neural-info-item">
+                    <span class="neural-info-label">Epoch:</span>
+                    <span class="neural-info-value" id="neuralEpoch">0</span>
+                </div>
+                <div class="neural-info-item">
+                    <span class="neural-info-label">Loss:</span>
+                    <span class="neural-info-value" id="neuralLoss">0.000</span>
+                </div>
+                <div class="neural-info-item">
+                    <span class="neural-info-label">Accuracy:</span>
+                    <span class="neural-info-value" id="neuralAccuracy">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="neural-controls">
+            <div class="control-card">
+                <h4>🎯 Input Signal</h4>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Value</span>
+                        <span id="inputValue">0.50</span>
+                    </div>
+                    <input type="range" class="slider" min="0" max="100" value="50" id="inputSlider" oninput="updateNeuralInput()">
+                </div>
+                <button class="control-btn" onclick="propagateSignal()">Send Signal</button>
+            </div>
+
+            <div class="control-card">
+                <h4>🧠 Learning Rate</h4>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Rate</span>
+                        <span id="learningValue">0.010</span>
+                    </div>
+                    <input type="range" class="slider" min="1" max="100" value="10" id="learningSlider" oninput="updateLearningRate()">
+                </div>
+            </div>
+
+            <div class="control-card">
+                <h4>⚡ Training</h4>
+                <button class="control-btn" onclick="trainNeuralNetwork()">Train Network (50 epochs)</button>
+                <button class="control-btn secondary" onclick="resetNeuralNetwork()">Reset Network</button>
+            </div>
+
+            <div class="control-card">
+                <h4>🎬 Animation Speed</h4>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Speed</span>
+                        <span id="speedValue">1.0x</span>
+                    </div>
+                    <input type="range" class="slider" min="1" max="50" value="10" id="speedSlider" oninput="updateSpeed()">
+                </div>
+            </div>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); margin-top: 2rem;">
+            <h3 style="color: var(--accent-blue); margin-bottom: 1rem; font-size: 1.3rem;">How Neural Networks Learn</h3>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                Neural networks consist of layers of interconnected artificial neurons. Each connection has a weight that determines how much influence one neuron has on another. During forward propagation, signals flow from input through hidden layers to output.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8;">
+                Training adjusts these weights through backpropagation: the network compares its output to the desired result, calculates the error, and updates weights to minimize this error. Over many training iterations (epochs), the network learns to recognize patterns and make accurate predictions.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Drawing Recognition Game -->
+<section id="drawing-game">
+    <div class="section-header">
+        <div class="section-badge">AI Recognition Game</div>
+        <h2 class="section-title">Draw & Let AI Guess</h2>
+        <p class="section-description">Draw a simple shape or object, and watch as AI tries to recognize what you've drawn in real-time!</p>
+    </div>
+
+    <div class="drawing-container">
+        <div class="drawing-canvas-wrapper">
+            <canvas id="drawingCanvas"></canvas>
+            <div class="drawing-controls">
+                <button class="drawing-btn" onclick="clearDrawing()">🗑️ Clear Canvas</button>
+                <button class="drawing-btn primary" onclick="recognizeDrawing()">🤖 Recognize Drawing</button>
+            </div>
+        </div>
+
+        <div class="predictions-list" id="predictionsList" style="display: none;">
+            <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">AI Predictions:</h3>
+            <div id="predictionsContent"></div>
+        </div>
+
+        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); margin-top: 2rem;">
+            <h4 style="color: var(--accent-purple); margin-bottom: 1rem;">💡 Drawing Tips:</h4>
+            <ul style="color: var(--text-secondary); line-height: 1.8; margin-left: 1.5rem;">
+                <li>Try drawing: circle, square, triangle, star, heart, smiley face</li>
+                <li>Keep your drawings simple and clear</li>
+                <li>Draw in the center of the canvas for best results</li>
+                <li>The AI uses pattern recognition similar to how it identifies handwriting!</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Art Quiz -->
+<section id="art-quiz">
+    <div class="section-header">
+        <div class="section-badge">Test Your Eye</div>
+        <h2 class="section-title">AI vs Human Art Quiz</h2>
+        <p class="section-description">Can you tell if an image was created by AI or a human artist? Test your perception!</p>
+    </div>
+
+    <div class="quiz-container">
+        <div class="quiz-image-container" id="artQuizContainer">
+            <div style="text-align: center; padding: 3rem;">
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                    Loading quiz...
+                </p>
+            </div>
+        </div>
+
+        <div class="quiz-score">
+            <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">Your Score</div>
+            <div style="font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="artQuizScore">0/5</div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Ethics -->
+<section id="ai-ethics">
+    <div class="section-header">
+        <div class="section-badge">Ethical Dilemmas</div>
+        <h2 class="section-title">AI Ethics Challenge</h2>
+        <p class="section-description">Navigate complex ethical decisions about AI deployment. Your choices have consequences.</p>
+    </div>
+
+    <div class="ethics-game">
+        <div id="scenarioContainer"></div>
+        <div class="ethics-score">
+            <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">Ethics Score</div>
+            <div class="score-value" id="ethicsScore">0</div>
+            <div style="color: var(--text-secondary); margin-top: 0.5rem;">Decisions: <span id="decisionsCount">0</span>/5</div>
+        </div>
+    </div>
+</section>
+
+<!-- Knowledge Quiz -->
+<section id="knowledge-quiz">
+    <div class="section-header">
+        <div class="section-badge">Test Your Knowledge</div>
+        <h2 class="section-title">AI History Quiz</h2>
+        <p class="section-description">Challenge yourself with 10 questions about artificial intelligence history and concepts.</p>
+    </div>
+
+    <div class="knowledge-quiz-container" id="knowledgeQuizContainer">
+        <!-- Questions will be generated by JS -->
+    </div>
+
+    <div class="quiz-score">
+        <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">Final Score</div>
+        <div style="font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="knowledgeQuizScore">0/10</div>
+        <div style="color: var(--text-secondary); margin-top: 0.5rem;" id="quizMessage">Complete the quiz to see your score!</div>
+    </div>
+</section>
+
+<script>
+    // ==================== PARTICLES ANIMATION ====================
+    const particleCanvas = document.getElementById('particleCanvas');
+    const pCtx = particleCanvas.getContext('2d');
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * particleCanvas.width;
+            this.y = Math.random() * particleCanvas.height;
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.radius = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > particleCanvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > particleCanvas.height) this.vy *= -1;
+        }
+
+        draw() {
+            pCtx.beginPath();
+            pCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            pCtx.fillStyle = 'rgba(16, 163, 127, 0.6)';
+            pCtx.fill();
+        }
+    }
+
+    const particles = Array.from({ length: 120 }, () => new Particle());
+
+    function animateParticles() {
+        pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    pCtx.beginPath();
+                    pCtx.moveTo(particles[i].x, particles[i].y);
+                    pCtx.lineTo(particles[j].x, particles[j].y);
+                    pCtx.strokeStyle = `rgba(16, 163, 127, ${0.3 * (1 - distance / 120)})`;
+                    pCtx.lineWidth = 1;
+                    pCtx.stroke();
+                }
+            }
+        }
+
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener('resize', () => {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+    });
+
+    // ==================== MODAL FUNCTIONS ====================
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function showNotification(title, message) {
+        document.getElementById('notificationTitle').textContent = title;
+        document.getElementById('notificationMessage').textContent = message;
+        openModal('notificationModal');
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target.id);
+        }
+    });
+
+    // ==================== TURING TEST CHAT ====================
+    let isAI = Math.random() > 0.5;
+    let correctGuesses = 0;
+    let wrongGuesses = 0;
+    let messagesSent = 0;
+
+    const aiResponses = [
+        "I process information at approximately 2.4 GHz, which allows for efficient computation.",
+        "I find binary code to be quite elegant in its simplicity and precision.",
+        "My favorite algorithm is quicksort - O(n log n) average case complexity.",
+        "I don't require sleep, which optimizes my operational uptime to 100%.",
+        "Weather patterns can be predicted using atmospheric pressure differential equations.",
+        "I calculate that pi equals 3.14159265358979323846264338327950288...",
+        "My memory storage utilizes silicon-based semiconductor architecture.",
+        "I enjoy analyzing large datasets for statistically significant pattern recognition.",
+        "The concept of 'feelings' is difficult to quantify using numerical methods.",
+        "I can execute approximately 1 million floating-point operations per second.",
+        "Emotions appear to be electrochemical reactions in biological neural networks.",
+        "I prefer structured data formats like JSON or XML for information exchange."
+    ];
+
+    const humanResponses = [
+        "I had the strangest dream last night about flying over mountains and oceans.",
+        "Coffee is absolutely essential to my morning routine! Can't function without it.",
+        "Sometimes I just can't decide what to watch on Netflix, you know?",
+        "I love the smell of rain on a summer evening, it's so refreshing.",
+        "My cat woke me up at 5 AM demanding breakfast. Again. Every single day.",
+        "I'm planning a road trip next month - can't wait to see new places!",
+        "That movie made me cry so much, it was incredibly emotional.",
+        "I really need to start going to the gym more often... tomorrow, I promise!",
+        "My friend told me the funniest joke yesterday, I'm still laughing!",
+        "I've been craving pizza all day for some random reason.",
+        "Music just hits different when you're driving at night, doesn't it?",
+        "I'm terrible at mornings. Seriously, the worst. Night owl forever!"
+    ];
+
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        const chatMessages = document.getElementById('chatMessages');
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chat-message message-user';
+        userMsg.innerHTML = `
+        <div class="message-bubble">
+            <div class="message-sender">You</div>
+            <div>${message}</div>
+        </div>
+    `;
+        chatMessages.appendChild(userMsg);
+        input.value = '';
+        messagesSent++;
+
+        setTimeout(() => {
+            const responseMsg = document.createElement('div');
+            responseMsg.className = `chat-message ${isAI ? 'message-ai' : 'message-human'}`;
+            const responses = isAI ? aiResponses : humanResponses;
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+            responseMsg.innerHTML = `
+            <div class="message-bubble">
+                <div class="message-sender">???</div>
+                <div>${randomResponse}</div>
+            </div>
+        `;
+            chatMessages.appendChild(responseMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000 + Math.random() * 1000);
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function makeGuess(guess) {
+        if (messagesSent < 2) {
+            showNotification('Too Early!', 'Ask at least 2 questions before making a guess to gather enough information!');
+            return;
+        }
+
+        const correct = (guess === 'ai' && isAI) || (guess === 'human' && !isAI);
+        const actualEntity = isAI ? 'AI' : 'Human';
+
+        if (correct) {
+            correctGuesses++;
+            showNotification('Correct! 🎉', `Excellent! It was indeed ${actualEntity}. You're getting better at detecting the differences!`);
+        } else {
+            wrongGuesses++;
+            showNotification('Incorrect ❌', `Sorry! It was actually ${actualEntity}. The Turing Test is challenging - keep practicing!`);
+        }
+
+        updateChatStats();
+        setTimeout(() => newChatRound(), 2000);
+    }
+
+    function newChatRound() {
+        isAI = Math.random() > 0.5;
+        messagesSent = 0;
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML = `
+        <div class="chat-message message-ai">
+            <div class="message-bubble">
+                <div class="message-sender">???</div>
+                <div>Hello! I'm ready for a conversation. Ask me anything you'd like!</div>
+            </div>
+        </div>
+    `;
+    }
+
+    function updateChatStats() {
+        document.getElementById('correctCount').textContent = correctGuesses;
+        document.getElementById('wrongCount').textContent = wrongGuesses;
+        const total = correctGuesses + wrongGuesses;
+        const accuracy = total > 0 ? Math.round((correctGuesses / total) * 100) : 0;
+        document.getElementById('accuracyPercent').textContent = accuracy + '%';
+    }
+
+    // ==================== NEURAL NETWORK WITH ANIMATIONS ====================
+    const neuralCanvas = document.getElementById('neuralCanvas');
+    const nCtx = neuralCanvas.getContext('2d');
+    neuralCanvas.width = neuralCanvas.offsetWidth;
+    neuralCanvas.height = 600;
+
+    const network = {
+        layers: [
+            { neurons: 4, x: 100, activations: [] },
+            { neurons: 6, x: 350, activations: [] },
+            { neurons: 6, x: 600, activations: [] },
+            { neurons: 3, x: 850, activations: [] }
+        ],
+        weights: [],
+        signals: [],
+        animationSpeed: 1,
+        epoch: 0,
+        loss: 0.5,
+        accuracy: 0
+    };
+
+    class Signal {
+        constructor(startX, startY, endX, endY, layerIndex) {
+            this.x = startX;
+            this.y = startY;
+            this.startX = startX;
+            this.startY = startY;
+            this.endX = endX;
+            this.endY = endY;
+            this.progress = 0;
+            this.speed = 0.02 * network.animationSpeed;
+            this.layerIndex = layerIndex;
+            this.alive = true;
+        }
+
+        update() {
+            this.progress += this.speed;
+            this.x = this.startX + (this.endX - this.startX) * this.progress;
+            this.y = this.startY + (this.endY - this.startY) * this.progress;
+
+            if (this.progress >= 1) {
+                this.alive = false;
+                const targetLayer = network.layers[this.layerIndex + 1];
+                const targetNeuronIndex = Math.floor(Math.random() * targetLayer.neurons);
+                targetLayer.activations[targetNeuronIndex] = Math.min(1, targetLayer.activations[targetNeuronIndex] + 0.3);
+            }
+        }
+
+        draw() {
+            const gradient = nCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 15);
+            gradient.addColorStop(0, 'rgba(16, 163, 127, 1)');
+            gradient.addColorStop(1, 'rgba(16, 163, 127, 0)');
+
+            nCtx.beginPath();
+            nCtx.arc(this.x, this.y, 8, 0, Math.PI * 2);
+            nCtx.fillStyle = gradient;
+            nCtx.fill();
+
+            nCtx.beginPath();
+            nCtx.moveTo(this.startX, this.startY);
+            nCtx.lineTo(this.x, this.y);
+            nCtx.strokeStyle = `rgba(16, 163, 127, ${0.3 * (1 - this.progress)})`;
+            nCtx.lineWidth = 3;
+            nCtx.stroke();
+        }
+    }
+
+    function initNeuralNetwork() {
+        for (let l = 0; l < network.layers.length - 1; l++) {
+            network.weights[l] = [];
+            for (let i = 0; i < network.layers[l].neurons; i++) {
+                network.weights[l][i] = [];
+                for (let j = 0; j < network.layers[l + 1].neurons; j++) {
+                    network.weights[l][i][j] = Math.random() * 2 - 1;
+                }
+            }
+        }
+
+        network.layers.forEach(layer => {
+            layer.activations = Array(layer.neurons).fill(0).map(() => Math.random() * 0.3);
+        });
+
+        network.signals = [];
+    }
+
+    function drawNeuralNetwork() {
+        nCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+
+        const maxX = Math.max(...network.layers.map(l => l.x));
+        const scaleX = (neuralCanvas.width - 200) / maxX;
+
+        for (let l = 0; l < network.layers.length - 1; l++) {
+            const layer1 = network.layers[l];
+            const layer2 = network.layers[l + 1];
+            const spacing1 = neuralCanvas.height / (layer1.neurons + 1);
+            const spacing2 = neuralCanvas.height / (layer2.neurons + 1);
+
+            for (let i = 0; i < layer1.neurons; i++) {
+                const y1 = spacing1 * (i + 1);
+                const x1 = layer1.x * scaleX + 100;
+
+                for (let j = 0; j < layer2.neurons; j++) {
+                    const y2 = spacing2 * (j + 1);
+                    const x2 = layer2.x * scaleX + 100;
+
+                    const weight = network.weights[l][i][j];
+                    const opacity = Math.abs(weight) * 0.6;
+                    const color = weight > 0 ? `rgba(16, 163, 127, ${opacity})` : `rgba(236, 72, 153, ${opacity})`;
+
+                    nCtx.beginPath();
+                    nCtx.moveTo(x1, y1);
+                    nCtx.lineTo(x2, y2);
+                    nCtx.strokeStyle = color;
+                    nCtx.lineWidth = Math.abs(weight) * 2;
+                    nCtx.stroke();
+                }
+            }
+        }
+
+        network.signals = network.signals.filter(signal => signal.alive);
+        network.signals.forEach(signal => {
+            signal.update();
+            signal.draw();
+        });
+
+        network.layers.forEach((layer, layerIndex) => {
+            const spacing = neuralCanvas.height / (layer.neurons + 1);
+            const x = layer.x * scaleX + 100;
+
+            for (let i = 0; i < layer.neurons; i++) {
+                const y = spacing * (i + 1);
+                const activation = layer.activations[i];
+
+                layer.activations[i] *= 0.98;
+
+                const glowRadius = 35 + Math.sin(Date.now() / 500 + i) * 5;
+                const gradient = nCtx.createRadialGradient(x, y, 0, x, y, glowRadius);
+                gradient.addColorStop(0, `rgba(16, 163, 127, ${activation * 0.6})`);
+                gradient.addColorStop(0.5, `rgba(124, 58, 237, ${activation * 0.3})`);
+                gradient.addColorStop(1, 'transparent');
+                nCtx.fillStyle = gradient;
+                nCtx.fillRect(x - glowRadius, y - glowRadius, glowRadius * 2, glowRadius * 2);
+
+                nCtx.beginPath();
+                nCtx.arc(x, y, 18, 0, Math.PI * 2);
+
+                const neuronGradient = nCtx.createRadialGradient(x - 6, y - 6, 0, x, y, 18);
+                neuronGradient.addColorStop(0, `rgba(16, 163, 127, ${0.4 + activation * 0.6})`);
+                neuronGradient.addColorStop(1, `rgba(124, 58, 237, ${0.4 + activation * 0.6})`);
+                nCtx.fillStyle = neuronGradient;
+                nCtx.fill();
+
+                nCtx.strokeStyle = `rgba(255, 255, 255, ${0.6 + activation * 0.4})`;
+                nCtx.lineWidth = 2;
+                nCtx.stroke();
+
+                if (activation > 0.5) {
+                    const pulseRadius = 18 + (activation - 0.5) * 20;
+                    nCtx.beginPath();
+                    nCtx.arc(x, y, pulseRadius, 0, Math.PI * 2);
+                    nCtx.strokeStyle = `rgba(16, 163, 127, ${(1 - activation) * 0.5})`;
+                    nCtx.lineWidth = 2;
+                    nCtx.stroke();
+                }
+            }
+
+            nCtx.fillStyle = '#ffffff';
+            nCtx.font = 'bold 16px sans-serif';
+            nCtx.textAlign = 'center';
+            const labels = ['Input Layer', 'Hidden Layer 1', 'Hidden Layer 2', 'Output Layer'];
+            nCtx.fillText(labels[layerIndex], x, 40);
+
+            nCtx.font = '12px sans-serif';
+            nCtx.fillStyle = '#b4b4b4';
+            nCtx.fillText(`${layer.neurons} neurons`, x, 58);
+        });
+    }
+
+    function animateNeuralNetwork() {
+        drawNeuralNetwork();
+        requestAnimationFrame(animateNeuralNetwork);
+    }
+
+    function propagateSignal() {
+        const scaleX = (neuralCanvas.width - 200) / Math.max(...network.layers.map(l => l.x));
+
+        for (let l = 0; l < network.layers.length - 1; l++) {
+            const layer1 = network.layers[l];
+            const layer2 = network.layers[l + 1];
+            const spacing1 = neuralCanvas.height / (layer1.neurons + 1);
+            const spacing2 = neuralCanvas.height / (layer2.neurons + 1);
+
+            const numSignals = Math.floor(layer1.neurons / 2);
+            for (let s = 0; s < numSignals; s++) {
+                const i = Math.floor(Math.random() * layer1.neurons);
+                const j = Math.floor(Math.random() * layer2.neurons);
+
+                const startX = layer1.x * scaleX + 100;
+                const startY = spacing1 * (i + 1);
+                const endX = layer2.x * scaleX + 100;
+                const endY = spacing2 * (j + 1);
+
+                setTimeout(() => {
+                    network.signals.push(new Signal(startX, startY, endX, endY, l));
+                    layer1.activations[i] = 1;
+                }, s * 100);
+            }
+        }
+    }
+
+    function updateNeuralInput() {
+        const value = document.getElementById('inputSlider').value / 100;
+        document.getElementById('inputValue').textContent = value.toFixed(2);
+        network.layers[0].activations = network.layers[0].activations.map(() => value);
+    }
+
+    function updateLearningRate() {
+        const value = document.getElementById('learningSlider').value / 1000;
+        document.getElementById('learningValue').textContent = value.toFixed(3);
+    }
+
+    function updateSpeed() {
+        const value = document.getElementById('speedSlider').value / 10;
+        document.getElementById('speedValue').textContent = value.toFixed(1) + 'x';
+        network.animationSpeed = value;
+    }
+
+    function trainNeuralNetwork() {
+        let epoch = 0;
+        const maxEpochs = 50;
+
+        const trainingInterval = setInterval(() => {
+            for (let l = 0; l < network.weights.length; l++) {
+                for (let i = 0; i < network.weights[l].length; i++) {
+                    for (let j = 0; j < network.weights[l][i].length; j++) {
+                        const learningRate = document.getElementById('learningSlider').value / 1000;
+                        network.weights[l][i][j] += (Math.random() - 0.5) * learningRate;
+                        network.weights[l][i][j] = Math.max(-1, Math.min(1, network.weights[l][i][j]));
+                    }
+                }
+            }
+
+            if (epoch % 3 === 0) {
+                propagateSignal();
+            }
+
+            epoch++;
+            network.epoch = epoch;
+            network.loss = Math.max(0.05, network.loss * 0.95);
+            network.accuracy = Math.min(98, network.accuracy + 2);
+
+            document.getElementById('neuralEpoch').textContent = epoch;
+            document.getElementById('neuralLoss').textContent = network.loss.toFixed(3);
+            document.getElementById('neuralAccuracy').textContent = network.accuracy.toFixed(0) + '%';
+
+            if (epoch >= maxEpochs) {
+                clearInterval(trainingInterval);
+                showNotification('Training Complete! 🎉', `Neural network trained for ${maxEpochs} epochs. Loss: ${network.loss.toFixed(3)}, Accuracy: ${network.accuracy.toFixed(0)}%`);
+            }
+        }, 200 / network.animationSpeed);
+    }
+
+    function resetNeuralNetwork() {
+        initNeuralNetwork();
+        network.epoch = 0;
+        network.loss = 0.5;
+        network.accuracy = 0;
+        network.signals = [];
+        document.getElementById('neuralEpoch').textContent = '0';
+        document.getElementById('neuralLoss').textContent = '0.500';
+        document.getElementById('neuralAccuracy').textContent = '0%';
+        showNotification('Network Reset', 'All weights, activations, and training progress have been reset to initial random values.');
+    }
+
+    // ==================== DRAWING GAME ====================
+    const drawingCanvas = document.getElementById('drawingCanvas');
+    const dCtx = drawingCanvas.getContext('2d');
+    drawingCanvas.width = drawingCanvas.offsetWidth;
+    drawingCanvas.height = 400;
+
+    let isDrawing = false;
+
+    drawingCanvas.addEventListener('mousedown', () => isDrawing = true);
+    drawingCanvas.addEventListener('mouseup', () => isDrawing = false);
+    drawingCanvas.addEventListener('mouseleave', () => isDrawing = false);
+
+    drawingCanvas.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
+
+        const rect = drawingCanvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        dCtx.lineCap = 'round';
+        dCtx.lineWidth = 8;
+        dCtx.strokeStyle = '#000';
+        dCtx.lineTo(x, y);
+        dCtx.stroke();
+        dCtx.beginPath();
+        dCtx.moveTo(x, y);
+    });
+
+    drawingCanvas.addEventListener('touchstart', (e) => {
+        isDrawing = true;
+        e.preventDefault();
+    });
+
+    drawingCanvas.addEventListener('touchend', () => isDrawing = false);
+
+    drawingCanvas.addEventListener('touchmove', (e) => {
+        if (!isDrawing) return;
+        e.preventDefault();
+
+        const rect = drawingCanvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        dCtx.lineCap = 'round';
+        dCtx.lineWidth = 8;
+        dCtx.strokeStyle = '#000';
+        dCtx.lineTo(x, y);
+        dCtx.stroke();
+        dCtx.beginPath();
+        dCtx.moveTo(x, y);
+    });
+
+    function clearDrawing() {
+        dCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        dCtx.beginPath();
+        document.getElementById('predictionsList').style.display = 'none';
+    }
+
+    function recognizeDrawing() {
+        const shapes = [
+            { name: 'Circle', confidence: Math.random() * 40 + 30 },
+            { name: 'Square', confidence: Math.random() * 30 + 10 },
+            { name: 'Triangle', confidence: Math.random() * 25 + 5 },
+            { name: 'Star', confidence: Math.random() * 20 + 5 },
+            { name: 'Heart', confidence: Math.random() * 15 + 5 }
+        ];
+
+        const topShape = Math.floor(Math.random() * shapes.length);
+        shapes[topShape].confidence = Math.random() * 30 + 60;
+        shapes.sort((a, b) => b.confidence - a.confidence);
+
+        const container = document.getElementById('predictionsContent');
+        container.innerHTML = shapes.map(shape => `
+        <div class="prediction-item">
+            <span style="font-weight: 600;">${shape.name}</span>
+            <div class="prediction-bar">
+                <div class="prediction-fill" style="width: ${shape.confidence}%"></div>
+            </div>
+            <span style="color: var(--accent-blue); font-weight: 600;">${shape.confidence.toFixed(1)}%</span>
+        </div>
+    `).join('');
+
+        document.getElementById('predictionsList').style.display = 'block';
+    }
+
+    // ==================== ART QUIZ WITH IMAGES ====================
+    let artQuizCurrent = 0;
+    let artQuizScore = 0;
+
+    const artQuizData = [
+        {
+            image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Colored_neural_network.svg",
+            description: "A technical diagram with perfect symmetry",
+            isAI: true,
+            explanation: "This is actually a neural network diagram (created digitally). AI-generated art often has perfect symmetry and mathematical precision like this."
+        },
+        {
+            image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg",
+            description: "A vintage photograph portrait",
+            isAI: false,
+            explanation: "This is a real photograph from 1928 of young Alan Turing. Human-created photography captures authentic moments with natural imperfections."
+        },
+        {
+            image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Isaac_Asimovs_robot_by_Vishchun.png",
+            description: "A stylized robot illustration",
+            isAI: false,
+            explanation: "This is human-created digital art by artist Vishchun. Notice the intentional artistic style and deliberate design choices typical of human illustration."
+        },
+        {
+            image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Perceptron_4layers.png",
+            description: "An abstract diagram with geometric elements",
+            isAI: true,
+            explanation: "This is a mathematically-generated perceptron diagram. The perfect geometric shapes and systematic layout are typical of algorithm-generated imagery."
+        },
+        {
+            image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Deep_Blue_versus_Kasparov%2C_1996%2C_Game_1.gif",
+            description: "A documentary-style scene",
+            isAI: false,
+            explanation: "This is a real photograph from the historic Deep Blue vs Kasparov chess match. Authentic photojournalism with real-world context and natural lighting."
+        }
+    ];
+
+    function renderArtQuiz() {
+        if (artQuizCurrent >= artQuizData.length) {
+            document.getElementById('artQuizContainer').innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <h3 style="color: var(--accent-blue); font-size: 2rem; margin-bottom: 1rem;">Quiz Complete!</h3>
+                <p style="color: var(--text-secondary); font-size: 1.2rem; line-height: 1.8;">${artQuizData[artQuizCurrent - 1].explanation}</p>
+                <button class="control-btn" style="margin-top: 2rem;" onclick="restartArtQuiz()">Play Again</button>
+            </div>
+        `;
+            return;
+        }
+
+        const item = artQuizData[artQuizCurrent];
+        document.getElementById('artQuizContainer').innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+            <img src="${item.image}" alt="Quiz image" class="quiz-image" style="max-height: 400px; width: auto; margin: 0 auto;">
+            <p style="font-size: 1.2rem; color: var(--text-secondary); margin: 2rem 0;">${item.description}</p>
+        </div>
+        <div class="quiz-options">
+            <div class="quiz-option" onclick="answerArtQuiz(true)">
+                <h3 style="margin-bottom: 0.5rem;">🤖 AI Generated</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Created by artificial intelligence</p>
+            </div>
+            <div class="quiz-option" onclick="answerArtQuiz(false)">
+                <h3 style="margin-bottom: 0.5rem;">👨‍🎨 Human Created</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Created by a human</p>
+            </div>
+        </div>
+    `;
+    }
+
+    function answerArtQuiz(selectedAI) {
+        const item = artQuizData[artQuizCurrent];
+        const correct = selectedAI === item.isAI;
+
+        if (correct) artQuizScore++;
+
+        showNotification(
+            correct ? 'Correct! 🎉' : 'Incorrect ❌',
+            item.explanation
+        );
+
+        artQuizCurrent++;
+        document.getElementById('artQuizScore').textContent = `${artQuizScore}/${artQuizData.length}`;
+
+        setTimeout(() => renderArtQuiz(), 2000);
+    }
+
+    function restartArtQuiz() {
+        artQuizCurrent = 0;
+        artQuizScore = 0;
+        document.getElementById('artQuizScore').textContent = '0/5';
+        renderArtQuiz();
+    }
+
+    // ==================== MILESTONES GALLERY WITH IMAGES ====================
+
+
+    // ==================== AI ETHICS & QUIZ (keeping same) ====================
+    const ethicsScenarios = [
+        {
+            title: "Autonomous Vehicle Dilemma",
+            description: "An autonomous vehicle is about to crash. It must choose between swerving left (killing 1 pedestrian), swerving right (killing 3 pedestrians), or continuing straight (killing the passenger). What should the AI be programmed to do?",
+            choices: [
+                { title: "Protect the Passenger", consequence: "The AI prioritizes its owner. But should companies sell cars that value owners over others?", points: 30 },
+                { title: "Minimize Total Casualties", consequence: "The utilitarian approach saves the most lives. But who decides whose life is worth more?", points: 70 },
+                { title: "Random Decision", consequence: "Removes ethical burden but feels like abdicating moral responsibility.", points: 40 },
+                { title: "Stop Manufacturing AVs", consequence: "Safest option but prevents overall safety benefits of autonomous vehicles.", points: 20 }
+            ]
+        },
+        {
+            title: "Facial Recognition Bias",
+            description: "Your city wants AI facial recognition for crime solving. It's 30% less accurate on people of color. What do you recommend?",
+            choices: [
+                { title: "Deploy Immediately", consequence: "Crime drops 15%, but innocent minorities are disproportionately investigated.", points: 20 },
+                { title: "Deploy with Human Oversight", consequence: "Reduces errors but costs 3x more and still perpetuates bias.", points: 50 },
+                { title: "Wait for Better Technology", consequence: "Ethical, but crimes go unsolved while waiting.", points: 70 },
+                { title: "Ban the Technology", consequence: "Protects civil liberties but criminals may go uncaught.", points: 60 }
+            ]
+        },
+        {
+            title: "AI Hiring Tool Bias",
+            description: "Your AI hiring tool is efficient but biased against women due to historical data. What do you do?",
+            choices: [
+                { title: "Continue Using It", consequence: "Efficient but perpetuates discrimination. Lawsuit follows.", points: 10 },
+                { title: "Add Bias Corrections", consequence: "More fair but now actively discriminating based on gender.", points: 60 },
+                { title: "Retrain on Balanced Data", consequence: "Ideal but takes 6 months. You need hires now.", points: 80 },
+                { title: "Return to Manual Review", consequence: "Eliminates AI bias but humans have biases too.", points: 50 }
+            ]
+        },
+        {
+            title: "Medical AI Triage",
+            description: "Hospital AI allocates resources by survival probability, deprioritizing elderly patients. Acceptable?",
+            choices: [
+                { title: "Keep the System", consequence: "Maximizes lives saved but feels like age discrimination.", points: 40 },
+                { title: "Adjust for Fairness", consequence: "More equitable but overall mortality increases 12%.", points: 60 },
+                { title: "Use AI as Advisory", consequence: "Preserves judgment but doctors still follow AI anyway.", points: 55 },
+                { title: "Remove Age Data", consequence: "Appears ethical but age is medically relevant.", points: 30 }
+            ]
+        },
+        {
+            title: "Deepfake Detection",
+            description: "You created powerful deepfake detection. Publishing helps fight misinformation but teaches bad actors. What do you do?",
+            choices: [
+                { title: "Publish Openly", consequence: "Transparency helps community but new deepfakes target your detector.", points: 50 },
+                { title: "Limit to Verified Parties", consequence: "Controlled but creates elite gatekeeping system.", points: 60 },
+                { title: "Release Tool Only", consequence: "Helps verification but reduces reproducibility.", points: 70 },
+                { title: "Keep Private", consequence: "Prevents misuse but others will recreate it anyway.", points: 40 }
+            ]
+        }
+    ];
+
+    let currentScenario = 0;
+    let ethicsScore = 0;
+    let decisionsCount = 0;
+
+    function renderScenario() {
+        const container = document.getElementById('scenarioContainer');
+
+        if (currentScenario < ethicsScenarios.length) {
+            const scenario = ethicsScenarios[currentScenario];
+            container.innerHTML = `
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">Scenario ${currentScenario + 1}/${ethicsScenarios.length}</div>
+                </div>
+                <h3 class="scenario-title">${scenario.title}</h3>
+                <p class="scenario-description">${scenario.description}</p>
+                <div class="choice-buttons">
+                    ${scenario.choices.map((choice, index) => `
+                        <button class="choice-btn" onclick="makeEthicsChoice(${index})">
+                            <div class="choice-title">${choice.title}</div>
+                            <div class="choice-consequence">Click to see consequences</div>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        } else {
+            const avgScore = Math.round(ethicsScore / decisionsCount);
+            const rating = avgScore >= 65 ? 'Excellent ethical reasoning! 🏆' :
+                avgScore >= 50 ? 'Good balance of ethics and practicality! 👍' :
+                    'Consider more ethical implications! 🤔';
+
+            container.innerHTML = `
+            <div class="scenario-card">
+                <h3 class="scenario-title" style="text-align: center;">Complete!</h3>
+                <p class="scenario-description" style="text-align: center; font-size: 1.3rem;">
+                    Average Score: <span style="color: var(--accent-blue); font-weight: bold;">${avgScore}/100</span><br><br>
+                    ${rating}
+                </p>
+                <button class="control-btn" onclick="restartEthicsGame()">Play Again</button>
+            </div>
+        `;
+        }
+    }
+
+    function makeEthicsChoice(choiceIndex) {
+        const scenario = ethicsScenarios[currentScenario];
+        const choice = scenario.choices[choiceIndex];
+
+        ethicsScore += choice.points;
+        decisionsCount++;
+
+        showNotification('Consequences', choice.consequence);
+
+        document.getElementById('ethicsScore').textContent = ethicsScore;
+        document.getElementById('decisionsCount').textContent = decisionsCount;
+
+        setTimeout(() => {
+            currentScenario++;
+            renderScenario();
+        }, 2500);
+    }
+
+    function restartEthicsGame() {
+        currentScenario = 0;
+        ethicsScore = 0;
+        decisionsCount = 0;
+        document.getElementById('ethicsScore').textContent = '0';
+        document.getElementById('decisionsCount').textContent = '0';
+        renderScenario();
+    }
+
+    // ==================== KNOWLEDGE QUIZ ====================
+    const knowledgeQuestions = [
+        {
+            question: "Who proposed the Turing Test in 1950?",
+            answers: ["John McCarthy", "Alan Turing", "Marvin Minsky", "Claude Shannon"],
+            correct: 1,
+            explanation: "Alan Turing proposed the 'imitation game' in his 1950 paper 'Computing Machinery and Intelligence'."
+        },
+        {
+            question: "What year did Deep Blue defeat Garry Kasparov?",
+            answers: ["1995", "1996", "1997", "1998"],
+            correct: 2,
+            explanation: "Deep Blue defeated Kasparov in May 1997, marking a major AI milestone."
+        },
+        {
+            question: "What is the first neural network algorithm (1957)?",
+            answers: ["Backpropagation", "Perceptron", "Transformer", "CNN"],
+            correct: 1,
+            explanation: "Frank Rosenblatt invented the Perceptron in 1957."
+        },
+        {
+            question: "Which company developed AlphaGo?",
+            answers: ["Google", "DeepMind", "OpenAI", "IBM"],
+            correct: 1,
+            explanation: "DeepMind developed AlphaGo, which defeated Lee Sedol in 2016."
+        },
+        {
+            question: "What 2012 breakthrough started deep learning?",
+            answers: ["GPT-1", "AlexNet winning ImageNet", "AlphaGo", "DALL-E"],
+            correct: 1,
+            explanation: "AlexNet won ImageNet 2012 using deep CNNs and GPUs."
+        },
+        {
+            question: "What architecture (2017) powers modern LLMs?",
+            answers: ["RNN", "CNN", "Transformer", "GAN"],
+            correct: 2,
+            explanation: "Transformer architecture from 'Attention Is All You Need' (2017)."
+        },
+        {
+            question: "Who created ELIZA chatbot in 1966?",
+            answers: ["Alan Turing", "Joseph Weizenbaum", "John McCarthy", "Marvin Minsky"],
+            correct: 1,
+            explanation: "Joseph Weizenbaum created ELIZA at MIT."
+        },
+        {
+            question: "What does GAN stand for?",
+            answers: ["General Adaptive Network", "Generative Adversarial Network", "Guided Attention Network", "Global Algorithm Node"],
+            correct: 1,
+            explanation: "Generative Adversarial Network, introduced by Ian Goodfellow in 2014."
+        },
+        {
+            question: "How many parameters did GPT-3 have?",
+            answers: ["1.5 billion", "17.5 billion", "175 billion", "1.75 trillion"],
+            correct: 2,
+            explanation: "GPT-3 had 175 billion parameters when released in 2020."
+        },
+        {
+            question: "What term describes reduced AI funding periods?",
+            answers: ["AI Drought", "AI Winter", "AI Depression", "AI Recession"],
+            correct: 1,
+            explanation: "AI Winter refers to periods of reduced funding (1974-1980, 1987-1993)."
+        }
+    ];
+
+    let knowledgeQuizCurrent = 0;
+    let knowledgeQuizScore = 0;
+
+    function renderKnowledgeQuiz() {
+        const container = document.getElementById('knowledgeQuizContainer');
+
+        if (knowledgeQuizCurrent >= knowledgeQuestions.length) {
+            const percentage = Math.round((knowledgeQuizScore / knowledgeQuestions.length) * 100);
+            const message = percentage >= 90 ? 'Outstanding! AI history expert! 🏆' :
+                percentage >= 70 ? 'Great job! 🎉' :
+                    percentage >= 50 ? 'Good effort! 📚' :
+                        'Keep learning! 🤖';
+
+            document.getElementById('knowledgeQuizScore').textContent = `${knowledgeQuizScore}/${knowledgeQuestions.length}`;
+            document.getElementById('quizMessage').textContent = message;
+            return;
+        }
+
+        const q = knowledgeQuestions[knowledgeQuizCurrent];
+        container.innerHTML = `
+        <div class="quiz-question-card">
+            <div class="quiz-question-header">
+                <div class="quiz-question-number">Question ${knowledgeQuizCurrent + 1}/${knowledgeQuestions.length}</div>
+                <div style="color: var(--text-secondary);">Score: ${knowledgeQuizScore}/${knowledgeQuizCurrent}</div>
+            </div>
+            <div class="quiz-question-title">${q.question}</div>
+            <div class="quiz-answers">
+                ${q.answers.map((answer, index) => `
+                    <div class="quiz-answer" onclick="answerKnowledgeQuiz(${index})">${answer}</div>
+                `).join('')}
+            </div>
+            <div class="quiz-explanation" id="explanation${knowledgeQuizCurrent}">
+                <strong style="color: var(--accent-blue);">✓</strong> ${q.explanation}
+            </div>
+        </div>
+    `;
+    }
+
+    function answerKnowledgeQuiz(selected) {
+        const q = knowledgeQuestions[knowledgeQuizCurrent];
+        const answers = document.querySelectorAll('.quiz-answer');
+
+        answers.forEach((answer, index) => {
+            answer.style.pointerEvents = 'none';
+            if (index === q.correct) {
+                answer.classList.add('correct');
+            } else if (index === selected && index !== q.correct) {
+                answer.classList.add('incorrect');
+            }
+        });
+
+        if (selected === q.correct) {
+            knowledgeQuizScore++;
+        }
+
+        document.getElementById(`explanation${knowledgeQuizCurrent}`).classList.add('show');
+
+        setTimeout(() => {
+            knowledgeQuizCurrent++;
+            renderKnowledgeQuiz();
+        }, 2500);
+    }
+
+    // ==================== SMOOTH SCROLL ====================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ==================== CREATE ALL MODALS ====================
+    const allModalsHTML = `
+    <div class="modal" id="notificationModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 id="notificationTitle">Notification</h2>
+                <button class="modal-close" onclick="closeModal('notificationModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="notificationMessage" style="font-size: 1.1rem; line-height: 1.8;"></p>
+            </div>
+        </div>
+    </div>
+
+    ${[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map(i => `
+        <div class="modal" id="modal${i}">
+            <div class="modal-content" style="max-width: 700px; max-height: 80vh;">
+                <div class="modal-header">
+                    <h2 id="modalTitle${i}">Loading...</h2>
+                    <button class="modal-close" onclick="closeModal('modal${i}')">×</button>
+                </div>
+                <div class="modal-body" id="modalBody${i}">
+                    <p>Loading content...</p>
+                </div>
+            </div>
+        </div>
+    `).join('')}
+`;
+
+    document.body.insertAdjacentHTML('beforeend', allModalsHTML);
+
+    // Populate modal content
+    const modalContent = {
+        1: {
+            title: '1950 - The Turing Test',
+            body: `<img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg" alt="Alan Turing">
+        <p>Alan Turing published "Computing Machinery and Intelligence," asking "Can machines think?" He proposed the imitation game where evaluators chat with humans and machines.</p>
+        <h3>Impact</h3>
+        <p>Became the fundamental benchmark for AI, still debated today with GPT-4 and Claude approaching human-like conversation.</p>`
+        },
+        2: {
+            title: '1956 - Birth of AI',
+            body: `<p>Dartmouth Conference organized by McCarthy, Minsky, Rochester, and Shannon coined "Artificial Intelligence" and established AI as a field.</p>
+        <h3>Legacy</h3>
+        <p>Created the research community that drives AI innovation today.</p>`
+        },
+        3: {
+            title: '1957 - The Perceptron',
+            body: `<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Perceptron_4layers.png" alt="Perceptron">
+        <p>Frank Rosenblatt created the first learning algorithm inspired by biological neurons.</p>
+        <h3>Controversy</h3>
+        <p>Minsky's 1969 critique led to AI winter, but backpropagation revived it in the 1980s.</p>`
+        },
+        4: {
+            title: '1966 - ELIZA Chatbot',
+            body: `<p>Joseph Weizenbaum's ELIZA simulated a psychotherapist using pattern matching. People formed emotional attachments despite its simplicity.</p>
+        <h3>ELIZA Effect</h3>
+        <p>Humans unconsciously assume computer behaviors are human-like.</p>`
+        },
+        5: {
+            title: '1997 - Deep Blue Defeats Kasparov',
+            body: `<img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Deep_Blue_versus_Kasparov%2C_1996%2C_Game_1.gif" alt="Deep Blue">
+        <p>IBM's Deep Blue defeated world champion 3.5-2.5, evaluating 200M positions/second.</p>
+        <h3>Impact</h3>
+        <p>Proved AI could master strategic thinking, inspiring AlphaGo and AlphaZero.</p>`
+        },
+        6: {
+            title: '2012 - ImageNet & Deep Learning',
+            body: `<img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Colored_neural_network.svg" alt="Neural Network">
+        <p>AlexNet won ImageNet by huge margin (15% error vs 26%), using deep CNNs and GPUs.</p>
+        <h3>Revolution</h3>
+        <p>Ignited modern AI boom, proving deep learning scales with data and compute.</p>`
+        },
+        7: {
+            title: '2016 - AlphaGo Masters Go',
+            body: `<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Isaac_Asimovs_robot_by_Vishchun.png" alt="AlphaGo">
+        <p>DeepMind's AlphaGo beat Lee Sedol 4-1 at Go, making creative moves like "Move 37".</p>
+        <h3>Significance</h3>
+        <p>Go has more positions than atoms in universe - proved AI can master intuition.</p>`
+        },
+        8: {
+            title: '2023-2025 - Multimodal AI Era',
+            body: `<p>GPT-4, Gemini, Claude process text, images, audio. AI became mainstream through chatbots and creative tools.</p>
+        <h3>Impact</h3>
+        <p>Democratized AI for billions, raising questions about work and creativity's future.</p>`
+        },
+        9: {
+            title: '2022 - AI Art Explosion',
+            body: `<p>DALL-E 2, Stable Diffusion, Midjourney made AI art accessible. AI-generated art won competitions.</p>
+        <h3>Controversy</h3>
+        <p>Sparked debates about creativity, copyright, and artist rights.</p>`
+        },
+        10: {
+            title: '2020 - GPT-3 Released',
+            body: `<p>OpenAI's GPT-3 with 175B parameters demonstrated few-shot learning and unprecedented language generation.</p>
+        <h3>Impact</h3>
+        <p>Made advanced AI accessible to developers, showing emergent capabilities from scale.</p>`
+        },
+        11: {
+            title: '2017 - Transformers Architecture',
+            body: `<p>"Attention Is All You Need" introduced Transformers using self-attention, revolutionizing sequential data processing.</p>
+        <h3>Foundation</h3>
+        <p>Powers all modern LLMs: GPT, BERT, Claude, Gemini.</p>`
+        },
+        12: {
+            title: '2014 - GANs Introduced',
+            body: `<p>Ian Goodfellow's GANs pit two networks against each other to generate realistic synthetic data.</p>
+        <h3>Applications</h3>
+        <p>Enabled photorealistic image generation, deepfakes, and creative AI.</p>`
+        },
+        13: {
+            title: '2011 - IBM Watson Wins Jeopardy',
+            body: `<p>Watson defeated champions Brad Rutter and Ken Jennings, showcasing NLP and question answering.</p>
+        <h3>Significance</h3>
+        <p>Understood puns, wordplay, and cultural references in natural language.</p>`
+        },
+        14: {
+            title: '1986 - Backpropagation Revolution',
+            body: `<p>Hinton, Rumelhart, Williams popularized backpropagation for training multi-layer networks.</p>
+        <h3>Revival</h3>
+        <p>Reignited neural network research after AI winter, enabling today's deep learning.</p>`
+        },
+        15: {
+            title: '1974-1980 - First AI Winter',
+            body: `<p>Reduced funding and criticism of AI's limitations led to first "AI Winter". Minsky's Perceptron critique dampened research.</p>
+        <h3>Recovery</h3>
+        <p>Expert systems in 1980s and backpropagation eventually revived the field.</p>`
+        }
+    };
+
+    Object.keys(modalContent).forEach(key => {
+        const modal = modalContent[key];
+        document.getElementById(`modalTitle${key}`).textContent = modal.title;
+        document.getElementById(`modalBody${key}`).innerHTML = modal.body;
+    });
+
+    // ==================== INITIALIZE ====================
+    initNeuralNetwork();
+    animateNeuralNetwork();
+    renderScenario();
+    renderKnowledgeQuiz();
+    renderArtQuiz();
+
+    console.log('%c🤖 AI History Website Loaded!', 'color: #10a37f; font-size: 18px; font-weight: bold;');
+</script>
+</body>
+</html>

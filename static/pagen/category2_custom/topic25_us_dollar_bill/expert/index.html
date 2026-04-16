@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The US Dollar Bill | History, Design & Secrets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #0a5c36;
+            --accent-green: #1a7a4c;
+            --light-green: #e8f5e9;
+            --gold: #c5a356;
+            --gold-light: #e8d5a3;
+            --dark: #1a1a1a;
+            --darker: #0d0d0d;
+            --text-light: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --card-bg: rgba(26, 26, 26, 0.8);
+            --gradient-gold: linear-gradient(135deg, #c5a356 0%, #f0e6c8 50%, #c5a356 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(13, 13, 13, 0.98);
+            border-bottom: 1px solid rgba(197, 163, 86, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.7rem 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, rgba(10, 92, 54, 0.2) 0%, transparent 70%);
+            background-image: linear-gradient(rgba(13, 13, 13, 0.6), rgba(13, 13, 13, 0.4)), url('assets/hero-background.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(197, 163, 86, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--gold);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(10, 92, 54, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-title span {
+            color: var(--gold);
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Timeline Section */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            border: 4px solid var(--darker);
+            z-index: 10;
+        }
+
+        /* Anatomy Cards Section */
+        .anatomy-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 92, 54, 0.1) 50%, transparent 100%);
+        }
+
+        .anatomy-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .anatomy-card {
+            background: linear-gradient(165deg, rgba(30, 30, 30, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(197, 163, 86, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .anatomy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .anatomy-card:hover {
+            border-color: rgba(197, 163, 86, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .anatomy-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .anatomy-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .anatomy-card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, rgba(197, 163, 86, 0.15), rgba(197, 163, 86, 0.05));
+            border: 1px solid rgba(197, 163, 86, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .anatomy-card-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(197, 163, 86, 0.15);
+            line-height: 1;
+        }
+
+        .anatomy-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .anatomy-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--gradient-gold);
+        }
+
+        .anatomy-card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .anatomy-card-facts {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .anatomy-card-facts li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .anatomy-card-facts li:last-child {
+            border-bottom: none;
+        }
+
+        .fact-bullet {
+            width: 6px;
+            height: 6px;
+            min-width: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+        }
+
+        .anatomy-card-accent {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at bottom right, rgba(197, 163, 86, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Security Features */
+        #security {
+            background-image: linear-gradient(rgba(13, 13, 13, 0.9), rgba(13, 13, 13, 0.9)), url('assets/security-macro.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .security-card {
+            background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(20, 20, 20, 0.95));
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(197, 163, 86, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .security-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            border-color: rgba(197, 163, 86, 0.3);
+        }
+
+        .security-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .security-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, var(--primary-green), var(--accent-green));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+            box-shadow: 0 10px 30px rgba(10, 92, 54, 0.3);
+            position: relative;
+        }
+
+        .security-icon::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 23px;
+            background: linear-gradient(145deg, rgba(197, 163, 86, 0.3), transparent);
+            z-index: -1;
+        }
+
+        .security-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .security-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .security-feature-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(197, 163, 86, 0.1);
+            border: 1px solid rgba(197, 163, 86, 0.2);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1.25rem;
+        }
+
+        /* Denominations Gallery */
+        .denom-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(197, 163, 86, 0.05) 50%, transparent 100%);
+            background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('assets/denominations-bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .denom-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .denom-track {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .denom-card {
+            min-width: 350px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .denom-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .denom-image {
+            height: 180px;
+            background: linear-gradient(135deg, #6b8e6b, #4a6b4a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .denom-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .denom-info {
+            padding: 1.5rem;
+        }
+
+        .denom-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .denom-portrait {
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .denom-facts {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .denom-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .denom-nav button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .denom-nav button:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        /* Fun Facts Section */
+        .facts-section {
+            background: radial-gradient(ellipse at center, rgba(197, 163, 86, 0.08) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .facts-bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 1.5rem;
+        }
+
+        .fact-card {
+            background: linear-gradient(165deg, rgba(30, 30, 30, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 0% 0%, rgba(197, 163, 86, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .fact-card:hover {
+            border-color: rgba(197, 163, 86, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .fact-card:hover::before {
+            opacity: 1;
+        }
+
+        .fact-card.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            padding: 2.5rem;
+        }
+
+        .fact-card.wide {
+            grid-column: span 2;
+        }
+
+        .fact-card.tall {
+            grid-row: span 2;
+        }
+
+        .fact-card.highlight {
+            background: linear-gradient(165deg, rgba(10, 92, 54, 0.3) 0%, rgba(18, 18, 18, 0.98) 100%);
+            border-color: rgba(26, 122, 76, 0.3);
+        }
+
+        .fact-card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, rgba(197, 163, 86, 0.15), rgba(197, 163, 86, 0.05));
+            border: 1px solid rgba(197, 163, 86, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .fact-card-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(197, 163, 86, 0.3), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fact-card:hover .fact-card-icon::after {
+            opacity: 1;
+        }
+
+        .fact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .fact-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--gradient-gold);
+            border-radius: 1px;
+        }
+
+        .fact-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+        }
+
+        /* Stat Cards */
+        .fact-card.stat-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fact-card.stat-card h3 {
+            order: 2;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .fact-card.stat-card h3::after {
+            display: none;
+        }
+
+        .fact-card.stat-card p {
+            order: 3;
+            text-align: center;
+            margin-top: 0.75rem;
+        }
+
+        .stat-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(197, 163, 86, 0.1), rgba(10, 92, 54, 0.2));
+            border: 3px solid rgba(197, 163, 86, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+            order: 1;
+        }
+
+        .stat-circle::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+        }
+
+        .stat-circle::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            border: 1px dashed rgba(197, 163, 86, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Large stat variation */
+        .fact-card.large .stat-circle {
+            width: 140px;
+            height: 140px;
+        }
+
+        .fact-card.large .stat-number {
+            font-size: 3rem;
+        }
+
+        /* Decorative corner */
+        .fact-corner-decor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, transparent 50%, rgba(197, 163, 86, 0.05) 50%);
+            border-radius: 0 24px 0 0;
+        }
+
+        /* Fact tag */
+        .fact-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(197, 163, 86, 0.1);
+            border: 1px solid rgba(197, 163, 86, 0.2);
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        /* Production Process */
+        .production-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 92, 54, 0.1) 50%, transparent 100%);
+            background-image: linear-gradient(rgba(13, 13, 13, 0.9), rgba(13, 13, 13, 0.9)), url('assets/production-bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .process-step {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .process-step:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .process-number {
+            position: absolute;
+            top: -15px;
+            left: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .process-step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .process-detail {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: var(--gold);
+        }
+
+        /* Global Dominance */
+        .global-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .global-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .global-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .global-stat-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .global-stat-card:hover {
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .global-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .global-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .global-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .global-info p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .global-list {
+            list-style: none;
+        }
+
+        .global-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .global-list li::before {
+            content: '→';
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Counterfeiting Section */
+        .counterfeit-section {
+            background: radial-gradient(ellipse at center, rgba(10, 92, 54, 0.15) 0%, transparent 70%);
+        }
+
+        .counterfeit-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(197, 163, 86, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .story-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .story-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(10, 92, 54, 0.3), rgba(197, 163, 86, 0.1));
+        }
+
+        .story-era {
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+
+        .story-content {
+            padding: 2rem;
+        }
+
+        .story-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .story-stat {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .story-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+
+        .story-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid var(--gold);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .modal p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .facts-bento {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .fact-card.large {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+
+            .stat-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .security-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .anatomy-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .anatomy-card {
+                padding: 2rem;
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .global-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item, .timeline-item:nth-child(odd) {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 50px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .security-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(13, 13, 13, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid rgba(197, 163, 86, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .facts-bento {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .fact-card.large, .fact-card.wide, .fact-card.tall {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .fact-card {
+                padding: 1.75rem;
+            }
+
+            .stat-circle {
+                width: 110px;
+                height: 110px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .fact-card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.75rem;
+            }
+
+            .global-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .denom-carousel {
+                overflow: visible;
+            }
+
+            .denom-track {
+                flex-direction: column;
+                gap: 1.5rem;
+                transform: none !important;
+            }
+
+            .denom-card {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .denom-nav {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .security-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .security-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .counterfeit-stories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem;
+            }
+
+            .hero .stat-number {
+                font-size: 1.75rem;
+            }
+
+            .hero .stat-label {
+                font-size: 0.75rem;
+            }
+
+            section.hero {
+                padding: 4rem 0.5rem !important;
+            }
+
+            .story-content {
+                padding: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .anatomy-card {
+                padding: 1.75rem;
+            }
+
+            .anatomy-card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .anatomy-card-number {
+                font-size: 2.5rem;
+            }
+
+            .anatomy-card h3 {
+                font-size: 1.25rem;
+            }
+
+            .global-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <span class="logo">US Dollar</span>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="#anatomy">Anatomy</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#facts">Facts</a></li>
+                <li><a href="#symbols">Symbols</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <span class="hero-badge">The World's Reserve Currency</span>
+            <h1>The <span>US Dollar</span> Bill</h1>
+            <p class="hero-subtitle">Discover the rich history, hidden symbolism, and fascinating secrets behind the most influential currency in the world.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="billsCount">0</span>
+                    <span class="stat-label">Billion Bills in Circulation</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="yearCount">0</span>
+                    <span class="stat-label">Years of History</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="percentCount">0%</span>
+                    <span class="stat-label">Of Global Reserves</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- History Timeline -->
+    <section id="history">
+        <div class="section-header">
+            <span class="section-tag">Timeline</span>
+            <h2 class="section-title">The <span>History</span> of US Currency</h2>
+            <p class="section-desc">From colonial currency to the world's dominant reserve currency, explore the evolution of American money.</p>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1690')">
+                    <div class="timeline-year">1690</div>
+                    <h3 class="timeline-title">Colonial Currency</h3>
+                    <p class="timeline-desc">Massachusetts Bay Colony issues the first paper money in the American colonies to pay soldiers fighting in King William's War.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1775')">
+                    <div class="timeline-year">1775</div>
+                    <h3 class="timeline-title">Continental Currency</h3>
+                    <p class="timeline-desc">The Continental Congress authorizes the issuance of Continental Currency to finance the Revolutionary War.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1792')">
+                    <div class="timeline-year">1792</div>
+                    <h3 class="timeline-title">Coinage Act</h3>
+                    <p class="timeline-desc">Congress passes the Coinage Act, establishing the U.S. Mint and creating a national monetary system based on the dollar.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1861')">
+                    <div class="timeline-year">1861</div>
+                    <h3 class="timeline-title">First Paper Dollars</h3>
+                    <p class="timeline-desc">The U.S. Treasury issues Demand Notes, the first federally issued paper currency, to finance the Civil War.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1913')">
+                    <div class="timeline-year">1913</div>
+                    <h3 class="timeline-title">Federal Reserve Act</h3>
+                    <p class="timeline-desc">The Federal Reserve System is established, creating a central banking system and Federal Reserve Notes.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1929')">
+                    <div class="timeline-year">1929</div>
+                    <h3 class="timeline-title">Standardized Design</h3>
+                    <p class="timeline-desc">Currency size is reduced to its current dimensions, and a standardized design is adopted for all denominations.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('1957')">
+                    <div class="timeline-year">1957</div>
+                    <h3 class="timeline-title">"In God We Trust" Added</h3>
+                    <p class="timeline-desc">The national motto is added to paper currency for the first time, appearing on the $1 Silver Certificate.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="openModal('2004')">
+                    <div class="timeline-year">2004</div>
+                    <h3 class="timeline-title">Color Revolution</h3>
+                    <p class="timeline-desc">The first colorized $20 bill is introduced with enhanced security features, marking a new era in currency design.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bill Anatomy Interactive Section -->
+    <section id="anatomy" class="anatomy-section">
+        <div class="section-header">
+            <span class="section-tag">Deep Dive</span>
+            <h2 class="section-title">Anatomy of a <span>Dollar Bill</span></h2>
+            <p class="section-desc">Discover the rich symbolism and hidden meanings behind every element of the one-dollar bill.</p>
+        </div>
+
+        <div class="anatomy-cards-grid">
+            <div class="anatomy-card">
+                <div class="anatomy-card-header">
+                    <div class="anatomy-card-icon">👤</div>
+                    <div class="anatomy-card-number">01</div>
+                </div>
+                <h3>George Washington Portrait</h3>
+                <p class="anatomy-card-desc">Based on Gilbert Stuart's unfinished 1796 "Athenaeum Portrait," this iconic image has graced the $1 bill since 1869.</p>
+                <ul class="anatomy-card-facts">
+                    <li><span class="fact-bullet"></span>Stuart intentionally left the painting unfinished to make more copies</li>
+                    <li><span class="fact-bullet"></span>The original painting resides at the National Portrait Gallery</li>
+                    <li><span class="fact-bullet"></span>Washington was chosen as he was unanimously elected first President</li>
+                    <li><span class="fact-bullet"></span>Fine-line printing with 400+ lines per inch prevents counterfeiting</li>
+                </ul>
+                <div class="anatomy-card-accent"></div>
+            </div>
+
+            <div class="anatomy-card">
+                <div class="anatomy-card-header">
+                    <div class="anatomy-card-icon">🏛️</div>
+                    <div class="anatomy-card-number">02</div>
+                </div>
+                <h3>Department of Treasury Seal</h3>
+                <p class="anatomy-card-desc">The green seal on the right represents the U.S. Department of the Treasury, which oversees the Bureau of Engraving and Printing.</p>
+                <ul class="anatomy-card-facts">
+                    <li><span class="fact-bullet"></span>The scales represent justice and balance in financial matters</li>
+                    <li><span class="fact-bullet"></span>The key symbolizes official authority and unlocking prosperity</li>
+                    <li><span class="fact-bullet"></span>The chevron with 13 stars represents the original colonies</li>
+                    <li><span class="fact-bullet"></span>The date 1789 marks the Treasury Department's founding year</li>
+                </ul>
+                <div class="anatomy-card-accent"></div>
+            </div>
+
+            <div class="anatomy-card">
+                <div class="anatomy-card-header">
+                    <div class="anatomy-card-icon">🔢</div>
+                    <div class="anatomy-card-number">03</div>
+                </div>
+                <h3>Serial Number System</h3>
+                <p class="anatomy-card-desc">Each bill has a unique 11-character serial number providing information about where and when it was printed.</p>
+                <ul class="anatomy-card-facts">
+                    <li><span class="fact-bullet"></span>First letter indicates Federal Reserve Bank (A=Boston to L=San Francisco)</li>
+                    <li><span class="fact-bullet"></span>Letters A-L correspond to the 12 Federal Reserve Banks</li>
+                    <li><span class="fact-bullet"></span>Star (*) notes replace defective bills and are highly collectible</li>
+                    <li><span class="fact-bullet"></span>Each serial number is unique and never repeated</li>
+                </ul>
+                <div class="anatomy-card-accent"></div>
+            </div>
+
+            <div class="anatomy-card">
+                <div class="anatomy-card-header">
+                    <div class="anatomy-card-icon">🔺</div>
+                    <div class="anatomy-card-number">04</div>
+                </div>
+                <h3>The Great Seal (Reverse)</h3>
+                <p class="anatomy-card-desc">The unfinished pyramid and Eye of Providence carry rich symbolic meaning about America's founding ideals and future aspirations.</p>
+                <ul class="anatomy-card-facts">
+                    <li><span class="fact-bullet"></span>The pyramid has 13 levels for the 13 original colonies</li>
+                    <li><span class="fact-bullet"></span>"MDCCLXXVI" (1776) marks the Declaration of Independence</li>
+                    <li><span class="fact-bullet"></span>The Eye of Providence represents divine guidance over America</li>
+                    <li><span class="fact-bullet"></span>"Annuit Coeptis" means "He (God) favors our undertakings"</li>
+                    <li><span class="fact-bullet"></span>"Novus Ordo Seclorum" means "A New Order of the Ages"</li>
+                </ul>
+                <div class="anatomy-card-accent"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Features -->
+    <section id="security">
+        <div class="section-header">
+            <span class="section-tag">Protection</span>
+            <h2 class="section-title"><span>Security</span> Features</h2>
+            <p class="section-desc">Modern U.S. currency incorporates multiple sophisticated security features to prevent counterfeiting.</p>
+        </div>
+
+        <div class="security-grid">
+            <div class="security-card">
+                <div class="security-icon">🧵</div>
+                <h3>Security Thread</h3>
+                <p>A thin embedded strip runs vertically through each bill. When held to light, the thread displays the denomination and "USA." Under UV light, each denomination glows a unique color—$5 blue, $10 orange, $20 green, $50 yellow, $100 pink.</p>
+                <span class="security-feature-tag">All Denominations</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">💧</div>
+                <h3>Watermark Portrait</h3>
+                <p>A faint image matching the bill's portrait becomes visible when held up to light. This watermark is embedded into the paper during manufacturing and cannot be replicated by standard printing techniques.</p>
+                <span class="security-feature-tag">$5 and Higher</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">🎨</div>
+                <h3>Color-Shifting Ink</h3>
+                <p>The numeral in the lower-right corner shifts from copper to green when the bill is tilted. This optically variable ink (OVI) uses microscopic metallic flakes that reflect light differently at various angles.</p>
+                <span class="security-feature-tag">$10 and Higher</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">🔬</div>
+                <h3>Microprinting</h3>
+                <p>Tiny text, readable only with magnification, appears throughout the bill. On the $100, "THE UNITED STATES OF AMERICA" is printed on Franklin's collar at a size nearly impossible to replicate with copiers.</p>
+                <span class="security-feature-tag">All Denominations</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">📜</div>
+                <h3>Cotton-Linen Paper</h3>
+                <p>U.S. bills are printed on a special 75% cotton and 25% linen blend, giving them a distinctive texture. Red and blue security fibers are randomly embedded throughout the paper during manufacturing.</p>
+                <span class="security-feature-tag">All Denominations</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">🖼️</div>
+                <h3>Intaglio Printing</h3>
+                <p>Ink is applied at 10,000 PSI of pressure, creating raised ridges you can feel with your fingernail. This tactile quality on portraits and borders is impossible to replicate with standard printers.</p>
+                <span class="security-feature-tag">All Denominations</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">🔷</div>
+                <h3>3D Security Ribbon</h3>
+                <p>A blue ribbon woven directly into the $100 bill contains images of bells and "100s" that shift and move as you tilt the note. This feature uses over 650,000 micro-lenses embedded in the ribbon.</p>
+                <span class="security-feature-tag">$100 Only</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">🔔</div>
+                <h3>Bell in the Inkwell</h3>
+                <p>On the $100 bill, a copper-colored inkwell contains a bell that changes from copper to green when tilted. The bell appears to disappear and reappear within the inkwell as you move the note.</p>
+                <span class="security-feature-tag">$100 Only</span>
+            </div>
+
+            <div class="security-card">
+                <div class="security-icon">✨</div>
+                <h3>Fine-Line Printing</h3>
+                <p>Intricate patterns of fine lines behind portraits and around borders create detailed backgrounds. These guilloche patterns are extremely difficult to reproduce accurately and appear blurred on counterfeits.</p>
+                <span class="security-feature-tag">All Denominations</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Facts Bento Grid -->
+    <section id="facts" class="facts-section">
+        <div class="section-header">
+            <span class="section-tag">Did You Know?</span>
+            <h2 class="section-title">Fascinating <span>Facts</span></h2>
+            <p class="section-desc">Surprising trivia and record-breaking facts about U.S. currency that will change how you see money.</p>
+        </div>
+
+        <div class="facts-bento">
+            <div class="fact-card large highlight">
+                <div class="fact-corner-decor"></div>
+                <div class="fact-card-icon">🏭</div>
+                <h3>Daily Money Production</h3>
+                <p>The Bureau of Engraving and Printing produces billions of notes annually at two facilities: Washington D.C. and Fort Worth, Texas. Production varies by Federal Reserve demand.</p>
+                <p>Each note costs between 7.7¢ ($1 and $2) and approximately 19¢ ($100) to produce.</p>
+                <span class="fact-tag">Production</span>
+            </div>
+
+            <div class="fact-card stat-card">
+                <div class="stat-circle">
+                    <span class="stat-number">6.6</span>
+                    <span class="stat-label">Years</span>
+                </div>
+                <h3>$1 Bill Lifespan</h3>
+                <p>Average circulation life before retirement. The $100 lasts 22.9 years.</p>
+            </div>
+
+            <div class="fact-card stat-card">
+                <div class="stat-circle">
+                    <span class="stat-number">4K</span>
+                    <span class="stat-label">Folds</span>
+                </div>
+                <h3>Durability Test</h3>
+                <p>Times a bill can be folded before tearing at the crease.</p>
+            </div>
+
+            <div class="fact-card wide">
+                <div class="fact-corner-decor"></div>
+                <div class="fact-card-icon">📐</div>
+                <h3>Precise Dimensions</h3>
+                <p>Every U.S. bill measures exactly 6.14" × 2.61" and weighs approximately 1 gram. A stack of 233 bills equals one inch. One million dollars in $100 bills weighs 22 pounds and fits in a standard briefcase. Single bill thickness: 0.0043 inches.</p>
+                <span class="fact-tag">Specifications</span>
+            </div>
+
+            <div class="fact-card tall">
+                <div class="fact-corner-decor"></div>
+                <div class="fact-card-icon">💰</div>
+                <h3>Discontinued Notes</h3>
+                <p>The U.S. once printed $500, $1,000, $5,000, $10,000, and even $100,000 bills.</p>
+                <p>The $100,000 Gold Certificate featured Woodrow Wilson and was used only between Federal Reserve Banks. All discontinued in 1969.</p>
+                <span class="fact-tag">History</span>
+            </div>
+
+            <div class="fact-card stat-card">
+                <div class="stat-circle">
+                    <span class="stat-number">90%</span>
+                    <span class="stat-label">Of Bills</span>
+                </div>
+                <h3>Cocaine Traces</h3>
+                <p>Studies show most U.S. bills contain trace amounts from handling and currency-counting machines.</p>
+            </div>
+
+            <div class="fact-card wide">
+                <div class="fact-corner-decor"></div>
+                <div class="fact-card-icon">🔍</div>
+                <h3>Hidden Owl Mystery</h3>
+                <p>Look closely at the upper right corner of the $1 bill, near the "1" on the shield. Some people claim to see a tiny owl or spider hidden in the intricate design. Most experts believe this is simply a printing artifact rather than an intentional design element—but the mystery endures.</p>
+                <span class="fact-tag">Mystery</span>
+            </div>
+
+            <div class="fact-card wide">
+                <div class="fact-corner-decor"></div>
+                <div class="fact-card-icon">🏛️</div>
+                <h3>The "Greenback" Origin</h3>
+                <p>U.S. paper currency earned this iconic nickname from the green ink used on the back of notes since 1861. The color was chosen because cameras of that era couldn't photograph the specific pigment, making counterfeiting significantly more difficult. Green also symbolized stability and trust.</p>
+                <span class="fact-tag">Etymology</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Process -->
+    <section id="production" class="production-section">
+        <div class="section-header">
+            <span class="section-tag">Behind the Scenes</span>
+            <h2 class="section-title">How <span>Money</span> Is Made</h2>
+            <p class="section-desc">The intricate 65-step process of creating U.S. currency, from specialized paper to finished bills.</p>
+        </div>
+
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="process-number">1</div>
+                <h3>Special Paper Production</h3>
+                <p>Crane & Co. produces currency paper from 75% cotton and 25% linen rags in Dalton, Massachusetts. Red and blue security fibers are woven into the paper during manufacturing.</p>
+                <div class="process-detail">The formula has been a closely guarded secret since 1879.</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">2</div>
+                <h3>Offset Printing</h3>
+                <p>The subtle background colors are applied first using offset lithography. Multiple sheets are printed simultaneously, with precise registration to ensure perfect alignment.</p>
+                <div class="process-detail">Background colors prevent basic counterfeiting attempts.</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">3</div>
+                <h3>Intaglio Printing</h3>
+                <p>Steel plates engraved by master craftsmen apply the main images at pressures up to 10,000 pounds per square inch, creating the distinctive raised feel of currency.</p>
+                <div class="process-detail">Each plate takes months to hand-engrave.</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">4</div>
+                <h3>COPE/LEPE Printing</h3>
+                <p>Currency Overprinting Processing Equipment (COPE) and Large Examining Printing Equipment (LEPE) add serial numbers, Federal Reserve seal, and Treasury seal.</p>
+                <div class="process-detail">Each note receives a unique serial number.</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">5</div>
+                <h3>Quality Inspection</h3>
+                <p>Sophisticated electronic inspection systems examine each note at high speed, detecting imperfections invisible to the human eye. Defective notes are shredded.</p>
+                <div class="process-detail">Only 1-2% of notes are rejected.</div>
+            </div>
+
+            <div class="process-step">
+                <div class="process-number">6</div>
+                <h3>Cutting & Packaging</h3>
+                <p>Sheets of 32 or 50 notes (depending on denomination) are cut, stacked into "bricks" of 4,000 notes, and wrapped for delivery to Federal Reserve Banks for distribution.</p>
+                <div class="process-detail">$80 million can fit on a single pallet.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden Symbols & Secrets -->
+    <section id="symbols" class="global-section">
+        <div class="section-header">
+            <span class="section-tag">Mysteries</span>
+            <h2 class="section-title">Hidden <span>Symbols</span> & Secrets</h2>
+            <p class="section-desc">Discover the hidden details, symbols, and mysteries embedded in the design of U.S. dollar bills.</p>
+        </div>
+
+        <div class="global-grid">
+            <div class="global-stats">
+                <div class="global-stat-card">
+                    <div class="global-stat-value">13</div>
+                    <div class="global-stat-label">Instances of the Number 13</div>
+                </div>
+                <div class="global-stat-card">
+                    <div class="global-stat-value">3</div>
+                    <div class="global-stat-label">Latin Phrases on $1 Bill</div>
+                </div>
+                <div class="global-stat-card">
+                    <div class="global-stat-value">1782</div>
+                    <div class="global-stat-label">Year Great Seal Adopted</div>
+                </div>
+                <div class="global-stat-card">
+                    <div class="global-stat-value">6.14"</div>
+                    <div class="global-stat-label">Standard Bill Length</div>
+                </div>
+            </div>
+
+            <div class="global-info">
+                <h3>The Number 13 Throughout</h3>
+                <p>The number 13, representing the original colonies, appears repeatedly throughout the $1 bill's design—far more than most people realize.</p>
+                <p>These instances were intentionally incorporated by the Founding Fathers to honor the original 13 colonies that declared independence.</p>
+                
+                <ul class="global-list">
+                    <li>13 stars above the eagle</li>
+                    <li>13 stripes on the shield</li>
+                    <li>13 arrows in the eagle's left talon</li>
+                    <li>13 olive leaves and 13 olives in the right talon</li>
+                    <li>13 levels of the pyramid</li>
+                    <li>13 letters in "E PLURIBUS UNUM"</li>
+                    <li>13 letters in "ANNUIT COEPTIS"</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rare & Collectible Bills -->
+    <section id="collectible" class="counterfeit-section">
+        <div class="section-header">
+            <span class="section-tag">Collector's Guide</span>
+            <h2 class="section-title">Rare & <span>Collectible</span> Bills</h2>
+            <p class="section-desc">Special serial numbers, error bills, and rare notes that collectors treasure and pay premium prices for.</p>
+        </div>
+
+        <div class="counterfeit-stories">
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-era">Star Notes</div>
+                    <h3 class="story-title">Replacement Bills</h3>
+                </div>
+                <div class="story-content">
+                    <p>Star notes (★) replace bills damaged during printing. The star at the end of the serial number indicates it's a replacement note. These are printed in smaller quantities, making them collectible.</p>
+                    <p>Low print runs of star notes from certain Federal Reserve banks can be worth $5-$100+ above face value, especially in uncirculated condition.</p>
+                    <div class="story-stat">
+                        <div class="story-stat-value">3.2M</div>
+                        <div class="story-stat-label">avg. star notes per print run</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-era">Fancy Serials</div>
+                    <h3 class="story-title">Special Serial Numbers</h3>
+                </div>
+                <div class="story-content">
+                    <p><strong>Solid numbers:</strong> All same digit (11111111) - Worth $500+<br>
+                    <strong>Ladders:</strong> Sequential digits (12345678) - Worth $300+<br>
+                    <strong>Radars:</strong> Palindromes (12344321) - Worth $20-50<br>
+                    <strong>Super radars:</strong> (01111110) - Worth $100+<br>
+                    <strong>Binary:</strong> Only 0s and 1s - Worth $20-100</p>
+                    <div class="story-stat">
+                        <div class="story-stat-value">1 in 11M</div>
+                        <div class="story-stat-label">odds of solid serial</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-era">Printing Errors</div>
+                    <h3 class="story-title">Error Bills</h3>
+                </div>
+                <div class="story-content">
+                    <p><strong>Misaligned printing:</strong> Image shifted off-center - $25-200<br>
+                    <strong>Ink smears:</strong> Excess ink on bill - $20-100<br>
+                    <strong>Double denomination:</strong> Different values on each side - $500+<br>
+                    <strong>Missing print:</strong> Blank areas where ink should be - $100-1,000<br>
+                    <strong>Inverted back:</strong> Back printed upside down - $100-500</p>
+                    <div class="story-stat">
+                        <div class="story-stat-value">&lt;1%</div>
+                        <div class="story-stat-label">of bills have errors</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Denominations Gallery -->
+    <section id="denominations" class="denom-section">
+        <div class="section-header">
+            <span class="section-tag">Gallery</span>
+            <h2 class="section-title">Currency <span>Denominations</span></h2>
+            <p class="section-desc">Explore the different bill denominations currently in circulation and their featured historical figures.</p>
+        </div>
+
+        <div class="denom-carousel">
+            <div class="denom-track" id="denomTrack">
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-1.png'); background-size: cover; background-position: center; background-color: #1a3a25;">
+                        <span class="denom-value">$1</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">One Dollar</h3>
+                        <p class="denom-portrait">George Washington (1732-1799)</p>
+                        <p class="denom-facts">First President. The most produced denomination. Features the Great Seal on reverse. Lifespan: 6.6 years. Costs 7.7¢ to produce.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-2.png'); background-size: cover; background-position: center; background-color: #253a1a;">
+                        <span class="denom-value">$2</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">Two Dollars</h3>
+                        <p class="denom-portrait">Thomas Jefferson (1743-1826)</p>
+                        <p class="denom-facts">3rd President, author of Declaration of Independence. Often mistakenly thought to be rare but still printed. Features "Signing of the Declaration" on reverse. Many kept as lucky charms.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-5.png'); background-size: cover; background-position: center; background-color: #1a2e3a;">
+                        <span class="denom-value">$5</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">Five Dollars</h3>
+                        <p class="denom-portrait">Abraham Lincoln (1809-1865)</p>
+                        <p class="denom-facts">16th President who preserved the Union. Features the Lincoln Memorial on reverse. Security thread glows blue under UV light. Lifespan: 4.7 years.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-10.png'); background-size: cover; background-position: center; background-color: #3a2e1a;">
+                        <span class="denom-value">$10</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">Ten Dollars</h3>
+                        <p class="denom-portrait">Alexander Hamilton (1755-1804)</p>
+                        <p class="denom-facts">First Treasury Secretary, never President. One of two non-presidents on circulating notes (with Benjamin Franklin on the $100). Features U.S. Treasury building. Hamilton helped establish the financial system.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-20.png'); background-size: cover; background-position: center; background-color: #2e3a1a;">
+                        <span class="denom-value">$20</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">Twenty Dollars</h3>
+                        <p class="denom-portrait">Andrew Jackson (1767-1845)</p>
+                        <p class="denom-facts">7th President, ironically opposed paper currency. Most frequently requested at ATMs. Features the White House on reverse. Most counterfeited inside the U.S. Lifespan: 7.8 years.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-50.png'); background-size: cover; background-position: center; background-color: #3a1a2e;">
+                        <span class="denom-value">$50</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">Fifty Dollars</h3>
+                        <p class="denom-portrait">Ulysses S. Grant (1822-1885)</p>
+                        <p class="denom-facts">18th President, Civil War general. Features the U.S. Capitol building on reverse. Security thread glows yellow under UV. Only 6% of printed currency. Lifespan: 12.2 years.</p>
+                    </div>
+                </div>
+
+                <div class="denom-card">
+                    <div class="denom-image" style="background-image: url('assets/denom-100.png'); background-size: cover; background-position: center; background-color: #1a253a;">
+                        <span class="denom-value">$100</span>
+                    </div>
+                    <div class="denom-info">
+                        <h3 class="denom-name">One Hundred Dollars</h3>
+                        <p class="denom-portrait">Benjamin Franklin (1706-1790)</p>
+                        <p class="denom-facts">Founding Father, inventor, diplomat—never President. Features Independence Hall. Most advanced security features including 3D ribbon. Most common denomination outside U.S. Lifespan: 22.9 years. Costs approximately 19¢ to produce.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="denom-nav">
+            <button onclick="scrollDenom(-1)">←</button>
+            <button onclick="scrollDenom(1)">→</button>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 id="modalTitle"></h3>
+            <p id="modalContent"></p>
+        </div>
+    </div>
+
+    <script>
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+            if (scrollTicking) return;
+            scrollTicking = true;
+            requestAnimationFrame(() => {
+                navbar.classList.toggle('scrolled', window.scrollY > 100);
+                scrollTicking = false;
+            });
+        }, { passive: true });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Animated counters
+        function animateCounter(element, target, suffix = '') {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + suffix;
+            }, 20);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('billsCount'), 55);
+                    animateCounter(document.getElementById('yearCount'), 250);
+                    animateCounter(document.getElementById('percentCount'), 58, '%');
+                    statsObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(document.querySelector('.hero-stats'));
+
+        // Denomination carousel
+        let denomPosition = 0;
+        const denomTrack = document.getElementById('denomTrack');
+
+        function scrollDenom(direction) {
+            if (window.innerWidth <= 768) return;
+            const cardWidth = 370;
+            const maxScroll = (denomTrack.children.length - 3) * cardWidth;
+            
+            denomPosition += direction * cardWidth;
+            denomPosition = Math.max(0, Math.min(denomPosition, maxScroll));
+            
+            denomTrack.style.transform = `translateX(-${denomPosition}px)`;
+        }
+
+        // Modal functionality
+        const modalData = {
+            '1690': {
+                title: 'Colonial Currency (1690)',
+                content: 'The Massachusetts Bay Colony became the first government in the Western world to issue paper money. These "bills of credit" were used to pay soldiers during King William\'s War against French Canada. The experiment was controversial and led to inflation, but it established the precedent for paper currency in America. By 1764, Britain banned colonial paper money through the Currency Act, fueling resentment that contributed to the Revolutionary War.'
+            },
+            '1775': {
+                title: 'Continental Currency (1775)',
+                content: 'To finance the Revolutionary War, the Continental Congress issued $2 million in Continental Currency. By 1779, over $200 million had been printed, leading to severe inflation—prices rose 10,000% in some areas. The phrase "not worth a Continental" emerged from this period, reflecting the currency\'s dramatic devaluation. This experience influenced the Constitution\'s prohibition on states printing money.'
+            },
+            '1792': {
+                title: 'Coinage Act of 1792',
+                content: 'This foundational legislation established the U.S. Mint in Philadelphia and created a decimal-based monetary system. The dollar was defined as 371.25 grains of silver or 24.75 grains of gold, establishing the bimetallic standard. The act also created the positions of Director of the Mint and established the death penalty for debasing currency. The first coins were struck in 1793.'
+            },
+            '1861': {
+                title: 'First Paper Dollars (1861)',
+                content: 'The Civil War created an unprecedented need for currency. Demand Notes, nicknamed "greenbacks" for their distinctive color, were the first federally issued paper currency. They were printed with green ink on the back to prevent photographic counterfeiting, as cameras of the era could not capture the color. By 1862, $450 million in Legal Tender Notes were in circulation, and the greenback became synonymous with U.S. currency.'
+            },
+            '1913': {
+                title: 'Federal Reserve Act (1913)',
+                content: 'Following the Panic of 1907, Congress created the Federal Reserve System as America\'s central bank. Federal Reserve Notes, introduced in 1914, replaced a complex system of national bank notes. The Fed was given authority to manage the nation\'s monetary policy, setting interest rates and controlling the money supply. Today, all U.S. paper currency is issued as Federal Reserve Notes.'
+            },
+            '1929': {
+                title: 'Standardized Design (1929)',
+                content: 'Currency was reduced from 7.42" × 3.13" to 6.14" × 2.61", saving 40% on paper costs during the Great Depression. All denominations adopted a uniform size and standardized portraits—the same basic layout used today. The new design featured distinctive serial numbers and seal colors to identify different types of notes, and established the portrait sizes and positions still in use.'
+            },
+            '1957': {
+                title: '"In God We Trust" Added (1957)',
+                content: 'The phrase "In God We Trust" was first added to U.S. paper currency on the $1 Silver Certificate in 1957. This followed Congress making it the official national motto in 1956. The motto had appeared on coins since 1864 but took nearly a century to appear on paper money. All denominations now carry this inscription prominently on the back of each bill.'
+            },
+            '2004': {
+                title: 'Color Revolution (2004)',
+                content: 'The redesigned $20 bill introduced subtle background colors—the first U.S. currency with color since 1905. Peach and blue tints were added along with enhanced security features including color-shifting ink, a security thread, and watermark. The redesign was driven by the proliferation of high-quality color copiers and printers. Subsequent redesigns of the $50 (2004), $10 (2006), $5 (2008), and $100 (2013) bills followed with similar enhancements.'
+            }
+        };
+
+        function openModal(year) {
+            const modal = document.getElementById('modal');
+            const data = modalData[year];
+            
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalContent').textContent = data.content;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

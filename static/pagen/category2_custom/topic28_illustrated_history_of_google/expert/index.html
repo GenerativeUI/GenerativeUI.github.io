@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Illustrated History of Google</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a24;
+      --accent-blue: #4285f4;
+      --accent-red: #ea4335;
+      --accent-yellow: #fbbc04;
+      --accent-green: #34a853;
+      --text-primary: #f0f0f5;
+      --text-secondary: #a0a0b0;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: transform 0.3s ease;
+    }
+
+    .nav.hidden { transform: translateY(-100%); }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-red), var(--accent-yellow), var(--accent-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent-blue); }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('assets/hero-background-gradient.png') center/cover no-repeat;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(66,133,244,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: 1rem;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 .g { color: var(--accent-blue); }
+    .hero h1 .o1 { color: var(--accent-red); }
+    .hero h1 .o2 { color: var(--accent-yellow); }
+    .hero h1 .g2 { color: var(--accent-blue); }
+    .hero h1 .l { color: var(--accent-green); }
+    .hero h1 .e { color: var(--accent-red); }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    /* Googol Calculator Widget */
+    .googol-widget {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 400px;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .googol-widget h3 {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .googol-display {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 1.5rem;
+      color: var(--accent-yellow);
+      margin-bottom: 1rem;
+      word-break: break-all;
+    }
+
+    .googol-input {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .googol-input input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .googol-input input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .googol-btn {
+      padding: 0.75rem 1.25rem;
+      background: linear-gradient(135deg, var(--accent-blue), #5a9cf4);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .googol-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(66,133,244,0.3);
+    }
+
+    .googol-fact {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Timeline Section */
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    @media (max-width: 768px) {
+      .timeline::before { left: 88px; transform: none; }
+    }
+    @media (max-width: 480px) {
+      .timeline::before { left: 76px; }
+    }
+
+    .timeline-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-nav-btn {
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .timeline-nav-btn:hover, .timeline-nav-btn.active {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+
+    .timeline-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      opacity: 0.5;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) {
+      .timeline-item, .timeline-item:nth-child(odd) {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 50px;
+      }
+    }
+
+    .timeline-year {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-yellow);
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .timeline-content:hover {
+      border-color: rgba(66,133,244,0.3);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-content h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .timeline-image {
+      width: 100%;
+      max-width: 280px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      aspect-ratio: 16/10;
+      margin-bottom: 1rem;
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(66,133,244,0.3);
+      box-shadow: var(--shadow);
+    }
+
+    .product-card:hover::before { transform: scaleX(1); }
+
+    .product-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Icon containers for white-background images */
+    .product-icon.has-image {
+      width: 64px;
+      height: 64px;
+      padding: 8px;
+      background: #ffffff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .product-icon.has-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .product-icon .icon-fallback {
+      display: none;
+      font-size: 1.5rem;
+    }
+
+    .product-icon.has-image img:not([src]) + .icon-fallback,
+    .product-icon .icon-fallback.visible {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .product-icon.gmail { background: rgba(234,67,53,0.2); }
+    .product-icon.maps { background: rgba(66,133,244,0.2); }
+    .product-icon.chrome { background: rgba(66,133,244,0.2); }
+    .product-icon.youtube { background: rgba(234,67,53,0.2); }
+    .product-icon.android { background: rgba(52,168,83,0.2); }
+    .product-icon.drive { background: rgba(251,188,4,0.2); }
+    .product-icon.news { background: rgba(234,67,53,0.2); }
+    .product-icon.earth { background: rgba(52,168,83,0.2); }
+
+    .product-icon.has-image.gmail,
+    .product-icon.has-image.maps,
+    .product-icon.has-image.chrome,
+    .product-icon.has-image.youtube,
+    .product-icon.has-image.android,
+    .product-icon.has-image.drive,
+    .product-icon.has-image.news,
+    .product-icon.has-image.earth {
+      background: #ffffff;
+    }
+
+    /* Fallback: colored background when emoji shows (image failed to load) */
+    .product-icon.has-image.gmail:has(.icon-fallback.visible) { background: rgba(234,67,53,0.2); }
+    .product-icon.has-image.maps:has(.icon-fallback.visible),
+    .product-icon.has-image.chrome:has(.icon-fallback.visible) { background: rgba(66,133,244,0.2); }
+    .product-icon.has-image.youtube:has(.icon-fallback.visible),
+    .product-icon.has-image.news:has(.icon-fallback.visible) { background: rgba(234,67,53,0.2); }
+    .product-icon.has-image.android:has(.icon-fallback.visible),
+    .product-icon.has-image.earth:has(.icon-fallback.visible) { background: rgba(52,168,83,0.2); }
+    .product-icon.has-image.drive:has(.icon-fallback.visible) { background: rgba(251,188,4,0.2); }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card .product-year {
+      font-size: 0.85rem;
+      color: var(--accent-yellow);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Stats Dashboard */
+    .stats-dashboard {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .stats-section {
+      position: relative;
+    }
+
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('assets/hero-background-data-viz.png') center/cover no-repeat;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stats-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .market-share-chart {
+      margin-top: 2rem;
+    }
+
+    .market-share-title {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .market-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+
+    .market-bar-label {
+      width: 100px;
+      font-size: 0.9rem;
+    }
+
+    .market-bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .market-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 1.5s ease-out;
+    }
+
+    .market-bar-fill.google { background: linear-gradient(90deg, var(--accent-blue), var(--accent-green)); }
+    .market-bar-fill.bing { background: #00a4ef; }
+    .market-bar-fill.yahoo { background: #6001d2; }
+    .market-bar-fill.duckduckgo { background: #de5833; }
+    .market-bar-fill.other { background: var(--text-secondary); }
+
+    .market-bar-value {
+      width: 50px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Logo Evolution */
+    .logo-evolution {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .logo-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .logo-stage:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-yellow);
+    }
+
+    .logo-stage .logo-preview {
+      font-family: 'Space Grotesk', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-stage .logo-year {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .logo-1998 .logo-preview { color: var(--accent-blue); }
+    .logo-1999 .logo-preview { 
+      font-family: Georgia, serif;
+      color: var(--accent-red);
+    }
+    .logo-2015 .logo-preview {
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-red), var(--accent-yellow), var(--accent-blue), var(--accent-green), var(--accent-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Doodle Section */
+    .doodle-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .doodle-section { grid-template-columns: 1fr; }
+    }
+
+    .doodle-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .doodle-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .doodle-widget {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .doodle-preview {
+      font-size: 3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+    }
+
+    .doodle-preview .burning-man {
+      display: inline-block;
+      animation: doodleBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes doodleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .doodle-caption {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .doodle-image {
+      width: 100%;
+      max-width: 400px;
+      border-radius: var(--radius);
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    .logo-stage img {
+      max-width: 180px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Info cards / expandable */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+      border-color: rgba(66,133,244,0.3);
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent-yellow);
+    }
+
+    .info-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .acquisition-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .acquisition-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.2s;
+    }
+
+    .acquisition-item:hover { border-color: rgba(66,133,244,0.3); }
+
+    .acquisition-year {
+      flex-shrink: 0;
+      font-weight: 700;
+      color: var(--accent-yellow);
+      width: 50px;
+    }
+
+    .acquisition-details h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .acquisition-details p { font-size: 0.85rem; color: var(--text-secondary); }
+
+    /* AI Section */
+    .ai-stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .ai-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ai-stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .ai-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .ai-stats-row { gap: 1.5rem; padding: 1rem; }
+      .ai-stat-value { font-size: 1.25rem; }
+    }
+
+    .ai-subsection {
+      margin-top: 2.5rem;
+    }
+
+    .ai-subsection h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .ai-subsection-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile nav */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+        transform: translateY(-150%);
+        transition: transform 0.3s;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { transform: translateY(0); }
+    }
+
+    /* Mobile: reduced padding and font sizes */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; }
+      .nav-logo { font-size: 1rem; }
+      .nav-links a { font-size: 0.85rem; }
+
+      .hero { padding: 4rem 1rem 3rem; }
+      .hero-badge { padding: 0.3rem 0.75rem; font-size: 0.75rem; margin-bottom: 1.25rem; }
+      .hero h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+      .hero-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+
+      .googol-widget { padding: 1.25rem; }
+      .googol-widget h3 { font-size: 0.9rem; margin-bottom: 0.75rem; }
+      .googol-display { font-size: 1.2rem; margin-bottom: 0.75rem; }
+      .googol-input input, .googol-btn { padding: 0.6rem 0.85rem; font-size: 0.9rem; }
+      .googol-fact { font-size: 0.8rem; margin-top: 0.75rem; }
+
+      .info-grid { grid-template-columns: 1fr; gap: 1rem; min-width: 0; }
+      .info-card { padding: 1rem; min-width: 0; overflow-wrap: break-word; }
+      .info-card h4 { font-size: 0.9rem; }
+      .info-card p { font-size: 0.85rem; }
+
+      section { padding: 3rem 1rem; }
+      .section-header { margin-bottom: 2.5rem; }
+      .section-header h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+      .section-header p { font-size: 0.95rem; }
+
+      .timeline-nav { margin-bottom: 2rem; }
+      .timeline-nav-btn { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+      .timeline-items { gap: 1.5rem; }
+      .timeline-item { gap: 1rem; padding-left: 60px; }
+      .timeline-year { width: 56px; height: 56px; font-size: 0.9rem; }
+      .timeline-content { padding: 1rem 1.25rem; }
+      .timeline-content h3 { font-size: 1.1rem; }
+      .timeline-content p { font-size: 0.9rem; }
+      .timeline-image { max-width: 100%; }
+
+      .product-card { padding: 1.25rem; }
+      .product-icon { width: 48px; height: 48px; font-size: 1.25rem; margin-bottom: 0.75rem; }
+      .product-icon.has-image { width: 52px; height: 52px; padding: 6px; }
+      .product-card h3 { font-size: 1.1rem; }
+      .product-year { font-size: 0.8rem; margin-bottom: 0.5rem; }
+      .product-card p { font-size: 0.85rem; }
+      .products-grid { grid-template-columns: 1fr; gap: 1rem; min-width: 0; }
+      .product-card { min-width: 0; overflow-wrap: break-word; }
+
+      .stats-dashboard { padding: 1.5rem; }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; min-width: 0; }
+      .stat-item { min-width: 0; }
+      .stat-value { font-size: 1.75rem; }
+      .stat-label { font-size: 0.8rem; }
+      .market-share-title { font-size: 0.9rem; margin-bottom: 0.75rem; }
+      .market-bar { margin-bottom: 0.5rem; }
+      .market-bar-label { width: 70px; min-width: 0; font-size: 0.8rem; }
+      .market-bar-track { height: 22px; }
+      .market-bar-value { font-size: 0.85rem; }
+
+      .ai-stats-row { padding: 1rem; gap: 1.25rem; margin-bottom: 2rem; }
+      .ai-stat-value { font-size: 1.2rem; }
+      .ai-stat-label { font-size: 0.75rem; }
+      .ai-subsection { margin-top: 1.5rem; }
+      .ai-subsection h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+      .ai-subsection-desc { font-size: 0.9rem; margin-bottom: 1rem; }
+
+      .acquisition-item { padding: 0.85rem; gap: 0.75rem; }
+      .acquisition-year { width: 40px; font-size: 0.9rem; }
+      .acquisition-details h4 { font-size: 0.9rem; }
+      .acquisition-details p { font-size: 0.8rem; }
+
+      .logo-stage { padding: 1rem 1.25rem; }
+      .logo-stage .logo-preview { font-size: 1.25rem; }
+      .logo-stage .logo-year, .logo-stage p { font-size: 0.75rem; }
+      .logo-stage img { max-width: 140px; }
+      .logo-evolution { gap: 0.75rem; }
+
+      .doodle-section { gap: 2rem; }
+      .doodle-content h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+      .doodle-content p { font-size: 0.9rem; margin-bottom: 0.75rem; }
+      .doodle-widget { padding: 1.25rem; }
+      .doodle-preview { font-size: 2rem; margin-bottom: 0.75rem; }
+      .doodle-caption { font-size: 0.85rem; }
+      .doodle-image { max-width: 100%; margin-bottom: 0.75rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 3rem 0.75rem 2rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .hero-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; }
+      .googol-widget { padding: 1rem; max-width: 100%; }
+      section { padding: 2rem 0.75rem; }
+      .section-header { margin-bottom: 1.5rem; }
+      .section-header h2 { font-size: 1.35rem; }
+      .section-header p { font-size: 0.9rem; }
+      .timeline-item { padding-left: 52px; }
+      .timeline-year { width: 48px; height: 48px; font-size: 0.8rem; }
+      .timeline-content { padding: 0.85rem 1rem; }
+      .product-card { padding: 1rem; }
+      .stats-dashboard { padding: 1.25rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-value { font-size: 1.5rem; }
+      .info-card { padding: 0.85rem; }
+      .ai-stats-row { flex-wrap: wrap; justify-content: center; gap: 1rem; padding: 0.75rem; }
+      .market-bar-label { width: 60px; font-size: 0.75rem; }
+      .market-bar-value { width: 40px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <span class="nav-logo">Illustrated History of Google</span>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero">Origin</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#stats">Impact</a></li>
+        <li><a href="#algorithms">Algorithms</a></li>
+        <li><a href="#ai">AI</a></li>
+        <li><a href="#acquisitions">Acquisitions</a></li>
+        <li><a href="#logos">Logos</a></li>
+        <li><a href="#doodle">Doodles</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <span class="hero-badge">Since September 4, 1998</span>
+    <h1>
+      <span class="g">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+    </h1>
+    <p class="hero-subtitle">Larry Page and Sergey Brin met at Stanford in 1995. Their research produced "The Anatomy of a Large-Scale Hypertextual Web Search Engine" (1998) and the PageRank algorithm—ranking pages by backlinks, not just keywords. The name "Google" is a play on "googol"—the number 10<sup>100</sup>.</p>
+    
+    <div class="googol-widget">
+      <h3>Explore the Googol</h3>
+      <div class="googol-display" id="googolDisplay">10<sup>10</sup> = 10,000,000,000</div>
+      <div class="googol-input">
+        <input type="number" id="googolInput" value="10" min="0" max="100" placeholder="Exponent (0-100)">
+        <button class="googol-btn" id="googolBtn">Calculate</button>
+      </div>
+      <p class="googol-fact">A googol (10¹⁰⁰) is larger than the number of atoms in the observable universe (~10⁸⁰). Google's name reflects its mission to organize an unfathomable amount of information.</p>
+    </div>
+
+    <div class="info-grid" style="margin-top: 3rem; max-width: 900px;">
+      <div class="info-card">
+        <h4>2004 IPO — Dutch Auction</h4>
+        <p>Google went public August 19, 2004, using a modified Dutch auction—unconventional on Wall Street. Offered 19.6M shares at $85–95; closed first day at $100.30. The founders wanted transparency and to let ordinary users participate, not just institutional investors who would flip shares.</p>
+      </div>
+      <div class="info-card">
+        <h4>"Don't Be Evil"</h4>
+        <p>Google's original motto appeared in the 2004 IPO founders' letter. It reflected the casual, value-driven culture shaped by Page and Brin. The Dutch auction itself embodied this—avoiding the early "pop" that enriched short-term traders.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline" id="timeline">
+    <div class="section-header">
+      <h2>Milestone Timeline</h2>
+      <p>Key moments that shaped the company from a garage startup to a global technology leader</p>
+    </div>
+
+    <div class="timeline-nav">
+      <button class="timeline-nav-btn active" data-era="all">All</button>
+      <button class="timeline-nav-btn" data-era="1998">1998-2004</button>
+      <button class="timeline-nav-btn" data-era="2005">2005-2010</button>
+      <button class="timeline-nav-btn" data-era="2011">2011-2015</button>
+      <button class="timeline-nav-btn" data-era="2016">2016+</button>
+    </div>
+
+    <div class="timeline-items">
+      <div class="timeline-item" data-year="1996">
+        <div class="timeline-year">1996</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-stanford-1996.png" alt="Stanford University campus 1996" class="timeline-image">
+          <h3>BackRub Begins</h3>
+          <p>Larry Page and Sergey Brin develop "BackRub" at Stanford—a search engine that ranks pages by analyzing backlinks. This link-analysis approach, published in "The Anatomy of a Large-Scale Hypertextual Web Search Engine" (1998), would become the foundation of Google. The initial database indexed at least 24 million pages.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="1997">
+        <div class="timeline-year">1997</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-1997-domain.png" alt="Domain registration 1997" class="timeline-image">
+          <h3>Google.com Registered</h3>
+          <p>The domain google.com is registered on September 15. The name "Google" is a misspelling of "googol" (10¹⁰⁰), reflecting the mission to organize the world's information. The first logo was created by Sergey Brin using GIMP.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="1998">
+        <div class="timeline-year">1998</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-1998-garage-startup.png" alt="1998 garage startup, Menlo Park" class="timeline-image">
+          <h3>Incorporation & First Doodle</h3>
+          <p>Sun co-founder Andy Bechtolsheim writes a $100,000 check after a brief demo. Google Inc. incorporates September 4 in Susan Wojcicki's Menlo Park garage. The first Google Doodle—a Burning Man stick figure—appears August 30, making Doodles older than Google Inc. itself.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="1999">
+        <div class="timeline-year">1999</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-googleplex-mountain-view.png" alt="Googleplex headquarters Mountain View" class="timeline-image">
+          <h3>Move to Mountain View</h3>
+          <p>With $25M from Kleiner Perkins and Sequoia Capital, Google grows to 8 employees and moves to Mountain View. Ruth Kedar designs the new logo using the Catull font. "The PageRank Citation Ranking: Bringing Order to the Web" paper is published with Rajeev Motwani and Terry Winograd.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2002">
+        <div class="timeline-year">2002</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2002-google-news.png" alt="Google News 2002" class="timeline-image">
+          <h3>Google News</h3>
+          <p>Google News launches September 22, aggregating headlines from ~4,000 sources. Created by Krishna Bharat after 9/11 to help find news from multiple viewpoints. The automated service would become a major traffic source for publishers.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2004">
+        <div class="timeline-year">2004</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2004-gmail-ipo.png" alt="Gmail launch and IPO 2004" class="timeline-image">
+          <h3>Gmail, Keyhole & IPO</h3>
+          <p>Gmail launches April 1 with 1GB free storage—100x more than Yahoo and Hotmail. Many thought it was an April Fool's joke; invitations later sold on eBay for over $100. Google acquires Keyhole Corp (foundation for Google Earth). Google goes public August 19 with a Dutch auction IPO—$85–95/share, closed first day at $100.30. The motto "Don't Be Evil" was in the IPO letter.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2005">
+        <div class="timeline-year">2005</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2005-maps-android.png" alt="Google Maps and Android 2005" class="timeline-image">
+          <h3>Google Maps & Android</h3>
+          <p>Google Maps launches in February with satellite imagery. Google acquires Android Inc. for ~$50 million—a 22-month-old startup that would power over 70% of the world's smartphones. Google.org, the charitable arm, is established.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2006">
+        <div class="timeline-year">2006</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2006-youtube.png" alt="YouTube acquisition 2006" class="timeline-image">
+          <h3>YouTube Acquisition</h3>
+          <p>Google acquires YouTube for $1.65 billion when it had only 67 employees. CEO Eric Schmidt called it "the next step in the evolution of the Internet." Google beat bids from Microsoft, Yahoo, and News Corp.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2007">
+        <div class="timeline-year">2007</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2007-street-view.png" alt="Street View launch 2007" class="timeline-image">
+          <h3>Street View & DoubleClick</h3>
+          <p>Street View launches May 25 in five U.S. cities (San Francisco, Miami, Denver, Las Vegas, New York). Technology came from the Stanford CityBlock Project. Google acquires DoubleClick for $3.1 billion, expanding its advertising platform.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2008">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2008-chrome.png" alt="Chrome browser launch 2008" class="timeline-image">
+          <h3>Chrome Browser</h3>
+          <p>Google Chrome launches September 2, introducing the V8 JavaScript engine and a minimalist design. It would eventually become the world's most used browser. Android 1.0 ships on the T-Mobile G1.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2009">
+        <div class="timeline-year">2009</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2009-self-driving.png" alt="Self-driving car project 2009" class="timeline-image">
+          <h3>Self-Driving Car Project</h3>
+          <p>Google's Self-Driving Car Project launches officially (roots in Stanford's 2004 team). This would evolve into Waymo, a leader in autonomous vehicle technology. Gmail exits beta after 5 years.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2011">
+        <div class="timeline-year">2011</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2011-motorola-panda.png" alt="Panda algorithm and Motorola 2011" class="timeline-image">
+          <h3>Panda & Motorola</h3>
+          <p>Panda algorithm update targets low-quality content (affecting ~12% of queries). Google acquires Motorola Mobility for $12.5 billion—primarily for 20,000+ mobile patents. Later sold to Lenovo for ~$2.9B in 2014.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2012">
+        <div class="timeline-year">2012</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2012-drive.png" alt="Google Drive launch 2012" class="timeline-image">
+          <h3>Penguin & Google Drive</h3>
+          <p>Penguin algorithm combats webspam and manipulative link building (~3.1% of queries affected). Google Drive launches April 24 with 5GB free storage, integrated with Docs, Sheets, and Slides.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2013">
+        <div class="timeline-year">2013</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2013-waze.png" alt="Hummingbird and Waze 2013" class="timeline-image">
+          <h3>Hummingbird & Waze</h3>
+          <p>Hummingbird algorithm improves semantic search and conversational queries. Google acquires Waze for $1.3 billion, enhancing Maps with real-time traffic from community reports.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2014">
+        <div class="timeline-year">2014</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2014-deepmind-nest.png" alt="DeepMind and Nest 2014" class="timeline-image">
+          <h3>DeepMind & Nest</h3>
+          <p>Google acquires DeepMind for ~$400 million—British AI company specializing in machine learning (later created AlphaGo). Nest acquired for $3.2 billion, entering the smart home market.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2015">
+        <div class="timeline-year">2015</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2015-alphabet.png" alt="Alphabet restructuring 2015" class="timeline-image">
+          <h3>Alphabet, RankBrain & Logo</h3>
+          <p>Google restructures as a subsidiary of Alphabet Inc.; Larry Page becomes Alphabet CEO, Sundar Pichai becomes Google CEO. RankBrain is announced—Google's third-most-important ranking factor, using ML for ~15% of queries. New flat Product Sans logo debuts September 1.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2016">
+        <div class="timeline-year">2016</div>
+        <div class="timeline-content">
+          <h3>Waymo Spinoff</h3>
+          <p>Google's Self-Driving Car Project spins off as Waymo on December 13, 2016—an independent company under Alphabet. John Krafcik becomes CEO. Waymo had logged 2M+ miles of road testing. Would later launch commercial autonomous ride-hailing.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-year="2024">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-content">
+          <img src="assets/timeline-2024-ai-search.png" alt="AI and Search 2024" class="timeline-image">
+          <h3>AI & Search Evolution</h3>
+          <p>Google integrates AI Overviews into Search. The company processes billions of searches daily (estimates range from 8B to 20B+). Market share remains ~90% globally. Google makes 600+ algorithm updates per year—about 13 per day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="section-header">
+      <h2>Product Evolution</h2>
+      <p>From search to a vast ecosystem of services used by billions worldwide</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon gmail has-image"><img src="assets/icon-gmail.png" alt="Gmail" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">✉</span></div>
+        <h3>Gmail</h3>
+        <div class="product-year">April 1, 2004</div>
+        <p>Launched on April Fool's Day—many thought it was a hoax. Offered 1GB free storage (100x competitors), search-based email, threaded conversations, and ~500,000 pages of email per user. Invitations sold on eBay for $100+. Beta until 2009. Now part of Google Workspace.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon maps has-image"><img src="assets/icon-google-maps.png" alt="Google Maps" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">🗺</span></div>
+        <h3>Google Maps</h3>
+        <div class="product-year">February 2005</div>
+        <p>Launched with satellite imagery. Street View added May 2007 (San Francisco, Miami, Denver, Las Vegas, New York first). Built on Keyhole acquisition (2004). Pegman icon for street-level navigation. Now covers 83+ countries. Waze data (2013) added real-time traffic.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon chrome has-image"><img src="assets/icon-chrome.png" alt="Chrome" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">🌐</span></div>
+        <h3>Chrome</h3>
+        <div class="product-year">September 2, 2008</div>
+        <p>Open-source browser with V8 JavaScript engine (dramatically faster JS). Minimalist design, multiprocess architecture. Dominates global browser market share. Chrome OS launched 2011 for Chromebooks.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon youtube has-image"><img src="assets/icon-youtube.png" alt="YouTube" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">▶</span></div>
+        <h3>YouTube</h3>
+        <div class="product-year">Acquired October 2006 — $1.65B</div>
+        <p>Acquired with 67 employees. Second-largest search engine after Google. Over 2 billion logged-in users monthly. Key to Google's video advertising. Founded 2005 by Chad Hurley, Steve Chen, Jawed Karim.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon android has-image"><img src="assets/icon-android.png" alt="Android" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">📱</span></div>
+        <h3>Android</h3>
+        <div class="product-year">Acquired 2005 — ~$50M</div>
+        <p>22-month-old startup when acquired. First commercial device: T-Mobile G1 (2008). Open-source; powers 70%+ of global smartphones. Over 3 billion active devices. Key partners: Samsung, Xiaomi, OnePlus.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon drive has-image"><img src="assets/icon-drive.png" alt="Google Drive" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">☁</span></div>
+        <h3>Google Drive</h3>
+        <div class="product-year">April 24, 2012</div>
+        <p>Cloud storage with Docs, Sheets, Slides integration. Launched with 5GB free; unified to 15GB in 2013. Real-time collaboration. Competes with Dropbox and OneDrive.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon news has-image"><img src="assets/icon-news.png" alt="Google News" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">📰</span></div>
+        <h3>Google News</h3>
+        <div class="product-year">September 22, 2002</div>
+        <p>Automated news aggregation from thousands of sources. Krishna Bharat created it after 9/11 to help find news from multiple viewpoints. Major traffic source for publishers. Available in 35+ languages.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-icon earth has-image"><img src="assets/icon-earth.png" alt="Google Earth" onerror="this.style.display='none';this.nextElementSibling.classList.add('visible')"><span class="icon-fallback">🌍</span></div>
+        <h3>Google Earth</h3>
+        <div class="product-year">June 2005 (Keyhole 2004)</div>
+        <p>3D globe built on Keyhole acquisition. Satellite imagery, terrain, 3D buildings. Street View integrated 2007. Used for education, disaster response, exploration.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="stats" class="stats-section">
+    <div class="section-header">
+      <h2>Global Impact</h2>
+      <p>By the numbers—Google's reach and influence in the digital world</p>
+    </div>
+
+    <div class="stats-dashboard">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value" id="searchStat">0</div>
+          <div class="stat-label">Billion+ searches per day</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">~90%</div>
+          <div class="stat-label">Global search market share</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">200+</div>
+          <div class="stat-label">Companies acquired</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">25+</div>
+          <div class="stat-label">Years in operation</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">3B+</div>
+          <div class="stat-label">Android devices active</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2B+</div>
+          <div class="stat-label">YouTube users monthly</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">600+</div>
+          <div class="stat-label">Algorithm updates/year</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">24M+</div>
+          <div class="stat-label">Pages in initial index (1998)</div>
+        </div>
+      </div>
+
+      <div class="market-share-chart">
+        <div class="market-share-title">Search Engine Market Share (2024)</div>
+        <div class="market-bar">
+          <span class="market-bar-label">Google</span>
+          <div class="market-bar-track">
+            <div class="market-bar-fill google" id="barGoogle" style="width: 0%"></div>
+          </div>
+          <span class="market-bar-value" id="valGoogle">89.8%</span>
+        </div>
+        <div class="market-bar">
+          <span class="market-bar-label">Bing</span>
+          <div class="market-bar-track">
+            <div class="market-bar-fill bing" id="barBing" style="width: 0%"></div>
+          </div>
+          <span class="market-bar-value">3.9%</span>
+        </div>
+        <div class="market-bar">
+          <span class="market-bar-label">Yahoo!</span>
+          <div class="market-bar-track">
+            <div class="market-bar-fill yahoo" id="barYahoo" style="width: 0%"></div>
+          </div>
+          <span class="market-bar-value">1.3%</span>
+        </div>
+        <div class="market-bar">
+          <span class="market-bar-label">DuckDuckGo</span>
+          <div class="market-bar-track">
+            <div class="market-bar-fill duckduckgo" id="barDuck" style="width: 0%"></div>
+          </div>
+          <span class="market-bar-value">0.8%</span>
+        </div>
+        <div class="market-bar">
+          <span class="market-bar-label">Others</span>
+          <div class="market-bar-track">
+            <div class="market-bar-fill other" id="barOther" style="width: 0%"></div>
+          </div>
+          <span class="market-bar-value">4.2%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="algorithms">
+    <div class="section-header">
+      <h2>Search Algorithm Evolution</h2>
+      <p>Google makes 600+ algorithm updates per year—about 13 per day. These are the major named updates that reshaped search.</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Panda — February 2011</h4>
+        <p>Targeted low-quality content: thin content, content farms, keyword stuffing, high ad-to-content ratios. Affected ~12% of search queries. Required sites to audit and remove low-value pages.</p>
+      </div>
+      <div class="info-card">
+        <h4>Penguin — April 2012</h4>
+        <p>Combated webspam and manipulative link building. Penalized unnatural links, low-quality backlinks, exact-match anchor overuse, link schemes. Initial rollout affected ~3.1% of queries.</p>
+      </div>
+      <div class="info-card">
+        <h4>Hummingbird — August 2013</h4>
+        <p>Focused on semantic search and conversational queries. Improved understanding of query meaning rather than keyword matching. Better handling of long-tail and natural language searches.</p>
+      </div>
+      <div class="info-card">
+        <h4>RankBrain — October 2015</h4>
+        <p>Machine learning algorithm; Google's third-most-important ranking factor. Handles unfamiliar queries by guessing similar meanings. Used for &lt;15% of queries initially but predicted top results 80% of the time vs. 70% for human engineers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai">
+    <div class="section-header">
+      <h2>AI Contributions</h2>
+      <p>From TensorFlow to Gemini—Google's research and products have shaped modern artificial intelligence</p>
+    </div>
+
+    <div class="ai-stats-row">
+      <div class="ai-stat"><span class="ai-stat-value">650M+</span><span class="ai-stat-label">Gemini monthly users</span></div>
+      <div class="ai-stat"><span class="ai-stat-value">2B+</span><span class="ai-stat-label">AI Overviews users/month</span></div>
+      <div class="ai-stat"><span class="ai-stat-value">13M+</span><span class="ai-stat-label">Developers on Google AI</span></div>
+      <div class="ai-stat"><span class="ai-stat-value">200M+</span><span class="ai-stat-label">AlphaFold protein structures</span></div>
+    </div>
+
+    <div class="info-grid" style="margin-bottom: 2rem;">
+      <div class="info-card">
+        <h4>TensorFlow — November 2015</h4>
+        <p>Open-source machine learning library from Google's Brain Team. Data-flow graphs for numerical computation; runs on CPU, GPU, TPU. Apache 2.0 licensed. Reached 1.0 in February 2017. Foundation for much of modern ML research and production.</p>
+      </div>
+      <div class="info-card">
+        <h4>BERT — 2018</h4>
+        <p>Bidirectional Encoder Representations from Transformers. Pre-trained language model achieving state-of-the-art on 11 NLP tasks. Released open source; influenced GPT and the transformer era. Published at NAACL 2019.</p>
+      </div>
+      <div class="info-card">
+        <h4>AlphaGo — 2016</h4>
+        <p>DeepMind's AI mastered Go and defeated world champion Lee Sedol. Demonstrated AI tackling strategic challenges requiring human-like intuition. Inspired a new era of reinforcement learning and game-playing AI.</p>
+      </div>
+      <div class="info-card">
+        <h4>AlphaFold — 2020+</h4>
+        <p>Solves the protein-folding problem—predicting 3D structure from amino acid sequences. AlphaFold 3 predicts protein interactions with other molecules. Over 200 million structures in the free database. Transformative for drug design and biology.</p>
+      </div>
+    </div>
+
+    <div class="ai-subsection">
+      <h3>Gemini & Generative AI</h3>
+      <p class="ai-subsection-desc">Bard launched March 2023 (LaMDA, then PaLM 2). Rebranded as Gemini December 2023 with Nano, Pro, Ultra. Gemini 2.0 (2024) designed for the "agentic era." Gemini 2.5 Pro and Flash (2025). Deep Research generates reports with citations. Integrated across Search, Workspace, Vertex AI.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Veo 2 & Imagen 3 — 2024</h4>
+          <p>Veo 2: Video generation up to 4K, minutes long; understands physics, cinematography. Imagen 3: State-of-the-art image generation, diverse styles. Available via VideoFX, ImageFX, Vertex AI.</p>
+        </div>
+        <div class="info-card">
+          <h4>MusicFX</h4>
+          <p>Generative music up to 70 seconds. 2024 update: higher-quality audio, faster generation. Music preferred 3× over previous versions in testing.</p>
+        </div>
+        <div class="info-card">
+          <h4>Gemma</h4>
+          <p>Open models (2B, 7B) from Gemini research. Lightweight, state-of-the-art. Continues Google's open-source tradition with TensorFlow, BERT, AlphaFold.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-subsection">
+      <h3>Research & Emerging</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>SIMA 2</h4>
+          <p>Agent that plays, reasons, and learns in virtual 3D worlds. Trained on video game environments.</p>
+        </div>
+        <div class="info-card">
+          <h4>Gemini Robotics</h4>
+          <p>World models for robotic understanding. Physical agents that perceive and act in real environments.</p>
+        </div>
+        <div class="info-card">
+          <h4>Game Arena</h4>
+          <p>DeepMind benchmark platform. Beyond chess—Werewolf, poker—testing social dynamics and risk management in AI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="acquisitions">
+    <div class="section-header">
+      <h2>Major Acquisitions</h2>
+      <p>Google has acquired 200+ companies. In 2010–2011 it acquired more than one company per week. Key deals that shaped the company:</p>
+    </div>
+    <div class="acquisition-list">
+      <div class="acquisition-item">
+        <span class="acquisition-year">2004</span>
+        <div class="acquisition-details">
+          <h4>Keyhole</h4>
+          <p>3D mapping technology; became Google Earth. Foundation for satellite imagery in Maps.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2005</span>
+        <div class="acquisition-details">
+          <h4>Android Inc. — ~$50M</h4>
+          <p>22-month-old startup. Became the world's dominant mobile OS.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2006</span>
+        <div class="acquisition-details">
+          <h4>YouTube — $1.65B</h4>
+          <p>67 employees. Beat Microsoft, Yahoo, News Corp. "Next step in the evolution of the Internet" (Eric Schmidt).</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2007</span>
+        <div class="acquisition-details">
+          <h4>DoubleClick — $3.1B</h4>
+          <p>Online advertising company. Expanded display and programmatic ad capabilities.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2011</span>
+        <div class="acquisition-details">
+          <h4>Motorola Mobility — $12.5B</h4>
+          <p>Google's largest acquisition. Primarily for 20,000+ mobile patents. Sold to Lenovo 2014 for ~$2.9B.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2013</span>
+        <div class="acquisition-details">
+          <h4>Waze — $1.3B</h4>
+          <p>GPS navigation with community-sourced traffic. Enhanced Maps with real-time data.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2014</span>
+        <div class="acquisition-details">
+          <h4>DeepMind — ~$400M</h4>
+          <p>British AI company (Demis Hassabis, Shane Legg, Mustafa Suleyman). Created AlphaGo. Now Alphabet subsidiary.</p>
+        </div>
+      </div>
+      <div class="acquisition-item">
+        <span class="acquisition-year">2014</span>
+        <div class="acquisition-details">
+          <h4>Nest — $3.2B</h4>
+          <p>Smart home (thermostats, cameras). One of Alphabet's largest acquisitions. Now part of Google.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="logos">
+    <div class="section-header">
+      <h2>Logo Evolution</h2>
+      <p>How Google's visual identity evolved from a GIMP creation to a multi-platform design system. The four colors (blue, red, yellow, green) have remained consistent since the beginning.</p>
+    </div>
+
+    <div class="logo-evolution">
+      <div class="logo-stage logo-1998">
+        <img src="assets/logo-google-1998-vintage.png" alt="Google logo 1997-1998">
+        <div class="logo-preview">Google</div>
+        <div class="logo-year">1997-1998</div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Sergey Brin created the first logo using GIMP. Very 1990s aesthetic. Used on Stanford servers.</p>
+      </div>
+      <div class="logo-stage logo-1999">
+        <div class="logo-preview">Google</div>
+        <div class="logo-year">1999-2013</div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Ruth Kedar designed the Catull-based wordmark (Berthold Type Foundry, 1982). Slight modifications over 14 years.</p>
+      </div>
+      <div class="logo-stage logo-2015">
+        <div class="logo-preview">Google</div>
+        <div class="logo-year">2015-Present</div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Product Sans. Flat design for phones, watches, cars. New four-color "G" icon replaced blue "g".</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="doodle">
+    <div class="section-header">
+      <h2>The First Google Doodle</h2>
+      <p>August 30, 1998—a stick figure that started a global tradition</p>
+    </div>
+
+    <div class="doodle-section">
+      <div class="doodle-content">
+        <h3>Burning Man, August 30, 1998</h3>
+        <p>Larry Page and Sergey Brin were heading to the Burning Man festival in Nevada. As an out-of-office message, they replaced the second "o" in Google with a stick figure—the festival's symbol. The first Doodle was posted less than a week before Google officially incorporated on September 4, making Doodles older than Google Inc. itself.</p>
+        <p>"It was a little bit of a joke," says Jessica Yu, Google Doodle team lead. The remarkably simple design established a concept that would evolve significantly. Google didn't create another Doodle for two years. In 2000, Dennis Hwang—then an intern—designed the Bastille Day (July 14) doodle. Hwang became chief Doodle designer, creating about 50 per year and establishing the program that now celebrates holidays, historical figures, and notable events worldwide.</p>
+      </div>
+      <div class="doodle-widget">
+        <img src="assets/first-google-doodle-burning-man.png" alt="First Google Doodle, Burning Man 1998" class="doodle-image">
+        <div class="doodle-preview">
+          G<span class="burning-man" title="Burning Man stick figure">o</span><span class="burning-man">🧍</span>gle
+        </div>
+        <p class="doodle-caption">Recreation of the first Google Doodle—stick figure replaced the second "o"</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Navigation scroll behavior
+    const nav = document.getElementById('nav');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 100) {
+        nav.classList.toggle('hidden', currentScroll > lastScroll && currentScroll > 200);
+      } else {
+        nav.classList.remove('hidden');
+      }
+      lastScroll = currentScroll;
+    });
+
+    // Mobile nav toggle
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // Googol Calculator
+    function formatBigNumber(num) {
+      if (num >= 1e100) return '10^100 (Googol!)';
+      if (num >= 1e15) return num.toExponential(2);
+      return num.toLocaleString();
+    }
+
+    document.getElementById('googolBtn').addEventListener('click', () => {
+      const exp = Math.min(100, Math.max(0, parseInt(document.getElementById('googolInput').value) || 0));
+      document.getElementById('googolInput').value = exp;
+      const result = Math.pow(10, exp);
+      document.getElementById('googolDisplay').innerHTML = `10<sup>${exp}</sup> = ${formatBigNumber(result)}`;
+    });
+
+    document.getElementById('googolInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') document.getElementById('googolBtn').click();
+    });
+
+    // Timeline filter
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const eraRanges = {
+      all: [1990, 2030],
+      '1998': [1996, 2004],
+      '2005': [2005, 2010],
+      '2011': [2011, 2015],
+      '2016': [2016, 2030]
+    };
+
+    document.querySelectorAll('.timeline-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.timeline-nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const [min, max] = eraRanges[btn.dataset.era];
+        timelineItems.forEach(item => {
+          const year = parseInt(item.dataset.year);
+          const visible = year >= min && year <= max;
+          item.style.display = visible ? 'flex' : 'none';
+          if (visible) item.classList.add('visible');
+        });
+      });
+    });
+
+    // Intersection Observer for timeline animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    timelineItems.forEach(item => observer.observe(item));
+
+    // Animated stats counter
+    function animateValue(el, end, duration = 2000) {
+      let start = 0;
+      const startTime = performance.now();
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeOut * end);
+        el.textContent = current;
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = end;
+      }
+      requestAnimationFrame(update);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateValue(document.getElementById('searchStat'), 8);
+          // Animate market share bars
+          document.getElementById('barGoogle').style.width = '89.8%';
+          document.getElementById('barBing').style.width = '3.9%';
+          document.getElementById('barYahoo').style.width = '1.3%';
+          document.getElementById('barDuck').style.width = '0.8%';
+          document.getElementById('barOther').style.width = '4.2%';
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const statsSection = document.getElementById('stats');
+    if (statsSection) statsObserver.observe(statsSection);
+  </script>
+</body>
+</html>

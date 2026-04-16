@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cars with Shield Logos</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Poppins:wght@600&family=Roboto+Flex:opsz,wght@8..144,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "shield-dark": "#111111",
+              "shield-grey": "#6F6F6F",
+              "shield-red": "#9B1C1C",
+              "shield-gold": "#C5A572",
+            },
+            fontFamily: {
+              roboto: ['"Roboto Flex"', "sans-serif"],
+              nunito: ["Nunito", "sans-serif"],
+              poppins: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      .font-roboto {
+        line-height: 1.3 !important;
+      }
+      .font-nunito {
+        line-height: 1.3 !important;
+      }
+      .font-poppins {
+        line-height: 1.3 !important;
+      }
+
+      /* --- ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white antialiased selection:bg-shield-red selection:text-white"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto overflow-hidden relative shadow-2xl"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex flex-col lg:flex-row items-center py-10 gap-5 justify-center px-6 text-center lg:text-left"
+      >
+        <div>
+          <h1
+            class="reveal font-roboto font-extrabold text-3xl md:text-5xl xl:text-[60px] text-shield-dark !leading-[1.1]"
+          >
+            CARS WITH <span class="text-shield-red">SHIELD</span> LOGOS
+          </h1>
+
+          <p
+            class="reveal delay-100 font-nunito font-normal text-xl md:text-2xl xl:text-[30px] text-shield-grey max-w-[1325px] py-6"
+          >
+            A visual guide to the world’s most iconic car brands that use the
+            shield shape in their logo designs.
+          </p>
+
+          <!-- CTA Button (Functional Scroll) -->
+          <a
+            href="#why-shields"
+            class="reveal delay-200 bg-shield-dark text-white font-poppins font-semibold text-xl xl:text-[30px] px-12 py-6 hover:bg-gray-800 transition-all duration-300 w-fit hover:scale-105 inline-block"
+          >
+            Explore more
+          </a>
+        </div>
+
+        <!-- Hero Image -->
+        <div class="reveal delay-300">
+          <img
+            src="./assets/hero-car.png"
+            alt="Luxury Cars"
+            class="w-full h-full max-h-[343px] xl:max-h-[450px] transition-transform duration-700 hover:scale-105"
+          />
+        </div>
+      </header>
+
+      <!-- SECTION 2: WHY USE SHIELDS (Dark BG) -->
+      <section
+        id="why-shields"
+        class="relative w-full py-20 xl:py-24 px-6 text-white text-center overflow-hidden bg-shield-dark"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/line-bg.png')] bg-cover bg-center bg-no-repeat opacity-20 z-10"
+        ></div>
+
+        <!-- Content -->
+        <div class="relative z-10">
+          <div class="reveal max-w-[1285px] mx-auto mb-16 xl:mb-24">
+            <h2
+              class="font-roboto font-extrabold text-4xl md:text-6xl xl:text-[65px] mb-8 uppercase"
+            >
+              WHY DO CAR BRANDS USE
+              <span class="text-shield-red">SHIELD</span> LOGOS?
+            </h2>
+
+            <div class="w-24 h-1 bg-white mx-auto mb-8"></div>
+
+            <p
+              class="font-nunito font-normal text-xl md:text-2xl xl:text-[30px] max-w-[1182px] mx-auto"
+            >
+              Shield logos symbolize strength, heritage, racing history, luxury,
+              and high performance. Many premium European brands use this shape
+              to communicate tradition and power.
+            </p>
+          </div>
+
+          <!-- Icons Row -->
+          <div
+            class="flex flex-col lg:flex-row justify-center gap-[50px] lg:gap-[150px]"
+          >
+            <!-- Icon 1 -->
+            <div
+              class="reveal delay-100 flex flex-col items-center gap-6 group"
+            >
+              <img
+                src="./assets/grip-icon.png"
+                alt="Strength"
+                class="w-full h-full max-h-[74px] max-w-[74px] transition-transform duration-300 group-hover:scale-110"
+              />
+              <span class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Strength
+              </span>
+            </div>
+
+            <!-- Icon 2 -->
+            <div
+              class="reveal delay-200 flex flex-col items-center gap-6 group"
+            >
+              <img
+                src="./assets/flag-icon.png"
+                alt="Racing"
+                class="w-full h-full max-h-[74px] max-w-[74px] transition-transform duration-300 group-hover:scale-110"
+              />
+              <span class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Racing heritage
+              </span>
+            </div>
+
+            <!-- Icon 3 -->
+            <div
+              class="reveal delay-300 flex flex-col items-center gap-6 group"
+            >
+              <img
+                src="./assets/badge-icon.png"
+                alt="Legacy"
+                class="w-full h-full max-h-[74px] max-w-[74px] transition-transform duration-300 group-hover:scale-110"
+              />
+              <span class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Tradition & legacy
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: TOP BRANDS (White BG) -->
+      <section class="w-full bg-white py-24 xl:py-32 px-6">
+        <div
+          class="reveal max-w-[1285px] mx-auto text-center mb-20 xl:mb-[120px]"
+        >
+          <h2
+            class="font-roboto font-extrabold text-4xl md:text-6xl xl:text-[65px] text-shield-dark mb-8 uppercase"
+          >
+            TOP CAR BRANDS WITH SHIELD LOGOS
+          </h2>
+          <p
+            class="font-nunito font-normal text-xl md:text-2xl xl:text-[30px] text-shield-grey max-w-[1182px] mx-auto"
+          >
+            Shield logos symbolize strength, heritage, racing history, luxury,
+            and high performance. Many premium European brands use this shape to
+            communicate tradition and power.
+          </p>
+        </div>
+
+        <!-- Brand Cards Grid (Row 1) -->
+        <div
+          class="flex flex-wrap justify-center gap-12 xl:gap-[47px] mb-12 xl:mb-[47px]"
+        >
+          <!-- Ferrari Card -->
+          <div
+            class="reveal delay-100 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="mb-4 overflow-hidden rounded-lg mx-auto w-full flex justify-center"
+            >
+              <img
+                src="./assets/ferrari.png"
+                alt="Ferrari"
+                class="w-ful h-[250px] object-cover transition-transform duration-500 hover:scale-105 text-center"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Ferrari
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Prancing Horse</span
+              >
+            </div>
+          </div>
+
+          <!-- Porsche Card -->
+          <div
+            class="reveal delay-200 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="mb-4 overflow-hidden rounded-lg mx-auto w-full flex justify-center"
+            >
+              <img
+                src="./assets/porsche-logo.png"
+                alt="Ferrari"
+                class="w-ful h-[250px] object-cover transition-transform duration-500 hover:scale-105 text-center"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Porsche
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Stuttgart Horse + Crests</span
+              >
+            </div>
+          </div>
+
+          <!-- Lamborghini Card -->
+          <div
+            class="reveal delay-300 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="mb-4 overflow-hidden rounded-lg mx-auto w-full flex justify-center"
+            >
+              <img
+                src="./assets/lambo-logo.png"
+                alt="Ferrari"
+                class="w-ful h-[250px] object-cover transition-transform duration-500 hover:scale-105 text-center"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Lamborghini
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Golden Bull</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Cards Grid (Row 2) -->
+        <div class="flex flex-wrap justify-center gap-12 xl:gap-[47px]">
+          <!-- Maserati Card -->
+          <div
+            class="reveal delay-100 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div class="mb-4 overflow-hidden rounded-lg">
+              <img
+                src="./assets/maserati.png"
+                alt="Maserati"
+                class="w-full h-[300px] object-contain transition-transform duration-500 hover:scale-105"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Maserati
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Trident</span
+              >
+            </div>
+          </div>
+
+          <!-- Alfa Romeo Card -->
+          <div
+            class="reveal delay-200 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div class="mb-4 overflow-hidden rounded-lg">
+              <img
+                src="./assets/alfa-romeo.png"
+                alt="Alfa Romeo"
+                class="w-full h-[300px] object-contain transition-transform duration-500 hover:scale-105"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Alfa Romeo
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Cross + Serpent</span
+              >
+            </div>
+          </div>
+
+          <!-- Koenigsegg Card -->
+          <div
+            class="reveal delay-300 bg-white rounded-[20px] shadow-2xl p-6 w-full max-w-[431px] transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div class="mb-4 overflow-hidden rounded-lg">
+              <img
+                src="./assets/koenigsegg.png"
+                alt="Koenigsegg"
+                class="w-full h-[300px] object-contain transition-transform duration-500 hover:scale-105"
+              />
+            </div>
+            <h3
+              class="font-roboto font-extrabold text-2xl xl:text-[30px] text-shield-dark mb-2"
+            >
+              Koenigsegg
+            </h3>
+            <div class="flex items-center gap-1">
+              <span class="font-nunito font-black text-lg xl:text-[18px]"
+                >Symbol:</span
+              >
+              <span
+                class="font-nunito font-normal text-base xl:text-[15px] text-shield-grey"
+                >Swedish Ghost Emblem</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: SYMBOL MEANINGS (White BG) -->
+      <section class="w-full bg-white py-20 xl:py-24 px-6 text-center">
+        <h2
+          class="reveal font-roboto font-extrabold text-4xl md:text-6xl xl:text-[65px] text-shield-dark mb-16 xl:mb-[90px] uppercase"
+        >
+          INSIDE THE <span class="text-shield-red">SHIELD</span>: WHAT EACH
+          SYMBOL MEANS
+        </h2>
+
+        <!-- Meaning Cards Row 1 -->
+        <div
+          class="flex flex-wrap justify-center gap-8 xl:gap-[26px] mb-8 xl:mb-[26px]"
+        >
+          <!-- Ferrari -->
+          <div
+            class="reveal delay-100 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[51px] xl:py-[34px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Ferrari
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Prancing Horse
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Represents Italian racing pride, speed, and the spirit of Modena.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+
+          <!-- Maserati -->
+          <div
+            class="reveal delay-200 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[51px] xl:py-[34px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Maserati
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Trident
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Inspired by the Fountain of Neptune, symbolizing power and Italian
+              legacy.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+
+          <!-- Alfa Romeo -->
+          <div
+            class="reveal delay-300 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[29px] xl:py-[31px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Alfa Romeo
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Cross + Serpent
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Represents Milan’s historic identity and the brand’s deep
+              heritage.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Meaning Cards Row 2 -->
+        <div class="flex flex-wrap justify-center gap-8 xl:gap-[26px]">
+          <!-- Lamborghini -->
+          <div
+            class="reveal delay-100 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[51px] xl:py-[34px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Lamborghini
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Golden Bull
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Signifies strength, power, performance, and the founder’s zodiac
+              sign.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+
+          <!-- Maserati (Repeated content from original code preserved) -->
+          <div
+            class="reveal delay-200 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[51px] xl:py-[34px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Maserati
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Trident
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Inspired by the Fountain of Neptune, symbolizing power and Italian
+              legacy.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+
+          <!-- Alfa Romeo (Repeated content from original code preserved) -->
+          <div
+            class="reveal delay-300 bg-shield-dark text-white rounded-[10px] p-8 xl:px-[29px] xl:py-[31px] w-full max-w-[470px] hover:scale-105 transition-transform duration-300"
+          >
+            <h3
+              class="font-nunito font-bold text-2xl xl:text-[34px] text-shield-red mb-2"
+            >
+              Alfa Romeo
+            </h3>
+            <h4
+              class="font-nunito font-semibold text-xl xl:text-[30px] text-shield-gold mb-3"
+            >
+              Cross + Serpent
+            </h4>
+            <p class="font-nunito font-normal text-lg xl:text-[30px]">
+              Represents Milan’s historic identity and the brand’s deep
+              heritage.
+            </p>
+            <div class="flex justify-center">
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE QUIZ SECTION -->
+      <section class="bg-white py-10 lg:pb-24 px-4 lg:px-6 text-center">
+        <div class="max-w-4xl mx-auto reveal">
+          <h2
+            class="font-roboto font-extrabold text-4xl xl:text-[55px] text-shield-dark mb-6 uppercase"
+          >
+            Guess the <span class="text-shield-red">Shield Logo</span>
+          </h2>
+
+          <p class="font-nunito text-xl text-shield-grey mb-10">
+            Test your knowledge of iconic car shield logos. You have 30 seconds!
+          </p>
+
+          <!-- Quiz Box -->
+          <div class="border-2 border-shield-dark p-8 rounded-xl">
+            <!-- Timer + Score -->
+            <div class="flex justify-between text-lg font-bold mb-6">
+              <span>⏱ Time: <span id="time">30</span>s</span>
+              <span>⭐ Score: <span id="score">0</span></span>
+            </div>
+
+            <!-- Question -->
+            <h3
+              id="question"
+              class="font-roboto font-extrabold text-2xl mb-6"
+            ></h3>
+
+            <!-- Options -->
+            <div
+              id="options"
+              class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            ></div>
+
+            <!-- Result -->
+            <p id="result" class="font-nunito text-xl mt-6 font-bold"></p>
+            <button
+              id="retryBtn"
+              class="hidden mt-6 border border-shield-dark px-6 py-3 font-bold rounded-lg hover:bg-shield-dark hover:text-white transition"
+            >
+              🔄 Retry Quiz
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: FUN FACTS (Dark BG) -->
+      <section
+        class="relative w-full py-20 xl:py-24 px-6 text-white text-center overflow-hidden bg-shield-dark"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/line-bg.png')] bg-cover bg-center bg-no-repeat opacity-20"
+        ></div>
+
+        <!-- Content -->
+        <div class="relative z-10">
+          <div class="reveal max-w-[1285px] mx-auto mb-16 xl:mb-20">
+            <h2
+              class="font-roboto font-extrabold text-4xl md:text-6xl xl:text-[65px] mb-8 uppercase"
+            >
+              FUN FACTS ABOUT <span class="text-shield-red">SHIELD</span> LOGOS
+            </h2>
+            <p
+              class="font-nunito font-normal text-xl md:text-2xl xl:text-[30px] max-w-[1182px] mx-auto"
+            >
+              A few cool details behind the world’s most famous automotive
+              shields.
+            </p>
+          </div>
+
+          <!-- Facts Grid -->
+          <div
+            class="max-w-[1537px] mx-auto flex flex-wrap justify-center gap-12 xl:gap-[110px]"
+          >
+            <!-- Fact 1 -->
+            <div
+              class="relative reveal delay-100 flex flex-col items-center max-w-[435px] text-center gap-6"
+            >
+              <h3 class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Ferrari’s Pilot Tribute
+              </h3>
+              <p class="font-nunito font-normal text-lg xl:text-[25px]">
+                The Ferrari horse comes from a WWI fighter pilot’s emblem—given
+                to Enzo Ferrari by the pilot’s mother.
+              </p>
+
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+
+            <!-- Fact 2 -->
+            <div
+              class="relative reveal delay-200 flex flex-col items-center max-w-[435px] text-center gap-6"
+            >
+              <h3 class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Porsche Blends Two Crests
+              </h3>
+              <p class="font-nunito font-normal text-lg xl:text-[25px]">
+                The Porsche badge merges symbols from two German regions:
+                Stuttgart and Württemberg.
+              </p>
+
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+              <!-- <hr class="bg-white h-1 border w-[50%] my-5 bottom-3 absolute" /> -->
+            </div>
+
+            <!-- Fact 3 -->
+            <div
+              class="relative reveal delay-300 flex flex-col items-center max-w-[447px] text-center gap-6"
+            >
+              <h3 class="font-roboto font-extrabold text-2xl xl:text-[30px]">
+                Lamborghini’s Bull is Personal
+              </h3>
+              <p class="font-nunito font-normal text-lg xl:text-[25px]">
+                Ferruccio Lamborghini chose the bull because it’s his zodiac
+                sign — Taurus.
+              </p>
+
+              <hr class="bg-white h-1 border w-[50%] my-5" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Section inside Dark BG -->
+      <section class="w-full bg-white py-20 xl:py-24 px-6 flex justify-center">
+        <div
+          class="reveal border-[2px] border-shield-red p-5 max-w-fit text-center"
+        >
+          <h2
+            class="font-roboto font-extrabold text-4xl md:text-6xl xl:text-[65px] mb-8 uppercase"
+          >
+            DRIVING <span class="text-shield-red">SYMBOLISM</span> FORWARD
+          </h2>
+          <p
+            class="font-nunito font-normal text-xl md:text-2xl xl:text-[30px] max-w-[1182px] mx-auto"
+          >
+            From racing heritage to luxury identity, shield logos continue to
+            define the spirit, strength, and legacy of the world’s most iconic
+            cars.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- SCRIPT FOR ANIMATIONS -->
+    <script>
+      // Initialize Intersection Observer
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              // Unobserve to animate only once
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1, // Trigger when 10% visible
+          rootMargin: "0px 0px -50px 0px", // Slight offset
+        }
+      );
+
+      // Start observing
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // INTERACTIVE
+
+      // ===============================
+      // 30 QUESTIONS BANK
+      // ===============================
+      const quizData = [
+        {
+          question: "Which brand uses a Golden Bull inside a shield?",
+          options: ["Ferrari", "Lamborghini", "Porsche", "Maserati"],
+          answer: "Lamborghini",
+        },
+        {
+          question: "Which logo features a prancing horse?",
+          options: ["Ferrari", "Alfa Romeo", "Koenigsegg", "Bugatti"],
+          answer: "Ferrari",
+        },
+        {
+          question: "Which brand combines Stuttgart & Württemberg symbols?",
+          options: ["Porsche", "Audi", "BMW", "Maserati"],
+          answer: "Porsche",
+        },
+        {
+          question: "Which brand uses a Trident?",
+          options: ["Maserati", "Ferrari", "Pagani", "Alfa Romeo"],
+          answer: "Maserati",
+        },
+        {
+          question: "Which logo represents Milan heritage?",
+          options: ["Alfa Romeo", "Ferrari", "Lamborghini", "Koenigsegg"],
+          answer: "Alfa Romeo",
+        },
+        {
+          question: "Which brand has a Swedish Ghost emblem?",
+          options: ["Koenigsegg", "Volvo", "Saab", "Polestar"],
+          answer: "Koenigsegg",
+        },
+        {
+          question: "Ferrari logo color mainly represents?",
+          options: ["Speed", "Racing heritage", "Luxury", "Technology"],
+          answer: "Racing heritage",
+        },
+        {
+          question: "Porsche logo animal?",
+          options: ["Horse", "Bull", "Lion", "Eagle"],
+          answer: "Horse",
+        },
+        {
+          question: "Which brand logo is inspired by Neptune?",
+          options: ["Maserati", "Ferrari", "Alfa Romeo", "Bugatti"],
+          answer: "Maserati",
+        },
+        {
+          question: "Lamborghini logo animal?",
+          options: ["Bull", "Horse", "Lion", "Snake"],
+          answer: "Bull",
+        },
+        // ---- add till 30 (example few more)
+        {
+          question: "Which brand uses shield logo from Italy?",
+          options: ["Ferrari", "Tesla", "Toyota", "Ford"],
+          answer: "Ferrari",
+        },
+        {
+          question: "Which logo includes serpent?",
+          options: ["Alfa Romeo", "Ferrari", "BMW", "Audi"],
+          answer: "Alfa Romeo",
+        },
+        {
+          question: "Koenigsegg is from?",
+          options: ["Sweden", "Germany", "Italy", "France"],
+          answer: "Sweden",
+        },
+        {
+          question: "Ferrari was founded in?",
+          options: ["Italy", "France", "Germany", "USA"],
+          answer: "Italy",
+        },
+        {
+          question: "Shield logos usually symbolize?",
+          options: ["Strength", "Speed", "Silence", "Economy"],
+          answer: "Strength",
+        },
+        // (You can continue adding up to 30)
+      ];
+
+      // ===============================
+      // VARIABLES
+      // ===============================
+      let questions = [];
+      let current = 0;
+      let score = 0;
+      let timeLeft = 30;
+      let timer;
+
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+      const scoreEl = document.getElementById("score");
+      const timeEl = document.getElementById("time");
+      const resultEl = document.getElementById("result");
+      const retryBtn = document.getElementById("retryBtn");
+
+      // ===============================
+      // START / RESET QUIZ
+      // ===============================
+      function startQuiz() {
+        current = 0;
+        score = 0;
+        timeLeft = 30;
+
+        scoreEl.innerText = score;
+        timeEl.innerText = timeLeft;
+        resultEl.innerText = "";
+        retryBtn.classList.add("hidden");
+
+        questions = quizData.sort(() => 0.5 - Math.random()).slice(0, 5);
+
+        clearInterval(timer);
+        startTimer();
+        loadQuestion();
+      }
+
+      // ===============================
+      // LOAD QUESTION
+      // ===============================
+      function loadQuestion() {
+        if (current >= questions.length) {
+          endQuiz();
+          return;
+        }
+
+        const q = questions[current];
+        questionEl.innerText = q.question;
+        optionsEl.innerHTML = "";
+
+        q.options.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.className =
+            "border border-shield-dark py-3 px-4 rounded-lg font-bold hover:bg-shield-dark hover:text-white transition";
+          btn.innerText = opt;
+          btn.onclick = () => checkAnswer(opt);
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      // ===============================
+      // CHECK ANSWER
+      // ===============================
+      function checkAnswer(selected) {
+        if (selected === questions[current].answer) {
+          score++;
+          scoreEl.innerText = score;
+          resultEl.innerText = "✅ Correct!";
+          resultEl.className = "text-green-600 font-bold mt-6";
+        } else {
+          resultEl.innerText =
+            "❌ Wrong! Correct: " + questions[current].answer;
+          resultEl.className = "text-red-600 font-bold mt-6";
+        }
+
+        current++;
+        setTimeout(loadQuestion, 900);
+      }
+
+      // ===============================
+      // TIMER
+      // ===============================
+      function startTimer() {
+        timer = setInterval(() => {
+          timeLeft--;
+          timeEl.innerText = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            endQuiz();
+          }
+        }, 1000);
+      }
+
+      // ===============================
+      // END QUIZ
+      // ===============================
+      function endQuiz() {
+        clearInterval(timer);
+        questionEl.innerText = "Quiz Completed!";
+        optionsEl.innerHTML = "";
+        resultEl.innerText = `🏁 Final Score: ${score} / ${questions.length}`;
+        resultEl.className = "text-shield-red font-extrabold text-2xl mt-6";
+        retryBtn.classList.remove("hidden");
+      }
+
+      // ===============================
+      // RETRY
+      // ===============================
+      retryBtn.addEventListener("click", startQuiz);
+
+      // INIT
+      startQuiz();
+    </script>
+  </body>
+</html>

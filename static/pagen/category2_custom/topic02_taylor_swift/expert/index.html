@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taylor Swift - The Eras Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --debut: #7BC4C4;
+            --fearless: #FFD700;
+            --speak-now: #8B4789;
+            --red: #C41E3A;
+            --1989: #87CEEB;
+            --reputation: #1a1a1a;
+            --lover: #FF69B4;
+            --folklore: #8B8680;
+            --evermore: #A0522D;
+            --midnights: #191970;
+
+            --bg-primary: #0f0a1e;
+            --bg-secondary: #1a1334;
+            --bg-tertiary: #2d1b4e;
+            --text-primary: #ffffff;
+            --text-secondary: #b8a7d6;
+            --text-muted: #8b7ca8;
+            --accent-gold: #ffd700;
+            --accent-pink: #ff69b4;
+            --accent-blue: #87ceeb;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: radial-gradient(ellipse at top, #2d1b4e, #1a1334, #0f0a1e);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        /* Animated Background Blobs */
+        .background-blobs {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .blob:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-gold);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .blob:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-pink);
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .blob:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-blue);
+            bottom: 10%;
+            left: 40%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink), var(--accent-blue));
+            z-index: 10000;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem 0.75rem;
+            background: rgba(15, 10, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .nav-dot:hover::before,
+        .nav-dot.active::before {
+            width: 24px;
+            height: 24px;
+            opacity: 0.3;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-gold);
+            box-shadow: 0 0 20px var(--accent-gold);
+        }
+
+        /* Section */
+        section {
+            min-height: auto;
+            padding: 2.5rem 0;
+            position: relative;
+            display: block;
+            align-items: flex-start;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 105, 180, 0.15));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-gold);
+            margin-bottom: 0.8rem;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            margin-bottom: 0.6rem;
+            background: linear-gradient(135deg, #ffffff, var(--accent-gold), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .section-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== HERO ===== */
+        #hero {
+            min-height: 80vh;
+            padding-top: 1.5rem;
+            padding-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            min-height: 80vh;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .hero-top {
+            margin-bottom: 1.8rem;         /* гарантированный зазор над stats */
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 105, 180, 0.2));
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+            animation: glow 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 3.2rem);
+            line-height: 1.1;
+            margin-bottom: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 50%, var(--accent-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 80px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 5rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 0;
+        }
+
+        .stat-box {
+            padding: 0.8rem 0.6rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .stat-box:hover::before {
+            left: 100%;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--accent-gold);
+            background: rgba(255, 215, 0, 0.05);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-image-container {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .hero-image-container:hover {
+            transform: rotateY(5deg) rotateX(-5deg);
+        }
+
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 105, 180, 0.2));
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .hero-image-container:hover::before {
+            opacity: 1;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .hero-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ===== ERAS WHEEL ===== */
+        #eras-wheel {
+            background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+            position: relative;
+            padding-top: 2.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .wheel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 3rem;
+        }
+
+        #erasCanvas {
+            width: 100%;
+            height: 650px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+            inset 0 0 100px rgba(255, 215, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .wheel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .era-chip {
+            padding: 0.5rem 1.4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .era-chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .era-chip:hover::before {
+            left: 100%;
+        }
+
+        .era-chip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .era-chip.active {
+            border-width: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px currentColor;
+            font-weight: 700;
+        }
+
+        .era-details {
+            max-width: 1000px;
+            margin: 2rem auto 0;
+            padding: 1.8rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            min-height: auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .era-details::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            opacity: 0.03;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .era-year {
+            position: absolute;
+            top: 2rem;
+            right: 3rem;
+            font-size: 8rem;
+            font-weight: 900;
+            font-family: 'Playfair Display', serif;
+            opacity: 10;
+            line-height: 1;
+        }
+
+        .era-title {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .era-description {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .era-tracks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .track-badge {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .track-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== ALBUMS - 3 PER ROW ===== */
+        #albums {
+            background: linear-gradient(180deg, var(--bg-secondary), var(--bg-tertiary));
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .album-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .album-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .album-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .album-card:hover {
+            transform: translateY(-16px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .album-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .album-card:hover .album-cover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .album-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--bg-primary);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .album-info {
+            padding: 1.1rem 1.3rem;
+        }
+
+        .album-year {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+        }
+
+        .album-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .album-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .album-meta {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.8);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 1.8rem 2rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-year {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .modal-body {
+            padding: 1.8rem 2rem 2rem;
+        }
+
+        .tracks-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .track-item {
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .track-item:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: var(--accent-gold);
+            transform: translateX(8px);
+        }
+
+        .track-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .track-duration {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .spotify-embed {
+            margin-top: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* ===== TIMELINE ===== */
+        #timeline {
+            background: var(--bg-primary);
+        }
+
+        .timeline-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-pink));
+            transform: translateX(-50%);
+            border-radius: 100px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 8px rgba(255, 215, 0, 0.2),
+            0 0 30px rgba(255, 215, 0, 0.6);
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .timeline-content:hover::before {
+            left: 100%;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* ===== EASTER EGGS ===== */
+        #easter-eggs {
+            background: linear-gradient(180deg, var(--bg-tertiary), var(--bg-secondary));
+        }
+
+        .eggs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .egg-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .egg-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .egg-card:hover::before {
+            opacity: 1;
+        }
+
+        .egg-card::after {
+            content: '🔒';
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .egg-card.unlocked::after {
+            content: '🔓';
+            transform: rotate(20deg);
+        }
+
+        .egg-card:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+        }
+
+        .egg-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .egg-card:hover .egg-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .egg-hint {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .egg-preview {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .egg-reveal {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .egg-card.unlocked .egg-reveal {
+            max-height: 500px;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        /* ===== QUIZ ===== */
+        #quiz {
+            background: var(--bg-primary);
+        }
+
+        .quiz-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 2rem 1.6rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.4rem;
+            line-height: 1.5;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--accent-gold);
+            transition: width 0.3s;
+        }
+
+        .quiz-option:hover:not(.correct):not(.wrong) {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: var(--accent-gold);
+            transform: translateX(8px);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+            animation: correctPulse 0.6s;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .quiz-option.correct::before {
+            width: 5px;
+            background: #10b981;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            animation: wrongShake 0.5s;
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .quiz-option.wrong::before {
+            width: 5px;
+            background: #ef4444;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.4rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .quiz-score {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        #quizResult {
+            text-align: center;
+        }
+
+        .final-score {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn {
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            border: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--bg-primary);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 60px rgba(255, 215, 0, 0.6);
+        }
+
+        /* ===== AWARDS - 3 PER ROW ===== */
+        #awards {
+            background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .award-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 1.4rem 1.2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .award-card:hover::before {
+            opacity: 1;
+        }
+
+        .award-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 30px 80px rgba(255, 215, 0, 0.3);
+        }
+
+        .award-icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.6rem;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            transition: transform 0.3s;
+        }
+
+        .award-card:hover .award-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .award-number {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.4rem;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+
+        .award-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ===== FACTS WITH MODAL ===== */
+        #facts {
+            background: var(--bg-tertiary);
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.4rem;
+            margin-top: 1.8rem;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 1.4rem 1.2rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .fact-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .fact-card:hover::before {
+            opacity: 1;
+        }
+
+        .fact-card:hover {
+            background: rgba(255, 105, 180, 0.08);
+            border-color: rgba(255, 105, 180, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+        }
+
+        .fact-media {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            position: relative;
+        }
+
+        .fact-media img,
+        .fact-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .fact-card:hover .fact-media img,
+        .fact-card:hover .fact-media video {
+            transform: scale(1.1);
+        }
+
+        .fact-emoji {
+            font-size: 2.1rem;
+            margin-bottom: 0.7rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .fact-card:hover .fact-emoji {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .fact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-pink);
+        }
+
+        .fact-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .fact-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 105, 180, 0.15);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            color: var(--accent-pink);
+        }
+
+        .fact-modal .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .fact-modal-media {
+            width: 100%;
+            max-height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .fact-modal-media img,
+        .fact-modal-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fact-modal-description {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .fact-modal-details {
+            background: rgba(255, 105, 180, 0.08);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .fact-modal-details h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-pink);
+        }
+
+        .fact-modal-details p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-primary);
+            padding: 2rem 0 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .albums-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .awards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .main-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .albums-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Floating Music Button */
+        .floating-music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #1a1a2e;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: pulse-float 2s ease-in-out infinite;
+        }
+
+        .floating-music-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(255, 215, 0, 0.7);
+        }
+
+        @keyframes pulse-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating-music-btn.hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .eras-wheel {
+                transform: scale(0.7);
+            }
+        }
+
+
+        .era-quick-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            color: #FFD700;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: lowercase;
+        }
+
+        .era-quick-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .era-quick-btn:active {
+            transform: scale(0.95);
+        }
+
+    </style>
+</head>
+<body>
+<!-- Animated Blobs -->
+<div class="background-blobs">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+</div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navigation -->
+<nav class="main-nav">
+    <div class="nav-dot active" data-section="0"></div>
+    <div class="nav-dot" data-section="1"></div>
+    <div class="nav-dot" data-section="2"></div>
+    <div class="nav-dot" data-section="3"></div>
+    <div class="nav-dot" data-section="4"></div>
+    <div class="nav-dot" data-section="5"></div>
+    <div class="nav-dot" data-section="6"></div>
+    <div class="nav-dot" data-section="7"></div>
+</nav>
+
+
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>✨</span>
+                    <span>Global Icon & Songwriter</span>
+                </div>
+                <h1>Taylor Swift</h1>
+                <p class="hero-subtitle">
+                    From country roots to pop domination, through indie folk introspection to record-breaking stadium tours — explore the eras that defined a generation and revolutionized the music industry.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-box glass">
+                        <span class="stat-number" data-target="10">0</span>
+                        <span class="stat-label">Studio Albums</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number" data-target="12">0</span>
+                        <span class="stat-label">Grammy Awards</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number" data-target="40">0</span>
+                        <span class="stat-label">Billboard #1s</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-number" data-target="19">0</span>
+                        <span class="stat-label">Years Active</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/191125_Taylor_Swift_at_the_2019_American_Music_Awards_%28cropped%29.png/800px-191125_Taylor_Swift_at_the_2019_American_Music_Awards_%28cropped%29.png" alt="Taylor Swift">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ERAS WHEEL ===== -->
+<section id="eras-wheel">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 1</div>
+            <h2>Explore the Eras</h2>
+            <p class="section-description">
+                Click any era button to see its story in a focused popup.
+            </p>
+        </div>
+
+        <!-- только кнопки, без кольца -->
+        <div class="wheel-controls" id="eraControls"></div>
+    </div>
+</section>
+
+<!-- Era Modal (новое модальное окно для эр) -->
+<div class="modal" id="eraModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" id="eraModalClose">×</button>
+            <h2 class="modal-title" id="eraTitle">Select an era</h2>
+            <p class="modal-year" id="eraYear">2006</p>
+        </div>
+        <div class="modal-body">
+            <p class="era-description" id="eraDesc">
+                Click any era button to explore.
+            </p>
+            <div class="tracks-list" id="eraTracks"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== ALBUMS ===== -->
+<section id="albums">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 2</div>
+            <h2>The Discography</h2>
+            <p class="section-description">
+                10 studio albums with iconic covers. Click any album to explore tracks and listen on Spotify.
+            </p>
+        </div>
+
+        <div class="albums-grid" id="albumsGrid"></div>
+    </div>
+</section>
+
+<!-- Album Modal -->
+<div class="modal" id="albumModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" id="modalClose">×</button>
+            <h2 class="modal-title" id="modalTitle">Album Name</h2>
+            <p class="modal-year" id="modalYear">2006</p>
+        </div>
+        <div class="modal-body">
+            <div class="tracks-list" id="tracksList"></div>
+            <div class="spotify-embed" id="spotifyEmbed"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TIMELINE ===== -->
+<section id="timeline">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 3</div>
+            <h2>Career Timeline</h2>
+            <p class="section-description">
+                From Nashville dream to global phenomenon — the milestones that shaped an icon.
+            </p>
+        </div>
+
+        <div class="timeline-wrapper">
+            <div class="timeline-line"></div>
+            <div id="timelineContainer"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== EASTER EGGS ===== -->
+<section id="easter-eggs">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 4</div>
+            <h2>Easter Eggs Detective</h2>
+            <p class="section-description">
+                Taylor is the queen of hidden messages. Click each card to unlock the secrets.
+            </p>
+        </div>
+
+        <div class="eggs-grid" id="eggsGrid"></div>
+    </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="quiz">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 5</div>
+            <h2>Lyrics Matcher Quiz</h2>
+            <p class="section-description">
+                Think you know every word? Match these iconic lyrics to the right songs.
+            </p>
+        </div>
+
+        <div class="quiz-wrapper">
+            <div id="quizContainer">
+                <h3 class="quiz-question" id="quizQuestion"></h3>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-progress">
+                    <div>Question <span id="currentQ">1</span> of <span id="totalQ">7</span></div>
+                    <div class="quiz-score">Score: <span id="scoreDisplay">0</span>/7</div>
+                </div>
+            </div>
+
+            <div id="quizResult" style="display: none;">
+                <h3>Quiz Complete! 🎉</h3>
+                <div class="final-score" id="finalScore">0/7</div>
+                <p class="quiz-message" id="quizMessage" style="font-size: 1.35rem; color: var(--text-secondary); margin: 2rem 0;"></p>
+                <button class="btn" id="restartBtn">Try Again</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== AWARDS ===== -->
+<section id="awards">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 6</div>
+            <h2>Awards & Records</h2>
+            <p class="section-description">
+                The numbers speak for themselves. A living legend who continues to break records.
+            </p>
+        </div>
+
+        <div class="awards-grid">
+            <div class="award-card glass">
+                <span class="award-icon">🏆</span>
+                <div class="award-number" data-target="12">0</div>
+                <div class="award-label">Grammy Awards</div>
+            </div>
+            <div class="award-card glass">
+                <span class="award-icon">💿</span>
+                <div class="award-number" data-target="200">0</div>
+                <div class="award-label">Million Albums</div>
+            </div>
+            <div class="award-card glass">
+                <span class="award-icon">🎵</span>
+                <div class="award-number" data-target="40">0</div>
+                <div class="award-label">Billboard #1s</div>
+            </div>
+            <div class="award-card glass">
+                <span class="award-icon">👑</span>
+                <div class="award-number" data-target="58">0</div>
+                <div class="award-label">World Records</div>
+            </div>
+            <div class="award-card glass">
+                <span class="award-icon">🎤</span>
+                <div class="award-number" data-target="1">0</div>
+                <div class="award-label">Billion Tour</div>
+            </div>
+            <div class="award-card glass">
+                <span class="award-icon">📺</span>
+                <div class="award-number" data-target="23">0</div>
+                <div class="award-label">VMAs Won</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FACTS ===== -->
+<section id="facts">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge">Chapter 7</div>
+            <h2>Swiftie Encyclopedia</h2>
+            <p class="section-description">
+                Fun facts with photos and videos. Click to see the full story.
+            </p>
+        </div>
+
+        <div class="facts-grid" id="factsContainer">
+            <div class="fact-card" data-index="0">
+                <div class="fact-emoji">🎸</div>
+                <h3 class="fact-title">Self-Written Prodigy</h3>
+                <p class="fact-text">Taylor writes or co-writes every song</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+            <div class="fact-card" data-index="1">
+                <div class="fact-emoji">🐍</div>
+                <h3 class="fact-title">Snake Reclaimed</h3>
+                <p class="fact-text">Turned hate into comeback</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+            <div class="fact-card" data-index="2">
+                <div class="fact-emoji">📝</div>
+                <h3 class="fact-title">Easter Eggs Master</h3>
+                <p class="fact-text">Hidden clues everywhere</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+            <div class="fact-card" data-index="3">
+                <div class="fact-emoji">💰</div>
+                <h3 class="fact-title">Billionaire</h3>
+                <p class="fact-text">$1.1B from music only</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+            <div class="fact-card" data-index="4">
+                <div class="fact-emoji">🎬</div>
+                <h3 class="fact-title">Film Director</h3>
+                <p class="fact-text">Directed 16+ videos</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+            <div class="fact-card" data-index="5">
+                <div class="fact-emoji">🏆</div>
+                <h3 class="fact-title">Awards Queen</h3>
+                <p class="fact-text">40 AMAs record</p>
+                <span class="fact-badge">Click to read more</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fact Modal -->
+<div class="modal fact-modal" id="factModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" id="factModalClose">×</button>
+            <h2 class="modal-title" id="factModalTitle">Fact Title</h2>
+        </div>
+        <div class="modal-body" id="factModalBody">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <h3 class="footer-title">Long Live All The Magic ✨</h3>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.8;">
+            An interactive tribute to Taylor Swift<br>
+            <em>"People haven't always been there for me, but music always has."</em>
+        </p>
+
+        <!-- Image Attribution -->
+        <div style="max-width: 1100px; margin: 1.5rem auto 0; padding: 1rem 2rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            <p style="margin: 0;">
+                <strong>Image Credit</strong>
+                Hero photo by
+                <a href="https://commons.wikimedia.org/wiki/File:191125TaylorSwiftatthe2019AmericanMusicAwards(cropped).png" target="_blank" style="color: var(--accent-gold); text-decoration: none;">Cosmopolitan UK</a>,
+                licensed under
+                <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" style="color: var(--accent-gold); text-decoration: none;">CC BY 3.0</a>.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ===== DATA =====
+    const erasData = [
+        { name: "Debut", year: 2006, color: "#7BC4C4", title: "Taylor Swift (Debut)", desc: "16-year-old Nashville newcomer delivers authentic teenage storytelling. 'Tim McGraw' and 'Teardrops On My Guitar' introduced a voice that felt like reading your best friend's diary.", tracks: ["Tim McGraw", "Teardrops On My Guitar", "Our Song", "Picture To Burn", "Should've Said No"] },
+        { name: "Fearless", year: 2008, color: "#FFD700", title: "Fearless", desc: "Album of the Year at the Grammys. First country artist to win. 'Love Story' became a global phenomenon transcending genres. The golden era of fairytales and pure joy.", tracks: ["Love Story", "You Belong With Me", "White Horse", "Fifteen", "Fearless"] },
+        { name: "Speak Now", year: 2010, color: "#B565D8", title: "Speak Now", desc: "100% self-written masterpiece. Every song penned solo at ages 18-20. Purple enchanted aesthetic with storytelling maturity beyond her years.", tracks: ["Mine", "Back To December", "Mean", "Enchanted", "Sparks Fly"] },
+        { name: "Red", year: 2012, color: "#FF1744", title: "Red", desc: "The turning point. Country meets pop, rock, and dubstep. 'All Too Well' becomes the ultimate 10-minute heartbreak anthem. Red lipstick and autumn leaves.", tracks: ["We Are Never...", "I Knew You Were Trouble", "22", "All Too Well", "Red"] },
+        { name: "1989", year: 2014, color: "#87CEEB", title: "1989", desc: "Full pop transformation. Inspired by 80s synth-pop. Sold 10+ million copies. 'Shake It Off' and 'Blank Space' dominated charts worldwide. New York became her city.", tracks: ["Shake It Off", "Blank Space", "Style", "Wildest Dreams", "Bad Blood"] },
+        { name: "reputation", year: 2017, color: "#4CAF50", title: "reputation", desc: "The dark era. Snakes reclaimed. Stadium tour broke records. 'Look What You Made Me Do' signaled rebirth. Taylor controlled the narrative.", tracks: ["Look What You Made Me Do", "Delicate", "Getaway Car", "...Ready For It?", "Gorgeous"] },
+        { name: "Lover", year: 2019, color: "#FF69B4", title: "Lover", desc: "Love in all its forms. Pastel skies and butterflies. LGBTQ+ anthem 'You Need To Calm Down'. The Archer showed vulnerability. A rainbow after the storm.", tracks: ["ME!", "You Need To Calm Down", "Lover", "The Archer", "Cruel Summer"] },
+        { name: "folklore", year: 2020, color: "#8B8680", title: "folklore", desc: "Surprise pandemic album. Indie-folk masterpiece produced with Aaron Dessner and Jack Antonoff. Won Album of the Year. Cabin in the woods aesthetic.", tracks: ["cardigan", "exile ft. Bon Iver", "the 1", "august", "betty"] },
+        { name: "evermore", year: 2020, color: "#A0522D", title: "evermore", desc: "folklore's sister. Released 5 months later. 'willow' and 'champagne problems' continued cozy storytelling with HAIM and Bon Iver collabs.", tracks: ["willow", "champagne problems", "gold rush", "tolerate it", "'tis the damn season"] },
+        { name: "Midnights", year: 2022, color: "#4A5CCC", title: "Midnights", desc: "13 sleepless nights. Synth-pop return. 'Anti-Hero' became her biggest hit ever. Broke every Spotify record. Lavender haze and midnight rain.", tracks: ["Anti-Hero", "Lavender Haze", "Snow On The Beach", "Karma", "Bejeweled"] }
+    ];
+
+    const albumsData = [
+        { title: "Taylor Swift", year: 2006, color: "#7BC4C4", desc: "Country debut that launched a superstar.", tracks: ["Tim McGraw", "Picture To Burn", "Teardrops On My Guitar", "A Place in This World", "Cold As You", "The Outside", "Tied Together with a Smile", "Stay Beautiful", "Should've Said No", "Mary's Song", "Our Song"], spotify: "5eyZZoQEFQWRHkV2xgAeBw" },
+        { title: "Fearless", year: 2008, color: "#FFD700", desc: "Grammy-winning masterpiece that defined a generation.", tracks: ["Fearless", "Fifteen", "Love Story", "Hey Stephen", "White Horse", "You Belong With Me", "Breathe", "Tell Me Why", "You're Not Sorry", "The Way I Loved You", "Forever & Always"], spotify: "4hDok0OAJd57SGIT8xuWJH" },
+        { title: "Speak Now", year: 2010, color: "#8B4789", desc: "100% self-written. Purple fairytales and raw emotion.", tracks: ["Mine", "Sparks Fly", "Back To December", "Speak Now", "Dear John", "Mean", "The Story Of Us", "Never Grow Up", "Enchanted", "Better Than Revenge"], spotify: "5MfAxS5zz8MlfROjGQVXhy" },
+        { title: "Red", year: 2012, color: "#C41E3A", desc: "Genre-blending experimentation. The transitional masterpiece.", tracks: ["State Of Grace", "Red", "Treacherous", "I Knew You Were Trouble", "All Too Well", "22", "We Are Never Getting Back Together", "Stay Stay Stay", "The Last Time"], spotify: "6kZ42qRrzov54LcAk4onW9" },
+        { title: "1989", year: 2014, color: "#87CEEB", desc: "Full pop reinvention. 10M+ sales. Era-defining synth-pop.", tracks: ["Welcome To New York", "Blank Space", "Style", "Out Of The Woods", "Shake It Off", "I Wish You Would", "Bad Blood", "Wildest Dreams", "How You Get The Girl"], spotify: "5fy0X0JmZRZnVa2UEicIOl" },
+        { title: "reputation", year: 2017, color: "#1a1a1a", desc: "Dark, edgy, unapologetic. Snake symbolism reclaimed.", tracks: ["...Ready For It?", "End Game", "I Did Something Bad", "Don't Blame Me", "Delicate", "Look What You Made Me Do", "Gorgeous", "Getaway Car", "King Of My Heart"], spotify: "6DEjYFkNZh67HP7R9PSZvv" },
+        { title: "Lover", year: 2019, color: "#FF69B4", desc: "Colorful celebration of love. The first album she owned.", tracks: ["I Forgot That You Existed", "Cruel Summer", "Lover", "The Man", "The Archer", "I Think He Knows", "Miss Americana", "Paper Rings", "Cornelia Street"], spotify: "1NAmidJlEaVgA3MpcPFYGq" },
+        { title: "folklore", year: 2020, color: "#8B8680", desc: "Surprise indie-folk album. Pandemic masterpiece.", tracks: ["the 1", "cardigan", "the last great american dynasty", "exile", "my tears ricochet", "mirrorball", "seven", "august", "this is me trying"], spotify: "2fenSS68JI1h4Fo296JfGr" },
+        { title: "evermore", year: 2020, color: "#A0522D", desc: "folklore's sister. Cozy cabin storytelling.", tracks: ["willow", "champagne problems", "gold rush", "'tis the damn season", "tolerate it", "no body, no crime", "happiness", "dorothea", "coney island"], spotify: "6AORtDjduMM3bupSWzbTSG" },
+        { title: "Midnights", year: 2022, color: "#191970", desc: "13 sleepless nights. Anti-Hero smashed records.", tracks: ["Lavender Haze", "Maroon", "Anti-Hero", "Snow On The Beach", "You're On Your Own, Kid", "Midnight Rain", "Question...?", "Vigilante Shit", "Bejeweled"], spotify: "151w1FgRZfnKZA9FEcg9Z3" }
+    ];
+
+    const timelineData = [
+        {
+            date: '2006',
+            title: 'Debut Album Release',
+            desc: 'At just 16 years old, Taylor Swift released her self-titled debut album on Big Machine Records. The lead single "Tim McGraw" was co-written during her after-school job at Sony Music and reached the Billboard Hot 100. The album showcased her authentic songwriting about teenage experiences—heartbreak, first love, and small-town life. Critics praised her mature lyricism and relatability. Songs like "Teardrops On My Guitar" and "Our Song" became country radio staples. The album was certified 5x Platinum and established Taylor as a promising young country artist with crossover potential. She was the first female country artist in decades to write or co-write every song on a debut album.'
+        },
+        {
+            date: '2009',
+            title: 'Fearless Era Dominance',
+            desc: 'Taylor\'s second album "Fearless" became a cultural phenomenon, selling over 12 million copies worldwide. At the 52nd Grammy Awards, she won Album of the Year—becoming the youngest artist ever to win the category at age 20. "You Belong With Me" became her breakthrough crossover hit, with the iconic music video depicting the classic nerd-to-prom-queen transformation. The Fearless Tour was her first headlining tour, playing 105 shows across North America, Europe, Asia, and Australia. The sparkly dresses, curly blonde hair, and acoustic guitar became iconic. This era marked her transition from country sweetheart to mainstream pop-country superstar. The infamous 2009 MTV VMAs incident with Kanye West ("Imma let you finish") only increased her visibility.'
+        },
+        {
+            date: '2012',
+            title: 'Red Genre Evolution',
+            desc: 'With "Red," Taylor began experimenting beyond country music, incorporating pop, rock, dubstep, and electronic elements. The album featured collaborations with producers like Max Martin and Shellback, signaling her future pop direction. "We Are Never Getting Back Together" became her first #1 on the Billboard Hot 100. "I Knew You Were Trouble" showcased dubstep-influenced production that divided country purists but attracted new audiences. The 10-minute version of "All Too Well" (released in 2021) became her most beloved deep cut, with fans dissecting every lyric about heartbreak. The Red Tour played 86 shows across six continents. She wore her signature red lipstick and featured elaborate stage designs. Critics noted her artistic maturity and willingness to take risks. This album sold 1.2 million copies in its first week.'
+        },
+        {
+            date: '2014',
+            title: '1989 Pop Revolution',
+            desc: 'Taylor fully embraced pop music with "1989," named after her birth year and inspired by 1980s synth-pop. She left Nashville and moved to New York City, marking a new chapter personally and professionally. The album debuted with 1.287 million sales in week one—the highest of her career. "Shake It Off" topped charts in over 10 countries. "Blank Space" satirized her serial-dater media persona with a brilliant self-aware music video. "Style," "Wildest Dreams," and "Bad Blood" dominated radio for two years. At the 58th Grammys, "1989" won Album of the Year, making Taylor the first woman to win the award twice. The 1989 World Tour grossed $250 million across 85 shows with elaborate production, surprise guest appearances, and costume changes. This era defined modern pop music and cemented her status as a global icon.'
+        },
+        {
+            date: '2017',
+            title: 'reputation Stadium Tour',
+            desc: 'After the "TaylorSwiftIsOverParty" controversy and public feuds with Kanye West and Kim Kardashian, Taylor disappeared from public life for over a year. She returned with "reputation," a darker, edgier album exploring themes of revenge, betrayal, and rebirth. "Look What You Made Me Do" broke streaming records with its snake-filled music video—reclaiming the snake symbol used to attack her. The reputation Stadium Tour became the highest-grossing US tour ever at $345.7 million, playing to 2.9 million fans across 53 shows. The production featured a 60-foot cobra, pyrotechnics, and a massive wraparound screen. She performed "Delicate" while flying through the stadium in a cage-like structure. This era showed her resilience and ability to turn criticism into art. Despite critical divide, "Delicate" and "Getaway Car" became fan favorites. The tour documentary premiered on Netflix in December 2018.'
+        },
+        {
+            date: '2020',
+            title: 'folklore Surprise Drop',
+            desc: 'During the COVID-19 pandemic, Taylor announced "folklore" with just 16 hours\' notice—a complete departure from her usual rollout strategy. The indie-folk album was created remotely with producers Aaron Dessner (The National) and Jack Antonoff. It showcased fictional storytelling rather than autobiographical songs, with an interconnected narrative about teenage love triangles ("cardigan," "betty," "august"). The cabin-in-the-woods aesthetic felt intimate and raw. "exile" featuring Bon Iver became a heartbreaking duet. Critics universally praised the artistic maturity and introspective lyrics. At the 63rd Grammys, "folklore" won Album of the Year—making Taylor the first woman to win three times in that category. The album sold 1.3 million copies in 24 hours and stayed #1 for eight weeks. It proved she could excel in any genre and control her narrative without relying on mainstream pop formulas.'
+        },
+        {
+            date: '2023',
+            title: 'The Eras Tour',
+            desc: 'The Eras Tour became the highest-grossing concert tour of all time, surpassing $1 billion in revenue—the first tour ever to reach this milestone. Spanning 146 shows across five continents, each 3.5-hour concert featured 44 songs representing all 10 studio albums (later 11 with "The Tortured Poets Department"). The setlist was divided into distinct "eras" with unique costumes, stage designs, and visuals. Fans dressed as their favorite era, traded friendship bracelets (inspired by "You\'re On Your Own, Kid"), and sang every word. The tour created unprecedented demand—Ticketmaster\'s system crashed during presales. The concert film grossed $261.6 million globally, becoming the highest-grossing concert film ever. Cities experienced "Taylor Swift tourism" boosts with sold-out hotels and restaurants. TIME named her 2023 Person of the Year. The tour demonstrated her unparalleled cultural impact and business acumen.'
+        },
+        {
+            date: '2024',
+            title: '4th Album of the Year Grammy',
+            desc: 'At the 66th Annual Grammy Awards on February 4, 2024, Taylor won her fourth Album of the Year Grammy for "Midnights"—making history as the most-awarded artist in that category. She surpassed legends like Frank Sinatra, Stevie Wonder, and Paul Simon. During her acceptance speech, she surprise-announced her 11th studio album "The Tortured Poets Department" (released April 19, 2024). "Midnights" had broken numerous records: it became Spotify\'s most-streamed album in a single day, and "Anti-Hero" became her longest-running #1 hit. The album explored themes of insomnia, self-loathing, and late-night anxieties with synth-pop production. At age 34, she\'s written 11 original albums, re-recorded 4 "Taylor\'s Version" albums to reclaim her masters, and amassed 14 Grammy wins total. She also became a billionaire in 2023—primarily from music and touring, not endorsements. Forbes estimated her net worth at $1.1 billion, making her one of the few musicians to achieve billionaire status through music alone.'
+        }
+    ];
+
+    const easterEggsData = [
+        { icon: "🎬", hint: "The '1' Netflix Mystery", preview: "A lyric about a movie that didn't exist yet...", reveal: "In 'the 1', Taylor sings about meeting 'in a film that's on Netflix'. She was referencing Amsterdam but the lyric was written BEFORE filming!" },
+        { icon: "🧣", hint: "All Too Well Scarf", preview: "The most famous clothing in music...", reveal: "The scarf in 'All Too Well' was left at Jake's sister's house. In the 10-minute version 'I was there, I remember it, all too well' addressing his denial." },
+        { icon: "🐍", hint: "Snake Reclaimed", preview: "Turning hate into art...", reveal: "After #TaylorSwiftIsOverParty snake attacks, she disappeared for a year, then returned with 'Look What You Made Me Do', reclaiming snakes as power." },
+        { icon: "🔤", hint: "Capital Letters Code", preview: "Hidden messages in social media...", reveal: "Taylor's Instagram captions capitalize random letters spelling words. Before folklore, she spelled 'APRIL TWENTY SIXTH' mysteriously." },
+        { icon: "🏠", hint: "The Lover House", preview: "Seven rooms, seven eras...", reveal: "The Lover music video house has 7 rooms in different colors. Each represents one of her first 7 album eras' aesthetics." },
+        { icon: "🕐", hint: "Clock Theory", preview: "Every clock tells a story...", reveal: "Clocks in videos show 1:13 or 10:13 (her birthday). In 'Willow', 1:03 hinted at Speak Now re-recording." }
+    ];
+
+    const quizData = [
+        { q: "'It's a love story, baby, just say yes'", options: ["Love Story", "You Belong With Me", "Mine", "Fearless"], correct: 0 },
+        { q: "'We are never ever ever getting back together'", options: ["Red", "We Are Never Getting Back Together", "I Knew You Were Trouble", "22"], correct: 1 },
+        { q: "'I knew you were trouble when you walked in'", options: ["Style", "Blank Space", "I Knew You Were Trouble", "Bad Blood"], correct: 2 },
+        { q: "'Cause darling I'm a nightmare dressed like a daydream'", options: ["Wildest Dreams", "Style", "Out Of The Woods", "Blank Space"], correct: 3 },
+        { q: "'It's me, hi, I'm the problem, it's me'", options: ["Karma", "Anti-Hero", "Lavender Haze", "Bejeweled"], correct: 1 },
+        { q: "'I'm only cryptic and Machiavellian cause I care'", options: ["Mastermind", "The Great War", "Vigilante Shit", "Labyrinth"], correct: 0 },
+        { q: "'And I can go anywhere I want, just not home'", options: ["my tears ricochet", "exile", "the 1", "this is me trying"], correct: 0 }
+    ];
+
+    // FACTS DATA з детальною інформацією для модалок
+    const factsData = [
+        {
+            emoji: '🎸',
+            title: 'Self-Written Prodigy',
+            preview: 'Taylor writes or co-writes every single song she releases.',
+            fullDesc: 'Unlike many pop stars who rely on teams of writers, Taylor Swift has writing or co-writing credits on every song in her discography—over 200 songs across 11 studio albums. She began songwriting at age 12, inspired by country legends like Shania Twain. Her first publishing deal came at 14 with Sony/ATV, making her the youngest signing in the company\'s history. She often writes alone or with longtime collaborators like Jack Antonoff, Aaron Dessner, and Liz Rose. "Speak Now" (2010) was entirely self-written—all 14 tracks penned solo. Her ability to craft narrative-driven, emotionally resonant lyrics is considered her greatest strength. She\'s won the Songwriter-Artist of the Decade award and is often compared to legendary storytellers like Joni Mitchell and Carole King.',
+            mediaType: 'none'
+        },
+        {
+            emoji: '🐍',
+            title: 'Snake Symbolism Reclaimed',
+            preview: 'She turned hate into her most powerful comeback.',
+            fullDesc: 'In 2016, after the Kanye West "Famous" controversy and Kim Kardashian\'s leaked phone call, the hashtag #TaylorSwiftIsOverParty trended worldwide. Trolls flooded her social media with snake emojis, labeling her a liar. Taylor disappeared from public life for over a year—no interviews, no appearances, complete silence. When she returned in August 2017, she wiped all her social media accounts and posted a video of a snake. The lead single "Look What You Made Me Do" featured snake imagery throughout. The reputation album cover showed newspaper headlines of her controversies. She reclaimed the snake symbol, turning it into a representation of her resilience and rebirth. During the reputation Stadium Tour, a massive 60-foot cobra emerged from the stage. The transformation from victim to victor became a masterclass in controlling your own narrative. Fans now celebrate snakes as symbols of Taylor\'s strength.',
+            mediaType: 'none'
+        },
+        {
+            emoji: '📝',
+            title: 'Easter Eggs Master',
+            preview: 'Hidden clues in everything she does.',
+            fullDesc: 'Taylor Swift is famous for planting "Easter eggs"—hidden messages and clues about upcoming projects. She capitalizes random letters in social media captions that spell words or dates. Music video timestamps, outfit colors, and even jewelry choices carry meaning. Before announcing re-recordings, she wore outfits matching specific album eras. The number 13 appears everywhere—it\'s her lucky number (her birthday is December 13, 1989). In the "Lover" music video, the house has seven rooms representing her first seven albums. Clock faces in videos show significant dates. Before "folklore," she wore braids and cabin-themed aesthetics months in advance. Fans analyze every interview, photo, and lyric for clues. Websites like r/TaylorSwift dissect theories. She\'s said, "I love that fans look for Easter eggs... it makes the album releases more interactive." This strategy builds anticipation and deepens fan engagement. It\'s marketing genius meets artistic expression.',
+            mediaType: 'none'
+        },
+        {
+            emoji: '💰',
+            title: 'Billionaire Status',
+            preview: 'First musician to become a billionaire primarily from music.',
+            fullDesc: 'In October 2023, Bloomberg reported that Taylor Swift reached billionaire status with an estimated net worth of $1.1 billion. Unlike other celebrity billionaires (Jay-Z, Rihanna) who built wealth through business ventures and endorsements, Taylor\'s fortune comes almost entirely from music: album sales, streaming royalties, concert tours, and merchandise. The Eras Tour alone generated over $1 billion in revenue. She owns the masters to her re-recorded albums ("Taylor\'s Version") and earns substantial royalties from her catalog—over 200 songs. Her business acumen includes negotiating ownership deals, controlling her brand, and strategic partnerships. She\'s rejected major endorsement deals that didn\'t align with her values. Her wealth is self-made—she didn\'t inherit money or marry into wealth. At 34, she\'s one of the youngest self-made billionaires in entertainment history. Forbes noted her unique position: "She\'s the only artist to build a 10-figure fortune from music and touring alone."',
+            mediaType: 'none'
+        },
+        {
+            emoji: '🎬',
+            title: 'Directorial Debut',
+            preview: 'She directed 16 of her own music videos.',
+            fullDesc: 'Taylor didn\'t just star in music videos—she directed many of them. She made her directorial debut with "The Man" (2019), which critiqued gender double standards in the music industry. She later directed "Cardigan," "Willow," "Anti-Hero," "Bejeweled," "Lavender Haze," and more. Her videos feature intricate storytelling, symbolism, and cinematic quality. "All Too Well: The Short Film" (2021) was a 15-minute narrative film starring Sadie Sink and Dylan O\'Brien, premiering at film festivals. She wrote, directed, and acted in it—showcasing her versatility beyond music. Her videos often reference classic films: "Blank Space" parodies celebrity culture, "Look What You Made Me Do" channels Tarantino aesthetics. She\'s meticulous about details—choosing every costume, color palette, and camera angle. In 2023, she announced she\'d direct her first feature film for Searchlight Pictures. Her ability to control every aspect of her art—from songwriting to visual storytelling—sets her apart from peers. She\'s a true auteur in the music industry.',
+            mediaType: 'none'
+        },
+        {
+            emoji: '🏆',
+            title: 'Record-Breaking Awards',
+            preview: 'Most awarded artist in American Music Awards history.',
+            fullDesc: 'Taylor Swift holds more awards than any other artist across multiple award shows. She\'s won 40 American Music Awards (the most in history), 23 Billboard Music Awards, 12 Grammy Awards (including 4 Album of the Year wins—a historic record), 14 MTV Video Music Awards, and over 580 total awards. She\'s the only artist to win Album of the Year three times for solo albums (Fearless, 1989, folklore) and four times total (including Midnights). She\'s broken Spotify records repeatedly: most-streamed artist in a day, most-streamed album in 24 hours, first artist to have 4 albums each sell 1 million copies in a week. "Anti-Hero" spent 8 weeks at #1—her longest-running chart-topper. She\'s had 58 songs reach the Billboard Hot 100, with 9 reaching #1. In 2023, she won 9 MTV VMAs in one night and was named TIME Person of the Year. Guinness World Records recognizes over 100 records held by Taylor. Her influence transcends music—she\'s reshaped the industry\'s business model and artist rights.',
+            mediaType: 'none'
+        }
+    ];
+
+    document.getElementById('factModalClose').addEventListener('click', function() {
+        document.getElementById('factModal').classList.remove('active');
+    });
+
+    document.getElementById('factModal').addEventListener('click', function(e) {
+        if (e.target.id === 'factModal') {
+            document.getElementById('factModal').classList.remove('active');
+        }
+    });
+
+
+    // ===== UTILITIES =====
+    function animateCounter(el, target, duration = 2000) {
+        let current = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+            } else {
+                el.textContent = Math.floor(current);
+            }
+        }, 16);
+    }
+
+    function updateScrollProgress() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    }
+
+    // ===== ERAS WHEEL =====
+    let currentEraIndex = 0;
+    let hoveredEraIndex = -1;
+
+    function initErasWheel() {
+        const controls = document.getElementById('eraControls');
+
+        const eraModal = document.getElementById('eraModal');
+        const eraTitle = document.getElementById('eraTitle');
+        const eraYear = document.getElementById('eraYear');
+        const eraDesc = document.getElementById('eraDesc');
+        const eraTracks = document.getElementById('eraTracks');
+        const eraModalClose = document.getElementById('eraModalClose');
+
+        function openEraModal() {
+            eraModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEraModal() {
+            eraModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // даём доступ из разметки, если потребуется
+        window.closeEraModal = closeEraModal;
+
+        eraModalClose.addEventListener('click', closeEraModal);
+        eraModal.addEventListener('click', (e) => {
+            if (e.target === eraModal) {
+                closeEraModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && eraModal.classList.contains('active')) {
+                closeEraModal();
+            }
+        });
+
+        function selectEra(index) {
+            const era = erasData[index];
+            if (!era) return;
+
+            // активное состояние кнопок
+            document.querySelectorAll('.era-chip').forEach((chip, i) => {
+                chip.classList.toggle('active', i === index);
+            });
+
+            // заполняем модалку
+            eraTitle.textContent = era.title;
+            eraYear.textContent = era.year;
+            eraDesc.textContent = era.desc;
+
+            eraTracks.innerHTML = '';
+            era.tracks.forEach((track, i) => {
+                const item = document.createElement('div');
+                item.className = 'track-item';
+                item.innerHTML = `
+                    <div class="track-number">${i + 1}</div>
+                    <div class="track-info">
+                        <div class="track-name">${track}</div>
+                        <div class="track-duration">Taylor Swift</div>
+                    </div>
+                `;
+                eraTracks.appendChild(item);
+            });
+
+            openEraModal();
+        }
+
+        // генерим кнопки снизу
+        erasData.forEach((era, index) => {
+            const chip = document.createElement('button');
+            chip.className = 'era-chip' + (index === 0 ? ' active' : '');
+            chip.textContent = era.name;
+            chip.style.borderColor = era.color;
+            chip.style.color = era.color;
+            chip.onclick = () => selectEra(index);
+            controls.appendChild(chip);
+        });
+    }
+
+    // ===== ALBUMS =====
+    function initAlbums() {
+        const grid = document.getElementById('albumsGrid');
+
+        albumsData.forEach((album, index) => {
+            const card = document.createElement('div');
+            card.className = 'album-card glass';
+            // Create gradient SVG cover
+            const svgGradient = `
+                    <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="grad${index}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:${album.color};stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#000;stop-opacity:0.8" />
+                            </linearGradient>
+                            <filter id="shadow${index}">
+                                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                                <feOffset dx="0" dy="4" result="offsetblur"/>
+                                <feFlood flood-color="#000000" flood-opacity="0.5"/>
+                                <feComposite in2="offsetblur" operator="in"/>
+                                <feMerge>
+                                    <feMergeNode/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <rect fill="url(#grad${index})" width="400" height="400"/>
+                        <text x="200" y="180" font-size="48" fill="white" text-anchor="middle" font-family="Playfair Display" font-weight="bold" filter="url(#shadow${index})">${album.title}</text>
+                        <text x="200" y="230" font-size="24" fill="rgba(255,255,255,0.8)" text-anchor="middle" font-family="DM Sans" font-weight="600">${album.year}</text>
+                    </svg>
+                `.trim();
+
+            const svgDataUrl = `data:image/svg+xml,${encodeURIComponent(svgGradient)}`;
+
+            card.innerHTML = `
+                    <div class="album-cover">
+                        <img src="${svgDataUrl}" alt="${album.title}">
+                        <div class="play-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <div class="album-year">${album.year}</div>
+                        <h3 class="album-title">${album.title}</h3>
+                        <p class="album-description">${album.desc}</p>
+                        <div class="album-meta">
+                            <span>🎵 ${album.tracks.length} tracks</span>
+                        </div>
+                    </div>
+                `;
+
+            card.onclick = () => openAlbumModal(album);
+            grid.appendChild(card);
+        });
+    }
+
+    function openAlbumModal(album) {
+        document.getElementById('modalTitle').textContent = album.title;
+        document.getElementById('modalYear').textContent = album.year;
+
+        const tracksList = document.getElementById('tracksList');
+        tracksList.innerHTML = '';
+        album.tracks.forEach((track, index) => {
+            const item = document.createElement('div');
+            item.className = 'track-item';
+            item.innerHTML = `
+                    <div class="track-number">${index + 1}</div>
+                    <div class="track-info">
+                        <div class="track-name">${track}</div>
+                        <div class="track-duration">Taylor Swift</div>
+                    </div>
+                `;
+            tracksList.appendChild(item);
+        });
+
+        const spotifyDiv = document.getElementById('spotifyEmbed');
+        spotifyDiv.innerHTML = `
+                <iframe style="border-radius:12px; width: 100%; height: 352px;"
+                src="https://open.spotify.com/embed/album/${album.spotify}?utm_source=generator"
+                frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+            `;
+
+        document.getElementById('albumModal').classList.add('active');
+    }
+
+    document.getElementById('modalClose').onclick = () => {
+        document.getElementById('albumModal').classList.remove('active');
+    };
+
+    document.getElementById('albumModal').onclick = (e) => {
+        if (e.target.id === 'albumModal') {
+            document.getElementById('albumModal').classList.remove('active');
+        }
+    };
+
+    // ===== TIMELINE =====
+    function initTimeline() {
+        const container = document.getElementById('timelineContainer');
+        timelineData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'timeline-item';
+            div.innerHTML = `
+                    <div class="timeline-content glass">
+                        <div class="timeline-date">${item.date}</div>
+                        <h3 class="timeline-title">${item.title}</h3>
+                        <p class="timeline-desc">${item.desc}</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                `;
+            container.appendChild(div);
+        });
+    }
+
+    // ===== EASTER EGGS =====
+    function initEasterEggs() {
+        const grid = document.getElementById('eggsGrid');
+        easterEggsData.forEach(egg => {
+            const card = document.createElement('div');
+            card.className = 'egg-card glass';
+            card.innerHTML = `
+                    <span class="egg-icon">${egg.icon}</span>
+                    <h3 class="egg-hint">${egg.hint}</h3>
+                    <p class="egg-preview">${egg.preview}</p>
+                    <div class="egg-reveal">${egg.reveal}</div>
+                `;
+            card.onclick = () => card.classList.toggle('unlocked');
+            grid.appendChild(card);
+        });
+    }
+
+    // ===== QUIZ =====
+    let quizIndex = 0, quizScore = 0;
+
+    function initQuiz() {
+        document.getElementById('totalQ').textContent = quizData.length;
+        loadQuizQuestion();
+        document.getElementById('restartBtn').onclick = () => {
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('scoreDisplay').textContent = '0';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizResult').style.display = 'none';
+            loadQuizQuestion();
+        };
+    }
+
+    function loadQuizQuestion() {
+        if (quizIndex >= quizData.length) {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'block';
+            document.getElementById('finalScore').textContent = `${quizScore}/${quizData.length}`;
+            const msg = quizScore === 7 ? "Perfect! Certified Swiftie! 🌟✨" :
+                quizScore >= 5 ? "Great job! You know your Taylor! 💕🎤" :
+                    quizScore >= 3 ? "Not bad! Keep listening! 🎵" :
+                        "Time to put those albums on repeat! 💿";
+            document.getElementById('quizMessage').textContent = msg;
+            return;
+        }
+
+        const q = quizData[quizIndex];
+        document.getElementById('quizQuestion').textContent = q.q;
+        document.getElementById('currentQ').textContent = quizIndex + 1;
+
+        const optionsContainer = document.getElementById('quizOptions');
+        optionsContainer.innerHTML = '';
+        q.options.forEach((opt, i) => {
+            const div = document.createElement('div');
+            div.className = 'quiz-option';
+            div.textContent = opt;
+            div.onclick = () => selectAnswer(i);
+            optionsContainer.appendChild(div);
+        });
+    }
+
+    function selectAnswer(selected) {
+        const q = quizData[quizIndex];
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.onclick = null);
+
+        options[q.correct].classList.add('correct');
+        if (selected === q.correct) {
+            quizScore++;
+            document.getElementById('scoreDisplay').textContent = quizScore;
+        } else {
+            options[selected].classList.add('wrong');
+        }
+
+        setTimeout(() => {
+            quizIndex++;
+            loadQuizQuestion();
+        }, 1800);
+    }
+
+    // ===== AWARDS =====
+    function initAwards() {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                document.querySelectorAll('.award-number').forEach(el => {
+                    animateCounter(el, parseInt(el.getAttribute('data-target')), 2500);
+                });
+                observer.disconnect();
+            }
+        }, { threshold: 0.3 });
+        observer.observe(document.getElementById('awards'));
+    }
+
+
+    document.getElementById('factModalClose').onclick = () => {
+        document.getElementById('factModal').classList.remove('active');
+    };
+
+    document.getElementById('factModal').onclick = (e) => {
+        if (e.target.id === 'factModal') {
+            document.getElementById('factModal').classList.remove('active');
+        }
+    };
+
+    // ===== NAVIGATION =====
+    function initNav() {
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        navDots.forEach((dot, i) => {
+            dot.onclick = () => sections[i].scrollIntoView({ behavior: 'smooth' });
+        });
+
+        window.addEventListener('scroll', () => {
+            updateScrollProgress();
+            let current = 0;
+            sections.forEach((section, i) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) current = i;
+            });
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === current);
+            });
+        });
+    }
+
+    // ===== GSAP ANIMATIONS =====
+    function initGSAP() {
+        if (!window.gsap || !window.ScrollTrigger) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.album-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 80,
+                opacity: 0,
+                rotation: 5,
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%'
+                },
+                x: index % 2 === 0 ? -100 : 100,
+                opacity: 0,
+                duration: 0.9,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.fact-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'back.out(1.7)'
+            });
+        });
+
+        gsap.utils.toArray('.award-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                y: 100,
+                opacity: 0,
+                rotation: -10,
+                duration: 0.8,
+                delay: index * 0.15,
+                ease: 'power3.out'
+            });
+        });
+
+        gsap.utils.toArray('.egg-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Hero parallax effect
+        gsap.to('.hero-visual', {
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            },
+            y: 100,
+        });
+    }
+
+    // ===== INITIALIZE EVERYTHING =====
+    window.addEventListener('load', () => {
+        // Animate hero stats
+        document.querySelectorAll('.stat-number').forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            animateCounter(el, target, 2000);
+        });
+
+        initErasWheel();
+        initAlbums();
+        initTimeline();
+        initEasterEggs();
+        initQuiz();
+        initAwards();
+        initNav();
+        initGSAP();
+
+        // Add mouse parallax to hero image
+        const heroImage = document.querySelector('.hero-image-container');
+        if (heroImage) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                heroImage.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            });
+        }
+    });
+
+    // Закриття модалки
+    document.getElementById('factModalClose').onclick = function() {
+        document.getElementById('factModal').classList.remove('active');
+    };
+
+    document.getElementById('factModal').onclick = function(e) {
+        if (e.target.id === 'factModal') {
+            document.getElementById('factModal').classList.remove('active');
+        }
+    };
+
+    // 🔥 ФАКТИ - БЕЗПЕЧНА ВЕРСІЯ
+    const FACTS_DATA = [
+        "🎸 Taylor writes EVERY song. 200+ credits. Speak Now 100% solo.",
+        "🐍 Snake attacks → reputation cobra. Turned hate into power.",
+        "📝 Easter eggs: 13 everywhere, Lover 7 rooms = 7 eras.",
+        "💰 $1.1B net worth. Eras Tour $1B+. Music only billionaire.",
+        "🎬 Directed The Man, Cardigan, Anti-Hero + feature film.",
+        "🏆 40 AMAs, 4 Grammy AOTY, 580+ awards. Streaming records."
+    ];
+
+    // ===== FACTS MODAL - WORKING VERSION =====
+    (function() {
+        const FACTS_FULL = [
+            {
+                emoji: '🎸',
+                title: 'Self-Written Prodigy',
+                image: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&h=400&fit=crop',
+                text: `Taylor Swift has writing or co-writing credits on every single song in her discography—over 200 songs across 11 studio albums. She began songwriting at age 12, inspired by country legends like Shania Twain and the storytelling of bands like the Dixie Chicks.
+
+Her first publishing deal came at 14 with Sony/ATV Music, making her the youngest artist ever signed by the company. She often writes alone or with longtime collaborators like Jack Antonoff, Aaron Dessner, and Liz Rose.
+
+<strong>Speak Now (2010)</strong> was entirely self-written—all 14 tracks penned solo between ages 18-20, a remarkable feat in modern pop music. Songs like "Dear John" and "Enchanted" showcased her ability to craft complex narratives without co-writers.
+
+Her ability to craft narrative-driven, emotionally resonant lyrics is considered her greatest strength. She's won the Songwriter-Artist of the Decade award from the Nashville Songwriters Association and is often compared to legendary storytellers like Joni Mitchell, Carole King, and Paul McCartney.
+
+<strong>"The way I write is very visual. I see everything I write. I think that's why people connect with it—they can see it too."</strong> - Taylor Swift`
+            },
+            {
+                emoji: '🐍',
+                title: 'Snake Symbolism Reclaimed',
+                image: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=600&h=400&fit=crop',
+                text: `In 2016, after the Kanye West "Famous" controversy and Kim Kardashian's leaked phone call, the hashtag <strong>#TaylorSwiftIsOverParty</strong> trended worldwide. Trolls flooded her social media with snake emojis, calling her a liar and accusing her of playing the victim.
+
+Taylor disappeared from public life for over a year—no interviews, no paparazzi photos, complete radio silence. It was the longest break of her career, and many wondered if she'd ever return.
+
+When she returned in <strong>August 2017</strong>, she wiped all her social media accounts clean and posted a cryptic video of a snake. The lead single "Look What You Made Me Do" featured snake imagery throughout, with Taylor literally surrounded by snakes in the music video.
+
+The <strong>reputation Stadium Tour (2018)</strong> became the highest-grossing US tour ever at the time, with a massive 60-foot cobra puppet emerging from the stage during performances. She wore snake-print outfits and snake rings, fully owning the symbol.
+
+<strong>"I realized that no matter what, people were going to talk. So I decided I would control the narrative."</strong> - Taylor Swift
+
+The snake became a symbol of rebirth, resilience, and taking back your power. Fans now wear snake jewelry and see it as a badge of honor.`
+            },
+            {
+                emoji: '📝',
+                title: 'Easter Eggs Master',
+                image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=400&fit=crop',
+                text: `Taylor Swift is famous for planting "Easter eggs"—hidden messages and clues about upcoming projects, often months in advance. She's trained an army of millions of Swifties to analyze every frame of her music videos, every outfit choice, and every social media caption.
+
+<strong>Classic Examples:</strong>
+• She capitalizes random letters in social media captions that spell words, dates, or album titles
+• The number <strong>13</strong> appears everywhere—it's her lucky number (born December 13, 1989)
+• In the "Lover" music video, the house has <strong>7 colored rooms</strong> representing her first 7 albums
+• Clock faces in videos show significant dates (album releases, birthdays)
+• Outfit colors at public events hint at upcoming re-recordings (wearing purple = Speak Now TV)
+
+Before announcing <strong>folklore</strong> in 2020, she wore cardigans in photos for months. Before <strong>Midnights</strong>, she dropped hints about the number 13 and midnight-themed imagery.
+
+Her music videos are treasure hunts. Fans dissect backgrounds, license plates, book titles, and even the number of steps she takes. When she announced "The Eras Tour," eagle-eyed fans had predicted it months earlier from Instagram posts.
+
+<strong>"I love that my fans are detectives. They're the best puzzle solvers."</strong> - Taylor Swift
+
+The Easter egg tradition has become so legendary that other artists now reference it. It's a two-way conversation between Taylor and her fans—she plants clues, they decode them, and the cycle continues.`
+            },
+            {
+                emoji: '💰',
+                title: 'Billionaire Status',
+                image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop',
+                text: `In October 2023, <strong>Bloomberg</strong> reported that Taylor Swift reached billionaire status with an estimated net worth of <strong>$1.1 billion</strong>. But unlike other celebrity billionaires, her wealth comes almost entirely from music—not makeup lines, fashion brands, or tech investments.
+
+<strong>Revenue Breakdown:</strong>
+• <strong>Eras Tour:</strong> Over $1 billion in ticket sales alone (became highest-grossing tour ever)
+• <strong>Album Sales:</strong> Over 200 million records sold worldwide
+• <strong>Streaming Royalties:</strong> Billions of streams generating millions monthly
+• <strong>Re-recorded Albums:</strong> Full ownership of masters = 100% royalties
+• <strong>Merchandise:</strong> Tour merch sales exceeded $200 million
+
+The <strong>Eras Tour (2023-2024)</strong> became a cultural phenomenon, with economic impact studies showing she boosted local economies by millions in every city she visited. Hotels, restaurants, and airlines saw record bookings. The tour film grossed over $250 million at the box office.
+
+She owns the masters to all her re-recorded albums ("Taylor's Version") and earns substantial royalties from her massive catalog. Unlike artists who sell their catalogs for quick cash, Taylor chose to re-record and own her work.
+
+<strong>Fun Fact:</strong> When the Eras Tour hit theaters, AMC Theatres' stock price jumped 11%. She single-handedly saved cinema chains during a slow period.
+
+<strong>"Music is art, and art is important. But I also see it as a business—and I'm going to control my business."</strong> - Taylor Swift`
+            },
+            {
+                emoji: '🎬',
+                title: 'Directorial Debut',
+                image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=400&fit=crop',
+                text: `Taylor Swift didn't just star in music videos—she became a director. She made her directorial debut with <strong>"The Man"</strong> (2019), a satirical video critiquing gender double standards in the music industry.
+
+<strong>Videos She Directed:</strong>
+• "The Man" (2019) - Featured Taylor in prosthetics as a male businessman
+• "Cardigan" (2020) - Dreamy folklore aesthetic, filmed during COVID-19 lockdown
+• "Willow" (2020) - Continuation of folklore's mystical world
+• "Anti-Hero" (2022) - Self-aware commentary on her public persona
+• "Bejeweled" (2022) - Cinderella-inspired visual with Easter eggs
+• "Lavender Haze" (2023) - Surreal dreamscape with 70s vibes
+• "I Can See You" (2023) - Heist film starring Taylor, Joey King, Presley Cash
+
+Her most ambitious project: <strong>"All Too Well: The Short Film"</strong> (2021), a 15-minute narrative film starring Sadie Sink and Dylan O'Brien. It premiered at film festivals, won awards, and proved Taylor could direct feature-length content.
+
+<strong>Upcoming:</strong> Taylor signed a deal with <strong>Searchlight Pictures</strong> to write and direct her first original feature film (not music-related). Details are still under wraps, but Hollywood insiders expect a character-driven drama.
+
+<strong>"I've always been a visual person. Directing lets me control every frame, every color, every emotion."</strong> - Taylor Swift
+
+Her videos feature intricate storytelling, hidden symbolism, and cinematic quality that rivals short films. She's won <strong>Video of the Year</strong> at the VMAs multiple times and is considered one of the best visual storytellers in music.`
+            },
+            {
+                emoji: '🏆',
+                title: 'Record-Breaking Awards',
+                image: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=600&h=400&fit=crop',
+                text: `Taylor Swift holds more awards than any other artist across multiple major ceremonies. Her trophy collection requires an entire room.
+
+<strong>Major Awards:</strong>
+• <strong>40 American Music Awards</strong> (most in history, surpassing Michael Jackson)
+• <strong>23 Billboard Music Awards</strong> (including Top Artist multiple times)
+• <strong>12 Grammy Awards</strong> including 4 Album of the Year wins—a historic record
+• <strong>14 MTV Video Music Awards</strong> (tied for most by a female artist)
+• <strong>12 Country Music Association Awards</strong>
+• <strong>580+ total awards</strong> from various organizations worldwide
+
+<strong>Grammy History:</strong>
+She's the only artist to win <strong>Album of the Year</strong> four times:
+1. "Fearless" (2010) - Age 20, youngest winner ever
+2. "1989" (2016) - First woman to win twice
+3. "folklore" (2021) - First surprise album to win
+4. "Midnights" (2024) - Record-breaking fourth win
+
+<strong>Other Records:</strong>
+• Most simultaneous Top 10 songs on Billboard Hot 100 (10 songs from "Midnights")
+• First artist to occupy entire Top 10 in one week
+• Most streamed artist on Spotify in a single day (multiple times)
+• Youngest person to win Entertainer of the Year at the CMAs (age 20)
+• Most Billboard Music Award wins in a single night (8 awards)
+
+<strong>"I never want to get complacent. Every album, every tour—I want to push further."</strong> - Taylor Swift
+
+Beyond music awards, she's been named one of Time's 100 Most Influential People multiple times, Forbes' highest-paid musician, and was the youngest woman ever on Forbes' Most Powerful Women list.`
+            }
+        ];
+
+
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.fact-card[data-index]');
+            const modal = document.getElementById('factModal');
+            const modalTitle = document.getElementById('factModalTitle');
+            const modalBody = document.getElementById('factModalBody');
+            const closeBtn = document.getElementById('factModalClose');
+
+            if (!cards.length || !modal) return;
+
+            cards.forEach((card, idx) => {
+                card.addEventListener('click', function() {
+                    const fact = FACTS_FULL[idx];
+
+                    modalTitle.textContent = fact.title;
+                    modalBody.innerHTML = `
+            <div style="margin-bottom: 2rem;">
+                <img src="${fact.image}" alt="${fact.title}"
+                     style="width: 100%; height: 350px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+            </div>
+            <div style="background: rgba(255,105,180,0.08); border: 2px solid rgba(255,105,180,0.25); border-radius: 20px; padding: 2.5rem;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">${fact.emoji}</div>
+                    <h4 style="color: #ff69b4; font-size: 2rem; margin: 0; font-family: 'Playfair Display', serif;">📖 The Full Story</h4>
+                </div>
+                <div style="font-size: 1.05rem; line-height: 1.9; color: #b8a7d6; text-align: left;">
+                    ${fact.text.split('\n\n').map(para => `<p style="margin-bottom: 1.5rem;">${para}</p>`).join('')}
+                </div>
+            </div>
+        `;
+
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+                });
+            });
+
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    modal.style.display = 'none';
+                });
+            }
+
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'factModal') {
+                    modal.classList.remove('active');
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    })();
+
+</script>
+</body>
+</html>
+

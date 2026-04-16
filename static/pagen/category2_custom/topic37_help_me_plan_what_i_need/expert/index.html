@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plan Your Newborn's Bedroom</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "dark-brown": "#28120E",
+              "text-grey": "#6F6F6F",
+              "text-dark": "#2C2C2C",
+              "safety-orange": "#C27D46",
+              "overlay-brown": "rgba(194, 125, 70, 0.9)",
+            },
+            fontFamily: {
+              nunito: ["Nunito", "sans-serif"],
+            },
+            backgroundImage: {
+              "hero-pattern": "url('./assets/hero-bg.png')",
+              "org-pattern":
+                "url('https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?q=80&w=2670&auto=format&fit=crop')",
+            },
+            boxShadow: {
+              card: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              float: "0px 10px 30px rgba(0, 0, 0, 0.15)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .font-nunito {
+        line-height: 1.3 !important;
+      }
+
+      /* --- REUSABLE ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger Delays */
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+      .delay-400 {
+        transition-delay: 0.4s;
+      }
+      .delay-500 {
+        transition-delay: 0.5s;
+      }
+
+      .itemCheckbox:checked {
+        accent-color: #c27d46; /* safety-orange theme */
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased bg-white font-nunito selection:bg-safety-orange selection:text-white"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full max-w-[1920px] mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex items-center justify-center px-4"
+      >
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="./assets/hero-bg.png"
+            alt="Nursery Background"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Floating Card -->
+        <div
+          class="border-[9px] border-safety-orange reveal relative z-10 bg-white p-8 md:p-14 max-w-[1137px] text-center mx-auto mt-20 lg:mt-0 shadow-float rounded-sm"
+        >
+          <h1
+            class="font-extrabold text-3xl md:text-5xl xl:text-[64px] lg:leading-[87px] text-text-dark mb-6"
+          >
+            Plan the Perfect Bedroom<br class="hidden md:block" />
+            for Your Newborn
+          </h1>
+          <p
+            class="font-normal text-base md:text-xl xl:text-[25px] lg:leading-[35px] text-text-grey max-w-4xl mx-auto"
+          >
+            Create a cozy, safe, and soothing space for your baby with this
+            simple guide to essentials, décor ideas, and setup tips.
+          </p>
+        </div>
+      </header>
+
+      <!-- SECTION 2: FURNITURE ESSENTIALS -->
+      <section
+        class="relative bg-white w-full py-16 px-4 md:py-24 md:px-12 lg:py-32 lg:px-24"
+      >
+        <div
+          class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center"
+        >
+          <!-- Left Text -->
+          <div class="reveal order-2 lg:order-1 text-center lg:text-left">
+            <h2
+              class="font-extrabold text-3xl md:text-4xl xl:text-[50px] !leading-[1.1] text-dark-brown mb-6 max-w-[576px]"
+            >
+              Must-Have Furniture for Your Baby’s Room
+            </h2>
+            <p
+              class="font-normal text-lg xl:text-[25px] lg:leading-[35px] text-text-grey mb-10"
+            >
+              Your newborn’s room doesn’t need to be crowded. Start with
+              essential, safe furniture that supports sleep, feeding, and
+              storage.
+            </p>
+
+            <div class="reveal delay-100 space-y-4 inline-block text-left">
+              <h3
+                class="font-extrabold text-xl xl:text-[30px] text-dark-brown mb-4"
+              >
+                Furniture to Mention:
+              </h3>
+              <ul
+                class="space-y-3 lg:space-y-8 font-normal text-lg xl:text-[24px] text-text-grey list-disc list-inside marker:text-dark-brown"
+              >
+                <li>Crib or bassinet</li>
+                <li>Changing table</li>
+                <li>Nursing chair</li>
+                <li>Storage shelves or dresser</li>
+                <li>Soft rug</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Image -->
+          <div class="reveal delay-200 order-1 lg:order-2">
+            <div
+              class="overflow-hidden rounded-lg group border-[5px] border-safety-orange"
+            >
+              <img
+                src="./assets/baby-bed.png"
+                alt="Baby Furniture"
+                class="w-full h-full max-h-[604px] transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: SAFETY CHECKLIST (Orange) -->
+      <section
+        class="relative bg-safety-orange w-full py-16 px-4 md:py-24 md:px-12 lg:py-32 lg:px-24"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-16 max-w-5xl mx-auto">
+          <h2
+            class="font-extrabold text-3xl md:text-4xl xl:text-[50px] text-white mb-6"
+          >
+            Baby Room Safety Checklist
+          </h2>
+          <p
+            class="font-normal text-lg xl:text-[25px] lg:leading-[35px] text-white opacity-90"
+          >
+            Your baby’s bedroom should be safe, calm, and hazard-free. A few
+            simple steps can make the room secure and comfortable for everyday
+            use. Use this checklist to make sure your newborn’s space is ready.
+          </p>
+        </div>
+
+        <!-- Checklist Grid -->
+        <div
+          class="max-w-[1457px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8"
+        >
+          <!-- Items with staggered delays -->
+          <div
+            class="reveal delay-100 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/shield-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Crib meets current safety standards
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-200 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/thermo-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Maintain a safe room temperature
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-300 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/wifi-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Baby monitor installed properly
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-400 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/switch-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Electrical cords kept out of reach
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-100 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/lock-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Soft, indirect lighting
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-200 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/bedsheet-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Use breathable bedding only
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-300 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/roller-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Non-toxic materials & paint
+            </p>
+          </div>
+
+          <div
+            class="reveal delay-400 flex flex-col items-center gap-6 text-center group"
+          >
+            <div
+              class="transition-transform group-hover:scale-110 duration-300"
+            >
+              <img
+                src="./assets/bulb-icon.png"
+                alt="Icon"
+                class="max-h-[59px]"
+              />
+            </div>
+            <p
+              class="font-extrabold text-xl xl:text-[30px] leading-tight text-white"
+            >
+              Furniture anchored to walls
+            </p>
+          </div>
+        </div>
+        <div class="max-w-[60%] h-1.5 bg-white mt-[90px] mx-auto"></div>
+      </section>
+
+      <!-- INTERACTIVE -->
+
+      <!-- INTERACTIVE SAFETY DESIGN SECTION -->
+      <section class="bg-gray-50 py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-6xl mx-auto text-center mb-12">
+          <h2
+            class="font-extrabold text-3xl md:text-4xl xl:text-[50px] text-text-dark mb-4"
+          >
+            Design Your Baby's Bedroom
+          </h2>
+          <p class="text-text-grey text-lg">
+            Select the items you want to include. We’ll score the room based on
+            safety & comfort.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+          <!-- LEFT: ITEMS -->
+          <div class="bg-white rounded-xl shadow-card p-8">
+            <h3 class="font-extrabold text-2xl text-dark-brown mb-6">
+              Choose Items
+            </h3>
+
+            <div class="space-y-4">
+              <!-- item -->
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="15"
+                  data-label="Safe Crib"
+                />
+                <span>Safe Crib</span>
+              </label>
+
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="10"
+                  data-label="Changing Table"
+                />
+                <span>Changing Table</span>
+              </label>
+
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="10"
+                  data-label="Nursing Chair"
+                />
+                <span>Nursing Chair</span>
+              </label>
+
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="5"
+                  data-label="Soft Rug"
+                />
+                <span>Soft Rug</span>
+              </label>
+
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="-10"
+                  data-label="Loose Cables"
+                />
+                <span>Loose Cables</span>
+              </label>
+
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="itemCheckbox"
+                  data-score="-15"
+                  data-label="Tall Unsecured Shelf"
+                />
+                <span>Tall Unsecured Shelf</span>
+              </label>
+
+              <!-- Add below the checkboxes -->
+              <button
+                id="checkScoreBtn"
+                class="mt-4 w-full px-6 py-3 bg-safety-orange text-white rounded-xl font-bold hover:bg-[#b96d3c] transition-colors"
+              >
+                Check Score
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT: RESULT -->
+          <div
+            class="bg-white rounded-xl shadow-card p-8 flex flex-col items-center justify-center"
+          >
+            <h3 class="font-extrabold text-2xl text-dark-brown mb-4">
+              Your Result Out Of 40
+            </h3>
+
+            <div
+              id="score"
+              class="text-[64px] font-extrabold text-safety-orange mb-4"
+            >
+              0
+            </div>
+
+            <p id="message" class="text-text-grey mb-6 text-center">
+              Select items to calculate safety score.
+            </p>
+
+            <!-- SELECTED ITEMS -->
+            <div class="w-full">
+              <h4 class="font-bold mb-3 text-dark-brown">Selected Items</h4>
+              <ul id="selectedItems" class="space-y-2"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- SECTION 4: CALM & COMFORTABLE (Decor) -->
+
+      <!-- SECTION 5: SLEEP FRIENDLY -->
+      <section
+        class="relative bg-[url('./assets/pet-bg.png')] bg-cover bg-center bg-no-repeat w-full py-16 px-4 md:py-24 md:px-12 lg:py-32 lg:px-24"
+      >
+        <!-- Header -->
+        <div class="reveal text-center mb-16 max-w-5xl mx-auto">
+          <h2
+            class="!leading-normal font-extrabold text-3xl md:text-4xl xl:text-[50px] text-dark-brown mb-6"
+          >
+            Make the Room Calm & Sleep-Friendly
+          </h2>
+          <p
+            class="font-normal text-lg xl:text-[25px] lg:leading-[35px] text-text-grey"
+          >
+            Newborns sleep many hours a day. A calm sleep environment helps them
+            feel safe and settle easily.
+          </p>
+        </div>
+
+        <div
+          class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+        >
+          <!-- Left Text/List -->
+          <ul
+            class="reveal delay-100 flex flex-col gap-9 order-2 lg:order-1 items-center lg:items-start text-text-grey list-disc list-inside marker:text-dark-brown"
+          >
+            <li
+              class="font-extrabold text-xl xl:text-[30px] text-dark-brown transition-transform hover:translate-x-2 duration-300"
+            >
+              Soft warm lighting
+            </li>
+            <li
+              class="font-extrabold text-xl xl:text-[30px] text-dark-brown transition-transform hover:translate-x-2 duration-300"
+            >
+              Breathable swaddles
+            </li>
+            <li
+              class="font-extrabold text-xl xl:text-[30px] text-dark-brown transition-transform hover:translate-x-2 duration-300"
+            >
+              Blackout curtains
+            </li>
+            <li
+              class="font-extrabold text-xl xl:text-[30px] text-dark-brown transition-transform hover:translate-x-2 duration-300"
+            >
+              White noise machine
+            </li>
+            <li
+              class="font-extrabold text-xl xl:text-[30px] text-dark-brown transition-transform hover:translate-x-2 duration-300"
+            >
+              Keep the room clutter-free
+            </li>
+          </ul>
+
+          <!-- Right Image -->
+          <div class="reveal delay-300 order-1 lg:order-2 flex justify-center">
+            <div
+              class="overflow-hidden group border-[5px] border-safety-orange"
+            >
+              <img
+                src="./assets/bed-toy.png"
+                alt="Sleeping Baby"
+                class="w-full h-full max-h-[394px] transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: ORGANIZATION (Brown Overlay) -->
+      <section
+        class="relative w-full py-16 px-4 md:py-24 md:px-12 lg:py-32 lg:px-24 overflow-hidden"
+      >
+        <!-- Background Image Layer -->
+        <div
+          class="absolute inset-0 bg-[url('./assets/bottom-bg.png')] bg-no-repeat bg-left bg-center bg-cover"
+        ></div>
+
+        <!-- Optional Overlay -->
+        <!-- <div class="absolute inset-0 bg-overlay-brown/85"></div> -->
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-[1600px] mx-auto">
+          <!-- Header -->
+          <div class="reveal text-center mb-16 max-w-4xl mx-auto text-white">
+            <h2
+              class="!leading-normal font-extrabold text-3xl md:text-4xl xl:text-[50px] mb-6"
+            >
+              Keep Everything Simple & Organized
+            </h2>
+            <p
+              class="font-normal text-lg xl:text-[25px] lg:leading-[35px] opacity-90"
+            >
+              Being organized makes caring for a newborn easier. Small baskets,
+              labels, and arranged drawers save time during late-night feeds and
+              diaper changes.
+            </p>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-14">
+            <!-- Card 1 -->
+            <div
+              class="reveal delay-100 flex flex-col rounded-[20px] overflow-hidden bg-white shadow-xl hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/shampoo.png"
+                class="w-full h-full max-h-[459px] object-cover"
+              />
+              <div class="bg-white py-8 text-center">
+                <h3
+                  class="font-extrabold text-2xl xl:text-[30px] text-dark-brown"
+                >
+                  Labeled Baskets
+                </h3>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div
+              class="reveal delay-200 flex flex-col rounded-[20px] overflow-hidden bg-white shadow-xl hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/towel.png"
+                class="w-full h-full max-h-[459px] object-cover"
+              />
+              <div class="bg-white py-8 text-center">
+                <h3
+                  class="font-extrabold text-2xl xl:text-[30px] text-dark-brown"
+                >
+                  Drawer Dividers
+                </h3>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div
+              class="reveal delay-300 flex flex-col rounded-[20px] overflow-hidden bg-white shadow-xl hover:-translate-y-2 transition-transform duration-300"
+            >
+              <img
+                src="./assets/rack.png"
+                class="w-full h-full max-h-[459px] object-cover"
+              />
+              <div class="bg-white py-8 text-center">
+                <h3
+                  class="font-extrabold text-2xl xl:text-[30px] text-dark-brown"
+                >
+                  Night-Time Basket
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="max-w-[60%] h-1.5 bg-white mt-[90px] mx-auto"></div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: FOOTER CTA -->
+      <section class="bg-white py-16 px-4 md:py-24 text-center">
+        <div class="reveal mx-auto w-full">
+          <h2
+            class="!leading-normal font-extrabold text-3xl md:text-4xl xl:text-[50px] text-dark-brown mb-6"
+          >
+            Create the Perfect
+            <span class="text-[#D87A4A]">Little World</span> for Your Newborn
+          </h2>
+          <p
+            class="font-normal text-lg xl:text-[30px] text-text-grey mx-auto max-w-4xl leading-normal"
+          >
+            From essential safety tips to cozy decor ideas, we’ll help you plan
+            a soothing and beautiful nursery for your newborn
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Animation Script -->
+    <script>
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              // Stop observing once animated
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.1, // Trigger when 10% visible
+          rootMargin: "0px 0px -50px 0px",
+        }
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // InterACTIVE
+
+      const checkboxes = document.querySelectorAll(".itemCheckbox");
+      const scoreEl = document.getElementById("score");
+      const messageEl = document.getElementById("message");
+      const selectedItemsEl = document.getElementById("selectedItems");
+      const checkScoreBtn = document.getElementById("checkScoreBtn");
+
+      let totalScore = 0;
+
+      // Update only score message
+      function updateMessage(score) {
+        if (score >= 50) {
+          messageEl.textContent =
+            "Excellent! Your bedroom setup is safe & comfortable.";
+        } else if (score >= 30) {
+          messageEl.textContent = "Good! A few improvements can make it safer.";
+        } else {
+          messageEl.textContent = "Needs improvement. Remove unsafe items.";
+        }
+      }
+
+      // Render selected items on checkbox click
+      function renderSelectedItems() {
+        selectedItemsEl.innerHTML = "";
+
+        checkboxes.forEach((cb) => {
+          if (cb.checked) {
+            const li = document.createElement("li");
+            li.className =
+              "flex justify-between items-center bg-gray-100 px-4 py-2 rounded";
+
+            li.innerHTML = `
+        <span>${cb.dataset.label}</span>
+        <button class="font-bold text-lg">✕</button>
+      `;
+
+            li.querySelector("button").addEventListener("click", () => {
+              cb.checked = false;
+              renderSelectedItems(); // immediately remove
+            });
+
+            selectedItemsEl.appendChild(li);
+          }
+        });
+      }
+
+      // Calculate score (only when button clicked)
+      function calculateScore() {
+        totalScore = 0;
+        checkboxes.forEach((cb) => {
+          if (cb.checked) {
+            totalScore += Number(cb.dataset.score);
+          }
+        });
+
+        scoreEl.textContent = totalScore;
+        updateMessage(totalScore);
+      }
+
+      // Checkbox click → update selected items immediately
+      checkboxes.forEach((cb) => {
+        cb.addEventListener("change", renderSelectedItems);
+      });
+
+      // Button click → calculate score
+      checkScoreBtn.addEventListener("click", calculateScore);
+    </script>
+  </body>
+</html>

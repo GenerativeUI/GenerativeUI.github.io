@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Visual History of the Atomic Bomb</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Leaflet -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <!-- IMPORTANT: no defer -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "accent-gold": "#D9A441",
+              "beige-bg": "#D6D0C2",
+              "text-grey": "#6F6A6A",
+              "text-light-grey": "#CFCECD",
+              "dark-section": "#333333",
+            },
+            fontFamily: {
+              serif: ["Lora", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            backgroundImage: {
+              "hero-pattern": "url('./assets/hero-bg.avif')",
+            },
+            screens: {
+              xs: "475px",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              fadeInUp: "fadeInUp 0.8s ease-out forwards",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* --- REUSABLE ANIMATION CLASSES --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.active-reveal {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .delay-100 {
+        transition-delay: 0.1s;
+      }
+      .delay-200 {
+        transition-delay: 0.2s;
+      }
+      .delay-300 {
+        transition-delay: 0.3s;
+      }
+
+      /* Timeline Tabs Styling */
+      .timeline-tab {
+        border-bottom: 2px solid #d1d5db;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .timeline-tab span {
+        color: #7a7d82;
+        transition: all 0.3s ease;
+      }
+      .timeline-tab.active-tab {
+        border-color: #000000;
+      }
+      .timeline-tab.active-tab span {
+        color: #d9a441;
+        transform: translateX(10px);
+      }
+
+      /* =========================
+         Impact Perspective (Map)
+         ========================= */
+      .pill {
+        background: #d9a441;
+        color: white;
+        font-weight: 700; /* ✅ Inter bold style like other sections */
+        padding: 0.9rem 1.35rem;
+        border-radius: 9999px;
+        transition: transform 0.15s ease, background 0.2s ease,
+          box-shadow 0.2s ease, opacity 0.2s ease;
+        font-family: "Inter", sans-serif; /* ✅ ensure same */
+      }
+      .pill:hover {
+        background: #b88a34;
+        transform: translateY(-1px);
+      }
+      .pill.is-active {
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+        transform: translateY(-1px);
+      }
+
+      .map {
+        width: 100%;
+        height: 100%;
+        min-height: 460px;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+      @media (min-width: 1024px) {
+        .map {
+          min-height: 560px;
+        }
+      }
+
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        display: inline-block;
+        border: 2px solid #000;
+      }
+      .dot-yellow {
+        background: #facc15;
+      }
+      .dot-orange {
+        background: #fb923c;
+      }
+      .dot-red {
+        background: #ef4444;
+      }
+
+      .leaflet-tile {
+        filter: grayscale(1) saturate(0);
+      }
+
+      .impact-card {
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(6px);
+      }
+    </style>
+  </head>
+
+  <body
+    class="antialiased bg-white selection:bg-accent-gold selection:text-white"
+  >
+    <!-- Wrapper -->
+    <div
+      class="w-full border-white mx-auto relative shadow-2xl overflow-hidden"
+    >
+      <!-- SECTION 1: HERO -->
+      <header
+        class="relative w-full h-[600px] md:h-[800px] lg:h-screen flex items-center justify-center text-center px-4 md:px-8"
+      >
+        <div
+          class="absolute inset-0 bg-hero-pattern bg-cover bg-center z-0"
+        ></div>
+        <div class="absolute inset-0 bg-black/70 z-10"></div>
+
+        <div
+          class="relative z-20 flex flex-col items-center gap-6 md:gap-8 mx-auto mt-0 md:mt-[-50px]"
+        >
+          <div
+            class="reveal border-2 md:border-[3px] border-white rounded-full px-6 py-2 md:px-9 md:py-4 mb-2 md:mb-4 backdrop-blur-sm"
+          >
+            <span
+              class="font-serif font-semibold text-lg md:text-2xl xl:text-[30px] text-white tracking-wide"
+            >
+              Atomic Bomb
+            </span>
+          </div>
+
+          <h1
+            class="reveal delay-100 font-serif font-bold text-3xl xs:text-4xl md:text-5xl xl:text-[64px] lg:leading-[82px] text-white"
+          >
+            A Visual History of the Atomic Bomb
+          </h1>
+
+          <p
+            class="reveal delay-200 font-sans font-normal text-base md:text-xl xl:text-[25px] lg:leading-[35px] text-gray-200 max-w-xs md:max-w-2xl lg:max-w-[893px]"
+          >
+            An educational, non-graphic exploration of the scientific,
+            political, and cultural journey of the atomic age.
+          </p>
+
+          <a
+            href="#origins"
+            class="reveal delay-300 group mt-4 flex items-center gap-2 border border-white px-8 py-3 rounded-full text-white font-sans text-lg hover:bg-white hover:text-black transition-all duration-300"
+          >
+            Start Journey
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5 group-hover:translate-y-1 transition-transform"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </a>
+        </div>
+      </header>
+
+      <!-- SECTION 2: ORIGINS -->
+      <section
+        id="origins"
+        class="relative bg-beige-bg w-full py-16 px-4 md:py-24 md:px-12 lg:py-32 lg:px-24 overflow-hidden"
+      >
+        <div
+          class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+        >
+          <div
+            class="reveal relative z-20 text-center lg:text-left order-2 lg:order-1"
+          >
+            <span
+              class="block font-serif font-semibold text-xl md:text-2xl xl:text-[30px] text-accent-gold mb-2 md:mb-4"
+            >
+              Origins: From Fission to Weapon
+            </span>
+            <h2
+              class="font-serif font-bold text-2xl md:text-4xl xl:text-[50px] lg:leading-[64px] text-black mb-6 md:mb-8"
+            >
+              How Nuclear Fission Gave Birth to the Atomic Age
+            </h2>
+
+            <div
+              class="font-sans font-normal text-base md:text-lg xl:text-[25px] lg:leading-[35px] text-text-grey space-y-6 md:space-y-8"
+            >
+              <p>
+                In <strong>1938</strong>, scientists in Germany discovered
+                nuclear fission — the process by which the nucleus of a heavy
+                atom splits into lighter nuclei, releasing tremendous energy.
+              </p>
+              <p>
+                This breakthrough transformed atomic theory from pure science
+                into a real possibility for both energy and weapons. The
+                discovery opened a new chapter for humanity — one defined by
+                power unlike anything before.
+              </p>
+            </div>
+
+            <div
+              class="max-w-[80%] h-0.5 bg-black mt-[60px] lg:mt-[90px] mx-auto lg:mx-0"
+            ></div>
+          </div>
+
+          <div
+            class="reveal delay-200 relative w-full flex items-center justify-center order-1 lg:order-2"
+          >
+            <img
+              src="./assets/atomic-nuclear.avif"
+              alt="Atom"
+              class="max-h-[594px] transition-transform duration-700 hover:scale-105 hover:rotate-3"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: TIMELINE -->
+      <section
+        class="relative bg-white w-full py-16 px-4 md:py-20 md:px-12 lg:py-26 lg:px-24"
+      >
+        <div class="reveal text-center mb-12 md:mb-24">
+          <span
+            class="block font-serif font-semibold text-xl md:text-2xl xl:text-[30px] text-accent-gold mb-2"
+          >
+            Key Events in Atomic History
+          </span>
+          <h2
+            class="font-serif font-bold text-2xl md:text-4xl xl:text-[50px] lg:leading-[64px] text-black"
+          >
+            Timeline — From Discovery to<br class="hidden md:block" />
+            Global Proliferation
+          </h2>
+        </div>
+
+        <div
+          class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16"
+        >
+          <div class="reveal delay-100 w-full lg:w-1/3 flex flex-col">
+            <div
+              class="timeline-tab border-b py-3 lg:py-7 active-tab"
+              data-tab="0"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >1938</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="1"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >Dec 28, 1942</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="2"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >July 16, 1945</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="3"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >Aug 6, 1945</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="4"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >Aug 9, 1945</span
+              >
+            </div>
+            <div
+              class="timeline-tab border-b py-3 lg:py-4 mt-2 lg:mt-6"
+              data-tab="5"
+            >
+              <span
+                class="font-sans font-bold text-2xl md:text-3xl xl:text-[40px] block"
+                >Late 1940s</span
+              >
+            </div>
+          </div>
+
+          <div class="reveal delay-200 w-full lg:w-2/3 lg:pl-16 pt-0 lg:pt-4">
+            <div
+              id="timelineContent"
+              class="transition-opacity duration-500 opacity-100"
+            >
+              <h3
+                id="timelineTitle"
+                class="font-serif font-bold text-2xl md:text-3xl xl:text-[40px] text-black mb-4 lg:mb-6"
+              >
+                1938 — Discovery of Nuclear Fission:
+              </h3>
+              <p
+                id="timelineDesc"
+                class="font-sans text-base md:text-lg xl:text-[25px] lg:leading-[35px] text-text-grey mb-6 lg:mb-12"
+              >
+                The discovery that the atomic nucleus can split, releasing vast
+                energy, laid the foundational science for nuclear weapons.
+              </p>
+              <div class="overflow-hidden rounded-sm">
+                <img
+                  id="timelineImage"
+                  src="./assets/lab.avif"
+                  alt="Laboratory"
+                  class="w-full h-full max-h-[515px] object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ✅ Impact Perspective (Fonts FIXED: uses same serif/sans styles as rest) -->
+      <section class="bg-beige-bg w-full py-14 md:py-20 px-4 md:px-10">
+        <div class="max-w-[1200px] mx-auto">
+          <!-- Title uses SERIF like other headings -->
+          <h1
+            class="font-serif text-4xl md:text-5xl font-extrabold text-black mb-8 md:mb-10"
+          >
+            Impact Perspective
+          </h1>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <!-- Left panel -->
+            <section class="impact-card p-6 md:p-7 flex flex-col font-sans">
+              <!-- buttons -->
+              <div class="flex gap-4 flex-wrap mb-6">
+                <button id="btn1kt" class="pill" type="button">
+                  1 kiloton
+                </button>
+                <button id="btn20kt" class="pill is-active" type="button">
+                  20 kilotons
+                </button>
+                <button id="btn1mt" class="pill" type="button">
+                  1 megaton
+                </button>
+                <button id="btn50mt" class="pill" type="button">
+                  50 megatons
+                </button>
+              </div>
+
+              <!-- selected -->
+              <div class="mb-6">
+                <div class="font-bold text-black text-lg">Selected</div>
+                <div id="scenarioLabel" class="text-black text-lg">
+                  20 kilotons
+                </div>
+
+                <div class="text-black/80 mt-2">
+                  Largest radius:
+                  <span id="largestRadiusLabel" class="font-semibold"></span>
+                </div>
+              </div>
+
+              <!-- legend -->
+              <div class="bg-black/10 rounded-2xl p-5">
+                <div class="font-bold text-black text-xl mb-4">Impact Area</div>
+
+                <ul class="space-y-3 text-black">
+                  <li class="flex items-center justify-between gap-6">
+                    <span class="flex items-center gap-3">
+                      <span class="dot dot-red"></span>
+                      <span class="font-medium">Total Destruction</span>
+                    </span>
+                    <span id="legendTotal" class="font-semibold">—</span>
+                  </li>
+
+                  <li class="flex items-center justify-between gap-6">
+                    <span class="flex items-center gap-3">
+                      <span class="dot dot-orange"></span>
+                      <span class="font-medium">Structural Damage</span>
+                    </span>
+                    <span id="legendDamage" class="font-semibold">—</span>
+                  </li>
+
+                  <li class="flex items-center justify-between gap-6">
+                    <span class="flex items-center gap-3">
+                      <span class="dot dot-yellow"></span>
+                      <span class="font-medium">Minor Shockwave</span>
+                    </span>
+                    <span id="legendMinor" class="font-semibold">—</span>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Right panel -->
+            <section class="h-full">
+              <div id="impactMap" class="map shadow-xl"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: TRINITY TEST -->
+      <section
+        class="relative bg-dark-section w-full flex flex-col lg:flex-row overflow-hidden"
+      >
+        <div class="reveal lg:w-[45%]">
+          <img
+            src="./assets/blast.avif"
+            alt="Trinity Test Explosion"
+            class="w-full h-full object-cover max-h-[814px] hover:sepia transition duration-700"
+          />
+        </div>
+
+        <div
+          class="w-full lg:w-[55%] flex flex-col justify-center px-6 py-12 md:px-12 md:py-16 lg:px-24 lg:py-24"
+        >
+          <div class="max-w-[902px]">
+            <span
+              class="reveal delay-100 block font-serif font-semibold text-xl md:text-2xl xl:text-[30px] text-accent-gold mb-3 md:mb-4"
+            >
+              The First Atomic Test: Trinity (1945)
+            </span>
+            <h2
+              class="reveal delay-200 font-serif font-bold text-2xl md:text-4xl xl:text-[50px] lg:leading-[64px] text-white mb-6 md:mb-8 pb-6 md:pb-8"
+            >
+              The First Detonation in Human History
+            </h2>
+
+            <p
+              class="reveal delay-300 font-sans font-normal text-base md:text-lg xl:text-[25px] lg:leading-[35px] text-white/90 text-left space-y-4"
+            >
+              <span class="block mb-4"
+                >On <strong>July 16, 1945</strong>, in the New Mexico desert,
+                the United States conducted the world’s first atomic bomb
+                test.</span
+              >
+            </p>
+
+            <div
+              class="reveal delay-300 hidden lg:block w-full h-px bg-white mt-8 opacity-50"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: HIROSHIMA & NAGASAKI -->
+      <section
+        class="relative bg-white w-full py-8 px-4 md:py-16 md:px-12 lg:py-20 lg:px-24"
+      >
+        <div class="reveal text-center mx-auto mb-12 md:mb-20">
+          <span
+            class="block font-serif font-semibold text-xl md:text-2xl xl:text-[30px] text-accent-gold mb-2"
+          >
+            Hiroshima & Nagasaki
+          </span>
+          <h2
+            class="font-serif font-bold text-2xl md:text-4xl xl:text-[50px] lg:leading-[64px] text-black mb-4 md:mb-6"
+          >
+            The First Use of Atomic Bombs in War
+          </h2>
+        </div>
+
+        <div
+          class="max-w-[1600px] mx-auto relative flex md:flex-row flex-col justify-between gap-5 md:gap-0"
+        >
+          <div
+            class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-black transform -translate-x-1/2 h-[80%] my-auto"
+          ></div>
+
+          <div
+            class="reveal delay-100 flex flex-col items-center text-center px-2 lg:px-4 w-full md:w-1/2"
+          >
+            <h3
+              class="font-serif font-bold text-2xl md:text-3xl xl:text-[40px] text-black mb-3 md:mb-4"
+            >
+              Hiroshima (Little Boy)
+            </h3>
+            <div class="overflow-hidden w-full">
+              <img
+                src="./assets/hiroshima-little-boy.png"
+                alt="Little Boy"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-1000 ease-out max-h-[486px]"
+              />
+            </div>
+          </div>
+
+          <div
+            class="reveal delay-200 flex flex-col items-center text-center px-2 lg:px-4 w-full md:w-1/2"
+          >
+            <div class="md:order-2">
+              <h3
+                class="font-serif font-bold text-2xl md:text-3xl xl:text-[40px] text-black mt-3 md:mt-4"
+              >
+                Nagasaki (Fat Man)
+              </h3>
+            </div>
+            <div class="overflow-hidden w-full order-2 md:order-1 mt-4 md:mt-0">
+              <img
+                src="./assets/nagasaki-fat-man.jpg"
+                alt="Fat Man"
+                class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-110 transition-all duration-1000 ease-out max-h-[486px]"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="!bg-[#333333] w-full py-16 px-4 md:py-20 text-center">
+        <div class="reveal max-w-5xl mx-auto">
+          <h2
+            class="font-serif font-bold text-3xl md:text-4xl xl:text-[48px] !mb-8 !text-white"
+          >
+            The Science That Shapes Our World
+          </h2>
+          <p
+            class="font-serif text-white text-base text-[18px] xl:text-[22px] !leading-normal"
+          >
+            From early alchemy to modern laboratories, chemistry continues to
+            change how we understand everything around us.
+          </p>
+        </div>
+        <div class="max-w-[40%] h-1 bg-white mt-[40px] mx-auto"></div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // TIMELINE DATA
+      const timelineData = [
+        {
+          title: "1938 — Discovery of Nuclear Fission:",
+          desc: "The discovery that the atomic nucleus can split, releasing vast energy, laid the foundational science for nuclear weapons.",
+          img: "./assets/lab.avif",
+        },
+        {
+          title: "Dec 28,1942: Early Nuclear Chain Reaction",
+          desc: " The first controlled nuclear chain reaction occurs in Chicago, proving nuclear energy could be harnessed.",
+          img: "./assets/1942.png",
+        },
+        {
+          title: "July 16, 1945: Trinity Test",
+          desc: "The first atomic bomb explodes in New Mexico, marking the dawn of the nuclear age.",
+          img: "./assets/trinity.png",
+        },
+        {
+          title: "Aug 6, 1945: Hiroshima",
+          desc: "The first atomic bomb used in war is dropped on Hiroshima, Japan, causing massive devastation.",
+          img: "./assets/hiroshima.webp",
+        },
+        {
+          title: "Aug 9, 1945: Nagasaki",
+          desc: "A second atomic bomb is dropped on Nagasaki, leading to Japan’s surrender.",
+          img: "./assets/1945.png",
+        },
+        {
+          title: "Late 1940s: Early Nuclear Arms Race",
+          desc: "Post-war, countries develop nuclear weapons. The USSR tests its first bomb, starting the Cold War arms race.",
+          img: "./assets/ussr-test.png",
+        },
+      ];
+
+      const tabs = document.querySelectorAll(".timeline-tab");
+      const titleEl = document.getElementById("timelineTitle");
+      const descEl = document.getElementById("timelineDesc");
+      const imgEl = document.getElementById("timelineImage");
+      const contentContainer = document.getElementById("timelineContent");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const index = tab.getAttribute("data-tab");
+          tabs.forEach((t) => t.classList.remove("active-tab"));
+          tab.classList.add("active-tab");
+
+          contentContainer.style.opacity = "0";
+          contentContainer.style.transform = "translateY(10px)";
+
+          setTimeout(() => {
+            titleEl.textContent = timelineData[index].title;
+            descEl.textContent = timelineData[index].desc;
+            imgEl.src = timelineData[index].img;
+
+            contentContainer.style.opacity = "1";
+            contentContainer.style.transform = "translateY(0)";
+          }, 300);
+        });
+      });
+
+      // SCROLL REVEAL
+      const revealElements = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active-reveal");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { root: null, threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      );
+      revealElements.forEach((el) => revealObserver.observe(el));
+    </script>
+
+    <!-- Impact Map Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const MI_TO_M = 1609.344;
+        const NYC = { lat: 40.7128, lng: -74.006 };
+
+        const presets = {
+          "1 kiloton": { minor: 1.39, damage: 0.46, total: 0.23 },
+          "20 kilotons": { minor: 3.78, damage: 1.26, total: 0.63 },
+          "1 megaton": { minor: 13.92, damage: 4.64, total: 2.32 },
+          "50 megatons": { minor: 51.3, damage: 17.1, total: 8.55 },
+        };
+
+        const els = {
+          map: document.getElementById("impactMap"),
+          scenario: document.getElementById("scenarioLabel"),
+          largest: document.getElementById("largestRadiusLabel"),
+          lm: document.getElementById("legendMinor"),
+          ld: document.getElementById("legendDamage"),
+          lt: document.getElementById("legendTotal"),
+          btn1kt: document.getElementById("btn1kt"),
+          btn20kt: document.getElementById("btn20kt"),
+          btn1mt: document.getElementById("btn1mt"),
+          btn50mt: document.getElementById("btn50mt"),
+        };
+
+        if (!els.map || typeof L === "undefined") return;
+
+        const map = L.map(els.map, { zoomControl: true }).setView(
+          [NYC.lat, NYC.lng],
+          10
+        );
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "",
+        }).addTo(map);
+
+        const marker = L.marker([NYC.lat, NYC.lng], { draggable: true }).addTo(
+          map
+        );
+
+        let circles = [];
+        let current = "20 kilotons";
+
+        function setActive(btn) {
+          [els.btn1kt, els.btn20kt, els.btn1mt, els.btn50mt].forEach((b) =>
+            b.classList.remove("is-active")
+          );
+          btn.classList.add("is-active");
+        }
+
+        function draw(key, shouldFit = true) {
+          const p = presets[key];
+
+          els.scenario.textContent = key;
+          els.largest.textContent =
+            Math.max(p.minor, p.damage, p.total).toFixed(2) + " mi";
+
+          els.lt.textContent = p.total.toFixed(2) + " mi";
+          els.ld.textContent = p.damage.toFixed(2) + " mi";
+          els.lm.textContent = p.minor.toFixed(2) + " mi";
+
+          circles.forEach((c) => map.removeLayer(c));
+          circles = [];
+
+          const center = marker.getLatLng();
+
+          const layers = [
+            { color: "#facc15", mi: p.minor, fillOpacity: 0.22, weight: 6 },
+            { color: "#fb923c", mi: p.damage, fillOpacity: 0.22, weight: 6 },
+            { color: "#ef4444", mi: p.total, fillOpacity: 0.22, weight: 6 },
+          ];
+
+          layers.forEach((layer) => {
+            circles.push(
+              L.circle(center, {
+                radius: layer.mi * MI_TO_M,
+                color: layer.color,
+                fillColor: layer.color,
+                fillOpacity: layer.fillOpacity,
+                weight: layer.weight,
+              }).addTo(map)
+            );
+          });
+
+          if (shouldFit && circles.length) {
+            const groupBounds = L.featureGroup(circles).getBounds();
+            map.fitBounds(groupBounds, { padding: [30, 30] });
+          }
+        }
+
+        marker.on("dragend", () => draw(current, false));
+        map.on("click", (e) => {
+          marker.setLatLng(e.latlng);
+          draw(current, false);
+        });
+
+        els.btn1kt.onclick = () => {
+          current = "1 kiloton";
+          setActive(els.btn1kt);
+          draw(current);
+        };
+        els.btn20kt.onclick = () => {
+          current = "20 kilotons";
+          setActive(els.btn20kt);
+          draw(current);
+        };
+        els.btn1mt.onclick = () => {
+          current = "1 megaton";
+          setActive(els.btn1mt);
+          draw(current);
+        };
+        els.btn50mt.onclick = () => {
+          current = "50 megatons";
+          setActive(els.btn50mt);
+          draw(current);
+        };
+
+        draw(current);
+
+        setTimeout(() => map.invalidateSize(), 60);
+        window.addEventListener("resize", () => map.invalidateSize());
+      });
+    </script>
+  </body>
+</html>

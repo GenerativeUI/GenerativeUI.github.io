@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fall Fashion Trends 2025 | Your Autumn Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mocha: #6B4423;
+      --powder-pink: #E8D5D5;
+      --aubergine: #4A1942;
+      --currant: #722F37;
+      --amber: #D4A574;
+      --forest: #2D5016;
+      --oxblood: #4A0E0E;
+      --cream: #F5F0E8;
+      --charcoal: #2C2C2C;
+      --mint: #98D4BB;
+      --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: 
+        linear-gradient(135deg, rgba(107, 68, 35, 0.4) 0%, rgba(74, 25, 66, 0.3) 50%, rgba(232, 213, 213, 0.35) 100%),
+        url("images/hero-background.png") center/cover no-repeat;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236B4423' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      color: var(--aubergine);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      animation: fadeUp 1s ease-out;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--mocha);
+      font-weight: 500;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s ease-out 0.2s both;
+    }
+
+    .hero .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--mocha);
+      font-size: 0.875rem;
+      animation: bounce 2s infinite;
+    }
+
+    .hero .scroll-hint svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* Section Styles */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--aubergine);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      color: var(--mocha);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Color Palette Explorer */
+    .color-explorer {
+      background: linear-gradient(180deg, var(--cream) 0%, #EDE6DC 100%);
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .color-swatch {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .color-swatch.active {
+      outline: 3px solid var(--charcoal);
+      outline-offset: 3px;
+    }
+
+    .color-swatch .name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .color-swatch .hex {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.9);
+      font-family: monospace;
+    }
+
+    /* Trend Cards */
+    .trends-section {
+      background: var(--cream);
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .trend-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .trend-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+
+    .trend-card-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .trend-card-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    }
+
+    .trend-card .tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--aubergine);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .trend-card-content {
+      padding: 1.5rem;
+    }
+
+    .trend-card h3 {
+      font-size: 1.25rem;
+      color: var(--aubergine);
+      margin-bottom: 0.5rem;
+    }
+
+    .trend-card p {
+      color: var(--mocha);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Accessories & Fabrics */
+    .accessories-section {
+      background: linear-gradient(180deg, var(--cream) 0%, #EDE6DC 100%);
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: var(--transition);
+      border-left: 4px solid var(--aubergine);
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+
+    .info-card h4 {
+      font-size: 1.1rem;
+      color: var(--aubergine);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .info-card p {
+      color: var(--mocha);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Outfit Builder */
+    .outfit-builder {
+      background: linear-gradient(180deg, #EDE6DC 0%, var(--cream) 100%);
+    }
+
+    .builder-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .builder-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .builder-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .layer-group h4 {
+      font-size: 1rem;
+      color: var(--aubergine);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .layer-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .layer-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid rgba(107, 68, 35, 0.3);
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: var(--transition);
+      color: black;
+    }
+
+    .layer-btn:hover {
+      border-color: var(--mocha);
+      background: var(--powder-pink);
+    }
+
+    .layer-btn.selected {
+      background: var(--aubergine);
+      color: white;
+      border-color: var(--aubergine);
+    }
+
+    .outfit-preview {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0, 0.08);
+      min-height: 280px;
+    }
+
+    .outfit-preview h4 {
+      font-size: 1.1rem;
+      color: var(--aubergine);
+      margin-bottom: 1rem;
+    }
+
+    .outfit-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .outfit-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: var(--cream);
+      border-radius: 12px;
+      font-size: 0.95rem;
+    }
+
+    .outfit-item .layer-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .outfit-tips {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--powder-pink), rgba(232, 213, 213, 0.5));
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: var(--aubergine);
+    }
+
+    .outfit-tips strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Style Quiz */
+    .quiz-section {
+      background: var(--cream);
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.08);
+    }
+
+    .quiz-progress {
+      height: 6px;
+      background: rgba(107, 68, 35, 0.2);
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .quiz-progress-bar {
+      height: 100%;
+      background: var(--aubergine);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-question {
+      display: none;
+    }
+
+    .quiz-question.active {
+      display: block;
+      animation: fadeUp 0.4s ease-out;
+    }
+
+    .quiz-question h3 {
+      font-size: 1.25rem;
+      color: var(--aubergine);
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quiz-option {
+      padding: 1rem 1.25rem;
+      border: 2px solid rgba(107, 68, 35, 0.2);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--mocha);
+      background: var(--cream);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--aubergine);
+      background: var(--cream);
+    }
+
+    .quiz-result {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .quiz-result.visible {
+      display: block;
+      animation: fadeUp 0.5s ease-out;
+    }
+
+    .quiz-result .result-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-result h3 {
+      font-size: 1.5rem;
+      color: var(--aubergine);
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-result p {
+      color: var(--mocha);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .quiz-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .quiz-btn.secondary {
+      background: transparent;
+      color: var(--mocha);
+    }
+
+    .quiz-btn.primary {
+      background: var(--aubergine);
+      color: white;
+    }
+
+    .quiz-btn:hover {
+      opacity: 0.9;
+    }
+
+    .quiz-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Lookbook Gallery */
+    .lookbook-section {
+      background: linear-gradient(180deg, var(--cream) 0%, #EDE6DC 100%);
+    }
+
+    .gallery-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.25rem;
+      border: 2px solid rgba(107, 68, 35, 0.3);
+      background: white;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--aubergine);
+      color: white;
+      border-color: var(--aubergine);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .gallery-item {
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Modal / Dialog */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-dialog {
+      background: white;
+      border-radius: 20px;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.25);
+      transform: scale(0.95);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.open .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(107, 68, 35, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .modal-header h3 {
+      font-size: 1.5rem;
+      color: var(--aubergine);
+      margin: 0;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--cream);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.25rem;
+      color: var(--mocha);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--powder-pink);
+    }
+
+    .modal-body {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .modal-body p {
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-body h4 {
+      font-size: 1rem;
+      color: var(--aubergine);
+      margin: 1.25rem 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .modal-body ul {
+      margin: 0 0 1rem 1.25rem;
+      color: var(--mocha);
+      line-height: 1.7;
+    }
+
+    .info-card {
+      cursor: pointer;
+    }
+
+    .trend-card .read-more,
+    .info-card .read-more {
+      font-size: 0.85rem;
+      color: var(--aubergine);
+      font-weight: 600;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Fall Fashion Trends</h1>
+    <p class="subtitle">Your interactive guide to autumn style 2025</p>
+    <div class="scroll-hint">
+      <span>Explore</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Color Palette Explorer -->
+  <section class="color-explorer" id="colors">
+    <div class="section-header">
+      <h2>Fall 2025 Color Palette</h2>
+      <p>Click any color to open a detailed guide with pairing suggestions and styling tips. Primary palette: Mocha Brown (Color of the Year), jewel tones, and mint. Decadent Harvest: Chili Flake, Dark Chocolate, Spiced Orange, Grape Purple.</p>
+    </div>
+    <div class="color-grid" id="colorGrid"></div>
+  </section>
+
+  <!-- Trend Cards -->
+  <section class="trends-section" id="trends">
+    <div class="section-header">
+      <h2>Key Trends to Know</h2>
+      <p>From layered bohemian silhouettes to modern prep—discover the looks defining fall 2025. Click any card to open a detailed guide with runway insights and styling ideas.</p>
+    </div>
+    <div class="trend-grid" id="trendGrid"></div>
+  </section>
+
+  <!-- Accessories & Fabrics -->
+  <section class="accessories-section" id="accessories">
+    <div class="section-header">
+      <h2>Accessories & Key Fabrics</h2>
+      <p>Fall 2025's must-have accessories and the fabrics that define the season. Click any card for the full breakdown.</p>
+    </div>
+    <div class="info-cards" id="infoCards"></div>
+  </section>
+
+  <!-- Outfit Builder -->
+  <section class="outfit-builder" id="builder">
+    <div class="section-header">
+      <h2>Outfit Layering Builder</h2>
+      <p>Build your perfect fall look. Select base, mid, and outer layers—we'll show you styling tips. Key principles: use lightweight bases to avoid bulk, vary proportions and hemlines, mix textures (denim + silk + corduroy), and add belts for shape.</p>
+    </div>
+    <div class="builder-container">
+      <div class="builder-layers">
+        <div class="layer-group">
+          <h4>Base Layer</h4>
+          <div class="layer-options" id="baseLayer"></div>
+        </div>
+        <div class="layer-group">
+          <h4>Mid Layer</h4>
+          <div class="layer-options" id="midLayer"></div>
+        </div>
+        <div class="layer-group">
+          <h4>Outer Layer</h4>
+          <div class="layer-options" id="outerLayer"></div>
+        </div>
+      </div>
+      <div class="outfit-preview">
+        <h4>Your Outfit</h4>
+        <div class="outfit-stack" id="outfitStack"></div>
+        <div class="outfit-tips" id="outfitTips"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Style Quiz -->
+  <section class="quiz-section" id="quiz">
+    <div class="section-header">
+      <h2>Find Your Fall Style</h2>
+      <p>Take a quick quiz to discover which fall 2025 trend best matches your personality.</p>
+    </div>
+    <div class="quiz-container">
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar" id="quizProgress" style="width: 0%"></div>
+      </div>
+      <div id="quizQuestions"></div>
+      <div class="quiz-result" id="quizResult"></div>
+    </div>
+  </section>
+
+  <!-- Lookbook Gallery -->
+  <section class="lookbook-section" id="lookbook">
+    <div class="section-header">
+      <h2>Fall Lookbook</h2>
+      <p>Filter by trend to explore curated autumn aesthetics. Click any image for styling tips and details.</p>
+    </div>
+    <div class="gallery-filters" id="galleryFilters"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- Modal Dialog -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">Details</h3>
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // Modal logic - must be defined first
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(title, content) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = content;
+      modalOverlay.classList.add('open');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Color Palette Data - Primary + Decadent Harvest (with modal content)
+    const colors = [
+      { name: 'Mocha Brown', hex: '#6B4423', desc: "Pantone's 2025 Color of the Year.", pairings: ['#F5F0E8', '#E8D5D5', '#4A1942', '#2C2C2C'], modal: "Pantone's 2025 Color of the Year. This rich, nutty brown offers sophistication—perfect for boots, blazers, and handbags. Luxurious in leather and suede. The palette emphasizes 'understated richness' meant for tactile layering and smart outerwear." },
+      { name: 'Powder Pink', hex: '#E8D5D5', desc: 'Soft pastel contrast.', pairings: ['#6B4423', '#4A1942', '#2C2C2C', '#98D4BB'], modal: 'A soft pastel that carries over from recent seasons, offering gentle contrast to deeper autumn shades. Ideal for blouses and accessories. Pairs with mocha, aubergine, and mint for a fresh take on fall.' },
+      { name: 'Aubergine', hex: '#4A1942', desc: 'Sultry plum evolution.', pairings: ['#6B4423', '#F5F0E8', '#E8D5D5', '#722F37'], modal: 'Sultry, opulent evolution of traditional plum. Pairs beautifully with neutrals like black, gray, and brown for evening looks. Seen across runways in dresses, blazers, and outerwear.' },
+      { name: 'Currant Red', hex: '#722F37', desc: 'Moody red with edge.', pairings: ['#2C2C2C', '#6B4423', '#F5F0E8', '#4A1942'], modal: 'A moody upgrade to traditional red with depth and edge. Seen at Tory Burch and Khaite—bold for statement pieces. Currant adds sophistication to coats and knitwear.' },
+      { name: 'Amber', hex: '#D4A574', desc: 'Warm sculptural tone.', pairings: ['#4A1942', '#2C2C2C', '#6B4423', '#E8D5D5'], modal: 'Saturated and warm, appearing in sculptural dresses and tailoring. Adds warmth to any autumn palette. Amber works in both minimal and maximal looks.' },
+      { name: 'Forest Green', hex: '#2D5016', desc: 'Modern prep staple.', pairings: ['#6B4423', '#F5F0E8', '#4A0E0E', '#D4A574'], modal: 'Modern prep staple. Rich and grounding—perfect for oxfords, Mary Janes, and structured pieces. Forest green brings a fresh, classic feel to fall footwear.' },
+      { name: 'Oxblood', hex: '#4A0E0E', desc: 'Classic deep red.', pairings: ['#F5F0E8', '#6B4423', '#2C2C2C', '#E8D5D5'], modal: 'Classic fall deep red. Timeless for shoes, bags, and outerwear. Pairs with cream and gold. Oxblood has perennial appeal in cold-weather dressing.' },
+      { name: 'Mint', hex: '#98D4BB', desc: 'Surprise accent.', pairings: ['#4A1942', '#6B4423', '#2C2C2C', '#E8D5D5'], modal: 'Surprise hit of the season—adds levity to moody palettes. Fresh accent for accessories. Mint cuts through earth tones for unexpected contrast.' },
+      { name: 'Chili Flake', hex: '#8B3A3A', desc: 'Peppery harvest red.', pairings: ['#F5F0E8', '#6B4423', '#2C2C2C', '#D4A574'], modal: 'Warm, peppery red appearing in blouses and parkas. Food-inspired harvest tone with spice and edge. Part of the Decadent Harvest palette from Marie Claire\'s Fall 2025 report.' },
+      { name: 'Dark Chocolate', hex: '#2C1810', desc: 'Indulgent dark brown.', pairings: ['#F5F0E8', '#E8D5D5', '#D4A574', '#6B4423'], modal: 'Rich, indulgent dark brown. The deepest neutral for coats, bags, and boots. Luxurious and grounding. Dark Chocolate is the season\'s boldest neutral.' },
+      { name: 'Spiced Orange', hex: '#D35400', desc: 'Harvest orange.', pairings: ['#2C2C2C', '#6B4423', '#F5F0E8', '#4A1942'], modal: 'Warm harvest-inspired orange. Featured in trench coats and cardigans. Bold and cozy. Spiced Orange brings energy to transitional fall pieces.' },
+      { name: 'Grape Purple', hex: '#5C3A6B', desc: 'Deep purple.', pairings: ['#F5F0E8', '#E8D5D5', '#6B4423', '#2C2C2C'], modal: 'Deep purple seen in pumps and blazers. Bridges aubergine and plum—sophisticated and modern. Grape purple works for both day and evening.' }
+    ];
+
+    // Render Color Grid
+    const colorGrid = document.getElementById('colorGrid');
+
+    colors.forEach((color) => {
+      const swatch = document.createElement('div');
+      swatch.className = 'color-swatch';
+      swatch.style.background = color.hex;
+      swatch.innerHTML = `<span class="name">${color.name}</span><span class="hex">${color.hex}</span>`;
+      swatch.addEventListener('click', () => {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        const modalContent = `
+          <p>${color.modal}</p>
+          <h4>Pairs well with</h4>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem">
+            ${color.pairings.map(p => `<div style="width:40px;height:40px;border-radius:8px;background:${p};border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.15)" title="${p}"></div>`).join('')}
+          </div>
+        `;
+        openModal(color.name + ' (' + color.hex + ')', modalContent);
+      });
+      colorGrid.appendChild(swatch);
+    });
+
+    // Trend Cards Data - with extended modal content
+    const trends = [
+      { tag: 'Silhouette', title: 'Layered Bohemian', short: 'Fur-trimmed jackets, slip dresses, and translucent chiffon create eclectic, personality-driven looks.', img: 'images/trend-layered-bohemian.png', modal: `
+        <p>The runway embraced layered bohemian silhouettes at "delightfully chaotic levels." Runway shows emphasized proportion play through artful stacks—"shirts on shirts! belts on belts! knits on knits!"—with flashes of color against neutral bases.</p>
+        <h4>Key pieces</h4>
+        <ul>
+          <li>Floral kimonos over turtlenecks</li>
+          <li>Bustier tops layered over button-downs</li>
+          <li>Slip dresses under chunky knits</li>
+          <li>Fur-trimmed jackets over flowing fabrics</li>
+          <li>Knit-on-knit with contrasting textures</li>
+        </ul>
+        <h4>Styling tip</h4>
+        <p>Vary hemlines—let cardigans peek from under puffers. Mix plaids, stripes, and florals but stick to a cohesive color family (earth tones) to keep it intentional.</p>
+      ` },
+      { tag: 'Texture', title: 'Faux Fur Revival', short: 'Stoles, coats, and even bra tops—faux fur adds drama and warmth to fall wardrobes.', img: 'images/trend-faux-fur.png', modal: `
+        <p>Faux fur appears in stoles, coats, and unexpected pieces like bra tops. The season balances Gothic/Emo sensibilities with cozy, soft textures—faux fur bridges both worlds.</p>
+        <h4>Where to wear it</h4>
+        <ul>
+          <li>Layer over slip dresses for evening</li>
+          <li>Pair with tailored trousers for contrast</li>
+          <li>Rich browns and creams are the go-to palette</li>
+          <li>Stoles for transitional weather</li>
+        </ul>
+        <h4>Sustainability</h4>
+        <p>High-quality sustainable faux fur options are widely available from major brands. Look for recycled or plant-based alternatives.</p>
+      ` },
+      { tag: 'Pattern', title: 'Pattern Mixing', short: 'Plaids, stripes, and florals worn together—maximalist energy with intentional chaos.', img: 'images/trend-pattern-mixing.png', modal: `
+        <p>Pattern mixing reaches new heights this season: houndstooth with stripes, florals with plaids. Runways showed poplin shirts with Fair Isle knits (sleeves peeking out), tucked under corduroy pants, or as a base for asymmetric bustier tops.</p>
+        <h4>The rule</h4>
+        <p>Vary scale—pair large prints with small. A houndstooth coat over a striped shirt works because the patterns differ in size. Stick to a cohesive color family (e.g., mocha, aubergine, cream) to keep maximalism intentional.</p>
+        <h4>Runway combo</h4>
+        <p>Modern suiting with an oversized houndstooth winter coat is a key transitional look from the fall shows.</p>
+      ` },
+      { tag: 'Footwear', title: 'Modern Prep', short: 'Oxfords and Mary Janes in forest green, oxblood, and rich browns—classic with a twist.', img: 'images/trend-modern-prep.png', modal: `
+        <p>Preppy footwear gets a bold color upgrade. Over-the-knee boots appeared at Fendi, Balmain, and Burberry in brown ostrich leather, slouchy wedges, and equestrian-inspired riding boots.</p>
+        <h4>Key styles</h4>
+        <ul>
+          <li>Oxfords and Mary Janes in forest green, oxblood, mocha</li>
+          <li>Shoes with feminine bows, paired with lace tights</li>
+          <li>Lace-up loafers from Victoria Beckham and McQueen</li>
+          <li>Luxury sneakers (Prada distressed leather, Miu Miu retro trainers)</li>
+        </ul>
+        <h4>How to wear</h4>
+        <p>Pair with knee-high socks, wide-leg trousers, or midi skirts. The look is polished yet playful—classical femininity with a modern edge.</p>
+      ` },
+      { tag: 'Comfort', title: 'Dramatic Comfort', short: 'Luxurious robes as coats, slip dresses for evening—elevated loungewear.', img: 'images/trend-dramatic-comfort.png', modal: `
+        <p>Comfort wear goes fancy. The season balances control with comfort—luxurious robes styled as coats, slip dresses for evening. Silky fabrics, plush textures, and relaxed silhouettes that still feel dressed up.</p>
+        <h4>Key looks</h4>
+        <ul>
+          <li>Robe worn as outer layer over tailored pieces</li>
+          <li>Slip dress over turtleneck for warmth</li>
+          <li>Crewneck sweater over gauzy dress</li>
+          <li>Mesh dress with sweater and boots</li>
+        </ul>
+        <h4>Transition tip</h4>
+        <p>Layer silky tanks over cream turtlenecks with blanket wraps, or long-sleeved tees beneath short-sleeved blouses for summer-to-fall transition.</p>
+      ` },
+      { tag: 'Tailoring', title: 'Blazer Dresses', short: 'Tailored suiting and blazer dresses offer structure with feminine ease.', img: 'images/trend-blazer-dress.png', modal: `
+        <p>Fall 2025 emphasizes a return to classical femininity with hourglass curves. Blazer dresses and tailored suiting dominate—single-button blazers, belted waistlines, clean lines. At Bally, designer Simone Bellotti created half-open corsets positioned at the hips for a softer take on structure.</p>
+        <h4>Staples from the runway</h4>
+        <ul>
+          <li>Corduroy pants in monochromatic tones</li>
+          <li>Modern prep polos and oversize button-up shirts</li>
+          <li>Peplum shapes and curved silhouettes</li>
+        </ul>
+        <h4>Classic combo</h4>
+        <p>Leather bomber with cashmere sweater and striped poplin shirt—head-to-toe essentials that work for professional and casual settings.</p>
+      ` }
+    ];
+
+    const trendGrid = document.getElementById('trendGrid');
+    trends.forEach(trend => {
+      const card = document.createElement('div');
+      card.className = 'trend-card';
+      card.innerHTML = `
+        <div class="trend-card-image" style="background-image:url('${trend.img}');background-size:cover;background-position:center"></div>
+        <span class="tag">${trend.tag}</span>
+        <div class="trend-card-content">
+          <h3>${trend.title}</h3>
+          <p>${trend.short}</p>
+          <span class="read-more">Click for full guide →</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(trend.title, trend.modal));
+      trendGrid.appendChild(card);
+    });
+
+    // Accessories & Fabrics - with modal content
+    const infoCardsData = [
+      { title: 'Bags', short: 'Archival revival: Chloé Paddington, Coach Twin Pocket, Fendi Spy. East-west silhouettes—long, low, horizontal.', modal: `
+        <p><strong>Archival Revival:</strong> Designers are bringing back beloved bag styles—Chloé's Paddington tote (2005), Coach's Twin Pocket (inspired by 1968), Fendi's Spy bag—all with modern updates.</p>
+        <h4>Silhouette</h4>
+        <p>The dominant shape is long, low, and horizontal—early-2000s aesthetic reimagined with minimal hardware. Soft slouchy shoulder bags and hobos with soft-grain leather offer a relaxed counterpoint.</p>
+        <h4>Personalization</h4>
+        <p>Customizing bags with charms and adornments continues as a key trend. Whimsical shapes—turtles, bottles, apples, spaghetti—reflect the season's emphasis on self-expression.</p>
+      ` },
+      { title: 'Shoes', short: 'Over-the-knee boots (slouchy, riding, ostrich leather). Oxfords & Mary Janes in forest green, oxblood.', modal: `
+        <p><strong>Over-the-Knee Boots</strong> are the standout cold-weather shoe—at Fendi, Balmain, and Burberry in brown ostrich leather, slouchy wedges, and equestrian-inspired riding boots.</p>
+        <h4>Key styles</h4>
+        <ul>
+          <li>Oxfords & Mary Janes in forest green, oxblood, mocha</li>
+          <li>Shoes with decorative bows, worn with lace tights</li>
+          <li>Luxury sneakers: Prada distressed leather, Miu Miu smooth trainers</li>
+          <li>Lace-up loafers from Victoria Beckham and McQueen</li>
+          <li>Knife-edged stilettos (Saint Laurent), gathered satin pumps (Dries Van Noten)</li>
+        </ul>
+      ` },
+      { title: 'Jewelry & Belts', short: 'Statement belts: extra-long floating down legs, corset-style over coats. Eccentric small hats.', modal: `
+        <p><strong>Statement Belts</strong> are styled in unexpected ways—extra-long versions buckled around bodies and left to float down legs, or tight corset-style belts cinching waists over coats and dresses. Belts accentuate the hourglass silhouette.</p>
+        <h4>Eccentric Hats</h4>
+        <p>Small, artistic hats emerged across Giorgio Armani, Loro Piana, Anna Sui, and Moschino—communicating individuality rather than conformity.</p>
+        <h4>Jewelry</h4>
+        <p>Deliberately imperfect baroque pearls and quirky accessories push familiar staples "just left of center."</p>
+      ` },
+      { title: 'Fabrics', short: 'Leather & Suede: buttery texture. Wool: tweed, houndstooth, cashmere. Faux fur, corduroy.', modal: `
+        <p><strong>Leather & Suede:</strong> Fall's unofficial fabric. Buttery suede "pops when the leaves are changing"—appears in jackets, trousers, shoes, and bags. Soft leather in saturated or pastel tones for blouses, blazers, dresses.</p>
+        <h4>Wool</h4>
+        <p>Essential for insulation—tweed, houndstooth, merino wool, cashmere. Lightweight to heavyweight, in neutral fall colors and vibrant hues.</p>
+        <h4>Corduroy</h4>
+        <p>70s revival with soft texture and excellent insulation. Saturated hues align with current fall color trends.</p>
+        <h4>Texture mixing</h4>
+        <p>Chunky knits over silky satin, buttery leather with faux fur. Combine denim, silk, corduroy, and lace for visual depth.</p>
+      ` }
+    ];
+
+    const infoCardsEl = document.getElementById('infoCards');
+    infoCardsData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'info-card';
+      card.innerHTML = `<h4>${item.title}</h4><p>${item.short}</p><span class="read-more">Click for full breakdown →</span>`;
+      card.addEventListener('click', () => openModal(item.title, item.modal));
+      infoCardsEl.appendChild(card);
+    });
+
+    // Outfit Builder Data
+    const layers = {
+      base: [
+        { name: 'Cashmere tee', tip: 'Lightweight thermal base—avoids bulk. Pair with leather bomber + striped poplin shirt.' },
+        { name: 'Thin turtleneck', tip: 'Anchors under low-cut tops. Layer under silky camis or floral kimonos.' },
+        { name: 'Silky cami', tip: 'Peek from under knits for texture contrast. Adds feminine edge.' },
+        { name: 'Button-down shirt', tip: 'Let collar peek from under sweater. Try Fair Isle or bustier on top.' },
+        { name: 'Long-sleeve jersey', tip: 'Sleek base. Use contrasting colors if outer layers are dark.' }
+      ],
+      mid: [
+        { name: 'Chunky knit sweater', tip: 'Layer under jean jackets or puffers. Pair with trench + lace-up loafers.' },
+        { name: 'Fair Isle knit', tip: 'Pair over button-down for preppy vibe. Vary pattern scale.' },
+        { name: 'Turtleneck dress', tip: 'Add cropped sweater on top. Try shearling coat over for drama.' },
+        { name: 'Cardigan', tip: 'Let it peek from under puffer vest for dimension. Play with proportions.' },
+        { name: 'Bustier top', tip: 'Layer over button-down for edge. Add belts for shape.' }
+      ],
+      outer: [
+        { name: 'Trench coat', tip: 'Classic combo: chunky knit + socks + lace-up loafers. Modern suiting underneath.' },
+        { name: 'Leather bomber', tip: 'Pairs with cashmere + striped poplin. Stack over houndstooth for texture mix.' },
+        { name: 'Suede jacket', tip: 'Polished over knits and denim. Mocha or aubergine in buttery finish.' },
+        { name: 'Shearling coat', tip: 'Over turtleneck dress + cropped sweater. Rich browns and creams.' },
+        { name: 'Puffer vest', tip: 'Stack over cardigan for dimension. Longer puffer adds visual interest.' }
+      ]
+    };
+
+    const selectedOutfit = { base: null, mid: null, outer: null };
+
+    function renderLayerOptions(type) {
+      const container = document.getElementById(type + 'Layer');
+      container.innerHTML = '';
+      layers[type].forEach((item, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'layer-btn';
+        btn.textContent = item.name;
+        btn.addEventListener('click', () => {
+          container.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedOutfit[type] = item;
+          updateOutfitPreview();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function updateOutfitPreview() {
+      const stack = document.getElementById('outfitStack');
+      const tips = document.getElementById('outfitTips');
+      const items = [selectedOutfit.base, selectedOutfit.mid, selectedOutfit.outer].filter(Boolean);
+      const colors = ['#6B4423', '#4A1942', '#722F37'];
+
+      if (items.length === 0) {
+        stack.innerHTML = '<p style="color:var(--mocha)">Select layers above to build your outfit.</p>';
+        tips.innerHTML = '';
+        return;
+      }
+
+      stack.innerHTML = items.map((item, i) => `
+        <div class="outfit-item">
+          <span class="layer-dot" style="background:${colors[i]}"></span>
+          ${item.name}
+        </div>
+      `).join('');
+
+      const allTips = items.map(i => i.tip).filter(Boolean);
+      tips.innerHTML = allTips.length ? `<strong>Styling tips:</strong>${allTips.map(t => ` ${t}`).join('')}` : '';
+    }
+
+    ['base', 'mid', 'outer'].forEach(renderLayerOptions);
+
+    // Style Quiz
+    const quizData = {
+      questions: [
+        { q: 'What\'s your ideal fall weekend?', options: [
+          { text: 'Cozy café, oversized sweater, good book', score: 'comfort' },
+          { text: 'Gallery hop, statement coat, bold accessories', score: 'dramatic' },
+          { text: 'Country walk, layered knits, sturdy boots', score: 'prep' },
+          { text: 'Vintage shopping, mixing prints, eclectic finds', score: 'bohemian' }
+        ]},
+        { q: 'Which color speaks to you?', options: [
+          { text: 'Mocha brown & cream', score: 'comfort' },
+          { text: 'Aubergine & powder pink', score: 'dramatic' },
+          { text: 'Forest green & oxblood', score: 'prep' },
+          { text: 'Amber, mint & currant', score: 'bohemian' }
+        ]},
+        { q: 'Your layering style?', options: [
+          { text: 'Minimal—one great piece does it', score: 'comfort' },
+          { text: 'Maximal—more is more', score: 'bohemian' },
+          { text: 'Structured—tailored and clean', score: 'prep' },
+          { text: 'Unexpected—robe as coat, slip as dress', score: 'dramatic' }
+        ]}
+      ],
+      results: {
+        comfort: { title: 'Dramatic Comfort', desc: 'Luxurious robes as coats, slip dresses for evening. You love elevated loungewear.', icon: '🧥' },
+        dramatic: { title: 'Blazer Dresses & Tailoring', desc: 'Structured, powerful silhouettes. Clean lines and bold impact.', icon: '✨' },
+        prep: { title: 'Modern Prep', desc: 'Oxfords, Mary Janes, forest green. Classic with a twist.', icon: '👞' },
+        bohemian: { title: 'Layered Bohemian', desc: 'Fur-trimmed jackets, pattern mixing, eclectic storytelling.', icon: '🧶' }
+      }
+    };
+
+    let quizScores = {};
+    let currentQ = 0;
+
+    function renderQuiz() {
+      const container = document.getElementById('quizQuestions');
+      const progress = document.getElementById('quizProgress');
+      const resultDiv = document.getElementById('quizResult');
+
+      container.innerHTML = quizData.questions.map((q, i) => `
+        <div class="quiz-question ${i === 0 ? 'active' : ''}" data-q="${i}">
+          <h3>${q.q}</h3>
+          <div class="quiz-options">
+            ${q.options.map((o, j) => `<div class="quiz-option" data-score="${o.score}">${o.text}</div>`).join('')}
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-btn secondary" onclick="quizPrev()" ${i === 0 ? 'disabled' : ''}>Back</button>
+            <button class="quiz-btn primary" onclick="quizNext()">${i === quizData.questions.length - 1 ? 'See Result' : 'Next'}</button>
+          </div>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.addEventListener('click', function() {
+          const qIndex = parseInt(this.closest('.quiz-question').dataset.q);
+          quizScores[qIndex] = this.dataset.score;
+          this.parentElement.querySelectorAll('.quiz-option').forEach(o => {
+            o.classList.remove('selected');
+            o.style.borderColor = '';
+            o.style.background = '';
+          });
+          this.classList.add('selected');
+          this.style.borderColor = 'var(--aubergine)';
+          this.style.background = 'var(--cream)';
+        });
+      });
+    }
+
+    window.quizNext = function() {
+      const questions = document.querySelectorAll('.quiz-question');
+      if (currentQ < questions.length - 1) {
+        questions[currentQ].classList.remove('active');
+        currentQ++;
+        questions[currentQ].classList.add('active');
+        document.getElementById('quizProgress').style.width = ((currentQ + 1) / questions.length * 100) + '%';
+      } else {
+        const scores = Object.values(quizScores);
+        const freq = {};
+        scores.forEach(s => { freq[s] = (freq[s] || 0) + 1; });
+        const winner = Object.keys(freq).reduce((a, b) => freq[a] >= freq[b] ? a : b);
+        const result = quizData.results[winner];
+        document.getElementById('quizQuestions').style.display = 'none';
+        document.getElementById('quizProgress').style.width = '100%';
+        document.getElementById('quizResult').innerHTML = `
+          <div class="result-icon">${result.icon}</div>
+          <h3>${result.title}</h3>
+          <p>${result.desc}</p>
+          <button class="quiz-btn primary" onclick="quizReset()">Retake Quiz</button>
+        `;
+        document.getElementById('quizResult').classList.add('visible');
+      }
+    };
+
+    window.quizPrev = function() {
+      if (currentQ > 0) {
+        document.querySelectorAll('.quiz-question')[currentQ].classList.remove('active');
+        currentQ--;
+        document.querySelectorAll('.quiz-question')[currentQ].classList.add('active');
+        document.getElementById('quizProgress').style.width = ((currentQ + 1) / quizData.questions.length * 100) + '%';
+      }
+    };
+
+    window.quizReset = function() {
+      currentQ = 0;
+      quizScores = {};
+      document.getElementById('quizQuestions').style.display = 'block';
+      document.getElementById('quizResult').classList.remove('visible');
+      document.getElementById('quizResult').innerHTML = '';
+      document.getElementById('quizProgress').style.width = '0%';
+      renderQuiz();
+    };
+
+    renderQuiz();
+
+    // Lookbook Gallery - local images with modal content
+    const lookbookItems = [
+      { category: 'layers', caption: 'Layered Bohemian Look', img: 'images/lookbook-layered.png', modal: '<p>Mix fur-trimmed jackets over slip dresses, chunky knits over flowing fabrics. Key: vary hemlines and textures—let cardigans peek from under puffers. Floral kimonos over turtlenecks, bustier tops over button-downs.</p>' },
+      { category: 'colors', caption: 'Fall Color Palette', img: 'images/lookbook-colors.png', modal: '<p>Fall 2025 palette: Mocha Brown (Color of the Year), powder pink, aubergine, currant, amber, forest green, oxblood, mint. Decadent Harvest adds chili flake, dark chocolate, spiced orange, grape purple.</p>' },
+      { category: 'layers', caption: 'Cozy Knit Styling', img: 'images/lookbook-knit.png', modal: '<p>Chunky knits layer under jean jackets or puffers. Pair Fair Isle over button-downs. Turtleneck dress with cropped sweater on top. Use lightweight bases (cashmere tee, thin turtleneck) to avoid bulk.</p>' },
+      { category: 'textures', caption: 'Structured Outerwear', img: 'images/lookbook-outerwear.png', modal: '<p>Trench coat with chunky knit + loafers. Leather bomber with cashmere + striped shirt. Modern suiting with oversized houndstooth coat. Suede and shearling in mocha and cream.</p>' },
+      { category: 'textures', caption: 'Autumn Textures', img: 'images/lookbook-textures.png', modal: '<p>Mix leather, suede, wool, corduroy, faux fur. Chunky knits over silky satin, buttery leather with faux fur. Corduroy in saturated hues for 70s revival. Tweed and houndstooth for structure.</p>' },
+      { category: 'accessories', caption: 'Fall Accessories', img: 'images/lookbook-accessories.png', modal: '<p>Over-the-knee boots, statement belts (corset-style or extra-long), eccentric small hats. Archival bags: Chloé Paddington, Coach Twin Pocket, Fendi Spy. Personalize with charms.</p>' },
+      { category: 'colors', caption: 'Warm Tones', img: 'images/lookbook-warm-tones.png', modal: '<p>Amber, mocha, cream, and spiced orange create cozy warmth. Balance bold self-expression with understated richness. These tones work for both minimal and maximal styling.</p>' },
+      { category: 'layers', caption: 'Seasonal Layers', img: 'images/lookbook-layers.png', modal: '<p>Base: cashmere tee, turtleneck, button-down. Mid: chunky knit, Fair Isle, cardigan. Outer: trench, leather bomber, suede jacket, shearling, puffer vest. Vary proportions and add belts for shape.</p>' }
+    ];
+
+    const filters = ['all', 'layers', 'colors', 'textures', 'accessories'];
+    const filterLabels = { all: 'All', layers: 'Layers', colors: 'Colors', textures: 'Textures', accessories: 'Accessories' };
+
+    const filtersEl = document.getElementById('galleryFilters');
+    filters.forEach(f => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (f === 'all' ? ' active' : '');
+      btn.textContent = filterLabels[f];
+      btn.dataset.filter = f;
+      btn.addEventListener('click', () => {
+        filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderGallery(btn.dataset.filter);
+      });
+      filtersEl.appendChild(btn);
+    });
+
+    function renderGallery(filter) {
+      const grid = document.getElementById('galleryGrid');
+      const items = filter === 'all' ? lookbookItems : lookbookItems.filter(i => i.category === filter);
+      grid.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `<img src="${item.img}" alt="${item.caption}" loading="lazy"><span class="caption">${item.caption} — Click for tips</span>`;
+        div.addEventListener('click', () => openModal(item.caption, item.modal));
+        grid.appendChild(div);
+      });
+    }
+
+    renderGallery('all');
+
+    // Smooth scroll
+    document.querySelector('.scroll-hint').addEventListener('click', () => {
+      document.getElementById('colors').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

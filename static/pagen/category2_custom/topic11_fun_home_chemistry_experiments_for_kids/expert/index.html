@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fun Home Chemistry Experiments for Kids</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+<!-------------------------------------------- Banner Section ------------------------------------------------>
+
+
+<div class="header-main" style="background-image: url('images/Bannerfour.jpg');">
+   <div class="header-main-box-one">
+     <h1>Fun Home Chemistry <span>Experiments for Kids</span></h1>
+     <p class="header-paragraph">Safe, colorful, and bubbly science you can enjoy right at home — with a grown-up by your side! These exciting experiments are designed especially for curious kids who love to explore and discover. Using simple household items, children can see amazing reactions happen in real time.</p>
+   </div>
+
+<p class="spacer-one"></p>
+
+  <div class="header-main-box-two">
+   <ul class="header-list-btn">
+     <li><a href="#java-widget" class="btn-primary">Try Experiments</a></li>
+     <li><a href="#step-by-step" class="btn-secondary">Step By Step Instructions</a></li>
+   </ul>
+     <img src="images/Arrow.png" class="down-arrow">
+  </div>
+
+<p class="spacer-two"></p>
+
+</div>
+
+
+<!-------------------------------------------- Four Tabs ------------------------------------------------>
+
+<main>
+
+<div class="cs-points-tabs" id="step-by-step">
+
+<div class="cs-experiments-head">
+
+    <h2>Experiments You'll Love</h2>
+    <p class="section-intro">Each experiment includes what you need, step-by-step instructions, and a safety tip.</p>
+
+</div>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Baking Soda Volcano</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">Color-Changing Milk</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Invisible Ink</button>
+  <button class="tablinks" onclick="openCity(event, 'Newyork')">Oil & Water Separation</button>
+</div>
+
+<div id="London" class="tabcontent">
+
+  <div class="tab-inside-div">
+    <h3>Baking Soda Volcano</h3>
+<ul>
+          <li><strong>Need:</strong> Baking soda, vinegar, dish soap, food coloring, small bottle</li>
+          <li><strong>How:</strong> Put baking soda in bottle, add a little dish soap and color, then pour vinegar and watch!</li>
+          <li><strong>Why it works:</strong> Acid (vinegar) + base (baking soda) → carbon dioxide bubbles (fizz!)</li>
+          <li>Adult supervision required. Do experiments on a tray.</li>
+        </ul>
+  </div>
+
+  <div class="tab-inside-image">
+    <img src="images/Soda.png">
+  </div>
+ 
+</div>
+
+
+
+<div id="Paris" class="tabcontent">
+
+  <div class="tab-inside-div">
+    <h3>Color-Changing Milk</h3>
+<ul>
+          <li><strong>Need:</strong> Whole milk, food coloring, cotton swab, dish soap</li>
+          <li><strong>How:</strong> Add drops of food color to milk, dip soapy swab in center — colors dance!</li>
+          <li><strong>Why it works:</strong> Soap lowers surface tension and moves the colors around.</li>
+          <li>Use a shallow dish and wipe spills. No tasting!</li>
+        </ul>
+  </div>
+
+   <div class="tab-inside-image">
+      <img src="images/Milk.png">
+   </div>
+
+</div>
+
+
+<div id="Tokyo" class="tabcontent">
+
+  <div class="tab-inside-div">
+    <h3>Invisible Ink</h3>
+<ul>
+          <li><strong>Need:</strong> Lemon juice, cotton swab, plain paper, lamp or toaster (adult)</li>
+          <li><strong>How:</strong> Write with lemon juice, let dry. Heat gently with adult help to reveal the message.</li>
+          <li><strong>Why it works:</strong> Lemon juice oxidizes (browns) when heated, revealing hidden writing.</li>
+          <li>Adult must handle heating. Keep flames away from paper edges.</li>
+        </ul>
+  </div>
+
+  <div class="tab-inside-image">
+    <img src="images/Ink.png">
+  </div>
+
+</div>
+
+<div id="Newyork" class="tabcontent">
+
+  <div class="tab-inside-div">
+    <h3>Oil & Water Separation</h3>
+<ul>
+          <li><strong>Need:</strong> Water, oil, clear jar, food coloring</li>
+          <li><strong>How:</strong> Fill jar with water, add colored water and then oil — watch them separate.</li>
+          <li><strong>Why it works:</strong> Oil is less dense and doesn't mix with water, so it floats.</li>
+          <li>Do not drink the liquids. Clean up thoroughly.</li>
+        </ul>
+  </div>
+
+  <div class="tab-inside-image">
+    <img src="images/Oil.png">
+  </div>
+
+</div>
+
+
+</div>
+
+
+<!-------------------------------------------- Javascript Widget ------------------------------------------------>
+
+<div class="chemical-containter" id="java-widget">
+  <section class="widget container">
+    <h2>Mix Your Own <span>Chemical Reaction</span></h2>
+    <p class="cs-chemical-paragraph">Try safe combinations below. Slide the amounts and press <strong>MIX</strong> to see a fun animation.</p>
+
+    <div class="simulator">
+      <div class="controls">
+        <label>Choose Chemical 1
+          <select id="chem1">
+            <option value="baking">Baking Soda</option>
+            <option value="vinegar">Vinegar</option>
+            <option value="lemon">Lemon Juice</option>
+            <option value="water">Water</option>
+            <option value="oil">Oil</option>
+            <option value="color">Food Coloring</option>
+          </select>
+        </label>
+
+        <label>Amount of Chemical 1
+          <input type="range" id="qty1" min="1" max="10" value="5" />
+        </label>
+
+        <label>Choose Chemical 2
+          <select id="chem2">
+            <option value="vinegar">Vinegar</option>
+            <option value="baking">Baking Soda</option>
+            <option value="lemon">Lemon Juice</option>
+            <option value="water">Water</option>
+            <option value="oil">Oil</option>
+            <option value="color">Food Coloring</option>
+          </select>
+        </label>
+
+        <label>Amount of Chemical 2
+          <input type="range" id="qty2" min="1" max="10" value="5" />
+        </label>
+
+        <button id="mixBtn" class="mix-btn">MIX</button>
+      </div>
+
+      <div class="visual">
+        <div id="beaker" class="beaker">
+          <div id="liquid" class="liquid"></div>
+          <div id="bubbles" class="bubbles"></div>
+        </div>
+        <div id="result" class="result">Pick chemicals and press MIX!</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-------------------------------------------- Four Hover Boxes ------------------------------------------------>
+
+ <div class="cards-sec">
+  <section id="experiments" class="experiments container">
+    <h2>Discover the Science Behind the Fun</h2>
+    <h4>Learn, explore, and experiment—safely!</h4>
+    <div class="cards">
+      <article class="card cardone">
+        <img src="images/Funnel.png" alt="Baking Soda Volcano" />
+        <h5>How Reactions Work</h5>
+        <p>When you mix two things together, they can react and change into something new. You might see bubbles, colors changing, or fizzing sounds. This happens because the ingredients interact in a special scientific way. That’s called a chemical reaction!</p>
+      </article>
+
+      <article class="card cardtwo">
+        <img src="images/Art.png" alt="Color Changing Milk" />
+        <h5>Why Colors Change</h5>
+        <p>Some experiments change color when ingredients mix. This happens because the chemicals respond to each other. The colors help scientists understand what’s happening inside. It’s science—and art—working together!</p>
+      </article>
+
+      <article class="card cardthree">
+        <img src="images/Safety.png" alt="Invisible Ink" />
+        <h5>Safety First, Scientists!</h5>
+        <p>Always ask a grown-up to help before starting any experiment. Wear safety goggles if needed and keep hands away from your face. Never taste or smell the experiment ingredients. Safety makes science fun and worry-free!</p>
+      </article>
+
+      <article class="card cardfour">
+        <img src="images/Home.png" alt="Oil and Water" />
+        <h5>Experimenting at Home</h5>
+        <p>Many experiments use things you already have at home. Work on a clean table and keep your area tidy. Follow the steps carefully and take your time. Learning science at home can be exciting and safe!</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+
+<!-------------------------------------------- Parallax Section ------------------------------------------------>
+
+<div class="parallax-sec" style="background-image: url('images/Grass.jpg');">
+   
+  <div class="cs-mind-main">
+
+      <div class="cs-mind-one">
+         <img src="images/Happy.png">
+      </div>
+
+      <div class="cs-mind-two">
+        <h3>Learning That Grows Curious Minds</h3>
+        <h4>Small experiments, big brain power</h4>
+        <p>Hands-on chemistry experiments help kids understand the world through curiosity and discovery. By observing changes, asking questions, and predicting outcomes, children build strong critical-thinking skills. These activities improve problem-solving, focus, and attention to detail in a fun way. Kids also develop creativity as they explore colors, reactions, and cause-and-effect relationships. Following steps boosts memory and listening skills. Most importantly, experimenting builds confidence and a love for learning that lasts a lifetime.</p>
+     </div>
+
+
+  </div>
+
+</div>
+
+
+<!-------------------------------------------- Bottom 3 cards ------------------------------------------------>
+
+<div class="cs-bottom-three-cards-main">
+
+  <div class="three-cards-one">
+     <img src="images/Focus.png">
+     <h5>Enhanced Focus & Attention</h5>
+     <p>Hands-on experiments encourage kids to slow down and pay attention to each step. Watching reactions carefully helps improve concentration and patience. Following simple instructions builds listening and observation skills. Over time, kids learn to stay focused while enjoying the learning process.</p>
+  </div>
+
+  <div class="three-cards-two">
+     <img src="images/Bannerone.png">
+     <h5>Improved Learning Skills</h5>
+     <p>Experiments turn ideas into real experiences kids can see and understand. Children learn to ask questions, make predictions, and solve problems. This strengthens memory, logical thinking, and understanding of cause and effect. Active learning helps kids feel confident in exploring new concepts.</p>
+  </div>
+
+  <div class="three-cards-three">
+     <img src="images/Milk.png">
+     <h5>Happy & Confident Kids</h5>
+     <p>Fun experiments create moments of excitement and joy for children. Seeing successful results builds confidence and self-belief. Kids feel proud when they complete activities on their own. A happy learning experience encourages curiosity and a positive mindset.</p>
+  </div>
+
+
+</div>
+
+
+</main>
+
+
+<!-------------------------------------------- Footer ------------------------------------------------>
+
+<footer class="footer">
+  <h3>© Fun Home Chemistry • Always perform experiments with an adult</h3>
+  <p class="footer-paragraph">Safe, colorful, and bubbly science you can enjoy right at home — with a grown-up by your side! These exciting experiments are designed especially for curious kids who love to explore and discover.</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

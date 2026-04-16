@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Computing - Interactive Learning Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #00f5ff;
+            --secondary: #ff00ff;
+            --accent: #fbbf24;
+            --bg-dark: #0a0e27;
+            --bg-card: rgba(15, 23, 42, 0.9);
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #050815 0%, var(--bg-dark) 50%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particles */
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .particle { 
+    position: absolute; 
+    width: 3px; 
+    height: 3px; 
+    background: var(--primary); 
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary);
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+        /* Navigation */
+        .nav-sidebar {
+            position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;
+            padding: 1.5rem 0.75rem; z-index: 1000;
+        }
+        .nav-dot {
+            width: 12px; height: 12px; background: rgba(255,255,255,0.3);
+            border-radius: 50%; margin: 1.5rem 0; cursor: pointer;
+            transition: all 0.3s ease; position: relative;
+        }
+        .nav-dot:hover, .nav-dot.active { background: var(--primary); transform: scale(1.4); box-shadow: 0 0 15px var(--primary); }
+        .nav-dot::after {
+            content: attr(data-label); position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%);
+            background: var(--bg-card); padding: 0.5rem 1rem; border-radius: 8px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            font-size: 0.875rem; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-dot:hover::after { opacity: 1; }
+
+        /* Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+        /* Typography */
+        h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.75rem; font-weight: 600; margin-bottom: 1rem; }
+        h4 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--primary); }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: gradient-shift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes gradient-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(0, 245, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .info-box.warning {
+            background: rgba(251, 191, 36, 0.05);
+            border-left-color: var(--accent);
+        }
+        .info-box.success {
+            background: rgba(16, 185, 129, 0.05);
+            border-left-color: #10b981;
+        }
+
+        /* Glass Card */
+        .glass {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4); padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,245,255,0.3); border-color: rgba(0,245,255,0.4); }
+
+        /* Stats Counter */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 4rem 0;
+        }
+        .hero-badge {
+            display: inline-block; padding: 0.75rem 2rem;
+            background: rgba(0,245,255,0.1); border: 1px solid var(--primary);
+            border-radius: 50px; font-size: 0.875rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px rgba(0,245,255,0.3); } 50% { box-shadow: 0 0 40px rgba(0,245,255,0.6); } }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); margin: 2rem auto; max-width: 700px; line-height: 1.8; }
+
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+
+        /* Icon Box */
+        .icon-box {
+            width: 100px; height: 100px; margin: 0 auto 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 20px; font-size: 3rem; font-weight: 800;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .icon-classical { background: linear-gradient(135deg, #3b82f6, #1e40af); box-shadow: 0 10px 40px rgba(59,130,246,0.4); }
+        .icon-quantum { background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 10px 40px rgba(0,245,255,0.4); }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
+        .btn {
+            padding: 1.25rem 2.5rem; border: none; border-radius: 50px;
+            font-size: 1.125rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .btn::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 0; height: 0; border-radius: 50%;
+            background: rgba(255,255,255,0.3); transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:hover::before { width: 300px; height: 300px; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--bg-dark); box-shadow: 0 10px 30px rgba(0,245,255,0.4);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 50px rgba(0,245,255,0.6); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: rgba(0,245,255,0.1); transform: translateY(-3px); }
+
+        /* Section */
+        section { padding: 6rem 0; position: relative; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-badge {
+            display: inline-block; padding: 0.5rem 1.5rem;
+            background: rgba(255,0,255,0.1); border: 1px solid var(--secondary);
+            border-radius: 50px; font-size: 0.875rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1rem;
+        }
+        .section-description {
+            max-width: 800px;
+            margin: 1rem auto 0;
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        /* Canvas */
+        canvas {
+            max-width: 100%; border-radius: 20px;
+            background: rgba(5,8,21,0.6); border: 2px solid rgba(0,245,255,0.2);
+            margin: 2rem auto; display: block; box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+        }
+        canvas:hover { border-color: rgba(0,245,255,0.5); box-shadow: 0 15px 70px rgba(0,245,255,0.3); }
+
+        /* Toggle */
+        .toggle-wrapper { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 2rem 0; }
+        .toggle-label { font-weight: 600; font-size: 1.125rem; }
+        .toggle {
+            position: relative; width: 80px; height: 40px;
+            background: rgba(255,255,255,0.1); border-radius: 50px;
+            cursor: pointer; transition: all 0.4s ease;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .toggle.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--primary); box-shadow: 0 0 20px rgba(0,245,255,0.5);
+        }
+        .toggle::after {
+            content: ''; position: absolute; top: 3px; left: 3px;
+            width: 30px; height: 30px; background: white; border-radius: 50%;
+            transition: all 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .toggle.active::after { transform: translateX(40px); }
+
+        /* Slider */
+        .slider-container { margin: 3rem 0; }
+        .slider-header { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600; }
+        .slider-value { color: var(--primary); font-size: 1.5rem; font-weight: 700; }
+        .slider {
+            width: 100%; height: 8px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; outline: none; -webkit-appearance: none;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px rgba(0,245,255,0.6);
+            transition: transform 0.3s ease;
+        }
+        .slider::-webkit-slider-thumb:hover { transform: scale(1.3); box-shadow: 0 0 25px rgba(0,245,255,0.8); }
+        .slider::-moz-range-thumb {
+            width: 24px; height: 24px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 0 15px rgba(0,245,255,0.6);
+        }
+
+        /* Result Box */
+        .result-box {
+            margin-top: 2rem; padding: 2rem; background: rgba(0,245,255,0.05);
+            border: 2px solid rgba(0,245,255,0.3); border-radius: 16px;
+            min-height: 80px; animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .result-box.success { background: rgba(16,185,129,0.1); border-color: #10b981; }
+        .result-box.error { background: rgba(239,68,68,0.1); border-color: #ef4444; }
+        .result-box.warning { background: rgba(251,191,36,0.1); border-color: var(--accent); }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 2000;
+            animation: slideIn 0.4s ease;
+            max-width: 400px;
+        }
+        @keyframes slideIn { from { transform: translateX(500px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast.success { border-color: #10b981; }
+        .toast.error { border-color: #ef4444; }
+
+        /* Entanglement */
+        .entangle-wrapper {
+            display: flex; justify-content: center; align-items: center;
+            gap: 4rem; flex-wrap: wrap; margin: 4rem 0;
+        }
+        .qubit-sphere { text-align: center; }
+        .sphere {
+            width: 180px; height: 180px; margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; font-weight: 800; cursor: pointer;
+            transition: all 0.4s ease; border: 4px solid var(--primary);
+            box-shadow: 0 10px 50px rgba(0,245,255,0.4); position: relative; overflow: hidden;
+        }
+        .sphere::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%; background: conic-gradient(transparent, rgba(255,255,255,0.3), transparent);
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .sphere:hover { transform: scale(1.1); box-shadow: 0 15px 70px rgba(0,245,255,0.6); }
+        .sphere.measured { animation: pulseMeasure 0.6s ease; }
+        @keyframes pulseMeasure { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .sphere-label { font-size: 1.25rem; font-weight: 600; }
+        .entangle-connector { font-size: 3rem; color: var(--secondary); animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; transform: scale(1.2); } }
+
+        /* Quiz */
+        .quiz-option {
+            padding: 1.5rem 2rem; background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1); border-radius: 16px;
+            cursor: pointer; transition: all 0.3s ease; text-align: left;
+            margin: 1rem 0; font-size: 1.125rem;
+        }
+        .quiz-option:hover:not(.correct):not(.wrong) { 
+            border-color: var(--primary); background: rgba(0,245,255,0.08); transform: translateX(10px); 
+        }
+        .quiz-option.correct { border-color: #10b981; background: rgba(16,185,129,0.1); animation: correctBounce 0.6s ease; }
+        .quiz-option.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); animation: shake 0.5s ease; }
+        @keyframes correctBounce { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(20px); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%; height: 40px; background: rgba(255,255,255,0.05);
+            border-radius: 50px; overflow: hidden; margin: 1rem 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 50px; transition: width 0.8s ease; display: flex;
+            align-items: center; padding: 0 1.5rem; font-weight: 700;
+            font-size: 1.125rem; color: var(--bg-dark); box-shadow: 0 0 20px rgba(0,245,255,0.5);
+        }
+
+        /* Fun Fact */
+        .fun-fact {
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,245,255,0.1));
+            border: 2px solid rgba(255,0,255,0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+        .fun-fact::before {
+            content: '💡';
+            font-size: 2rem;
+            position: absolute;
+            top: -1.5rem;
+            left: 2rem;
+            background: var(--bg-dark);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        .fun-fact h4 {
+            margin-top: 1rem;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) { .nav-sidebar { display: none; } }
+        @media (max-width: 1024px) {
+            section#section8 > div > div { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 1.5rem; }
+            section { padding: 4rem 0; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .entangle-wrapper { gap: 2rem; }
+            .sphere { width: 140px; height: 140px; font-size: 3rem; }
+            .toast { right: 1rem; left: 1rem; max-width: none; }
+        }
+    
+        /* Drag & Drop Styles */
+        .gate-item {
+            padding: 1rem;
+            background: rgba(0,245,255,0.1);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .gate-item:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+        .gate-item:active { cursor: grabbing; }
+
+        .circuit-wire {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 0;
+        }
+
+        .gate-slot {
+            width: 70px;
+            height: 60px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .gate-slot.drag-over {
+            border-color: var(--primary);
+            background: rgba(0,245,255,0.1);
+        }
+        .gate-slot.filled {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0,245,255,0.2), rgba(255,0,255,0.2));
+        }
+
+        /* Algorithm Cards */
+        .algorithm-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        /* Game Cells */
+        .game-cell {
+            aspect-ratio: 1;
+            background: rgba(0,245,255,0.1);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .game-cell:hover {
+            background: rgba(0,245,255,0.2);
+            transform: scale(1.05);
+        }
+
+        /* Achievement Badges */
+        .achievement-badge {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .achievement-badge.unlocked {
+            border-color: var(--accent);
+            background: rgba(251,191,36,0.1);
+            animation: badgeUnlock 0.5s ease;
+        }
+        @keyframes badgeUnlock {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .badge-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+            filter: grayscale(1);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+        .achievement-badge.unlocked .badge-icon {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        .badge-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+        .badge-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="particles"></div>
+
+    <nav class="nav-sidebar">
+        <div class="nav-dot active" onclick="scrollToSection(0)" title="Home"></div>
+        <div class="nav-dot" onclick="scrollToSection(1)" title="Qubits"></div>
+        <div class="nav-dot" onclick="scrollToSection(2)" title="Superposition"></div>
+        <div class="nav-dot" onclick="scrollToSection(3)" title="Entanglement"></div>
+        <div class="nav-dot" onclick="scrollToSection(4)" title="Gates"></div>
+        <div class="nav-dot" onclick="scrollToSection(5)" title="Circuit"></div>
+        <div class="nav-dot" onclick="scrollToSection(6)" title="Quiz"></div>
+        <div class="nav-dot" onclick="scrollToSection(7)" title="Drag & Drop"></div>
+        <div class="nav-dot" onclick="scrollToSection(8)" title="Algorithms"></div>
+        <div class="nav-dot" onclick="scrollToSection(9)" title="Game"></div>
+        <div class="nav-dot" onclick="scrollToSection(10)" title="Achievements"></div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="section0">
+        <div class="container">
+            <div class="hero-badge">INTERACTIVE QUANTUM COMPUTING</div>
+            <h1>Welcome to the<br><span class="gradient-text">Quantum Realm</span></h1>
+            <p>
+                Dive into the fascinating world of quantum computing through hands-on visualizations and interactive experiments. 
+                Learn how qubits harness superposition and entanglement to revolutionize computation.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="interactionCount">0</div>
+                    <div class="stat-label">Your Interactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Interactive Modules</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Possibilities</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="glass">
+                    <div class="icon-box icon-classical">0/1</div>
+                    <h3>Classical Bit</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        A traditional bit is like a light switch - either ON (1) or OFF (0). Simple, predictable, deterministic.
+                    </p>
+                    <div class="info-box">
+                        <strong>How it works:</strong> At any given moment, a classical bit exists in exactly one state. 
+                        There's no ambiguity - it's binary and absolute.
+                    </div>
+                </div>
+
+                <div class="glass">
+                    <div class="icon-box icon-quantum">|ψ⟩</div>
+                    <h3>Quantum Qubit</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        A qubit can exist in multiple states simultaneously through quantum superposition. Like a coin spinning mid-air!
+                    </p>
+                    <div class="info-box success">
+                        <strong>Quantum advantage:</strong> While spinning, the coin is both heads AND tails. 
+                        Only when we measure it does it "choose" one state.
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="scrollToSection(1)">Start Learning →</button>
+                <button class="btn btn-outline" onclick="scrollToSection(6)">Try Simulator</button>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="container">
+        <!-- Section 1: Qubit -->
+        <section id="section1">
+            <div class="section-header">
+                <div class="section-badge">CHAPTER 1</div>
+                <h2>What is a <span class="gradient-text">Qubit</span>?</h2>
+                <p class="section-description">
+                    A quantum bit (qubit) is the fundamental unit of quantum information. Unlike classical bits that must be either 0 or 1, 
+                    qubits leverage quantum mechanics to exist in a superposition of both states simultaneously.
+                </p>
+            </div>
+
+            <div class="glass">
+                <div class="grid-2">
+                    <div style="text-align: center;">
+                        <h3>Classical Bit</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                            Toggle the switch to change the bit state. Notice how it's always in ONE definite state.
+                        </p>
+                        <div class="toggle-wrapper">
+                            <span class="toggle-label">OFF (0)</span>
+                            <div class="toggle" id="classicalToggle" onclick="toggleClassical()"></div>
+                            <span class="toggle-label">ON (1)</span>
+                        </div>
+                        <div id="classicalState" style="font-size: 5rem; font-weight: 800; margin-top: 2rem; color: var(--text-muted);">0</div>
+
+                        <div class="info-box">
+                            <strong>Current State:</strong> The bit is definitively in state <span id="classicalExplain">0</span>. 
+                            This is how all traditional computers work - billions of transistors switching between 0 and 1.
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <h3>Quantum Qubit</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                            Click "Measure" to collapse the superposition. The question mark represents BOTH states existing simultaneously!
+                        </p>
+                        <canvas id="qubitCanvas" width="300" height="300"></canvas>
+                        <button class="btn btn-primary" onclick="measureQubit()">⊙ Measure Qubit</button>
+                        <div id="qubitResult" style="margin-top: 1rem;"></div>
+                    </div>
+                </div>
+
+                <div class="fun-fact">
+                    <h4>Fun Fact: Schrödinger's Cat</h4>
+                    <p>
+                        The famous thought experiment about a cat that's simultaneously alive and dead perfectly illustrates quantum superposition. 
+                        Just like the cat, a qubit exists in multiple states until observed!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Superposition -->
+        <section id="section2">
+            <div class="section-header">
+                <div class="section-badge">CHAPTER 2</div>
+                <h2><span class="gradient-text">Superposition</span> - Quantum's Secret Weapon</h2>
+                <p class="section-description">
+                    Superposition allows qubits to process multiple possibilities at once. While a spinning coin is in the air, 
+                    it's neither heads nor tails - it's BOTH! This is the key to quantum computing's incredible power.
+                </p>
+            </div>
+
+            <div class="glass" style="text-align: center;">
+                <h3>The Quantum Coin Experiment</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 2rem;">
+                    Adjust the probability slider to control the "weight" of your quantum coin. Then flip it into superposition and measure the result!
+                </p>
+
+                <!-- Canvas тільки з монеткою -->
+                <div style="text-align: center; margin: 2rem auto;">
+                    <canvas id="coinCanvas" width="400" height="400" 
+                        style="max-width: 100%; border: 2px solid rgba(139, 92, 246, 0.3); border-radius: 20px; background: rgba(0,0,0,0.2);">
+                    </canvas>
+                </div>
+
+                <!-- Controls: Slider + Progress Bars -->
+                <div style="max-width: 600px; margin: 3rem auto;">
+
+                    <!-- Slider з шкалою -->
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <span style="font-size: 0.875rem; color: var(--text-muted);">Probability of |0⟩:</span>
+                            <span style="font-size: 1.5rem; font-weight: 700; color: var(--primary);" id="probValue">50%</span>
+                        </div>
+                        <input type="range" class="slider" id="probSlider" min="0" max="100" value="50" style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; padding: 0 0.25rem;">
+                            <span>0%</span>
+                            <span>25%</span>
+                            <span>50%</span>
+                            <span>75%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <!-- 2 Progress Bars (окремо від canvas!) -->
+                    <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="margin-bottom: 1.25rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">State |0⟩</span>
+                                <span style="font-size: 1.1rem; font-weight: 600; color: var(--primary);" id="prob0Display">50%</span>
+                            </div>
+                            <div style="width: 100%; height: 10px; background: rgba(59,130,246,0.15); border-radius: 5px; overflow: hidden;">
+                                <div id="prob0Bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--primary), #60a5fa); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">State |1⟩</span>
+                                <span style="font-size: 1.1rem; font-weight: 600; color: var(--secondary);" id="prob1Display">50%</span>
+                            </div>
+                            <div style="width: 100%; height: 10px; background: rgba(236,72,153,0.15); border-radius: 5px; overflow: hidden;">
+                                <div id="prob1Bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--secondary), #f472b6); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="flipCoin()">🪙 Flip into Superposition</button>
+                    <button class="btn btn-outline" onclick="measureCoin()">⊙ Measure Result</button>
+                </div>
+
+                <div id="coinResult" style="margin-top: 2rem;"></div>
+
+                <div id="coinStats" style="margin-top: 3rem; display: none;">
+                    <h4 style="text-align: center; margin-bottom: 1.5rem;">Your Measurement Statistics</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="flipsCount">0</div>
+                            <div class="stat-label">Total Flips</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="zeros">0</div>
+                            <div class="stat-label">|0⟩ Results</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="ones">0</div>
+                            <div class="stat-label">|1⟩ Results</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fun-fact" style="margin-top: 2rem;">
+                <h4>Why This Matters</h4>
+                <p>
+                    With n classical bits, you can represent ONE of 2ⁿ possible values at a time. 
+                    But with n qubits in superposition, you can represent ALL 2ⁿ values simultaneously! 
+                    This exponential advantage is why quantum computers can solve certain problems millions of times faster.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Entanglement -->
+        <section id="section3">
+            <div class="section-header">
+                <div class="section-badge">CHAPTER 3</div>
+                <h2><span class="gradient-text">Entanglement</span> - Spooky Action at a Distance</h2>
+                <p class="section-description">
+                    Einstein called it "spooky action at a distance." When qubits become entangled, measuring one instantly affects the other, 
+                    regardless of the distance between them. This phenomenon defies our everyday intuition about how the universe works!
+                </p>
+            </div>
+
+            <div class="glass">
+                <h3 style="text-align: center; margin-bottom: 2rem;">Interactive Entanglement Demo</h3>
+                <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;">
+                    These two qubits are entangled. Click on either one to measure it. 
+                    Watch what happens to the other qubit - it instantly "knows" what state to be in!
+                </p>
+
+                <div class="entangle-wrapper">
+                    <div class="qubit-sphere">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">Qubit A</h3>
+                        <div class="sphere" id="qubitA" onclick="measureEntangled('A')">
+                            <span style="position: relative; z-index: 10;">?</span>
+                        </div>
+                        <p class="sphere-label" id="stateA">Superposition</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;" id="probA">50% chance of each</p>
+                    </div>
+
+                    <div class="entangle-connector">↔</div>
+
+                    <div class="qubit-sphere">
+                        <h3 style="color: var(--secondary); margin-bottom: 1rem;">Qubit B</h3>
+                        <div class="sphere" id="qubitB" onclick="measureEntangled('B')" style="border-color: var(--secondary);">
+                            <span style="position: relative; z-index: 10;">?</span>
+                        </div>
+                        <p class="sphere-label" id="stateB">Superposition</p>
+                        <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;" id="probB">50% chance of each</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-outline" onclick="resetEntanglement()">↻ Reset Entanglement</button>
+                </div>
+
+                <div class="result-box" id="entangleMsg" style="text-align: center; font-size: 1.125rem;">
+                    <strong>Step 1:</strong> Click on either Qubit A or Qubit B to measure it first.
+                </div>
+
+                <div class="info-box" style="margin-top: 2rem;">
+                    <h4>How Entanglement Works:</h4>
+                    <p style="margin-top: 0.5rem;">
+                        1. <strong>Before measurement:</strong> Both qubits are in superposition (? state)<br>
+                        2. <strong>First measurement:</strong> One qubit randomly collapses to 0 or 1<br>
+                        3. <strong>Instant correlation:</strong> The other qubit INSTANTLY becomes the same value<br>
+                        4. <strong>The mystery:</strong> No signal travels between them - it's instantaneous!
+                    </p>
+                </div>
+            </div>
+
+            <div class="fun-fact" style="margin-top: 2rem;">
+                <h4>Real-World Application: Quantum Teleportation</h4>
+                <p>
+                    Using entanglement, scientists have successfully "teleported" quantum information over distances of hundreds of kilometers! 
+                    This technology is being developed for ultra-secure quantum communication networks that are theoretically impossible to hack.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Section 4: Gates -->
+        <section id="section4">
+            <div class="section-header">
+                <div class="section-badge">CHAPTER 4</div>
+                <h2><span class="gradient-text">Quantum Gates</span></h2>
+                <p class="section-description">
+                    Just like classical computers use logic gates (AND, OR, NOT), quantum computers use quantum gates to manipulate qubits. 
+                    These gates perform rotations and transformations in the quantum state space.
+                </p>
+            </div>
+
+            <div class="grid-3" style="margin-bottom: 3rem;">
+                <div class="glass" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);">X</div>
+                    <h3>NOT Gate (X)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
+                        Flips the qubit state: |0⟩ becomes |1⟩ and vice versa. The quantum equivalent of a classical NOT gate.
+                    </p>
+                    <button class="btn btn-outline" onclick="applyGate('X')" style="width: 100%;">Apply X Gate</button>
+                    <div class="info-box" style="margin-top: 1rem; text-align: left; font-size: 0.75rem;">
+                        <strong>Math:</strong> X|0⟩ = |1⟩<br>
+                        X|1⟩ = |0⟩
+                    </div>
+                </div>
+
+                <div class="glass" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary);">H</div>
+                    <h3>Hadamard (H)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
+                        Creates perfect superposition! Puts qubit into equal mix of both |0⟩ and |1⟩ states.
+                    </p>
+                    <button class="btn btn-outline" onclick="applyGate('H')" style="width: 100%;">Apply H Gate</button>
+                    <div class="info-box" style="margin-top: 1rem; text-align: left; font-size: 0.75rem;">
+                        <strong>Math:</strong> H|0⟩ = (|0⟩ + |1⟩)/√2<br>
+                        50% chance each
+                    </div>
+                </div>
+
+                <div class="glass" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent);">Z</div>
+                    <h3>Phase Gate (Z)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
+                        Adds a phase flip to |1⟩. Doesn't change probabilities but affects quantum interference!
+                    </p>
+                    <button class="btn btn-outline" onclick="applyGate('Z')" style="width: 100%;">Apply Z Gate</button>
+                    <div class="info-box" style="margin-top: 1rem; text-align: left; font-size: 0.75rem;">
+                        <strong>Math:</strong> Z|0⟩ = |0⟩<br>
+                        Z|1⟩ = -|1⟩
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass" style="text-align: center;">
+                <h3>Quantum Circuit Builder</h3>
+                <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem;">
+                    Build your own quantum circuit by applying gates in sequence. Watch how the state changes with each operation!
+                </p>
+
+                <canvas id="circuitCanvas" width="400" height="400"></canvas>
+
+                <div class="result-box" style="text-align: left; max-width: 700px; margin: 2rem auto;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong>Current State:</strong><br>
+                            <span id="stateVector" style="font-family: monospace; color: var(--primary);">|0⟩</span>
+                        </div>
+                        <div>
+                            <strong>Gates Applied:</strong><br>
+                            <span id="gateSequence" style="font-family: monospace; color: var(--secondary);">None</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <strong>Measurement Probabilities:</strong><br>
+                        <span id="circuitProbs">|0⟩: 100.0% | |1⟩: 0.0%</span>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="measureCircuit()">⊙ Measure Circuit</button>
+                    <button class="btn btn-outline" onclick="resetCircuit()">↻ Reset Circuit</button>
+                </div>
+
+                <div id="circuitMeasureResult" style="margin-top: 2rem;"></div>
+
+                <div class="info-box warning" style="margin-top: 2rem; text-align: left;">
+                    <h4>Try These Experiments:</h4>
+                    <p style="margin-top: 0.5rem;">
+                        • <strong>H → H</strong>: Apply Hadamard twice - returns to original state!<br>
+                        • <strong>X → X</strong>: Two NOT gates cancel out<br>
+                        • <strong>H → X → H</strong>: Creates a Z gate effect<br>
+                        • <strong>H → Z → H</strong>: Creates an X gate effect
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Quiz -->
+        <section id="section5">
+            <div class="section-header">
+                <div class="section-badge">TEST YOUR KNOWLEDGE</div>
+                <h2>Quantum Computing <span class="gradient-text">Quiz</span></h2>
+                <p class="section-description">
+                    Test your understanding of quantum computing concepts! Each question comes with a detailed explanation to help you learn.
+                </p>
+            </div>
+
+            <div class="glass">
+                <div id="quizContainer"></div>
+
+                <div id="quizScore" style="display: none; text-align: center; padding: 2rem;">
+                    <h3 style="font-size: 2.5rem; margin-bottom: 1rem;">Quiz Complete!</h3>
+                    <div style="font-size: 5rem; font-weight: 800; margin: 2rem 0;">
+                        <span class="gradient-text"><span id="finalScore">0</span>/5</span>
+                    </div>
+                    <p id="scoreMessage" style="font-size: 1.5rem; margin: 2rem 0;"></p>
+
+                    <div class="info-box success" style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                        <h4>Your Performance:</h4>
+                        <div id="quizBreakdown"></div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Simulator -->
+        <section id="section6">
+            <div class="section-header">
+                <div class="section-badge">HANDS-ON EXPERIMENT</div>
+                <h2>Full Quantum <span class="gradient-text">Simulator</span></h2>
+                <p class="section-description">
+                    Experience a real quantum simulator! Apply gates, watch the Bloch sphere visualization, 
+                    and see probability distributions in real-time. This is similar to what quantum programmers use.
+                </p>
+            </div>
+
+            <div class="glass">
+                <div class="grid-2">
+                    <div>
+                        <h3 style="text-align: center;">Bloch Sphere Visualization</h3>
+                        <p style="text-align: center; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1rem;">
+                            The Bloch sphere represents all possible qubit states. The top hemisphere is |0⟩, bottom is |1⟩.
+                        </p>
+                        <canvas id="simulatorCanvas" width="350" height="350"></canvas>
+
+                        <div style="margin-top: 2rem;">
+                            <h4>Measurement Probabilities:</h4>
+                            <div class="progress-bar-wrapper" style="margin-top: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600;">|0⟩ (Blue)</span>
+                                    <span id="prob0" style="font-weight: 700; color: var(--primary);">100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="probBar0" style="width: 100%;">100%</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar-wrapper" style="margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600;">|1⟩ (Red)</span>
+                                    <span id="prob1" style="font-weight: 700; color: #ef4444;">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="probBar1" style="width: 0%; background: linear-gradient(90deg, #ef4444, #f87171);">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>Gate Operations</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
+                            Apply quantum gates and watch the state change in real-time!
+                        </p>
+
+                        <button class="btn btn-outline" onclick="simApplyGate('H')" style="width: 100%; margin: 0.75rem 0; justify-content: space-between; display: flex; padding: 1.25rem 1.5rem;">
+                            <strong>H - Hadamard</strong>
+                            <span style="font-size: 0.875rem; opacity: 0.7;">Create superposition</span>
+                        </button>
+
+                        <button class="btn btn-outline" onclick="simApplyGate('X')" style="width: 100%; margin: 0.75rem 0; justify-content: space-between; display: flex; padding: 1.25rem 1.5rem;">
+                            <strong>X - NOT Gate</strong>
+                            <span style="font-size: 0.875rem; opacity: 0.7;">Flip state</span>
+                        </button>
+
+                        <button class="btn btn-outline" onclick="simApplyGate('Z')" style="width: 100%; margin: 0.75rem 0; justify-content: space-between; display: flex; padding: 1.25rem 1.5rem;">
+                            <strong>Z - Phase Gate</strong>
+                            <span style="font-size: 0.875rem; opacity: 0.7;">Add phase shift</span>
+                        </button>
+
+                        <button class="btn btn-outline" onclick="simApplyGate('Y')" style="width: 100%; margin: 0.75rem 0; justify-content: space-between; display: flex; padding: 1.25rem 1.5rem;">
+                            <strong>Y - Pauli-Y</strong>
+                            <span style="font-size: 0.875rem; opacity: 0.7;">Combined X+Z</span>
+                        </button>
+
+                        <div class="result-box" style="margin-top: 2rem;">
+                            <strong>State Vector:</strong>
+                            <div id="simState" style="font-family: monospace; font-size: 1.125rem; margin-top: 0.75rem; color: var(--primary);">|ψ⟩ = 1.00|0⟩ + 0.00|1⟩</div>
+                        </div>
+
+                        <div class="info-box" style="margin-top: 1rem; font-size: 0.875rem;">
+                            The state vector shows the quantum amplitudes. Square them to get probabilities!
+                        </div>
+
+                        <div class="btn-group" style="margin-top: 2rem;">
+                            <button class="btn btn-primary" onclick="simMeasure()" style="flex: 1;">⊙ Measure</button>
+                            <button class="btn btn-outline" onclick="simReset()" style="flex: 1;">↻ Reset</button>
+                        </div>
+
+                        <div id="simMeasureResult" style="margin-top: 1rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+    <!-- NEW: Drag-and-Drop Circuit Builder -->
+    <section id="section7">
+        <div class="section-header">
+            <div class="section-badge">ADVANCED FEATURE</div>
+            <h2>Drag & Drop <span class="gradient-text">Circuit Builder</span></h2>
+            <p class="section-description">
+                Build quantum circuits visually! Drag gates from the palette and drop them on the circuit.
+            </p>
+        </div>
+
+        <div class="glass">
+            <div class="info-box">
+                <strong>How to use:</strong> Drag gates from left palette → drop on circuit slots → run!
+            </div>
+
+            <div style="display: grid; grid-template-columns: 200px 1fr; gap: 2rem; margin: 2rem 0;">
+                <div id="gatePalette" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <h4 style="text-align: center; margin-bottom: 0.5rem;">Gates</h4>
+                    <div class="gate-item" draggable="true" data-gate="H">
+                        <div style="font-size: 2rem; font-weight: 700;">H</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Hadamard</div>
+                    </div>
+                    <div class="gate-item" draggable="true" data-gate="X">
+                        <div style="font-size: 2rem; font-weight: 700;">X</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">NOT</div>
+                    </div>
+                    <div class="gate-item" draggable="true" data-gate="Y">
+                        <div style="font-size: 2rem; font-weight: 700;">Y</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Pauli-Y</div>
+                    </div>
+                    <div class="gate-item" draggable="true" data-gate="Z">
+                        <div style="font-size: 2rem; font-weight: 700;">Z</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Phase</div>
+                    </div>
+                </div>
+
+                <div id="circuitArea" style="background: rgba(5,8,21,0.6); border: 2px solid rgba(0,245,255,0.2); border-radius: 16px; padding: 2rem; min-height: 300px;">
+                    <div class="circuit-wire" data-qubit="0">
+                        <span style="font-weight: 600; margin-right: 1rem;">q₀ |0⟩</span>
+                        <div class="gate-slot" data-pos="0" data-qubit="0"></div>
+                        <div class="gate-slot" data-pos="1" data-qubit="0"></div>
+                        <div class="gate-slot" data-pos="2" data-qubit="0"></div>
+                        <div class="gate-slot" data-pos="3" data-qubit="0"></div>
+                    </div>
+                    <div class="circuit-wire" data-qubit="1" style="margin-top: 2rem;">
+                        <span style="font-weight: 600; margin-right: 1rem;">q₁ |0⟩</span>
+                        <div class="gate-slot" data-pos="0" data-qubit="1"></div>
+                        <div class="gate-slot" data-pos="1" data-qubit="1"></div>
+                        <div class="gate-slot" data-pos="2" data-qubit="1"></div>
+                        <div class="gate-slot" data-pos="3" data-qubit="1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="runDragCircuit()">▶ Run Circuit</button>
+                <button class="btn btn-outline" onclick="clearDragCircuit()">✕ Clear</button>
+                <button class="btn btn-outline" onclick="exportCircuitCode()">⟨/⟩ Export Code</button>
+            </div>
+
+            <div id="dragCircuitResult"></div>
+            <div id="circuitCode" style="display: none; margin-top: 2rem; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,245,255,0.3); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <h4 style="margin: 0;">Python Code (Qiskit)</h4>
+                    <button class="btn btn-outline" onclick="copyCircuitCode()" style="padding: 0.5rem 1rem; font-size: 0.875rem;">⎘ Copy</button>
+                </div>
+                <pre id="codeOutput" style="color: #a8e6cf; overflow-x: auto; font-family: monospace; font-size: 0.875rem;"></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Algorithm Library -->
+    <section id="section8">
+        <div class="section-header">
+            <div class="section-badge">QUANTUM ALGORITHMS</div>
+            <h2>Famous <span class="gradient-text">Algorithms</span></h2>
+            <p class="section-description">
+                Explore quantum algorithms that revolutionized computing!
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 2rem 0;">
+            <div class="glass algorithm-card" onclick="showAlgorithm('deutsch')" style="cursor: pointer; transition: all 0.3s ease; padding: 1.5rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⚛️</div>
+                <h3>Deutsch's Algorithm</h3>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin: 1rem 0;">
+                    Determine if a function is constant or balanced using only ONE query.
+                </p>
+                <div style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(251,191,36,0.2); border: 1px solid var(--accent); border-radius: 12px; font-size: 0.75rem;">
+                    Beginner
+                </div>
+            </div>
+
+            <div class="glass algorithm-card" onclick="showAlgorithm('grover')" style="cursor: pointer; transition: all 0.3s ease; padding: 1.5rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔎</div>
+                <h3>Grover's Search</h3>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin: 1rem 0;">
+                    Search unsorted database with quadratic speedup over classical algorithms.
+                </p>
+                <div style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(239,68,68,0.2); border: 1px solid var(--secondary); border-radius: 12px; font-size: 0.75rem; font-weight: 500; color: var(--secondary); line-height: 1;">Intermediate</div>
+            </div>
+
+            <div class="glass algorithm-card" onclick="showAlgorithm('shor')" style="cursor: pointer; transition: all 0.3s ease; padding: 1.5rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔑</div>
+                <h3>Shor's Algorithm</h3>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin: 1rem 0;">
+                    Factor large numbers exponentially faster - breaks RSA encryption!
+                </p>
+                <div style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(239,68,68,0.2); border: 1px solid var(--error); border-radius: 12px; font-size: 0.75rem;">
+                    Advanced
+                </div>
+            </div>
+
+            <div class="glass algorithm-card" onclick="showAlgorithm('teleportation')" style="cursor: pointer; transition: all 0.3s ease; padding: 1.5rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">↔️</div>
+                <h3>Quantum Teleportation</h3>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin: 1rem 0;">
+                    Transfer quantum state using entanglement and classical bits.
+                </p>
+                <div style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(251,191,36,0.2); border: 1px solid var(--accent); border-radius: 12px; font-size: 0.75rem;">
+                    Intermediate
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Quantum Tic-Tac-Toe -->
+    <section id="section9">
+        <div class="section-header">
+            <div class="section-badge">QUANTUM GAME</div>
+            <h2>Quantum <span class="gradient-text">Tic-Tac-Toe</span></h2>
+            <p class="section-description">
+                Play tic-tac-toe with quantum superposition! Markers exist in both X and O states until measured.
+            </p>
+        </div>
+
+        <div class="glass" style="max-width: 600px; margin: 0 auto;">
+            <h3 id="gameStatus" style="text-align: center; margin-bottom: 1.5rem;">Your Turn - Place Quantum Marker</h3>
+
+            <div id="gameBoard" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; max-width: 400px; margin-left: auto; margin-right: auto;">
+                <!-- Cells generated by JS -->
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="measureGameBoard()">⊙ Measure All Cells</button>
+                <button class="btn btn-outline" onclick="resetQuantumGame()">↻ New Game</button>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <strong>How to play:</strong><br>
+                1. Click cells to place quantum markers (both X and O simultaneously)<br>
+                2. Markers stay in superposition (?) until measured<br>
+                3. Click "Measure All" to collapse all cells<br>
+                4. First to get 3 in a row wins!
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Achievements -->
+    <section id="section10">
+        <div class="section-header">
+            <div class="section-badge">YOUR PROGRESS</div>
+            <h2>Your <span class="gradient-text">Achievements</span></h2>
+            <p class="section-description">
+                Unlock badges as you explore quantum computing concepts!
+            </p>
+        </div>
+
+        <div class="glass">
+            <div id="achievementGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div class="achievement-badge" data-badge="first-measure">
+                    <div class="badge-icon" style="color: var(--primary);">⊙</div>
+                    <div class="badge-name">First Measurement</div>
+                    <div class="badge-desc">Measure a qubit</div>
+                </div>
+                <div class="achievement-badge" data-badge="entanglement">
+                    <div class="badge-icon" style="color: var(--secondary);">⧈</div>
+                    <div class="badge-name">Entanglement Master</div>
+                    <div class="badge-desc">Create entanglement</div>
+                </div>
+                <div class="achievement-badge" data-badge="circuit-builder">
+                    <div class="badge-icon" style="color: var(--accent);">◎</div>
+                    <div class="badge-name">Circuit Builder</div>
+                    <div class="badge-desc">Build a circuit</div>
+                </div>
+                <div class="achievement-badge" data-badge="code-exporter">
+                    <div class="badge-icon" style="color: var(--primary);">⟨/⟩</div>
+                    <div class="badge-name">Code Exporter</div>
+                    <div class="badge-desc">Export circuit code</div>
+                </div>
+                <div class="achievement-badge" data-badge="algorithm-explorer">
+                    <div class="badge-icon" style="color: var(--secondary);">≡</div>
+                    <div class="badge-name">Algorithm Explorer</div>
+                    <div class="badge-desc">Learn an algorithm</div>
+                </div>
+                <div class="achievement-badge" data-badge="quantum-gamer">
+                    <div class="badge-icon" style="color: var(--accent);">▶</div>
+                    <div class="badge-name">Quantum Gamer</div>
+                    <div class="badge-desc">Play tic-tac-toe</div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <strong>▸ Progress:</strong> <span id="achievementProgress">0/6</span> achievements unlocked!<br>
+                <small style="color: var(--text-muted);">Your progress is saved automatically in your browser.</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithm Modal -->
+    <div id="algorithmModal" onclick="closeAlgorithmModal()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9999; cursor: pointer;">
+        <div onclick="event.stopPropagation()" style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 3rem; max-width: 700px; max-height: 80vh; overflow-y: auto; position: relative; cursor: default;">
+            <button onclick="closeAlgorithmModal()" style="position: absolute; top: 1rem; right: 1rem; width: 40px; height: 40px; border: none; background: rgba(255,255,255,0.1); color: white; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: all 0.3s ease;">×</button>
+            <div id="algorithmContent"></div>
+        </div>
+    </div>
+
+<!-- Footer -->
+        <footer style="text-align: center; padding: 4rem 0; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem;">
+            <h3 style="margin-bottom: 1rem;">Continue Your Quantum Journey</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Ready to dive deeper? Explore these professional quantum computing platforms and start programming real quantum computers!
+            </p>
+            <div class="btn-group">
+                <a href="https://www.ibm.com/quantum/qiskit" target="_blank" class="btn btn-outline">Qiskit by IBM</a>
+                <a href="https://www.ibm.com/quantum/" target="_blank" class="btn btn-outline">IBM Quantum</a>
+                <a href="https://quantumai.google/" target="_blank" class="btn btn-outline">Google Quantum AI</a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.875rem; color: var(--text-muted);">
+                Interactive Quantum Computing Learning Platform | 2025
+            </p>
+        </footer>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+
+    <script>
+        // Global interaction counter
+        let totalInteractions = 0;
+        function incrementInteraction() {
+            totalInteractions++;
+            document.getElementById('interactionCount').textContent = totalInteractions;
+        }
+
+        // Toast notification system
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<strong>${type === 'success' ? '✓' : '!'}</strong> ${message}`;
+            document.getElementById('toastContainer').appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Particles
+        const particleContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 20 + 's';
+            p.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particleContainer.appendChild(p);
+        }
+
+        // Navigation
+        const sections = document.querySelectorAll('section[id^="section"]');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        function scrollToSection(index) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            let current = 0;
+            sections.forEach((section, i) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) current = i;
+            });
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === current);
+            });
+        });
+
+        // Classical Toggle
+        let classicalState = 0;
+        function toggleClassical() {
+            incrementInteraction();
+            classicalState = classicalState === 0 ? 1 : 0;
+            document.getElementById('classicalToggle').classList.toggle('active');
+            const display = document.getElementById('classicalState');
+            display.textContent = classicalState;
+            display.style.color = classicalState === 1 ? 'var(--primary)' : 'var(--text-muted)';
+            document.getElementById('classicalExplain').textContent = classicalState;
+            gsap.from(display, { scale: 1.3, duration: 0.3, ease: 'elastic.out(1, 0.5)' });
+        }
+
+        // Qubit Measurement
+        let qubitMeasured = false;
+        let qubitResult = null;
+
+        function drawQubit() {
+            const canvas = document.getElementById('qubitCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2, cy = canvas.height / 2, r = 90;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!qubitMeasured) {
+                const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+                grad.addColorStop(0, 'rgba(0,245,255,0.9)');
+                grad.addColorStop(0.5, 'rgba(255,0,255,0.7)');
+                grad.addColorStop(1, 'rgba(0,245,255,0.2)');
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0,245,255,0.5)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 60px Space Grotesk';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('?', cx, cy);
+
+                ctx.font = '16px Space Grotesk';
+                ctx.fillText('Superposition', cx, cy + r + 30);
+            } else {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.fillStyle = qubitResult === 0 ? 'rgba(59,130,246,0.6)' : 'rgba(239,68,68,0.6)';
+                ctx.fill();
+                ctx.strokeStyle = qubitResult === 0 ? '#3b82f6' : '#ef4444';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 80px Space Grotesk';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(qubitResult, cx, cy);
+
+                ctx.font = '16px Space Grotesk';
+                ctx.fillText('Measured!', cx, cy + r + 30);
+            }
+        }
+
+        function measureQubit() {
+            incrementInteraction();
+            qubitMeasured = true;
+            qubitResult = Math.random() < 0.5 ? 0 : 1;
+            drawQubit();
+
+            showToast(`Qubit collapsed to |${qubitResult}⟩!`, 'success');
+
+            document.getElementById('qubitResult').innerHTML = `
+                <div class="result-box ${qubitResult === 0 ? 'success' : 'error'}">
+                    <h4 style="margin-bottom: 0.5rem;">Wave Function Collapsed!</h4>
+                    <p style="font-size: 1.75rem; margin: 1rem 0;"><strong>Result: |${qubitResult}⟩</strong></p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">
+                        The qubit was in superposition (both 0 and 1). Upon measurement, the wave function collapsed 
+                        to a single definite state. There was a 50% probability for each outcome.
+                    </p>
+                </div>
+            `;
+
+            setTimeout(() => {
+                qubitMeasured = false;
+                drawQubit();
+                document.getElementById('qubitResult').innerHTML = `
+                    <div class="info-box">
+                        <p>The qubit has returned to superposition. Try measuring again - you might get a different result!</p>
+                    </div>
+                `;
+            }, 5000);
+        }
+
+        // Superposition Coin
+        let coinProb = 0.5;
+        let coinState = 'super';
+        let coinAnimating = false;
+        let flipStats = {total: 0, zeros: 0, ones: 0};
+
+        function drawCoin() {
+            const canvas = document.getElementById('coinCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2, cy = canvas.height / 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (coinState === 'super') {
+                const time = Date.now() / 1000;
+                const rot = Math.sin(time * 3) * Math.PI / 6;
+
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(rot);
+
+                const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, 70);
+                grad.addColorStop(0, '#fbbf24');
+                grad.addColorStop(1, '#f59e0b');
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 70, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.strokeStyle = '#d97706';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 60px Space Grotesk';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('?', 0, 0);
+
+                ctx.restore();
+
+                // Probability bars
+                const barY = cy + 110, barW = 220, barH = 25;
+                ctx.fillStyle = 'rgba(59,130,246,0.2)';
+                ctx.fillRect(cx - barW/2, barY, barW, barH);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(cx - barW/2, barY, barW * coinProb, barH);
+
+                ctx.fillStyle = 'rgba(239,68,68,0.2)';
+                ctx.fillRect(cx - barW/2, barY + 35, barW, barH);
+                ctx.fillStyle = '#ef4444';
+                ctx.fillRect(cx - barW/2, barY + 35, barW * (1 - coinProb), barH);
+
+                ctx.fillStyle = 'white';
+                ctx.font = '14px Space Grotesk';
+                ctx.textAlign = 'left';
+                ctx.fillText('|0⟩: ' + (coinProb * 100).toFixed(0) + '%', cx - barW/2 - 75, barY + 17);
+                ctx.fillText('|1⟩: ' + ((1-coinProb) * 100).toFixed(0) + '%', cx - barW/2 - 75, barY + 52);
+            } else {
+                const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+                grad.addColorStop(0, coinState === 0 ? '#60a5fa' : '#f87171');
+                grad.addColorStop(1, coinState === 0 ? '#3b82f6' : '#ef4444');
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+                ctx.strokeStyle = coinState === 0 ? '#1e40af' : '#b91c1c';
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 90px Space Grotesk';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(coinState, cx, cy);
+            }
+        }
+
+        document.getElementById('probSlider').addEventListener('input', function(e) {
+            coinProb = e.target.value / 100;
+            document.getElementById('probValue').textContent = e.target.value + '%';
+            if (coinState === 'super') drawCoin();
+        });
+
+        function flipCoin() {
+            incrementInteraction();
+            if (coinAnimating) return;
+            coinAnimating = true;
+            coinState = 'super';
+
+            let flips = 0;
+            const interval = setInterval(() => {
+                drawCoin();
+                if (++flips > 15) {
+                    clearInterval(interval);
+                    coinAnimating = false;
+                }
+            }, 80);
+
+            showToast('Coin flipped into superposition!', 'success');
+
+            document.getElementById('coinResult').innerHTML = `
+                <div class="result-box warning">
+                    <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Quantum Superposition Active!</h4>
+                    <p style="margin-top: 0.5rem;">
+                        The coin is now spinning - it exists as BOTH |0⟩ and |1⟩ simultaneously! 
+                        Click "Measure" to collapse it to a single state based on your probability setting.
+                    </p>
+                </div>
+            `;
+        }
+
+        function measureCoin() {
+            incrementInteraction();
+            if (coinState === 'super') {
+                coinState = Math.random() < coinProb ? 0 : 1;
+                flipStats.total++;
+                if (coinState === 0) flipStats.zeros++;
+                else flipStats.ones++;
+
+                drawCoin();
+
+                showToast(`Measured |${coinState}⟩ (probability was ${(coinState === 0 ? coinProb : 1-coinProb)*100}%)`, 'success');
+
+                document.getElementById('coinResult').innerHTML = `
+                    <div class="result-box ${coinState === 0 ? 'success' : 'error'}">
+                        <h4 style="margin-bottom: 0.5rem;">Superposition Collapsed!</h4>
+                        <p style="font-size: 2rem; margin: 1rem 0;"><strong>Result: |${coinState}⟩</strong></p>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">
+                            Your probability was ${(coinProb * 100).toFixed(0)}% for |0⟩ and ${((1-coinProb)*100).toFixed(0)}% for |1⟩. 
+                            With many measurements, the results should approach these probabilities (Law of Large Numbers).
+                        </p>
+                    </div>
+                `;
+
+                // Update stats
+                document.getElementById('coinStats').style.display = 'block';
+                document.getElementById('flipsCount').textContent = flipStats.total;
+                document.getElementById('zeros').textContent = flipStats.zeros;
+                document.getElementById('ones').textContent = flipStats.ones;
+            } else {
+                showToast('Flip the coin first before measuring!', 'error');
+            }
+        }
+
+
+        // Entanglement
+        let entangleState = null;
+        let measured = {A: false, B: false};
+
+        function measureEntangled(qubit) {
+            incrementInteraction();
+            if (measured.A && measured.B) {
+                showToast('Both qubits already measured! Click Reset to try again.', 'error');
+                return;
+            }
+
+            const sphereA = document.getElementById('qubitA');
+            const sphereB = document.getElementById('qubitB');
+            const msgDiv = document.getElementById('entangleMsg');
+
+            if (!measured.A && !measured.B) {
+                entangleState = Math.random() < 0.5 ? 0 : 1;
+                measured[qubit] = true;
+
+                const sphere = document.getElementById('qubit' + qubit);
+                sphere.querySelector('span').textContent = entangleState;
+                sphere.classList.add('measured');
+                document.getElementById('state' + qubit).textContent = '|' + entangleState + '⟩ (Measured)';
+                document.getElementById('state' + qubit).style.color = entangleState === 0 ? '#3b82f6' : '#ef4444';
+                document.getElementById('prob' + qubit).textContent = '100% certain';
+
+                showToast(`Qubit ${qubit} measured as |${entangleState}⟩!`, 'success');
+
+                msgDiv.innerHTML = `
+                    <h4 style="color: var(--primary); margin-bottom: 0.75rem;">First Measurement Complete!</h4>
+                    <p style="margin-bottom: 0.5rem;"><strong>Qubit ${qubit}</strong> collapsed to <strong>|${entangleState}⟩</strong></p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem;">
+                        <strong>Step 2:</strong> Now click on the other qubit. Because they're entangled, 
+                        it will INSTANTLY be in the same state - no matter how far apart they are!
+                    </p>
+                `;
+                msgDiv.className = 'result-box warning';
+            } else {
+                measured[qubit] = true;
+                const sphere = document.getElementById('qubit' + qubit);
+                sphere.querySelector('span').textContent = entangleState;
+                sphere.classList.add('measured');
+                document.getElementById('state' + qubit).textContent = '|' + entangleState + '⟩ (Entangled)';
+                document.getElementById('state' + qubit).style.color = entangleState === 0 ? '#3b82f6' : '#ef4444';
+                document.getElementById('prob' + qubit).textContent = '100% certain';
+
+                showToast('Entanglement observed! Both qubits are now |' + entangleState + '⟩', 'success');
+
+                msgDiv.innerHTML = `
+                    <h4 style="color: var(--secondary); margin-bottom: 0.75rem; font-size: 1.5rem;">✓ Entanglement Demonstrated!</h4>
+                    <p style="font-size: 1.125rem; margin-bottom: 1rem;">
+                        <strong>Both qubits collapsed to |${entangleState}⟩!</strong>
+                    </p>
+                    <p style="color: var(--text-muted); line-height: 1.7;">
+                        This is the "spooky action at a distance" Einstein was skeptical about. When you measured Qubit ${qubit}, 
+                        it was already predetermined to be |${entangleState}⟩ due to the entanglement created earlier. 
+                        This correlation happens <strong>instantaneously</strong>, faster than light could travel between them!
+                    </p>
+                    <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.875rem; color: var(--text-muted);">
+                        💡 <strong>Note:</strong> No information travels faster than light. The correlation was established when the qubits became entangled.
+                    </p>
+                `;
+                msgDiv.className = 'result-box success';
+            }
+        }
+
+        function resetEntanglement() {
+            incrementInteraction();
+            entangleState = null;
+            measured = {A: false, B: false};
+            ['A', 'B'].forEach(q => {
+                document.getElementById('qubit' + q).querySelector('span').textContent = '?';
+                document.getElementById('qubit' + q).classList.remove('measured');
+                document.getElementById('state' + q).textContent = 'Superposition';
+                document.getElementById('state' + q).style.color = 'var(--text)';
+                document.getElementById('prob' + q).textContent = '50% chance of each';
+            });
+            document.getElementById('entangleMsg').innerHTML = '<strong>Step 1:</strong> Click on either Qubit A or Qubit B to measure it first.';
+            document.getElementById('entangleMsg').className = 'result-box';
+
+            showToast('Entanglement reset - try again!', 'success');
+        }
+
+        // Quantum Gates
+        let circuitState = {alpha: 1, beta: 0};
+        let gateHistory = [];
+
+        function applyGate(gate) {
+            incrementInteraction();
+            const {alpha, beta} = circuitState;
+            const sqrt2 = Math.sqrt(2);
+
+            if (gate === 'X') circuitState = {alpha: beta, beta: alpha};
+            else if (gate === 'H') circuitState = {alpha: (alpha + beta) / sqrt2, beta: (alpha - beta) / sqrt2};
+            else if (gate === 'Z') circuitState = {alpha: alpha, beta: -beta};
+
+            gateHistory.push(gate);
+            updateCircuitDisplay();
+            showToast(`${gate} gate applied to circuit!`, 'success');
+        }
+
+        function updateCircuitDisplay() {
+            const {alpha, beta} = circuitState;
+            const p0 = alpha * alpha;
+            const p1 = beta * beta;
+
+            document.getElementById('stateVector').textContent = 
+                `${alpha.toFixed(3)}|0⟩ ${beta >= 0 ? '+' : ''} ${beta.toFixed(3)}|1⟩`;
+            document.getElementById('gateSequence').textContent = 
+                gateHistory.length ? gateHistory.join(' → ') : 'None';
+            document.getElementById('circuitProbs').textContent = 
+                `|0⟩: ${(p0*100).toFixed(1)}% | |1⟩: ${(p1*100).toFixed(1)}%`;
+
+            drawCircuitCanvas();
+        }
+
+        function drawCircuitCanvas() {
+            const canvas = document.getElementById('circuitCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2, cy = canvas.height / 2, r = 120;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const p0 = circuitState.alpha * circuitState.alpha;
+            const p1 = circuitState.beta * circuitState.beta;
+
+            // Draw probability pie chart
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + (p0 * Math.PI * 2));
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(59,130,246,0.7)';
+            ctx.fill();
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, -Math.PI/2 + (p0 * Math.PI * 2), Math.PI * 3/2);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(239,68,68,0.7)';
+            ctx.fill();
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Space Grotesk';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${(p0*100).toFixed(1)}%`, cx, cy - 20);
+            ctx.fillText(`${(p1*100).toFixed(1)}%`, cx, cy + 35);
+
+            ctx.font = '14px Space Grotesk';
+            ctx.fillText('|0⟩', cx, cy - 45);
+            ctx.fillText('|1⟩', cx, cy + 55);
+        }
+
+        function measureCircuit() {
+            incrementInteraction();
+            const p0 = circuitState.alpha * circuitState.alpha;
+            const result = Math.random() < p0 ? 0 : 1;
+            circuitState = result === 0 ? {alpha: 1, beta: 0} : {alpha: 0, beta: 1};
+            gateHistory.push('⚡MEASURE');
+            updateCircuitDisplay();
+
+            document.getElementById('circuitMeasureResult').innerHTML = `
+                <div class="result-box ${result === 0 ? 'success' : 'error'}">
+                    <h4 style="margin-bottom: 0.75rem;">Circuit Measured!</h4>
+                    <p style="font-size: 2rem; margin: 1rem 0;"><strong>Result: |${result}⟩</strong></p>
+                    <p style="color: var(--text-muted); font-size: 0.875rem;">
+                        The quantum circuit has been measured and collapsed to a definite state. 
+                        The probability of this outcome was ${(result === 0 ? p0 : 1-p0)*100}%.
+                    </p>
+                </div>
+            `;
+
+            showToast(`Circuit measured: |${result}⟩`, 'success');
+        }
+
+        function resetCircuit() {
+            incrementInteraction();
+            circuitState = {alpha: 1, beta: 0};
+            gateHistory = [];
+            updateCircuitDisplay();
+            document.getElementById('circuitMeasureResult').innerHTML = '';
+            showToast('Circuit reset to |0⟩', 'success');
+        }
+
+        // Quiz
+        const quizData = [
+            { q: "What makes a qubit fundamentally different from a classical bit?", 
+              opts: ["It's faster", "It can be 0 AND 1 simultaneously (superposition)", "It uses less power", "It's physically smaller"], 
+              correct: 1, 
+              exp: "Through quantum superposition, a qubit can exist as both |0⟩ and |1⟩ at the same time until measured!" },
+            { q: "What happens when you measure a qubit in superposition?", 
+              opts: ["Nothing changes", "It speeds up", "It collapses to either 0 or 1", "It creates two qubits"], 
+              correct: 2, 
+              exp: "Measurement causes the wave function to collapse, forcing the qubit into a definite state (either 0 or 1)." },
+            { q: "What is quantum entanglement?", 
+              opts: ["Qubits physically tangling together", "Measuring one instantly affects another, regardless of distance", "Qubits vibrating in sync", "Qubits sharing the same memory"], 
+              correct: 1, 
+              exp: "Entanglement creates a correlation between qubits - measuring one instantly determines the state of the other!" },
+            { q: "What does the Hadamard (H) gate do?", 
+              opts: ["Flips |0⟩ to |1⟩", "Deletes the qubit", "Creates equal superposition", "Measures the qubit"], 
+              correct: 2, 
+              exp: "The H gate creates a perfect 50-50 superposition: H|0⟩ = (|0⟩ + |1⟩)/√2" },
+            { q: "Which is a REAL application of quantum computers?", 
+              opts: ["Playing video games faster", "Browsing the web", "Simulating molecules for drug discovery", "Sending emails"], 
+              correct: 2, 
+              exp: "Quantum computers excel at simulating molecular interactions, revolutionizing drug discovery and materials science!" }
+        ];
+
+        let currentQ = 0, score = 0, answered = false, quizAnswers = [];
+
+        function loadQuiz() {
+            currentQ = 0; score = 0; answered = false; quizAnswers = [];
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizData[currentQ];
+            document.getElementById('quizContainer').innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Question ${currentQ + 1} of ${quizData.length}</h3>
+                        <span style="color: var(--text-muted); font-size: 0.875rem;">Score: ${score}/${currentQ}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${((currentQ + 1) / quizData.length) * 100}%;">${currentQ + 1}/${quizData.length}</div>
+                    </div>
+                </div>
+
+                <p style="font-size: 1.5rem; margin-bottom: 2rem; font-weight: 600; line-height: 1.5;">${q.q}</p>
+                ${q.opts.map((opt, i) => `
+                    <div class="quiz-option" onclick="selectAnswer(${i})" id="opt${i}">
+                        <strong>${String.fromCharCode(65 + i)}.</strong> ${opt}
+                    </div>
+                `).join('')}
+                <div id="feedback" style="margin-top: 2rem;"></div>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="margin-top: 2rem; display: none;">
+                    ${currentQ < quizData.length - 1 ? 'Next Question →' : 'See Results →'}
+                </button>
+            `;
+        }
+
+        function selectAnswer(idx) {
+            if (answered) return;
+            incrementInteraction();
+            answered = true;
+            const q = quizData[currentQ];
+            const correct = idx === q.correct;
+
+            if (correct) score++;
+            quizAnswers.push({question: currentQ, correct: correct});
+
+            document.getElementById('opt' + idx).classList.add(correct ? 'correct' : 'wrong');
+            if (!correct) document.getElementById('opt' + q.correct).classList.add('correct');
+
+            // Disable all options
+            for (let i = 0; i < q.opts.length; i++) {
+                document.getElementById('opt' + i).style.pointerEvents = 'none';
+            }
+
+            document.getElementById('feedback').innerHTML = `
+                <div class="result-box ${correct ? 'success' : 'error'}">
+                    <h4 style="margin-bottom: 0.75rem; font-size: 1.25rem;">${correct ? '✓ Correct!' : '✗ Not quite!'}</h4>
+                    <p style="line-height: 1.7;">${q.exp}</p>
+                </div>
+            `;
+
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            showToast(correct ? 'Correct answer!' : 'Incorrect, but keep learning!', correct ? 'success' : 'error');
+        }
+
+        function nextQuestion() {
+            answered = false;
+            currentQ++;
+            if (currentQ < quizData.length) showQuestion();
+            else showQuizResults();
+        }
+
+        function showQuizResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizScore').style.display = 'block';
+            document.getElementById('finalScore').textContent = score;
+
+            const pct = (score / quizData.length) * 100;
+            let message, emoji;
+
+            if (pct === 100) { message = "Perfect score! You're a quantum computing genius!"; emoji = "🏆"; }
+            else if (pct >= 80) { message = "Excellent work! You really understand quantum concepts!"; emoji = "🌟"; }
+            else if (pct >= 60) { message = "Good job! You're on the right track!"; emoji = "👍"; }
+            else { message = "Keep practicing! Review the concepts and try again!"; emoji = "📚"; }
+
+            document.getElementById('scoreMessage').innerHTML = `${emoji} ${message}`;
+
+            // Breakdown
+            let breakdown = `<p style="margin-bottom: 0.5rem;"><strong>Your answers:</strong></p>`;
+            quizAnswers.forEach((ans, i) => {
+                breakdown += `<div style="margin: 0.5rem 0;">
+                    Question ${i+1}: ${ans.correct ? '<span style="color: #10b981;">✓ Correct</span>' : '<span style="color: #ef4444;">✗ Incorrect</span>'}
+                </div>`;
+            });
+            document.getElementById('quizBreakdown').innerHTML = breakdown;
+
+            showToast(`Quiz completed! Score: ${score}/${quizData.length}`, 'success');
+        }
+
+        function restartQuiz() {
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizScore').style.display = 'none';
+            loadQuiz();
+            showToast('Quiz restarted!', 'success');
+        }
+
+
+        // Simulator
+        let simState = {alpha: 1, beta: 0};
+
+        function simApplyGate(gate) {
+            incrementInteraction();
+            const {alpha, beta} = simState;
+            const sqrt2 = Math.sqrt(2);
+
+            if (gate === 'H') simState = {alpha: (alpha + beta) / sqrt2, beta: (alpha - beta) / sqrt2};
+            else if (gate === 'X') simState = {alpha: beta, beta: alpha};
+            else if (gate === 'Z') simState = {alpha: alpha, beta: -beta};
+            else if (gate === 'Y') simState = {alpha: -beta, beta: alpha};
+
+            updateSimulator();
+            showToast(`${gate} gate applied!`, 'success');
+        }
+
+        function updateSimulator() {
+            const {alpha, beta} = simState;
+            const p0 = alpha * alpha;
+            const p1 = beta * beta;
+
+            document.getElementById('simState').textContent = 
+                `|ψ⟩ = ${alpha.toFixed(3)}|0⟩ ${beta >= 0 ? '+' : ''} ${beta.toFixed(3)}|1⟩`;
+
+            document.getElementById('prob0').textContent = (p0 * 100).toFixed(1) + '%';
+            document.getElementById('prob1').textContent = (p1 * 100).toFixed(1) + '%';
+
+            document.getElementById('probBar0').style.width = (p0 * 100) + '%';
+            document.getElementById('probBar1').style.width = (p1 * 100) + '%';
+            document.getElementById('probBar0').textContent = (p0 * 100).toFixed(1) + '%';
+            document.getElementById('probBar1').textContent = (p1 * 100).toFixed(1) + '%';
+
+            drawSimulator();
+        }
+
+        function drawSimulator() {
+            const canvas = document.getElementById('simulatorCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2, cy = canvas.height / 2, r = 130;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background circle
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(10,14,39,0.8)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Horizontal line
+            ctx.beginPath();
+            ctx.moveTo(cx - r, cy);
+            ctx.lineTo(cx + r, cy);
+            ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            const p0 = simState.alpha * simState.alpha;
+            const p1 = simState.beta * simState.beta;
+
+            // Top hemisphere (|0⟩)
+            if (p0 > 0.01) {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, r, Math.PI, 0, true);
+                ctx.closePath();
+                ctx.fillStyle = `rgba(59,130,246,${p0 * 0.7})`;
+                ctx.fill();
+            }
+
+            // Bottom hemisphere (|1⟩)
+            if (p1 > 0.01) {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, r, 0, Math.PI, true);
+                ctx.closePath();
+                ctx.fillStyle = `rgba(239,68,68,${p1 * 0.7})`;
+                ctx.fill();
+            }
+
+            // Labels
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 18px Space Grotesk';
+            ctx.textAlign = 'center';
+            ctx.fillText('|0⟩', cx, cy - r - 15);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillText(`${(p0*100).toFixed(1)}%`, cx, cy - r/2);
+
+            ctx.fillStyle = 'white';
+            ctx.fillText('|1⟩', cx, cy + r + 25);
+            ctx.fillStyle = '#ef4444';
+            ctx.fillText(`${(p1*100).toFixed(1)}%`, cx, cy + r/2);
+        }
+
+        function simMeasure() {
+            incrementInteraction();
+            const p0 = simState.alpha * simState.alpha;
+            const result = Math.random() < p0 ? 0 : 1;
+            const prevProb = result === 0 ? p0 : 1 - p0;
+
+            simState = result === 0 ? {alpha: 1, beta: 0} : {alpha: 0, beta: 1};
+            updateSimulator();
+
+            document.getElementById('simMeasureResult').innerHTML = `
+                <div class="result-box ${result === 0 ? 'success' : 'error'}">
+                    <strong>Measured: |${result}⟩</strong> (probability was ${(prevProb*100).toFixed(1)}%)
+                </div>
+            `;
+
+            showToast(`Simulator measured: |${result}⟩`, 'success');
+
+            setTimeout(() => {
+                document.getElementById('simMeasureResult').innerHTML = '';
+            }, 4000);
+        }
+
+        function simReset() {
+            incrementInteraction();
+            simState = {alpha: 1, beta: 0};
+            updateSimulator();
+            document.getElementById('simMeasureResult').innerHTML = '';
+            showToast('Simulator reset to |0⟩', 'success');
+        }
+
+        // Initialize all
+        window.addEventListener('load', function() {
+            // Draw canvases
+            drawQubit();
+            drawCoin();
+            setInterval(() => { if (coinState === 'super') drawCoin(); }, 50);
+            resetEntanglement();
+            updateCircuitDisplay();
+            loadQuiz();
+            updateSimulator();
+
+            // GSAP animations
+            gsap.from('.hero h1', { opacity: 0, y: 50, duration: 1, delay: 0.2 });
+            gsap.from('.hero p', { opacity: 0, y: 30, duration: 1, delay: 0.4 });
+            gsap.from('.stats-grid', { opacity: 0, y: 30, duration: 0.8, delay: 0.6 });
+
+            // Show welcome toast
+            setTimeout(() => {
+                showToast('Welcome to Quantum Computing! Start interacting to learn.', 'success');
+            }, 1000);
+        });
+    
+
+        // ==================== DRAG & DROP CIRCUIT ====================
+        let dragCircuit = [];
+        let draggedGateType = null;
+
+        window.addEventListener('DOMContentLoaded', function() {
+            // Setup drag and drop
+            const gateItems = document.querySelectorAll('.gate-item');
+            const gateSlots = document.querySelectorAll('.gate-slot');
+
+            gateItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedGateType = e.target.dataset.gate || e.target.closest('.gate-item').dataset.gate;
+                    e.target.style.opacity = '0.5';
+                });
+                item.addEventListener('dragend', (e) => {
+                    e.target.style.opacity = '1';
+                });
+            });
+
+            gateSlots.forEach(slot => {
+                slot.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    slot.classList.add('drag-over');
+                });
+                slot.addEventListener('dragleave', () => {
+                    slot.classList.remove('drag-over');
+                });
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('drag-over');
+
+                    if (draggedGateType && !slot.classList.contains('filled')) {
+                        slot.textContent = draggedGateType;
+                        slot.classList.add('filled');
+
+                        const qubit = parseInt(slot.dataset.qubit);
+                        const pos = parseInt(slot.dataset.pos);
+                        dragCircuit.push({gate: draggedGateType, qubit, pos});
+
+                        incrementInteraction();
+                        unlockAchievement('circuit-builder');
+                        showToast(`${draggedGateType} gate added!`, 'success');
+                    }
+                });
+
+                // Click to remove
+                slot.addEventListener('click', () => {
+                    if (slot.classList.contains('filled')) {
+                        const qubit = parseInt(slot.dataset.qubit);
+                        const pos = parseInt(slot.dataset.pos);
+                        dragCircuit = dragCircuit.filter(g => !(g.qubit === qubit && g.pos === pos));
+                        slot.textContent = '';
+                        slot.classList.remove('filled');
+                    }
+                });
+            });
+
+            // Initialize game
+            initQuantumGame();
+
+            // Load achievements
+            loadAchievements();
+        });
+
+        function runDragCircuit() {
+            if (dragCircuit.length === 0) {
+                showToast('Add gates to circuit first!', 'error');
+                return;
+            }
+
+            incrementInteraction();
+
+            // Simulate
+            const result = Math.random() < 0.5 ? '0' : '1';
+            const result2 = Math.random() < 0.5 ? '0' : '1';
+
+            document.getElementById('dragCircuitResult').innerHTML = `
+                <div class="result-box success" style="margin-top: 2rem;">
+                    <h4>Circuit Executed!</h4>
+                    <p style="margin-top: 1rem; font-size: 1.25rem;">
+                        <strong>Result:</strong> |${result}${result2}⟩
+                    </p>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.875rem;">
+                        Applied ${dragCircuit.length} gates on 2 qubits
+                    </p>
+                </div>
+            `;
+
+            showToast(`Circuit result: |${result}${result2}⟩`, 'success');
+        }
+
+        function clearDragCircuit() {
+            dragCircuit = [];
+            document.querySelectorAll('.gate-slot').forEach(slot => {
+                slot.textContent = '';
+                slot.classList.remove('filled');
+            });
+            document.getElementById('dragCircuitResult').innerHTML = '';
+            document.getElementById('circuitCode').style.display = 'none';
+            showToast('Circuit cleared', 'success');
+        }
+
+        function exportCircuitCode() {
+            if (dragCircuit.length === 0) {
+                showToast('Build a circuit first!', 'error');
+                return;
+            }
+
+            incrementInteraction();
+            unlockAchievement('code-exporter');
+
+            let code = `from qiskit import QuantumCircuit
+
+# Create quantum circuit with 2 qubits
+qc = QuantumCircuit(2, 2)
+
+# Apply gates
+`;
+
+            dragCircuit.sort((a, b) => a.pos - b.pos).forEach(g => {
+                code += `qc.${g.gate.toLowerCase()}(${g.qubit})  # ${g.gate} gate on qubit ${g.qubit}\n`;
+            });
+
+            code += `
+# Measure qubits
+qc.measure([0, 1], [0, 1])
+
+# Run on simulator
+from qiskit import Aer, execute
+backend = Aer.get_backend('qasm_simulator')
+job = execute(qc, backend, shots=1024)
+result = job.result()
+counts = result.get_counts()
+print(counts)
+`;
+
+            document.getElementById('codeOutput').textContent = code;
+            document.getElementById('circuitCode').style.display = 'block';
+            showToast('Code exported!', 'success');
+        }
+
+        function copyCircuitCode() {
+            const code = document.getElementById('codeOutput').textContent;
+            navigator.clipboard.writeText(code);
+            showToast('Code copied to clipboard!', 'success');
+        }
+
+        // ==================== ALGORITHMS ====================
+        function showAlgorithm(type) {
+            incrementInteraction();
+            unlockAchievement('algorithm-explorer');
+
+            const algorithms = {
+                deutsch: {
+                    title: "Deutsch's Algorithm",
+                    content: `
+                        <h2>Deutsch's Algorithm</h2>
+                        <p style="margin: 1rem 0; line-height: 1.7;">
+                            Determines if a function f:{0,1} → {0,1} is <strong>constant</strong> (always returns 0 or always 1) 
+                            or <strong>balanced</strong> (returns 0 for half inputs, 1 for other half) using only ONE query!
+                        </p>
+                        <div class="info-box">
+                            <strong>Circuit Steps:</strong><br>
+                            1. Apply Hadamard (H) gates to both qubits<br>
+                            2. Apply the oracle function Uf<br>
+                            3. Apply H gate to first qubit<br>
+                            4. Measure first qubit:<br>
+                            &nbsp;&nbsp; • |0⟩ → function is constant<br>
+                            &nbsp;&nbsp; • |1⟩ → function is balanced
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">
+                            <strong>Why it matters:</strong> Classical computers need 2 queries in worst case, 
+                            quantum needs only 1! This was the first algorithm to show quantum advantage.
+                        </p>
+                    `
+                },
+                grover: {
+                    title: "Grover's Search",
+                    content: `
+                        <h2>Grover's Search Algorithm</h2>
+                        <p style="margin: 1rem 0; line-height: 1.7;">
+                            Search an unsorted database of N items in O(√N) steps instead of O(N) classically!
+                        </p>
+                        <div class="info-box">
+                            <strong>How it works:</strong><br>
+                            1. Create superposition of all possible states<br>
+                            2. Apply Grover iteration ~√N times:<br>
+                            &nbsp;&nbsp; a. Oracle marks the target state<br>
+                            &nbsp;&nbsp; b. Diffusion operator amplifies target amplitude<br>
+                            3. Measure - high probability of finding target
+                        </div>
+                        <p style="margin-top: 1rem;">
+                            <strong>Example:</strong> To search 1 million items:<br>
+                            • Classical: ~500,000 checks on average<br>
+                            • Grover: ~1,000 iterations (√1,000,000)
+                        </p>
+                    `
+                },
+                shor: {
+                    title: "Shor's Algorithm",
+                    content: `
+                        <h2>Shor's Factoring Algorithm</h2>
+                        <p style="margin: 1rem 0; line-height: 1.7;">
+                            Factor large numbers exponentially faster than best known classical algorithms!
+                        </p>
+                        <div class="info-box warning">
+                            <strong>⚠ Security Impact:</strong><br>
+                            RSA encryption relies on factoring being hard. Shor's algorithm breaks RSA in polynomial time, 
+                            threatening current internet security!
+                        </div>
+                        <div class="info-box">
+                            <strong>Algorithm Steps:</strong><br>
+                            1. Pick random number a < N<br>
+                            2. Use quantum period finding to find period r<br>
+                            3. If r is even and a^(r/2) ≠ -1 mod N:<br>
+                            &nbsp;&nbsp; Factors are gcd(a^(r/2) ± 1, N)<br>
+                            4. Otherwise repeat
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">
+                            This is why we're developing post-quantum cryptography!
+                        </p>
+                    `
+                },
+                teleportation: {
+                    title: "Quantum Teleportation",
+                    content: `
+                        <h2>Quantum Teleportation</h2>
+                        <p style="margin: 1rem 0; line-height: 1.7;">
+                            Transfer an unknown quantum state from Alice to Bob using entanglement!
+                        </p>
+                        <div class="info-box">
+                            <strong>Protocol:</strong><br>
+                            1. Alice and Bob share entangled Bell pair<br>
+                            2. Alice performs Bell measurement on her qubit + state to teleport<br>
+                            3. Alice sends 2 classical bits to Bob<br>
+                            4. Bob applies correction gates based on classical bits<br>
+                            5. Bob now has the original state!
+                        </div>
+                        <div class="info-box warning">
+                            <strong>Important:</strong> The original state is destroyed (no-cloning theorem). 
+                            No information travels faster than light - classical bits are needed!
+                        </div>
+                        <p style="margin-top: 1rem;">
+                            Successfully demonstrated over 1400+ km via satellite!
+                        </p>
+                    `
+                }
+            };
+
+            const algo = algorithms[type];
+            document.getElementById('algorithmContent').innerHTML = algo.content;
+            document.getElementById('algorithmModal').style.display = 'flex';
+        }
+
+        function closeAlgorithmModal() {
+            document.getElementById('algorithmModal').style.display = 'none';
+        }
+
+        // ==================== QUANTUM GAME ====================
+        let gameState = Array(9).fill('empty');
+
+        function initQuantumGame() {
+            const board = document.getElementById('gameBoard');
+            if (!board) return;
+            board.innerHTML = '';
+
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'game-cell';
+                cell.textContent = '?';
+                cell.onclick = () => placeQuantumMarker(i);
+                board.appendChild(cell);
+            }
+        }
+
+        function placeQuantumMarker(index) {
+            if (gameState[index] !== 'empty') return;
+
+            incrementInteraction();
+            unlockAchievement('quantum-gamer');
+
+            gameState[index] = 'quantum';
+            const cell = document.querySelectorAll('.game-cell')[index];
+            cell.style.background = 'linear-gradient(135deg, rgba(0,245,255,0.3), rgba(255,0,255,0.3))';
+            cell.textContent = '?';
+
+            showToast('Quantum marker placed!', 'success');
+        }
+
+        function measureGameBoard() {
+            incrementInteraction();
+
+            const cells = document.querySelectorAll('.game-cell');
+            gameState.forEach((state, i) => {
+                if (state === 'quantum') {
+                    const result = Math.random() < 0.5 ? 'X' : 'O';
+                    gameState[i] = result;
+                    cells[i].textContent = result;
+                    cells[i].style.background = result === 'X' 
+                        ? 'rgba(59,130,246,0.3)' 
+                        : 'rgba(239,68,68,0.3)';
+                }
+            });
+
+            // Check winner
+            const winner = checkGameWinner();
+            const statusEl = document.getElementById('gameStatus');
+            if (statusEl) {
+                if (winner) {
+                    statusEl.textContent = `${winner} Wins! ✓`;
+                    showToast(`${winner} wins!`, 'success');
+                } else {
+                    statusEl.textContent = 'All cells measured!';
+                }
+            }
+        }
+
+        function checkGameWinner() {
+            const lines = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
+            ];
+
+            for (const [a, b, c] of lines) {
+                if (gameState[a] !== 'empty' && gameState[a] !== 'quantum' &&
+                    gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                    return gameState[a];
+                }
+            }
+            return null;
+        }
+
+        function resetQuantumGame() {
+            gameState = Array(9).fill('empty');
+            initQuantumGame();
+            const statusEl = document.getElementById('gameStatus');
+            if (statusEl) {
+                statusEl.textContent = 'Your Turn - Place Quantum Marker';
+            }
+            showToast('New game started!', 'success');
+        }
+
+        // ==================== ACHIEVEMENTS ====================
+        let achievements = {};
+
+        function unlockAchievement(badge) {
+            if (achievements[badge]) return;
+
+            achievements[badge] = true;
+            const el = document.querySelector(`[data-badge="${badge}"]`);
+            if (el) {
+                el.classList.add('unlocked');
+            }
+
+            updateAchievementProgress();
+            localStorage.setItem('quantumAchievements', JSON.stringify(achievements));
+
+            showToast(`Achievement unlocked: ${badge}!`, 'success');
+        }
+
+        function updateAchievementProgress() {
+            const count = Object.keys(achievements).length;
+            const progressEl = document.getElementById('achievementProgress');
+            if (progressEl) {
+                progressEl.textContent = `${count}/6`;
+            }
+        }
+
+        function loadAchievements() {
+            const saved = localStorage.getItem('quantumAchievements');
+            if (saved) {
+                achievements = JSON.parse(saved);
+                Object.keys(achievements).forEach(badge => {
+                    const el = document.querySelector(`[data-badge="${badge}"]`);
+                    if (el) el.classList.add('unlocked');
+                });
+                updateAchievementProgress();
+            }
+        }
+
+        // Hook achievement for first measurement
+        const originalMeasureQubit = window.measureQubit;
+        if (typeof originalMeasureQubit === 'function') {
+            window.measureQubit = function() {
+                unlockAchievement('first-measure');
+                originalMeasureQubit.apply(this, arguments);
+            };
+        }
+
+        // Hook achievement for entanglement
+        const originalMeasureEntangled = window.measureEntangled;
+        if (typeof originalMeasureEntangled === 'function') {
+            window.measureEntangled = function() {
+                unlockAchievement('entanglement');
+                originalMeasureEntangled.apply(this, arguments);
+            };
+        }
+
+    </script>
+</body>
+</html>

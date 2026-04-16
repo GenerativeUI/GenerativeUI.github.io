@@ -1,0 +1,900 @@
+html {
+  scroll-behavior: smooth;
+}
+
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#f0f9ff;
+ color:#1e293b;
+ text-align:center
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family:Oswald,sans-serif;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 45px;
+}
+
+h2 {
+  font-size: 35px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 25px;
+}
+
+h5 {
+  font-size: 22px;
+}
+
+p, a, ul, li, ol, label {
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    line-height: 1.7em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/********** Buttons **************/
+
+.btn-primary {
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    background-color: #6628a7;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #ffc300;
+    color: #000000;
+    font-size: 16px;
+}
+
+/********** Up and Down Animation *************/
+
+.down-arrow {
+  animation: mymove 2s infinite;
+}
+
+@keyframes mymove {
+  0% {
+  translate: 0px 0px;
+  }
+  50% {
+  translate: 0px -20px;
+  }
+    100% {
+  translate: 0px 0px;
+  }
+}
+
+.down-arrow {
+    border-radius: 0px !important;
+}
+
+/********* Navigation Menu ***********/
+
+.navigation-menu {
+    width: 100%;
+    float: left;
+    display: block;
+    background-color: #fff;
+}
+
+.navigation-menu-container {
+    width: 100%;
+    float: left;
+    margin-left: 0%;
+    margin-right: 0%;
+    display: block;
+}
+
+.logo-container {
+    width: 100%;
+    float: left;
+    display: block;
+}
+
+.logo-container img {
+    width: 120px;
+}
+
+.menu-container {
+    width: 100%;
+    margin-left: 0%;
+    float: left;
+    display: block;
+    text-align: center;
+    background-color: #2b2e6c;
+}
+
+.menu-container ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.menu-container ul li {
+    display: inline-block;
+}
+
+.menu-container ul li a {
+    background-color: #ffc300;
+    color: #000;
+    text-decoration: none;
+    padding: 10px 30px;
+    margin: 0px 10px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: .3s ease-in-out;
+    font-size: 15px;
+}
+
+.menu-container ul li a:hover {
+    background-color: #7351ee;
+    transition: .3s ease-in-out;
+    color: #fff;
+}
+
+/********* Slider ************/
+
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+.cs-slideshow-container h2 {
+    font-size: 42px;
+}
+
+
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+
+.cs-slideshow-container {
+    display: block;
+    width: 100%;
+    float: left;
+    background-color: #2b2e6c;
+    color: #fff;
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 40px;
+}
+
+.cs-slideshow-container span {
+    color: #ffc300;
+}
+
+.cs-slideshow-container p {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    line-height: 1.7em;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.cs-slideshow-container img {
+    border-radius: 0px;
+    width: 30px;
+}
+
+
+.cs-slider-dots {
+    float: left;
+    display: block;
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
+
+.cs-experiments-head h1 {
+    color: #2b2e6c;
+}
+
+.cs-experiments-head span {
+    color: #f57439;
+}
+
+.cs-slider-dots {
+    display: none !important;
+}
+
+.cs-slider-dots {
+    float: left;
+    display: block;
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
+
+.cs-slider-buttons {
+    width: 100%;
+    float: left;
+    display: block;
+    margin-bottom: 30px;
+}
+
+ul.cs-slider-buttons-list {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul.cs-slider-buttons-list li {
+    display: inline-block;
+}
+
+ul.cs-slider-buttons-list li a {
+    padding: 15px 40px;
+    margin: 0px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+}
+
+/************** What is Tower of Hanoi ***************/
+
+.parallax-sec {
+    width: 100%;
+    display: block;
+    float: left;
+    background-color: #f9fafb;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.cs-mind-main {
+    width: 80%;
+    display: block;
+    float: left;
+    max-width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.cs-mind-one {
+    width: 30%;
+    float: left;
+    display: block;
+    margin-right: 3%;
+}
+
+.cs-mind-one video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.cs-mind-two {
+    width: 64%;
+    margin-left: 3%;
+    float: left;
+    display: block;
+    line-height: 1.7em;
+    text-align: left;
+}
+
+.tower-span {
+    color: #db2777;
+}
+
+.cs-mind-two h1 {
+    margin-bottom: 30px;
+}
+
+.cs-min-three {
+    display: block;
+    width: 100%;
+    float: left;
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+
+.cs-min-three-container {
+    width: 100%;
+    float: left;
+    display: block;
+}
+
+.cs-min-three-one {
+    width: 48%;
+    float: left;
+    display: block;
+    background-color: #2b2e6c;
+    padding: 15px 20px;
+    margin-right: 2%;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.cs-min-three-two {
+    width: 48%;
+    float: left;
+    display: block;
+    background-color: #db2777;
+    padding: 15px 20px;
+    margin-left: 2%;
+    border-radius: 10px;
+    color: #fff;
+}
+
+/************* What is Tower of Hanoi ? ****************/
+
+.cs-tower-sec-container img {
+    width: 100%;
+    margin-top: -220px;
+}
+
+.cs-tower-sec {
+    width: 100%;
+    float: left;
+    display: block;
+    background-color: #fff;
+}
+
+.cs-tower-sec-container {
+    width: 100%;
+    padding: 60px 80px;
+    text-align: left;
+}
+
+.cs-tower-sec-container h1 {
+    color: #6628a7;
+}
+
+/*********** Tabs ************/
+
+.cs-experiments-head {
+    padding-top: 0px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.cs-experiments-head span {
+    color: #ff5000;
+}
+
+.cs-experiments-head h1 {
+    color: #2c2c2c;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  margin-bottom: 30px;
+    background-color: #00000000 !important;
+    border: solid 0px;
+}
+
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  margin: 0px 20px 0px 0px;
+  color: #000;
+}
+
+/* Change background color of buttons on hover */
+
+.tab button:hover {
+    background-color: #2b2e6c;
+    border-radius: 50px;
+    color: #fff;
+}
+
+/* Create an active/current tablink class */
+
+.tab button.active {
+    background-color: #2b2e6c;
+    color: #fff;
+    border-radius: 30px;
+    padding: 15px 25px;
+}
+
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 0px 0px;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 20px;
+}
+
+.section-intro {
+    font-size: 16px;
+    color: #000;
+}
+
+.cs-points-tabs {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    padding: 60px 100px;
+    float: left;
+    background-color: #ffb900;
+}
+
+.cs-points-tabs div img {
+    width: 100%;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.tabcontent {
+    padding: 0px 0px;
+    border: 1px solid #ccc;
+    border-top: none;
+    width: 100%;
+    background-color: #fff;
+    float: left;
+}
+
+.tab-inside-div {
+    width: 48%;
+    float: left;
+    display: block;
+    margin-left: 2%;
+    text-align: left;
+    padding: 30px 30px 0px 0px;
+}
+
+.tab-inside-image {
+    width: 48%;
+    float: left;
+    display: block;
+    margin-right: 2%;
+}
+
+
+.tab-inside-div h3 {
+    font-size: 30px;
+}
+
+.tab-inside-div p {
+    line-height: 1.7em;
+    font-size: 16px;
+    color: #000;
+}
+
+.cs-points-tabs .tab {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.tab-inside-div ul {
+    padding-left: 20px;
+}
+
+.tab-inside-div ul li {
+    line-height: 1.4em;
+    border-bottom: solid 1px #eee;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+/******************** Javascript Widget **********************/
+
+.cs-java-widget {
+    width: 100%;
+    float: left;
+    display: block;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.cs-java-widget-container {
+    width: 100%;
+    padding: 0px 90px;
+}
+
+.cs-java-widget-container h1 span {
+    color: #d83ba6;
+}
+
+.cs-java-widget img {
+    width: 300px;
+}
+
+.game {
+    background: #f0f9ff;
+    padding: 30px;
+    color: white;
+}
+
+.controls {
+  text-align:center; padding:20px;
+}
+.controls button, select {
+  padding:8px 15px; margin:5px;
+  border-radius:20px; border:none;
+  cursor: pointer
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 20px;
+    font-family: Oswald;
+}
+
+.towers {
+  display:flex; justify-content:center; gap:30px;
+}
+.tower {
+  width:160px; height:200px;
+  background:#2b2e6c;
+  border-radius:10px;
+  display:flex; flex-direction:column-reverse;
+  align-items:center; padding-bottom:10px;
+}
+.disk {
+  height:18px; border-radius:10px;
+  margin:4px 0; cursor:grab;
+  width: 90%;
+}
+
+/************ Parallax Section **********************/
+
+.cs-parallax-sec {
+    width: 100%;
+    display: block;
+    float: left;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.cs-parallax-sec-container {
+    width: 100%;
+    padding: 60px 80px 20px 80px;
+    display: block;
+    float: left;
+}
+
+.cs-parallax-one {
+    width: 48%;
+    float: left;
+    display: block;
+    text-align: left;
+    margin-right: 2%;
+    margin-top: 5%;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 30px;
+}
+
+.cs-parallax-two {
+    width: 48%;
+    float: left;
+    margin-left: 2%;
+    display: block;
+}
+
+.cs-parallax-two img {
+    width: 100%;
+}
+
+/************* 4 cards ******************/
+
+.cs-cards-images {
+    width: 100%;
+    float: left;
+    display: block;
+    background-color: #2b2e6c;
+    padding: 80px 80px 0px 80px;
+}
+
+.cs-cards-images img {
+    width: 100%;
+    float: left;
+    display: block;
+    border-radius: 20px;
+}
+
+.card img {
+    width: 80%;
+    border-radius: 50%;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    padding: 2.5rem 4rem;
+    background-color: #2b2e6c;
+}
+.card {
+    padding: 0.5rem;
+    border-radius: 12px;
+    animation: fadeIn 1s ease;
+    color: #fff;
+    transition: .3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.07);
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.card h4 {
+    font-size: 23px;
+}
+
+.card p {
+    font-size: 15px;
+}
+
+.cs-crads-number {
+    width: 60px !important;
+    margin-top: 18px;
+    margin-bottom: 5px;
+}
+
+/************** Footer ********************/
+
+.cs-footer-sec {
+    width: 100%;
+    float: left;
+    display: block;
+    background-color: #ffb900;
+    padding: 30px 0px;
+    color: #222222;
+}
+
+.cs-footer-sec-container {
+    width: 100%;
+    float: left;
+    display: block;
+    padding: 0px 100px;
+    color: #fff;
+}
+
+.cs-footer-sec-container img {
+    width: 150px;
+}
+
+.cs-footer-sec footer {
+    color: #242424;
+}
+
+.cs-footer-sec h3 {
+    margin-bottom: 20px;
+}
+
+.cs-foot-copyright {
+    font-size: 16px;
+}
+
+/*********** Mobile Responsive ****************/
+
+@media only screen and (max-width: 980px) {
+
+h1 {
+  font-size: 34px !important;
+}
+
+h2 {
+  font-size: 30px !important;
+}
+
+h3 {
+  font-size: 25px !important;
+}
+
+h4 {
+  font-size: 20px !important;
+}
+
+h5 {
+  font-size: 17px !important;
+}
+
+
+.cs-slideshow-container {
+    padding: 30px 30px;
+}
+
+.cs-tower-sec-container img {
+    display: none;
+}
+
+ul.cs-slider-buttons-list li a {
+    margin: 0px 20px;
+    float: left;
+}
+
+.cs-tower-sec-container {
+    padding: 30px 30px;
+}
+
+.cs-points-tabs {
+    padding: 40px 30px;
+}
+
+.tabcontent {
+    padding: 20px 20px;
+}
+
+.tab-inside-image {
+    width: 100%;
+    margin-right: 0%;
+}
+
+.tab-inside-div {
+    width: 100%;;
+    margin-left: 0%;
+}
+
+.cs-java-widget {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.cs-java-widget-container {
+    padding: 0px 30px;
+}
+.cs-parallax-sec-container {
+    padding: 30px;
+}
+
+.cs-parallax-one {
+    width: 100%;
+    margin-right: 0%;
+    margin-top: 0%;
+}
+
+.cs-parallax-two {
+    width: 100%;
+    margin-left: 0%;
+}
+
+.cs-cards-images {
+    padding: 30px;
+}
+
+.cards {
+    padding: 0.5rem 2rem;
+}
+
+.cs-footer-sec-container {
+    padding: 0px 20px;
+}
+
+/******* What is Tower ***********/
+
+.cs-mind-one {
+    width: 100%;
+    margin-right: 0%;
+}
+
+.cs-mind-two {
+    width: 100%;
+    margin-left: 0%;
+}
+
+.cs-min-three-one {
+    width: 100%;
+    margin-right: 0%;
+}
+
+.cs-min-three-two {
+    width: 100%;
+    margin-left: 0%;
+    margin-top: 20px;
+}
+
+.cs-mind-main {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.parallax-sec {
+    padding-top: 30px;
+    padding-bottom: 0px;
+}
+
+/************ Growth Benefits ************/
+
+#cs-benefits {
+    display: inline-block;
+    padding: 60px 100px;
+}
+
+.card {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.cs-parallax-two img {
+    width: 70%;
+}
+
+.card img {
+    width: 40%;
+}
+
+}
+
+
+
