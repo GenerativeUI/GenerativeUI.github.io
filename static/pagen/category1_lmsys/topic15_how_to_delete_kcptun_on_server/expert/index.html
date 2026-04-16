@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Remove kcptun from Server</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+           
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .text-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .image-content {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .image-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Fade-in animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Section specific styles */
+        .intro-section {
+            background-color: white;
+        }
+        
+        .steps-section {
+            background-color: #f8f9fa;
+        }
+        
+        .alternative-section {
+            background-color: white;
+        }
+        
+        .closing-section {
+            background-color: #e8f4f8;
+        }
+        
+        /* Code block styles */
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .code-block i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+        
+        .command {
+            color: #8eff8e;
+        }
+        
+        .comment {
+            color: #999;
+            font-style: italic;
+        }
+        
+        /* List styles */
+        .step-list {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            margin-bottom: 25px;
+            padding-left: 60px;
+            position: relative;
+            font-size: 18px;
+        }
+        
+        .step-list li:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4ca1af;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        /* Footer styles */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+            
+            .step-list li {
+                padding-left: 50px;
+            }
+            
+            .step-list li:before {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>How to Safely Remove kcptun from a Server</h1>
+            <p>A step-by-step guide to completely uninstall kcptun from your server environment</p>
+        </div>
+    </header>
+
+    <section class="intro-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="text-content fade-in">
+                    <h2>🔹 Introduction</h2>
+                    <p>kcptun is a tool that improves network performance by tunneling traffic with KCP. While it's powerful, you may want to remove it if you:</p>
+                    <ul>
+                        <li>No longer use it</li>
+                        <li>Are switching to another tunneling solution</li>
+                        <li>Need to free up server resources</li>
+                    </ul>
+                </div>
+                <div class="image-content fade-in">
+                    <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Server room with network equipment" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="fade-in">🔹 Step-by-Step Removal Process</h2>
+            
+            <ol class="step-list">
+                <li class="fade-in">
+                    <h3>Stop the kcptun Service</h3>
+                    <p>If kcptun is running as a system service:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">sudo systemctl stop kcptun</span></div>
+                        <div><i class="fas fa-terminal"></i> <span class="command">sudo systemctl disable kcptun</span></div>
+                    </div>
+                    <p>Or if it's running in the background manually:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">pkill kcptun</span></div>
+                    </div>
+                </li>
+                
+                <li class="fade-in">
+                    <h3>Remove kcptun Files</h3>
+                    <p>Typically, kcptun binaries are placed in /usr/local/bin/ or your installation directory. To remove:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">sudo rm -f /usr/local/bin/server_linux_amd64</span></div>
+                        <div><i class="fas fa-terminal"></i> <span class="command">sudo rm -f /usr/local/bin/client_linux_amd64</span></div>
+                        <div class="comment">(Replace with your actual binary names)</div>
+                    </div>
+                </li>
+                
+                <li class="fade-in">
+                    <h3>Delete Configuration Files</h3>
+                    <p>Configs are usually in /etc/kcptun/ or wherever you saved them. Remove with:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">sudo rm -rf /etc/kcptun</span></div>
+                    </div>
+                </li>
+                
+                <li class="fade-in">
+                    <h3>Verify Removal</h3>
+                    <p>Check if kcptun is still running:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">ps aux | grep kcptun</span></div>
+                    </div>
+                    <p>If nothing shows up (other than the grep line), it's gone ✅</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="alternative-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="text-content fade-in">
+                    <h2>🔹 Alternative Cleanups</h2>
+                    <p>If installed with a script: re-run the uninstall option if provided.</p>
+                    <p>If running in Docker:</p>
+                    <div class="code-block">
+                        <div><i class="fas fa-terminal"></i> <span class="command">docker stop kcptun</span></div>
+                        <div><i class="fas fa-terminal"></i> <span class="command">docker rm kcptun</span></div>
+                    </div>
+                </div>
+                <div class="image-content fade-in">
+                    <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Docker containers visualization" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="closing-section">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="image-content fade-in">
+                    <img src="https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Checkmark indicating successful completion" loading="lazy">
+                </div>
+                <div class="text-content fade-in">
+                    <h2>🔹 Closing Note</h2>
+                    <p>Removing kcptun is straightforward — just stop the service, delete binaries and configs, and verify. Always double-check you're not deleting other important files.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <script>
+        // Function to check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Function to handle scroll events
+        function handleScroll() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            fadeElements.forEach(element => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Initial check on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            handleScroll();
+            
+            // Add event listener for scroll
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+</body>
+</html>

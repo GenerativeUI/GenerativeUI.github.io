@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube Surface Area Calculator - Interactive Math Learning</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-cube"></i>
+                <span>Cube Math</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#introduction" class="nav-link">Introduction</a>
+                <a href="#formula" class="nav-link">Formula</a>
+                <a href="#practice" class="nav-link">Practice</a>
+                <a href="#applications" class="nav-link">Applications</a>
+            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Master Cube Surface Area
+                    <span class="highlight">Calculations</span>
+                </h1>
+                <p class="hero-description">
+                    Learn how to calculate the surface area of cubes with interactive examples, 
+                    step-by-step solutions, and real-world applications.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="scrollToSection('practice')">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Try Practice
+                    </button>
+                    <button class="btn-secondary" onclick="scrollToSection('introduction')">
+                        <i class="fas fa-play"></i>
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="cube-container">
+                    <div class="cube" id="heroCube">
+                        <div class="face front"></div>
+                        <div class="face back"></div>
+                        <div class="face right"></div>
+                        <div class="face left"></div>
+                        <div class="face top"></div>
+                        <div class="face bottom"></div>
+                    </div>
+                </div>
+                <div class="cube-info">
+                    <div class="info-item">
+                        <span class="info-label">Side Length:</span>
+                        <span class="info-value" id="heroSideLength">2 inches</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Surface Area:</span>
+                        <span class="info-value" id="heroSurfaceArea">24 in²</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What is a Cube?</h2>
+                <p class="section-subtitle">Understanding the fundamentals of cube geometry</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>Definition</h3>
+                    <p>A cube is a three-dimensional solid object with six identical square faces. All edges are equal in length, and all angles are right angles (90°).</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-dice"></i>
+                    </div>
+                    <h3>Real-World Examples</h3>
+                    <p>Dice, Rubik's cubes, ice cubes, sugar cubes, and many packaging boxes are examples of cubes in everyday life.</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-ruler"></i>
+                    </div>
+                    <h3>Key Properties</h3>
+                    <p>• 6 faces (all squares)<br>• 12 edges (all equal)<br>• 8 vertices<br>• All faces are identical</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Why Study Cubes?</h3>
+                    <p>Understanding cubes is fundamental to architecture, gaming, 3D modeling, and engineering. They form the building blocks of complex structures and help develop spatial reasoning skills.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Formula Section -->
+    <section id="formula" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Surface Area Formula</h2>
+                <p class="section-subtitle">Understanding the mathematical foundation</p>
+            </div>
+
+            <div class="formula-content">
+                <div class="formula-explanation">
+                    <div class="formula-card">
+                        <h3>Surface Area Formula</h3>
+                        <div class="formula-display">
+                            <span class="formula-text">Surface Area = 6 × (side length)²</span>
+                        </div>
+                        <div class="formula-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-number">6</span>
+                                <span class="breakdown-text">faces on a cube</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-number">×</span>
+                                <span class="breakdown-text">multiply by</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-number">s²</span>
+                                <span class="breakdown-text">area of one face (side × side)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-by-step">
+                    <h3>Step-by-Step Example (2-inch cube)</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Identify the side length</h4>
+                                <p>Side length = 2 inches</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Calculate area of one face</h4>
+                                <p>Area = 2 × 2 = 4 square inches</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Multiply by 6 faces</h4>
+                                <p>Total Surface Area = 6 × 4 = 24 square inches</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visual-calculation">
+                <h3>Visual Calculation</h3>
+                <div class="calculation-visual">
+                    <div class="cube-faces" id="calculationCube">
+                        <div class="face-calc" data-face="1">4</div>
+                        <div class="face-calc" data-face="2">4</div>
+                        <div class="face-calc" data-face="3">4</div>
+                        <div class="face-calc" data-face="4">4</div>
+                        <div class="face-calc" data-face="5">4</div>
+                        <div class="face-calc" data-face="6">4</div>
+                    </div>
+                    <div class="calculation-result">
+                        <span class="result-text">6 faces × 4 in² = 24 in²</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Practice Problems Section -->
+    <section id="practice" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Practice Problems</h2>
+                <p class="section-subtitle">Test your understanding with interactive exercises</p>
+            </div>
+
+            <div class="practice-container">
+                <div class="practice-problem" id="problem1">
+                    <div class="problem-header">
+                        <h3>Problem 1</h3>
+                        <span class="difficulty easy">Easy</span>
+                    </div>
+                    <div class="problem-content">
+                        <p>A cube has a side length of 5 inches. What is its surface area?</p>
+                        <div class="problem-input">
+                            <input type="number" id="answer1" placeholder="Enter your answer">
+                            <button onclick="checkAnswer(1, 150)">Check Answer</button>
+                        </div>
+                        <div class="problem-feedback" id="feedback1"></div>
+                    </div>
+                </div>
+
+                <div class="practice-problem" id="problem2">
+                    <div class="problem-header">
+                        <h3>Problem 2</h3>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                    <div class="problem-content">
+                        <p>A cube has a surface area of 96 cm². What is the length of each side?</p>
+                        <div class="problem-input">
+                            <input type="number" id="answer2" placeholder="Enter your answer">
+                            <button onclick="checkAnswer(2, 4)">Check Answer</button>
+                        </div>
+                        <div class="problem-feedback" id="feedback2"></div>
+                    </div>
+                </div>
+
+                <div class="practice-problem" id="problem3">
+                    <div class="problem-header">
+                        <h3>Problem 3</h3>
+                        <span class="difficulty hard">Hard</span>
+                    </div>
+                    <div class="problem-content">
+                        <p>If you double the side length of a cube, how many times larger does the surface area become?</p>
+                        <div class="problem-input">
+                            <input type="number" id="answer3" placeholder="Enter your answer">
+                            <button onclick="checkAnswer(3, 4)">Check Answer</button>
+                        </div>
+                        <div class="problem-feedback" id="feedback3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-summary">
+                <h3>Practice Summary</h3>
+                <div class="summary-stats">
+                    <div class="stat">
+                        <span class="stat-number" id="correctAnswers">0</span>
+                        <span class="stat-label">Correct</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalAttempts">0</span>
+                        <span class="stat-label">Attempts</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="accuracy">0%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-World Applications Section -->
+    <section id="applications" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real-World Applications</h2>
+                <p class="section-subtitle">Where cube surface area matters in everyday life</p>
+                <p class="unit-note"><em>Examples shown in both metric and imperial units for variety</em></p>
+            </div>
+
+            <div class="applications-grid">
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>Packaging & Shipping</h3>
+                    <p>Companies calculate surface area to determine how much material is needed for boxes, labels, and protective wrapping.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> A 10cm cube needs 600cm² of wrapping paper.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Painting & Coating</h3>
+                    <p>Painters and contractors calculate surface area to estimate how much paint or coating material they need.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> Painting a 1m cube requires covering 6m² of surface area (or a 2ft cube needs 24ft²).
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h3>Heat Transfer</h3>
+                    <p>Engineers use surface area calculations to design efficient cooling systems and heat exchangers.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> Larger surface area = better heat dissipation.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Gift Wrapping</h3>
+                    <p>When wrapping gifts, knowing the surface area helps you buy the right amount of wrapping paper.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> A 15cm cube needs 1,350cm² of wrapping paper (or a 6-inch cube needs 216 in²).
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Construction</h3>
+                    <p>Builders calculate surface area for materials like tiles, siding, and insulation.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> Tiling a cubic room requires knowing the total wall surface area.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Chemistry & Biology</h3>
+                    <p>Scientists study surface area to volume ratios in cells, crystals, and chemical reactions.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> Smaller cubes have higher surface area to volume ratios.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3>3D Printing</h3>
+                    <p>3D printing enthusiasts calculate surface area to estimate filament or resin needed for coating and finishing.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> A 5cm cube needs 150cm² of surface area for post-processing treatments.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Nanotechnology</h3>
+                    <p>Surface area is crucial when designing nanoparticles for drug delivery, as it affects absorption and release rates.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> Nanocubes with larger surface areas can carry more therapeutic molecules.
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Gaming & VR Graphics</h3>
+                    <p>Game developers use surface area calculations in rendering 3D objects, lighting, and texture mapping for realistic graphics.</p>
+                    <div class="app-example">
+                        <strong>Example:</strong> VR environments calculate surface areas for accurate light reflection and shadows.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Common questions about cube surface area</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(1)">
+                        <h3>What's the difference between surface area and volume?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq1">
+                        <p><strong>Surface Area:</strong> The total area of all faces on the outside of a 3D object (measured in square units like in², cm²).</p>
+                        <p><strong>Volume:</strong> The amount of space inside a 3D object (measured in cubic units like in³, cm³).</p>
+                        <p>For a cube: Surface Area = 6s², Volume = s³</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(2)">
+                        <h3>Why do we multiply by 6 for a cube?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq2">
+                        <p>A cube has exactly 6 faces, and since all faces are identical squares, we calculate the area of one face and multiply by 6.</p>
+                        <p>This is different from other shapes where faces might have different sizes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(3)">
+                        <h3>Do we use square units or cubic units for surface area?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq3">
+                        <p>Surface area is always measured in <strong>square units</strong> (in², cm², ft², m²) because it represents a two-dimensional measurement.</p>
+                        <p>Cubic units (in³, cm³, ft³, m³) are used for volume, which is a three-dimensional measurement.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(4)">
+                        <h3>What happens to surface area when you double the side length?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq4">
+                        <p>When you double the side length, the surface area becomes <strong>4 times larger</strong>.</p>
+                        <p>Original: SA = 6s² → New: SA = 6(2s)² = 6(4s²) = 24s² = 4 × (6s²)</p>
+                        <p>This is because area scales with the square of the linear dimension.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(5)">
+                        <h3>Can surface area be measured in different units?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq5">
+                        <p>Yes. You can use square inches, square centimeters, square feet, or square meters. Just ensure the side length is in the same unit before calculating.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(6)">
+                        <h3>What if the cube is not a perfect cube?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq6">
+                        <p>If the sides are unequal, it is a rectangular prism, and the surface area formula changes:</p>
+                        <p><strong>SA = 2(lw + lh + wh)</strong> where l, w, h are the lengths of the sides.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(7)">
+                        <h3>Why is surface area important in real life?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq7">
+                        <p>Surface area helps estimate materials needed for packaging, painting, coating, heat transfer, and even scientific calculations like cell growth.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(8)">
+                        <h3>How does surface area relate to volume?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq8">
+                        <p>Surface area grows with the square of the side length, while volume grows with the cube. This means as cubes get larger, volume increases faster than surface area.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(9)">
+                        <h3>How to calculate surface area if given the volume?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq9">
+                        <p>First, find the side length: <strong>s = ∛Volume</strong>. Then calculate: <strong>SA = 6 × s²</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(10)">
+                        <h3>Can surface area ever decrease if a cube grows?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq10">
+                        <p>No. Increasing the side length always increases the surface area, since area scales with the square of the side.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(11)">
+                        <h3>How does changing units affect surface area?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq11">
+                        <p>If you convert side length units (e.g., from cm to m), remember to square the conversion factor when calculating surface area.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Cube Math Learning. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Potato Soup Recipe - Interactive Cooking Guide</title>
+    <meta name="description" content="Learn to make the perfect potato soup with our interactive recipe guide, cooking timer, nutrition calculator, and potato selection tips. Creamy, delicious comfort food made easy.">
+    <meta name="keywords" content="potato soup recipe, comfort food, cooking guide, interactive recipe, nutrition facts">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Perfect Potato Soup Recipe - Interactive Cooking Guide">
+    <meta property="og:description" content="Learn to make the perfect potato soup with our interactive recipe guide, cooking timer, nutrition calculator, and potato selection tips.">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Perfect Potato Soup Recipe">
+    <meta name="twitter:description" content="Interactive cooking guide for the perfect potato soup">
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Warm, creamy backgrounds inspired by soup */
+            --background: hsl(44, 20%, 98%);
+            --foreground: hsl(30, 15%, 15%);
+            
+            /* Card colors - warm cream tones */
+            --card: hsl(43, 25%, 96%);
+            --card-foreground: hsl(30, 15%, 15%);
+            
+            /* Primary - rich potato brown */
+            --primary: hsl(32, 45%, 35%);
+            --primary-foreground: hsl(44, 20%, 98%);
+            --primary-glow: hsl(32, 55%, 55%);
+            
+            /* Secondary - creamy butter tones */
+            --secondary: hsl(45, 35%, 88%);
+            --secondary-foreground: hsl(30, 15%, 15%);
+            
+            /* Muted - soft beige */
+            --muted: hsl(42, 15%, 92%);
+            --muted-foreground: hsl(30, 10%, 45%);
+            
+            /* Accent - warm orange/carrot */
+            --accent: hsl(25, 85%, 65%);
+            --accent-foreground: hsl(44, 20%, 98%);
+            
+            /* Success - fresh herb green */
+            --success: hsl(120, 40%, 45%);
+            --success-foreground: hsl(44, 20%, 98%);
+            
+            --destructive: hsl(0, 84.2%, 60.2%);
+            --destructive-foreground: hsl(44, 20%, 98%);
+            
+            /* Subtle warm borders */
+            --border: hsl(42, 20%, 88%);
+            --input: hsl(42, 20%, 88%);
+            --ring: hsl(32, 45%, 35%);
+            
+            /* Gradients */
+            --gradient-warm: linear-gradient(135deg, hsl(44, 25%, 96%), hsl(43, 30%, 94%));
+            --gradient-soup: linear-gradient(135deg, hsl(32, 45%, 35%), hsl(32, 55%, 45%));
+            --gradient-hero: linear-gradient(135deg, hsl(32, 45%, 35%) 0%, hsl(25, 85%, 65%) 100%);
+            
+            /* Shadows */
+            --shadow-warm: 0 4px 12px hsl(32, 45%, 35%, 0.1);
+            --shadow-elevated: 0 8px 25px hsl(32, 45%, 35%, 0.15);
+            --shadow-glow: 0 0 30px hsl(25, 85%, 65%, 0.3);
+            
+            --radius: 0.75rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--foreground);
+            background: var(--background);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom right, var(--background), var(--card), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom right, 
+                hsl(32, 45%, 35%, 0.2), 
+                hsl(44, 20%, 98%, 0.8), 
+                hsl(25, 85%, 65%, 0.2));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 60rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-gradient-text {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 40rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .hero-button {
+            background: var(--gradient-hero);
+            color: var(--primary-foreground);
+            padding: 1.5rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-warm);
+        }
+
+        .hero-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--gradient-warm);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-warm);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-elevated);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Recipe Calculator */
+        .recipe-section {
+            background: linear-gradient(to bottom, var(--background), rgba(var(--card-rgb), 0.5));
+        }
+
+        .recipe-calculator {
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+
+        .calculator-controls {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .slider-container {
+            max-width: 24rem;
+            margin: 0 auto;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--muted);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ingredient-category {
+            space-y: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ingredient-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(var(--secondary-rgb), 0.3);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(var(--border-rgb), 0.3);
+        }
+
+        .ingredient-name {
+            font-weight: 500;
+        }
+
+        .ingredient-amount {
+            background: var(--secondary);
+            color: var(--secondary-foreground);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .ingredients-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Icons (using Unicode symbols) */
+        .icon-timer::before { content: "⏱️"; }
+        .icon-users::before { content: "👥"; }
+        .icon-trending::before { content: "📈"; }
+        .icon-calculator::before { content: "🧮"; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="hero-potato-soup.jpg" alt="Creamy potato soup in a rustic bowl with garnishes">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Perfect
+                <span class="hero-gradient-text">Potato Soup</span>
+            </h1>
+            <p class="hero-subtitle">
+                Interactive cooking guide with recipe calculator, cooking timers, and nutrition insights. 
+                Master the art of comfort food cooking.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat-badge">
+                    <span class="icon-timer"></span>
+                    <span>30 minutes</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="icon-users"></span>
+                    <span>Serves 6-8</span>
+                </div>
+                <div class="stat-badge">
+                    <span class="icon-trending"></span>
+                    <span>Easy Level</span>
+                </div>
+            </div>
+            
+            <button class="hero-button" onclick="scrollToRecipe()">
+                Start Cooking Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Recipe Calculator Section -->
+    <section id="recipe-calculator" class="section recipe-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Interactive Recipe Calculator</h2>
+                <p class="section-subtitle">Adjust serving size and get perfectly scaled ingredients</p>
+            </div>
+
+            <div class="recipe-calculator">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="calculator-controls">
+                            <div class="flex items-center justify-center gap-4 mb-4">
+                                <span class="icon-calculator"></span>
+                                <h3 class="card-title">Recipe for <span id="serving-count">6</span> people</h3>
+                            </div>
+                            
+                            <div class="slider-container">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <span class="icon-users"></span>
+                                        <span class="font-medium">Servings:</span>
+                                    </div>
+                                    <span id="serving-badge" class="ingredient-amount">6</span>
+                                </div>
+                                <input type="range" id="serving-slider" class="slider" min="2" max="16" value="6" oninput="updateServings(this.value)">
+                                <div class="flex justify-between text-sm mt-2" style="color: var(--muted-foreground);">
+                                    <span>2</span>
+                                    <span>16</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="ingredients-grid" id="ingredients-grid">
+                            <!-- Ingredients will be populated by JavaScript -->
+                        </div>
+                        
+                        <div style="border-top: 1px solid var(--border); margin: 2rem 0; padding-top: 2rem;">
+                            <div class="flex items-center justify-center gap-6 text-sm" style="color: var(--muted-foreground);">
+                                <div class="flex items-center gap-2">
+                                    <span class="icon-timer"></span>
+                                    <span>Prep: 10 min</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="icon-timer"></span>
+                                    <span>Cook: 25 min</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="icon-timer"></span>
+                                    <span>Total: 35 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cooking Steps Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Step-by-Step Cooking Guide</h2>
+                <p class="section-subtitle">Follow along with detailed instructions and helpful tips</p>
+            </div>
+
+            <div style="max-width: 64rem; margin: 0 auto; display: grid; gap: 1.5rem;">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">1</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Prep Ingredients</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>10 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    Wash and dice potatoes into 1-inch cubes. Dice onion and celery. Cook bacon until crispy, then crumble.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> Keep potato pieces uniform for even cooking
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">2</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Sauté Vegetables</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>5 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    In a large pot, melt butter over medium heat. Add onions and celery, cook until softened, about 5 minutes.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> Don't let the vegetables brown
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">3</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Add Flour</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>2 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    Sprinkle flour over vegetables and stir constantly for 1-2 minutes to cook out the raw flour taste.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> This creates a roux that will thicken your soup
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">4</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Add Broth & Potatoes</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>3 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    Gradually whisk in chicken broth to prevent lumps. Add diced potatoes and bring to a boil.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> Whisk constantly while adding broth
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">5</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Simmer</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>18 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    Reduce heat and simmer until potatoes are tender, about 15-20 minutes. Stir occasionally.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> Test potatoes with a fork for doneness
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex items-start gap-4">
+                            <div style="background: var(--accent); color: var(--accent-foreground); width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.125rem; flex-shrink: 0;">6</div>
+                            <div style="flex: 1;">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Blend & Finish</h3>
+                                    <span style="background: var(--muted); color: var(--muted-foreground); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span class="icon-timer"></span>5 min
+                                    </span>
+                                </div>
+                                <p style="color: var(--muted-foreground); margin-bottom: 1rem; line-height: 1.6;">
+                                    Partially blend soup for desired consistency. Stir in cream, season with salt and pepper. Top with bacon and chives.
+                                </p>
+                                <div style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                                    <p style="font-size: 0.875rem; color: var(--accent-foreground);">
+                                        <span style="font-weight: 500;">💡 Tip:</span> Don't boil after adding cream to prevent curdling
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Information -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nutrition Information</h2>
+                <p class="section-subtitle">Per serving (1 cup) - Classic recipe</p>
+            </div>
+
+            <div style="max-width: 48rem; margin: 0 auto;">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="text-center mb-6">
+                            <div style="font-size: 3rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">320</div>
+                            <div style="color: var(--muted-foreground);">Calories per serving</div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Protein</span>
+                                <span class="ingredient-amount">8g</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Carbohydrates</span>
+                                <span class="ingredient-amount">35g</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Fat</span>
+                                <span class="ingredient-amount">16g</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Fiber</span>
+                                <span class="ingredient-amount">4g</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Sodium</span>
+                                <span class="ingredient-amount">850mg</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Potassium</span>
+                                <span class="ingredient-amount">650mg</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); text-center;">
+                            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">Health Benefits</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; text-align: left;">
+                                <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(var(--success-rgb), 0.1); border-radius: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">❤️</span>
+                                    <div>
+                                        <div style="font-weight: 500; font-size: 0.875rem;">Heart Healthy</div>
+                                        <div style="color: var(--muted-foreground); font-size: 0.75rem;">Rich in potassium for healthy blood pressure</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(var(--success-rgb), 0.1); border-radius: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">⚡</span>
+                                    <div>
+                                        <div style="font-weight: 500; font-size: 0.875rem;">Energy Source</div>
+                                        <div style="color: var(--muted-foreground); font-size: 0.75rem;">Complex carbs provide sustained energy</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(var(--success-rgb), 0.1); border-radius: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">🛡️</span>
+                                    <div>
+                                        <div style="font-weight: 500; font-size: 0.875rem;">Immune Support</div>
+                                        <div style="color: var(--muted-foreground); font-size: 0.75rem;">Contains vitamin C and antioxidants</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(var(--success-rgb), 0.1); border-radius: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">🌿</span>
+                                    <div>
+                                        <div style="font-weight: 500; font-size: 0.875rem;">Digestive Health</div>
+                                        <div style="color: var(--muted-foreground); font-size: 0.75rem;">Fiber supports healthy digestion</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Base ingredients for 6 servings
+        const baseIngredients = [
+            { name: "Russet potatoes", amount: 2, unit: "lbs", category: "vegetables" },
+            { name: "Yellow onion", amount: 1, unit: "medium", category: "vegetables" },
+            { name: "Celery stalks", amount: 2, unit: "stalks", category: "vegetables" },
+            { name: "Butter", amount: 4, unit: "tbsp", category: "dairy" },
+            { name: "All-purpose flour", amount: 3, unit: "tbsp", category: "seasonings" },
+            { name: "Chicken broth", amount: 4, unit: "cups", category: "protein" },
+            { name: "Heavy cream", amount: 1, unit: "cup", category: "dairy" },
+            { name: "Salt", amount: 1, unit: "tsp", category: "seasonings" },
+            { name: "Black pepper", amount: 0.5, unit: "tsp", category: "seasonings" },
+            { name: "Bacon strips", amount: 4, unit: "strips", category: "protein" }
+        ];
+
+        const categories = {
+            vegetables: "Vegetables",
+            dairy: "Dairy Products", 
+            seasonings: "Seasonings & Flour",
+            protein: "Protein & Broth"
+        };
+
+        function formatAmount(amount, unit) {
+            if (amount < 1 && (unit === "tsp" || unit === "tbsp")) {
+                const fraction = amount === 0.5 ? "½" : amount === 0.25 ? "¼" : amount === 0.75 ? "¾" : amount.toString();
+                return `${fraction} ${unit}`;
+            }
+            
+            if (amount % 1 === 0) {
+                return `${amount} ${unit}${amount > 1 && !unit.includes("medium") ? "s" : ""}`;
+            }
+            
+            return `${amount.toFixed(1)} ${unit}${amount > 1 ? "s" : ""}`;
+        }
+
+        function updateServings(servings) {
+            const baseServings = 6;
+            const multiplier = servings / baseServings;
+            
+            document.getElementById('serving-count').textContent = servings;
+            document.getElementById('serving-badge').textContent = servings;
+            
+            const scaledIngredients = baseIngredients.map(ingredient => ({
+                ...ingredient,
+                amount: ingredient.amount * multiplier
+            }));
+            
+            const grid = document.getElementById('ingredients-grid');
+            grid.innerHTML = '';
+            
+            Object.entries(categories).forEach(([category, title]) => {
+                const categoryIngredients = scaledIngredients.filter(ing => ing.category === category);
+                
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'ingredient-category';
+                
+                categoryDiv.innerHTML = `
+                    <h3 class="category-title">${title}</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        ${categoryIngredients.map(ingredient => `
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">${ingredient.name}</span>
+                                <span class="ingredient-amount">${formatAmount(ingredient.amount, ingredient.unit)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                grid.appendChild(categoryDiv);
+            });
+        }
+
+        function scrollToRecipe() {
+            document.getElementById('recipe-calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize with default serving size
+        updateServings(6);
+    </script>
+</body>
+</html>

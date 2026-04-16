@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<title>Why is Navigation Only Visible on the Root Path in React Router?</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 0px 15px !important;
+	    margin: 50px auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	 position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 70%;  
+		margin: 0 auto; 
+		text-align: center;
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_3 img,.sec_4 img{
+	    height: 350px;
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.sec_3 .container{
+		padding: 0px 15px !important;
+	}
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+	.home{
+		position: relative;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000c4;
+		z-index: 1;
+	}
+	.pb_50{
+		padding-bottom: 50px;
+	}
+	@media (max-width: 768px){
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+		h1{
+			font-size: 40px;
+		}
+		h2{
+			font-size: 32px;
+			padding-top: 20px;
+			padding-bottom: 20px !important;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 50px;
+		}
+		h2{
+			font-size: 30px;
+		}
+	}
+</style>
+</head>
+<body style="background: #000; color: #fff;">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/m_banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container">
+				<div class="box">
+					<span data-aos="fade-right" data-aos-duration="1500">Understanding the Problem</span>
+					<h1 data-aos="zoom-in" data-aos-duration="2000">Why is Navigation Only Visible on the Root Path in React Router?</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">When building a React app with react-router-dom, it’s common to create a reusable Layout component that holds your navigation bar, footer, or other shared UI elements. But if you set up your routes incorrectly, you might find that your navigation only shows up on the root path (/) and disappears when navigating to other routes like /Test.</p>
+					<p data-aos="zoom-in" data-aos-duration="2000">This issue comes down to how React Router handles route nesting and element placement. Let’s break it down.</p>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="sec_2">
+		<div class="container p_50">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.png"></div>
+				<div class="w_50">
+					<h2 class="pb_50"  data-aos="zoom-in" data-aos-duration="2000">The Problem</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Here’s the code you currently have:</p>
+					<p data-aos="zoom-in" data-aos-duration="2000">At first glance, it looks like this should work — Layout at /, Home as the index route, and ExampleComponent at /Test.</p>
+				</div>
+			</div>
+			<p data-aos="zoom-in" data-aos-duration="2000">But the issue is that:</p>
+			<ul data-aos="zoom-in" data-aos-duration="2000">
+				<li>The Layout component is only tied to the / route.</li>
+				<li>The Home and ExampleComponent routes are defined at the same level instead of being nested under Layout.</li>
+				<li>This means when you visit /Test, React Router skips Layout and renders only ExampleComponent.</li>
+			</ul>
+			<p data-aos="zoom-in" data-aos-duration="2000">That’s why the navigation bar (inside Layout) disappears on all routes except /.</p>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container p_50">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 class="pb_50"  data-aos="zoom-in" data-aos-duration="2000">Why Nested Routes Are the Key</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">In React Router v6, if you want a component like Layout to wrap multiple routes, you must define it as a parent route and place the child routes inside it.</p>
+					<p data-aos="zoom-in" data-aos-duration="2000">Example structure:</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.png"></div>
+			</div>
+			<h3 data-aos="zoom-in" data-aos-duration="2000">What’s Happening Here?</h3>
+			<ul data-aos="zoom-in" data-aos-duration="2000">
+				<li>< Route path="/" element={< Layout />}> → defines Layout as the parent wrapper.</li>
+				<li>< Route index element={< Home />} /> → Home loads at /, inside the layout.</li>
+				<li>< Route path="Test" element={< ExampleComponent />} /> → ExampleComponent loads at /Test, also inside the layout.</li>
+			</ul>
+			<p data-aos="zoom-in" data-aos-duration="2000">Now, whenever you navigate between / and /Test, the Layout stays in place, and only the child content changes.</p>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container p_50">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a7.png"></div>
+				<div class="w_50">
+					<h2 class="pb_50"  data-aos="zoom-in" data-aos-duration="2000">Fixing Layout with < Outlet /></h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">For this nesting to work, your Layout component must include < Outlet />. This is where React Router will render the child routes.</p>
+					<p data-aos="zoom-in" data-aos-duration="2000">Example Layout.js:</p>
+					<p data-aos="zoom-in" data-aos-duration="2000">Without < Outlet />, your child routes (Home, Test) won’t render inside Layout.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container p_50">
+			<div class="d_flex al_center space_bt">
+				<div class="w_50">
+					<h2 class="pb_50"  data-aos="zoom-in" data-aos-duration="2000">Corrected App.js</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Here’s the fully corrected version of your App.js:</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a8.png"></div>
+			</div>
+		</div>
+	</div>
+
+		<div class="sec_5">
+		<div class="container text_center">
+			<h2 class="pb_50" data-aos="zoom-in" data-aos-duration="2000">Conclusion</h2>
+			<p>Your navigation only appeared at / because Layout was not wrapping the other routes. By restructuring your routing with nested routes and using <Outlet /> inside Layout, you ensure the navigation bar stays visible across all pages.</p>
+			<p>This approach is the recommended pattern in React Router v6 for handling shared layouts like headers, sidebars, and footers.</p>
+		</div>
+	</div>
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

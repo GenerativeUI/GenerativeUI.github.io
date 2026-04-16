@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<title>Explain why we can’t achieve nuclear fusion for energy supply</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 0px 15px !important;
+	    margin: 50px auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	 position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 50%;   
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	.pb_0{
+		padding-bottom: 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_3 img,.sec_4 img{
+	    height: 350px;
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	.box{
+		width: 80%;
+		margin: 0 auto;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.sec_3 .container,.sec_5 .container{
+		padding: 0px 15px !important;
+	}
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000c4;
+		z-index: 1;
+	}
+	@media (max-width: 768px){
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 50px;
+		}
+		h2{
+			font-size: 30px;
+		}
+	}
+</style>
+</head>
+<body style="background: #000; color: #fff;">
+<div class="">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container">
+				<div class="box text_center">
+					<h1 data-aos="zoom-in" data-aos-duration="2000">Why We Can’t Yet Achieve Nuclear Fusion for Energy Supply</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">Nuclear fusion has long been called the “holy grail” of clean energy. It promises unlimited power, no carbon emissions, and minimal radioactive waste. So why aren’t we already powering our homes and cities with it? The answer lies in the incredible scientific and engineering challenges that come with trying to replicate the Sun’s energy here on Earth.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a4.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">What is Nuclear Fusion?</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Nuclear fusion is the process that powers the stars. It happens when two light atomic nuclei, such as hydrogen isotopes, collide and fuse together to form a heavier nucleus, releasing vast amounts of energy. Unlike nuclear fission, which splits atoms, fusion has the potential to provide cleaner and virtually limitless energy.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_3  pb_0">
+		<div class="container text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">The Core Challenge: Extreme Conditions</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000">For fusion to occur, nuclei must overcome their natural electrostatic repulsion — the force that pushes positively charged protons apart. This requires:</p>
+			<div class="d_flex space_bt p_50">
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a1.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Extreme Temperatures</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Fusion requires heating hydrogen isotopes to millions of degrees Celsius, even hotter than the Sun’s core. At these temperatures, matter becomes plasma, a highly energetic state that is incredibly hard to create and maintain on Earth without overwhelming energy costs.</p>
+				</div>
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a2.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Immense Pressure</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">To push atomic nuclei close enough to fuse, you also need tremendous pressure. Without it, the positively charged protons repel each other instead of colliding. Replicating such crushing forces in a controlled environment is one of the greatest challenges scientists face.</p>
+				</div>
+				<div class="w_33 m_0">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a3.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Stable Confinement</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Even if the plasma is hot and dense enough, it must be held in stable confinement for long enough to sustain reactions. The plasma constantly tries to expand and escape, and if it touches the reactor walls, the reaction collapses instantly. Designing systems that can confine plasma reliably remains a central barrier to usable fusion power.</p>
+				</div>
+			</div>
+			<p data-aos="zoom-in" data-aos-duration="2000">Replicating these conditions on Earth is extremely difficult. Containing plasma that hot without letting it escape or damage equipment is one of the greatest challenges in modern physics.</p>
+		</div>
+	</div>
+		<div class="sec_4 pb_0">
+		<div class="container p_50 text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">Containment Difficulties</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000">Two main approaches exist:</p>
+			<div class="d_flex space_bt p_50">
+				<div class="w_50">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Magnetic confinement (tokamaks and stellarators)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Use powerful magnetic fields to trap plasma.</p>
+				</div>
+				<div class="w_50">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a6.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Inertial confinement (lasers)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Use intense laser beams to compress fuel pellets.</p>
+				</div>
+			</div>
+			<p data-aos="zoom-in" data-aos-duration="2000">Both methods are still experimental. While progress has been made, none have yet achieved net energy gain — meaning producing more energy than the process consumes.</p>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a9.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Energy vs. Input Problem</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Currently, every fusion experiment requires more energy to start and sustain the reaction than the amount of energy that comes out. This makes it impractical for commercial electricity generation. Reaching “ignition,” where the reaction sustains itself, has only been achieved briefly and under limited laboratory conditions.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Materials and Engineering Limits</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Fusion reactors push materials to their breaking points. Walls must withstand constant bombardment by high-energy particles, intense heat, and radiation. Developing materials that survive long enough for a reactor to operate economically remains a huge hurdle.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a6.jpg"></div>
+			</div>
+		</div>
+	</div>
+
+		<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a7.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Why We’re Still Hopeful</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Despite the challenges, fusion research is advancing. Projects like ITER in France, private startups, and breakthroughs in superconducting magnets and laser technology suggest that achieving practical fusion energy may one day be possible. However, experts believe large-scale deployment is still decades away.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Conclusion</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">We can’t yet achieve nuclear fusion for energy supply because the conditions required - extreme heat, pressure, and stable confinement — remain beyond our current technological reach. While the science is proven in theory, the engineering hurdles are enormous. Fusion remains one of the most ambitious goals in energy research: not impossible, but not here yet.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a8.jpg"></div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

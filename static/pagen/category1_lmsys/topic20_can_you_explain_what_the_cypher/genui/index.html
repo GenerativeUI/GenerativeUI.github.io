@@ -1,0 +1,1543 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<script class="injected-ffc2e83d85">
+(function(){'use strict';
+function $$jscomp$arrayIteratorImpl$$($array$jscomp$6$$) {
+  var $index$jscomp$110$$ = 0;
+  return function() {
+    return $index$jscomp$110$$ < $array$jscomp$6$$.length ? {done:!1, value:$array$jscomp$6$$[$index$jscomp$110$$++]} : {done:!0};
+  };
+}
+function $$jscomp$makeIterator$$($iterable$jscomp$4$$) {
+  var $iteratorFunction$$ = typeof Symbol != "undefined" && Symbol.iterator && $iterable$jscomp$4$$[Symbol.iterator];
+  if ($iteratorFunction$$) {
+    return $iteratorFunction$$.call($iterable$jscomp$4$$);
+  }
+  if (typeof $iterable$jscomp$4$$.length == "number") {
+    return {next:$$jscomp$arrayIteratorImpl$$($iterable$jscomp$4$$)};
+  }
+  throw Error(String($iterable$jscomp$4$$) + " is not an iterable or ArrayLike");
+}
+var $$jscomp$defineProperty$$ = typeof Object.defineProperties == "function" ? Object.defineProperty : function($target$jscomp$92$$, $property$jscomp$13$$, $descriptor$jscomp$2$$) {
+  if ($target$jscomp$92$$ == Array.prototype || $target$jscomp$92$$ == Object.prototype) {
+    return $target$jscomp$92$$;
+  }
+  $target$jscomp$92$$[$property$jscomp$13$$] = $descriptor$jscomp$2$$.value;
+  return $target$jscomp$92$$;
+};
+function $$jscomp$getGlobal$$($passedInThis_possibleGlobals$$) {
+  $passedInThis_possibleGlobals$$ = ["object" == typeof globalThis && globalThis, $passedInThis_possibleGlobals$$, "object" == typeof window && window, "object" == typeof self && self, "object" == typeof global && global];
+  for (var $i$jscomp$3$$ = 0; $i$jscomp$3$$ < $passedInThis_possibleGlobals$$.length; ++$i$jscomp$3$$) {
+    var $maybeGlobal$$ = $passedInThis_possibleGlobals$$[$i$jscomp$3$$];
+    if ($maybeGlobal$$ && $maybeGlobal$$.Math == Math) {
+      return $maybeGlobal$$;
+    }
+  }
+  throw Error("Cannot find global object");
+}
+var $$jscomp$global$$ = $$jscomp$getGlobal$$(this);
+function $$jscomp$polyfill$$($property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$, $impl$jscomp$inline_23_polyfill$jscomp$2$$) {
+  if ($impl$jscomp$inline_23_polyfill$jscomp$2$$) {
+    a: {
+      var $obj$jscomp$inline_17$$ = $$jscomp$global$$;
+      $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.split(".");
+      for (var $i$jscomp$inline_19_orig$jscomp$inline_22$$ = 0; $i$jscomp$inline_19_orig$jscomp$inline_22$$ < $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.length - 1; $i$jscomp$inline_19_orig$jscomp$inline_22$$++) {
+        var $key$jscomp$inline_20$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$[$i$jscomp$inline_19_orig$jscomp$inline_22$$];
+        if (!($key$jscomp$inline_20$$ in $obj$jscomp$inline_17$$)) {
+          break a;
+        }
+        $obj$jscomp$inline_17$$ = $obj$jscomp$inline_17$$[$key$jscomp$inline_20$$];
+      }
+      $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$[$property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.length - 1];
+      $i$jscomp$inline_19_orig$jscomp$inline_22$$ = $obj$jscomp$inline_17$$[$property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$];
+      $impl$jscomp$inline_23_polyfill$jscomp$2$$ = $impl$jscomp$inline_23_polyfill$jscomp$2$$($i$jscomp$inline_19_orig$jscomp$inline_22$$);
+      $impl$jscomp$inline_23_polyfill$jscomp$2$$ != $i$jscomp$inline_19_orig$jscomp$inline_22$$ && $impl$jscomp$inline_23_polyfill$jscomp$2$$ != null && $$jscomp$defineProperty$$($obj$jscomp$inline_17$$, $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$, {configurable:!0, writable:!0, value:$impl$jscomp$inline_23_polyfill$jscomp$2$$});
+    }
+  }
+}
+function $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$1$$) {
+  if (!($result$jscomp$1$$ instanceof Object)) {
+    throw new TypeError("Iterator result " + $result$jscomp$1$$ + " is not an object");
+  }
+}
+function $$jscomp$generator$Context$$() {
+  this.$m$ = !1;
+  this.$j$ = null;
+  this.$o$ = void 0;
+  this.$g$ = 1;
+  this.$i$ = this.$l$ = 0;
+  this.$v$ = this.$h$ = null;
+}
+function $JSCompiler_StaticMethods_start_$$($JSCompiler_StaticMethods_start_$self$$) {
+  if ($JSCompiler_StaticMethods_start_$self$$.$m$) {
+    throw new TypeError("Generator is already running");
+  }
+  $JSCompiler_StaticMethods_start_$self$$.$m$ = !0;
+}
+$$jscomp$generator$Context$$.prototype.$u$ = function($value$jscomp$175$$) {
+  this.$o$ = $value$jscomp$175$$;
+};
+function $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_JSC$2497_throw_$self$$, $e$jscomp$8$$) {
+  $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$h$ = {$exception$:$e$jscomp$8$$, $isException$:!0};
+  $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$g$ = $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$l$ || $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$i$;
+}
+$$jscomp$generator$Context$$.prototype.getNextAddressJsc = function() {
+  return this.$g$;
+};
+$$jscomp$generator$Context$$.prototype.getYieldResultJsc = function() {
+  return this.$o$;
+};
+$$jscomp$generator$Context$$.prototype.return = function($value$jscomp$176$$) {
+  this.$h$ = {return:$value$jscomp$176$$};
+  this.$g$ = this.$i$;
+};
+$$jscomp$generator$Context$$.prototype["return"] = $$jscomp$generator$Context$$.prototype.return;
+$$jscomp$generator$Context$$.prototype.$I$ = function($nextAddress$$) {
+  this.$h$ = {$jumpTo$:$nextAddress$$};
+  this.$g$ = this.$i$;
+};
+$$jscomp$generator$Context$$.prototype.jumpThroughFinallyBlocks = $$jscomp$generator$Context$$.prototype.$I$;
+$$jscomp$generator$Context$$.prototype.$A$ = function($value$jscomp$177$$, $resumeAddress$$) {
+  this.$g$ = $resumeAddress$$;
+  return {value:$value$jscomp$177$$};
+};
+$$jscomp$generator$Context$$.prototype.yield = $$jscomp$generator$Context$$.prototype.$A$;
+$$jscomp$generator$Context$$.prototype.$L$ = function($iterable$jscomp$5_iterator$jscomp$6$$, $resumeAddress$jscomp$1$$) {
+  $iterable$jscomp$5_iterator$jscomp$6$$ = $$jscomp$makeIterator$$($iterable$jscomp$5_iterator$jscomp$6$$);
+  var $result$jscomp$2$$ = $iterable$jscomp$5_iterator$jscomp$6$$.next();
+  $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$2$$);
+  if ($result$jscomp$2$$.done) {
+    this.$o$ = $result$jscomp$2$$.value, this.$g$ = $resumeAddress$jscomp$1$$;
+  } else {
+    return this.$j$ = $iterable$jscomp$5_iterator$jscomp$6$$, this.$A$($result$jscomp$2$$.value, $resumeAddress$jscomp$1$$);
+  }
+};
+$$jscomp$generator$Context$$.prototype.yieldAll = $$jscomp$generator$Context$$.prototype.$L$;
+$$jscomp$generator$Context$$.prototype.$jumpTo$ = function($nextAddress$jscomp$1$$) {
+  this.$g$ = $nextAddress$jscomp$1$$;
+};
+$$jscomp$generator$Context$$.prototype.jumpTo = $$jscomp$generator$Context$$.prototype.$jumpTo$;
+$$jscomp$generator$Context$$.prototype.$C$ = function() {
+  this.$g$ = 0;
+};
+$$jscomp$generator$Context$$.prototype.jumpToEnd = $$jscomp$generator$Context$$.prototype.$C$;
+$$jscomp$generator$Context$$.prototype.$F$ = function($catchAddress$$, $finallyAddress$$) {
+  this.$l$ = $catchAddress$$;
+  $finallyAddress$$ != void 0 && (this.$i$ = $finallyAddress$$);
+};
+$$jscomp$generator$Context$$.prototype.setCatchFinallyBlocks = $$jscomp$generator$Context$$.prototype.$F$;
+$$jscomp$generator$Context$$.prototype.$K$ = function($finallyAddress$jscomp$1$$) {
+  this.$l$ = 0;
+  this.$i$ = $finallyAddress$jscomp$1$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.setFinallyBlock = $$jscomp$generator$Context$$.prototype.$K$;
+$$jscomp$generator$Context$$.prototype.$D$ = function($nextAddress$jscomp$2$$, $catchAddress$jscomp$1$$) {
+  this.$g$ = $nextAddress$jscomp$2$$;
+  this.$l$ = $catchAddress$jscomp$1$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.leaveTryBlock = $$jscomp$generator$Context$$.prototype.$D$;
+$$jscomp$generator$Context$$.prototype.$B$ = function($exception$jscomp$2_nextCatchBlockAddress$$) {
+  this.$l$ = $exception$jscomp$2_nextCatchBlockAddress$$ || 0;
+  $exception$jscomp$2_nextCatchBlockAddress$$ = this.$h$.$exception$;
+  this.$h$ = null;
+  return $exception$jscomp$2_nextCatchBlockAddress$$;
+};
+$$jscomp$generator$Context$$.prototype.enterCatchBlock = $$jscomp$generator$Context$$.prototype.$B$;
+$$jscomp$generator$Context$$.prototype.$G$ = function($nextCatchAddress$$, $nextFinallyAddress$$, $finallyDepth$$) {
+  $finallyDepth$$ ? this.$v$[$finallyDepth$$] = this.$h$ : this.$v$ = [this.$h$];
+  this.$l$ = $nextCatchAddress$$ || 0;
+  this.$i$ = $nextFinallyAddress$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.enterFinallyBlock = $$jscomp$generator$Context$$.prototype.$G$;
+$$jscomp$generator$Context$$.prototype.$J$ = function($nextAddress$jscomp$3$$, $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$) {
+  $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ = this.$v$.splice($abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ || 0)[0];
+  ($abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ = this.$h$ = this.$h$ || $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$) ? $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$isException$ ? this.$g$ = this.$l$ || this.$i$ : $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$ != void 0 && this.$i$ < $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$ ? (this.$g$ = $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$, 
+  this.$h$ = null) : this.$g$ = this.$i$ : this.$g$ = $nextAddress$jscomp$3$$;
+};
+$$jscomp$generator$Context$$.prototype.leaveFinallyBlock = $$jscomp$generator$Context$$.prototype.$J$;
+$$jscomp$generator$Context$$.prototype.$H$ = function($object$$) {
+  return new $$jscomp$generator$Context$PropertyIterator$$($object$$);
+};
+$$jscomp$generator$Context$$.prototype.forIn = $$jscomp$generator$Context$$.prototype.$H$;
+function $$jscomp$generator$Context$PropertyIterator$$($object$jscomp$1$$) {
+  this.$i$ = $object$jscomp$1$$;
+  this.$g$ = [];
+  for (var $property$jscomp$17$$ in $object$jscomp$1$$) {
+    this.$g$.push($property$jscomp$17$$);
+  }
+  this.$g$.reverse();
+}
+$$jscomp$generator$Context$PropertyIterator$$.prototype.$h$ = function() {
+  for (; this.$g$.length > 0;) {
+    var $property$jscomp$18$$ = this.$g$.pop();
+    if ($property$jscomp$18$$ in this.$i$) {
+      return $property$jscomp$18$$;
+    }
+  }
+  return null;
+};
+$$jscomp$generator$Context$PropertyIterator$$.prototype.getNext = $$jscomp$generator$Context$PropertyIterator$$.prototype.$h$;
+function $$jscomp$generator$Engine_$$($program$jscomp$63$$) {
+  this.$g$ = new $$jscomp$generator$Context$$();
+  this.$h$ = $program$jscomp$63$$;
+}
+function $JSCompiler_StaticMethods_return_$$($JSCompiler_StaticMethods_return_$self$$, $value$jscomp$179$$) {
+  $JSCompiler_StaticMethods_start_$$($JSCompiler_StaticMethods_return_$self$$.$g$);
+  var $yieldAllIterator$$ = $JSCompiler_StaticMethods_return_$self$$.$g$.$j$;
+  if ($yieldAllIterator$$) {
+    return $JSCompiler_StaticMethods_yieldAllStep_$$($JSCompiler_StaticMethods_return_$self$$, "return" in $yieldAllIterator$$ ? $yieldAllIterator$$["return"] : function($v$jscomp$1$$) {
+      return {value:$v$jscomp$1$$, done:!0};
+    }, $value$jscomp$179$$, $JSCompiler_StaticMethods_return_$self$$.$g$.return);
+  }
+  $JSCompiler_StaticMethods_return_$self$$.$g$.return($value$jscomp$179$$);
+  return $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_return_$self$$);
+}
+function $JSCompiler_StaticMethods_yieldAllStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$, $action$jscomp$1$$, $value$jscomp$180$$, $nextAction$$) {
+  try {
+    var $result$jscomp$3$$ = $action$jscomp$1$$.call($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$, $value$jscomp$180$$);
+    $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$3$$);
+    if (!$result$jscomp$3$$.done) {
+      return $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$m$ = !1, $result$jscomp$3$$;
+    }
+    var $resultValue$$ = $result$jscomp$3$$.value;
+  } catch ($e$jscomp$9$$) {
+    return $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$ = null, $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$, $e$jscomp$9$$), $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$);
+  }
+  $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$ = null;
+  $nextAction$$.call($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$, $resultValue$$);
+  return $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$);
+}
+function $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_nextStep_$self$$) {
+  for (; $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$g$;) {
+    try {
+      var $abruptCompletion$jscomp$1_yieldValue$$ = $JSCompiler_StaticMethods_nextStep_$self$$.$h$($JSCompiler_StaticMethods_nextStep_$self$$.$g$);
+      if ($abruptCompletion$jscomp$1_yieldValue$$) {
+        return $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$m$ = !1, {value:$abruptCompletion$jscomp$1_yieldValue$$.value, done:!1};
+      }
+    } catch ($e$jscomp$10$$) {
+      $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$o$ = void 0, $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_nextStep_$self$$.$g$, $e$jscomp$10$$);
+    }
+  }
+  $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$m$ = !1;
+  if ($JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$) {
+    $abruptCompletion$jscomp$1_yieldValue$$ = $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$;
+    $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$ = null;
+    if ($abruptCompletion$jscomp$1_yieldValue$$.$isException$) {
+      throw $abruptCompletion$jscomp$1_yieldValue$$.$exception$;
+    }
+    return {value:$abruptCompletion$jscomp$1_yieldValue$$.return, done:!0};
+  }
+  return {value:void 0, done:!0};
+}
+function $$jscomp$generator$Generator_$$($engine$$) {
+  this.next = function($JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$) {
+    $JSCompiler_StaticMethods_start_$$($engine$$.$g$);
+    $engine$$.$g$.$j$ ? $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$ = $JSCompiler_StaticMethods_yieldAllStep_$$($engine$$, $engine$$.$g$.$j$.next, $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$, $engine$$.$g$.$u$) : ($engine$$.$g$.$u$($JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$), $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$ = $JSCompiler_StaticMethods_nextStep_$$($engine$$));
+    return $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$;
+  };
+  this.throw = function($JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$) {
+    $JSCompiler_StaticMethods_start_$$($engine$$.$g$);
+    $engine$$.$g$.$j$ ? $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$ = $JSCompiler_StaticMethods_yieldAllStep_$$($engine$$, $engine$$.$g$.$j$["throw"], $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$, $engine$$.$g$.$u$) : ($JSCompiler_StaticMethods_JSC$2497_throw_$$($engine$$.$g$, $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$), $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$ = $JSCompiler_StaticMethods_nextStep_$$($engine$$));
+    return $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$;
+  };
+  this.return = function($value$jscomp$181$$) {
+    return $JSCompiler_StaticMethods_return_$$($engine$$, $value$jscomp$181$$);
+  };
+  this[Symbol.iterator] = function() {
+    return this;
+  };
+}
+function $$jscomp$asyncExecutePromiseGenerator$$($generator$jscomp$1$$) {
+  function $passValueToGenerator$$($value$jscomp$182$$) {
+    return $generator$jscomp$1$$.next($value$jscomp$182$$);
+  }
+  function $passErrorToGenerator$$($error$jscomp$4$$) {
+    return $generator$jscomp$1$$.throw($error$jscomp$4$$);
+  }
+  return new Promise(function($resolve$$, $reject$$) {
+    function $handleGeneratorRecord$$($genRec$$) {
+      $genRec$$.done ? $resolve$$($genRec$$.value) : Promise.resolve($genRec$$.value).then($passValueToGenerator$$, $passErrorToGenerator$$).then($handleGeneratorRecord$$, $reject$$);
+    }
+    $handleGeneratorRecord$$($generator$jscomp$1$$.next());
+  });
+}
+$$jscomp$polyfill$$("Symbol", function($orig$jscomp$2$$) {
+  function $symbolPolyfill$$($opt_description$jscomp$2$$) {
+    if (this instanceof $symbolPolyfill$$) {
+      throw new TypeError("Symbol is not a constructor");
+    }
+    return new $SymbolClass$$($SYMBOL_PREFIX$$ + ($opt_description$jscomp$2$$ || "") + "_" + $counter$$++, $opt_description$jscomp$2$$);
+  }
+  function $SymbolClass$$($id$jscomp$6$$, $opt_description$jscomp$1$$) {
+    this.$g$ = $id$jscomp$6$$;
+    $$jscomp$defineProperty$$(this, "description", {configurable:!0, writable:!0, value:$opt_description$jscomp$1$$});
+  }
+  if ($orig$jscomp$2$$) {
+    return $orig$jscomp$2$$;
+  }
+  $SymbolClass$$.prototype.toString = function() {
+    return this.$g$;
+  };
+  var $SYMBOL_PREFIX$$ = "jscomp_symbol_" + (Math.random() * 1E9 >>> 0) + "_", $counter$$ = 0;
+  return $symbolPolyfill$$;
+});
+$$jscomp$polyfill$$("Symbol.iterator", function($orig$jscomp$3_symbolIterator$$) {
+  if ($orig$jscomp$3_symbolIterator$$) {
+    return $orig$jscomp$3_symbolIterator$$;
+  }
+  $orig$jscomp$3_symbolIterator$$ = Symbol("Symbol.iterator");
+  $$jscomp$defineProperty$$(Array.prototype, $orig$jscomp$3_symbolIterator$$, {configurable:!0, writable:!0, value:function() {
+    return $$jscomp$iteratorPrototype$$($$jscomp$arrayIteratorImpl$$(this));
+  }});
+  return $orig$jscomp$3_symbolIterator$$;
+});
+function $$jscomp$iteratorPrototype$$($iterator$jscomp$7_next$$) {
+  $iterator$jscomp$7_next$$ = {next:$iterator$jscomp$7_next$$};
+  $iterator$jscomp$7_next$$[Symbol.iterator] = function() {
+    return this;
+  };
+  return $iterator$jscomp$7_next$$;
+}
+$$jscomp$polyfill$$("Promise", function($NativePromise$$) {
+  function $PolyfillPromise$$($executor$$) {
+    this.$h$ = 0;
+    this.$i$ = void 0;
+    this.$g$ = [];
+    this.$o$ = !1;
+    var $resolveAndReject$$ = this.$j$();
+    try {
+      $executor$$($resolveAndReject$$.resolve, $resolveAndReject$$.reject);
+    } catch ($e$jscomp$11$$) {
+      $resolveAndReject$$.reject($e$jscomp$11$$);
+    }
+  }
+  function $AsyncExecutor$$() {
+    this.$g$ = null;
+  }
+  function $resolvingPromise$$($opt_value$jscomp$11$$) {
+    return $opt_value$jscomp$11$$ instanceof $PolyfillPromise$$ ? $opt_value$jscomp$11$$ : new $PolyfillPromise$$(function($resolve$jscomp$1$$) {
+      $resolve$jscomp$1$$($opt_value$jscomp$11$$);
+    });
+  }
+  if ($NativePromise$$) {
+    return $NativePromise$$;
+  }
+  $AsyncExecutor$$.prototype.$h$ = function($f$jscomp$1$$) {
+    if (this.$g$ == null) {
+      this.$g$ = [];
+      var $self$jscomp$1$$ = this;
+      this.$i$(function() {
+        $self$jscomp$1$$.$l$();
+      });
+    }
+    this.$g$.push($f$jscomp$1$$);
+  };
+  var $nativeSetTimeout$$ = $$jscomp$global$$.setTimeout;
+  $AsyncExecutor$$.prototype.$i$ = function($f$jscomp$2$$) {
+    $nativeSetTimeout$$($f$jscomp$2$$, 0);
+  };
+  $AsyncExecutor$$.prototype.$l$ = function() {
+    for (; this.$g$ && this.$g$.length;) {
+      var $executingBatch$$ = this.$g$;
+      this.$g$ = [];
+      for (var $i$jscomp$7$$ = 0; $i$jscomp$7$$ < $executingBatch$$.length; ++$i$jscomp$7$$) {
+        var $f$jscomp$3$$ = $executingBatch$$[$i$jscomp$7$$];
+        $executingBatch$$[$i$jscomp$7$$] = null;
+        try {
+          $f$jscomp$3$$();
+        } catch ($error$jscomp$5$$) {
+          this.$j$($error$jscomp$5$$);
+        }
+      }
+    }
+    this.$g$ = null;
+  };
+  $AsyncExecutor$$.prototype.$j$ = function($exception$jscomp$5$$) {
+    this.$i$(function() {
+      throw $exception$jscomp$5$$;
+    });
+  };
+  $PolyfillPromise$$.prototype.$j$ = function() {
+    function $firstCallWins$$($method$jscomp$1$$) {
+      return function($x$jscomp$96$$) {
+        $alreadyCalled$$ || ($alreadyCalled$$ = !0, $method$jscomp$1$$.call($thisPromise$$, $x$jscomp$96$$));
+      };
+    }
+    var $thisPromise$$ = this, $alreadyCalled$$ = !1;
+    return {resolve:$firstCallWins$$(this.$C$), reject:$firstCallWins$$(this.$l$)};
+  };
+  $PolyfillPromise$$.prototype.$C$ = function($value$jscomp$184$$) {
+    if ($value$jscomp$184$$ === this) {
+      this.$l$(new TypeError("A Promise cannot resolve to itself"));
+    } else {
+      if ($value$jscomp$184$$ instanceof $PolyfillPromise$$) {
+        this.$F$($value$jscomp$184$$);
+      } else {
+        a: {
+          switch(typeof $value$jscomp$184$$) {
+            case "object":
+              var $JSCompiler_inline_result$jscomp$11$$ = $value$jscomp$184$$ != null;
+              break a;
+            case "function":
+              $JSCompiler_inline_result$jscomp$11$$ = !0;
+              break a;
+            default:
+              $JSCompiler_inline_result$jscomp$11$$ = !1;
+          }
+        }
+        $JSCompiler_inline_result$jscomp$11$$ ? this.$B$($value$jscomp$184$$) : this.$m$($value$jscomp$184$$);
+      }
+    }
+  };
+  $PolyfillPromise$$.prototype.$B$ = function($obj$jscomp$28$$) {
+    var $thenMethod$$ = void 0;
+    try {
+      $thenMethod$$ = $obj$jscomp$28$$.then;
+    } catch ($error$jscomp$6$$) {
+      this.$l$($error$jscomp$6$$);
+      return;
+    }
+    typeof $thenMethod$$ == "function" ? this.$G$($thenMethod$$, $obj$jscomp$28$$) : this.$m$($obj$jscomp$28$$);
+  };
+  $PolyfillPromise$$.prototype.$l$ = function($reason$jscomp$9$$) {
+    this.$u$(2, $reason$jscomp$9$$);
+  };
+  $PolyfillPromise$$.prototype.$m$ = function($value$jscomp$185$$) {
+    this.$u$(1, $value$jscomp$185$$);
+  };
+  $PolyfillPromise$$.prototype.$u$ = function($settledState$$, $valueOrReason$$) {
+    if (this.$h$ != 0) {
+      throw Error("Cannot settle(" + $settledState$$ + ", " + $valueOrReason$$ + "): Promise already settled in state" + this.$h$);
+    }
+    this.$h$ = $settledState$$;
+    this.$i$ = $valueOrReason$$;
+    this.$h$ === 2 && this.$D$();
+    this.$v$();
+  };
+  $PolyfillPromise$$.prototype.$D$ = function() {
+    var $self$jscomp$2$$ = this;
+    $nativeSetTimeout$$(function() {
+      if ($self$jscomp$2$$.$A$()) {
+        var $nativeConsole$$ = $$jscomp$global$$.console;
+        typeof $nativeConsole$$ !== "undefined" && $nativeConsole$$.error($self$jscomp$2$$.$i$);
+      }
+    }, 1);
+  };
+  $PolyfillPromise$$.prototype.$A$ = function() {
+    if (this.$o$) {
+      return !1;
+    }
+    var $NativeCustomEvent_event$jscomp$6$$ = $$jscomp$global$$.CustomEvent, $NativeEvent$$ = $$jscomp$global$$.Event, $nativeDispatchEvent$$ = $$jscomp$global$$.dispatchEvent;
+    if (typeof $nativeDispatchEvent$$ === "undefined") {
+      return !0;
+    }
+    typeof $NativeCustomEvent_event$jscomp$6$$ === "function" ? $NativeCustomEvent_event$jscomp$6$$ = new $NativeCustomEvent_event$jscomp$6$$("unhandledrejection", {cancelable:!0}) : typeof $NativeEvent$$ === "function" ? $NativeCustomEvent_event$jscomp$6$$ = new $NativeEvent$$("unhandledrejection", {cancelable:!0}) : ($NativeCustomEvent_event$jscomp$6$$ = $$jscomp$global$$.document.createEvent("CustomEvent"), $NativeCustomEvent_event$jscomp$6$$.initCustomEvent("unhandledrejection", !1, !0, $NativeCustomEvent_event$jscomp$6$$));
+    $NativeCustomEvent_event$jscomp$6$$.promise = this;
+    $NativeCustomEvent_event$jscomp$6$$.reason = this.$i$;
+    return $nativeDispatchEvent$$($NativeCustomEvent_event$jscomp$6$$);
+  };
+  $PolyfillPromise$$.prototype.$v$ = function() {
+    if (this.$g$ != null) {
+      for (var $i$jscomp$8$$ = 0; $i$jscomp$8$$ < this.$g$.length; ++$i$jscomp$8$$) {
+        $asyncExecutor$$.$h$(this.$g$[$i$jscomp$8$$]);
+      }
+      this.$g$ = null;
+    }
+  };
+  var $asyncExecutor$$ = new $AsyncExecutor$$();
+  $PolyfillPromise$$.prototype.$F$ = function($promise$$) {
+    var $methods$jscomp$1$$ = this.$j$();
+    $promise$$.$callWhenSettled_$($methods$jscomp$1$$.resolve, $methods$jscomp$1$$.reject);
+  };
+  $PolyfillPromise$$.prototype.$G$ = function($thenMethod$jscomp$1$$, $thenable$$) {
+    var $methods$jscomp$2$$ = this.$j$();
+    try {
+      $thenMethod$jscomp$1$$.call($thenable$$, $methods$jscomp$2$$.resolve, $methods$jscomp$2$$.reject);
+    } catch ($error$jscomp$7$$) {
+      $methods$jscomp$2$$.reject($error$jscomp$7$$);
+    }
+  };
+  $PolyfillPromise$$.prototype.then = function($onFulfilled$$, $onRejected$jscomp$1$$) {
+    function $createCallback$$($paramF$$, $defaultF$$) {
+      return typeof $paramF$$ == "function" ? function($x$jscomp$97$$) {
+        try {
+          $resolveChild$$($paramF$$($x$jscomp$97$$));
+        } catch ($error$jscomp$8$$) {
+          $rejectChild$$($error$jscomp$8$$);
+        }
+      } : $defaultF$$;
+    }
+    var $resolveChild$$, $rejectChild$$, $childPromise$$ = new $PolyfillPromise$$(function($resolve$jscomp$2$$, $reject$jscomp$2$$) {
+      $resolveChild$$ = $resolve$jscomp$2$$;
+      $rejectChild$$ = $reject$jscomp$2$$;
+    });
+    this.$callWhenSettled_$($createCallback$$($onFulfilled$$, $resolveChild$$), $createCallback$$($onRejected$jscomp$1$$, $rejectChild$$));
+    return $childPromise$$;
+  };
+  $PolyfillPromise$$.prototype.catch = function($onRejected$jscomp$2$$) {
+    return this.then(void 0, $onRejected$jscomp$2$$);
+  };
+  $PolyfillPromise$$.prototype.$callWhenSettled_$ = function($onFulfilled$jscomp$1$$, $onRejected$jscomp$3$$) {
+    function $callback$jscomp$70$$() {
+      switch($thisPromise$jscomp$1$$.$h$) {
+        case 1:
+          $onFulfilled$jscomp$1$$($thisPromise$jscomp$1$$.$i$);
+          break;
+        case 2:
+          $onRejected$jscomp$3$$($thisPromise$jscomp$1$$.$i$);
+          break;
+        default:
+          throw Error("Unexpected state: " + $thisPromise$jscomp$1$$.$h$);
+      }
+    }
+    var $thisPromise$jscomp$1$$ = this;
+    this.$g$ == null ? $asyncExecutor$$.$h$($callback$jscomp$70$$) : this.$g$.push($callback$jscomp$70$$);
+    this.$o$ = !0;
+  };
+  $PolyfillPromise$$.resolve = $resolvingPromise$$;
+  $PolyfillPromise$$.reject = function($opt_reason$jscomp$1$$) {
+    return new $PolyfillPromise$$(function($resolve$jscomp$3$$, $reject$jscomp$3$$) {
+      $reject$jscomp$3$$($opt_reason$jscomp$1$$);
+    });
+  };
+  $PolyfillPromise$$.race = function($thenablesOrValues$$) {
+    return new $PolyfillPromise$$(function($resolve$jscomp$4$$, $reject$jscomp$4$$) {
+      for (var $iterator$jscomp$8$$ = $$jscomp$makeIterator$$($thenablesOrValues$$), $iterRec$$ = $iterator$jscomp$8$$.next(); !$iterRec$$.done; $iterRec$$ = $iterator$jscomp$8$$.next()) {
+        $resolvingPromise$$($iterRec$$.value).$callWhenSettled_$($resolve$jscomp$4$$, $reject$jscomp$4$$);
+      }
+    });
+  };
+  $PolyfillPromise$$.all = function($thenablesOrValues$jscomp$1$$) {
+    var $iterator$jscomp$9$$ = $$jscomp$makeIterator$$($thenablesOrValues$jscomp$1$$), $iterRec$jscomp$1$$ = $iterator$jscomp$9$$.next();
+    return $iterRec$jscomp$1$$.done ? $resolvingPromise$$([]) : new $PolyfillPromise$$(function($resolveAll$$, $rejectAll$$) {
+      function $onFulfilled$jscomp$2$$($i$jscomp$9$$) {
+        return function($ithResult$$) {
+          $resultsArray$$[$i$jscomp$9$$] = $ithResult$$;
+          $unresolvedCount$$--;
+          $unresolvedCount$$ == 0 && $resolveAll$$($resultsArray$$);
+        };
+      }
+      var $resultsArray$$ = [], $unresolvedCount$$ = 0;
+      do {
+        $resultsArray$$.push(void 0), $unresolvedCount$$++, $resolvingPromise$$($iterRec$jscomp$1$$.value).$callWhenSettled_$($onFulfilled$jscomp$2$$($resultsArray$$.length - 1), $rejectAll$$), $iterRec$jscomp$1$$ = $iterator$jscomp$9$$.next();
+      } while (!$iterRec$jscomp$1$$.done);
+    });
+  };
+  return $PolyfillPromise$$;
+});
+function $$jscomp$owns$$($obj$jscomp$29$$, $prop$jscomp$2$$) {
+  return Object.prototype.hasOwnProperty.call($obj$jscomp$29$$, $prop$jscomp$2$$);
+}
+$$jscomp$polyfill$$("Object.is", function($orig$jscomp$13$$) {
+  return $orig$jscomp$13$$ ? $orig$jscomp$13$$ : function($left$jscomp$2$$, $right$jscomp$2$$) {
+    return $left$jscomp$2$$ === $right$jscomp$2$$ ? $left$jscomp$2$$ !== 0 || 1 / $left$jscomp$2$$ === 1 / $right$jscomp$2$$ : $left$jscomp$2$$ !== $left$jscomp$2$$ && $right$jscomp$2$$ !== $right$jscomp$2$$;
+  };
+});
+$$jscomp$polyfill$$("Array.prototype.includes", function($orig$jscomp$14$$) {
+  return $orig$jscomp$14$$ ? $orig$jscomp$14$$ : function($searchElement$jscomp$5$$, $i$jscomp$11_opt_fromIndex$jscomp$11$$) {
+    var $array$jscomp$8$$ = this;
+    $array$jscomp$8$$ instanceof String && ($array$jscomp$8$$ = String($array$jscomp$8$$));
+    var $len$$ = $array$jscomp$8$$.length;
+    $i$jscomp$11_opt_fromIndex$jscomp$11$$ = $i$jscomp$11_opt_fromIndex$jscomp$11$$ || 0;
+    for ($i$jscomp$11_opt_fromIndex$jscomp$11$$ < 0 && ($i$jscomp$11_opt_fromIndex$jscomp$11$$ = Math.max($i$jscomp$11_opt_fromIndex$jscomp$11$$ + $len$$, 0)); $i$jscomp$11_opt_fromIndex$jscomp$11$$ < $len$$; $i$jscomp$11_opt_fromIndex$jscomp$11$$++) {
+      var $element$jscomp$9$$ = $array$jscomp$8$$[$i$jscomp$11_opt_fromIndex$jscomp$11$$];
+      if ($element$jscomp$9$$ === $searchElement$jscomp$5$$ || Object.is($element$jscomp$9$$, $searchElement$jscomp$5$$)) {
+        return !0;
+      }
+    }
+    return !1;
+  };
+});
+$$jscomp$polyfill$$("String.prototype.includes", function($orig$jscomp$15$$) {
+  return $orig$jscomp$15$$ ? $orig$jscomp$15$$ : function($searchString$jscomp$3$$, $opt_position$jscomp$3$$) {
+    if (this == null) {
+      throw new TypeError("The 'this' value for String.prototype.includes must not be null or undefined");
+    }
+    if ($searchString$jscomp$3$$ instanceof RegExp) {
+      throw new TypeError("First argument to String.prototype.includes must not be a regular expression");
+    }
+    return this.indexOf($searchString$jscomp$3$$, $opt_position$jscomp$3$$ || 0) !== -1;
+  };
+});
+$$jscomp$polyfill$$("WeakMap", function($NativeWeakMap$$) {
+  function $PolyfillWeakMap$$($iter$jscomp$1_opt_iterable$jscomp$4$$) {
+    this.$g$ = ($index$jscomp$111$$ += Math.random() + 1).toString();
+    if ($iter$jscomp$1_opt_iterable$jscomp$4$$) {
+      $iter$jscomp$1_opt_iterable$jscomp$4$$ = $$jscomp$makeIterator$$($iter$jscomp$1_opt_iterable$jscomp$4$$);
+      for (var $entry_item$jscomp$21$$; !($entry_item$jscomp$21$$ = $iter$jscomp$1_opt_iterable$jscomp$4$$.next()).done;) {
+        $entry_item$jscomp$21$$ = $entry_item$jscomp$21$$.value, this.set($entry_item$jscomp$21$$[0], $entry_item$jscomp$21$$[1]);
+      }
+    }
+  }
+  function $WeakMapMembership$$() {
+  }
+  function $isValidKey$$($key$jscomp$44$$) {
+    var $type$jscomp$171$$ = typeof $key$jscomp$44$$;
+    return $type$jscomp$171$$ === "object" && $key$jscomp$44$$ !== null || $type$jscomp$171$$ === "function";
+  }
+  function $insert$$($target$jscomp$103$$) {
+    if (!$$jscomp$owns$$($target$jscomp$103$$, $prop$jscomp$3$$)) {
+      var $obj$jscomp$31$$ = new $WeakMapMembership$$();
+      $$jscomp$defineProperty$$($target$jscomp$103$$, $prop$jscomp$3$$, {value:$obj$jscomp$31$$});
+    }
+  }
+  function $patch$$($name$jscomp$77$$) {
+    var $prev$$ = Object[$name$jscomp$77$$];
+    $prev$$ && (Object[$name$jscomp$77$$] = function($target$jscomp$104$$) {
+      if ($target$jscomp$104$$ instanceof $WeakMapMembership$$) {
+        return $target$jscomp$104$$;
+      }
+      Object.isExtensible($target$jscomp$104$$) && $insert$$($target$jscomp$104$$);
+      return $prev$$($target$jscomp$104$$);
+    });
+  }
+  if (function() {
+    if (!$NativeWeakMap$$ || !Object.seal) {
+      return !1;
+    }
+    try {
+      var $x$jscomp$99$$ = Object.seal({}), $y$jscomp$82$$ = Object.seal({}), $map$$ = new $NativeWeakMap$$([[$x$jscomp$99$$, 2], [$y$jscomp$82$$, 3]]);
+      if ($map$$.get($x$jscomp$99$$) != 2 || $map$$.get($y$jscomp$82$$) != 3) {
+        return !1;
+      }
+      $map$$.delete($x$jscomp$99$$);
+      $map$$.set($y$jscomp$82$$, 4);
+      return !$map$$.has($x$jscomp$99$$) && $map$$.get($y$jscomp$82$$) == 4;
+    } catch ($err$jscomp$4$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeWeakMap$$;
+  }
+  var $prop$jscomp$3$$ = "$jscomp_hidden_" + Math.random();
+  $patch$$("freeze");
+  $patch$$("preventExtensions");
+  $patch$$("seal");
+  var $index$jscomp$111$$ = 0;
+  $PolyfillWeakMap$$.prototype.set = function($key$jscomp$45$$, $value$jscomp$186$$) {
+    if (!$isValidKey$$($key$jscomp$45$$)) {
+      throw Error("Invalid WeakMap key");
+    }
+    $insert$$($key$jscomp$45$$);
+    if (!$$jscomp$owns$$($key$jscomp$45$$, $prop$jscomp$3$$)) {
+      throw Error("WeakMap key fail: " + $key$jscomp$45$$);
+    }
+    $key$jscomp$45$$[$prop$jscomp$3$$][this.$g$] = $value$jscomp$186$$;
+    return this;
+  };
+  $PolyfillWeakMap$$.prototype.get = function($key$jscomp$46$$) {
+    return $isValidKey$$($key$jscomp$46$$) && $$jscomp$owns$$($key$jscomp$46$$, $prop$jscomp$3$$) ? $key$jscomp$46$$[$prop$jscomp$3$$][this.$g$] : void 0;
+  };
+  $PolyfillWeakMap$$.prototype.has = function($key$jscomp$47$$) {
+    return $isValidKey$$($key$jscomp$47$$) && $$jscomp$owns$$($key$jscomp$47$$, $prop$jscomp$3$$) && $$jscomp$owns$$($key$jscomp$47$$[$prop$jscomp$3$$], this.$g$);
+  };
+  $PolyfillWeakMap$$.prototype.delete = function($key$jscomp$48$$) {
+    return $isValidKey$$($key$jscomp$48$$) && $$jscomp$owns$$($key$jscomp$48$$, $prop$jscomp$3$$) && $$jscomp$owns$$($key$jscomp$48$$[$prop$jscomp$3$$], this.$g$) ? delete $key$jscomp$48$$[$prop$jscomp$3$$][this.$g$] : !1;
+  };
+  return $PolyfillWeakMap$$;
+});
+$$jscomp$polyfill$$("Map", function($NativeMap$$) {
+  function $createHead$$() {
+    var $head$$ = {};
+    return $head$$.$previous$ = $head$$.next = $head$$.head = $head$$;
+  }
+  function $makeIterator$$($map$jscomp$3$$, $func$jscomp$4$$) {
+    var $entry$jscomp$8$$ = $map$jscomp$3$$[1];
+    return $$jscomp$iteratorPrototype$$(function() {
+      if ($entry$jscomp$8$$) {
+        for (; $entry$jscomp$8$$.head != $map$jscomp$3$$[1];) {
+          $entry$jscomp$8$$ = $entry$jscomp$8$$.$previous$;
+        }
+        for (; $entry$jscomp$8$$.next != $entry$jscomp$8$$.head;) {
+          return $entry$jscomp$8$$ = $entry$jscomp$8$$.next, {done:!1, value:$func$jscomp$4$$($entry$jscomp$8$$)};
+        }
+        $entry$jscomp$8$$ = null;
+      }
+      return {done:!0, value:void 0};
+    });
+  }
+  function $maybeGetEntry$$($index$jscomp$112_map$jscomp$2$$, $key$jscomp$54$$) {
+    var $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = $key$jscomp$54$$ && typeof $key$jscomp$54$$;
+    $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ == "object" || $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ == "function" ? $idMap$$.has($key$jscomp$54$$) ? $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = $idMap$$.get($key$jscomp$54$$) : ($id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = "" + ++$mapIndex$$, $idMap$$.set($key$jscomp$54$$, $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$)) : $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = 
+    "p_" + $key$jscomp$54$$;
+    var $list$$ = $index$jscomp$112_map$jscomp$2$$[0][$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$];
+    if ($list$$ && $$jscomp$owns$$($index$jscomp$112_map$jscomp$2$$[0], $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$)) {
+      for ($index$jscomp$112_map$jscomp$2$$ = 0; $index$jscomp$112_map$jscomp$2$$ < $list$$.length; $index$jscomp$112_map$jscomp$2$$++) {
+        var $entry$jscomp$7$$ = $list$$[$index$jscomp$112_map$jscomp$2$$];
+        if ($key$jscomp$54$$ !== $key$jscomp$54$$ && $entry$jscomp$7$$.key !== $entry$jscomp$7$$.key || $key$jscomp$54$$ === $entry$jscomp$7$$.key) {
+          return {id:$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$, list:$list$$, index:$index$jscomp$112_map$jscomp$2$$, entry:$entry$jscomp$7$$};
+        }
+      }
+    }
+    return {id:$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$, list:$list$$, index:-1, entry:void 0};
+  }
+  function $PolyfillMap$$($iter$jscomp$3_opt_iterable$jscomp$5$$) {
+    this[0] = {};
+    this[1] = $createHead$$();
+    this.size = 0;
+    if ($iter$jscomp$3_opt_iterable$jscomp$5$$) {
+      $iter$jscomp$3_opt_iterable$jscomp$5$$ = $$jscomp$makeIterator$$($iter$jscomp$3_opt_iterable$jscomp$5$$);
+      for (var $entry$jscomp$1_item$jscomp$23$$; !($entry$jscomp$1_item$jscomp$23$$ = $iter$jscomp$3_opt_iterable$jscomp$5$$.next()).done;) {
+        $entry$jscomp$1_item$jscomp$23$$ = $entry$jscomp$1_item$jscomp$23$$.value, this.set($entry$jscomp$1_item$jscomp$23$$[0], $entry$jscomp$1_item$jscomp$23$$[1]);
+      }
+    }
+  }
+  if (function() {
+    if (!$NativeMap$$ || typeof $NativeMap$$ != "function" || !$NativeMap$$.prototype.entries || typeof Object.seal != "function") {
+      return !1;
+    }
+    try {
+      var $key$jscomp$49$$ = Object.seal({x:4}), $map$jscomp$1$$ = new $NativeMap$$($$jscomp$makeIterator$$([[$key$jscomp$49$$, "s"]]));
+      if ($map$jscomp$1$$.get($key$jscomp$49$$) != "s" || $map$jscomp$1$$.size != 1 || $map$jscomp$1$$.get({x:4}) || $map$jscomp$1$$.set({x:4}, "t") != $map$jscomp$1$$ || $map$jscomp$1$$.size != 2) {
+        return !1;
+      }
+      var $iter$jscomp$2$$ = $map$jscomp$1$$.entries(), $item$jscomp$22$$ = $iter$jscomp$2$$.next();
+      if ($item$jscomp$22$$.done || $item$jscomp$22$$.value[0] != $key$jscomp$49$$ || $item$jscomp$22$$.value[1] != "s") {
+        return !1;
+      }
+      $item$jscomp$22$$ = $iter$jscomp$2$$.next();
+      return $item$jscomp$22$$.done || $item$jscomp$22$$.value[0].x != 4 || $item$jscomp$22$$.value[1] != "t" || !$iter$jscomp$2$$.next().done ? !1 : !0;
+    } catch ($err$jscomp$5$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeMap$$;
+  }
+  var $idMap$$ = new WeakMap();
+  $PolyfillMap$$.prototype.set = function($key$jscomp$50$$, $value$jscomp$187$$) {
+    $key$jscomp$50$$ = $key$jscomp$50$$ === 0 ? 0 : $key$jscomp$50$$;
+    var $r$jscomp$1$$ = $maybeGetEntry$$(this, $key$jscomp$50$$);
+    $r$jscomp$1$$.list || ($r$jscomp$1$$.list = this[0][$r$jscomp$1$$.id] = []);
+    $r$jscomp$1$$.entry ? $r$jscomp$1$$.entry.value = $value$jscomp$187$$ : ($r$jscomp$1$$.entry = {next:this[1], $previous$:this[1].$previous$, head:this[1], key:$key$jscomp$50$$, value:$value$jscomp$187$$}, $r$jscomp$1$$.list.push($r$jscomp$1$$.entry), this[1].$previous$.next = $r$jscomp$1$$.entry, this[1].$previous$ = $r$jscomp$1$$.entry, this.size++);
+    return this;
+  };
+  $PolyfillMap$$.prototype.delete = function($key$jscomp$51_r$jscomp$2$$) {
+    $key$jscomp$51_r$jscomp$2$$ = $maybeGetEntry$$(this, $key$jscomp$51_r$jscomp$2$$);
+    return $key$jscomp$51_r$jscomp$2$$.entry && $key$jscomp$51_r$jscomp$2$$.list ? ($key$jscomp$51_r$jscomp$2$$.list.splice($key$jscomp$51_r$jscomp$2$$.index, 1), $key$jscomp$51_r$jscomp$2$$.list.length || delete this[0][$key$jscomp$51_r$jscomp$2$$.id], $key$jscomp$51_r$jscomp$2$$.entry.$previous$.next = $key$jscomp$51_r$jscomp$2$$.entry.next, $key$jscomp$51_r$jscomp$2$$.entry.next.$previous$ = $key$jscomp$51_r$jscomp$2$$.entry.$previous$, $key$jscomp$51_r$jscomp$2$$.entry.head = null, this.size--, 
+    !0) : !1;
+  };
+  $PolyfillMap$$.prototype.clear = function() {
+    this[0] = {};
+    this[1] = this[1].$previous$ = $createHead$$();
+    this.size = 0;
+  };
+  $PolyfillMap$$.prototype.has = function($key$jscomp$52$$) {
+    return !!$maybeGetEntry$$(this, $key$jscomp$52$$).entry;
+  };
+  $PolyfillMap$$.prototype.get = function($entry$jscomp$2_key$jscomp$53$$) {
+    return ($entry$jscomp$2_key$jscomp$53$$ = $maybeGetEntry$$(this, $entry$jscomp$2_key$jscomp$53$$).entry) && $entry$jscomp$2_key$jscomp$53$$.value;
+  };
+  $PolyfillMap$$.prototype.entries = function() {
+    return $makeIterator$$(this, function($entry$jscomp$3$$) {
+      return [$entry$jscomp$3$$.key, $entry$jscomp$3$$.value];
+    });
+  };
+  $PolyfillMap$$.prototype.keys = function() {
+    return $makeIterator$$(this, function($entry$jscomp$4$$) {
+      return $entry$jscomp$4$$.key;
+    });
+  };
+  $PolyfillMap$$.prototype.values = function() {
+    return $makeIterator$$(this, function($entry$jscomp$5$$) {
+      return $entry$jscomp$5$$.value;
+    });
+  };
+  $PolyfillMap$$.prototype.forEach = function($callback$jscomp$71$$, $opt_thisArg$jscomp$15$$) {
+    for (var $iter$jscomp$4$$ = this.entries(), $entry$jscomp$6_item$jscomp$24$$; !($entry$jscomp$6_item$jscomp$24$$ = $iter$jscomp$4$$.next()).done;) {
+      $entry$jscomp$6_item$jscomp$24$$ = $entry$jscomp$6_item$jscomp$24$$.value, $callback$jscomp$71$$.call($opt_thisArg$jscomp$15$$, $entry$jscomp$6_item$jscomp$24$$[1], $entry$jscomp$6_item$jscomp$24$$[0], this);
+    }
+  };
+  $PolyfillMap$$.prototype[Symbol.iterator] = $PolyfillMap$$.prototype.entries;
+  var $mapIndex$$ = 0;
+  return $PolyfillMap$$;
+});
+$$jscomp$polyfill$$("Set", function($NativeSet$$) {
+  function $PolyfillSet$$($iter$jscomp$7_opt_iterable$jscomp$6$$) {
+    this.$g$ = new Map();
+    if ($iter$jscomp$7_opt_iterable$jscomp$6$$) {
+      $iter$jscomp$7_opt_iterable$jscomp$6$$ = $$jscomp$makeIterator$$($iter$jscomp$7_opt_iterable$jscomp$6$$);
+      for (var $entry$jscomp$10$$; !($entry$jscomp$10$$ = $iter$jscomp$7_opt_iterable$jscomp$6$$.next()).done;) {
+        this.add($entry$jscomp$10$$.value);
+      }
+    }
+    this.size = this.$g$.size;
+  }
+  if (function() {
+    if (!$NativeSet$$ || typeof $NativeSet$$ != "function" || !$NativeSet$$.prototype.entries || typeof Object.seal != "function") {
+      return !1;
+    }
+    try {
+      var $value$jscomp$188$$ = Object.seal({x:4}), $set$$ = new $NativeSet$$($$jscomp$makeIterator$$([$value$jscomp$188$$]));
+      if (!$set$$.has($value$jscomp$188$$) || $set$$.size != 1 || $set$$.add($value$jscomp$188$$) != $set$$ || $set$$.size != 1 || $set$$.add({x:4}) != $set$$ || $set$$.size != 2) {
+        return !1;
+      }
+      var $iter$jscomp$6$$ = $set$$.entries(), $item$jscomp$26$$ = $iter$jscomp$6$$.next();
+      if ($item$jscomp$26$$.done || $item$jscomp$26$$.value[0] != $value$jscomp$188$$ || $item$jscomp$26$$.value[1] != $value$jscomp$188$$) {
+        return !1;
+      }
+      $item$jscomp$26$$ = $iter$jscomp$6$$.next();
+      return $item$jscomp$26$$.done || $item$jscomp$26$$.value[0] == $value$jscomp$188$$ || $item$jscomp$26$$.value[0].x != 4 || $item$jscomp$26$$.value[1] != $item$jscomp$26$$.value[0] ? !1 : $iter$jscomp$6$$.next().done;
+    } catch ($err$jscomp$6$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeSet$$;
+  }
+  $PolyfillSet$$.prototype.add = function($value$jscomp$189$$) {
+    $value$jscomp$189$$ = $value$jscomp$189$$ === 0 ? 0 : $value$jscomp$189$$;
+    this.$g$.set($value$jscomp$189$$, $value$jscomp$189$$);
+    this.size = this.$g$.size;
+    return this;
+  };
+  $PolyfillSet$$.prototype.delete = function($result$jscomp$6_value$jscomp$190$$) {
+    $result$jscomp$6_value$jscomp$190$$ = this.$g$.delete($result$jscomp$6_value$jscomp$190$$);
+    this.size = this.$g$.size;
+    return $result$jscomp$6_value$jscomp$190$$;
+  };
+  $PolyfillSet$$.prototype.clear = function() {
+    this.$g$.clear();
+    this.size = 0;
+  };
+  $PolyfillSet$$.prototype.has = function($value$jscomp$191$$) {
+    return this.$g$.has($value$jscomp$191$$);
+  };
+  $PolyfillSet$$.prototype.entries = function() {
+    return this.$g$.entries();
+  };
+  $PolyfillSet$$.prototype.values = function() {
+    return this.$g$.values();
+  };
+  $PolyfillSet$$.prototype.keys = $PolyfillSet$$.prototype.values;
+  $PolyfillSet$$.prototype[Symbol.iterator] = $PolyfillSet$$.prototype.values;
+  $PolyfillSet$$.prototype.forEach = function($callback$jscomp$72$$, $opt_thisArg$jscomp$16$$) {
+    var $set$jscomp$1$$ = this;
+    this.$g$.forEach(function($value$jscomp$192$$) {
+      return $callback$jscomp$72$$.call($opt_thisArg$jscomp$16$$, $value$jscomp$192$$, $value$jscomp$192$$, $set$jscomp$1$$);
+    });
+  };
+  return $PolyfillSet$$;
+});
+(function() {
+  function $getValidIconNames$$() {
+    return $validIconNames$$ ? Promise.resolve($validIconNames$$) : $iconNamesPromise$$ ? $iconNamesPromise$$ : $iconNamesPromise$$ = fetch("https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json").then(function($response$jscomp$2$$) {
+      if (!$response$jscomp$2$$.ok) {
+        throw Error("HTTP error! status: " + $response$jscomp$2$$.status + " fetching https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json");
+      }
+      return $response$jscomp$2$$.json();
+    }).then(function($names$$) {
+      if (!Array.isArray($names$$)) {
+        throw new TypeError("Fetched icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json is not an array.");
+      }
+      return $validIconNames$$ = $names$$;
+    }).catch(function($error$jscomp$11$$) {
+      console.error("IconChecker: Failed to load valid icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json.", $error$jscomp$11$$);
+      $iconNamesPromise$$ = null;
+      throw $error$jscomp$11$$;
+    });
+  }
+  function $checkAndReplaceIconElement$$($iconEl$$) {
+    var $iconName$$, $style$jscomp$1$$, $validNames$$, $isIconNameValid$$;
+    return $$jscomp$asyncExecutePromiseGenerator$$(new $$jscomp$generator$Generator_$$(new $$jscomp$generator$Engine_$$(function($$jscomp$generator$context$1825642716$50$$) {
+      switch($$jscomp$generator$context$1825642716$50$$.$g$) {
+        case 1:
+          $iconName$$ = ($iconEl$$.textContent || "").trim();
+          if (!$iconName$$ || $iconEl$$.classList.contains("js-replaced-missing-icon") && $iconName$$ === "radio_button_unchecked") {
+            return $$jscomp$generator$context$1825642716$50$$.return();
+          }
+          $style$jscomp$1$$ = window.getComputedStyle($iconEl$$);
+          if ($style$jscomp$1$$.display === "none" || $style$jscomp$1$$.visibility === "hidden") {
+            return $$jscomp$generator$context$1825642716$50$$.return();
+          }
+          $$jscomp$generator$context$1825642716$50$$.$F$(2);
+          return $$jscomp$generator$context$1825642716$50$$.$A$($getValidIconNames$$(), 4);
+        case 4:
+          $validNames$$ = $$jscomp$generator$context$1825642716$50$$.$o$;
+          $$jscomp$generator$context$1825642716$50$$.$D$(3);
+          break;
+        case 2:
+          return $$jscomp$generator$context$1825642716$50$$.$B$(), console.warn('IconChecker: Skipping check for icon "' + $iconName$$ + '" as valid names could not be loaded.'), $$jscomp$generator$context$1825642716$50$$.return();
+        case 3:
+          ($isIconNameValid$$ = $validNames$$.includes($iconName$$)) ? $iconEl$$.classList.contains("js-replaced-missing-icon") && $iconEl$$.classList.remove("js-replaced-missing-icon") : $iconName$$ === "radio_button_unchecked" && $iconEl$$.classList.contains("js-replaced-missing-icon") || ($iconEl$$.textContent = "radio_button_unchecked", $iconEl$$.classList.add("js-replaced-missing-icon")), $$jscomp$generator$context$1825642716$50$$.$C$();
+      }
+    })));
+  }
+  function $scanInitialIcons$$($rootElement$$) {
+    $rootElement$$ = $rootElement$$ === void 0 ? document.body : $rootElement$$;
+    $rootElement$$.querySelectorAll($CSS_SELECTOR$$).forEach(function($iconEl$jscomp$1$$) {
+      $checkAndReplaceIconElement$$($iconEl$jscomp$1$$);
+    });
+  }
+  function $initialize$$() {
+    $getValidIconNames$$().catch(function() {
+    });
+    document.fonts.ready.then(function() {
+      requestAnimationFrame(function() {
+        $scanInitialIcons$$(document.body);
+        (new MutationObserver(function($$jscomp$iter$0_mutationsList$$) {
+          var $elementsToCheck$$ = new Set();
+          $$jscomp$iter$0_mutationsList$$ = $$jscomp$makeIterator$$($$jscomp$iter$0_mutationsList$$);
+          for (var $$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$iter$0_mutationsList$$.next(); !$$jscomp$key$1825642716$49$mutation_mutation_parent$$.done; $$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$iter$0_mutationsList$$.next()) {
+            if ($$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.value, $$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "childList") {
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.addedNodes.forEach(function($node$jscomp$5$$) {
+                $node$jscomp$5$$.nodeType === Node.ELEMENT_NODE && ($node$jscomp$5$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($node$jscomp$5$$), $node$jscomp$5$$.querySelectorAll($CSS_SELECTOR$$).forEach(function($icon$$) {
+                  $elementsToCheck$$.add($icon$$);
+                }));
+              });
+            } else if ($$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "attributes" && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.attributeName === "class") {
+              var $target$jscomp$107$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target;
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.nodeType === Node.ELEMENT_NODE && $target$jscomp$107$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($target$jscomp$107$$);
+            } else {
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "characterData" && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.parentNode && ($$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.parentNode, $$jscomp$key$1825642716$49$mutation_mutation_parent$$.nodeType === Node.ELEMENT_NODE && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($$jscomp$key$1825642716$49$mutation_mutation_parent$$));
+            }
+          }
+          $elementsToCheck$$.size > 0 && setTimeout(function() {
+            $elementsToCheck$$.forEach(function($iconEl$jscomp$2$$) {
+              $checkAndReplaceIconElement$$($iconEl$jscomp$2$$);
+            });
+          }, 500);
+        })).observe(document.body, {childList:!0, subtree:!0, attributes:!0, attributeFilter:["class"], characterData:!0});
+      });
+    }).catch(function($error$jscomp$13$$) {
+      console.error("IconChecker: Font loading error. Scanning icons anyway.", $error$jscomp$13$$);
+      requestAnimationFrame(function() {
+        $scanInitialIcons$$(document.body);
+      });
+    });
+  }
+  var $CSS_SELECTOR$$ = ["material-icons", "material-symbols-outlined", "material-symbols-rounded", "material-symbols-sharp"].map(function($cls$$) {
+    return "." + $cls$$;
+  }).join(","), $validIconNames$$ = null, $iconNamesPromise$$ = null;
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", function() {
+    $initialize$$();
+  }) : $initialize$$();
+})();
+}).call(this);
+
+//# sourceURL=gg.icon_checker_bin.js
+</script>
+
+<meta name="surface-hint" content="desktop-responsive" data-hint="injected-ffc2e83d85">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cypher Query Language Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .cypher-keyword { color: #d946ef; font-weight: 600; } /* fuchsia-500 */
+        .cypher-node { color: #3b82f6; font-weight: 600; } /* blue-500 */
+        .cypher-rel { color: #eab308; font-weight: 600; } /* yellow-500 */
+        .cypher-prop { color: #22c55e; } /* green-500 */
+        
+        .node-circle { transition: all 0.3s ease; }
+        .node-circle:hover { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)); cursor: pointer; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/*# sourceURL=gg.inline_style.0.css */
+    </style>
+    <script>
+    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+      key: "AIzaSyBB_SVKlC9CcEjDt1H01_B7Gjmb8FiIaGw",
+      v: "weekly",
+  });
+//# sourceURL=gg.inline_script.0.js
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 shadow-sm z-10 flex-none">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg">C</div>
+                <h1 class="text-xl font-bold tracking-tight text-slate-900">Cypher <span class="font-light text-slate-500">Interactive Guide</span></h1>
+            </div>
+            <div class="flex items-center gap-4 text-sm font-medium text-slate-600">
+                <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500"></span> Nodes</div>
+                <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-500"></span> Relationships</div>
+                <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-500"></span> Properties</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex overflow-hidden">
+        
+        <!-- Left Panel: Scenarios & Education -->
+        <div class="w-1/3 min-w-[350px] bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+            
+            <!-- Introduction Section -->
+            <div class="p-6 border-b border-slate-100">
+                <h2 class="text-lg font-semibold text-slate-900 mb-2">What is Cypher?</h2>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    Cypher is a declarative graph query language. It uses <span class="font-semibold text-slate-800">ASCII Art</span> to represent patterns.
+                </p>
+                <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs text-slate-500 flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                        <code class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-blue-600 font-bold">(Node)</code>
+                        <span>Parentheses represent data entities</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <code class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-yellow-600 font-bold">-[:REL]-></code>
+                        <span>Arrows represent connections</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenarios List -->
+            <div class="p-4 flex-1">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">Select a Query Scenario</h3>
+                <div class="space-y-3" id="scenario-list">
+                    <!-- Scenarios will be injected by JS -->
+                </div>
+            </div>
+
+            <!-- SQL Comparison Toggle -->
+            <div class="p-4 bg-slate-50 border-t border-slate-200">
+                <button id="sql-toggle-btn" class="w-full flex items-center justify-between px-4 py-2 bg-white border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    <span>Compare with SQL</span>
+                    <span class="material-symbols-outlined text-slate-400">compare_arrows</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel: Visualization & Code -->
+        <div class="flex-1 flex flex-col h-full bg-slate-50/50 relative">
+            
+            <!-- Visualization Area -->
+            <div class="flex-1 relative overflow-hidden" id="viz-container">
+                <div class="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full shadow-sm border border-slate-200 text-xs font-medium text-slate-500">
+                    Graph Visualization
+                </div>
+                <canvas id="graphCanvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+                
+                <!-- Legend/Overlay for selected node -->
+                <div id="node-tooltip" class="absolute hidden bottom-4 right-4 bg-white/95 backdrop-blur shadow-lg border border-slate-200 rounded-lg p-4 max-w-xs transition-opacity duration-200">
+                    <h4 class="font-bold text-slate-800 mb-1" id="tooltip-title">Node Name</h4>
+                    <div class="flex flex-wrap gap-2 mb-2" id="tooltip-labels">
+                        <!-- labels injected here -->
+                    </div>
+                    <div class="text-xs text-slate-600 space-y-1" id="tooltip-props">
+                        <!-- props injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Query Editor Area -->
+            <div class="h-1/3 min-h-[250px] bg-slate-900 text-slate-200 border-t border-slate-700 flex flex-col shadow-2xl z-20">
+                <div class="flex items-center justify-between px-4 py-2 bg-slate-800 border-b border-slate-700">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Cypher Query Editor</span>
+                    <div class="flex gap-2">
+                        <button id="run-btn" class="flex items-center gap-1 px-3 py-1 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded transition-colors shadow-lg shadow-green-900/20">
+                            <span class="material-symbols-outlined text-[16px]">play_arrow</span> RUN
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1 p-4 overflow-auto code-font text-sm leading-6 relative group">
+                    <div id="code-display" class="whitespace-pre-wrap outline-none" contenteditable="false">
+                        <!-- Code injected here -->
+                    </div>
+                    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <span class="text-[10px] text-slate-500">Read-only demo mode</span>
+                    </div>
+                </div>
+                <!-- Explanation Panel (Dynamic) -->
+                <div class="px-4 py-3 bg-slate-800 border-t border-slate-700 text-xs text-slate-400 flex items-start gap-2">
+                    <span class="material-symbols-outlined text-blue-400 text-sm mt-0.5">info</span>
+                    <p id="query-explanation">Select a scenario from the left to see the query and explanation.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal for SQL Comparison -->
+    <div id="sql-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl border border-slate-200">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-lg font-bold leading-6 text-slate-900" id="modal-title">Cypher vs. SQL Comparison</h3>
+                            <button id="close-modal" class="text-slate-400 hover:text-slate-600 transition-colors">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        <div class="mt-2 grid grid-cols-2 gap-6">
+                            <!-- SQL Column -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center font-bold text-xs text-slate-600">SQL</div>
+                                    <h4 class="font-bold text-slate-700">Relational (Tables)</h4>
+                                </div>
+                                <p class="text-xs text-slate-500 mb-3 h-10">Rigid structure. Requires complex JOINs to connect data across tables.</p>
+                                <div class="bg-slate-800 rounded p-3 text-xs text-slate-300 font-mono mb-2 overflow-x-auto">
+                                    <span class="text-purple-400">SELECT</span> p.Name, m.Title<br>
+                                    <span class="text-purple-400">FROM</span> Person p<br>
+                                    <span class="text-purple-400">JOIN</span> ActedIn a <span class="text-purple-400">ON</span> p.ID = a.PersonID<br>
+                                    <span class="text-purple-400">JOIN</span> Movie m <span class="text-purple-400">ON</span> a.MovieID = m.ID<br>
+                                    <span class="text-purple-400">WHERE</span> m.Title = 'The Matrix'
+                                </div>
+                            </div>
+                            <!-- Cypher Column -->
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-6 h-6 rounded bg-blue-500 flex items-center justify-center font-bold text-xs text-white">C</div>
+                                    <h4 class="font-bold text-blue-900">Graph (Patterns)</h4>
+                                </div>
+                                <p class="text-xs text-blue-800/70 mb-3 h-10">Visual & intuitive. Uses pattern matching to traverse connections naturally.</p>
+                                <div class="bg-slate-800 rounded p-3 text-xs text-slate-300 font-mono mb-2 overflow-x-auto">
+                                    <span class="text-fuchsia-400">MATCH</span> (p:Person)-[:ACTED_IN]->(m:Movie)<br>
+                                    <span class="text-fuchsia-400">WHERE</span> m.title = 'The Matrix'<br>
+                                    <span class="text-fuchsia-400">RETURN</span> p.name, m.title
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-sm text-slate-600 italic border-l-4 border-blue-500 pl-3">
+                            "In Cypher, you simply draw the pattern you are looking for using ASCII characters."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data & State ---
+        const nodes = [
+            { id: 1, label: 'Person', name: 'Keanu Reeves', born: 1964, color: '#3b82f6', x: 0, y: 0 },
+            { id: 2, label: 'Person', name: 'Carrie-Anne Moss', born: 1967, color: '#3b82f6', x: 0, y: 0 },
+            { id: 3, label: 'Person', name: 'Laurence Fishburne', born: 1961, color: '#3b82f6', x: 0, y: 0 },
+            { id: 4, label: 'Movie', title: 'The Matrix', released: 1999, tagline: 'Welcome to the Real World', color: '#ef4444', x: 0, y: 0 },
+            { id: 5, label: 'Movie', title: 'The Matrix Reloaded', released: 2003, color: '#ef4444', x: 0, y: 0 },
+            { id: 6, label: 'Person', name: 'Lana Wachowski', born: 1965, color: '#3b82f6', x: 0, y: 0 },
+            { id: 7, label: 'Person', name: 'Joel Silver', born: 1952, color: '#3b82f6', x: 0, y: 0 }
+        ];
+
+        const relationships = [
+            { source: 1, target: 4, type: 'ACTED_IN', roles: ['Neo'] },
+            { source: 2, target: 4, type: 'ACTED_IN', roles: ['Trinity'] },
+            { source: 3, target: 4, type: 'ACTED_IN', roles: ['Morpheus'] },
+            { source: 1, target: 5, type: 'ACTED_IN', roles: ['Neo'] },
+            { source: 2, target: 5, type: 'ACTED_IN', roles: ['Trinity'] },
+            { source: 3, target: 5, type: 'ACTED_IN', roles: ['Morpheus'] },
+            { source: 6, target: 4, type: 'DIRECTED' },
+            { source: 6, target: 5, type: 'DIRECTED' },
+            { source: 7, target: 4, type: 'PRODUCED' }
+        ];
+
+        const scenarios = [
+            {
+                id: 'intro',
+                title: '1. Match All Nodes',
+                description: 'The simplest query. Find everything in the database.',
+                code: `MATCH (n) \nRETURN n`,
+                explanation: '<b>MATCH</b> finds patterns. <b>(n)</b> is a variable for "any node". <b>RETURN</b> defines output.',
+                filter: () => ({ nodes: nodes, relationships: relationships }), // Show all
+                focusNodeId: 4 // Center on Matrix
+            },
+            {
+                id: 'label',
+                title: '2. Find by Label',
+                description: 'Find all nodes that are labeled as "Person".',
+                code: `MATCH (p:Person) \nRETURN p`,
+                explanation: '<b>:Person</b> filters nodes to only those with the "Person" label.',
+                filter: () => {
+                    const filteredNodes = nodes.filter(n => n.label === 'Person');
+                    return { nodes: filteredNodes, relationships: [] };
+                },
+                focusNodeId: 1
+            },
+            {
+                id: 'prop',
+                title: '3. Find by Property',
+                description: 'Find the specific movie "The Matrix".',
+                code: `MATCH (m:Movie {title: 'The Matrix'}) \nRETURN m`,
+                explanation: '<b>{title: ...}</b> uses curly braces to filter by properties (key-value pairs) inside the node.',
+                filter: () => {
+                    const filteredNodes = nodes.filter(n => n.title === 'The Matrix');
+                    return { nodes: filteredNodes, relationships: [] };
+                },
+                focusNodeId: 4
+            },
+            {
+                id: 'pattern',
+                title: '4. Basic Pattern Matching',
+                description: 'Find everyone who acted in "The Matrix".',
+                code: `MATCH (p:Person)-[:ACTED_IN]->(m:Movie {title: 'The Matrix'}) \nRETURN p, m`,
+                explanation: 'The arrow <b>-[:TYPE]-></b> describes the relationship direction and type. We bind "p" to the people found.',
+                filter: () => {
+                    const matrix = nodes.find(n => n.title === 'The Matrix');
+                    const rels = relationships.filter(r => r.target === matrix.id && r.type === 'ACTED_IN');
+                    const actorIds = rels.map(r => r.source);
+                    const actors = nodes.filter(n => actorIds.includes(n.id));
+                    return { nodes: [matrix, ...actors], relationships: rels };
+                },
+                focusNodeId: 4
+            },
+            {
+                id: 'reverse',
+                title: '5. Reverse Relationships',
+                description: 'Find all movies directed by Lana Wachowski.',
+                code: `MATCH (p:Person {name: 'Lana Wachowski'})-[:DIRECTED]->(m:Movie) \nRETURN m`,
+                explanation: 'Cypher traverses the graph. We start at Lana, follow the DIRECTED arrow, and find the movies.',
+                filter: () => {
+                    const lana = nodes.find(n => n.name === 'Lana Wachowski');
+                    const rels = relationships.filter(r => r.source === lana.id && r.type === 'DIRECTED');
+                    const movieIds = rels.map(r => r.target);
+                    const movies = nodes.filter(n => movieIds.includes(n.id));
+                    return { nodes: [lana, ...movies], relationships: rels };
+                },
+                focusNodeId: 6
+            }
+        ];
+
+        let currentScenario = scenarios[0];
+        let activeData = { nodes: [], relationships: [] };
+        
+        // --- Canvas & Simulation Setup ---
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let animationFrameId;
+
+        // Force simulation physics
+        const simulation = {
+            nodes: [],
+            links: [],
+            alpha: 1,
+            tick: function() {
+                // Simple force layout logic
+                const k = 0.5 * Math.sqrt(width * height / (this.nodes.length + 1)); // Ideal length
+                const centerForce = 0.05;
+                const repulsion = 250;
+                
+                // 1. Repulsion
+                for (let i = 0; i < this.nodes.length; i++) {
+                    for (let j = i + 1; j < this.nodes.length; j++) {
+                        const a = this.nodes[i];
+                        const b = this.nodes[j];
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+                        const force = (repulsion * repulsion) / dist;
+                        const fx = (dx/dist) * force * 0.005;
+                        const fy = (dy/dist) * force * 0.005;
+                        a.vx += fx; a.vy += fy;
+                        b.vx -= fx; b.vy -= fy;
+                    }
+                }
+
+                // 2. Attraction (Springs)
+                this.links.forEach(link => {
+                    const a = link.sourceNode;
+                    const b = link.targetNode;
+                    if(!a || !b) return;
+                    const dx = b.x - a.x;
+                    const dy = b.y - a.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+                    const force = (dist - 150) * 0.05; // 150 is rest length
+                    const fx = (dx/dist) * force;
+                    const fy = (dy/dist) * force;
+                    a.vx += fx; a.vy += fy;
+                    b.vx -= fx; b.vy -= fy;
+                });
+
+                // 3. Center Gravity
+                this.nodes.forEach(n => {
+                    n.vx += (width/2 - n.x) * centerForce * 0.05;
+                    n.vy += (height/2 - n.y) * centerForce * 0.05;
+                    
+                    // Velocity Damping
+                    n.vx *= 0.9;
+                    n.vy *= 0.9;
+                    
+                    // Update Position
+                    n.x += n.vx;
+                    n.y += n.vy;
+                });
+            }
+        };
+
+        function initSimulation() {
+            // Map raw data to simulation objects
+            // Preserve positions if ID exists to prevent jarring jumps
+            const newNodes = activeData.nodes.map(n => {
+                const existing = simulation.nodes.find(en => en.id === n.id);
+                return {
+                    ...n,
+                    x: existing ? existing.x : width/2 + (Math.random() - 0.5) * 50,
+                    y: existing ? existing.y : height/2 + (Math.random() - 0.5) * 50,
+                    vx: 0, vy: 0,
+                    radius: n.label === 'Movie' ? 35 : 25
+                };
+            });
+
+            const newLinks = activeData.relationships.map(r => {
+                return {
+                    ...r,
+                    sourceNode: newNodes.find(n => n.id === r.source),
+                    targetNode: newNodes.find(n => n.id === r.target)
+                };
+            });
+
+            simulation.nodes = newNodes;
+            simulation.links = newLinks;
+        }
+
+        // --- Rendering ---
+        function resize() {
+            width = canvas.parentElement.clientWidth;
+            height = canvas.parentElement.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function drawArrow(ctx, fromX, fromY, toX, toY, color) {
+            const headlen = 10; 
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const angle = Math.atan2(dy, dx);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+            
+            // Arrowhead
+            ctx.beginPath();
+            ctx.moveTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, width, height);
+            
+            simulation.tick();
+
+            // Draw Relationships
+            simulation.links.forEach(link => {
+                if (!link.sourceNode || !link.targetNode) return;
+                
+                const dx = link.targetNode.x - link.sourceNode.x;
+                const dy = link.targetNode.y - link.sourceNode.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist === 0) return;
+
+                // Stop line at node edge
+                const sourcePadding = link.sourceNode.radius + 2;
+                const targetPadding = link.targetNode.radius + 4; // +4 for arrowhead
+                
+                const startX = link.sourceNode.x + (dx/dist) * sourcePadding;
+                const startY = link.sourceNode.y + (dy/dist) * sourcePadding;
+                const endX = link.targetNode.x - (dx/dist) * targetPadding;
+                const endY = link.targetNode.y - (dy/dist) * targetPadding;
+
+                drawArrow(ctx, startX, startY, endX, endY, '#cbd5e1'); // slate-300
+
+                // Label
+                const midX = (startX + endX) / 2;
+                const midY = (startY + endY) / 2;
+                
+                ctx.save();
+                ctx.translate(midX, midY);
+                // Rotate label to match line, but keep readable
+                let angle = Math.atan2(dy, dx);
+                if (angle > Math.PI/2 || angle < -Math.PI/2) angle += Math.PI;
+                
+                ctx.rotate(angle);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(-20, -8, 40, 16); // Background for text
+                
+                ctx.font = '10px Inter';
+                ctx.fillStyle = '#eab308'; // yellow-500
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`:${link.type}`, 0, 0);
+                ctx.restore();
+            });
+
+            // Draw Nodes
+            simulation.nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = node.color;
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset
+                
+                // Border
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Text
+                ctx.fillStyle = '#ffffff';
+                ctx.font = node.label === 'Movie' ? 'bold 10px Inter' : '10px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Word wrap simplified: just split by space and take first/last or main
+                const labelText = node.title || node.name || 'Node';
+                const words = labelText.split(' ');
+                if(words.length > 2) {
+                    ctx.fillText(words[0], node.x, node.y - 5);
+                    ctx.fillText(words.slice(1).join(' '), node.x, node.y + 7);
+                } else {
+                    ctx.fillText(labelText, node.x, node.y);
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(render);
+        }
+
+        // --- Interaction Logic ---
+        function highlightSyntax(code) {
+            // Simple regex replacers for styling
+            let html = code
+                .replace(/(MATCH|RETURN|WHERE|AND|OR|AS|ORDER BY|LIMIT)/g, '<span class="cypher-keyword">$1</span>')
+                .replace(/(\(\w+)(:)(\w+)/g, '$1<span class="text-slate-400">$2</span><span class="cypher-node">$3</span>') // Node labels
+                .replace(/(\[:)(\w+)/g, '<span class="text-slate-400">$1</span><span class="cypher-rel">$2</span>') // Rel types
+                .replace(/(\{)(\w+)(:)/g, '$1<span class="cypher-prop">$2</span>$3'); // Props keys
+            return html;
+        }
+
+        function loadScenario(scenarioId) {
+            const scenario = scenarios.find(s => s.id === scenarioId);
+            currentScenario = scenario;
+            
+            // UI Updates
+            document.querySelectorAll('.scenario-item').forEach(el => {
+                if(el.dataset.id === scenarioId) {
+                    el.classList.add('bg-blue-50', 'border-blue-200');
+                    el.querySelector('.indicator').classList.add('bg-blue-500');
+                    el.querySelector('.indicator').classList.remove('bg-slate-300');
+                } else {
+                    el.classList.remove('bg-blue-50', 'border-blue-200');
+                    el.querySelector('.indicator').classList.remove('bg-blue-500');
+                    el.querySelector('.indicator').classList.add('bg-slate-300');
+                }
+            });
+
+            // Code update
+            const codeDisplay = document.getElementById('code-display');
+            codeDisplay.innerHTML = highlightSyntax(scenario.code);
+            
+            // Explanation update
+            document.getElementById('query-explanation').innerHTML = scenario.explanation;
+
+            // Trigger "Run" visual effect
+            const runBtn = document.getElementById('run-btn');
+            runBtn.classList.add('scale-95', 'opacity-80');
+            setTimeout(() => runBtn.classList.remove('scale-95', 'opacity-80'), 150);
+
+            // Data update
+            activeData = scenario.filter();
+            initSimulation();
+        }
+
+        function buildScenarioList() {
+            const list = document.getElementById('scenario-list');
+            list.innerHTML = scenarios.map(s => `
+                <div class="scenario-item group cursor-pointer border border-transparent rounded-lg p-3 hover:bg-slate-50 transition-all" data-id="${s.id}" onclick="loadScenario('${s.id}')">
+                    <div class="flex items-start gap-3">
+                        <div class="indicator w-2 h-2 rounded-full bg-slate-300 mt-2 flex-none transition-colors"></div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">${s.title}</h4>
+                            <p class="text-xs text-slate-500 mt-1 line-clamp-2">${s.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Interaction Events ---
+        
+        // Canvas Interaction (Hover/Tooltip)
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const hoveredNode = simulation.nodes.find(n => {
+                const dist = Math.sqrt((n.x - mouseX)**2 + (n.y - mouseY)**2);
+                return dist < n.radius;
+            });
+
+            const tooltip = document.getElementById('node-tooltip');
+            
+            if (hoveredNode) {
+                canvas.style.cursor = 'pointer';
+                tooltip.classList.remove('hidden');
+                
+                // Populate Tooltip
+                document.getElementById('tooltip-title').innerText = hoveredNode.title || hoveredNode.name;
+                
+                const labelsContainer = document.getElementById('tooltip-labels');
+                labelsContainer.innerHTML = `<span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold border border-blue-200">:${hoveredNode.label}</span>`;
+                
+                const propsContainer = document.getElementById('tooltip-props');
+                let propsHtml = '';
+                Object.entries(hoveredNode).forEach(([key, val]) => {
+                    if(['id', 'label', 'x', 'y', 'vx', 'vy', 'radius', 'color', 'title', 'name'].includes(key)) return;
+                    propsHtml += `<div class="flex justify-between"><span class="font-medium text-slate-500">${key}:</span> <span>${val}</span></div>`;
+                });
+                propsContainer.innerHTML = propsHtml;
+
+            } else {
+                canvas.style.cursor = 'default';
+                tooltip.classList.add('hidden');
+            }
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('sql-modal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const openModalBtn = document.getElementById('sql-toggle-btn');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        function toggleModal(show) {
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        openModalBtn.addEventListener('click', () => toggleModal(true));
+        closeModalBtn.addEventListener('click', () => toggleModal(false));
+        modalBackdrop.addEventListener('click', () => toggleModal(false));
+
+        // Initialization
+        window.addEventListener('resize', resize);
+        window.addEventListener('DOMContentLoaded', () => {
+            resize();
+            buildScenarioList();
+            loadScenario('intro'); // Default load
+            render();
+        });
+
+        document.getElementById('run-btn').addEventListener('click', () => {
+             // Re-run animation/layout for current data
+             initSimulation();
+        });
+//# sourceURL=gg.inline_script.1.js
+
+    </script>
+</body>
+</html>

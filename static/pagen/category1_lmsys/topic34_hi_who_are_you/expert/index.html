@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+	<title>Hi who are you</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 50px 15px !important;
+	    margin: 0 auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	 position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 50%;   
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	.pb_0{
+		padding-bottom: 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	.sec_3 img{
+		height: 120px;
+		object-fit: contain;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_4 img{
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	.box{
+		width: 80%;
+		margin: 0 auto;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.sec_3 .container,.sec_5 .container{
+		padding: 0px 15px !important;
+	}
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+	.home{
+		position: relative;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000db;
+		z-index: 1;
+	}
+	.pb_50{
+		padding-bottom: 50px;
+	}
+/* Flickity	*/
+	.carousel-cell {
+	  width: 28%;
+	  margin-right: 10px;
+	  counter-increment: carousel-cell;
+	}
+	.flickity-button{
+	    color: #fff;
+    	background: #000;
+	}
+
+/* end  */
+	@media (max-width: 768px){
+		.carousel-cell {
+		  width: 100%;
+		}
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 42px;
+		}
+		h2{
+			font-size: 30px;
+		}
+	}
+</style>
+</head>
+<body style="background: #ffcebc; color: #000;">
+<div class="">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container" style="color: #fff !important;">
+				<div class="box text_center">
+					<h1 data-aos="fade-right" data-aos-duration="1500">Hi, Who Are You?</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">“Hi, who are you?” is a timeless question. It’s the start of every introduction, every story, and every connection. On this page, we explore what it means to answer that question—clearly, honestly, and meaningfully.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">About Section</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Who you are is more than just your name. It’s a mix of your experiences, your values, and the goals that drive you forward. Whether you’re an individual introducing yourself to new friends, a professional sharing your expertise, or a creator presenting your work, this is your chance to define yourself in your own words.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.jpg"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a6.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Why It Matters</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Every relationship—personal or professional—begins with identity. When you share who you are, you open doors to trust, collaboration, and belonging. Your story helps others understand where you’re coming from and what makes you unique.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">How to Answer</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">The best introductions are simple but powerful. Start with the basics—your name, what you do, and what excites you. Add a touch of your personality, your vision, or your purpose. In just a few sentences, you can make a memorable impression that lasts.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a7.jpg"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a8.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Closing Section</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">So, the next time someone asks “Hi, who are you?”, think of it as an opportunity—not just to introduce yourself, but to invite others into your world.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

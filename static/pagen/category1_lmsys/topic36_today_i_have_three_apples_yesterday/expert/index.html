@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Apple Counting Puzzle Explained</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Tagesschrift&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Tagesschrift&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<style type="text/css">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	body {
+	  	background-image: url('assets/img/bg.jpg'); /* Replace with your image path */
+	 	 background-repeat: no-repeat; /* Prevents image from repeating */
+	  	background-size: cover; /* Ensures image covers the entire area */
+	  	background-position: bottom; /* Centers the image */
+	  	color: #000;
+	}
+	p,a,li{
+		font-family: "Lato", sans-serif;
+		font-weight: 600;
+  		font-style: normal;
+  		font-size: 16px;
+	    letter-spacing: 1px;
+	    padding-bottom: 10px;
+	    line-height: 1.6em;
+	}
+	ul{
+		padding-left: 15px;
+	}
+	span{
+		font-family: "Caveat", cursive;
+	  	font-optical-sizing: auto;
+	  	font-weight: 600;
+	  	font-style: normal;
+		text-transform: uppercase;
+		font-size: 20px;
+	    letter-spacing: 1px;
+	    padding-bottom: 10px;
+	}
+	h1,h2,h3,h4,h5,h5{
+		font-family: "Lato", sans-serif;
+		font-weight: 900;
+		font-style: normal;
+		padding-bottom: 10px;
+	}
+	h3{
+		font-family: "Lato", sans-serif;
+		font-weight: 600;
+  		font-style: normal;
+  		text-transform: uppercase;
+	}
+	.container{
+	    max-width: 1450px;
+	    padding: 0px 15px !important;
+	    margin: 0 auto;
+	    width: 100%;
+        margin-top: 50px;
+    	margin-bottom: 50px;
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.w_33{
+		width: 33.33%;
+	}
+	.w_25{
+		width: calc(25% - 10px);
+	}
+	.w_20{
+		width: 20%;
+	}
+	.w_30{
+		width: 30%;
+	}
+	.w_40{
+		width: 40%;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	.w_60{
+		width: 60%;
+	}
+	.w_70{
+		width: 70%;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.m_auto{
+		margin: 0 auto;
+	}
+	img{
+		width: 60%;
+		border-radius: 50px;
+	}
+	.pb_0{
+		padding-bottom: 0px;
+	}
+	.fixed{
+	  	background-size: cover; /* Ensure the image covers the entire area */
+  		background-attachment: fixed; /* This makes the background fixed */
+  		background-repeat: no-repeat; /* Prevent image repetition */
+  		background-position: top center;
+  		height: 400px;
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.zoom:hover {
+	  transform: scale(0.95); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	}
+	.zoom{
+		transition: transform .2s; 
+	}
+	.pb_50{
+		padding-bottom: 50px;
+	}
+	@media (max-width: 1024px){
+		.d_flex{
+			flex-direction: column;
+		}
+		.w_50,.w_25,.w_70{
+			width: 100%;
+			text-align: center;
+		}
+		.col_rev{
+			flex-direction: column-reverse;
+		}
+		.mb_p{
+			padding-bottom: 50px;
+		}
+		.mr_0{
+			margin-right: 0px;
+			margin-bottom: 10px;
+		}
+		img{
+			width: 100%;
+		}
+	}
+	@media (max-width: 1024px){
+		h1{
+			font-size: 50px;
+		}
+	}
+</style>
+<body style="background-image: url('assets/img/bg.jpg');">
+	<div class="container text_center">
+		<h1 class="w_70 m_auto" data-aos="fade-in" data-aos-duration="1700">Apple Counting Puzzle Explained</h1>
+		<p  data-aos="fade-in" data-aos-duration="1700">“Today I have three apples. Yesterday I ate one apple. How many apples do I have today?”
+At first glance, this looks like a straightforward subtraction problem. Many people might rush to calculate 3 – 1 = 2. But if we look closely, the question is actually about comprehension, not calculation.</p>
+	</div>
+	<div class="fixed" style="background-image: url('assets/img/t3.jpg');"></div> 
+	<div class="container text_center ">
+		<div class="w_70 m_auto">
+			<h3 data-aos="fade-in" data-aos-duration="1700"><strong>Step 1: Breaking Down the Statement</strong></h3>
+			<p data-aos="fade-in" data-aos-duration="1700">The riddle gives us two pieces of information:</p>
+			<ul data-aos="fade-in" data-aos-duration="1700">
+				<li><strong>Today’s Condition:</strong> It directly states that today you have three apples. This is already a clear fact, not something you need to calculate.</li>
+				<li><strong>Yesterday’s Action:</strong> It mentions that you ate one apple yesterday. While interesting, this detail belongs to the past and does not alter the statement about today’s apples.</li>
+			</ul>
+			<h3 data-aos="fade-in" data-aos-duration="1700"><strong>Step 2: Common Misinterpretation</strong></h3>
+			<p data-aos="fade-in" data-aos-duration="1700">Many people fall into the trap of treating this like a math exercise. They see “three apples” and “ate one” and instinctively subtract. But this ignores the wording: eating an apple yesterday doesn’t take away from what you have today unless the question connects the two events directly.</p>
+			<h3 data-aos="fade-in" data-aos-duration="1700"><strong>Step 3: The Correct Logic</strong></h3>
+			<p data-aos="fade-in" data-aos-duration="1700">Because the problem explicitly says “Today I have three apples,” that is the answer. The mention of yesterday is a distraction designed to test reading skills and logical attention rather than arithmetic ability.</p>
+			<p data-aos="fade-in" data-aos-duration="1700">So, no matter what happened yesterday, today’s count is already given: 3 apples.</p>
+			<h3 data-aos="fade-in" data-aos-duration="1700"><strong>Step 4: Broader Lesson</strong></h3>
+			<p data-aos="fade-in" data-aos-duration="1700">This puzzle shows how important it is to read carefully before jumping to conclusions. In problem-solving—whether in school, business, or daily life - sometimes the challenge isn’t the math itself, but the interpretation of the information. Words matter as much as numbers.</p>
+			<h3 data-aos="fade-in" data-aos-duration="1700"><strong>Conclusion</strong></h3>
+			<p class="pb_50" data-aos="fade-in" data-aos-duration="1700">The correct and only logical answer is: You have three apples today. Yesterday’s apple doesn’t change that fact. The riddle’s trick is in making you think subtraction is required, when in reality, the solution comes from careful reading.</p>
+			</div>
+		<img class="zoom" src="assets/img/t2.jpg">
+	</div>
+	<script>
+	  AOS.init();
+	</script>
+</body>
+</html>

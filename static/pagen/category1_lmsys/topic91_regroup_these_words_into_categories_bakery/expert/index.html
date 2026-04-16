@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Categorizer - Interactive Classification Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-sort-amount-down"></i> Word Categorizer</h1>
+            <p>Interactive tool to organize and categorize words into logical groups</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for any word (e.g., 'gummy bears', 'coffee', 'toys')...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All Categories</button>
+                <button class="filter-btn" data-category="food">Food & Beverages</button>
+                <button class="filter-btn" data-category="bakery">Bakery & Sweets</button>
+                <button class="filter-btn" data-category="proteins">Proteins</button>
+                <button class="filter-btn" data-category="toys">Toys & Pets</button>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2>Classification Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalWords">19</div>
+                    <div class="stat-label">Total Words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCategories">5</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="visibleWords">19</div>
+                    <div class="stat-label">Visible Words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="searchResults">19</div>
+                    <div class="stat-label">Search Results</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="categories-section">
+            <div class="category-card" data-category="food">
+                <div class="category-header">
+                    <div class="category-icon" style="background: #ff6b6b;">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="category-title">Food & Beverages</div>
+                </div>
+                <div class="category-items">
+                    <div class="item-tag" data-word="coffee">
+                        <span>coffee</span>
+                        <div class="item-info">A popular caffeinated beverage made from roasted coffee beans</div>
+                    </div>
+                    <div class="item-tag" data-word="chocolate">
+                        <span>chocolate</span>
+                        <div class="item-info">Sweet treat made from cocoa beans, available in various forms</div>
+                    </div>
+                    <div class="item-tag" data-word="prepared meal">
+                        <span>prepared meal</span>
+                        <div class="item-info">Ready-to-eat meals that require minimal preparation</div>
+                    </div>
+                    <div class="item-tag" data-word="food can">
+                        <span>food can</span>
+                        <div class="item-info">Canned food products for long-term storage</div>
+                    </div>
+                    <div class="item-tag" data-word="food">
+                        <span>food</span>
+                        <div class="item-info">General term for any edible substance</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card" data-category="bakery">
+                <div class="category-header">
+                    <div class="category-icon" style="background: #4ecdc4;">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <div class="category-title">Bakery & Sweets</div>
+                </div>
+                <div class="category-items">
+                    <div class="item-tag" data-word="bakery">
+                        <span>bakery</span>
+                        <div class="item-info">A place where bread, cakes, and pastries are made or sold</div>
+                    </div>
+                    <div class="item-tag" data-word="pastry">
+                        <span>pastry</span>
+                        <div class="item-info">Sweet baked goods made with flour, butter, and sugar</div>
+                    </div>
+                    <div class="item-tag" data-word="biscuit">
+                        <span>biscuit</span>
+                        <div class="item-info">Small baked goods, often sweet and crispy</div>
+                    </div>
+                    <div class="item-tag" data-word="cookies">
+                        <span>cookies</span>
+                        <div class="item-info">Sweet baked treats, often round and flat</div>
+                    </div>
+                    <div class="item-tag" data-word="candy">
+                        <span>candy</span>
+                        <div class="item-info">Sweet confectionery made with sugar</div>
+                    </div>
+                    <div class="item-tag" data-word="gummy bears">
+                        <span>gummy bears</span>
+                        <div class="item-info">Chewy candy shaped like bears, made with gelatin</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card" data-category="proteins">
+                <div class="category-header">
+                    <div class="category-icon" style="background: #45b7d1;">
+                        <i class="fas fa-drumstick-bite"></i>
+                    </div>
+                    <div class="category-title">Proteins & Fresh Foods</div>
+                </div>
+                <div class="category-items">
+                    <div class="item-tag" data-word="fish">
+                        <span>fish</span>
+                        <div class="item-info">Aquatic animals used as food, rich in protein and omega-3</div>
+                    </div>
+                    <div class="item-tag" data-word="meat">
+                        <span>meat</span>
+                        <div class="item-info">Animal flesh used as food, high in protein</div>
+                    </div>
+                    <div class="item-tag" data-word="fruit">
+                        <span>fruit</span>
+                        <div class="item-info">Sweet, edible plant parts containing seeds</div>
+                    </div>
+                    <div class="item-tag" data-word="vegetable">
+                        <span>vegetable</span>
+                        <div class="item-info">Edible plant parts, rich in vitamins and minerals</div>
+                    </div>
+                    <div class="item-tag" data-word="burger">
+                        <span>burger</span>
+                        <div class="item-info">Sandwich with a meat patty, often served in a bun</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-card" data-category="toys">
+                <div class="category-header">
+                    <div class="category-icon" style="background: #96ceb4;">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="category-title">Toys & Pets</div>
+                </div>
+                <div class="category-items">
+                    <div class="item-tag" data-word="toys">
+                        <span>toys</span>
+                        <div class="item-info">Objects for play, entertainment, or learning</div>
+                    </div>
+                    <div class="item-tag" data-word="plush">
+                        <span>plush</span>
+                        <div class="item-info">Soft, stuffed toys made from plush fabric</div>
+                    </div>
+                    <div class="item-tag" data-word="dogs and cats">
+                        <span>dogs and cats</span>
+                        <div class="item-info">Popular domestic pets, beloved companions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3><i class="fas fa-lightbulb"></i> Smart Recommendations</h3>
+            <div class="recommendations">
+                <div class="recommendation-card">
+                    <h4>🍰 Perfect Bakery Combo</h4>
+                    <p>Try pairing <strong>pastry</strong> with <strong>coffee</strong> for a delightful breakfast treat. Add some <strong>chocolate</strong> for extra indulgence!</p>
+                </div>
+                <div class="recommendation-card">
+                    <h4>🥗 Healthy Meal Ideas</h4>
+                    <p>Combine <strong>fish</strong> or <strong>meat</strong> with fresh <strong>vegetables</strong> and <strong>fruit</strong> for a balanced, nutritious meal.</p>
+                </div>
+                <div class="recommendation-card">
+                    <h4>🐾 Pet Care Essentials</h4>
+                    <p>For <strong>dogs and cats</strong>, consider <strong>plush</strong> toys for comfort and regular <strong>toys</strong> for exercise and mental stimulation.</p>
+                </div>
+                <div class="recommendation-card">
+                    <h4>🍪 Sweet Treats</h4>
+                    <p>Create a dessert platter with <strong>cookies</strong>, <strong>biscuits</strong>, and <strong>gummy bears</strong> for a colorful, sweet experience.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="knowledge-section">
+            <h3><i class="fas fa-graduation-cap"></i> Word Classification Guide</h3>
+            <div class="knowledge-grid">
+                <div class="knowledge-card">
+                    <div class="knowledge-icon">🍎</div>
+                    <h4>Food Categories</h4>
+                    <p>Learn how to classify different types of food items based on their nutritional value, preparation method, and cultural context.</p>
+                    <ul>
+                        <li><strong>Fresh Foods:</strong> Fish, meat, fruits, vegetables</li>
+                        <li><strong>Processed Foods:</strong> Prepared meals, food cans</li>
+                        <li><strong>Beverages:</strong> Coffee, chocolate drinks</li>
+                    </ul>
+                </div>
+                <div class="knowledge-card">
+                    <div class="knowledge-icon">🏪</div>
+                    <h4>Commercial Categories</h4>
+                    <p>Understand how items are organized in retail and commercial settings for better shopping and organization.</p>
+                    <ul>
+                        <li><strong>Bakery Items:</strong> Pastry, biscuits, cookies</li>
+                        <li><strong>Confectionery:</strong> Candy, gummy bears, chocolate</li>
+                        <li><strong>Pet Supplies:</strong> Toys, plush items</li>
+                    </ul>
+                </div>
+                <div class="knowledge-card">
+                    <div class="knowledge-icon">🧠</div>
+                    <h4>Cognitive Classification</h4>
+                    <p>Discover how our brains naturally categorize items and improve your mental organization skills.</p>
+                    <ul>
+                        <li><strong>Functional Groups:</strong> Items with similar uses</li>
+                        <li><strong>Material Groups:</strong> Items made from similar materials</li>
+                        <li><strong>Contextual Groups:</strong> Items used in similar situations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3><i class="fas fa-tips"></i> Classification Tips & Tricks</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-number">1</div>
+                    <h4>Start with Purpose</h4>
+                    <p>Ask yourself: "What is this item used for?" This helps identify the primary category and subcategories.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-number">2</div>
+                    <h4>Consider Context</h4>
+                    <p>Think about where and when the item is typically used. Context often determines the most logical grouping.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-number">3</div>
+                    <h4>Look for Patterns</h4>
+                    <p>Identify common characteristics like material, function, or origin to create meaningful categories.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-number">4</div>
+                    <h4>Use Hierarchical Thinking</h4>
+                    <p>Create broad categories first, then break them down into more specific subcategories for better organization.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="educational-section">
+            <h3><i class="fas fa-book"></i> Learning Resources</h3>
+            <div class="educational-content">
+                <div class="learning-path">
+                    <h4>📚 Vocabulary Building</h4>
+                    <p>Expand your vocabulary by learning related terms for each category:</p>
+                    <div class="vocabulary-lists">
+                        <div class="vocab-category">
+                            <strong>Food & Cooking:</strong>
+                            <span class="vocab-tags">culinary, gastronomy, nutrition, ingredients, recipe</span>
+                        </div>
+                        <div class="vocab-category">
+                            <strong>Commerce & Retail:</strong>
+                            <span class="vocab-tags">merchandise, inventory, retail, wholesale, consumer</span>
+                        </div>
+                        <div class="vocab-category">
+                            <strong>Organization & Management:</strong>
+                            <span class="vocab-tags">categorization, taxonomy, classification, system, structure</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="learning-path">
+                    <h4>🎯 Practical Applications</h4>
+                    <p>Use these classification skills in real-world scenarios:</p>
+                    <ul class="application-list">
+                        <li><strong>Grocery Shopping:</strong> Organize your shopping list by store sections</li>
+                        <li><strong>Home Organization:</strong> Group items by function and frequency of use</li>
+                        <li><strong>Study Planning:</strong> Categorize study materials by subject and difficulty</li>
+                        <li><strong>Digital Organization:</strong> Organize files and folders logically</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <div class="faq-question">How does this word categorization tool work?</div>
+                <div class="faq-answer">Our AI-powered tool automatically organizes words into logical categories based on their meaning, usage, and context. Simply search for any word or browse categories to see how items are grouped together.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I add my own words to the categorization system?</div>
+                <div class="faq-answer">Currently, this tool works with the predefined set of words. However, the categorization logic can be extended to include new words by analyzing their semantic relationships and context.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What's the difference between food categories and non-food items?</div>
+                <div class="faq-answer">Food categories include edible items like bakery goods, proteins, and beverages. Non-food items encompass toys, pets, and other non-edible objects. This distinction helps organize items by their primary function.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How accurate is the automatic categorization?</div>
+                <div class="faq-answer">Our categorization system uses advanced algorithms to achieve high accuracy. Words are analyzed based on their semantic meaning, common usage patterns, and contextual relationships to ensure proper classification.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I use this tool for educational purposes?</div>
+                <div class="faq-answer">Absolutely! This tool is perfect for learning about word relationships, improving vocabulary, and understanding how different items can be grouped logically. It's great for students, teachers, and language learners.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is this tool mobile-friendly?</div>
+                <div class="faq-answer">Yes! The interface is fully responsive and optimized for all devices - desktop, tablet, and mobile. All interactive features work seamlessly across different screen sizes.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

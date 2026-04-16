@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parse questions (separator "-") — Interactive Guide & Tools</title>
+  <style>
+    :root{
+      --bg:#071226; --card:#0b1220; --muted:#9fb0bf; --accent:#7dd3fc; --good:#8df3c8; --bad:#ffb4b4;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#e6eef6;background:linear-gradient(180deg,#031226 0%,#071226 100%);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:28px auto;padding:20px}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+    .logo{width:64px;height:64px;padding:10px;background:rgba(255,255,255,0.03);border-radius:12px;display:flex;align-items:center;justify-content:center}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr} .toc{order:2}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:16px;border-radius:12px;box-shadow:0 8px 22px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .section-title{display:flex;justify-content:space-between;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+    input[type=file]{color:var(--muted)}
+    .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    button{background:#07172a;color:var(--accent);border:1px solid rgba(125,211,252,0.12);padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    textarea{width:100%;min-height:120px;background:#01131a;border-radius:8px;padding:10px;color:#d7f9ff;border:1px solid rgba(255,255,255,0.03);resize:vertical}
+    pre{background:#01131a;padding:12px;border-radius:8px;color:#d7f9ff;overflow:auto}
+    .result{background:#02171d;padding:10px;border-radius:8px;color:#cfeefb;max-height:260px;overflow:auto;margin-top:8px}
+    .code-sample{background:#01131a;padding:12px;border-radius:8px;color:#d7f9ff;overflow:auto;margin-top:8px}
+    .stat{display:flex;gap:8px;align-items:center}
+    .chip{background:rgba(125,211,252,0.06);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600}
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+    .small{font-size:13px;color:var(--muted)}
+    .img{width:100%;border-radius:8px;background:linear-gradient(90deg,#021322,#051827);padding:12px;color:var(--muted);text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo card" aria-hidden>
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="8" width="52" height="48" rx="8" fill="#072340"/><text x="32" y="36" text-anchor="middle" font-size="18" fill="#7dd3fc" font-family="sans-serif">Py</text></svg>
+      </div>
+      <div>
+        <h1>Parse Questions Separated by "-" in Python</h1>
+        <p class="lead">Upload a text file or paste your content, then watch the page parse it into a Python list. Includes robust Python functions, examples, and a downloadable script.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <!-- Section 1: Interactive file upload & paste -->
+        <section class="card" id="upload">
+          <div class="section-title"><h2>Upload / Paste your file</h2><span class="chip">Interactive</span></div>
+          <p class="muted" style="margin-top:8px">Your file should use a single line containing only <code>-</code> as the separator between questions (exact match after trimming).</p>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px">
+            <div><input id="fileInput" type="file" accept=".txt" /></div>
+            <div class="small">or paste content below</div>
+          </div>
+
+          <textarea id="pasteArea" placeholder="Paste your file content here..."></textarea>
+          <div class="controls">
+            <button id="parseBtn">Parse to list</button>
+            <button id="showPy" class="ghost">Show Python function</button>
+            <button id="downloadPy" class="ghost">Download .py</button>
+            <button id="copyList" class="ghost">Copy list</button>
+          </div>
+
+          <div class="muted" style="margin-top:10px">Parsed questions (each element = one question):</div>
+          <div class="result" id="resultArea" aria-live="polite"></div>
+        </section>
+
+        <!-- Section 2: Explanation & Python solutions -->
+        <section class="card" id="solutions">
+          <div class="section-title"><h2>How it works — Python solutions</h2><span class="muted">Robust and edge-case friendly</span></div>
+          <p class="muted" style="margin-top:8px">Below are several patterns you can use depending on file size and needs: simple split, line-based state machine (recommended), regex-based split, streaming generator for very large files.</p>
+
+          <div class="code-sample">
+            <strong>1) Recommended — line-based parser (handles spacing, empty items)</strong>
+            <pre><code>def parse_questions_lines(path):
+    questions = []
+    cur = []
+    with open(path, 'r', encoding='utf-8') as f:
+        for raw in f:
+            line = raw.strip()
+            if line == '-':
+                # separator -> flush current question if non-empty
+                q = '\\n'.join(cur).strip()
+                if q:
+                    questions.append(q)
+                cur = []
+            else:
+                cur.append(raw.rstrip('\\n'))
+    # final flush in case file doesn't end with '-'
+    final = '\\n'.join(cur).strip()
+    if final:
+        questions.append(final)
+    return questions</code></pre>
+          </div>
+
+          <div class="code-sample" style="margin-top:8px">
+            <strong>2) Simple split on separator lines (works for smaller files)</strong>
+            <pre><code>def parse_questions_split(path):
+    text = open(path, 'r', encoding='utf-8').read()
+    # normalize CRLF, then split on newline + '-' + newline (allowing surrounding spaces)
+    import re
+    parts = re.split(r'\\r?\\n\\s*-\\s*\\r?\\n', text.strip())
+    return [p.strip() for p in parts if p.strip()]</code></pre>
+          </div>
+
+          <div class="code-sample" style="margin-top:8px">
+            <strong>3) Generator for streaming (large files)</strong>
+            <pre><code>def parse_questions_stream(path):
+    def gen():
+        cur = []
+        with open(path, 'r', encoding='utf-8') as f:
+            for raw in f:
+                line = raw.strip()
+                if line == '-':
+                    q = '\\n'.join(cur).strip()
+                    if q:
+                        yield q
+                    cur = []
+                else:
+                    cur.append(raw.rstrip('\\n'))
+        if cur:
+            final = '\\n'.join(cur).strip()
+            if final:
+                yield final
+    return list(gen())</code></pre>
+          </div>
+
+          <p class="muted small" style="margin-top:8px"><strong>Tips</strong>: make sure separators are on their own line; watch for trailing separators (they'll be ignored). Use <code>encoding='utf-8'</code> for modern files.</p>
+        </section>
+
+        <!-- Section 3: Live JS parsing demo & output as Python list -->
+        <section class="card" id="live">
+          <div class="section-title"><h2>Live demo (in-browser)</h2><span class="muted">Instant feedback</span></div>
+          <p class="muted" style="margin-top:8px">This client-side parser uses the same rules as the recommended Python function. Upload or paste text and see the parsed list and a ready-to-run Python snippet.</p>
+
+          <div class="muted" style="margin-top:8px">Parsed as JavaScript array (visual):</div>
+          <pre id="jsArray">[]</pre>
+
+          <div class="muted" style="margin-top:8px">Generated Python list literal (copy into your script):</div>
+          <pre id="pyLiteral">[]</pre>
+        </section>
+
+        <footer class="muted">This page demonstrates parsing logic and generates a downloadable Python script implementing the recommended parser.</footer>
+      </main>
+
+      <aside class="toc">
+        <div class="card small">
+          <h3 style="margin:0 0 8px">Quick links</h3>
+          <p class="muted">Upload · Solutions · Demo</p>
+          <div style="display:flex;gap:8px;margin-top:8px"><button onclick="document.getElementById('upload').scrollIntoView({behavior:'smooth'})" class="ghost">Upload</button><button onclick="document.getElementById('solutions').scrollIntoView({behavior:'smooth'})">Solutions</button></div>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Why line-based parser?</h4>
+          <p class="muted" style="margin-top:8px">It preserves internal newlines in questions (useful for multi-line options), tolerates spacing, and processes files streamingly when needed.</p>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Download</h4>
+          <p class="muted" style="margin-top:8px">You can download a small Python file implementing the parser via the button on the main panel.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Parsing logic (mirrors recommended Python)
+    function parseTextToQuestions(text){
+      const lines = text.split(/\r?\n/);
+      const questions = [];
+      let cur = [];
+      for(const raw of lines){
+        const line = raw.trim();
+        if(line === '-') {
+          const q = cur.join('\\n').trim();
+          if(q) questions.push(q);
+          cur = [];
+        } else {
+          // preserve original line endings inside questions
+          cur.push(raw.replace(/\\r$/,''));
+        }
+      }
+      const final = cur.join('\\n').trim();
+      if(final) questions.push(final);
+      return questions;
+    }
+
+    // UI elements
+    const fileInput = document.getElementById('fileInput');
+    const pasteArea = document.getElementById('pasteArea');
+    const parseBtn = document.getElementById('parseBtn');
+    const resultArea = document.getElementById('resultArea');
+    const jsArray = document.getElementById('jsArray');
+    const pyLiteral = document.getElementById('pyLiteral');
+    const showPy = document.getElementById('showPy');
+    const downloadPy = document.getElementById('downloadPy');
+    const copyList = document.getElementById('copyList');
+
+    function displayResults(list){
+      resultArea.innerHTML = '';
+      if(list.length === 0){ resultArea.textContent = 'No questions found.'; jsArray.textContent='[]'; pyLiteral.textContent='[]'; return; }
+      const ol = document.createElement('ol');
+      for(const q of list){
+        const li = document.createElement('li');
+        li.style.marginBottom = '8px';
+        li.textContent = q;
+        ol.appendChild(li);
+      }
+      resultArea.appendChild(ol);
+      jsArray.textContent = JSON.stringify(list, null, 2);
+      // create python literal, preserving newlines
+      const py = '[' + list.map(q => "'''"+ q.replace(/'''/g,"\\'\\'\\'") + "'''").join(',\\n') + ']';
+      pyLiteral.textContent = py;
+    }
+
+    parseBtn.addEventListener('click', ()=>{
+      const fromPaste = pasteArea.value.trim();
+      if(fileInput.files.length > 0){
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const text = e.target.result;
+          const list = parseTextToQuestions(text);
+          displayResults(list);
+        };
+        reader.readAsText(file, 'utf-8');
+      } else if(fromPaste){
+        const list = parseTextToQuestions(pasteArea.value);
+        displayResults(list);
+      } else {
+        resultArea.textContent = 'Please upload a .txt file or paste content.';
+      }
+    });
+
+    // show Python function in an alert
+    const pyFunctionText = `def parse_questions_lines(path):
+    \"\"\"Parse a text file where questions are separated by a single line containing only \"-\".\"\"\"
+    questions = []
+    cur = []
+    with open(path, 'r', encoding='utf-8') as f:
+        for raw in f:
+            line = raw.strip()
+            if line == '-':
+                q = '\\n'.join(cur).strip()
+                if q:
+                    questions.append(q)
+                cur = []
+            else:
+                cur.append(raw.rstrip('\\n'))
+    final = '\\n'.join(cur).strip()
+    if final:
+        questions.append(final)
+    return questions`;
+
+    showPy.addEventListener('click', ()=>{ alert(pyFunctionText); });
+
+    // Download a small Python script implementing the parser
+    downloadPy.addEventListener('click', ()=>{
+      const pyFile = `# parser generated by interactive guide\n\n${pyFunctionText}\n\nif __name__ == '__main__':\n    import argparse\n    p = argparse.ArgumentParser(description='Parse questions separated by a line containing \"-\"')\n    p.add_argument('file', help='path to input text file')\n    args = p.parse_args()\n    qs = parse_questions_lines(args.file)\n    for i,q in enumerate(qs,1):\n        print(f'--- Question {i} ---')\n        print(q)\n`;
+      const blob = new Blob([pyFile], {type: 'text/x-python'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'parse_questions.py';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // copy list to clipboard
+    copyList.addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(pyLiteral.textContent);
+        copyList.textContent = 'Copied!';
+        setTimeout(()=>copyList.textContent='Copy list',1500);
+      }catch(e){
+        alert('Clipboard failed: ' + e);
+      }
+    });
+
+    // drag & drop support for convenience
+    window.addEventListener('dragover', (e)=> e.preventDefault());
+    window.addEventListener('drop', (e)=>{
+      e.preventDefault();
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if(file){
+        fileInput.files = e.dataTransfer.files;
+        parseBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C File Character Counter - Code Explanation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            background: rgba(30, 41, 59, 0.95);
+            background-image: url('images/header-pattern.png');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Code Display */
+        .code-section {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .code-section:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .code-section:hover::before {
+            left: 100%;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .code-block {
+            position: relative;
+        }
+
+        .code-block:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .code-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .code-block {
+            background: #0a0e1a;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .code-block-container {
+            position: relative;
+        }
+
+        .code-line {
+            color: #e2e8f0;
+            margin: 0.25rem 0;
+        }
+
+        .code-keyword { color: #c792ea; }
+        .code-string { color: #c3e88d; }
+        .code-function { color: #82aaff; }
+        .code-comment { color: #546e7a; font-style: italic; }
+        .code-number { color: #f78c6c; }
+        .code-operator { color: #89ddff; }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .tab:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+        }
+
+        /* Interactive Demo */
+        .demo-section {
+            background: var(--bg-card);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .demo-title {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            background: #0a0e1a;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #7c3aed;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .result-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Step-by-step */
+        .steps {
+            margin: 2rem 0;
+        }
+
+        .step {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            transition: width 0.4s;
+        }
+
+        .step:hover {
+            border-left-width: 8px;
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .step:hover::before {
+            width: 8px;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2rem;
+            font-weight: bold;
+            margin-right: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            margin-left: 3rem;
+        }
+
+        /* Visual Breakdown */
+        .visual-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .breakdown-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .breakdown-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breakdown-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .code-section, .demo-section {
+                padding: 1.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step-content {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Mobile Optimizations for devices < 680px */
+        @media (max-width: 680px) {
+            /* Typography */
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.25rem;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            h3 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .code-title {
+                font-size: 1.2rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .step-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .demo-title {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            .card-content, .step-content, p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .code-block {
+                font-size: 0.85rem;
+                line-height: 1.6;
+            }
+
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .result-label {
+                font-size: 0.8rem;
+            }
+
+            .hero-icon {
+                font-size: 3rem;
+            }
+
+            .card-icon {
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .breakdown-icon {
+                font-size: 2.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Spacing & Padding */
+            body {
+                padding-bottom: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            header {
+                padding: 1rem 0;
+            }
+
+            .hero {
+                padding: 1.5rem 0;
+            }
+
+            .code-section, .demo-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .step {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .code-block {
+                padding: 1rem;
+            }
+
+            .code-header {
+                margin-bottom: 1rem;
+                gap: 0.75rem;
+            }
+
+            .tabs {
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .copy-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .input-group {
+                margin-bottom: 1rem;
+            }
+
+            textarea {
+                padding: 0.75rem;
+                min-height: 120px;
+                font-size: 0.85rem;
+            }
+
+            .button-group {
+                gap: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .results {
+                gap: 0.75rem;
+                margin-top: 1rem;
+            }
+
+            .result-card {
+                padding: 1rem;
+            }
+
+            .cards-grid {
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+
+            .steps {
+                margin: 1rem 0;
+            }
+
+            .visual-breakdown {
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .breakdown-item {
+                padding: 1rem;
+            }
+
+            .step-number {
+                width: 1.75rem;
+                height: 1.75rem;
+                line-height: 1.75rem;
+                margin-right: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .step-content {
+                margin-left: 2.5rem;
+            }
+
+            .image-container {
+                margin: 1rem auto;
+            }
+
+            .section-image, .hero-image, .banner-image {
+                margin: 1rem auto;
+            }
+
+            /* Inline styles adjustments via more specific selectors */
+            section h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .faq-item h3 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            ul, ol {
+                margin-left: 1.5rem;
+                line-height: 1.6;
+            }
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+
+            code {
+                padding: 0.15rem 0.3rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            /* Override inline styles for mobile */
+            .hero h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .hero p {
+                font-size: 0.95rem !important;
+                margin: 1rem auto 0 !important;
+            }
+
+            section h2[style*="font-size"] {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* FAQ Mobile Optimizations */
+            .faq-item {
+                padding: 0.75rem !important;
+                margin-bottom: 0.75rem !important;
+                margin-top: 0.75rem !important;
+                padding-top: 0.75rem !important;
+            }
+
+            .faq-item:first-child {
+                margin-top: 0 !important;
+                padding-top: 0.75rem !important;
+            }
+
+            .faq-item h3 {
+                font-size: 1rem !important;
+                margin-bottom: 0 !important;
+                gap: 0.5rem;
+                line-height: 1.5;
+            }
+
+            .faq-item h3 > span:not(.faq-toggle) {
+                flex: 1;
+                min-width: 0;
+                font-size: 1rem !important;
+            }
+
+            .faq-toggle {
+                flex-shrink: 0;
+                margin-left: 0 !important;
+                font-size: 0.85em;
+                padding-top: 0.15em;
+                align-self: flex-start;
+            }
+
+            .faq-answer {
+                font-size: 0.9rem;
+            }
+
+            .faq-answer p {
+                font-size: 0.9rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .faq-item.active .faq-answer {
+                padding-top: 0.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FAQ Collapsible */
+        .faq-item {
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .faq-item:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .faq-item h3 {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .faq-toggle {
+            display: inline-block;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+            font-size: 0.9em;
+            line-height: 1;
+            padding-top: 0.1em;
+        }
+
+        .faq-item h3 > span:not(.faq-toggle) {
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(90deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-top: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+            padding-top: 0.75rem;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(90deg);
+        }
+
+        /* Image Styles */
+        .section-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 1rem;
+            margin: 2rem auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+
+        .section-image.loaded {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .section-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary);
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 1rem;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+            border: 2px solid var(--primary);
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.9) rotateY(-10deg);
+            animation: imageFadeIn 1s ease forwards;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05) rotateY(0deg);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes imageFadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            margin: 2rem auto;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+            transition: left 0.6s;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .image-container:hover::before {
+            left: 100%;
+        }
+
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .image-container:hover::after {
+            opacity: 1;
+        }
+
+        /* Image loading skeleton */
+        .section-image:not(.loaded) {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .banner-image {
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 1rem;
+            margin: 2rem auto;
+            display: block;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--border);
+            transition: all 0.4s ease;
+        }
+
+        .banner-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 1000;
+            transition: width 0.1s;
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Enhanced tab animations */
+        .tab-content {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Glow effect on hover for buttons */
+        .copy-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .copy-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .copy-btn {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero fade-in">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary);">C File Character Counter</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+                Understanding File I/O and Character Classification in C
+            </p>
+            <p style="color: var(--text-secondary); max-width: 700px; margin: 1.5rem auto 0;">
+                Learn how this C program reads a file and categorizes characters into different types using standard library functions.
+            </p>
+            <div class="image-container">
+                <img src="images/hero-image.png" alt="C Programming Illustration" class="hero-image" onload="this.classList.add('loaded')">
+            </div>
+        </section>
+
+        <!-- Code Display Section -->
+        <section class="code-section">
+            <div class="code-header">
+                <h2 class="code-title" style="text-align: center;">Source Code</h2>
+                <button class="copy-btn" onclick="copyCode()" id="copyBtn">
+                    <span>📋</span> Copy Code
+                </button>
+            </div>
+            <div class="code-block" id="codeDisplay">
+                <div class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdio.h&gt;</span></div>
+                <div class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;stdlib.h&gt;</span></div>
+                <div class="code-line"><span class="code-keyword">#include</span> <span class="code-string">&lt;ctype.h&gt;</span></div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-keyword">int</span> <span class="code-function">main</span>()</div>
+                <div class="code-line">{</div>
+                <div class="code-line"><span class="code-keyword">char</span> *file = <span class="code-string">"text.txt"</span>;</div>
+                <div class="code-line"><span class="code-keyword">FILE</span> *fileOpen = <span class="code-function">fopen</span>(file, <span class="code-string">"r"</span>);</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-keyword">char</span> carattere;</div>
+                <div class="code-line"><span class="code-keyword">int</span> contaMaiuscole = <span class="code-number">0</span>;</div>
+                <div class="code-line"><span class="code-keyword">int</span> contaMinuscole = <span class="code-number">0</span>;</div>
+                <div class="code-line"><span class="code-keyword">int</span> contaNumeri = <span class="code-number">0</span>;</div>
+                <div class="code-line"><span class="code-keyword">int</span> contaspazi = <span class="code-number">0</span>;</div>
+                <div class="code-line"><span class="code-keyword">int</span> contaPunteggiatura = <span class="code-number">0</span>;</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-keyword">do</span> {</div>
+                <div class="code-line">carattere = <span class="code-function">fgetc</span>(fileOpen);</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-keyword">if</span> (<span class="code-function">isspace</span>(carattere)) {</div>
+                <div class="code-line">contaspazi++;</div>
+                <div class="code-line">} <span class="code-keyword">else if</span> (<span class="code-function">islower</span>(carattere)) {</div>
+                <div class="code-line">contaMinuscole++;</div>
+                <div class="code-line">} <span class="code-keyword">else if</span> (<span class="code-function">isupper</span>(carattere)){</div>
+                <div class="code-line">contaMaiuscole++;</div>
+                <div class="code-line">} <span class="code-keyword">else if</span> (<span class="code-function">isdigit</span>(carattere)) {</div>
+                <div class="code-line">contaNumeri++;</div>
+                <div class="code-line">} <span class="code-keyword">else if</span> (<span class="code-function">ispunct</span>(carattere)) {</div>
+                <div class="code-line">contaPunteggiatura++;</div>
+                <div class="code-line">}</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line">} <span class="code-keyword">while</span> (carattere != <span class="code-keyword">EOF</span>);</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-function">printf</span>(<span class="code-string">"%d %d %d %d %d"</span>, contaspazi, contaMinuscole, contaMaiuscole, contaNumeri, contaPunteggiatura);</div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="code-function">fclose</span>(fileOpen);</div>
+                <div class="code-line">}</div>
+            </div>
+        </section>
+
+        <!-- Explanation Tabs -->
+        <section class="code-section fade-in">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('overview')">Overview</div>
+                <div class="tab" onclick="switchTab('includes')">Includes</div>
+                <div class="tab" onclick="switchTab('logic')">Logic</div>
+                <div class="tab" onclick="switchTab('functions')">Functions</div>
+            </div>
+
+            <div id="overview" class="tab-content active">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Program Overview</h3>
+                <div class="image-container">
+                    <img src="images/character-types-overview.png" alt="Character Types Overview" class="section-image" style="max-width: 700px;" onload="this.classList.add('loaded')">
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    This C program reads a text file character by character and counts different types of characters:
+                </p>
+                <ul style="color: var(--text-secondary); margin-left: 2rem; line-height: 2;">
+                    <li><strong style="color: var(--primary);">Spaces:</strong> Whitespace characters (spaces, tabs, newlines)</li>
+                    <li><strong style="color: var(--primary);">Lowercase letters:</strong> a-z</li>
+                    <li><strong style="color: var(--primary);">Uppercase letters:</strong> A-Z</li>
+                    <li><strong style="color: var(--primary);">Numbers:</strong> 0-9</li>
+                    <li><strong style="color: var(--primary);">Punctuation:</strong> Special characters like !, ?, ., etc.</li>
+                </ul>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">
+                    The program uses a <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">do-while</code> loop to read until the end of file (EOF) and categorizes each character using functions from the <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">ctype.h</code> library.
+                </p>
+            </div>
+
+            <div id="includes" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Header Files</h3>
+                <div style="color: var(--text-secondary);">
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">#include &lt;stdio.h&gt;</strong><br>
+                    Provides file I/O functions: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgetc()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fclose()</code>, and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">printf()</code>.</p>
+                    
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">#include &lt;stdlib.h&gt;</strong><br>
+                    Standard library for general utilities (though not heavily used in this program).</p>
+                    
+                    <p><strong style="color: var(--primary);">#include &lt;ctype.h&gt;</strong><br>
+                    Character classification functions: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">islower()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isupper()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isdigit()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isspace()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">ispunct()</code>.</p>
+                </div>
+            </div>
+
+            <div id="logic" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Program Logic Flow</h3>
+                <div class="image-container">
+                    <img src="images/logic-flow-diagram.png" alt="Program Logic Flow Diagram" class="section-image" onload="this.classList.add('loaded')">
+                </div>
+                <div style="color: var(--text-secondary);">
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">1. File Opening:</strong><br>
+                    Opens "text.txt" in read mode using <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code>. The file pointer is stored in <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fileOpen</code>.</p>
+                    
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">2. Variable Initialization:</strong><br>
+                    Five counters are initialized to zero to track each character type.</p>
+                    
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">3. Character Reading Loop:</strong><br>
+                    Uses a <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">do-while</code> loop to read characters one by one. The loop continues until <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">EOF</code> (End of File) is reached.</p>
+                    
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">4. Character Classification:</strong><br>
+                    Each character is checked using if-else chain with ctype.h functions to determine its type and increment the appropriate counter.</p>
+                    
+                    <p><strong style="color: var(--primary);">5. Output & Cleanup:</strong><br>
+                    Prints all counts and closes the file using <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fclose()</code>.</p>
+                </div>
+            </div>
+
+            <div id="functions" class="tab-content">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Key Functions Explained</h3>
+                <div class="image-container">
+                    <img src="images/functions-reference.png" alt="C Functions Reference" class="section-image" style="max-width: 800px;" onload="this.classList.add('loaded')">
+                </div>
+                <div style="color: var(--text-secondary);">
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">fopen(file, "r"):</strong> Opens a file in read mode. Returns a FILE pointer or NULL if the file doesn't exist.</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">fgetc(fileOpen):</strong> Reads a single character from the file. Returns the character as an int, or EOF when end of file is reached.</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">isspace(c):</strong> Returns non-zero if character is whitespace (space, tab, newline, etc.).</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">islower(c):</strong> Returns non-zero if character is a lowercase letter (a-z).</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">isupper(c):</strong> Returns non-zero if character is an uppercase letter (A-Z).</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">isdigit(c):</strong> Returns non-zero if character is a digit (0-9).</p>
+                    <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">ispunct(c):</strong> Returns non-zero if character is punctuation (!, ?, ., ,, etc.).</p>
+                    <p><strong style="color: var(--primary);">fclose(fileOpen):</strong> Closes the file and frees resources. Always close files after use!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step-by-Step Walkthrough -->
+        <section class="steps fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center; font-size: 2rem;">Step-by-Step Walkthrough</h2>
+            <div class="image-container">
+                <img src="images/process-flowchart.png" alt="Step-by-Step Process Flowchart" class="section-image" style="max-width: 1000px; margin-bottom: 3rem;" onload="this.classList.add('loaded')">
+            </div>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-title">File Declaration & Opening</span>
+                <div class="step-content">
+                    The program declares a filename string and opens it using <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code>. The "r" mode means read-only. If the file doesn't exist, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code> returns NULL (this program doesn't check for this error).
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-title">Counter Initialization</span>
+                <div class="step-content">
+                    Five integer variables are initialized to zero: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">contaMaiuscole</code> (uppercase), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">contaMinuscole</code> (lowercase), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">contaNumeri</code> (numbers), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">contaspazi</code> (spaces), and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">contaPunteggiatura</code> (punctuation).
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-title">Reading Loop</span>
+                <div class="step-content">
+                    A <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">do-while</code> loop is used to ensure at least one character is read. <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgetc()</code> reads one character at a time and returns it as an integer. When the end of file is reached, it returns EOF (-1).
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <span class="step-title">Character Classification</span>
+                <div class="step-content">
+                    Each character is tested using an if-else chain. The order matters: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isspace()</code> is checked first, then <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">islower()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isupper()</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isdigit()</code>, and finally <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">ispunct()</code>. When a match is found, the corresponding counter is incremented.
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <span class="step-title">Output & Cleanup</span>
+                <div class="step-content">
+                    After the loop completes, all five counts are printed using <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">printf()</code> in the order: spaces, lowercase, uppercase, numbers, punctuation. Finally, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fclose()</code> closes the file to free system resources.
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Concepts Cards -->
+        <section class="fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center; font-size: 2rem;">Key Programming Concepts</h2>
+            <div class="image-container">
+                <img src="images/programming-concepts-banner.png" alt="Programming Concepts Banner" class="banner-image" onload="this.classList.add('loaded')">
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-icon">📁</span>
+                    <h3 class="card-title">File I/O</h3>
+                    <p class="card-content">
+                        Learn how C programs interact with files using FILE pointers, opening files in different modes, and reading data sequentially.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔄</span>
+                    <h3 class="card-title">Loop Structures</h3>
+                    <p class="card-content">
+                        The do-while loop ensures the loop body executes at least once, which is perfect for reading files where you need to check EOF after reading.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔍</span>
+                    <h3 class="card-title">Character Classification</h3>
+                    <p class="card-content">
+                        The ctype.h library provides functions to categorize characters, making it easy to identify character types without manual ASCII comparisons.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Data Accumulation</h3>
+                    <p class="card-content">
+                        Counters are incremented as data is processed, demonstrating a common pattern in programming for aggregating information.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Errors & Pitfalls -->
+        <section class="code-section fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center; font-size: 2rem;">Common Errors & Pitfalls</h2>
+            <div class="image-container">
+                <img src="images/common-errors-visual.png" alt="Common Programming Errors Visualization" class="section-image" style="max-width: 900px; margin-bottom: 2rem;" onload="this.classList.add('loaded')">
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <h3 class="card-title">No Error Checking</h3>
+                    <p class="card-content">
+                        The program doesn't check if <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code> returns NULL. If "text.txt" doesn't exist, the program will crash when trying to read from a NULL pointer.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚠️</span>
+                    <h3 class="card-title">EOF Character Counted</h3>
+                    <p class="card-content">
+                        The <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">do-while</code> loop reads EOF (-1) and may incorrectly classify it. The check should happen before processing the character.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔢</span>
+                    <h3 class="card-title">Character Type Overlap</h3>
+                    <p class="card-content">
+                        The if-else chain order matters. If <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isspace()</code> wasn't first, spaces might be miscounted. The current order is correct.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">💾</span>
+                    <h3 class="card-title">Memory Leaks</h3>
+                    <p class="card-content">
+                        While the file is closed, if an error occurs before <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fclose()</code>, resources aren't freed. Error handling would prevent this.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Improvements -->
+        <section class="code-section fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center; font-size: 2rem;">Code Improvements & Best Practices</h2>
+            <div class="image-container">
+                <img src="images/code-improvements.png" alt="Code Improvements Visualization" class="section-image" onload="this.classList.add('loaded')">
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Add Error Checking</span>
+                    <div class="step-content">
+                        Always check if <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fopen()</code> returns NULL before using the file pointer. Print an error message and exit gracefully.
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Fix EOF Handling</span>
+                    <div class="step-content">
+                        Check for EOF immediately after reading: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">if (carattere == EOF) break;</code> before processing the character. This prevents EOF from being counted.
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Use Meaningful Variable Names</span>
+                    <div class="step-content">
+                        While Italian variable names work, English names like <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">countUppercase</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">countLowercase</code> improve code readability for international developers.
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <span class="step-title">Better Output Format</span>
+                    <div class="step-content">
+                        Instead of printing raw numbers, format the output: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">printf("Spaces: %d\nLowercase: %d\n...", ...);</code> This makes the output more readable.
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <span class="step-title">Command-Line Arguments</span>
+                    <div class="step-content">
+                        Make the filename a command-line argument: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">int main(int argc, char *argv[])</code> allows users to specify different files without recompiling.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example Output -->
+        <section class="code-section fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center; font-size: 2rem;">Example Output & Testing</h2>
+            <div style="color: var(--text-secondary);">
+                <p style="margin-bottom: 1.5rem;">
+                    If you create a file named <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">text.txt</code> with the following content:
+                </p>
+                <div class="code-block" style="margin-bottom: 1.5rem;">
+                    <div class="code-line">ABC abc 123!</div>
+                </div>
+                <p style="margin-bottom: 1rem;">
+                    The program will output:
+                </p>
+                <div class="code-block" style="margin-bottom: 1.5rem;">
+                    <div class="code-line"><span class="code-number">2</span> <span class="code-number">3</span> <span class="code-number">3</span> <span class="code-number">3</span> <span class="code-number">1</span></div>
+                </div>
+                <p style="margin-bottom: 0.5rem;">
+                    <strong style="color: var(--primary);">Breakdown:</strong>
+                </p>
+                <ul style="margin-left: 2rem; line-height: 2; color: var(--text-secondary);">
+                    <li><strong style="color: var(--primary);">2</strong> - Spaces (2 spaces in the text)</li>
+                    <li><strong style="color: var(--primary);">3</strong> - Lowercase letters (a, b, c)</li>
+                    <li><strong style="color: var(--primary);">3</strong> - Uppercase letters (A, B, C)</li>
+                    <li><strong style="color: var(--primary);">3</strong> - Numbers (1, 2, 3)</li>
+                    <li><strong style="color: var(--primary);">1</strong> - Punctuation (!)</li>
+                </ul>
+                <p style="margin-top: 1rem; color: var(--text-secondary); font-style: italic;">
+                    <strong style="color: var(--primary);">Note:</strong> The output format is: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">spaces lowercase uppercase numbers punctuation</code>
+                </p>
+            </div>
+        </section>
+
+        <!-- Related Concepts -->
+        <section class="fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center; font-size: 2rem;">Related Concepts & Further Learning</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-icon">📖</span>
+                    <h3 class="card-title">File Modes</h3>
+                    <p class="card-content">
+                        Learn about different file modes: <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">"r"</code> (read), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">"w"</code> (write), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">"a"</code> (append), and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">"r+"</code> (read/write).
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔄</span>
+                    <h3 class="card-title">Other File Functions</h3>
+                    <p class="card-content">
+                        Explore <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgets()</code> for line-by-line reading, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fread()</code> for binary data, and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fscanf()</code> for formatted input.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🔤</span>
+                    <h3 class="card-title">More ctype.h Functions</h3>
+                    <p class="card-content">
+                        Discover <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isalnum()</code> (alphanumeric), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">isxdigit()</code> (hexadecimal), <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">tolower()</code>, and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">toupper()</code> for character manipulation.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🛡️</span>
+                    <h3 class="card-title">Error Handling</h3>
+                    <p class="card-content">
+                        Learn about proper error handling with <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">errno</code>, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">perror()</code>, and <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">strerror()</code> to make your programs more robust.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Data Structures</h3>
+                    <p class="card-content">
+                        Consider using arrays or structs to store character counts, making the code more maintainable and easier to extend for additional character types.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">Performance Optimization</h3>
+                    <p class="card-content">
+                        For large files, consider buffered I/O techniques or reading in chunks rather than character-by-character to improve performance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="code-section fade-in">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center; font-size: 2rem;">Frequently Asked Questions</h2>
+            <div style="color: var(--text-secondary);">
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.25rem;">
+                        <span class="faq-toggle">▶</span>
+                        <span>Q: Why use do-while instead of while?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p style="margin-bottom: 1rem;">A: The <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">do-while</code> loop ensures the body executes at least once, which is necessary because we need to read a character before checking for EOF. A regular <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">while</code> loop would require reading before the loop, which is less elegant.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFAQ(this)" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.25rem;">
+                        <span class="faq-toggle">▶</span>
+                        <span>Q: What happens if the file is empty?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p style="margin-bottom: 1rem;">A: If the file is empty, <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgetc()</code> will immediately return EOF. The loop will execute once, process EOF (which may be miscounted), and then exit. All counters will be 0 except potentially one incorrect count.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFAQ(this)" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.25rem;">
+                        <span class="faq-toggle">▶</span>
+                        <span>Q: Can this program handle binary files?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p style="margin-bottom: 1rem;">A: Technically yes, but it's not recommended. The program opens the file in text mode ("r"), which may cause issues with binary data. For binary files, use <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">"rb"</code> mode and handle EOF differently.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFAQ(this)" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.25rem;">
+                        <span class="faq-toggle">▶</span>
+                        <span>Q: Why is char used for carattere instead of int?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p style="margin-bottom: 1rem;">A: While <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgetc()</code> returns an <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">int</code>, storing it in a <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">char</code> can cause issues with EOF detection. It's better practice to use <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">int</code> for the variable storing <code style="background: rgba(99, 102, 241, 0.2); padding: 0.2rem 0.4rem; border-radius: 0.25rem;">fgetc()</code> return values.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFAQ(this)" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.25rem;">
+                        <span class="faq-toggle">▶</span>
+                        <span>Q: What if a character doesn't match any category?</span>
+                    </h3>
+                    <div class="faq-answer">
+                        <p style="margin-bottom: 1rem;">A: Characters that don't match any of the conditions (spaces, lowercase, uppercase, digits, or punctuation) are simply ignored and not counted. This could include control characters or extended ASCII characters depending on the system.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Copy code to clipboard
+        function copyCode() {
+            const codeText = `#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+
+
+int main()
+{
+char *file = "text.txt";
+FILE *fileOpen = fopen(file, "r");
+
+
+
+char carattere;
+int contaMaiuscole = 0;
+int contaMinuscole = 0;
+int contaNumeri = 0;
+int contaspazi = 0;
+int contaPunteggiatura = 0;
+
+
+
+do {
+carattere = fgetc(fileOpen);
+
+
+
+if (isspace(carattere)) {
+contaspazi++;
+} else if (islower(carattere)) {
+contaMinuscole++;
+} else if (isupper(carattere)){
+contaMaiuscole++;
+} else if (isdigit(carattere)) {
+contaNumeri++;
+} else if (ispunct(carattere)) {
+contaPunteggiatura++;
+}
+
+
+
+} while (carattere != EOF);
+
+
+
+printf("%d %d %d %d %d", contaspazi, contaMinuscole, contaMaiuscole, contaNumeri, contaPunteggiatura);
+
+
+
+fclose(fileOpen);
+}`;
+
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span>✓</span> Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy code. Please select and copy manually.');
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Image lazy loading and animation
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                    } else {
+                        img.addEventListener('load', () => {
+                            img.classList.add('loaded');
+                        });
+                    }
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe all images
+        document.querySelectorAll('img').forEach(img => {
+            imageObserver.observe(img);
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.pageYOffset / windowHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+
+            // Parallax effect for hero image (only on desktop)
+            if (window.innerWidth > 768) {
+                const heroImage = document.querySelector('.hero-image');
+                if (heroImage && window.pageYOffset < 500) {
+                    const rate = window.pageYOffset * 0.2;
+                    heroImage.style.transform = `translateY(${rate}px) scale(1) rotateY(0deg)`;
+                }
+            }
+        });
+
+        // Add smooth reveal animation to images on scroll
+        const imageRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = Math.random() * 0.3 + 's';
+                    entry.target.classList.add('loaded');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.section-image, .banner-image').forEach(img => {
+            imageRevealObserver.observe(img);
+        });
+    </script>
+</body>
+</html>

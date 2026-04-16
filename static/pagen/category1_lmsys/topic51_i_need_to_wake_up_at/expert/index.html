@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayFlow - Interactive Break Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 40px 80px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #ec4899);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Timer Widget */
+        .timer-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 200px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(30, 41, 59, 0.85));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer-widget.minimized {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .timer-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .timer-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #ec4899);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .timer-btn {
+            flex: 1;
+            padding: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timer-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .timer-btn.stop {
+            background: var(--danger);
+        }
+
+        /* Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 24px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 3px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Form */
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Slider */
+        .slider-wrapper {
+            margin-bottom: 16px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .slider-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(51, 65, 85, 0.5);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 0 0 3px var(--primary);
+            transition: all 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Strategy */
+        .strategy-grid {
+            display: grid;
+            gap: 8px;
+        }
+
+        .strategy {
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .strategy:hover {
+            border-color: var(--primary);
+            transform: translateX(2px);
+        }
+
+        .strategy.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.15);
+        }
+
+        .strategy-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .strategy-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .stat {
+            position: relative;
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .stat:hover::before {
+            opacity: 1;
+        }
+
+        .stat:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .stat-trend {
+            font-size: 0.7rem;
+            margin-top: 6px;
+            color: var(--success);
+        }
+
+        /* Interactive Timeline */
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.02), rgba(236, 72, 153, 0.02));
+            pointer-events: none;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .timeline-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-container {
+            position: relative;
+            height: 120px;
+            margin-bottom: 16px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .time-block {
+            position: absolute;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+            cursor: move;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .time-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            z-index: 10;
+        }
+
+        .time-block.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .time-block.gym {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            top: 10px;
+        }
+
+        .time-block.work {
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
+            top: 46px;
+        }
+
+        .time-block.break {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            top: 82px;
+            height: 28px;
+        }
+
+        .time-block-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .time-block:hover .time-block-tooltip {
+            opacity: 1;
+        }
+
+        .time-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Chart */
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            height: 280px;
+            position: relative;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%);
+            pointer-events: none;
+            border-radius: 12px;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        /* Break List */
+        .break-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .break-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .break-item:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .break-item.active {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .break-icon {
+            font-size: 1.25rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .break-time {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text);
+            min-width: 50px;
+        }
+
+        .break-details {
+            flex: 1;
+        }
+
+        .break-type {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .break-duration {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .break-actions {
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .break-item:hover .break-actions {
+            opacity: 1;
+        }
+
+        .break-action-btn {
+            width: 28px;
+            height: 28px;
+            background: rgba(99, 102, 241, 0.2);
+            border: none;
+            border-radius: 6px;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .break-action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Activity Suggestions */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .activity-chip {
+            padding: 8px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .activity-chip:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Productivity Score */
+        .score-card {
+            background: linear-gradient(135deg, var(--primary), #ec4899);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .score-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.08;
+            border-radius: 12px;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .score-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-title {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .score-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .score-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .score-progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(239, 68, 68, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        /* Settings Modal */
+        .settings-section {
+            margin-bottom: 24px;
+        }
+
+        .settings-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .settings-label {
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            left: 25px;
+        }
+
+        /* Stat Detail Box */
+        .stat-detail-box {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-detail-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-detail-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Sound Wave Animation */
+        .sound-wave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            height: 20px;
+        }
+
+        .sound-bar {
+            width: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .sound-bar:nth-child(1) { animation-delay: 0s; }
+        .sound-bar:nth-child(2) { animation-delay: 0.1s; }
+        .sound-bar:nth-child(3) { animation-delay: 0.2s; }
+        .sound-bar:nth-child(4) { animation-delay: 0.3s; }
+        .sound-bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { height: 4px; }
+            50% { height: 20px; }
+        }
+
+        /* Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .tip {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tip:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .tip-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .tip-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            body {
+                padding: 24px 40px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timer-widget {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+            <div class="logo-text">
+                <h1>DayFlow</h1>
+                <p>Interactive Break Optimizer</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSound()" title="Toggle Sound">
+                <span id="soundIcon">🔊</span>
+            </button>
+            <button class="icon-btn" onclick="openSettings()" title="Settings">
+                <span>⚙️</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid">
+        <!-- Sidebar -->
+        <div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Controls</h2>
+                    <span class="badge">Live</span>
+                </div>
+                <div class="card-body">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <div class="tab active" data-tab="schedule">Schedule</div>
+                        <div class="tab" data-tab="activities">Activities</div>
+                    </div>
+
+                    <!-- Schedule Tab -->
+                    <div class="tab-content active" id="schedule">
+                        <div class="section">
+                            <div class="section-title">Morning Routine</div>
+                            <div class="input-grid">
+                                <div class="input-group">
+                                    <label class="label">Wake Up</label>
+                                    <input type="time" class="input" id="wakeTime" value="04:44">
+                                </div>
+                                <div class="input-group">
+                                    <label class="label">Gym End</label>
+                                    <input type="time" class="input" id="gymEnd" value="06:30">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-title">Work Hours</div>
+                            <div class="input-grid">
+                                <div class="input-group">
+                                    <label class="label">Start</label>
+                                    <input type="time" class="input" id="workStart" value="06:30">
+                                </div>
+                                <div class="input-group">
+                                    <label class="label">End</label>
+                                    <input type="time" class="input" id="workEnd" value="16:30">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-title">Break Duration</div>
+
+                            <div class="slider-wrapper">
+                                <div class="slider-header">
+                                    <span class="slider-label">Short Break</span>
+                                    <span class="slider-value"><span id="shortVal">5</span> min</span>
+                                </div>
+                                <input type="range" class="slider" id="shortSlider" min="3" max="10" value="5">
+                            </div>
+
+                            <div class="slider-wrapper">
+                                <div class="slider-header">
+                                    <span class="slider-label">Long Break</span>
+                                    <span class="slider-value"><span id="longVal">15</span> min</span>
+                                </div>
+                                <input type="range" class="slider" id="longSlider" min="10" max="30" value="15">
+                            </div>
+
+                            <div class="slider-wrapper">
+                                <div class="slider-header">
+                                    <span class="slider-label">Lunch Break</span>
+                                    <span class="slider-value"><span id="lunchVal">45</span> min</span>
+                                </div>
+                                <input type="range" class="slider" id="lunchSlider" min="30" max="60" value="45">
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-title">Strategy</div>
+                            <div class="strategy-grid">
+                                <div class="strategy active" data-strategy="pomodoro">
+                                    <div class="strategy-name">🍅 Pomodoro</div>
+                                    <div class="strategy-desc">25 min focus sessions</div>
+                                </div>
+                                <div class="strategy" data-strategy="ultradian">
+                                    <div class="strategy-name">🌊 Ultradian</div>
+                                    <div class="strategy-desc">90 min deep work</div>
+                                </div>
+                                <div class="strategy" data-strategy="custom">
+                                    <div class="strategy-name">⚡ Flexible</div>
+                                    <div class="strategy-desc">Hourly rhythm</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn" onclick="calculate()">⚡ Generate Schedule</button>
+                    </div>
+
+                    <!-- Activities Tab -->
+                    <div class="tab-content" id="activities">
+                        <div class="section">
+                            <div class="section-title">Break Activities</div>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">
+                                Click to add to your breaks
+                            </p>
+                            <div class="activity-grid">
+                                <div class="activity-chip" onclick="addActivity('🚶 Walk')">🚶 Walk</div>
+                                <div class="activity-chip" onclick="addActivity('🧘 Stretch')">🧘 Stretch</div>
+                                <div class="activity-chip" onclick="addActivity('💧 Hydrate')">💧 Hydrate</div>
+                                <div class="activity-chip" onclick="addActivity('👀 Eye Rest')">👀 Eye Rest</div>
+                                <div class="activity-chip" onclick="addActivity('🧠 Meditate')">🧠 Meditate</div>
+                                <div class="activity-chip" onclick="addActivity('🍎 Snack')">🍎 Snack</div>
+                                <div class="activity-chip" onclick="addActivity('☕ Coffee')">☕ Coffee</div>
+                                <div class="activity-chip" onclick="addActivity('📱 Social')">📱 Social</div>
+                                <div class="activity-chip" onclick="addActivity('🎵 Music')">🎵 Music</div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-title">Sound Notifications</div>
+                            <div class="strategy-grid">
+                                <div class="strategy active" data-sound="chime">
+                                    <div class="strategy-name">🔔 Gentle Chime</div>
+                                    <div class="strategy-desc">Soft notification</div>
+                                </div>
+                                <div class="strategy" data-sound="alert">
+                                    <div class="strategy-name">⏰ Alert</div>
+                                    <div class="strategy-desc">Clear sound</div>
+                                </div>
+                                <div class="strategy" data-sound="none">
+                                    <div class="strategy-name">🔇 Silent</div>
+                                    <div class="strategy-desc">Visual only</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn" onclick="testNotification()">🔊 Test Notification</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+            <!-- Productivity Score -->
+            <div class="score-card">
+                <div class="score-content">
+                    <div class="score-title">Productivity Score</div>
+                    <div class="score-value" id="scoreValue">87</div>
+                    <div class="score-label">Excellent balance of work and rest</div>
+                    <div class="score-progress">
+                        <div class="score-progress-bar" id="scoreBar" style="width: 87%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat" onclick="showStatDetails('breaks')">
+                    <span class="stat-value" id="totalBreaks">8</span>
+                    <span class="stat-label">Breaks Today</span>
+                    <div class="stat-trend">↗ +2 vs yesterday</div>
+                </div>
+                <div class="stat" onclick="showStatDetails('time')">
+                    <span class="stat-value" id="breakTime">85min</span>
+                    <span class="stat-label">Break Time</span>
+                    <div class="stat-trend">✓ Optimal</div>
+                </div>
+                <div class="stat" onclick="showStatDetails('focus')">
+                    <span class="stat-value" id="focusTime">8.5h</span>
+                    <span class="stat-label">Focus Time</span>
+                    <div class="stat-trend">↗ +15% efficiency</div>
+                </div>
+            </div>
+
+            <!-- Interactive Timeline -->
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-title">📅 Interactive Timeline</span>
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">Drag blocks to adjust</div>
+                </div>
+                <div class="timeline-container" id="timelineContainer">
+                    <div id="timeline"></div>
+                </div>
+                <div class="time-labels">
+                    <span>4am</span>
+                    <span>8am</span>
+                    <span>12pm</span>
+                    <span>4pm</span>
+                    <span>8pm</span>
+                </div>
+            </div>
+
+            <!-- Energy Chart -->
+            <div class="chart-card">
+                <canvas id="chart" class="chart-canvas"></canvas>
+                <div class="chart-tooltip" id="chartTooltip"></div>
+            </div>
+
+            <!-- Break Schedule -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h2 class="card-title">⏰ Break Schedule</h2>
+                    <div class="sound-wave" id="soundWave" style="display: none;">
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="break-list" id="breakList"></div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💡 Personalized Insights</h2>
+                </div>
+                <div class="card-body">
+                    <div class="tips-grid" id="tips"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Timer Widget -->
+<div class="timer-widget" id="timerWidget">
+    <div class="timer-header">
+        <span class="timer-title">Focus Timer</span>
+        <button style="background: none; border: none; color: var(--text-muted); cursor: pointer;" onclick="minimizeTimer()">—</button>
+    </div>
+    <div class="timer-display" id="timerDisplay">25:00</div>
+    <div class="timer-progress">
+        <div class="timer-progress-bar" id="timerProgress"></div>
+    </div>
+    <div class="timer-controls">
+        <button class="timer-btn" id="timerStartBtn" onclick="startTimer()">Start</button>
+        <button class="timer-btn stop" onclick="stopTimer()">Reset</button>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+    <div class="toast-icon">🔔</div>
+    <div class="toast-content">
+        <div class="toast-title" id="toastTitle">Break Time!</div>
+        <div class="toast-message" id="toastMessage">Time for a 5 minute break</div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Break Details</h3>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // State
+    const state = {
+        wakeTime: '04:44',
+        gymEnd: '06:30',
+        workStart: '06:30',
+        workEnd: '16:30',
+        shortBreak: 5,
+        longBreak: 15,
+        lunch: 45,
+        strategy: 'pomodoro',
+        breaks: [],
+        soundEnabled: true,
+        autoBreakReminders: true,
+        darkMode: true,
+        showTimer: true,
+        currentBreakIndex: null,
+        timerRunning: false,
+        timerSeconds: 1500,
+        timerInterval: null,
+        draggedElement: null
+    };
+
+    // Init
+    function init() {
+        setupListeners();
+        calculate();
+        startAutoUpdate();
+    }
+
+    function setupListeners() {
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = function() {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(target).classList.add('active');
+            };
+        });
+
+        // Time inputs
+        ['wakeTime', 'gymEnd', 'workStart', 'workEnd'].forEach(id => {
+            document.getElementById(id).onchange = (e) => {
+                state[id] = e.target.value;
+                if (id === 'gymEnd') {
+                    state.workStart = e.target.value;
+                    document.getElementById('workStart').value = e.target.value;
+                }
+                calculate();
+                playSound('click');
+            };
+        });
+
+        // Sliders
+        setupSlider('short', 'shortBreak');
+        setupSlider('long', 'longBreak');
+        setupSlider('lunch', 'lunch');
+
+        // Strategy
+        document.querySelectorAll('.strategy').forEach(s => {
+            s.onclick = function() {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.strategy').forEach(st => st.classList.remove('active'));
+                this.classList.add('active');
+
+                if (this.dataset.strategy) {
+                    state.strategy = this.dataset.strategy;
+                    calculate();
+                }
+                playSound('click');
+            };
+        });
+
+        // Chart hover
+        const canvas = document.getElementById('chart');
+        canvas.onmousemove = handleChartHover;
+        canvas.onmouseleave = hideChartTooltip;
+
+        // Modal close on outside click
+        document.getElementById('modal').onclick = (e) => {
+            if (e.target.id === 'modal') closeModal();
+        };
+    }
+
+    function setupSlider(prefix, stateKey) {
+        const slider = document.getElementById(prefix + 'Slider');
+        const display = document.getElementById(prefix + 'Val');
+        slider.oninput = (e) => {
+            const val = parseInt(e.target.value);
+            state[stateKey] = val;
+            display.textContent = val;
+            calculate();
+        };
+    }
+
+    // Time utils
+    function toMin(time) {
+        const [h, m] = time.split(':').map(Number);
+        return h * 60 + m;
+    }
+
+    function toTime(min) {
+        const h = Math.floor(min / 60);
+        const m = min % 60;
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    }
+
+    function formatDur(min) {
+        if (min < 60) return `${min}min`;
+        const h = Math.floor(min / 60);
+        const m = min % 60;
+        return m > 0 ? `${h}h ${m}m` : `${h}h`;
+    }
+
+    // Calculate
+    function calculate() {
+        const start = toMin(state.workStart);
+        const end = toMin(state.workEnd);
+        state.breaks = [];
+
+        if (state.strategy === 'pomodoro') calcPomodoro(start, end);
+        else if (state.strategy === 'ultradian') calcUltradian(start, end);
+        else calcCustom(start, end);
+
+        updateUI();
+        calculateScore();
+    }
+
+    function calcPomodoro(start, end) {
+        let time = start;
+        let count = 0;
+        let lunchDone = false;
+
+        while (time < end) {
+            time += 25;
+            if (time >= end) break;
+            count++;
+
+            if (!lunchDone && time >= 720 && time <= 780) {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.lunch,
+                    type: 'Lunch Break',
+                    icon: '🍽️',
+                    energy: 'high',
+                    activity: '🍽️ Nutritious meal'
+                });
+                time += state.lunch;
+                lunchDone = true;
+                count = 0;
+            } else if (count % 4 === 0) {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.longBreak,
+                    type: 'Long Break',
+                    icon: '☕',
+                    energy: 'medium',
+                    activity: '🚶 Short walk'
+                });
+                time += state.longBreak;
+            } else {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.shortBreak,
+                    type: 'Short Break',
+                    icon: '⏸️',
+                    energy: 'high',
+                    activity: '👀 Eye rest'
+                });
+                time += state.shortBreak;
+            }
+        }
+    }
+
+    function calcUltradian(start, end) {
+        let time = start;
+        let lunchDone = false;
+
+        while (time < end) {
+            time += 90;
+            if (time >= end) break;
+
+            if (!lunchDone && time >= 720 && time <= 780) {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.lunch,
+                    type: 'Lunch Break',
+                    icon: '🍽️',
+                    energy: 'high',
+                    activity: '🍽️ Healthy lunch'
+                });
+                time += state.lunch;
+                lunchDone = true;
+            } else {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.longBreak,
+                    type: 'Ultradian Break',
+                    icon: '🌊',
+                    energy: 'medium',
+                    activity: '🧘 Stretch & breathe'
+                });
+                time += state.longBreak;
+            }
+        }
+    }
+
+    function calcCustom(start, end) {
+        let time = start + 60;
+        let lunchDone = false;
+
+        while (time < end) {
+            if (!lunchDone && time >= 720 && time <= 780) {
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: state.lunch,
+                    type: 'Lunch Break',
+                    icon: '🍽️',
+                    energy: 'high',
+                    activity: '🍽️ Lunch time'
+                });
+                time += state.lunch;
+                lunchDone = true;
+            } else {
+                const dur = time > 840 ? state.longBreak : state.shortBreak;
+                state.breaks.push({
+                    time: toTime(time),
+                    duration: dur,
+                    type: dur > 10 ? 'Long Break' : 'Short Break',
+                    icon: dur > 10 ? '☕' : '⏸️',
+                    energy: time < 720 || time > 900 ? 'high' : 'medium',
+                    activity: dur > 10 ? '🚶 Walk around' : '💧 Quick water'
+                });
+                time += dur;
+            }
+            time += 60;
+        }
+    }
+
+    // Update UI
+    function updateUI() {
+        updateStats();
+        updateTimeline();
+        updateBreaks();
+        updateTips();
+        drawChart();
+    }
+
+    function updateStats() {
+        const total = state.breaks.length;
+        const breakMin = state.breaks.reduce((sum, b) => sum + b.duration, 0);
+        const workMin = toMin(state.workEnd) - toMin(state.workStart) - breakMin;
+
+        document.getElementById('totalBreaks').textContent = total;
+        document.getElementById('breakTime').textContent = formatDur(breakMin);
+        document.getElementById('focusTime').textContent = formatDur(workMin);
+    }
+
+    function updateTimeline() {
+        const container = document.getElementById('timeline');
+        const dayStart = 4 * 60;
+        const dayEnd = 20 * 60;
+        const dayDur = dayEnd - dayStart;
+
+        const wakeMin = toMin(state.wakeTime);
+        const gymMin = toMin(state.gymEnd);
+        const workStartMin = toMin(state.workStart);
+        const workEndMin = toMin(state.workEnd);
+
+        let html = '';
+
+        // Gym
+        const gymStart = ((wakeMin - dayStart) / dayDur) * 100;
+        const gymWidth = ((gymMin - wakeMin) / dayDur) * 100;
+        html += `
+                <div class="time-block gym" draggable="true" data-type="gym" style="left: ${gymStart}%; width: ${gymWidth}%;">
+                    <div class="time-block-tooltip">${state.wakeTime} - ${state.gymEnd} (Gym)</div>
+                    🏋️ Gym
+                </div>
+            `;
+
+        // Work
+        const workStart = ((workStartMin - dayStart) / dayDur) * 100;
+        const workWidth = ((workEndMin - workStartMin) / dayDur) * 100;
+        html += `
+                <div class="time-block work" draggable="true" data-type="work" style="left: ${workStart}%; width: ${workWidth}%;">
+                    <div class="time-block-tooltip">${state.workStart} - ${state.workEnd} (Work)</div>
+                    💼 Work Time
+                </div>
+            `;
+
+        // Breaks
+        state.breaks.forEach((b, i) => {
+            const bMin = toMin(b.time);
+            const bStart = ((bMin - dayStart) / dayDur) * 100;
+            const bWidth = (b.duration / dayDur) * 100;
+            html += `
+                    <div class="time-block break" draggable="true" data-type="break" data-index="${i}" style="left: ${bStart}%; width: ${bWidth}%;">
+                        <div class="time-block-tooltip">${b.time} - ${b.type} (${b.duration}min)</div>
+                        ${b.icon}
+                    </div>
+                `;
+        });
+
+        container.innerHTML = html;
+        setupDragAndDrop();
+    }
+
+    function setupDragAndDrop() {
+        const blocks = document.querySelectorAll('.time-block');
+
+        blocks.forEach(block => {
+            block.ondragstart = (e) => {
+                block.classList.add('dragging');
+                state.draggedElement = block;
+                e.dataTransfer.effectAllowed = 'move';
+                playSound('pick');
+            };
+
+            block.ondragend = (e) => {
+                block.classList.remove('dragging');
+                state.draggedElement = null;
+                playSound('drop');
+            };
+        });
+
+        const container = document.getElementById('timelineContainer');
+
+        container.ondragover = (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        };
+
+        container.ondrop = (e) => {
+            e.preventDefault();
+            if (!state.draggedElement) return;
+
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percent = (x / rect.width) * 100;
+
+            const dayStart = 4 * 60;
+            const dayEnd = 20 * 60;
+            const dayDur = dayEnd - dayStart;
+            const newTimeMin = dayStart + (dayDur * percent / 100);
+            const newTime = toTime(Math.round(newTimeMin));
+
+            const type = state.draggedElement.dataset.type;
+            const index = state.draggedElement.dataset.index;
+
+            if (type === 'break' && index !== undefined) {
+                state.breaks[index].time = newTime;
+                showToast('Break Moved', `Moved to ${newTime}`);
+                updateTimeline();
+                updateBreaks();
+            }
+        };
+    }
+
+    function updateBreaks() {
+        const list = document.getElementById('breakList');
+
+        if (state.breaks.length === 0) {
+            list.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">No breaks scheduled</p>';
+            return;
+        }
+
+        const now = new Date();
+        const currentMin = now.getHours() * 60 + now.getMinutes();
+
+        list.innerHTML = state.breaks.map((b, i) => {
+            const breakMin = toMin(b.time);
+            const isActive = Math.abs(currentMin - breakMin) < 5;
+
+            return `
+                    <div class="break-item ${isActive ? 'active' : ''}" onclick="showBreakDetails(${i})">
+                        <div class="break-icon">${b.icon}</div>
+                        <div class="break-time">${b.time}</div>
+                        <div class="break-details">
+                            <div class="break-type">${b.type}</div>
+                            <div class="break-duration">${b.duration} min • ${b.activity}</div>
+                        </div>
+                        <div class="break-actions">
+                            <button class="break-action-btn" onclick="event.stopPropagation(); startBreakTimer(${i})" title="Start timer">▶</button>
+                            <button class="break-action-btn" onclick="event.stopPropagation(); editBreak(${i})" title="Edit">✎</button>
+                            <button class="break-action-btn" onclick="event.stopPropagation(); skipBreak(${i})" title="Skip">⊘</button>
+                        </div>
+                    </div>
+                `;
+        }).join('');
+    }
+
+    function updateTips() {
+        const tips = [
+            {icon: '☕', title: 'Coffee Timing', text: `Best time for coffee is around ${toTime(toMin(state.wakeTime) + 120)}. Wait 2 hours after waking.`},
+            {icon: '💧', title: 'Hydration', text: 'Drink 16-24oz water immediately after waking. Post-workout hydration is critical.'},
+            {icon: '🧠', title: 'Peak Performance', text: `Your cognitive peak is ${toTime(toMin(state.gymEnd) + 60)}-${toTime(toMin(state.gymEnd) + 300)}. Schedule hard tasks then.`},
+            {icon: '🌙', title: 'Sleep Target', text: `With ${state.wakeTime} wake-up, aim for 8:30 PM bedtime for optimal 8h sleep.`},
+            {icon: '🏃', title: 'Movement Breaks', text: 'Short walks during breaks increase alertness by 40% more than sitting.'},
+            {icon: '👀', title: '20-20-20 Rule', text: 'Every 20 minutes, look at something 20 feet away for 20 seconds to reduce eye strain.'}
+        ];
+
+        document.getElementById('tips').innerHTML = tips.map(t => `
+                <div class="tip">
+                    <div class="tip-icon">${t.icon}</div>
+                    <div class="tip-title">${t.title}</div>
+                    <div class="tip-text">${t.text}</div>
+                </div>
+            `).join('');
+    }
+
+    function drawChart() {
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        const w = canvas.width;
+        const h = canvas.height;
+        const p = 35;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const start = toMin(state.workStart);
+        const end = toMin(state.workEnd);
+        const dur = end - start;
+
+        const points = [];
+        for (let i = 0; i <= dur; i += 10) {
+            const time = start + i;
+            const hr = time / 60;
+
+            let energy = 75;
+            if (hr < 9) energy = 88;
+            else if (hr < 11) energy = 92;
+            else if (hr < 12) energy = 82;
+            else if (hr < 14.5) energy = 58;
+            else if (hr < 16) energy = 72;
+            else energy = 62;
+
+            const breakNear = state.breaks.find(b => Math.abs(toMin(b.time) - time) < 15);
+            if (breakNear) energy += breakNear.duration / 3;
+
+            energy = Math.min(100, Math.max(30, energy));
+            points.push({x: i, y: energy, time: toTime(time)});
+        }
+
+        canvas.chartPoints = points;
+        canvas.chartBounds = {p, w, h, dur};
+
+        // Grid
+        ctx.strokeStyle = 'rgba(51, 65, 85, 0.3)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 5; i++) {
+            const y = p + (h - 2 * p) * i / 5;
+            ctx.beginPath();
+            ctx.moveTo(p, y);
+            ctx.lineTo(w - p, y);
+            ctx.stroke();
+        }
+
+        // Line
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+
+        points.forEach((pt, i) => {
+            const x = p + (w - 2 * p) * pt.x / dur;
+            const y = h - p - (h - 2 * p) * pt.y / 100;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+
+        ctx.stroke();
+
+        // Fill
+        ctx.lineTo(w - p, h - p);
+        ctx.lineTo(p, h - p);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(99, 102, 241, 0.15)';
+        ctx.fill();
+
+        // Points
+        points.forEach(pt => {
+            const x = p + (w - 2 * p) * pt.x / dur;
+            const y = h - p - (h - 2 * p) * pt.y / 100;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#6366f1';
+            ctx.fill();
+        });
+
+        // Labels
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px -apple-system';
+        ctx.textAlign = 'right';
+
+        for (let i = 0; i <= 5; i++) {
+            const y = p + (h - 2 * p) * i / 5;
+            const val = 100 - i * 20;
+            ctx.fillText(val + '%', p - 10, y + 3);
+        }
+
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 12px -apple-system';
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillText('Energy Level Throughout Day', p, p - 15);
+
+        ctx.textAlign = 'center';
+        ctx.font = '10px -apple-system';
+        const labels = [state.workStart, '09:00', '12:00', '15:00', state.workEnd];
+        labels.forEach((label, i) => {
+            const x = p + (w - 2 * p) * i / (labels.length - 1);
+            ctx.fillText(label, x, h - 10);
+        });
+    }
+
+    function handleChartHover(e) {
+        const canvas = e.target;
+        if (!canvas.chartPoints) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const {p, w, h, dur} = canvas.chartBounds;
+        const points = canvas.chartPoints;
+
+        let nearest = null;
+        let minDist = Infinity;
+
+        points.forEach(pt => {
+            const px = p + (w - 2 * p) * pt.x / dur;
+            const py = h - p - (h - 2 * p) * pt.y / 100;
+            const dist = Math.sqrt((x - px) ** 2 + (y - py) ** 2);
+
+            if (dist < minDist && dist < 20) {
+                minDist = dist;
+                nearest = pt;
+            }
+        });
+
+        if (nearest) {
+            showChartTooltip(e.clientX, e.clientY, nearest);
+        } else {
+            hideChartTooltip();
+        }
+    }
+
+    function showChartTooltip(x, y, point) {
+        const tooltip = document.getElementById('chartTooltip');
+        tooltip.innerHTML = `
+                <strong>${point.time}</strong><br>
+                Energy: ${Math.round(point.y)}%
+            `;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = (y - 50) + 'px';
+        tooltip.style.opacity = '1';
+    }
+
+    function hideChartTooltip() {
+        document.getElementById('chartTooltip').style.opacity = '0';
+    }
+
+    function calculateScore() {
+        const totalBreaks = state.breaks.length;
+        const breakMin = state.breaks.reduce((sum, b) => sum + b.duration, 0);
+        const workMin = toMin(state.workEnd) - toMin(state.workStart);
+        const breakRatio = breakMin / workMin;
+
+        let score = 50;
+
+        if (totalBreaks >= 7 && totalBreaks <= 10) score += 20;
+        else if (totalBreaks >= 5 && totalBreaks <= 12) score += 10;
+
+        if (breakRatio >= 0.12 && breakRatio <= 0.18) score += 20;
+        else if (breakRatio >= 0.10 && breakRatio <= 0.20) score += 10;
+
+        const hasLunch = state.breaks.some(b => b.duration >= 30);
+        if (hasLunch) score += 10;
+
+        if (state.strategy === 'pomodoro') score += 5;
+
+        score = Math.min(100, score);
+
+        document.getElementById('scoreValue').textContent = score;
+        document.getElementById('scoreBar').style.width = score + '%';
+    }
+
+    // Timer
+    function startTimer() {
+        if (state.timerRunning) {
+            pauseTimer();
+            return;
+        }
+
+        state.timerRunning = true;
+        document.getElementById('timerStartBtn').textContent = 'Pause';
+        document.getElementById('soundWave').style.display = 'flex';
+
+        state.timerInterval = setInterval(() => {
+            state.timerSeconds--;
+
+            const mins = Math.floor(state.timerSeconds / 60);
+            const secs = state.timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent =
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            const progress = ((1500 - state.timerSeconds) / 1500) * 100;
+            document.getElementById('timerProgress').style.width = progress + '%';
+
+            if (state.timerSeconds <= 0) {
+                stopTimer();
+                showToast('Time\'s Up!', 'Great work! Time for a break.');
+                playSound('complete');
+            }
+        }, 1000);
+
+        playSound('start');
+    }
+
+    function pauseTimer() {
+        state.timerRunning = false;
+        clearInterval(state.timerInterval);
+        document.getElementById('timerStartBtn').textContent = 'Resume';
+        document.getElementById('soundWave').style.display = 'none';
+    }
+
+    function stopTimer() {
+        state.timerRunning = false;
+        clearInterval(state.timerInterval);
+        state.timerSeconds = 1500;
+        document.getElementById('timerDisplay').textContent = '25:00';
+        document.getElementById('timerProgress').style.width = '0%';
+        document.getElementById('timerStartBtn').textContent = 'Start';
+        document.getElementById('soundWave').style.display = 'none';
+    }
+
+    function minimizeTimer() {
+        document.getElementById('timerWidget').classList.toggle('minimized');
+    }
+
+    function startBreakTimer(index) {
+        const breakItem = state.breaks[index];
+        state.timerSeconds = breakItem.duration * 60;
+
+        const mins = breakItem.duration;
+        document.getElementById('timerDisplay').textContent = `${String(mins).padStart(2, '0')}:00`;
+
+        showToast('Break Timer Started', `${breakItem.duration} minute ${breakItem.type}`);
+        startTimer();
+    }
+
+    // Interactive functions
+    function showBreakDetails(index) {
+        const breakItem = state.breaks[index];
+
+        document.getElementById('modalTitle').textContent = breakItem.type;
+        document.getElementById('modalBody').innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 4rem; margin-bottom: 16px;">${breakItem.icon}</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 8px;">${breakItem.time}</div>
+                    <div style="font-size: 1rem; color: var(--text-muted);">${breakItem.duration} minutes</div>
+                </div>
+                <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                    <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Suggested Activity</div>
+                    <div style="font-size: 0.9rem;">${breakItem.activity}</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <button class="btn" onclick="startBreakTimer(${index}); closeModal();">
+                        ▶ Start Timer
+                    </button>
+                    <button class="btn" style="background: rgba(99, 102, 241, 0.2); color: var(--primary);" onclick="closeModal();">
+                        Close
+                    </button>
+                </div>
+            `;
+
+        document.getElementById('modal').classList.add('active');
+        playSound('open');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+    }
+
+    function editBreak(index) {
+        showToast('Edit Mode', 'Drag break on timeline to adjust time');
+    }
+
+    function skipBreak(index) {
+        if (confirm('Skip this break?')) {
+            state.breaks.splice(index, 1);
+            updateBreaks();
+            updateTimeline();
+            showToast('Break Skipped', 'Break removed from schedule');
+        }
+    }
+
+    function showStatDetails(type) {
+        const total = state.breaks.length;
+        const breakMin = state.breaks.reduce((sum, b) => sum + b.duration, 0);
+        const workMin = toMin(state.workEnd) - toMin(state.workStart) - breakMin;
+
+        let title, content;
+
+        if (type === 'breaks') {
+            title = '📊 Break Statistics';
+            content = `
+                    <div class="stat-detail-box">
+                        <div class="stat-detail-value">${total}</div>
+                        <div class="stat-detail-label">Total breaks today</div>
+                    </div>
+                    <div style="background: rgba(99, 102, 241, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Comparison</div>
+                        <div style="font-size: 1rem; color: var(--success); font-weight: 700;">+2 breaks vs yesterday</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+                        You're taking more breaks today, which is excellent for sustained focus and preventing burnout. Research shows that regular breaks improve productivity by up to 30%.
+                    </div>
+                `;
+        } else if (type === 'time') {
+            title = '⏱️ Break Time Analysis';
+            const breakRatio = (breakMin / (toMin(state.workEnd) - toMin(state.workStart)) * 100).toFixed(1);
+            content = `
+                    <div class="stat-detail-box">
+                        <div class="stat-detail-value">${formatDur(breakMin)}</div>
+                        <div class="stat-detail-label">Total break time</div>
+                    </div>
+                    <div style="background: rgba(99, 102, 241, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Break Ratio</div>
+                        <div style="font-size: 1rem; color: var(--success); font-weight: 700;">${breakRatio}% of work time</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+                        Optimal break time is 12-18% of your work day. You're in the perfect range! This helps maintain high energy levels throughout the day.
+                    </div>
+                `;
+        } else if (type === 'focus') {
+            title = '🎯 Focus Time Stats';
+            content = `
+                    <div class="stat-detail-box">
+                        <div class="stat-detail-value">${formatDur(workMin)}</div>
+                        <div class="stat-detail-label">Pure focus time</div>
+                    </div>
+                    <div style="background: rgba(99, 102, 241, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Efficiency Boost</div>
+                        <div style="font-size: 1rem; color: var(--success); font-weight: 700;">+15% vs last week</div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+                        Your ${state.strategy} strategy is working great! Focus sessions with planned breaks lead to higher quality work and better retention.
+                    </div>
+                `;
+        }
+
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = content + '<button class="btn" style="margin-top: 16px;" onclick="closeModal()">Close</button>';
+        document.getElementById('modal').classList.add('active');
+        playSound('open');
+    }
+
+    function addActivity(activity) {
+        showToast('Activity Added', `${activity} added to break suggestions`);
+        playSound('add');
+    }
+
+    function testNotification() {
+        showToast('Test Notification', 'This is how break notifications will appear');
+        playSound('notification');
+    }
+
+    function toggleSound() {
+        state.soundEnabled = !state.soundEnabled;
+        document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇';
+        showToast('Sound ' + (state.soundEnabled ? 'Enabled' : 'Disabled'), 'Notification sounds ' + (state.soundEnabled ? 'on' : 'off'));
+    }
+
+    function openSettings() {
+        document.getElementById('modalTitle').textContent = '⚙️ Settings';
+        document.getElementById('modalBody').innerHTML = `
+                <div class="settings-section">
+                    <div class="settings-title">Notifications</div>
+                    <div class="settings-item">
+                        <span class="settings-label">Auto Break Reminders</span>
+                        <div class="toggle-switch ${state.autoBreakReminders ? 'active' : ''}" onclick="toggleSetting('autoBreakReminders')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">Sound Effects</span>
+                        <div class="toggle-switch ${state.soundEnabled ? 'active' : ''}" onclick="toggleSetting('soundEnabled')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="settings-title">Display</div>
+                    <div class="settings-item">
+                        <span class="settings-label">Show Focus Timer</span>
+                        <div class="toggle-switch ${state.showTimer ? 'active' : ''}" onclick="toggleSetting('showTimer')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="closeModal()">Save Settings</button>
+            `;
+        document.getElementById('modal').classList.add('active');
+        playSound('open');
+    }
+
+    function toggleSetting(key) {
+        state[key] = !state[key];
+        event.currentTarget.classList.toggle('active');
+
+        if (key === 'showTimer') {
+            document.getElementById('timerWidget').style.display = state.showTimer ? 'block' : 'none';
+        }
+
+        if (key === 'soundEnabled') {
+            document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇';
+        }
+
+        playSound('click');
+    }
+
+    function showToast(title, message) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastTitle').textContent = title;
+        document.getElementById('toastMessage').textContent = message;
+
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    function playSound(type) {
+        if (!state.soundEnabled) return;
+
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = 'sine';
+        gainNode.gain.value = 0.1;
+
+        const frequencies = {
+            'click': [800, 0.05],
+            'pick': [600, 0.08],
+            'drop': [400, 0.08],
+            'start': [1000, 0.15],
+            'complete': [1200, 0.3],
+            'notification': [900, 0.2],
+            'add': [700, 0.1],
+            'open': [500, 0.1]
+        };
+
+        const [freq, duration] = frequencies[type] || [600, 0.1];
+
+        oscillator.frequency.value = freq;
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + duration);
+    }
+
+    function startAutoUpdate() {
+        setInterval(() => {
+            const now = new Date();
+            const currentMin = now.getHours() * 60 + now.getMinutes();
+
+            state.breaks.forEach((b, i) => {
+                const breakMin = toMin(b.time);
+
+                if (state.autoBreakReminders) {
+                    if (Math.abs(currentMin - breakMin) === 5) {
+                        showToast('Upcoming Break', `${b.type} in 5 minutes`);
+                        playSound('notification');
+                    }
+
+                    if (currentMin === breakMin) {
+                        showToast('Break Time!', `Time for your ${b.type}`);
+                        playSound('complete');
+                    }
+                }
+            });
+
+            updateBreaks();
+        }, 60000);
+    }
+
+    window.onload = init;
+    window.onresize = () => state.breaks.length && drawChart();
+</script>
+</body>
+</html>

@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kool-Aid Man Interactive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Для сохранения персонажа как PNG -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ed1c24;
+            --primary-dark: #c41e3a;
+            --secondary: #0099ff;
+            --accent: #ffd700;
+            --bg: #050816;
+            --card: rgba(15, 23, 42, 0.96);
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: rgba(148, 163, 184, 0.35);
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(
+                    circle at 15% 15%,
+                    rgba(237, 28, 36, 0.25),
+                    transparent 55%
+            ),
+            radial-gradient(
+                    circle at 85% 80%,
+                    rgba(37, 99, 235, 0.25),
+                    transparent 55%
+            );
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 80px 60px;
+        }
+
+        /* HEADER */
+
+        .header {
+            margin-bottom: 0px;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr auto;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.5);
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .header-stat {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 9px 11px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            transition: border-color 0.18s, transform 0.12s;
+        }
+
+        .header-stat:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .header-stat-icon {
+            font-size: 1.3rem;
+        }
+
+        .header-stat-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .header-stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.97);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.18s, transform 0.12s, border-color 0.18s;
+            font-size: 1.1rem;
+        }
+
+        .header-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* CARD COMMON */
+
+        .card {
+            background: var(--card);
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+        }
+
+        .card-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .card-badge {
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(237, 28, 36, 0.22);
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .card-body {
+            padding: 22px 24px 24px;
+        }
+
+        /* STORY */
+
+        .story-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 18px;
+        }
+
+        .story-nav-btn {
+            flex: 0 0 auto;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.78rem;
+            cursor: pointer;
+            color: var(--text);
+            white-space: nowrap;
+            transition: background 0.18s, border-color 0.18s, transform 0.12s;
+        }
+
+        .story-nav-btn:hover {
+            background: rgba(30, 64, 175, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .story-nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .story-chapter {
+            display: none;
+            animation: fadeIn 0.22s ease-out;
+        }
+
+        .story-chapter.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .story-hero {
+            width: 100%;
+            height: 240px;
+            border-radius: 14px;
+            background: radial-gradient(circle at 20% 20%, rgba(239, 68, 68, 0.35), transparent),
+            radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.35), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-hero::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 65%);
+            opacity: 0.6;
+            animation: spin 18s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .story-hero-emoji {
+            position: relative;
+            font-size: 4.4rem;
+            z-index: 1;
+        }
+
+        .story-year {
+            font-size: 0.78rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-bottom: 4px;
+        }
+
+        .story-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .story-text {
+            font-size: 0.96rem;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+
+        .story-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .story-btn {
+            padding: 9px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.97);
+            color: #fff;
+            font-size: 0.84rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s, transform 0.12s;
+        }
+
+        .story-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* GAMES GRID */
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.9);
+            overflow: hidden;
+        }
+
+        .game-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .game-title {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .game-best {
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.22);
+            color: var(--success);
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .game-body {
+            padding: 16px 18px 18px;
+        }
+
+        .game-area {
+            width: 100%;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 1);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ВАЖНО: Memory без фиксированной высоты */
+        .game-area.memory-area {
+            height: auto;
+            min-height: 230px;
+            overflow: visible;
+        }
+
+        .game-area.runner-area,
+        .game-area.target-area,
+        .game-area.mixer-area {
+            height: 260px;
+        }
+
+        .game-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .game-stat {
+            background: rgba(15, 23, 42, 0.96);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 8px;
+            text-align: center;
+        }
+
+        .game-stat-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .game-stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            margin-top: 2px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px 16px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(239, 68, 68, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 64, 175, 0.55);
+        }
+
+        /* MEMORY */
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 6px;
+            padding: 8px;
+        }
+
+        .memory-card {
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            background: rgba(30, 64, 175, 0.2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.6rem;
+            transition: transform 0.18s, border-color 0.18s, background 0.18s;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+        }
+
+        .memory-card.flipped {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, var(--success), #059669);
+            border-color: var(--success);
+            pointer-events: none;
+        }
+
+        .card-back {
+            display: block;
+            font-size: 1.3rem;
+        }
+
+        .card-front {
+            display: none;
+        }
+
+        .memory-card.flipped .card-back {
+            display: none;
+        }
+
+        .memory-card.flipped .card-front {
+            display: block;
+        }
+
+        /* RUNNER */
+
+        .runner-canvas {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top, #111827, #020617);
+        }
+
+        .runner-player {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: 3px solid #fff;
+            box-shadow: 0 8px 18px rgba(239, 68, 68, 0.7);
+            position: absolute;
+            left: 52px;
+            bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: bottom 0.24s ease-out;
+            z-index: 3;
+        }
+
+        .runner-player.jumping {
+            bottom: 210px;
+        }
+
+        .runner-obstacle {
+            width: 30px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #9f1239, #7f1d1d);
+            border: 2px solid rgba(15, 23, 42, 0.95);
+            position: absolute;
+            right: -40px;
+            bottom: 18px;
+            z-index: 2;
+        }
+
+        .runner-ground {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px;
+            height: 2px;
+            background: rgba(148, 163, 184, 0.7);
+            z-index: 1;
+        }
+
+        /* TARGET */
+
+        .target-canvas {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            background: radial-gradient(circle at top, #020617, #020617);
+        }
+
+        .target {
+            width: 54px;
+            height: 54px;
+            border-radius: 999px;
+            border: 3px solid #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 8px 18px rgba(239, 68, 68, 0.8);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.2s;
+        }
+
+        .target:hover {
+            transform: scale(1.15);
+        }
+
+        .target.hit {
+            animation: target-hit 0.25s ease-out forwards;
+        }
+
+        @keyframes target-hit {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* MIXER */
+
+        .mixer-canvas {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+            padding: 14px 14px 10px;
+        }
+
+        .mixer-display {
+            width: 110px;
+            height: 110px;
+            border-radius: 999px;
+            border: 4px solid #fff;
+            margin: 0 auto 10px;
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
+            position: relative;
+            transition: background 0.25s;
+        }
+
+        .mixer-display::after {
+            content: attr(data-colors);
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .mixer-formula {
+            text-align: center;
+            background: rgba(15, 23, 42, 0.98);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 9px;
+        }
+
+        .mixer-formula-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 3px;
+        }
+
+        .mixer-formula-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .mixer-flavors {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .mixer-flavor {
+            padding: 8px;
+            border-radius: 9px;
+            border: 2px solid var(--border);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.18s, border-color 0.18s;
+        }
+
+        .mixer-flavor:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.9);
+            border-color: #fff;
+        }
+
+        .mixer-controls {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        /* BUILDER */
+
+        .builder-grid {
+            display: grid;
+            grid-template-columns: 360px minmax(0, 1fr);
+            gap: 26px;
+        }
+
+        .builder-preview {
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            padding: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 360px;
+        }
+
+        .character {
+            position: relative;
+            width: 220px;
+            height: 220px;
+        }
+
+        .character-body {
+            width: 100%;
+            height: 100%;
+            border-radius: 999px;
+            border: 7px solid #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.9);
+            position: relative;
+            transition: background 0.25s;
+        }
+
+        .character-face {
+            position: absolute;
+            inset: 22% 18% 18%;
+        }
+
+        .character-eye {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            background: #fff;
+            position: absolute;
+            top: 10px;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.7);
+        }
+
+        .character-eye.left {
+            left: 6px;
+        }
+
+        .character-eye.right {
+            right: 6px;
+        }
+
+        .character-pupil {
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: #000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s;
+        }
+
+        .character-mouth {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 64px;
+            height: 36px;
+            border-radius: 0 0 64px 64px;
+            border: 4px solid #000;
+            border-top: none;
+            background: #fecaca;
+            transition: all 0.2s;
+        }
+
+        .character-handle {
+            position: absolute;
+            right: -20px;
+            top: 30%;
+            width: 26px;
+            height: 70px;
+            border-radius: 0 40px 40px 0;
+            border: 7px solid #fff;
+            border-left: none;
+        }
+
+        .builder-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .control-section {
+            background: rgba(15, 23, 42, 0.98);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 12px 11px;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .color-option {
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.15s, border-color 0.15s, box-shadow 0.18s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.06);
+        }
+
+        .color-option.active {
+            border-color: #fff;
+            box-shadow: 0 0 0 2px rgba(248, 250, 252, 0.45);
+            transform: scale(1.05);
+        }
+
+        .slider-wrapper {
+            margin-top: 4px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(31, 41, 55, 0.9);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            background: #f9fafb;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.9);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .expression-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .expression-btn {
+            padding: 9px 10px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.98);
+            color: var(--text);
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.18s, border-color 0.18s, transform 0.12s;
+        }
+
+        .expression-btn:hover {
+            background: rgba(30, 64, 175, 0.55);
+            transform: translateY(-1px);
+        }
+
+        .expression-btn.active {
+            background: rgba(237, 28, 36, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* TOAST */
+
+        .toast {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            min-width: 260px;
+            max-width: 320px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 1);
+            padding: 10px 14px;
+            display: none;
+            flex-direction: column;
+            gap: 3px;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            display: flex;
+            animation: slide-in 0.2s ease-out;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast-icon {
+            font-size: 1.3rem;
+        }
+
+        .toast-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .toast-message {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 26px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 18px 32px 40px;
+            }
+            .header-grid {
+                grid-template-columns: minmax(0, 1fr);
+                row-gap: 18px;
+            }
+            .builder-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .header-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .games-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 16px 18px 32px;
+            }
+            .story-actions {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .memory-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* SVG ILLUSTRATIONS */
+        .hero-svg-container {
+            max-width: 350px;
+            margin: 0px auto;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .card-svg-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .illustration-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Cosmic Scene */
+        .cosmic-scene {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            position: relative;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .cosmic-planet {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ed1c24, #8b0000);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 60px rgba(237, 28, 36, 0.8),
+            inset -20px -20px 50px rgba(0, 0, 0, 0.5);
+            animation: pulse-planet 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-planet {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Laboratory Scene */
+        .lab-scene {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lab-flask {
+            position: relative;
+        }
+
+        .flask-neck {
+            width: 40px;
+            height: 60px;
+            background: transparent;
+            border: 4px solid var(--primary);
+            border-bottom: none;
+            margin: 0 auto;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .flask-body {
+            width: 120px;
+            height: 150px;
+            background: linear-gradient(180deg, transparent 60%, rgba(237, 28, 36, 0.4));
+            border: 4px solid var(--primary);
+            border-radius: 0 0 60px 60px;
+            position: relative;
+            animation: fill-flask 3s ease-in-out infinite;
+        }
+
+        @keyframes fill-flask {
+            0%, 100% { background: linear-gradient(180deg, transparent 60%, rgba(237, 28, 36, 0.3)); }
+            50% { background: linear-gradient(180deg, transparent 20%, rgba(237, 28, 36, 0.7)); }
+        }
+
+        .lab-bubble {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: rise-bubble 2s infinite;
+        }
+
+        @keyframes rise-bubble {
+            0% { bottom: 10px; opacity: 1; }
+            100% { bottom: 140px; opacity: 0; }
+        }
+
+        .lab-bubble:nth-child(1) { left: 25%; animation-delay: 0s; }
+        .lab-bubble:nth-child(2) { left: 50%; animation-delay: 0.7s; }
+        .lab-bubble:nth-child(3) { left: 75%; animation-delay: 1.4s; }
+
+    
+        /* SVG ICON STYLES */
+        .svg-icon-inline {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        .svg-icon-game {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .svg-icon-hero {
+            width: 80px;
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+        }
+
+        .svg-icon-player {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .svg-icon-btn {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+<!-- TOAST -->
+<div class="toast" id="toast">
+    <div class="toast-header">
+        <div class="toast-icon" id="toastIcon">🎉</div>
+        <div class="toast-title" id="toastTitle">Success</div>
+    </div>
+    <div class="toast-message" id="toastMessage">Done</div>
+</div>
+
+<div class="container">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-grid">
+            <div class="logo">
+                <div class="logo-text">
+                    <h1>Kool‑Aid Chronicles</h1>
+
+                    <!-- Hero SVG Character -->
+                    <div class="hero-svg-container">
+                        <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 20px 40px rgba(237, 28, 36, 0.5));">
+                            <defs>
+                                <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ff4d4d;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#c41e3a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="150" cy="220" rx="100" ry="120" fill="url(#bodyGradient)" opacity="0.95"/>
+                            <ellipse cx="120" cy="180" rx="30" ry="50" fill="white" opacity="0.25"/>
+                            <ellipse cx="60" cy="220" rx="15" ry="50" fill="#ed1c24" transform="rotate(-35 60 220)"/>
+                            <ellipse cx="240" cy="220" rx="15" ry="50" fill="#ed1c24" transform="rotate(35 240 220)"/>
+                            <rect x="110" y="320" width="25" height="60" rx="12" fill="#ed1c24"/>
+                            <rect x="165" y="320" width="25" height="60" rx="12" fill="#ed1c24"/>
+                            <circle cx="125" cy="200" r="18" fill="white"/>
+                            <circle cx="130" cy="200" r="10" fill="#000"/>
+                            <circle cx="133" cy="197" r="4" fill="white"/>
+                            <circle cx="175" cy="200" r="18" fill="white"/>
+                            <circle cx="180" cy="200" r="10" fill="#000"/>
+                            <circle cx="183" cy="197" r="4" fill="white"/>
+                            <path d="M 120 240 Q 150 265 180 240" stroke="white" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            <path d="M 245 180 Q 270 180 270 220 Q 270 260 245 260" stroke="#ed1c24" stroke-width="12" fill="none"/>
+                            <g opacity="0.8">
+                                <line x1="30" y1="100" x2="10" y2="80" stroke="#ffd700" stroke-width="4" stroke-linecap="round">
+                                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="270" y1="100" x2="290" y2="80" stroke="#ffd700" stroke-width="4" stroke-linecap="round">
+                                    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.5s" repeatCount="indefinite"/>
+                                </line>
+                            </g>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-icon">⭐</div>
+                    <div>
+                        <div class="header-stat-value" id="statPoints">0</div>
+                        <div class="header-stat-label">Points</div>
+                    </div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-icon">🏆</div>
+                    <div>
+                        <div class="header-stat-value" id="statLevel">1</div>
+                        <div class="header-stat-label">Level</div>
+                    </div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-icon">📖</div>
+                    <div>
+                        <div class="header-stat-value" id="statStory">0/6</div>
+                        <div class="header-stat-label">Chapters</div>
+                    </div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-icon">🎮</div>
+                    <div>
+                        <div class="header-stat-value" id="statWins">0</div>
+                        <div class="header-stat-label">Games Won</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="header-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
+                <button class="header-btn" onclick="resetAll()">🔄</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- STORY -->
+    <section class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span>📖</span>
+                <span>The Origin Story</span>
+            </div>
+            <div class="card-badge" id="currentChapter">Chapter 1</div>
+        </div>
+        <div class="card-body">
+            <div class="story-nav">
+                <button class="story-nav-btn active" onclick="showChapter(0)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#9b30ff"/>
+                            <circle cx="8" cy="10" r="1" fill="white" opacity="0.8">
+                                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="15" cy="8" r="0.8" fill="white" opacity="0.6">
+                                <animate attributeName="opacity" values="0.3;0.9;0.3" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>Origins
+                </button>
+                <button class="story-nav-btn" onclick="showChapter(1)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="3" width="4" height="6" fill="none" stroke="#ed1c24" stroke-width="1.5" rx="2"/>
+                            <path d="M 8 9 L 8 16 Q 8 19 12 19 Q 16 19 16 16 L 16 9 Z" fill="rgba(237,28,36,0.4)" stroke="#ed1c24" stroke-width="1.5"/>
+                            <circle cx="11" cy="15" r="1.5" fill="white" opacity="0.7">
+                                <animate attributeName="cy" values="15;10;15" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>Laboratory
+                </button>
+                <button class="story-nav-btn" onclick="showChapter(2)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="18" height="18" fill="#8b0000" stroke="#ed1c24" stroke-width="2" rx="2"/>
+                            <path d="M 8 8 L 14 14 M 16 8 L 10 14" stroke="#ed1c24" stroke-width="2" opacity="0.8">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite"/>
+                            </path>
+                        </svg>First Break
+                </button>
+                <button class="story-nav-btn" onclick="showChapter(3)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="#ed1c24" stroke-width="1.5"/>
+                            <rect x="5" y="8" width="14" height="9" fill="rgba(237,28,36,0.3)"/>
+                            <circle cx="4" cy="20" r="1" fill="#ed1c24"/>
+                            <circle cx="20" cy="20" r="1" fill="#ed1c24"/>
+                        </svg>Fame
+                </button>
+                <button class="story-nav-btn" onclick="showChapter(4)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 8 5 L 8 9 Q 8 12 12 12 Q 16 12 16 9 L 16 5 Z" fill="#ffd700" stroke="#ffd700" stroke-width="1.5"/>
+                            <rect x="10" y="12" width="4" height="4" fill="#ffd700"/>
+                            <rect x="8" y="16" width="8" height="2" rx="1" fill="#ffd700"/>
+                        </svg>Icon
+                </button>
+                <button class="story-nav-btn" onclick="showChapter(5)">
+                    <svg class="svg-icon-inline" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 12 2 L 14 9 L 21 10 L 16 15 L 18 22 L 12 18 L 6 22 L 8 15 L 3 10 L 10 9 Z" fill="#ffd700" stroke="#ffd700" stroke-width="1">
+                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="10s" repeatCount="indefinite"/>
+                            </path>
+                        </svg>Present
+                </button>
+            </div>
+
+            <!-- Chapters -->
+            <div class="story-chapter active" data-chapter="0">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#9b30ff"/>
+                    <circle cx="30" cy="35" r="3" fill="white" opacity="0.9">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="65" cy="30" r="2.5" fill="white" opacity="0.8">
+                        <animate attributeName="opacity" values="0.3;0.9;0.3" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="40" cy="60" r="2" fill="white" opacity="0.7">
+                        <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                </div>
+                <div class="story-year">The Beginning</div>
+                <div class="story-title">Birth of a Legend</div>
+                <p class="story-text">
+                    Before flavor existed, before refreshment was known, the universe lived
+                    in a quiet state of thirst. At the edge of reality, in a cosmic
+                    kitchen, joy condensed into something new.
+                </p>
+                <p class="story-text">
+                    Not star, not planet – a glass body with liquid heart. The first
+                    thought it had was simple: <em>“People look thirsty.”</em>
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="nextChapter()">
+                        <span>→</span><span>Continue</span>
+                    </button>
+                    <button class="story-btn" onclick="earnPoints(25,'Story bonus','You explored the beginning')">
+                        <span>⭐</span><span>+25 points</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="story-chapter" data-chapter="1">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="40" y="10" width="20" height="25" fill="none" stroke="#ed1c24" stroke-width="4" rx="10"/>
+                    <path d="M 30 35 L 30 70 Q 30 85 50 85 Q 70 85 70 70 L 70 35 Z" fill="rgba(237,28,36,0.5)" stroke="#ed1c24" stroke-width="4"/>
+                    <circle cx="45" cy="65" r="5" fill="white" opacity="0.8">
+                        <animate attributeName="cy" values="65;45;65" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="55" cy="70" r="4" fill="white" opacity="0.7">
+                        <animate attributeName="cy" values="70;50;70" dur="2.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                </div>
+                <div class="story-year">1954</div>
+                <div class="story-title">Laboratory Genesis</div>
+                <p class="story-text">
+                    In a quiet lab, Dr. Edwin Perkins mixed sugar, acids and color. One red
+                    batch glowed brighter than the rest. Bubbles rose like thoughts.
+                </p>
+                <p class="story-text">
+                    Two dark spots floated to the surface – eyes. A curve formed – a
+                    smile. Chemistry accidentally crossed into consciousness.
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="prevChapter()">
+                        <span>←</span><span>Previous</span>
+                    </button>
+                    <button class="story-btn" onclick="nextChapter()">
+                        <span>→</span><span>Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="story-chapter" data-chapter="2">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="80" height="80" fill="#8b0000" stroke="#ed1c24" stroke-width="4" rx="8"/>
+                    <path d="M 30 30 L 50 50 M 70 30 L 50 50 M 50 50 L 30 70 M 50 50 L 70 70" stroke="#ed1c24" stroke-width="5" stroke-linecap="round" opacity="0.9">
+                        <animate attributeName="opacity" values="0.7;1;0.7" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#ffd700" stroke-width="3" opacity="0.5">
+                        <animate attributeName="r" values="30;45;30" dur="1.5s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.7;0;0.7" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                </div>
+                <div class="story-year">1975</div>
+                <div class="story-title">The First Wall Break</div>
+                <p class="story-text">
+                    Kids on a summer afternoon wished for something cold. Between them and
+                    joy stood one boring brick wall.
+                </p>
+                <p class="story-text">
+                    With a legendary <strong>“OH YEAH!”</strong> the Kool‑Aid Man chose his
+                    entrance: straight through the masonry.
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="prevChapter()">
+                        <span>←</span><span>Previous</span>
+                    </button>
+                    <button class="story-btn" onclick="nextChapter()">
+                        <span>→</span><span>Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="story-chapter" data-chapter="3">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="25" width="80" height="55" rx="8" fill="none" stroke="#ed1c24" stroke-width="4"/>
+                    <rect x="18" y="33" width="64" height="39" fill="rgba(237,28,36,0.4)"/>
+                    <circle cx="15" cy="85" r="4" fill="#ed1c24"/>
+                    <circle cx="85" cy="85" r="4" fill="#ed1c24"/>
+                </svg>
+                </div>
+                <div class="story-year">1980s</div>
+                <div class="story-title">Rise to Fame</div>
+                <p class="story-text">
+                    TV commercials turned every living‑room wall into a potential portal.
+                    Kids waited not just for cartoons, but for the sound of falling bricks.
+                </p>
+                <p class="story-text">
+                    The Kool‑Aid Man became a symbol: crash through the ordinary, bring
+                    something better.
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="prevChapter()">
+                        <span>←</span><span>Previous</span>
+                    </button>
+                    <button class="story-btn" onclick="nextChapter()">
+                        <span>→</span><span>Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="story-chapter" data-chapter="4">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 30 20 L 30 40 Q 30 55 50 55 Q 70 55 70 40 L 70 20 Z" fill="#ffd700" stroke="#ffd700" stroke-width="4"/>
+                    <rect x="42" y="55" width="16" height="15" fill="#ffd700"/>
+                    <rect x="35" y="70" width="30" height="8" rx="4" fill="#ffd700"/>
+                    <path d="M 25 20 Q 15 20 15 30 Q 15 40 25 40" fill="none" stroke="#ffd700" stroke-width="4"/>
+                    <path d="M 75 20 Q 85 20 85 30 Q 85 40 75 40" fill="none" stroke="#ffd700" stroke-width="4"/>
+                </svg>
+                </div>
+                <div class="story-year">1990s</div>
+                <div class="story-title">Cultural Icon</div>
+                <p class="story-text">
+                    Comics, games, parodies – every medium built new walls just to let him
+                    smash them.
+                </p>
+                <p class="story-text">
+                    “Pulling a Kool‑Aid Man” started to mean: enter loudly, fix the mood,
+                    apologize to the wall later.
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="prevChapter()">
+                        <span>←</span><span>Previous</span>
+                    </button>
+                    <button class="story-btn" onclick="nextChapter()">
+                        <span>→</span><span>Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="story-chapter" data-chapter="5">
+                <div class="story-hero">
+                    <svg class="svg-icon-hero" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 50 5 L 58 35 L 90 40 L 65 62 L 73 95 L 50 78 L 27 95 L 35 62 L 10 40 L 42 35 Z" fill="#ffd700" stroke="#ffd700" stroke-width="3">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                </div>
+                <div class="story-year">Today</div>
+                <div class="story-title">The Eternal Guardian</div>
+                <p class="story-text">
+                    Now he lives everywhere at once – in memes, jokes, and shared memories
+                    of smashed drywall and red waves.
+                </p>
+                <p class="story-text">
+                    Somewhere, right now, someone shouts “OH YEAH!” – and everyone in the
+                    room sees the same glass hero in their head.
+                </p>
+                <div class="story-actions">
+                    <button class="story-btn" onclick="prevChapter()">
+                        <span>←</span><span>Previous</span>
+                    </button>
+                    <button class="story-btn" onclick="showChapter(0)">
+                        <span>🔄</span><span>Restart story</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAMES -->
+    <section class="games-grid">
+        <!-- MEMORY -->
+        <div class="game-card">
+            <div class="game-header">
+                <div class="game-title">
+                    <svg class="svg-icon-game" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M 12 3 Q 8 3 6 6 Q 4 8 4 12 Q 4 16 6 18 Q 8 21 12 21 Q 16 21 18 18 Q 20 16 20 12 Q 20 8 18 6 Q 16 3 12 3 Z" fill="#ed1c24" opacity="0.9"/><circle cx="9" cy="10" r="1.5" fill="white"/><circle cx="15" cy="10" r="1.5" fill="white"/></svg><span>Memory Match</span>
+                </div>
+                <div class="game-best" id="memoryBest">Best: —</div>
+            </div>
+            <div class="game-body">
+                <div class="game-stats">
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="memoryMoves">0</div>
+                        <div class="game-stat-label">Moves</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="memoryMatched">0/8</div>
+                        <div class="game-stat-label">Pairs</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="memoryTime">0s</div>
+                        <div class="game-stat-label">Time</div>
+                    </div>
+                </div>
+                <div class="game-area memory-area">
+                    <div class="memory-grid" id="memoryGrid"></div>
+                </div>
+                <button class="btn" onclick="startMemory()">
+                    <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="10" rx="3" fill="#ed1c24"/><circle cx="9" cy="13" r="1.5" fill="white"/><circle cx="15" cy="13" r="1.5" fill="white"/></svg><span>New game</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- RUNNER -->
+        <div class="game-card">
+            <div class="game-header">
+                <div class="game-title">
+                    <svg class="svg-icon-game" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="6" r="2" fill="#ed1c24"/><ellipse cx="14" cy="12" rx="3" ry="4" fill="#ed1c24"/><line x1="14" y1="15" x2="12" y2="19" stroke="#ed1c24" stroke-width="2"/><line x1="14" y1="15" x2="17" y2="19" stroke="#ed1c24" stroke-width="2"/></svg><span>Wall Runner</span>
+                </div>
+                <div class="game-best" id="runnerBest">Best: 0</div>
+            </div>
+            <div class="game-body">
+                <div class="game-stats">
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="runnerScore">0</div>
+                        <div class="game-stat-label">Score</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="runnerDodged">0</div>
+                        <div class="game-stat-label">Dodged</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="runnerSpeed">1.0x</div>
+                        <div class="game-stat-label">Speed</div>
+                    </div>
+                </div>
+                <div class="game-area runner-area">
+                    <div class="runner-canvas" id="runnerCanvas">
+                        <div class="runner-player" id="runnerPlayer">
+                    <svg class="svg-icon-player" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="23" cy="23" r="20" fill="#ed1c24"/>
+                        <circle cx="18" cy="20" r="3" fill="white"/>
+                        <circle cx="28" cy="20" r="3" fill="white"/>
+                        <circle cx="18.5" cy="20" r="1.5" fill="#000"/>
+                        <circle cx="28.5" cy="20" r="1.5" fill="#000"/>
+                        <path d="M 16 28 Q 23 32 30 28" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                        <div class="runner-ground"></div>
+                    </div>
+                </div>
+                <button class="btn" id="runnerBtn" onclick="toggleRunner()">
+                    <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="10" rx="3" fill="#ed1c24"/><circle cx="9" cy="13" r="1.5" fill="white"/><circle cx="15" cy="13" r="1.5" fill="white"/></svg><span>Start</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- TARGET -->
+        <div class="game-card">
+            <div class="game-header">
+                <div class="game-title">
+                    <svg class="svg-icon-game" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="none" stroke="#ed1c24" stroke-width="1.5"/><circle cx="12" cy="12" r="7" fill="none" stroke="#ed1c24" stroke-width="1.5"/><circle cx="12" cy="12" r="2" fill="#ed1c24"/></svg><span>Target Shooter</span>
+                </div>
+                <div class="game-best" id="targetBest">Best: 0</div>
+            </div>
+            <div class="game-body">
+                <div class="game-stats">
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="targetHits">0</div>
+                        <div class="game-stat-label">Hits</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="targetMisses">0</div>
+                        <div class="game-stat-label">Misses</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="targetTime">30s</div>
+                        <div class="game-stat-label">Time</div>
+                    </div>
+                </div>
+                <div class="game-area target-area">
+                    <div class="target-canvas" id="targetCanvas"></div>
+                </div>
+                <button class="btn" id="targetBtn" onclick="toggleTarget()">
+                    <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="10" rx="3" fill="#ed1c24"/><circle cx="9" cy="13" r="1.5" fill="white"/><circle cx="15" cy="13" r="1.5" fill="white"/></svg><span>Start</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- MIXER -->
+        <div class="game-card">
+            <div class="game-header">
+                <div class="game-title">
+                    <svg class="svg-icon-game" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="3" width="4" height="6" fill="none" stroke="#ed1c24" stroke-width="1.5" rx="2"/><path d="M 8 9 L 8 16 Q 8 19 12 19 Q 16 19 16 16 L 16 9 Z" fill="rgba(237,28,36,0.5)" stroke="#ed1c24" stroke-width="1.5"/></svg><span>Flavor Mixer</span>
+                </div>
+                <div class="game-best" id="mixerScore">Score: 0</div>
+            </div>
+            <div class="game-body">
+                <div class="game-area mixer-area">
+                    <div class="mixer-canvas">
+                        <div
+                                class="mixer-display"
+                                id="mixerDisplay"
+                                data-colors="You mixed: —"
+                        ></div>
+                        <div class="mixer-formula">
+                            <div class="mixer-formula-label">Target Formula</div>
+                            <div class="mixer-formula-text" id="targetFormula">
+                                red + blue = purple
+                            </div>
+                        </div>
+                        <div class="mixer-flavors">
+                            <button
+                                    class="mixer-flavor"
+                                    style="background: linear-gradient(135deg,#ed1c24,#c41e3a);"
+                                    onclick="mixColor('red')"
+                            >
+                                <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#ed1c24" stroke="white" stroke-width="2"/></svg> Red
+                            </button>
+                            <button
+                                    class="mixer-flavor"
+                                    style="background: linear-gradient(135deg,#0099ff,#2563eb);"
+                                    onclick="mixColor('blue')"
+                            >
+                                <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#0099ff" stroke="white" stroke-width="2"/></svg> Blue
+                            </button>
+                            <button
+                                    class="mixer-flavor"
+                                    style="background: linear-gradient(135deg,#facc15,#f97316);"
+                                    onclick="mixColor('yellow')"
+                            >
+                                <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#facc15" stroke="white" stroke-width="2"/></svg> Yellow
+                            </button>
+                        </div>
+                        <div class="mixer-controls">
+                            <button class="btn btn-secondary" onclick="resetMixer()">
+                                <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M 12 4 A 8 8 0 1 1 6 8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M 6 4 L 6 8 L 10 8" fill="currentColor"/></svg> Reset
+                            </button>
+                            <button class="btn" onclick="checkMixer()">
+                                <svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M 5 12 L 10 17 L 19 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg> Check
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHARACTER BUILDER -->
+    <section class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span>🎨</span><span>Character Builder</span>
+            </div>
+            <div class="card-badge">Customize & Save</div>
+        </div>
+        <div class="card-body">
+            <div class="builder-grid">
+                <div class="builder-preview">
+                    <div class="character" id="character">
+                        <div class="character-body" id="characterBody">
+                            <div class="character-face">
+                                <div class="character-eye left">
+                                    <div class="character-pupil" id="pupilL"></div>
+                                </div>
+                                <div class="character-eye right">
+                                    <div class="character-pupil" id="pupilR"></div>
+                                </div>
+                                <div class="character-mouth" id="mouth"></div>
+                            </div>
+                            <div class="character-handle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="builder-controls">
+                    <div class="control-section">
+                        <div class="control-label">Body color</div>
+                        <div class="color-grid">
+                            <div
+                                    class="color-option active"
+                                    style="background: linear-gradient(135deg,#ed1c24,#c41e3a);"
+                                    onclick="setColor('red', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#8b5cf6,#7c3aed);"
+                                    onclick="setColor('purple', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#0099ff,#2563eb);"
+                                    onclick="setColor('blue', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#10b981,#059669);"
+                                    onclick="setColor('green', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#f97316,#ea580c);"
+                                    onclick="setColor('orange', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#ec4899,#db2777);"
+                                    onclick="setColor('pink', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#06b6d4,#0284c7);"
+                                    onclick="setColor('cyan', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#84cc16,#65a30d);"
+                                    onclick="setColor('lime', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#eab308,#ca8a04);"
+                                    onclick="setColor('yellow', this)"
+                            ></div>
+                            <div
+                                    class="color-option"
+                                    style="background: linear-gradient(135deg,#6366f1,#4f46e5);"
+                                    onclick="setColor('indigo', this)"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <div class="control-label">Size</div>
+                        <div class="slider-wrapper">
+                            <input
+                                    type="range"
+                                    min="180"
+                                    max="260"
+                                    value="220"
+                                    class="slider"
+                                    oninput="setSize(this.value)"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <div class="control-label">Expression</div>
+                        <div class="expression-grid">
+                            <button
+                                    class="expression-btn active"
+                                    onclick="setExpression('happy', this)"
+                            >
+                                😊 Happy
+                            </button>
+                            <button
+                                    class="expression-btn"
+                                    onclick="setExpression('excited', this)"
+                            >
+                                😃 Excited
+                            </button>
+                            <button
+                                    class="expression-btn"
+                                    onclick="setExpression('surprised', this)"
+                            >
+                                😲 Surprised
+                            </button>
+                            <button
+                                    class="expression-btn"
+                                    onclick="setExpression('cool', this)"
+                            >
+                                😎 Cool
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="saveCharacter()">
+                        <span>💾</span><span>Save character (PNG)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    const state = {
+        points: 0,
+        level: 1,
+        storySeen: new Set(),
+        gamesWon: 0,
+        sound: true,
+        memory: { moves: 0, matched: 0, time: 0, best: null, cards: [], flipped: [], timer: null },
+        runner: { running: false, score: 0, dodged: 0, speed: 1, best: 0, loop: null, obstacles: [], jumpHandler: null, spawnTimer: 0, spawnInterval: 1500 },
+        target: { running: false, hits: 0, misses: 0, time: 30, best: 0, loop: null },
+        mixer: { current: [], target: null, score: 0 },
+        colors: {
+            red: "linear-gradient(135deg,#ed1c24,#c41e3a)",
+            purple: "linear-gradient(135deg,#8b5cf6,#7c3aed)",
+            blue: "linear-gradient(135deg,#0099ff,#2563eb)",
+            green: "linear-gradient(135deg,#10b981,#059669)",
+            orange: "linear-gradient(135deg,#f97316,#ea580c)",
+            pink: "linear-gradient(135deg,#ec4899,#db2777)",
+            cyan: "linear-gradient(135deg,#06b6d4,#0284c7)",
+            lime: "linear-gradient(135deg,#84cc16,#65a30d)",
+            yellow: "linear-gradient(135deg,#eab308,#ca8a04)",
+            indigo: "linear-gradient(135deg,#6366f1,#4f46e5)",
+        },
+    };
+
+    /* TOAST */
+
+    function showToast(icon, title, message) {
+        const t = document.getElementById("toast");
+        document.getElementById("toastIcon").textContent = icon;
+        document.getElementById("toastTitle").textContent = title;
+        document.getElementById("toastMessage").textContent = message;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2300);
+    }
+
+    /* HEADER / POINTS */
+
+    function earnPoints(amount, title = "Points earned", msg = "Nice!") {
+        state.points += amount;
+        const newLevel = Math.floor(state.points / 500) + 1;
+        if (newLevel > state.level) {
+            state.level = newLevel;
+            showToast("🏆", "Level up", `You reached level ${state.level}`);
+        }
+        updateHeaderStats();
+        showToast("⭐", title, msg);
+    }
+
+    function updateHeaderStats() {
+        document.getElementById("statPoints").textContent = state.points;
+        document.getElementById("statLevel").textContent = state.level;
+        document.getElementById("statStory").textContent =
+            state.storySeen.size + "/6";
+        document.getElementById("statWins").textContent = state.gamesWon;
+    }
+
+    /* STORY */
+
+    let currentChapterIndex = 0;
+
+    function showChapter(index) {
+        currentChapterIndex = index;
+        state.storySeen.add(index);
+
+        const navBtns = document.querySelectorAll(".story-nav-btn");
+        const chapters = document.querySelectorAll(".story-chapter");
+        navBtns.forEach((btn, i) =>
+            btn.classList.toggle("active", i === index)
+        );
+        chapters.forEach((ch, i) =>
+            ch.classList.toggle("active", i === index)
+        );
+
+        document.getElementById(
+            "currentChapter"
+        ).textContent = `Chapter ${index + 1}`;
+        updateHeaderStats();
+
+        if (state.storySeen.size === 1) {
+            earnPoints(40, "Story started", "You began reading the legend");
+        } else if (state.storySeen.size === 6) {
+            earnPoints(150, "Story complete", "You read all chapters");
+        }
+    }
+
+    function nextChapter() {
+        if (currentChapterIndex < 5) showChapter(currentChapterIndex + 1);
+    }
+
+    function prevChapter() {
+        if (currentChapterIndex > 0) showChapter(currentChapterIndex - 1);
+    }
+
+    /* MEMORY */
+
+    function startMemory() {
+        const icons = ["🍹", "💥", "🧱", "😊", "🌟", "⚡", "🎉", "🏆"];
+        const cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
+
+        if (state.memory.timer) clearInterval(state.memory.timer);
+        state.memory.moves = 0;
+        state.memory.matched = 0;
+        state.memory.time = 0;
+        state.memory.cards = cards;
+        state.memory.flipped = [];
+
+        const grid = document.getElementById("memoryGrid");
+        grid.innerHTML = "";
+        cards.forEach((emoji, index) => {
+            const div = document.createElement("div");
+            div.className = "memory-card";
+            div.innerHTML = `
+          <div class="card-front">${emoji}</div>
+          <div class="card-back">?</div>
+        `;
+            div.addEventListener("click", () => flipMemoryCard(div, index));
+            grid.appendChild(div);
+        });
+
+        updateMemoryUI();
+        state.memory.timer = setInterval(() => {
+            state.memory.time++;
+            updateMemoryUI();
+        }, 1000);
+    }
+
+    function flipMemoryCard(el, index) {
+        const mem = state.memory;
+        if (mem.flipped.length >= 2) return;
+        if (el.classList.contains("flipped") || el.classList.contains("matched"))
+            return;
+
+        el.classList.add("flipped");
+        mem.flipped.push({ el, index });
+
+        if (mem.flipped.length === 2) {
+            mem.moves++;
+            updateMemoryUI();
+
+            const [a, b] = mem.flipped;
+            const isMatch = mem.cards[a.index] === mem.cards[b.index];
+
+            setTimeout(() => {
+                if (isMatch) {
+                    a.el.classList.add("matched");
+                    b.el.classList.add("matched");
+                    mem.matched++;
+                    updateMemoryUI();
+
+                    if (mem.matched === 8) {
+                        clearInterval(mem.timer);
+                        const bestNode = document.getElementById("memoryBest");
+                        if (mem.best === null || mem.moves < mem.best) {
+                            mem.best = mem.moves;
+                            bestNode.textContent = `Best: ${mem.moves}`;
+                        }
+                        state.gamesWon++;
+                        earnPoints(
+                            Math.max(60, 200 - mem.moves * 5),
+                            "Memory Win",
+                            `Completed in ${mem.moves} moves`
+                        );
+                    }
+                } else {
+                    a.el.classList.remove("flipped");
+                    b.el.classList.remove("flipped");
+                }
+                mem.flipped = [];
+            }, 600);
+        }
+    }
+
+    function updateMemoryUI() {
+        document.getElementById("memoryMoves").textContent = state.memory.moves;
+        document.getElementById("memoryMatched").textContent =
+            state.memory.matched + "/8";
+        document.getElementById("memoryTime").textContent =
+            state.memory.time + "s";
+    }
+
+    /* RUNNER */
+
+    function toggleRunner() {
+        state.runner.running ? stopRunner() : startRunner();
+    }
+
+    function startRunner() {
+        const r = state.runner;
+        r.running = true;
+        r.score = 0;
+        r.dodged = 0;
+        r.speed = 1;
+        r.obstacles = [];
+
+        // таймер контролируемого спавна препятствий
+        r.spawnTimer = 0;        // мс с последнего спавна
+        r.spawnInterval = 1500;  // стартовый интервал между стенами, мс
+
+        document.getElementById("runnerBtn").innerHTML =
+            '<span>⏸️</span><span>Stop</span>';
+
+        document
+            .querySelectorAll(".runner-obstacle")
+            .forEach((el) => el.remove());
+
+        const player = document.getElementById("runnerPlayer");
+        const canvas = document.getElementById("runnerCanvas");
+
+        const jump = (e) => {
+            if (!r.running) return;
+            if (e.type === "click" || e.code === "Space") {
+                e.preventDefault();
+                if (!player.classList.contains("jumping")) {
+                    player.classList.add("jumping");
+                    setTimeout(() => player.classList.remove("jumping"), 900);
+                }
+            }
+        };
+
+        r.jumpHandler = jump;
+        document.addEventListener("keydown", jump);
+        canvas.addEventListener("click", jump);
+
+        // сразу создаём первое препятствие
+        spawnRunnerObstacle();
+
+        r.loop = setInterval(() => {
+            if (!r.running) return;
+
+            const dt = 50;      // шаг таймера = delay setInterval
+            r.score += r.speed; // счёт растёт с учётом скорости
+            r.spawnTimer += dt;
+
+            // плавное ускорение
+            if (r.score > 0 && r.score % 200 === 0) {
+                r.speed = Math.min(3, r.speed + 0.2);
+            }
+
+            // контролируемый спавн: новая стена только по таймеру
+            if (r.spawnTimer >= r.spawnInterval) {
+                spawnRunnerObstacle();
+                r.spawnTimer = 0;
+
+                // по мере роста счёта интервал уменьшается, но не ниже 700 мс
+                const base = 1500;
+                const bonus = Math.min(600, r.score * 2); // 0..600
+                r.spawnInterval = Math.max(700, base - bonus);
+            }
+
+            moveRunnerObstacles();
+            updateRunnerUI();
+        }, 50);
+    }
+
+
+    function stopRunner() {
+        const r = state.runner;
+        r.running = false;
+        clearInterval(r.loop);
+        document.getElementById("runnerBtn").innerHTML =
+            '<svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="10" rx="3" fill="#ed1c24"/><circle cx="9" cy="13" r="1.5" fill="white"/><circle cx="15" cy="13" r="1.5" fill="white"/></svg><span>Start</span>';
+
+        const canvas = document.getElementById("runnerCanvas");
+        if (r.jumpHandler) {
+            document.removeEventListener("keydown", r.jumpHandler);
+            canvas.removeEventListener("click", r.jumpHandler);
+        }
+
+        document
+            .querySelectorAll(".runner-obstacle")
+            .forEach((el) => el.remove());
+        r.obstacles = [];
+
+        if (r.score > r.best) {
+            r.best = Math.floor(r.score);
+            document.getElementById("runnerBest").textContent =
+                "Best: " + r.best;
+            state.gamesWon++;
+        }
+
+        if (r.score > 0) {
+            earnPoints(
+                Math.floor(r.score),
+                "Runner finished",
+                "Score: " + Math.floor(r.score)
+            );
+        }
+    }
+
+    function spawnRunnerObstacle() {
+        const obs = document.createElement("div");
+        obs.className = "runner-obstacle";
+        obs.style.right = "-40px";
+        document.getElementById("runnerCanvas").appendChild(obs);
+        state.runner.obstacles.push({ el: obs, x: -40 });
+    }
+
+    function moveRunnerObstacles() {
+        const r = state.runner;
+        const player = document.getElementById("runnerPlayer");
+        const pRect = player.getBoundingClientRect();
+        const jumping = player.classList.contains("jumping");
+
+        r.obstacles.forEach((obj, idx) => {
+            obj.x += 3.1 * r.speed;
+            obj.el.style.right = obj.x + "px";
+            const oRect = obj.el.getBoundingClientRect();
+
+            const horizontal =
+                oRect.left < pRect.right - 8 && oRect.right > pRect.left + 8;
+            const vertical = oRect.bottom > pRect.bottom - 10;
+
+            if (!jumping && horizontal && vertical && r.running) {
+                stopRunner();
+                showToast(
+                    "💥",
+                    "Game over",
+                    `You dodged ${r.dodged} walls`
+                );
+            }
+
+            if (oRect.right < 0) {
+                obj.el.remove();
+                r.obstacles.splice(idx, 1);
+                r.dodged++;
+            }
+        });
+    }
+
+    function updateRunnerUI() {
+        const r = state.runner;
+        document.getElementById("runnerScore").textContent =
+            Math.floor(r.score);
+        document.getElementById("runnerDodged").textContent = r.dodged;
+        document.getElementById("runnerSpeed").textContent =
+            r.speed.toFixed(1) + "x";
+    }
+
+    /* TARGET */
+
+    function toggleTarget() {
+        state.target.running ? stopTarget() : startTarget();
+    }
+
+    function startTarget() {
+        const t = state.target;
+        t.running = true;
+        t.hits = 0;
+        t.misses = 0;
+        t.time = 30;
+
+        document.getElementById("targetBtn").innerHTML =
+            '<span>⏸️</span><span>Stop</span>';
+        const canvas = document.getElementById("targetCanvas");
+        canvas.innerHTML = "";
+
+        canvas.onclick = (e) => {
+            if (e.target === canvas && t.running) {
+                t.misses++;
+                updateTargetUI();
+            }
+        };
+
+        /* первая цель появляется сразу */
+        spawnTarget();
+
+        t.loop = setInterval(() => {
+            if (!t.running) return;
+
+            t.time--;
+            updateTargetUI();
+
+            /* дополнительный спавн по таймеру */
+            if (Math.random() < 0.4) spawnTarget();
+
+            if (t.time <= 0) {
+                stopTarget();
+            }
+        }, 1000);
+    }
+
+    function stopTarget() {
+        const t = state.target;
+        t.running = false;
+        clearInterval(t.loop);
+        document.getElementById("targetBtn").innerHTML =
+            '<svg class="svg-icon-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="16" height="10" rx="3" fill="#ed1c24"/><circle cx="9" cy="13" r="1.5" fill="white"/><circle cx="15" cy="13" r="1.5" fill="white"/></svg><span>Start</span>';
+        document.getElementById("targetCanvas").innerHTML = "";
+
+        const score = t.hits * 10;
+        if (score > t.best) {
+            t.best = score;
+            document.getElementById("targetBest").textContent =
+                "Best: " + score;
+            state.gamesWon++;
+        }
+        if (score > 0) {
+            earnPoints(score, "Target result", `${t.hits} hits`);
+        }
+    }
+
+    function spawnTarget() {
+        const t = state.target;
+        if (!t.running) return;
+
+        const canvas = document.getElementById("targetCanvas");
+        const target = document.createElement("div");
+        target.className = "target";
+        target.textContent = "🎯";
+
+        const maxX = canvas.clientWidth - 54;
+        const maxY = canvas.clientHeight - 54;
+        target.style.left = Math.random() * maxX + "px";
+        target.style.top = Math.random() * maxY + "px";
+
+        target.onclick = (e) => {
+            e.stopPropagation();
+            hitTarget(target);
+        };
+
+        canvas.appendChild(target);
+
+        /* автоудаление, если промах */
+        setTimeout(() => {
+            if (target.parentNode && !target.classList.contains("hit")) {
+                target.remove();
+            }
+        }, 2200);
+    }
+
+    /* НОВОЕ: спавн сразу после попадания */
+    function hitTarget(target) {
+        const t = state.target;
+        if (!t.running) return;
+        target.classList.add("hit");
+        t.hits++;
+        updateTargetUI();
+        setTimeout(() => {
+            if (target.parentNode) target.remove();
+            if (t.running) spawnTarget(); // сразу новая цель
+        }, 200);
+    }
+
+    function updateTargetUI() {
+        const t = state.target;
+        document.getElementById("targetHits").textContent = t.hits;
+        document.getElementById("targetMisses").textContent = t.misses;
+        document.getElementById("targetTime").textContent = t.time + "s";
+    }
+
+    /* MIXER */
+
+    const MIX_RECIPES = {
+        purple: ["red", "blue"],
+        green: ["blue", "yellow"],
+        orange: ["red", "yellow"],
+    };
+
+    const MIX_COLOR = {
+        red: "#ed1c24",
+        blue: "#0099ff",
+        yellow: "#facc15",
+        purple: "#8b5cf6",
+        green: "#10b981",
+        orange: "#f97316",
+    };
+
+    function initMixer() {
+        pickMixerTarget();
+        resetMixer();
+    }
+
+    function pickMixerTarget() {
+        const keys = Object.keys(MIX_RECIPES);
+        const key = keys[Math.floor(Math.random() * keys.length)];
+        state.mixer.target = key;
+        const formula = MIX_RECIPES[key].join(" + ");
+        document.getElementById(
+            "targetFormula"
+        ).textContent = `${formula} = ${key}`;
+    }
+
+    function resetMixer() {
+        state.mixer.current = [];
+        const disp = document.getElementById("mixerDisplay");
+        disp.style.background = "linear-gradient(135deg,#4b5563,#6b7280)";
+        disp.setAttribute("data-colors", "You mixed: —");
+    }
+
+    function mixColor(color) {
+        state.mixer.current.push(color);
+        const disp = document.getElementById("mixerDisplay");
+        disp.setAttribute(
+            "data-colors",
+            "You mixed: " + state.mixer.current.join(" + ")
+        );
+
+        const set = new Set(state.mixer.current);
+        let result = MIX_COLOR[color] || "#4b5563";
+
+        if (set.has("red") && set.has("blue")) result = MIX_COLOR.purple;
+        else if (set.has("blue") && set.has("yellow")) result = MIX_COLOR.green;
+        else if (set.has("red") && set.has("yellow")) result = MIX_COLOR.orange;
+
+        disp.style.background = `linear-gradient(135deg,${result},${result})`;
+    }
+
+    function checkMixer() {
+        const targetArr = MIX_RECIPES[state.mixer.target].slice().sort();
+        const mixedArr = state.mixer.current.slice().sort();
+
+        if (targetArr.join(",") === mixedArr.join(",")) {
+            state.mixer.score += 100;
+            document.getElementById("mixerScore").textContent =
+                "Score: " + state.mixer.score;
+            earnPoints(100, "Perfect mix", "You matched the formula exactly");
+            pickMixerTarget();
+            resetMixer();
+        } else {
+            showToast("❌", "Wrong mix", "Try a different combination");
+        }
+    }
+
+    /* BUILDER */
+
+    function setColor(key, el) {
+        document
+            .querySelectorAll(".color-option")
+            .forEach((c) => c.classList.remove("active"));
+        el.classList.add("active");
+        const body = document.getElementById("characterBody");
+        body.style.background = state.colors[key];
+    }
+
+    function setSize(value) {
+        const c = document.getElementById("character");
+        c.style.width = value + "px";
+        c.style.height = value + "px";
+    }
+
+    function setExpression(type, el) {
+        document
+            .querySelectorAll(".expression-btn")
+            .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+
+        const mouth = document.getElementById("mouth");
+
+        if (type === "happy") {
+            mouth.style.height = "36px";
+            mouth.style.width = "64px";
+            mouth.style.borderRadius = "0 0 64px 64px";
+        } else if (type === "excited") {
+            mouth.style.height = "46px";
+            mouth.style.width = "72px";
+            mouth.style.borderRadius = "0 0 72px 72px";
+        } else if (type === "surprised") {
+            mouth.style.height = "42px";
+            mouth.style.width = "42px";
+            mouth.style.borderRadius = "999px";
+        } else if (type === "cool") {
+            mouth.style.height = "22px";
+            mouth.style.width = "64px";
+            mouth.style.borderRadius = "999px";
+        }
+
+        mouth.dataset.expression = type;
+    }
+
+    function getCharacterState() {
+        const char = document.getElementById("character");
+        const body = document.getElementById("characterBody");
+        const mouth = document.getElementById("mouth");
+        const expression = mouth.dataset.expression || "happy";
+
+        return {
+            size: char.offsetWidth,
+            background: body.style.background || state.colors.red,
+            expression,
+        };
+    }
+
+    function applyCharacterState(c) {
+        const char = document.getElementById("character");
+        const body = document.getElementById("characterBody");
+        char.style.width = c.size + "px";
+        char.style.height = c.size + "px";
+        body.style.background = c.background;
+
+        const btn = Array.from(
+            document.querySelectorAll(".expression-btn")
+        ).find((b) => {
+            const text = b.textContent.trim();
+            if (c.expression === "happy" && text.includes("Happy")) return true;
+            if (c.expression === "excited" && text.includes("Excited"))
+                return true;
+            if (c.expression === "surprised" && text.includes("Surprised"))
+                return true;
+            if (c.expression === "cool" && text.includes("Cool")) return true;
+            return false;
+        });
+        if (btn) setExpression(c.expression, btn);
+    }
+
+    async function saveCharacter() {
+        const c = getCharacterState();
+        localStorage.setItem("koolaid-character", JSON.stringify(c));
+
+        /* PNG через html2canvas */
+        if (window.html2canvas) {
+            try {
+                const node = document.getElementById("character");
+                const canvas = await html2canvas(node, {
+                    backgroundColor: null,
+                    scale: 2,
+                });
+                const link = document.createElement("a");
+                link.href = canvas.toDataURL("image/png");
+                link.download = "koolaid-character.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                earnPoints(
+                    120,
+                    "Character saved",
+                    "PNG downloaded & state stored"
+                );
+                return;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        /* fallback, если html2canvas недоступен */
+        earnPoints(80, "Character saved", "State stored (PNG unavailable)");
+    }
+
+    function loadCharacter() {
+        const raw = localStorage.getItem("koolaid-character");
+        if (!raw) return;
+        try {
+            const c = JSON.parse(raw);
+            applyCharacterState(c);
+        } catch (e) {
+            console.error("Failed to load character", e);
+        }
+    }
+
+    function trackEyes(e) {
+        const char = document.getElementById("character");
+        const rect = char.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+        const dist = Math.min(
+            5,
+            Math.hypot(e.clientX - cx, e.clientY - cy) / 25
+        );
+        const offsetX = Math.cos(angle) * dist;
+        const offsetY = Math.sin(angle) * dist;
+
+        document
+            .querySelectorAll(".character-pupil")
+            .forEach((p) => {
+                p.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
+            });
+    }
+
+    /* UTILS */
+
+    function toggleSound() {
+        state.sound = !state.sound;
+        document.getElementById("soundBtn").textContent = state.sound
+            ? "🔊"
+            : "🔇";
+        showToast(
+            "🔊",
+            state.sound ? "Sound on" : "Sound off",
+            state.sound ? "FX enabled" : "FX muted"
+        );
+    }
+
+    function resetAll() {
+        localStorage.removeItem("koolaid-character");
+        location.reload();
+    }
+
+    function initApp() {
+        updateHeaderStats();
+        showChapter(0);
+        startMemory();
+        initMixer();
+        loadCharacter();
+        setExpression(
+            "happy",
+            document.querySelector(".expression-btn.active")
+        );
+        document.addEventListener("mousemove", trackEyes);
+    }
+
+    window.onload = initApp;
+</script>
+</body>
+</html>

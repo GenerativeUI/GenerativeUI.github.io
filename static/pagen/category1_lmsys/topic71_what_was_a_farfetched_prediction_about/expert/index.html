@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Far-fetched Predictions That Came True — Interactive</title>
+  <style>
+    :root{--bg:#071226;--muted:#9fb0bf;--accent:#7dd3fc;--good:#8df3c8;--bad:#ffb4b4}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#e6eef6;background:linear-gradient(180deg,#031226 0%,#071226 100%)}.wrap{max-width:1100px;margin:28px auto;padding:20px}header{display:flex;gap:16px;align-items:center;margin-bottom:18px}.logo{width:64px;height:64px;padding:10px;background:rgba(255,255,255,0.03);border-radius:12px;display:flex;align-items:center;justify-content:center}h1{margin:0;font-size:20px}p.lead{margin:4px 0 0;color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 340px;gap:18px}@media(max-width:980px){.grid{grid-template-columns:1fr}.toc{order:2}}.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:16px;border-radius:12px;box-shadow:0 8px 22px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}.section-title{display:flex;justify-content:space-between;align-items:center}.muted{color:var(--muted);font-size:13px}.timeline{display:flex;flex-direction:column;gap:12px;margin-top:12px}.slider{width:100%}.pred-card{display:flex;gap:12px;align-items:center}.pred-card img{width:110px;height:70px;border-radius:8px;object-fit:cover}.pred-info{flex:1}.meter{height:18px;border-radius:10px;background:#02171d;overflow:hidden}.meter>div{height:100%;background:linear-gradient(90deg,#ffd166,#7dd3fc);width:0%}.controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}button{background:#07172a;color:var(--accent);border:1px solid rgba(125,211,252,0.12);padding:8px 12px;border-radius:8px;cursor:pointer}button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}.examples{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}@media(max-width:640px){.examples{grid-template-columns:1fr}}.badge{background:rgba(125,211,252,0.06);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600}.log{background:#02171d;padding:10px;border-radius:8px;color:#cfeefb;max-height:200px;overflow:auto;margin-top:8px}footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}.resources li{margin-bottom:8px}.quiz button{width:100%;text-align:left;padding:10px}.good{background:var(--good);color:#023;padding:8px;border-radius:8px;margin-top:8px}.bad{background:var(--bad);color:#200;padding:8px;border-radius:8px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo card" aria-hidden>
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="8" width="52" height="48" rx="8" fill="#072340"/><circle cx="22" cy="32" r="8" fill="#7dd3fc"/><rect x="36" y="24" width="14" height="16" rx="4" fill="#ffd166"/></svg>
+      </div>
+      <div>
+        <h1>Far‑fetched Predictions That Became True</h1>
+        <p class="lead">Explore surprising predictions that sounded impossible — and later came true. Interactive timeline, deep dives, and a quiz.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card" id="timeline">
+          <div class="section-title"><h2>Interactive Timeline</h2><span class="badge">From wild idea → reality</span></div>
+          <p class="muted" style="margin-top:8px">Move the slider to pick a prediction — see the original claim, year made, and how it turned into reality.</p>
+          <div class="timeline">
+            <input class="slider" id="predSlider" type="range" min="0" max="3" value="0" step="1" aria-label="Select prediction by slider">
+            <div class="pred-card" id="predCard">
+              <img src="clarke.svg" id="predImg" alt="Prediction image"/>
+              <div class="pred-info">
+                <h3 id="predTitle">Arthur C. Clarke: Geostationary Satellites (1945)</h3>
+                <p class="muted" id="predDesc">Clarke proposed geostationary satellites for worldwide radio communications — a bold idea when rockets were new.</p>
+                <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+                  <div style="flex:1">
+                    <div class="muted" style="font-size:12px">Believability at the time</div>
+                    <div class="meter" aria-hidden><div id="meterFill" style="width:10%"></div></div>
+                  </div>
+                  <div style="width:120px;text-align:right"><div class="muted" style="font-size:12px">Outcome</div><div id="outcome" style="font-weight:700">Became reality</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="controls">
+            <button id="prev">Prev</button><button id="next">Next</button><button class="ghost" id="reset">Reset</button>
+          </div>
+        </section>
+
+        <section class="card" id="examplesSection">
+          <div class="section-title"><h2>Deep‑dives</h2><span class="muted">Read original claims & modern context</span></div>
+          <div class="examples">
+            <div class="card" style="padding:12px">
+              <h4>Arthur C. Clarke (1945)</h4>
+              <p class="muted">Paper \"Extra-Terrestrial Relays\" proposed geostationary satellites for communication. This inspired modern communication satellites.</p>
+              <a class="muted" href="#" id="linkClarke">More →</a>
+            </div>
+            <div class="card" style="padding:12px">
+              <h4>Jules Verne (1865)</h4>
+              <p class="muted">From the Earth to the Moon described launching from Florida, trajectory math, and ocean splashdown — elements similar to Apollo.</p>
+              <a class="muted" href="#" id="linkVerne">More →</a>
+            </div>
+            <div class="card" style="padding:12px">
+              <h4>H. G. Wells (1914)</h4>
+              <p class="muted">The World Set Free described atomic bombs decades before the Manhattan Project; it influenced early thinkers.</p>
+              <a class="muted" href="#" id="linkWells">More →</a>
+            </div>
+            <div class="card" style="padding:12px">
+              <h4>Alan Turing (1950)</h4>
+              <p class="muted">Turing proposed the imitation game (Turing Test) and argued for machines that could think — a foundation for AI.</p>
+              <a class="muted" href="#" id="linkTuring">More →</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="how">
+          <div class="section-title"><h2>How did a wild idea become real?</h2><span class="muted">Paths from idea to reality</span></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <button id="pathTech">Technological advances</button>
+            <button id="pathPolicy">Policy & funding</button>
+            <button id="pathAccident">Serendipity / Accident</button>
+            <button id="pathMulti">All of the above</button>
+          </div>
+          <div class="log" id="pathLog"></div>
+        </section>
+
+        <section class="card" id="quiz">
+          <div class="section-title"><h2>Quick Quiz</h2><span class="muted">Test your intuition</span></div>
+          <div style="margin-top:8px" class="quiz">
+            <div><strong>Which prediction is oldest?</strong></div>
+            <div style="margin-top:8px"><button data-q="verne">A — Jules Verne</button><button data-q="wells" style="margin-top:6px">B — H.G. Wells</button></div>
+            <div id="quizRes"></div>
+          </div>
+        </section>
+
+        <footer class="muted">Sources: Clarke 1945; Verne 1865; Wells 1914; Turing 1950. See right column for links.</footer>
+      </main>
+
+      <aside class="toc">
+        <div class="card small">
+          <h3 style="margin:0 0 8px">At a glance</h3>
+          <p class="muted">Clarke · Verne · Wells · Turing</p>
+          <div style="display:flex;gap:8px;margin-top:8px"><button onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})" class="ghost">Timeline</button><button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it happened</button></div>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Notable citations</h4>
+          <ol class="muted" style="margin-top:8px">
+            <li>Clarke 1945 — geostationary satellites.</li>
+            <li>Verne 1865 — From the Earth to the Moon.</li>
+            <li>Wells 1914 — The World Set Free (atomic bomb).</li>
+            <li>Turing 1950 — Computing Machinery and Intelligence.</li>
+          </ol>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Further reading</h4>
+          <ul class="muted" style="margin-top:8px">
+            <li><a href="#" id="mdnLink">Clarke paper (1945)</a></li>
+            <li><a href="#" id="verneLink">Verne — From the Earth to the Moon</a></li>
+            <li><a href="#" id="wellsLink">Wells — The World Set Free</a></li>
+            <li><a href="#" id="turingLink">Turing — Computing Machinery and Intelligence</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const preds = [
+      {id:'clarke',title:'Arthur C. Clarke: Geostationary Satellites (1945)',year:1945,desc:'Clarke proposed using geostationary "extra-terrestrial relays" for worldwide radio communications; later became foundation for modern communication satellites.',img:'clarke.svg',believability:10,src:'https://clarkeinstitute.org/wp-content/uploads/2010/04/ClarkeWirelessWorldArticle.pdf'},
+      {id:'verne',title:'Jules Verne: Launch to Moon (1865)',year:1865,desc:'Verne described launch location, trajectory math, and splashdown — elements that match Apollo missions a century later.',img:'verne.svg',believability:8,src:'https://www.gutenberg.org/ebooks/10384'},
+      {id:'wells',title:'H. G. Wells: Atomic Bomb (1914)',year:1914,desc:'Wells imagined \"atomic bombs\" decades before WWII; his writing influenced later scientists.',img:'wells.svg',believability:5,src:'https://en.wikipedia.org/wiki/The_World_Set_Free'},
+      {id:'turing',title:'Alan Turing: Thinking Machines (1950)',year:1950,desc:'Turing proposed the imitation game (Turing Test) and argued for machines that could think — core ideas for AI.',img:'turing.svg',believability:6,src:'https://courses.cs.umbc.edu/471/papers/turing.pdf'}
+    ];
+    const slider = document.getElementById('predSlider');
+    const predImg = document.getElementById('predImg');
+    const predTitle = document.getElementById('predTitle');
+    const predDesc = document.getElementById('predDesc');
+    const meterFill = document.getElementById('meterFill');
+    const outcome = document.getElementById('outcome');
+    function render(i){ const p = preds[i]; predImg.src = p.img; predTitle.textContent = p.title; predDesc.textContent = p.desc + ' (Year: ' + p.year + ')'; meterFill.style.width = (p.believability*8)+'%'; outcome.textContent = 'Became reality'; }
+    slider.addEventListener('input', ()=>{ render(parseInt(slider.value)); });
+    document.getElementById('prev').addEventListener('click', ()=>{ slider.value = Math.max(0, slider.value-1); slider.dispatchEvent(new Event('input')); });
+    document.getElementById('next').addEventListener('click', ()=>{ slider.value = Math.min(preds.length-1, parseInt(slider.value)+1); slider.dispatchEvent(new Event('input')); });
+    document.getElementById('reset').addEventListener('click', ()=>{ slider.value = 0; slider.dispatchEvent(new Event('input')); });
+    render(0);
+    document.getElementById('linkClarke').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[0].src,'_blank'); });
+    document.getElementById('linkVerne').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[1].src,'_blank'); });
+    document.getElementById('linkWells').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[2].src,'_blank'); });
+    document.getElementById('linkTuring').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[3].src,'_blank'); });
+    document.getElementById('mdnLink').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[0].src,'_blank'); });
+    document.getElementById('verneLink').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[1].src,'_blank'); });
+    document.getElementById('wellsLink').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[2].src,'_blank'); });
+    document.getElementById('turingLink').addEventListener('click', (e)=>{ e.preventDefault(); window.open(preds[3].src,'_blank'); });
+    const pathLog = document.getElementById('pathLog');
+    function path(msg){ const el = document.createElement('div'); el.textContent = msg; pathLog.appendChild(el); pathLog.scrollTop = pathLog.scrollHeight; }
+    document.getElementById('pathTech').addEventListener('click', ()=>{ path('Technological advances: engineering and new science enabled the idea — e.g., rocketry, electronics, computation.'); });
+    document.getElementById('pathPolicy').addEventListener('click', ()=>{ path('Policy & funding: state programs and private investment scaled prototypes into infrastructure (space programs, communications agencies).'); });
+    document.getElementById('pathAccident').addEventListener('click', ()=>{ path('Serendipity: accidents, interdisciplinary cross-pollination, and imagination often accelerate discovery.'); });
+    document.getElementById('pathMulti').addEventListener('click', ()=>{ path('Combination: most predictions need tech + funding + chance; the idea inspires research, which then iterates toward reality.'); });
+    document.querySelectorAll('.quiz button').forEach(btn=>{ btn.addEventListener('click', ()=>{ const a = btn.getAttribute('data-q'); const res = document.getElementById('quizRes'); if(a==='verne'){ res.innerHTML = '<div class=\"good\">Correct — Jules Verne (1865) is the earliest of these.</div>'; } else { res.innerHTML = '<div class=\"bad\">Not quite — H.G. Wells (1914) and Turing (1950) are later.</div>'; } }); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowLeft'){ document.getElementById('prev').click(); } if(e.key==='ArrowRight'){ document.getElementById('next').click(); } });
+  </script>
+</body>
+</html>

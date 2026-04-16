@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimbot Technology: Understanding Gaming Security & Ethics</title>
+    <meta name="description" content="Educational guide on aimbot technology, anti-cheat systems, and gaming ethics. Learn about detection methods, consequences, and legitimate alternatives.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Aimbot Technology: Understanding Gaming Security & Ethics">
+    <meta property="og:description" content="Comprehensive educational guide covering aimbot technology, anti-cheat systems, gaming ethics, and legitimate training alternatives.">
+    
+    <!-- Embedded Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: 220 25% 4%;
+            --foreground: 210 40% 98%;
+            --card: 220 20% 8%;
+            --card-foreground: 210 40% 98%;
+            --primary: 217 91% 60%;
+            --primary-foreground: 220 25% 4%;
+            --primary-glow: 217 91% 75%;
+            --secondary: 260 80% 65%;
+            --secondary-foreground: 220 25% 4%;
+            --muted: 220 15% 15%;
+            --muted-foreground: 215 20% 65%;
+            --accent: 280 100% 70%;
+            --accent-foreground: 220 25% 4%;
+            --destructive: 0 84% 60%;
+            --destructive-foreground: 210 40% 98%;
+            --warning: 45 100% 60%;
+            --warning-foreground: 220 25% 4%;
+            --success: 142 76% 36%;
+            --success-foreground: 210 40% 98%;
+            --border: 220 15% 20%;
+            --cyber-blue: 195 100% 50%;
+            --neon-purple: 280 100% 70%;
+            --tech-green: 120 100% 50%;
+            --radius: 0.75rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Gradient Background */
+        .bg-gradient-dark {
+            background: linear-gradient(180deg, hsl(var(--background)), hsl(220 25% 2%));
+        }
+
+        /* Cyber Grid Pattern */
+        .cyber-grid {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('./images/hero-gaming-security.jpg') center/cover no-repeat;
+            opacity: 0.2;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                hsl(var(--background) / 0.8), 
+                hsl(var(--background) / 0.6), 
+                hsl(var(--background) / 0.9));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        /* Typography */
+        .gradient-text {
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 60px hsl(var(--primary) / 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid hsl(var(--secondary));
+            color: hsl(var(--secondary));
+        }
+
+        .btn-outline:hover {
+            background: hsl(var(--secondary) / 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .btn-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 60px -20px hsl(var(--primary) / 0.4);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: hsl(var(--card) / 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            padding: 1px;
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title p {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .grid-cards {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Images */
+        .section-image {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 60px -20px hsl(var(--primary) / 0.4);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: calc(var(--radius) / 2);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-primary {
+            background: hsl(var(--primary) / 0.2);
+            color: hsl(var(--primary));
+            border: 1px solid hsl(var(--primary) / 0.3);
+        }
+
+        .badge-destructive {
+            background: hsl(var(--destructive) / 0.2);
+            color: hsl(var(--destructive));
+            border: 1px solid hsl(var(--destructive) / 0.3);
+        }
+
+        .badge-success {
+            background: hsl(var(--success) / 0.2);
+            color: hsl(var(--success));
+            border: 1px solid hsl(var(--success) / 0.3);
+        }
+
+        /* Alert Boxes */
+        .alert {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-warning {
+            background: hsl(var(--warning) / 0.1);
+            border: 1px solid hsl(var(--warning) / 0.5);
+            color: hsl(var(--warning-foreground));
+        }
+
+        /* Tech Concepts */
+        .tech-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .tech-item {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+        }
+
+        .tech-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tech-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: hsl(var(--muted));
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: hsl(var(--primary));
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 0;
+            border-top: 1px solid hsl(var(--border) / 0.5);
+            text-align: center;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Animations */
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cyber Effects */
+        .cyber-box {
+            background: linear-gradient(135deg, hsl(var(--cyber-blue)), hsl(var(--neon-purple)));
+            padding: 2rem;
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: 0 10px 50px hsl(var(--cyber-blue) / 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .text-primary { color: hsl(var(--primary)); }
+        .text-secondary { color: hsl(var(--secondary)); }
+        .text-destructive { color: hsl(var(--destructive)); }
+        .text-success { color: hsl(var(--success)); }
+        .text-muted { color: hsl(var(--muted-foreground)); }
+    </style>
+</head>
+<body class="bg-gradient-dark cyber-grid">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge badge-primary pulse-glow">Educational Content</div>
+            
+            <h1 class="gradient-text">Aimbot Technology</h1>
+            
+            <p>Understanding the technical concepts, detection methods, and ethical implications 
+            of automated aiming systems in competitive gaming</p>
+            
+            <div class="btn-group">
+                <a href="#technical" class="btn btn-primary">
+                    📚 Learn the Technology
+                </a>
+                <a href="#ethics" class="btn btn-outline">
+                    🛡️ Understand the Ethics
+                </a>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number text-destructive">15%</div>
+                    <div class="stat-label">Cheater Detection Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number text-primary">2,500,000+</div>
+                    <div class="stat-label">Monthly Bans</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number text-secondary">98%</div>
+                    <div class="stat-label">Games Protected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number text-success">89%</div>
+                    <div class="stat-label">Detection Accuracy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Overview Section -->
+    <section id="technical" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical <span class="gradient-text">Concepts</span></h2>
+                <p>Understanding how aimbot technology works from a computer science perspective. 
+                This information is for educational purposes only.</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <img src="./images/computer-vision-tech.jpg" alt="Computer vision algorithms" class="section-image">
+                </div>
+                <div>
+                    <div class="alert alert-warning">
+                        <span>⚠️</span>
+                        <div>
+                            <strong>Educational Purpose:</strong> This content is designed to help understand 
+                            detection methods and improve game security, not to facilitate cheating.
+                        </div>
+                    </div>
+
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-icon">👁️</span>
+                                <h3>Computer Vision</h3>
+                            </div>
+                            <p class="text-muted mb-4">Algorithms that analyze game visuals to identify targets</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                            <div style="text-align: right; font-size: 0.875rem; margin-top: 0.5rem;">85% Complexity</div>
+                        </div>
+
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-icon">🎯</span>
+                                <h3>Image Processing</h3>
+                            </div>
+                            <p class="text-muted mb-4">Real-time analysis of pixel data and object recognition</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%"></div>
+                            </div>
+                            <div style="text-align: right; font-size: 0.875rem; margin-top: 0.5rem;">70% Complexity</div>
+                        </div>
+
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-icon">⚡</span>
+                                <h3>Mouse Control</h3>
+                            </div>
+                            <p class="text-muted mb-4">Automated cursor movement and input simulation</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <div style="text-align: right; font-size: 0.875rem; margin-top: 0.5rem;">60% Complexity</div>
+                        </div>
+
+                        <div class="tech-item">
+                            <div class="tech-header">
+                                <span class="tech-icon">🧠</span>
+                                <h3>Game Memory</h3>
+                            </div>
+                            <p class="text-muted mb-4">Reading game state data from memory addresses</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 95%"></div>
+                            </div>
+                            <div style="text-align: right; font-size: 0.875rem; margin-top: 0.5rem;">95% Complexity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ethics & Consequences Section -->
+    <section id="ethics" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ethics & <span class="text-destructive">Consequences</span></h2>
+                <p>Understanding the serious legal, social, and personal consequences 
+                of using automated aiming systems in competitive gaming.</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="card" style="background: hsl(var(--destructive) / 0.05); border-color: hsl(var(--destructive) / 0.2);">
+                        <h3 class="text-destructive mb-4">⚠️ Why Cheating Hurts Everyone</h3>
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--destructive));">👥</span>
+                                <div>
+                                    <h4>Player Experience</h4>
+                                    <p class="text-muted">Destroys fair competition and ruins the game for legitimate players</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--destructive));">📈</span>
+                                <div>
+                                    <h4>Competitive Integrity</h4>
+                                    <p class="text-muted">Undermines esports and professional gaming ecosystems</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--destructive));">🎮</span>
+                                <div>
+                                    <h4>Game Development</h4>
+                                    <p class="text-muted">Forces developers to spend resources on anti-cheat instead of new features</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-cards" style="margin-top: 2rem;">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <span>❌</span>
+                                    <div>
+                                        <h4>Permanent Ban</h4>
+                                        <p class="text-muted">Complete account termination with no appeal process</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-destructive">High</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <span>🔒</span>
+                                    <div>
+                                        <h4>Hardware ID Ban</h4>
+                                        <p class="text-muted">Device-level ban preventing new account creation</p>
+                                    </div>
+                                </div>
+                                <span class="badge badge-destructive">Critical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="./images/gaming-ethics.jpg" alt="Gaming ethics and consequences" class="section-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anti-Cheat Systems Section -->
+    <section id="anticheat" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2><span class="gradient-text">Anti-Cheat</span> Systems</h2>
+                <p>Modern games employ sophisticated detection systems powered by machine learning, 
+                behavioral analysis, and advanced monitoring techniques.</p>
+            </div>
+
+            <div class="grid-cards">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>VAC (Valve Anti-Cheat)</h3>
+                        <span class="badge badge-success">92% Effective</span>
+                    </div>
+                    <p class="text-muted mb-2">CS:GO, Dota 2, TF2</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 92%"></div>
+                    </div>
+                    <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                        Machine learning-based detection with delayed bans
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>BattlEye</h3>
+                        <span class="badge badge-success">89% Effective</span>
+                    </div>
+                    <p class="text-muted mb-2">PUBG, Rainbow Six Siege</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 89%"></div>
+                    </div>
+                    <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                        Proactive scanning and behavioral analysis
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>EasyAntiCheat</h3>
+                        <span class="badge badge-success">87% Effective</span>
+                    </div>
+                    <p class="text-muted mb-2">Fortnite, Apex Legends</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 87%"></div>
+                    </div>
+                    <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                        Combines multiple detection methods for comprehensive protection
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Riot Vanguard</h3>
+                        <span class="badge badge-success">95% Effective</span>
+                    </div>
+                    <p class="text-muted mb-2">Valorant, League of Legends</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: 95%"></div>
+                    </div>
+                    <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                        Deep system integration with ring-0 access
+                    </p>
+                </div>
+            </div>
+
+            <div class="cyber-box" style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 2rem;">🛡️ How Anti-Cheat Systems Work</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div class="text-center">
+                        <div style="width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            👁️
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">Monitor Behavior</h4>
+                        <p style="opacity: 0.8; font-size: 0.875rem;">
+                            Track player actions, mouse patterns, and performance metrics in real-time
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div style="width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            🧠
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">Analyze Patterns</h4>
+                        <p style="opacity: 0.8; font-size: 0.875rem;">
+                            Use machine learning to identify suspicious patterns and anomalies
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div style="width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            🔒
+                        </div>
+                        <h4 style="margin-bottom: 0.5rem;">Take Action</h4>
+                        <p style="opacity: 0.8; font-size: 0.875rem;">
+                            Implement bans, restrict access, and protect legitimate players
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legitimate Alternatives Section -->
+    <section id="alternatives" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Legitimate <span class="text-success">Alternatives</span></h2>
+                <p>Improve your aim through legitimate training methods, accessibility features, 
+                and skill development tools that don't compromise competitive integrity.</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <img src="./images/aim-training.jpg" alt="Legitimate aim training software" class="section-image">
+                </div>
+                
+                <div>
+                    <div class="card" style="background: hsl(var(--success) / 0.05); border-color: hsl(var(--success) / 0.2); margin-bottom: 2rem;">
+                        <h3 class="text-success mb-4">✅ Recommended Training Methods</h3>
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--success));">🎯</span>
+                                <div>
+                                    <h4>Aim Trainers</h4>
+                                    <p class="text-muted">Kovaak's, Aim Lab, and other legitimate training software</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--success));">🎮</span>
+                                <div>
+                                    <h4>Practice Modes</h4>
+                                    <p class="text-muted">Use in-game training ranges and aim practice maps</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <span style="color: hsl(var(--success));">♿</span>
+                                <div>
+                                    <h4>Accessibility Features</h4>
+                                    <p class="text-muted">Built-in game options for players with disabilities</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="mb-4">Skill Development Timeline</h3>
+                        <p class="text-muted mb-6">How long it takes to improve your aim through legitimate practice</p>
+                        
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 4rem; font-size: 0.875rem;">1 Week</span>
+                                <div class="progress-bar" style="flex: 1;">
+                                    <div class="progress-fill" style="width: 20%"></div>
+                                </div>
+                                <span class="text-muted" style="font-size: 0.875rem;">Basic improvement</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 4rem; font-size: 0.875rem;">1 Month</span>
+                                <div class="progress-bar" style="flex: 1;">
+                                    <div class="progress-fill" style="width: 50%"></div>
+                                </div>
+                                <span class="text-muted" style="font-size: 0.875rem;">Noticeable gains</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 4rem; font-size: 0.875rem;">6 Months</span>
+                                <div class="progress-bar" style="flex: 1;">
+                                    <div class="progress-fill" style="width: 80%"></div>
+                                </div>
+                                <span class="text-muted" style="font-size: 0.875rem;">Advanced skill</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 4rem; font-size: 0.875rem;">1+ Years</span>
+                                <div class="progress-bar" style="flex: 1;">
+                                    <div class="progress-fill" style="width: 95%"></div>
+                                </div>
+                                <span class="text-muted" style="font-size: 0.875rem;">Professional level</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="mb-8">
+                <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;" class="gradient-text">
+                    Play Fair, Play Better
+                </h3>
+                <p class="text-muted" style="max-width: 600px; margin: 0 auto;">
+                    Understanding technology helps us build better security systems and fairer games. 
+                    Choose the path of legitimate improvement and contribute to a healthy gaming community.
+                </p>
+            </div>
+            
+            <div class="badge-group">
+                <span class="badge badge-success">Educational Content</span>
+                <span class="badge badge-primary">Anti-Cheat Research</span>
+                <span class="badge" style="background: hsl(var(--secondary) / 0.2); color: hsl(var(--secondary)); border: 1px solid hsl(var(--secondary) / 0.3);">Gaming Ethics</span>
+            </div>
+            
+            <p style="font-size: 0.875rem;" class="text-muted">
+                This educational content is designed to improve game security and promote fair play. 
+                Always respect game terms of service and community guidelines.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections for animation
+        document.querySelectorAll('.card, .section').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate progress bars when they come into view
+        const progressBars = document.querySelectorAll('.progress-fill');
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target;
+                    const width = progressBar.style.width;
+                    progressBar.style.width = '0%';
+                    setTimeout(() => {
+                        progressBar.style.width = width;
+                    }, 200);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        progressBars.forEach(bar => {
+            progressObserver.observe(bar);
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+                this.style.boxShadow = '0 20px 60px -20px hsl(217 91% 60% / 0.4)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Console welcome message
+        console.log('%c🎮 Aimbot Technology Education Portal', 'color: #3b82f6; font-size: 20px; font-weight: bold;');
+        console.log('%cThis educational resource is designed to promote fair gaming and improve security awareness.', 'color: #6b7280; font-size: 14px;');
+    </script>
+</body>
+</html>

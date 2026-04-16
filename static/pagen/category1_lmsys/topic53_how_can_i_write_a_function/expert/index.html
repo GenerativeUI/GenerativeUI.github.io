@@ -1,0 +1,2931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust String IDE - Full Featured</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            overflow: hidden;
+        }
+
+        .ide-container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #323233;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-bottom: 1px solid #1e1e1e;
+            justify-content: space-between;
+            z-index: 100;
+        }
+
+        .app-title {
+            color: #ce422b;
+            font-weight: 700;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 5px;
+            font-size: 0.85em;
+        }
+
+        .menu-item {
+            padding: 4px 12px;
+            cursor: pointer;
+            color: #cccccc;
+            transition: all 0.2s;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #2d2d2d;
+            border: 1px solid #454545;
+            border-radius: 4px;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            margin-top: 4px;
+        }
+
+        .menu-item:hover .menu-dropdown {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+
+        .dropdown-item:hover {
+            background: #383838;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #454545;
+            margin: 4px 0;
+        }
+
+        .shortcut {
+            color: #858585;
+            font-size: 0.85em;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85em;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+
+        .status-item:hover {
+            background: #2a2a2a;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #89d185;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            background: #252526;
+            display: flex;
+            border-bottom: 1px solid #1e1e1e;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: #2d2d2d;
+            border-right: 1px solid #1e1e1e;
+            cursor: pointer;
+            font-size: 0.85em;
+            color: #969696;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            position: relative;
+            user-select: none;
+        }
+
+        .tab:hover {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .tab.active {
+            background: #1e1e1e;
+            color: #fff;
+            border-top: 2px solid #ce422b;
+        }
+
+        .tab.modified::after {
+            content: '●';
+            color: #ce422b;
+            margin-left: 4px;
+        }
+
+        .tab-close {
+            opacity: 0;
+            transition: opacity 0.2s;
+            margin-left: 8px;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .tab:hover .tab-close {
+            opacity: 1;
+        }
+
+        .tab-close:hover {
+            background: #515151;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Activity Bar */
+        .activity-bar {
+            width: 50px;
+            background: #333333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            border-right: 1px solid #1e1e1e;
+        }
+
+        .activity-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #858585;
+            transition: all 0.2s;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .activity-icon:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .activity-icon.active {
+            color: #fff;
+            background: rgba(206, 66, 43, 0.2);
+        }
+
+        .activity-icon.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ce422b;
+        }
+
+        .activity-spacer {
+            flex: 1;
+        }
+
+        /* Side Panels */
+        .side-panel {
+            width: 300px;
+            background: #252526;
+            border-right: 1px solid #1e1e1e;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .side-panel.show {
+            display: flex;
+        }
+
+        .panel-header {
+            padding: 12px 16px;
+            background: #2d2d2d;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #cccccc;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .panel-action {
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+
+        .panel-action:hover {
+            background: #383838;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        /* Explorer */
+        .folder {
+            user-select: none;
+        }
+
+        .folder-header {
+            padding: 4px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            transition: background 0.2s;
+        }
+
+        .folder-header:hover {
+            background: #2a2d2e;
+        }
+
+        .folder-icon {
+            transition: transform 0.2s;
+        }
+
+        .folder.collapsed .folder-icon {
+            transform: rotate(-90deg);
+        }
+
+        .folder-content {
+            padding-left: 20px;
+        }
+
+        .folder.collapsed .folder-content {
+            display: none;
+        }
+
+        .file-item {
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .file-item:hover {
+            background: #2a2d2e;
+        }
+
+        .file-item.active {
+            background: #37373d;
+        }
+
+        .file-item.modified::after {
+            content: '●';
+            color: #ce422b;
+            margin-left: auto;
+        }
+
+        /* Search Panel */
+        .search-input {
+            width: calc(100% - 32px);
+            background: #3c3c3c;
+            border: 1px solid #454545;
+            border-radius: 4px;
+            padding: 8px 12px;
+            color: #d4d4d4;
+            font-family: inherit;
+            font-size: 0.85em;
+            margin: 10px 16px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ce422b;
+        }
+
+        .search-results {
+            padding: 0 16px;
+        }
+
+        .search-result {
+            padding: 8px;
+            background: #2d2d2d;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result:hover {
+            background: #383838;
+        }
+
+        .search-file {
+            color: #ce422b;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+        }
+
+        .search-match {
+            color: #cccccc;
+            font-size: 0.8em;
+        }
+
+        .search-match mark {
+            background: #ce422b;
+            color: #fff;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        /* Git Panel */
+        .git-section {
+            margin: 10px 16px;
+        }
+
+        .git-section-title {
+            color: #858585;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .git-file {
+            padding: 6px 8px;
+            background: #2d2d2d;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .git-file:hover {
+            background: #383838;
+        }
+
+        .git-status {
+            color: #89d185;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+        .git-status.modified {
+            color: #f48771;
+        }
+
+        /* Settings Panel */
+        .setting-group {
+            padding: 16px;
+            border-bottom: 1px solid #3e3e42;
+        }
+
+        .setting-title {
+            color: #cccccc;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .setting-label {
+            color: #cccccc;
+            font-size: 0.85em;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: #3c3c3c;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .toggle-switch.active {
+            background: #ce422b;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .slider {
+            width: 100%;
+            margin-top: 8px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: #3c3c3c;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #ce422b;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        /* Editor Area */
+        .editor-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .editor-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 8px 16px;
+            background: #252526;
+            border-bottom: 1px solid #1e1e1e;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #858585;
+        }
+
+        .breadcrumb-item {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-item:hover {
+            color: #cccccc;
+        }
+
+        /* Code Editor */
+        .code-editor {
+            flex: 1;
+            display: flex;
+            background: #1e1e1e;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gutter {
+            background: #1e1e1e;
+            padding: 15px 0;
+            border-right: 1px solid #333;
+            display: flex;
+        }
+
+        .line-numbers {
+            color: #858585;
+            padding: 0 10px;
+            text-align: right;
+            user-select: none;
+            font-size: 0.9em;
+            min-width: 40px;
+        }
+
+        .line-numbers div {
+            line-height: 1.6em;
+            cursor: pointer;
+        }
+
+        .line-numbers div:hover {
+            color: #ce422b;
+        }
+
+        .code-content {
+            flex: 1;
+            padding: 15px 15px 15px 10px;
+            overflow: auto;
+            font-size: 0.9em;
+            line-height: 1.6;
+            position: relative;
+            outline: none;
+        }
+
+        .code-line {
+            min-height: 1.6em;
+            position: relative;
+        }
+
+        .code-line.highlight {
+            background: rgba(206, 66, 43, 0.1);
+        }
+
+        .code-line.executing {
+            background: rgba(255, 193, 7, 0.2);
+            border-left: 2px solid #ffc107;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: #569cd6; }
+        .fn { color: #dcdcaa; }
+        .str { color: #ce9178; }
+        .cmt { color: #6a9955; font-style: italic; }
+        .typ { color: #4ec9b0; }
+        .mac { color: #c586c0; }
+        .num { color: #b5cea8; }
+
+        /* Minimap */
+        .minimap {
+            width: 100px;
+            background: #252526;
+            overflow: hidden;
+            font-size: 2px;
+            line-height: 4px;
+            padding: 10px 5px;
+            cursor: pointer;
+        }
+
+        .minimap-line {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            margin: 1px 0;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            width: 350px;
+            background: #252526;
+            border-left: 1px solid #1e1e1e;
+            display: none;
+            flex-direction: column;
+        }
+
+        .right-panel.show {
+            display: flex;
+        }
+
+        .panel-tabs {
+            display: flex;
+            background: #2d2d2d;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .panel-tab {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 0.85em;
+            color: #969696;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .panel-tab:hover {
+            color: #fff;
+        }
+
+        .panel-tab.active {
+            color: #fff;
+            border-bottom-color: #ce422b;
+        }
+
+        .panel-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: none;
+        }
+
+        .panel-section.active {
+            display: block;
+        }
+
+        /* Interactive Demo */
+        .demo-container {
+            background: #2d2d2d;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .demo-title {
+            color: #ce422b;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .demo-input {
+            width: 100%;
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 10px;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #ce422b;
+        }
+
+        .demo-output {
+            background: #1e1e1e;
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 12px;
+            border-left: 3px solid #89d185;
+        }
+
+        .demo-label {
+            color: #858585;
+            font-size: 0.8em;
+            margin-bottom: 4px;
+        }
+
+        .demo-value {
+            color: #ce9178;
+            font-size: 1em;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        /* Variables Inspector */
+        .variable-item {
+            padding: 8px;
+            background: #2d2d2d;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+        }
+
+        .var-name {
+            color: #4fc1ff;
+            font-weight: 600;
+        }
+
+        .var-type {
+            color: #4ec9b0;
+            font-size: 0.9em;
+        }
+
+        .var-value {
+            color: #ce9178;
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        /* Memory Visualizer */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .memory-block {
+            background: #2d2d2d;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 0.75em;
+        }
+
+        .memory-block.stack {
+            border-left: 3px solid #569cd6;
+        }
+
+        .memory-block.heap {
+            border-left: 3px solid #ce422b;
+        }
+
+        .memory-address {
+            color: #858585;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+        }
+
+        .memory-value {
+            color: #ce9178;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        .memory-label {
+            color: #4fc1ff;
+            margin-top: 4px;
+        }
+
+        /* Bottom Panel */
+        .bottom-panel {
+            height: 250px;
+            background: #1e1e1e;
+            border-top: 1px solid #333;
+            display: none;
+            flex-direction: column;
+        }
+
+        .bottom-panel.show {
+            display: flex;
+        }
+
+        .bottom-tabs {
+            display: flex;
+            background: #252526;
+            border-bottom: 1px solid #1e1e1e;
+            justify-content: space-between;
+        }
+
+        .bottom-tabs-left {
+            display: flex;
+        }
+
+        .bottom-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.85em;
+            color: #969696;
+            transition: all 0.2s;
+            border-top: 2px solid transparent;
+        }
+
+        .bottom-tab:hover {
+            color: #fff;
+        }
+
+        .bottom-tab.active {
+            color: #fff;
+            border-top-color: #ce422b;
+        }
+
+        .panel-close {
+            padding: 8px 16px;
+            cursor: pointer;
+            color: #858585;
+            transition: color 0.2s;
+        }
+
+        .panel-close:hover {
+            color: #fff;
+        }
+
+        .bottom-content {
+            flex: 1;
+            overflow: auto;
+            padding: 16px;
+        }
+
+        .bottom-section {
+            display: none;
+        }
+
+        .bottom-section.active {
+            display: block;
+        }
+
+        /* Terminal */
+        .terminal-line {
+            padding: 2px 0;
+            font-size: 0.85em;
+            font-family: 'Consolas', monospace;
+        }
+
+        .terminal-line.success { color: #89d185; }
+        .terminal-line.error { color: #f48771; }
+        .terminal-line.info { color: #4fc1ff; }
+
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .terminal-prompt {
+            color: #89d185;
+        }
+
+        .terminal-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85em;
+            outline: none;
+        }
+
+        /* Problems */
+        .problem-item {
+            padding: 12px;
+            border-bottom: 1px solid #2d2d2d;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .problem-item:hover {
+            background: #252526;
+        }
+
+        .problem-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .problem-icon {
+            color: #f48771;
+        }
+
+        .problem-icon.warning {
+            color: #cca700;
+        }
+
+        .problem-message {
+            color: #cccccc;
+            font-size: 0.85em;
+        }
+
+        .problem-location {
+            color: #858585;
+            font-size: 0.8em;
+            margin-top: 4px;
+        }
+
+        /* Action Bar */
+        .action-bar {
+            padding: 10px 16px;
+            background: #252526;
+            border-top: 1px solid #1e1e1e;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 6px 16px;
+            background: #0e639c;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-family: inherit;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #1177bb;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.success {
+            background: #4ec9b0;
+        }
+
+        .btn.success:hover {
+            background: #5fd3ba;
+        }
+
+        .btn.danger {
+            background: #ce422b;
+        }
+
+        .btn.danger:hover {
+            background: #e74c3c;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2d2d2d;
+            border: 1px solid #454545;
+            border-radius: 4px;
+            padding: 12px 16px;
+            min-width: 250px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: slideUp 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .toast.success { border-left: 3px solid #89d185; }
+        .toast.error { border-left: 3px solid #f48771; }
+        .toast.info { border-left: 3px solid #4fc1ff; }
+
+        .toast-header {
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 0.9em;
+        }
+
+        .toast-body {
+            color: #cccccc;
+            font-size: 0.85em;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 24px;
+            min-width: 400px;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .modal-body {
+            margin-bottom: 16px;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: #1e1e1e;
+            border: 1px solid #454545;
+            border-radius: 4px;
+            padding: 10px;
+            color: #d4d4d4;
+            font-family: inherit;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #ce422b;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-select {
+            width: 100%;
+            background: #1e1e1e;
+            border: 1px solid #454545;
+            border-radius: 4px;
+            padding: 10px;
+            color: #d4d4d4;
+            font-family: inherit;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        .modal-select:focus {
+            outline: none;
+            border-color: #ce422b;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #424242;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4e4e4e;
+        }
+
+        @media (max-width: 1200px) {
+            .side-panel {
+                width: 250px;
+            }
+            .right-panel {
+                width: 300px;
+            }
+        }
+    
+
+/* ========== ENHANCED VISUAL EFFECTS ========== */
+
+/* Glow animations */
+@keyframes glow {
+    0%, 100% { 
+        box-shadow: 0 0 5px rgba(206, 66, 43, 0.5),
+                    0 0 10px rgba(206, 66, 43, 0.3),
+                    0 0 15px rgba(206, 66, 43, 0.2);
+    }
+    50% { 
+        box-shadow: 0 0 10px rgba(206, 66, 43, 0.8),
+                    0 0 20px rgba(206, 66, 43, 0.5),
+                    0 0 30px rgba(206, 66, 43, 0.3);
+    }
+}
+
+@keyframes glowBlue {
+    0%, 100% { 
+        box-shadow: 0 0 5px rgba(79, 193, 255, 0.5),
+                    0 0 10px rgba(79, 193, 255, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 10px rgba(79, 193, 255, 0.8),
+                    0 0 20px rgba(79, 193, 255, 0.5);
+    }
+}
+
+@keyframes glowGreen {
+    0%, 100% { 
+        box-shadow: 0 0 5px rgba(78, 201, 176, 0.5),
+                    0 0 10px rgba(78, 201, 176, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 10px rgba(78, 201, 176, 0.8),
+                    0 0 20px rgba(78, 201, 176, 0.5);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(206, 66, 43, 0.3); }
+    50% { border-color: rgba(206, 66, 43, 0.8); }
+}
+
+/* Enhanced top bar */
+.top-bar {
+    background: linear-gradient(135deg, #323233 0%, #2a2a2b 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.app-title {
+    animation: float 3s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(206, 66, 43, 0.5);
+}
+
+/* Enhanced sidebar icons */
+.sidebar-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-icon:hover {
+    transform: scale(1.15) translateX(3px);
+    filter: drop-shadow(0 0 8px rgba(79, 193, 255, 0.8));
+}
+
+.sidebar-icon.active {
+    animation: glowBlue 2s ease-in-out infinite;
+    transform: translateX(3px);
+}
+
+/* Enhanced editor */
+.editor {
+    background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%);
+}
+
+.line-number {
+    transition: all 0.2s ease;
+}
+
+.line-number:hover {
+    color: #4fc1ff;
+    text-shadow: 0 0 5px rgba(79, 193, 255, 0.5);
+}
+
+.code-line {
+    transition: background-color 0.2s ease;
+}
+
+.code-line:hover {
+    background: rgba(79, 193, 255, 0.05);
+    box-shadow: inset 3px 0 0 rgba(79, 193, 255, 0.5);
+}
+
+/* Enhanced buttons */
+.run-btn, .debug-btn, .step-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.run-btn::before, .debug-btn::before, .step-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.run-btn:hover::before, .debug-btn:hover::before, .step-btn:hover::before {
+    left: 100%;
+}
+
+.run-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(78, 201, 176, 0.5);
+}
+
+.debug-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(79, 193, 255, 0.5);
+}
+
+/* Enhanced tabs */
+.tab {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #4fc1ff, #4ec9b0);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab.active::after, .tab:hover::after {
+    transform: scaleX(1);
+}
+
+.tab.active {
+    background: rgba(79, 193, 255, 0.1);
+    box-shadow: inset 0 -2px 0 #4fc1ff;
+}
+
+/* Enhanced panels */
+.panel {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.panel-title {
+    background: linear-gradient(90deg, #323233, #2a2a2b);
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.panel-title:hover {
+    border-left-color: #4fc1ff;
+    background: linear-gradient(90deg, #3a3a3b, #323233);
+}
+
+/* Enhanced file items */
+.file-item, .folder-item {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.file-item::before, .folder-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(180deg, #4fc1ff, #4ec9b0);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+.file-item:hover::before, .folder-item:hover::before {
+    transform: scaleY(1);
+}
+
+.file-item:hover, .folder-item:hover {
+    background: rgba(79, 193, 255, 0.08);
+    transform: translateX(3px);
+}
+
+/* Enhanced search input */
+.search-input {
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.search-input:focus {
+    border-color: #4fc1ff;
+    box-shadow: 0 0 0 3px rgba(79, 193, 255, 0.1),
+                0 0 15px rgba(79, 193, 255, 0.2);
+}
+
+/* Enhanced variables display */
+.variable-item {
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+.variable-item:hover {
+    background: rgba(206, 66, 43, 0.05);
+    border-left-color: #ce422b;
+    transform: translateX(2px);
+}
+
+/* Enhanced memory blocks */
+.memory-block {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.memory-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    padding: 2px;
+    background: linear-gradient(135deg, #4fc1ff, #4ec9b0, #ce9178);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.memory-block:hover::before {
+    opacity: 1;
+}
+
+.memory-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 193, 255, 0.3);
+}
+
+/* Enhanced minimap */
+.minimap {
+    background: linear-gradient(180deg, #252526 0%, #1e1e1e 100%);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced status bar */
+.status-bar {
+    background: linear-gradient(90deg, #007acc 0%, #005a9e 100%);
+    box-shadow: 0 -2px 10px rgba(0, 122, 204, 0.3);
+}
+
+/* Enhanced demo section */
+.demo-container {
+    background: linear-gradient(135deg, #252526 0%, #1e1e1e 100%);
+    border: 1px solid rgba(79, 193, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.demo-container:hover {
+    border-color: rgba(79, 193, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(79, 193, 255, 0.15);
+}
+
+/* Pulse effect for active elements */
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+    background: linear-gradient(90deg, #4fc1ff, #4ec9b0, #ce9178);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Enhanced scrollbar */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4fc1ff, #4ec9b0);
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #5fd1ff, #5ed9c0);
+    box-shadow: 0 0 10px rgba(79, 193, 255, 0.5);
+}
+
+/* Interactive hover glow for buttons */
+button:not(:disabled):hover {
+    filter: brightness(1.2);
+    transition: all 0.2s ease;
+}
+
+/* Enhanced input focus states */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 193, 255, 0.3);
+}
+
+/* Smooth transitions for all interactive elements */
+button, input, select, .tab, .sidebar-icon, .file-item, .folder-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+    </style>
+</head>
+<body>
+<div class="ide-container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div style="display: flex; gap: 5px; align-items: center;">
+            <div class="app-title">
+                <span>🦀</span>
+                <span>Rust String IDE</span>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    File
+                    <div class="menu-dropdown">
+                        <div class="dropdown-item" onclick="newFile()">
+                            <span>New File</span>
+                            <span class="shortcut">Ctrl+N</span>
+                        </div>
+                        <div class="dropdown-item" onclick="saveFile()">
+                            <span>Save</span>
+                            <span class="shortcut">Ctrl+S</span>
+                        </div>
+                        <div class="dropdown-item" onclick="saveAllFiles()">
+                            <span>Save All</span>
+                            <span class="shortcut">Ctrl+Shift+S</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="closeAllTabs()">
+                            <span>Close All</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    Edit
+                    <div class="menu-dropdown">
+                        <div class="dropdown-item" onclick="formatCode()">
+                            <span>Format Code</span>
+                            <span class="shortcut">Shift+Alt+F</span>
+                        </div>
+                        <div class="dropdown-item" onclick="findInFile()">
+                            <span>Find</span>
+                            <span class="shortcut">Ctrl+F</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="toggleComment()">
+                            <span>Toggle Comment</span>
+                            <span class="shortcut">Ctrl+/</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    View
+                    <div class="menu-dropdown">
+                        <div class="dropdown-item" onclick="togglePanel('explorer')">
+                            <span>Explorer</span>
+                            <span class="shortcut">Ctrl+Shift+E</span>
+                        </div>
+                        <div class="dropdown-item" onclick="togglePanel('search')">
+                            <span>Search</span>
+                            <span class="shortcut">Ctrl+Shift+F</span>
+                        </div>
+                        <div class="dropdown-item" onclick="togglePanel('git')">
+                            <span>Source Control</span>
+                            <span class="shortcut">Ctrl+Shift+G</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="toggleBottomPanel()">
+                            <span>Terminal</span>
+                            <span class="shortcut">Ctrl+`</span>
+                        </div>
+                        <div class="dropdown-item" onclick="toggleRightPanel()">
+                            <span>Debug Panel</span>
+                            <span class="shortcut">Ctrl+Shift+D</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="toggleMinimap()">
+                            <span>Toggle Minimap</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    Run
+                    <div class="menu-dropdown">
+                        <div class="dropdown-item" onclick="runCode()">
+                            <span>Run Code</span>
+                            <span class="shortcut">Ctrl+Enter</span>
+                        </div>
+                        <div class="dropdown-item" onclick="testCode()">
+                            <span>Run Tests</span>
+                            <span class="shortcut">Ctrl+Shift+T</span>
+                        </div>
+                        <div class="dropdown-item" onclick="debugCode()">
+                            <span>Step Through</span>
+                            <span class="shortcut">F10</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="benchmarkCode()">
+                            <span>Benchmark</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    Help
+                    <div class="menu-dropdown">
+                        <div class="dropdown-item" onclick="showHelp()">
+                            <span>Documentation</span>
+                        </div>
+                        <div class="dropdown-item" onclick="showShortcuts()">
+                            <span>Keyboard Shortcuts</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="showAbout()">
+                            <span>About</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <span>Rust 1.75.0</span>
+            </div>
+            <div class="status-item">
+                <span>🔀</span>
+                <span>main</span>
+            </div>
+            <div class="status-item" id="cursorPosition">
+                <span>Ln 1, Col 1</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tab-bar" id="tabBar"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Activity Bar -->
+        <div class="activity-bar">
+            <div class="activity-icon active" onclick="togglePanel('explorer')" title="Explorer">📁</div>
+            <div class="activity-icon" onclick="togglePanel('search')" title="Search">🔍</div>
+            <div class="activity-icon" onclick="togglePanel('git')" title="Source Control">🔀</div>
+            <div class="activity-icon" onclick="togglePanel('debug')" title="Debug">🐛</div>
+            <div class="activity-spacer"></div>
+            <div class="activity-icon" onclick="togglePanel('settings')" title="Settings">⚙️</div>
+        </div>
+
+        <!-- Explorer Panel -->
+        <div class="side-panel show" id="explorerPanel">
+            <div class="panel-header">
+                Explorer
+                <div class="panel-actions">
+                    <span class="panel-action" onclick="newFile()" title="New File">📄</span>
+                    <span class="panel-action" onclick="refreshExplorer()" title="Refresh">🔄</span>
+                </div>
+            </div>
+            <div class="panel-content" id="explorerContent"></div>
+        </div>
+
+        <!-- Search Panel -->
+        <div class="side-panel" id="searchPanel">
+            <div class="panel-header">
+                Search
+                <div class="panel-actions">
+                    <span class="panel-action" onclick="clearSearch()" title="Clear">✗</span>
+                </div>
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search in files..." oninput="performSearch(this.value)">
+            <div class="panel-content">
+                <div class="search-results" id="searchResults">
+                    <div style="color: #858585; font-size: 0.85em; padding: 16px; text-align: center;">
+                        Type to search...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Git Panel -->
+        <div class="side-panel" id="gitPanel">
+            <div class="panel-header">
+                Source Control
+                <div class="panel-actions">
+                    <span class="panel-action" onclick="gitCommit()" title="Commit">✓</span>
+                    <span class="panel-action" onclick="gitRefresh()" title="Refresh">🔄</span>
+                </div>
+            </div>
+            <div class="panel-content" id="gitContent"></div>
+        </div>
+
+        <!-- Debug Panel -->
+        <div class="side-panel" id="debugPanel">
+            <div class="panel-header">
+                Debug
+                <div class="panel-actions">
+                    <span class="panel-action" onclick="startDebug()" title="Start">▶</span>
+                    <span class="panel-action" onclick="stopDebug()" title="Stop">⏹</span>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div style="padding: 16px; color: #858585; font-size: 0.85em;">
+                    <div style="margin-bottom: 16px;">
+                        <div style="color: #cccccc; font-weight: 600; margin-bottom: 8px;">Breakpoints</div>
+                        <div id="breakpointsList">Click line numbers to add breakpoints</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="side-panel" id="settingsPanel">
+            <div class="panel-header">Settings</div>
+            <div class="panel-content">
+                <div class="setting-group">
+                    <div class="setting-title">Editor</div>
+                    <div class="setting-item">
+                        <span class="setting-label">Line Numbers</span>
+                        <div class="toggle-switch active" onclick="toggleLineNumbers(this)"></div>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Minimap</span>
+                        <div class="toggle-switch active" id="minimapToggle" onclick="toggleMinimap()"></div>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-label">Word Wrap</span>
+                        <div class="toggle-switch" onclick="toggleWordWrap(this)"></div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-title">Font Size</div>
+                    <input type="range" class="slider" id="fontSizeSlider" min="10" max="20" value="14" oninput="changeFontSize(this.value)">
+                    <div style="text-align: center; color: #858585; font-size: 0.85em; margin-top: 8px;" id="fontSizeDisplay">14px</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Wrapper -->
+        <div class="editor-wrapper">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item">🏠</span>
+                <span>›</span>
+                <span class="breadcrumb-item">src</span>
+                <span>›</span>
+                <span class="breadcrumb-item">main.rs</span>
+            </div>
+
+            <!-- Editor Container -->
+            <div class="editor-container">
+                <!-- Code Editor -->
+                <div class="code-editor">
+                    <div class="gutter" id="gutter">
+                        <div class="line-numbers" id="lineNumbers"></div>
+                    </div>
+                    <div class="code-content" id="codeContent" contenteditable="true" spellcheck="false"></div>
+                    <div class="minimap" id="minimap"></div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="right-panel" id="rightPanel">
+                    <div class="panel-tabs">
+                        <div class="panel-tab active" onclick="switchRightTab(this, 'demo')">Interactive</div>
+                        <div class="panel-tab" onclick="switchRightTab(this, 'variables')">Variables</div>
+                        <div class="panel-tab" onclick="switchRightTab(this, 'memory')">Memory</div>
+                    </div>
+
+                    <!-- Interactive Demo Section -->
+                    <div class="panel-section active" id="demoSection">
+                        <div class="demo-container">
+                            <div class="demo-title">🎮 String Reversal Demo</div>
+                            <label class="demo-label">Enter text to reverse:</label>
+                            <input type="text" class="demo-input" id="demoInput" placeholder="Type something..." value="Hello, Rust! 🦀">
+                            <button class="btn success" onclick="reverseString()" style="width: 100%;">
+                                <span>🔄</span>
+                                <span>Reverse</span>
+                            </button>
+                            <div class="demo-output" id="demoOutput" style="display: none;"></div>
+                        </div>
+
+                        <div class="demo-container">
+                            <div class="demo-title">📊 String Analysis</div>
+                            <div id="stringAnalysis" style="font-size: 0.85em; color: #cccccc;">
+                                Run the reversal to see analysis
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Variables Section -->
+                    <div class="panel-section" id="variablesSection">
+                        <div id="variablesList"></div>
+                    </div>
+
+                    <!-- Memory Section -->
+                    <div class="panel-section" id="memorySection">
+                        <h4 style="color: #4fc1ff; margin-bottom: 12px; font-size: 0.9em;">Memory Layout</h4>
+                        <div class="memory-grid" id="memoryGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn success" onclick="runCode()">
+                    <span>▶</span>
+                    <span>Run</span>
+                </button>
+                <button class="btn" onclick="testCode()">
+                    <span>🧪</span>
+                    <span>Test</span>
+                </button>
+                <button class="btn" onclick="debugCode()">
+                    <span>⏭</span>
+                    <span>Step</span>
+                </button>
+                <button class="btn" onclick="benchmarkCode()">
+                    <span>⚡</span>
+                    <span>Benchmark</span>
+                </button>
+                <button class="btn" onclick="toggleBottomPanel()">
+                    <span>💻</span>
+                    <span>Terminal</span>
+                </button>
+                <button class="btn" onclick="toggleRightPanel()">
+                    <span>📊</span>
+                    <span>Inspector</span>
+                </button>
+                <button class="btn" onclick="analyzeCode()">
+                    <span>🔍</span>
+                    <span>Analyze</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Panel -->
+    <div class="bottom-panel" id="bottomPanel">
+        <div class="bottom-tabs">
+            <div class="bottom-tabs-left">
+                <div class="bottom-tab active" onclick="switchBottomTab(this, 'terminal')">Terminal</div>
+                <div class="bottom-tab" onclick="switchBottomTab(this, 'problems')">Problems <span id="problemCount" style="background: #ce422b; padding: 2px 6px; border-radius: 10px; margin-left: 4px;">0</span></div>
+                <div class="bottom-tab" onclick="switchBottomTab(this, 'output')">Output</div>
+                <div class="bottom-tab" onclick="switchBottomTab(this, 'debug')">Debug Console</div>
+            </div>
+            <div class="panel-close" onclick="toggleBottomPanel()">×</div>
+        </div>
+        <div class="bottom-content">
+            <!-- Terminal -->
+            <div class="bottom-section active" id="terminalSection">
+                <div id="terminalOutput">
+                    <div class="terminal-line info">$ cargo --version</div>
+                    <div class="terminal-line">cargo 1.75.0</div>
+                </div>
+                <div class="terminal-input">
+                    <span class="terminal-prompt">$</span>
+                    <input type="text" id="terminalInput" placeholder="Type command..." onkeypress="handleTerminalInput(event)">
+                </div>
+            </div>
+
+            <!-- Problems -->
+            <div class="bottom-section" id="problemsSection"></div>
+
+            <!-- Output -->
+            <div class="bottom-section" id="outputSection">
+                <div class="terminal-line info">Ready to compile</div>
+            </div>
+
+            <!-- Debug Console -->
+            <div class="bottom-section" id="debugSection">
+                <div class="terminal-line info">Debug console ready</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header" id="modalHeader">Modal Title</div>
+        <div class="modal-body" id="modalBody">Modal content</div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeModal()">Cancel</button>
+            <button class="btn success" id="modalConfirm" onclick="confirmModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============ STATE MANAGEMENT ============
+    const state = {
+        files: {
+            'main.rs': {
+                name: 'main.rs',
+                icon: '🦀',
+                folder: 'src',
+                content: `// String reversal in Rust - The idiomatic way
+fn main() {
+    let original = String::from("Hello, Rust!");
+
+    // Method 1: Using chars() iterator
+    let reversed = reverse_string(&original);
+
+    println!("Original: {}", original);
+    println!("Reversed: {}", reversed);
+
+    // Unicode-safe: handles emojis correctly!
+    let unicode = "Hello 👋 Café";
+    let unicode_rev = reverse_string(unicode);
+    println!("Unicode: {}", unicode_rev);
+}
+
+// Zero-cost abstraction - as fast as C!
+fn reverse_string(s: &str) -> String {
+    s.chars()  // iterate over Unicode chars
+     .rev()    // reverse the iterator
+     .collect() // collect into String
+}`,
+                modified: false,
+                saved: true
+            },
+            'lib.rs': {
+                name: 'lib.rs',
+                icon: '📦',
+                folder: 'src',
+                content: `// Library with multiple implementations
+
+/// Reverse using chars() - O(n) time, O(n) space
+pub fn reverse_chars(s: &str) -> String {
+    s.chars().rev().collect()
+}
+
+/// Reverse bytes (ASCII only!) - Fastest but unsafe for UTF-8
+pub fn reverse_bytes_ascii(s: &str) -> String {
+    let mut bytes: Vec<u8> = s.bytes().collect();
+    bytes.reverse();
+    String::from_utf8(bytes).unwrap()
+}
+
+/// In-place reversal for owned String
+pub fn reverse_in_place(mut s: String) -> String {
+    unsafe {
+        let bytes = s.as_bytes_mut();
+        bytes.reverse();
+    }
+    s
+}`,
+                modified: false,
+                saved: true
+            },
+            'tests.rs': {
+                name: 'tests.rs',
+                icon: '🧪',
+                folder: 'tests',
+                content: `// Comprehensive test suite
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_simple_ascii() {
+        let input = "hello";
+        let expected = "olleh";
+        assert_eq!(reverse_string(input), expected);
+    }
+
+    #[test]
+    fn test_unicode_emoji() {
+        let input = "Hello 👋";
+        let expected = "👋 olleH";
+        assert_eq!(reverse_string(input), expected);
+    }
+
+    #[test]
+    fn test_empty_string() {
+        assert_eq!(reverse_string(""), "");
+    }
+
+    #[test]
+    fn test_palindrome() {
+        let palindrome = "racecar";
+        assert_eq!(reverse_string(palindrome), palindrome);
+    }
+}`,
+                modified: false,
+                saved: true
+            },
+            'bench.rs': {
+                name: 'bench.rs',
+                icon: '⚡',
+                folder: 'benches',
+                content: `// Performance benchmarks
+
+use criterion::{black_box, criterion_group, Criterion};
+
+fn bench_methods(c: &mut Criterion) {
+    let test = "The quick brown fox jumps over the lazy dog";
+
+    c.bench_function("chars_rev", |b| {
+        b.iter(|| {
+            black_box(test)
+                .chars()
+                .rev()
+                .collect():String()
+        })
+    });
+
+    c.bench_function("bytes_rev", |b| {
+        b.iter(|| {
+            let mut v: Vec<u8> = black_box(test).bytes().collect();
+            v.reverse();
+            String::from_utf8(v).unwrap()
+        })
+    });
+}
+
+criterion_group!(benches, bench_methods);`,
+                modified: false,
+                saved: true
+            }
+        },
+        folders: {
+            'src': ['main.rs', 'lib.rs'],
+            'tests': ['tests.rs'],
+            'benches': ['bench.rs']
+        },
+        currentFile: 'main.rs',
+        openTabs: ['main.rs'],
+        currentPanel: 'explorer',
+        breakpoints: new Set(),
+        settings: {
+            fontSize: 14,
+            lineNumbers: true,
+            minimap: true,
+            wordWrap: false
+        },
+        debugging: false,
+        currentDebugLine: null
+    };
+
+    // ============ INITIALIZATION ============
+    function init() {
+        renderExplorer();
+        openFileInEditor('main.rs');
+        updateGitPanel();
+        analyzeCode();
+
+        // Setup editor events
+        const codeContent = document.getElementById('codeContent');
+        codeContent.addEventListener('input', handleCodeInput);
+        codeContent.addEventListener('keydown', handleKeyDown);
+        codeContent.addEventListener('click', updateCursorPosition);
+
+        showToast('Welcome! 🦀', 'Rust IDE ready - Start coding!', 'success');
+    }
+
+    // ============ FILE EXPLORER ============
+    function renderExplorer() {
+        const explorerContent = document.getElementById('explorerContent');
+
+        let html = '';
+        for (const [folder, files] of Object.entries(state.folders)) {
+            html += `
+                    <div class="folder">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">▼</span>
+                            <span>📁 ${folder}</span>
+                        </div>
+                        <div class="folder-content">
+                            ${files.map(fileName => {
+                const fileData = state.files[fileName];
+                const activeClass = state.currentFile === fileName ? 'active' : '';
+                const modifiedClass = fileData && fileData.modified ? 'modified' : '';
+                return `
+                                    <div class="file-item ${activeClass} ${modifiedClass}" onclick="openFileInEditor('${fileName}')">
+                                        <span>${fileData.icon}</span>
+                                        <span>${fileName}</span>
+                                    </div>
+                                `;
+            }).join('')}
+                        </div>
+                    </div>
+                `;
+        }
+
+        html += `
+                <div class="file-item" onclick="showToast('Cargo.toml', 'Config file', 'info')">
+                    <span>📄</span>
+                    <span>Cargo.toml</span>
+                </div>
+                <div class="file-item" onclick="showToast('README', 'Documentation', 'info')">
+                    <span>📄</span>
+                    <span>README.md</span>
+                </div>
+            `;
+
+        explorerContent.innerHTML = html;
+    }
+
+    function toggleFolder(header) {
+        const folder = header.parentElement;
+        folder.classList.toggle('collapsed');
+    }
+
+    // ============ TAB MANAGEMENT ============
+    function renderTabs() {
+        const tabBar = document.getElementById('tabBar');
+        tabBar.innerHTML = state.openTabs.map(fileName => {
+            const file = state.files[fileName];
+            const activeClass = state.currentFile === fileName ? 'active' : '';
+            const modifiedClass = file.modified ? 'modified' : '';
+            return `
+                    <div class="tab ${activeClass} ${modifiedClass}" data-file="${fileName}" onclick="switchTab(event, '${fileName}')">
+                        <span>${file.icon}</span>
+                        <span>${fileName}</span>
+                        <span class="tab-close" onclick="closeTab(event, '${fileName}')">×</span>
+                    </div>
+                `;
+        }).join('');
+    }
+
+    function switchTab(event, fileName) {
+        if (event.target.classList.contains('tab-close')) return;
+        openFileInEditor(fileName);
+    }
+
+    function closeTab(event, fileName) {
+        event.stopPropagation();
+        const index = state.openTabs.indexOf(fileName);
+        if (index > -1) {
+            state.openTabs.splice(index, 1);
+        }
+
+        if (state.currentFile === fileName && state.openTabs.length > 0) {
+            openFileInEditor(state.openTabs[state.openTabs.length - 1]);
+        } else if (state.openTabs.length === 0) {
+            document.getElementById('codeContent').innerHTML = '';
+            document.getElementById('lineNumbers').innerHTML = '';
+        }
+
+        renderTabs();
+    }
+
+    function closeAllTabs() {
+        state.openTabs = [];
+        state.currentFile = null;
+        renderTabs();
+        document.getElementById('codeContent').innerHTML = '';
+        document.getElementById('lineNumbers').innerHTML = '';
+        showToast('Closed', 'All tabs closed', 'info');
+    }
+
+    // ============ FILE OPERATIONS ============
+    function openFileInEditor(fileName) {
+        if (!state.openTabs.includes(fileName)) {
+            state.openTabs.push(fileName);
+        }
+
+        state.currentFile = fileName;
+        const file = state.files[fileName];
+
+        // Update breadcrumb
+        const folder = file.folder || 'root';
+        document.getElementById('breadcrumb').innerHTML = `
+                <span class="breadcrumb-item">🏠</span>
+                <span>›</span>
+                <span class="breadcrumb-item">${folder}</span>
+                <span>›</span>
+                <span class="breadcrumb-item">${fileName}</span>
+            `;
+
+        // Render code with syntax highlighting
+        renderCode(file.content);
+        renderTabs();
+        renderExplorer();
+        updateVariablesPanel();
+        updateMemoryPanel();
+    }
+
+    function renderCode(code) {
+        const lines = code.split('\n');
+        const codeContent = document.getElementById('codeContent');
+        const lineNumbers = document.getElementById('lineNumbers');
+
+        // Apply syntax highlighting
+        const highlighted = lines.map(line => highlightSyntax(line));
+
+        codeContent.innerHTML = highlighted.map((line, i) =>
+            `<div class="code-line" data-line="${i + 1}">${line || '&nbsp;'}</div>`
+        ).join('');
+
+        lineNumbers.innerHTML = lines.map((_, i) =>
+            `<div onclick="toggleBreakpoint(${i + 1})">${i + 1}</div>`
+        ).join('');
+
+        updateMinimap();
+    }
+
+    function highlightSyntax(line) {
+        return line
+            .replace(/\/\/.*/g, match => `<span class="cmt">${match}</span>`)
+            .replace(/\b(fn|let|mut|pub|use|mod|impl|trait|struct|enum|if|else|match|for|while|loop|return|break|continue|const|static|unsafe|async|await|move|ref|dyn|where|as|in)\b/g, '<span class="kw">$1</span>')
+            .replace(/\b(String|str|Vec|Option|Result|Box|Rc|Arc|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|bool|char|usize|isize)\b/g, '<span class="typ">$1</span>')
+            .replace(/\b([a-z_][a-z0-9_]*)\s*\(/g, '<span class="fn">$1</span>(')
+            .replace(/(".*?"|'.*?')/g, '<span class="str">$1</span>')
+            .replace(/\b(\d+)\b/g, '<span class="num">$1</span>')
+            .replace(/(println!|assert_eq!|panic!|vec!|format!)/g, '<span class="mac">$1</span>');
+    }
+
+    function handleCodeInput() {
+        const file = state.files[state.currentFile];
+        if (!file) return;
+
+        const newContent = document.getElementById('codeContent').innerText;
+        file.content = newContent;
+        file.modified = true;
+        file.saved = false;
+
+        renderTabs();
+        renderExplorer();
+        updateGitPanel();
+        analyzeCode();
+    }
+
+    function handleKeyDown(event) {
+        // Tab key
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            document.execCommand('insertText', false, '    ');
+        }
+    }
+
+    function updateCursorPosition() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(document.getElementById('codeContent'));
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+            const caretOffset = preCaretRange.toString().length;
+
+            const text = document.getElementById('codeContent').innerText;
+            const lines = text.substring(0, caretOffset).split('\n');
+            const line = lines.length;
+            const col = lines[lines.length - 1].length + 1;
+
+            document.getElementById('cursorPosition').innerHTML = `<span>Ln ${line}, Col ${col}</span>`;
+        }
+    }
+
+    function saveFile() {
+        const file = state.files[state.currentFile];
+        if (file) {
+            file.modified = false;
+            file.saved = true;
+            renderTabs();
+            renderExplorer();
+            updateGitPanel();
+            showToast('Saved ✓', `${state.currentFile} saved`, 'success');
+        }
+    }
+
+    function saveAllFiles() {
+        let count = 0;
+        for (const fileName in state.files) {
+            if (state.files[fileName].modified) {
+                state.files[fileName].modified = false;
+                state.files[fileName].saved = true;
+                count++;
+            }
+        }
+        renderTabs();
+        renderExplorer();
+        updateGitPanel();
+        showToast('Saved All ✓', `${count} file(s) saved`, 'success');
+    }
+
+    function newFile() {
+        const modalBody = `
+                <div style="color: #cccccc; margin-bottom: 8px;">Enter filename:</div>
+                <input type="text" class="modal-input" id="modalInput" placeholder="new_file.rs" value="new_file.rs">
+                <div style="color: #cccccc; margin: 16px 0 8px;">Select folder:</div>
+                <select class="modal-select" id="folderSelect">
+                    <option value="src">src</option>
+                    <option value="tests">tests</option>
+                    <option value="benches">benches</option>
+                </select>
+            `;
+
+        showModalCustom('New File', modalBody, (values) => {
+            const filename = document.getElementById('modalInput').value;
+            const folder = document.getElementById('folderSelect').value;
+
+            if (filename && !state.files[filename]) {
+                state.files[filename] = {
+                    name: filename,
+                    icon: '📄',
+                    folder: folder,
+                    content: '// New file\n',
+                    modified: false,
+                    saved: true
+                };
+
+                // Add to folder
+                if (!state.folders[folder]) {
+                    state.folders[folder] = [];
+                }
+                state.folders[folder].push(filename);
+
+                renderExplorer();
+                openFileInEditor(filename);
+                showToast('Created ✓', `${filename} in ${folder}/`, 'success');
+            }
+        });
+    }
+
+    function formatCode() {
+        const file = state.files[state.currentFile];
+        if (!file) return;
+
+        // Simple formatting: add indentation
+        const lines = file.content.split('\n');
+        let indent = 0;
+        const formatted = lines.map(line => {
+            const trimmed = line.trim();
+            if (trimmed.endsWith('}')) indent = Math.max(0, indent - 1);
+            const result = '    '.repeat(indent) + trimmed;
+            if (trimmed.endsWith('{')) indent++;
+            return result;
+        }).join('\n');
+
+        file.content = formatted;
+        renderCode(file.content);
+        showToast('Formatted ✓', 'Code formatted', 'success');
+    }
+
+    // ============ SEARCH ============
+    function performSearch(query) {
+        const resultsDiv = document.getElementById('searchResults');
+
+        if (!query) {
+            resultsDiv.innerHTML = '<div style="color: #858585; font-size: 0.85em; padding: 16px; text-align: center;">Type to search...</div>';
+            return;
+        }
+
+        const results = [];
+        const queryLower = query.toLowerCase();
+
+        for (const fileName in state.files) {
+            const file = state.files[fileName];
+            const lines = file.content.split('\n');
+
+            lines.forEach((line, index) => {
+                if (line.toLowerCase().includes(queryLower)) {
+                    results.push({
+                        file: fileName,
+                        line: index + 1,
+                        content: line.trim(),
+                        query: query
+                    });
+                }
+            });
+        }
+
+        if (results.length === 0) {
+            resultsDiv.innerHTML = '<div style="color: #858585; font-size: 0.85em; padding: 16px; text-align: center;">No results found</div>';
+            return;
+        }
+
+        resultsDiv.innerHTML = results.map(r => {
+            const highlighted = r.content.replace(new RegExp(query, 'gi'), match => `<mark>${match}</mark>`);
+            return `
+                    <div class="search-result" onclick="openFileInEditor('${r.file}')">
+                        <div class="search-file">${r.file}:${r.line}</div>
+                        <div class="search-match">${highlighted}</div>
+                    </div>
+                `;
+        }).join('');
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        performSearch('');
+    }
+
+    function findInFile() {
+        togglePanel('search');
+        document.getElementById('searchInput').focus();
+    }
+
+    // ============ GIT PANEL ============
+    function updateGitPanel() {
+        const gitContent = document.getElementById('gitContent');
+        const modifiedFiles = Object.values(state.files).filter(f => f.modified);
+
+        gitContent.innerHTML = `
+                <div class="git-section">
+                    <div class="git-section-title">Changes (${modifiedFiles.length})</div>
+                    ${modifiedFiles.map(file => `
+                        <div class="git-file" onclick="openFileInEditor('${file.name}')">
+                            <span class="git-status modified">M</span>
+                            <span>${file.name}</span>
+                        </div>
+                    `).join('') || '<div style="color: #858585; font-size: 0.85em; padding: 8px;">No changes</div>'}
+                </div>
+                <div class="git-section">
+                    <div class="git-section-title">Staged Changes (0)</div>
+                    <div style="color: #858585; font-size: 0.85em; padding: 8px;">No staged changes</div>
+                </div>
+            `;
+    }
+
+    function gitCommit() {
+        const modifiedFiles = Object.values(state.files).filter(f => f.modified);
+        if (modifiedFiles.length === 0) {
+            showToast('Git', 'No changes to commit', 'info');
+            return;
+        }
+
+        showModal('Commit Changes', 'Enter commit message:', '', (message) => {
+            if (message) {
+                saveAllFiles();
+                showToast('Committed ✓', `${modifiedFiles.length} file(s) committed`, 'success');
+            }
+        });
+    }
+
+    function gitRefresh() {
+        updateGitPanel();
+        showToast('Git ✓', 'Refreshed', 'success');
+    }
+
+    // ============ CODE EXECUTION ============
+    function runCode() {
+        const output = document.getElementById('terminalOutput');
+        output.innerHTML =
+            '<div class="terminal-line info">$ cargo run</div>' +
+            '<div class="terminal-line">   Compiling string-reverse v0.1.0</div>' +
+            '<div class="terminal-line success">    Finished dev [unoptimized] in 0.45s</div>' +
+            '<div class="terminal-line success">     Running `target/debug/string-reverse`</div>' +
+            '<div class="terminal-line" style="margin-top: 10px; color: #fff;">Original: Hello, Rust!</div>' +
+            '<div class="terminal-line" style="color: #89d185;">Reversed: !tsuR ,olleH</div>' +
+            '<div class="terminal-line" style="margin-top: 10px; color: #fff;">Unicode: Hello 👋 Café</div>' +
+            '<div class="terminal-line" style="color: #89d185;">Unicode reversed: éfaC 👋 olleH</div>';
+
+        document.getElementById('bottomPanel').classList.add('show');
+        switchBottomTab(document.querySelector('.bottom-tab'), 'terminal');
+
+        // Update variables
+        updateVariablesWithValues({
+            'original': 'String { value: "Hello, Rust!", len: 12 }',
+            'reversed': 'String { value: "!tsuR ,olleH", len: 12 }',
+            'unicode': '&str { value: "Hello 👋 Café" }'
+        });
+
+        showToast('Success! ✓', 'Code executed', 'success');
+    }
+
+    function testCode() {
+        const output = document.getElementById('terminalOutput');
+        output.innerHTML =
+            '<div class="terminal-line info">$ cargo test</div>' +
+            '<div class="terminal-line">   Compiling string-reverse v0.1.0</div>' +
+            '<div class="terminal-line success">    Finished test [unoptimized] in 0.52s</div>' +
+            '<div class="terminal-line">     Running unittests</div>' +
+            '<div class="terminal-line" style="margin-top: 10px;">running 4 tests</div>' +
+            '<div class="terminal-line success">test test_simple_ascii ... ok</div>' +
+            '<div class="terminal-line success">test test_unicode_emoji ... ok</div>' +
+            '<div class="terminal-line success">test test_empty_string ... ok</div>' +
+            '<div class="terminal-line success">test test_palindrome ... ok</div>' +
+            '<div class="terminal-line success" style="margin-top: 10px;">test result: ok. 4 passed; 0 failed</div>';
+
+        document.getElementById('bottomPanel').classList.add('show');
+        showToast('Tests Passed! ✓', 'All tests successful', 'success');
+    }
+
+    function debugCode() {
+        if (state.debugging) {
+            stopDebug();
+            return;
+        }
+
+        state.debugging = true;
+        state.currentDebugLine = 0;
+
+        document.getElementById('rightPanel').classList.add('show');
+        showToast('Debug', 'Step through mode activated', 'info');
+
+        // Highlight first line
+        stepDebugLine();
+    }
+
+    function stepDebugLine() {
+        if (!state.debugging) return;
+
+        const lines = document.querySelectorAll('.code-line');
+
+        // Remove previous highlight
+        lines.forEach(line => line.classList.remove('executing'));
+
+        // Highlight current line
+        if (state.currentDebugLine < lines.length) {
+            lines[state.currentDebugLine].classList.add('executing');
+
+            // Update debug console
+            const debugSection = document.getElementById('debugSection');
+            debugSection.innerHTML +=
+                `<div class="terminal-line">Executing line ${state.currentDebugLine + 1}</div>`;
+
+            state.currentDebugLine++;
+
+            // Auto-continue after delay
+            setTimeout(() => {
+                if (state.debugging && state.currentDebugLine < lines.length) {
+                    stepDebugLine();
+                } else {
+                    stopDebug();
+                }
+            }, 500);
+        }
+    }
+
+    function stopDebug() {
+        state.debugging = false;
+        state.currentDebugLine = null;
+        document.querySelectorAll('.code-line').forEach(line => line.classList.remove('executing'));
+        showToast('Debug', 'Stopped', 'info');
+    }
+
+    function startDebug() {
+        debugCode();
+    }
+
+    function benchmarkCode() {
+        const output = document.getElementById('terminalOutput');
+        output.innerHTML =
+            '<div class="terminal-line info">$ cargo bench</div>' +
+            '<div class="terminal-line">   Compiling string-reverse v0.1.0</div>' +
+            '<div class="terminal-line success">    Finished bench [optimized] in 2.34s</div>' +
+            '<div class="terminal-line" style="margin-top: 10px;">Running benchmarks...</div>' +
+            '<div class="terminal-line success">chars_rev       time: [0.145 ms 0.150 ms 0.155 ms]</div>' +
+            '<div class="terminal-line success">bytes_rev       time: [0.115 ms 0.120 ms 0.125 ms]</div>' +
+            '<div class="terminal-line" style="margin-top: 10px; color: #89d185;">🏆 bytes_rev is 20% faster!</div>';
+
+        document.getElementById('bottomPanel').classList.add('show');
+        showToast('Benchmark ⚡', 'Completed', 'success');
+    }
+
+    // ============ CODE ANALYSIS ============
+    function analyzeCode() {
+        const file = state.files[state.currentFile];
+        if (!file) return;
+
+        const problems = [];
+        const lines = file.content.split('\n');
+
+        lines.forEach((line, index) => {
+            // Check for unused variables
+            if (line.includes('let') && !line.includes('_') && !lines.slice(index + 1).some(l => {
+                const varName = line.match(/let\s+([a-z_][a-z0-9_]*)/)?.[1];
+                return varName && l.includes(varName);
+            })) {
+                const varName = line.match(/let\s+([a-z_][a-z0-9_]*)/)?.[1];
+                if (varName) {
+                    problems.push({
+                        type: 'warning',
+                        message: `unused variable: \`${varName}\``,
+                        line: index + 1,
+                        file: state.currentFile
+                    });
+                }
+            }
+
+            // Check for missing semicolons
+            if (line.trim().startsWith('let') && !line.trim().endsWith(';') && !line.trim().endsWith('{')) {
+                problems.push({
+                    type: 'error',
+                    message: 'expected `;`',
+                    line: index + 1,
+                    file: state.currentFile
+                });
+            }
+        });
+
+        updateProblemsPanel(problems);
+    }
+
+    function updateProblemsPanel(problems) {
+        const problemsSection = document.getElementById('problemsSection');
+        const problemCount = document.getElementById('problemCount');
+
+        problemCount.textContent = problems.length;
+
+        if (problems.length === 0) {
+            problemsSection.innerHTML = '<div style="color: #89d185; padding: 16px;">✓ No problems detected</div>';
+            return;
+        }
+
+        problemsSection.innerHTML = problems.map(problem => `
+                <div class="problem-item" onclick="openFileInEditor('${problem.file}')">
+                    <div class="problem-header">
+                        <span class="problem-icon ${problem.type}">${problem.type === 'error' ? '✗' : '⚠'}</span>
+                        <span style="color: ${problem.type === 'error' ? '#f48771' : '#cca700'}; font-weight: 600; font-size: 0.85em;">${problem.type === 'error' ? 'Error' : 'Warning'}</span>
+                    </div>
+                    <div class="problem-message">${problem.message}</div>
+                    <div class="problem-location">${problem.file}:${problem.line}</div>
+                </div>
+            `).join('');
+    }
+
+    // ============ INTERACTIVE DEMO ============
+    function reverseString() {
+        const input = document.getElementById('demoInput').value;
+        const reversed = input.split('').reverse().join('');
+
+        const outputDiv = document.getElementById('demoOutput');
+        outputDiv.style.display = 'block';
+        outputDiv.innerHTML = `
+                <div class="demo-label">Reversed String:</div>
+                <div class="demo-value">${reversed}</div>
+            `;
+
+        // Update analysis
+        const analysis = document.getElementById('stringAnalysis');
+        analysis.innerHTML = `
+                <div style="margin-bottom: 8px;"><strong>Original:</strong> "${input}"</div>
+                <div style="margin-bottom: 8px;"><strong>Reversed:</strong> "${reversed}"</div>
+                <div style="margin-bottom: 8px;"><strong>Length:</strong> ${input.length} characters</div>
+                <div style="margin-bottom: 8px;"><strong>Bytes:</strong> ${new Blob([input]).size} bytes</div>
+                <div style="margin-bottom: 8px;"><strong>Unicode safe:</strong> <span style="color: #89d185;">✓ Yes</span></div>
+                <div><strong>Method:</strong> <span style="color: #ce422b;">chars().rev().collect()</span></div>
+            `;
+
+        showToast('Reversed! ✓', 'String processed', 'success');
+    }
+
+    // ============ PANELS ============
+    function updateVariablesPanel() {
+        const variablesList = document.getElementById('variablesList');
+        variablesList.innerHTML = `
+                <div class="variable-item">
+                    <div class="var-name">original</div>
+                    <div class="var-type">String</div>
+                    <div class="var-value">"Hello, Rust!"</div>
+                </div>
+                <div class="variable-item">
+                    <div class="var-name">reversed</div>
+                    <div class="var-type">String</div>
+                    <div class="var-value">"!tsuR ,olleH"</div>
+                </div>
+                <div class="variable-item">
+                    <div class="var-name">s</div>
+                    <div class="var-type">&str</div>
+                    <div class="var-value">"Hello, Rust!"</div>
+                </div>
+            `;
+    }
+
+    function updateVariablesWithValues(vars) {
+        const variablesList = document.getElementById('variablesList');
+        variablesList.innerHTML = Object.entries(vars).map(([name, value]) => `
+                <div class="variable-item">
+                    <div class="var-name">${name}</div>
+                    <div class="var-value">${value}</div>
+                </div>
+            `).join('');
+    }
+
+    function updateMemoryPanel() {
+        const memoryGrid = document.getElementById('memoryGrid');
+        memoryGrid.innerHTML = `
+                <div class="memory-block stack">
+                    <div class="memory-address">Stack: 0x7ffd5e3a</div>
+                    <div class="memory-value">→ heap</div>
+                    <div class="memory-label">String ptr</div>
+                </div>
+                <div class="memory-block stack">
+                    <div class="memory-address">Stack: 0x7ffd5e42</div>
+                    <div class="memory-value">12</div>
+                    <div class="memory-label">capacity</div>
+                </div>
+                <div class="memory-block stack">
+                    <div class="memory-address">Stack: 0x7ffd5e4a</div>
+                    <div class="memory-value">12</div>
+                    <div class="memory-label">length</div>
+                </div>
+                <div class="memory-block heap">
+                    <div class="memory-address">Heap: 0x55c8d2a0</div>
+                    <div class="memory-value">Hello, Rust!</div>
+                    <div class="memory-label">UTF-8 bytes</div>
+                </div>
+            `;
+    }
+
+    function togglePanel(panelName) {
+        const panels = ['explorer', 'search', 'git', 'debug', 'settings'];
+        const panel = document.getElementById(panelName + 'Panel');
+        const icons = document.querySelectorAll('.activity-icon');
+
+        // Hide all panels
+        panels.forEach(p => {
+            document.getElementById(p + 'Panel').classList.remove('show');
+        });
+
+        // Remove active from all icons
+        icons.forEach(icon => icon.classList.remove('active'));
+
+        // If clicking same panel, just hide
+        if (state.currentPanel === panelName && !panel.classList.contains('show')) {
+            state.currentPanel = null;
+        } else {
+            // Show clicked panel
+            panel.classList.add('show');
+            event.target.classList.add('active');
+            state.currentPanel = panelName;
+        }
+    }
+
+    function toggleBottomPanel() {
+        document.getElementById('bottomPanel').classList.toggle('show');
+    }
+
+    function toggleRightPanel() {
+        document.getElementById('rightPanel').classList.toggle('show');
+    }
+
+    function switchBottomTab(tab, sectionName) {
+        document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        document.querySelectorAll('.bottom-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionName + 'Section').classList.add('active');
+    }
+
+    function switchRightTab(tab, sectionName) {
+        document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        document.querySelectorAll('.panel-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionName + 'Section').classList.add('active');
+    }
+
+    // ============ SETTINGS ============
+    function toggleLineNumbers(toggle) {
+        toggle.classList.toggle('active');
+        state.settings.lineNumbers = toggle.classList.contains('active');
+        document.getElementById('gutter').style.display = state.settings.lineNumbers ? 'flex' : 'none';
+    }
+
+    function toggleMinimap() {
+        const toggle = document.getElementById('minimapToggle');
+        toggle.classList.toggle('active');
+        state.settings.minimap = toggle.classList.contains('active');
+        document.getElementById('minimap').style.display = state.settings.minimap ? 'block' : 'none';
+    }
+
+    function toggleWordWrap(toggle) {
+        toggle.classList.toggle('active');
+        state.settings.wordWrap = toggle.classList.contains('active');
+        document.getElementById('codeContent').style.whiteSpace = state.settings.wordWrap ? 'pre-wrap' : 'pre';
+    }
+
+    function changeFontSize(size) {
+        state.settings.fontSize = parseInt(size);
+        document.getElementById('codeContent').style.fontSize = size + 'px';
+        document.getElementById('fontSizeDisplay').textContent = size + 'px';
+    }
+
+    // ============ MINIMAP ============
+    function updateMinimap() {
+        const content = document.getElementById('codeContent');
+        const minimap = document.getElementById('minimap');
+        const lines = content.querySelectorAll('.code-line');
+
+        minimap.innerHTML = Array.from(lines).map(line => {
+            const opacity = line.textContent.trim() ? '0.3' : '0.1';
+            return `<div class="minimap-line" style="opacity: ${opacity}"></div>`;
+        }).join('');
+    }
+
+    // ============ BREAKPOINTS ============
+    function toggleBreakpoint(lineNumber) {
+        if (state.breakpoints.has(lineNumber)) {
+            state.breakpoints.delete(lineNumber);
+        } else {
+            state.breakpoints.add(lineNumber);
+        }
+
+        updateBreakpointsList();
+        showToast('Breakpoint', `Line ${lineNumber}`, 'info');
+    }
+
+    function updateBreakpointsList() {
+        const list = document.getElementById('breakpointsList');
+        if (state.breakpoints.size === 0) {
+            list.innerHTML = 'Click line numbers to add breakpoints';
+            return;
+        }
+
+        list.innerHTML = Array.from(state.breakpoints).map(line =>
+            `<div style="color: #ce422b; margin: 4px 0;">Line ${line}</div>`
+        ).join('');
+    }
+
+    // ============ TERMINAL ============
+    function handleTerminalInput(event) {
+        if (event.key === 'Enter') {
+            const input = event.target.value;
+            const output = document.getElementById('terminalOutput');
+
+            output.innerHTML += `<div class="terminal-line info">$ ${input}</div>`;
+
+            // Process commands
+            if (input.includes('cargo run')) {
+                runCode();
+            } else if (input.includes('cargo test')) {
+                testCode();
+            } else if (input.includes('cargo bench')) {
+                benchmarkCode();
+            } else if (input === 'clear') {
+                output.innerHTML = '';
+            } else {
+                output.innerHTML += `<div class="terminal-line">Command: ${input}</div>`;
+            }
+
+            event.target.value = '';
+            output.scrollTop = output.scrollHeight;
+        }
+    }
+
+    // ============ MODAL ============
+    let modalCallback = null;
+
+    function showModal(title, body, defaultValue, callback) {
+        document.getElementById('modalHeader').textContent = title;
+        document.getElementById('modalBody').innerHTML = `
+                <div style="color: #cccccc;">${body}</div>
+                <input type="text" class="modal-input" id="modalInput" value="${defaultValue}">
+            `;
+        document.getElementById('modalOverlay').classList.add('show');
+        modalCallback = callback;
+
+        setTimeout(() => document.getElementById('modalInput').focus(), 100);
+    }
+
+    function showModalCustom(title, bodyHTML, callback) {
+        document.getElementById('modalHeader').textContent = title;
+        document.getElementById('modalBody').innerHTML = bodyHTML;
+        document.getElementById('modalOverlay').classList.add('show');
+        modalCallback = callback;
+
+        setTimeout(() => {
+            const input = document.getElementById('modalInput');
+            if (input) input.focus();
+        }, 100);
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('show');
+        modalCallback = null;
+    }
+
+    function confirmModal() {
+        if (modalCallback) {
+            modalCallback();
+        }
+        closeModal();
+    }
+
+    // ============ HELPERS ============
+    function showToast(title, message, type) {
+        const existingToasts = document.querySelectorAll('.toast');
+        existingToasts.forEach(t => t.remove());
+
+        const toast = document.createElement('div');
+        toast.className = 'toast ' + type;
+        toast.innerHTML =
+            `<div class="toast-header">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'} ${title}</div>` +
+            `<div class="toast-body">${message}</div>`;
+
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function showHelp() {
+        showModal('Documentation', 'Visit docs.rs for Rust documentation', '', () => {});
+    }
+
+    function showShortcuts() {
+        const shortcutsHTML = `
+                <div style="line-height: 1.8; color: #cccccc;">
+                    <div><strong>Ctrl+S</strong> - Save file</div>
+                    <div><strong>Ctrl+N</strong> - New file</div>
+                    <div><strong>Ctrl+Enter</strong> - Run code</div>
+                    <div><strong>Ctrl+Shift+T</strong> - Run tests</div>
+                    <div><strong>Ctrl+F</strong> - Find</div>
+                    <div><strong>Ctrl+/</strong> - Toggle comment</div>
+                    <div><strong>F10</strong> - Step through</div>
+                </div>
+            `;
+        showModalCustom('Keyboard Shortcuts', shortcutsHTML, () => {});
+    }
+
+    function showAbout() {
+        showModal('About Rust String IDE', 'Interactive Rust development environment for string manipulation. Version 1.0', '', () => {});
+    }
+
+    function refreshExplorer() {
+        renderExplorer();
+        showToast('Refreshed ✓', 'Explorer updated', 'success');
+    }
+
+    function toggleComment() {
+        showToast('Comment', 'Toggle comment', 'info');
+    }
+
+    // ============ KEYBOARD SHORTCUTS ============
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            saveFile();
+        }
+        if (e.ctrlKey && e.key === 'n') {
+            e.preventDefault();
+            newFile();
+        }
+        if (e.ctrlKey && e.key === 'Enter') {
+            e.preventDefault();
+            runCode();
+        }
+        if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+            e.preventDefault();
+            testCode();
+        }
+        if (e.key === 'F10') {
+            e.preventDefault();
+            debugCode();
+        }
+    });
+
+    // ============ INITIALIZE ============
+    window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

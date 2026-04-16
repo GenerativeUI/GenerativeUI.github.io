@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful European Mountain Towns | Spring & Summer Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5a87;
+            --secondary: #4a90a4;
+            --accent: #7fb3d3;
+            --dark: #1a3a52;
+            --light: #f0f7fa;
+            --success: #5cb85c;
+            --warning: #f0ad4e;
+            --text: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(45, 90, 135, 0.95) 0%, rgba(74, 144, 164, 0.95) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path fill="%23ffffff" opacity="0.1" d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            opacity: 0.95;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Filters Section */
+        .filters {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 247, 250, 0.98));
+            backdrop-filter: blur(10px);
+            padding: 35px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(45, 90, 135, 0.1);
+        }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 180px;
+            flex: 1;
+            max-width: 220px;
+        }
+
+        .filter-group label {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .filter-group label::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .filter-group select {
+            padding: 14px 16px;
+            padding-right: 40px;
+            border: 2px solid rgba(45, 90, 135, 0.15);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--white);
+            color: var(--text);
+            font-weight: 500;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d5a87' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-group select:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 135, 0.15);
+            background-color: #fafbfc;
+        }
+
+        .filter-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(45, 90, 135, 0.1), 0 6px 20px rgba(45, 90, 135, 0.2);
+            background-color: var(--white);
+        }
+
+        .filter-group select option {
+            padding: 12px;
+            background: var(--white);
+            color: var(--text);
+        }
+
+        .filter-group select option:hover {
+            background: var(--light);
+        }
+
+        .range-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .clear-filters {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: var(--white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(74, 144, 164, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            min-width: 140px;
+            align-self: flex-end;
+        }
+
+        .clear-filters:hover {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(45, 90, 135, 0.4);
+        }
+
+        .clear-filters:active {
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* City Cards Grid */
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            transition: opacity 0.3s ease;
+        }
+
+        .cities-grid.filtering {
+            opacity: 0.7;
+        }
+
+        .city-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .city-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .city-card.selected {
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 0 4px rgba(45, 90, 135, 0.15), 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .city-image {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 50%, var(--primary) 100%);
+        }
+
+        .city-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .city-card:hover .city-image img {
+            transform: scale(1.1);
+        }
+
+        .city-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--primary);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.5px;
+        }
+
+        .city-content {
+            padding: 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .city-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 18px;
+        }
+
+        .city-name {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .city-country {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .city-rating {
+            display: flex;
+            gap: 3px;
+            font-size: 1.1rem;
+            align-items: center;
+        }
+
+        .star {
+            color: #ffd700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .city-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0;
+        }
+
+        .feature-tag {
+            background: linear-gradient(135deg, var(--light), #e8f4f8);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            border: 1px solid rgba(45, 90, 135, 0.1);
+            transition: all 0.2s;
+        }
+
+        .feature-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .city-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 18px 12px;
+            background: linear-gradient(135deg, var(--light), #f8fcff);
+            border-radius: 16px;
+            border: 1px solid rgba(45, 90, 135, 0.08);
+            transition: all 0.3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .stat-value {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .city-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin: 18px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .detail-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .detail-section h4 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .detail-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(45, 90, 135, 0.1);
+            transition: all 0.2s;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .info-item strong {
+            color: var(--dark);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .info-item span {
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .details-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            flex: 1;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(45, 90, 135, 0.3);
+            letter-spacing: 0.3px;
+        }
+
+        .details-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 135, 0.4);
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+        }
+
+        .compare-btn {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(92, 184, 92, 0.3);
+            white-space: nowrap;
+        }
+
+        .compare-btn:hover {
+            background: #4cae4c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(92, 184, 92, 0.4);
+        }
+
+        .compare-btn.selected {
+            background: var(--primary);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .modal::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 30px;
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 10px 30px var(--shadow);
+            display: none;
+        }
+
+        .comparison-section.active {
+            display: block;
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .comparison-title {
+            font-size: 2rem;
+            color: var(--dark);
+        }
+
+        .clear-comparison {
+            background: var(--warning);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .comparison-table th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--light);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 15px;
+            color: var(--white);
+        }
+
+        .stat-card-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-card-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .filter-group label {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 50px 12px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem; /* 20% reduction from 3.5rem */
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .filters {
+                position: static;
+                padding: 25px 12px;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .clear-filters {
+                align-self: stretch;
+                margin-top: 10px;
+            }
+
+            .container {
+                padding: 30px 12px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+
+            .cities-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+
+            .city-card {
+                margin: 0;
+            }
+
+            .city-content {
+                padding: 20px;
+            }
+
+            .city-name {
+                font-size: 1.52rem; /* 20% reduction from 1.9rem */
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px 5px;
+            }
+
+            .comparison-section {
+                padding: 20px 12px;
+                margin-top: 40px;
+            }
+
+            .travel-tips-section {
+                padding: 20px !important;
+                margin: 20px 0 !important;
+            }
+
+            .tip-card {
+                padding: 15px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .info-item {
+                padding: 12px !important;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .city-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-section {
+                margin-bottom: 20px;
+                padding: 12px;
+            }
+
+            /* Reduce all heading font sizes by 20% on mobile */
+            .modal-header h2 {
+                font-size: 1.6rem; /* 20% reduction from 2rem */
+            }
+
+            .comparison-title {
+                font-size: 1.6rem; /* 20% reduction from 2rem */
+            }
+
+            .tip-card h4 {
+                font-size: 0.96rem; /* 20% reduction from 1.2rem */
+            }
+
+            /* Reduce inline styled h3 and h4 headings */
+            h3 {
+                font-size: 1.44rem !important; /* 20% reduction from 1.8rem */
+            }
+
+            h4 {
+                font-size: 1.04rem !important; /* 20% reduction from 1.3rem */
+            }
+
+            .detail-section h4 {
+                font-size: 0.96rem !important; /* 20% reduction from 1.2rem - override general h4 */
+            }
+
+            /* Reduce padding on inline styled boxes */
+            .detail-section [style*="padding: 20px"],
+            .detail-section [style*="padding: 15px"],
+            .detail-section .info-item[style*="padding"] {
+                padding: 12px !important;
+            }
+
+            /* Force all grids to single column on mobile */
+            .detail-section [style*="grid-template-columns"],
+            .detail-section .info-grid,
+            .detail-section div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Reduce padding on all nested divs with inline padding */
+            .detail-section > div > div[style*="padding"] {
+                padding: 12px !important;
+            }
+
+            .modal {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .details-btn,
+            .compare-btn {
+                width: 100%;
+            }
+
+            .no-results {
+                padding: 40px 12px;
+            }
+
+            .loading {
+                padding: 30px 12px;
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        .travel-tips-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .tip-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-card p {
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        .activities-section {
+            margin-top: 15px;
+        }
+
+        .activity-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 5px 5px 5px 0;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 620px) {
+            .stat-value {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🏔️ Beautiful European Mountain Towns</h1>
+            <p>Discover stunning destinations perfect for spring & summer adventures</p>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="priceFilter">💰 Hotel Price Range</label>
+                <select id="priceFilter" onchange="applyFilters()">
+                    <option value="all">All Prices</option>
+                    <option value="budget">Budget (€30-€60/night)</option>
+                    <option value="mid">Mid-Range (€60-€100/night)</option>
+                    <option value="premium">Premium (€100+/night)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="walkabilityFilter">🚶 Walkability</label>
+                <select id="walkabilityFilter" onchange="applyFilters()">
+                    <option value="all">All Levels</option>
+                    <option value="excellent">Excellent</option>
+                    <option value="very-good">Very Good</option>
+                    <option value="good">Good</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="transportFilter">🚇 Public Transport</label>
+                <select id="transportFilter" onchange="applyFilters()">
+                    <option value="all">All Levels</option>
+                    <option value="excellent">Excellent</option>
+                    <option value="very-good">Very Good</option>
+                    <option value="good">Good</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="nearbyCityFilter">🏙️ Nearby Large City</label>
+                <select id="nearbyCityFilter" onchange="applyFilters()">
+                    <option value="all">All</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2 class="section-title">Explore Amazing Destinations</h2>
+        
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h3 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 20px;">
+                Destination Overview
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-number" id="totalCities">10</div>
+                    <div class="stat-card-label">Amazing Towns</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-number" id="avgPrice">€75</div>
+                    <div class="stat-card-label">Avg. Hotel Price</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-number" id="avgRating">4.6</div>
+                    <div class="stat-card-label">Average Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-number" id="selectedCount">0</div>
+                    <div class="stat-card-label">Selected for Comparison</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cities Grid -->
+        <div class="cities-grid" id="citiesGrid">
+            <!-- Cities will be dynamically inserted here -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <p>No cities match your filters. Try adjusting your search criteria.</p>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+            <div class="modal" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2 id="modalTitle">City Details</h2>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-content" id="modalContent">
+                    <!-- Modal content will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section" id="comparisonSection">
+            <div class="comparison-header">
+                <h3 class="comparison-title">Compare Selected Cities</h3>
+                <button class="clear-comparison" onclick="clearComparison()">Clear Comparison</button>
+            </div>
+            <div id="comparisonTable"></div>
+        </section>
+
+        <!-- Travel Tips Section -->
+        <section class="travel-tips-section">
+            <h3 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 20px;">
+                💡 Travel Tips for Spring & Summer Visits
+            </h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>🌡️ Weather & Packing</h4>
+                    <p>Spring (April-June) temperatures range from 10-20°C. Summer (July-August) is 15-25°C. Pack layers, waterproof jacket, comfortable walking shoes, and sun protection. Evenings can be cool in the mountains.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🚇 Public Transport</h4>
+                    <p>Most towns offer excellent regional passes. Consider multi-day passes for extended stays. Many cities provide free public transport with hotel bookings. Research local transport apps before arrival.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🚲 Biking</h4>
+                    <p>Many towns have bike rental shops and dedicated bike paths. E-bikes are increasingly available for easier mountain terrain. Some hotels offer free bike rentals. Always wear helmets and follow local traffic rules.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>💰 Budget Tips</h4>
+                    <p>Book accommodations 2-3 months in advance for better rates. Consider apartments or guesthouses for longer stays. Many towns have local markets for fresh, affordable food. Look for hotels outside peak tourist areas.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🥾 Hiking Essentials</h4>
+                    <p>Trails are well-marked but always carry water, snacks, and a map. Weather changes quickly in mountains. Start early to avoid afternoon storms. Many towns have tourist offices with free trail maps and current conditions.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>📅 Best Timing</h4>
+                    <p>Late May to early June offers fewer crowds, wildflowers, and pleasant weather. July-August is peak season but has the warmest weather. Early September combines good weather with fewer tourists.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🍽️ Local Cuisine</h4>
+                    <p>Each region offers unique specialties. Try local markets for fresh produce. Many towns have excellent restaurants serving regional dishes. Don't miss local cheeses, wines, and traditional pastries. Ask locals for recommendations.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>📸 Photography Tips</h4>
+                    <p>Best light is early morning (6-9am) and golden hour (6-8pm). Mountain weather creates dramatic skies. Bring extra batteries - cold drains them faster. Many viewpoints are accessible by public transport. Respect local photography rules.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🛡️ Safety & Health</h4>
+                    <p>European mountain towns are generally very safe. Carry travel insurance. Know emergency numbers (112 in EU). Stay hydrated at altitude. Be aware of weather changes. Inform someone of your hiking plans.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>💳 Money & Payments</h4>
+                    <p>Most places accept cards, but carry some cash for markets and small shops. Tipping culture varies by country (10% is standard in restaurants). ATMs are widely available. Notify your bank before traveling.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🌐 Connectivity</h4>
+                    <p>Free WiFi is common in hotels and cafes. EU roaming works across countries. Consider local SIM cards for longer stays. Many towns have excellent 4G coverage. Download offline maps before arrival.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🎒 Packing Checklist</h4>
+                    <p>Essentials: Comfortable walking shoes, layers, waterproof jacket, daypack, water bottle, sunscreen, hat, camera, power adapter, travel insurance documents, passport copies, and a good map or GPS device.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comprehensive Guide Section -->
+        <section class="travel-tips-section" style="margin-top: 40px;">
+            <h3 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 30px;">
+                📚 Comprehensive Travel Guide
+            </h3>
+            
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--primary); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">💰 Budget Breakdown Example (Per Day)</h4>
+                <div class="info-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="info-item">
+                        <strong>Budget Traveler</strong>
+                        <span>€45-€65/day</span>
+                        <p style="font-size: 0.85rem; margin-top: 8px; color: var(--text-light);">Hostel: €30-40 | Food: €15-20 | Transport: €5-10</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Mid-Range Traveler</strong>
+                        <span>€80-€120/day</span>
+                        <p style="font-size: 0.85rem; margin-top: 8px; color: var(--text-light);">Hotel: €60-80 | Food: €25-35 | Activities: €15-25</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Comfort Traveler</strong>
+                        <span>€130-€200/day</span>
+                        <p style="font-size: 0.85rem; margin-top: 8px; color: var(--text-light);">Hotel: €100-150 | Food: €40-60 | Activities: €30-50</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--secondary); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">🍷 Local Cuisine Highlights by Region</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 15px;">
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇦🇹 Austria</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Wiener Schnitzel, Apfelstrudel, Kaiserschmarrn, Tyrolean Speck, local beers, and excellent coffee culture.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇫🇷 France</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Fondue, raclette, tartiflette, local cheeses, Savoyard cuisine, and excellent wines from nearby regions.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇨🇭 Switzerland</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Fondue, rösti, raclette, Swiss chocolate, local cheeses, and excellent mountain cuisine.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇮🇹 Italy</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Dolomite cuisine, polenta, local cheeses, excellent pasta, regional wines, and Tiroler specialties.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇩🇪 Germany</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Bavarian specialties, Weisswurst, pretzels, local beers, hearty mountain dishes, and excellent pastries.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🇸🇮 Slovenia</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Kremšnita (Bled cream cake), local wines, traditional Slovenian dishes, excellent pastries, and fresh lake fish.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--accent); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">📸 Best Photo Spots by Destination</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Innsbruck</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Golden Roof, Nordkette cable car views, Old Town bridges, and mountain panoramas from Hungerburg.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Annecy</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Lake Annecy from Col de la Forclaz, old town canals, Palais de l'Isle, and lakeside promenades.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Bled</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Ojstrica viewpoint, Bled Castle, island church from the lake, and Mala Osojnica viewpoint.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Hallstatt</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Classic viewpoint from across the lake, Skywalk Hallstatt, old town streets, and lake reflections.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Zermatt</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Matterhorn from Gornergrat, Schwarzsee reflections, village streets, and mountain railway views.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">Chamonix</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Aiguille du Midi cable car, Mont Blanc views, Lac Blanc, and alpine meadows with wildflowers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--success); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">🛡️ Safety & Emergency Information</h4>
+                <div class="info-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="info-item">
+                        <strong>European Emergency Number</strong>
+                        <span>112 (Works in all EU countries)</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Travel Insurance</strong>
+                        <span>Highly recommended for medical coverage</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Altitude Sickness</strong>
+                        <span>Stay hydrated, ascend slowly, rest if needed</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Weather Warnings</strong>
+                        <span>Check local forecasts, be prepared for changes</span>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: var(--text-light); line-height: 1.8; font-size: 0.95rem;">
+                    <strong style="color: var(--dark);">Important:</strong> These mountain towns are generally very safe. However, always inform someone of your hiking plans, carry a charged phone, and be aware of weather conditions. Mountain weather can change rapidly. Most towns have tourist offices with current trail conditions and safety information.
+                </p>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--warning); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">🌍 Local Customs & Etiquette</h4>
+                <ul class="detail-list" style="margin-top: 15px;">
+                    <li><strong>Greetings:</strong> Learn basic greetings in local language (Guten Tag, Bonjour, Buongiorno, etc.)</li>
+                    <li><strong>Tipping:</strong> 10% in restaurants is standard, rounding up for good service</li>
+                    <li><strong>Dining:</strong> Many restaurants close between lunch and dinner (2-6pm)</li>
+                    <li><strong>Quiet Hours:</strong> Respect quiet hours, especially in smaller towns (usually 10pm-7am)</li>
+                    <li><strong>Hiking:</strong> Greet fellow hikers, stay on marked trails, pack out all trash</li>
+                    <li><strong>Public Transport:</strong> Validate tickets, offer seats to elderly, keep voices down</li>
+                    <li><strong>Photography:</strong> Ask permission for portraits, respect private property signs</li>
+                    <li><strong>Markets:</strong> Cash preferred, don't touch produce, wait your turn</li>
+                </ul>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--primary);">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">📱 Useful Apps & Resources</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🗺️ Navigation</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">Google Maps, Maps.me (offline), AllTrails (hiking)</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🚇 Transport</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">Local transport apps, SBB (Switzerland), ÖBB (Austria)</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🌤️ Weather</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">MeteoSwiss, local weather apps, mountain forecast sites</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🍽️ Food</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">TripAdvisor, local restaurant apps, Google Reviews</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotel Guide Section -->
+        <section class="travel-tips-section" style="margin-top: 40px;">
+            <h3 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 30px;">
+                🏨 Comprehensive Hotel & Accommodation Guide
+            </h3>
+            
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--primary); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">💰 Accommodation Types & Price Ranges</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 15px;">
+                    <div style="padding: 20px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem;">🏠 Budget Options (€30-€70/night)</strong>
+                        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                            <li>✓ Hostels & Youth Hostels</li>
+                            <li>✓ Budget Hotels & Pensions</li>
+                            <li>✓ Guesthouses (Gasthof)</li>
+                            <li>✓ Basic B&Bs</li>
+                            <li>✓ Shared apartments</li>
+                        </ul>
+                        <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-light);">Best for: Solo travelers, backpackers, budget-conscious travelers. Often include breakfast. Shared facilities common.</p>
+                    </div>
+                    <div style="padding: 20px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem;">🏨 Mid-Range Options (€70-€150/night)</strong>
+                        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                            <li>✓ 3-4 Star Hotels</li>
+                            <li>✓ Boutique Hotels</li>
+                            <li>✓ Quality B&Bs</li>
+                            <li>✓ Apartments & Studios</li>
+                            <li>✓ Family-run Hotels</li>
+                        </ul>
+                        <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-light);">Best for: Couples, families, comfort travelers. Private bathrooms, often include breakfast, good locations.</p>
+                    </div>
+                    <div style="padding: 20px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem;">⭐ Luxury Options (€150+/night)</strong>
+                        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+                            <li>✓ 4-5 Star Hotels</li>
+                            <li>✓ Grand Hotels</li>
+                            <li>✓ Luxury Chalets</li>
+                            <li>✓ Premium Apartments</li>
+                            <li>✓ Spa & Wellness Hotels</li>
+                        </ul>
+                        <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-light);">Best for: Special occasions, luxury travelers. Premium amenities, spa facilities, mountain views, fine dining.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--secondary); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">📅 Booking Tips & Best Practices</h4>
+                <div class="info-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 15px;">
+                    <div class="info-item" style="padding: 20px;">
+                        <strong style="color: var(--dark); display: block; margin-bottom: 10px; font-size: 1rem;">⏰ When to Book</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin: 0;">
+                            <strong>Summer (July-Aug):</strong> Book 3-4 months ahead<br>
+                            <strong>Shoulder Season (May-Jun, Sep):</strong> Book 1-2 months ahead<br>
+                            <strong>Off Season:</strong> Can book 2-4 weeks ahead<br>
+                            <strong>Popular destinations (Hallstatt, Zermatt):</strong> Book 4-6 months ahead
+                        </p>
+                    </div>
+                    <div class="info-item" style="padding: 20px;">
+                        <strong style="color: var(--dark); display: block; margin-bottom: 10px; font-size: 1rem;">💡 Money-Saving Tips</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin: 0;">
+                            • Book directly with hotels for better rates<br>
+                            • Look for packages with breakfast included<br>
+                            • Consider apartments for longer stays (weekly discounts)<br>
+                            • Stay slightly outside center for better value<br>
+                            • Check for guest cards (often include transport)
+                        </p>
+                    </div>
+                    <div class="info-item" style="padding: 20px;">
+                        <strong style="color: var(--dark); display: block; margin-bottom: 10px; font-size: 1rem;">📍 Location Considerations</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin: 0;">
+                            • Town center: Most convenient, walkable, may be noisier<br>
+                            • Near train station: Easy access, good for day trips<br>
+                            • Outskirts: Quieter, better value, may need transport<br>
+                            • Lake/mountain views: Premium pricing, worth it for views<br>
+                            • Near cable cars: Convenient for mountain activities
+                        </p>
+                    </div>
+                    <div class="info-item" style="padding: 20px;">
+                        <strong style="color: var(--dark); display: block; margin-bottom: 10px; font-size: 1rem;">🎁 What's Often Included</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin: 0;">
+                            • Breakfast (very common in Europe)<br>
+                            • Guest cards (free public transport)<br>
+                            • WiFi (standard)<br>
+                            • Tourist tax (usually €2-5/night, paid separately)<br>
+                            • Parking (varies - check if free or paid)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--accent); margin-bottom: 25px;">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">🏡 Alternative Accommodation Options</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🏘️ Apartments & Studios</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Great for longer stays (2+ weeks). Often have kitchens, more space, weekly discounts. Check Airbnb, Booking.com, or local rental agencies. Prices: €50-150/night.</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🏔️ Chalets & Vacation Rentals</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Perfect for groups or families. Often require weekly bookings. Full facilities, mountain views, authentic experience. Prices: €100-300/night (often weekly rates).</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🛏️ Guesthouses & Pensions</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Family-run, authentic experience, often include breakfast. More personal service, local recommendations. Prices: €40-100/night. Great value!</p>
+                    </div>
+                    <div style="padding: 15px; background: var(--light); border-radius: 12px;">
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;">🏕️ Hostels & Budget Options</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6;">Excellent for solo travelers, social atmosphere, often include breakfast. Private rooms available. Prices: €25-60/night. Many offer free activities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section" style="background: var(--white); border-left: 4px solid var(--success);">
+                <h4 style="color: var(--dark); font-size: 1.3rem; margin-bottom: 15px;">📋 Booking Checklist</h4>
+                <ul class="detail-list" style="margin-top: 15px;">
+                    <li><strong>Check cancellation policy</strong> - Many offer free cancellation up to 24-48 hours before</li>
+                    <li><strong>Verify what's included</strong> - Breakfast, WiFi, parking, guest cards, tourist tax</li>
+                    <li><strong>Read recent reviews</strong> - Check last 3-6 months for current conditions</li>
+                    <li><strong>Compare prices</strong> - Check hotel website, Booking.com, Expedia, Airbnb</li>
+                    <li><strong>Consider location</strong> - Balance convenience vs. price vs. views</li>
+                    <li><strong>Check for special offers</strong> - Extended stay discounts, package deals, early bird rates</li>
+                    <li><strong>Verify amenities</strong> - WiFi, parking, breakfast, air conditioning (if needed)</li>
+                    <li><strong>Book directly when possible</strong> - Often better rates and more flexible policies</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // City Data
+        const cities = [
+            {
+                id: 1,
+                name: "Innsbruck",
+                country: "Austria",
+                rating: 4.8,
+                priceRange: "mid",
+                price: "€70-€90",
+                walkability: "excellent",
+                transport: "excellent",
+                nearbyCity: "yes",
+                nearbyCityName: "Munich (2h)",
+                description: "Nestled in the heart of the Austrian Alps, Innsbruck offers stunning mountain views, excellent public transportation, and a compact, walkable city center. The city is perfect for spring and summer with numerous hiking trails, bike paths, and outdoor activities. Affordable accommodation options are plentiful, and it's easily accessible from Munich.",
+                features: ["🏔️ Alpine Views", "🚶 Highly Walkable", "🚇 Excellent Transit", "💰 Affordable", "🌳 Hiking Trails"],
+                stats: {
+                    walkability: 95,
+                    transport: 98,
+                    bikeability: 90
+                },
+                image: "images/innsbruck.png",
+                bestTime: "May to September",
+                springTemp: "10-18°C (50-64°F)",
+                summerTemp: "15-25°C (59-77°F)",
+                currency: "Euro (€)",
+                language: "German (English widely spoken)",
+                gettingThere: "Direct flights to Innsbruck Airport, or train from Munich (2h), Vienna (5h), or Zurich (4h)",
+                activities: ["Nordkette Cable Car to Hafelekar", "Hike the Innsbrucker Klettersteig", "Bike along the Inn River", "Visit the Golden Roof", "Explore Old Town", "Hike to Hungerburg", "Visit Ambras Castle", "Swim in Baggersee Lake"],
+                accommodation: "Budget: €50-70/night | Mid-range: €70-120/night | Luxury: €120+/night. Many guesthouses and apartments available.",
+                hotels: "Budget: Hostel Marmota (€35-45), Jugendherberge Innsbruck (€30-40), Pension Paula (€45-60). Mid-range: Hotel Innsbruck (€75-95), Hotel Central (€70-90), Hotel Mondschein (€80-100). Luxury: Grand Hotel Europa (€130+), Hotel Innsbruck (€120+), ADLER Hotel (€140+). Apartments: Many Airbnb options (€50-100), serviced apartments in Old Town. Best areas: Old Town (walkable), near train station (convenient), Pradl district (affordable). Booking tip: Book 2-3 months ahead for summer. Many hotels include Innsbruck Card.",
+                localTips: "Get the Innsbruck Card for free public transport and museum entries. The city center is completely walkable. Bike rentals available at multiple locations. Many hotels offer free public transport passes.",
+                nearbyAttractions: "Swarovski Crystal Worlds (20min), Hall in Tirol (15min), Stubai Glacier (45min), Achensee Lake (30min), Zugspitze (1h)",
+                transportDetails: "Excellent bus and tram network. Free with Innsbruck Card. Regional trains connect to surrounding areas. Bike-sharing system available.",
+                population: "132,000",
+                elevation: "574m (1,883ft)",
+                localCuisine: "Tyrolean specialties: Speck, Kaiserschmarrn, Tiroler Gröstl, local beers, excellent coffee culture, and traditional Austrian pastries.",
+                bestPhotoSpots: "Golden Roof, Nordkette cable car views from Hafelekar, Old Town bridges over the Inn River, mountain panoramas from Hungerburg, and colorful baroque buildings.",
+                safetyTips: "Very safe city. Be cautious on mountain trails - check weather before hiking. Watch for traffic in the city center. Emergency: 112.",
+                budgetExample: "Budget day: €55 (Hostel €35, Food €15, Transport €5) | Mid-range: €95 (Hotel €70, Food €20, Activities €5) | Comfort: €150+ (Hotel €100, Food €35, Activities €15+)"
+            },
+            {
+                id: 2,
+                name: "Annecy",
+                country: "France",
+                rating: 4.9,
+                priceRange: "mid",
+                price: "€65-€85",
+                walkability: "excellent",
+                transport: "very-good",
+                nearbyCity: "yes",
+                nearbyCityName: "Geneva (45min)",
+                description: "Known as the 'Venice of the Alps,' Annecy is a picturesque town on the shores of Lake Annecy. The old town is completely walkable, with charming canals and stunning mountain backdrops. Public transportation connects you to nearby hiking trails and the lake. Geneva is just a short train ride away, making it perfect for day trips.",
+                features: ["🏞️ Lake Views", "🚶 Highly Walkable", "🚲 Bike-Friendly", "💰 Affordable", "🏛️ Historic Old Town"],
+                stats: {
+                    walkability: 98,
+                    transport: 85,
+                    bikeability: 95
+                },
+                image: "images/annecy.png",
+                bestTime: "May to September",
+                springTemp: "12-20°C (54-68°F)",
+                summerTemp: "18-28°C (64-82°F)",
+                currency: "Euro (€)",
+                language: "French (English spoken in tourist areas)",
+                gettingThere: "Train from Geneva Airport (45min), Lyon (2h), or Paris (3.5h). Direct buses from Geneva Airport.",
+                activities: ["Swim in Lake Annecy", "Bike the 40km lake circuit", "Visit Annecy Castle", "Canoe or kayak on the lake", "Hike Semnoz Mountain", "Explore Old Town canals", "Visit Gorges du Fier", "Paragliding from Col de la Forclaz"],
+                accommodation: "Budget: €55-75/night | Mid-range: €75-120/night | Luxury: €120+/night. Many charming B&Bs and apartments.",
+                hotels: "Budget: Hotel des Alpes (€50-65), Auberge de Jeunesse Annecy (€35-45), Hotel du Château (€55-70). Mid-range: Hotel du Palais de l'Isle (€85-110), Hotel Splendid (€80-100), Les Trésoms Lake & Spa (€95-120). Luxury: Imperial Palace (€150+), Hotel L'Impérial Palace (€140+), Les Trésoms (€160+). B&Bs: Many charming options in Old Town (€60-90). Apartments: Lakefront apartments (€70-120), Old Town studios (€60-100). Best areas: Old Town (charming), near lake (views), outskirts (value). Booking tip: Summer books out early. Book 3+ months ahead. Many hotels offer lake views.",
+                localTips: "Rent bikes to explore the lake circuit. The old town is pedestrian-only. Many restaurants offer lake views. Public beaches are free. Market days: Tuesday, Friday, Sunday mornings.",
+                nearbyAttractions: "Geneva (45min), Chamonix (1h), Aix-les-Bains (30min), Talloires (15min), Col de la Forclaz (30min)",
+                transportDetails: "Good bus network. Free parking outside center. Bike rentals widely available. Boat tours on the lake. Train connections to major cities.",
+                population: "125,000 (urban area)",
+                elevation: "447m (1,467ft)",
+                localCuisine: "French alpine cuisine: Fondue, raclette, local cheeses, excellent French wines, fresh lake fish, and traditional Savoyard dishes.",
+                bestPhotoSpots: "Lake Annecy from Col de la Forclaz, old town canals with colorful buildings, Palais de l'Isle, lakeside promenades at sunrise, and mountain backdrops.",
+                safetyTips: "Very safe town. Lake is safe for swimming. Be cautious on mountain trails. Emergency: 112.",
+                budgetExample: "Budget day: €70 (Hostel €45, Food €20, Transport €5) | Mid-range: €105 (Hotel €75, Food €25, Activities €5) | Comfort: €170+ (Hotel €120, Food €40, Activities €10+)"
+            },
+            {
+                id: 3,
+                name: "Interlaken",
+                country: "Switzerland",
+                rating: 4.7,
+                priceRange: "mid",
+                price: "€80-€110",
+                walkability: "very-good",
+                transport: "excellent",
+                nearbyCity: "yes",
+                nearbyCityName: "Bern (1h), Zurich (2h)",
+                description: "Situated between two stunning lakes, Interlaken is a gateway to the Swiss Alps. The town center is compact and walkable, with excellent train connections to surrounding mountains and cities. While slightly pricier, it offers incredible value for the stunning scenery and outdoor activities available in spring and summer.",
+                features: ["🏔️ Alpine Gateway", "🚇 Excellent Trains", "🚶 Very Walkable", "🏞️ Lake Access", "🚠 Mountain Activities"],
+                stats: {
+                    walkability: 88,
+                    transport: 95,
+                    bikeability: 85
+                },
+                image: "images/interlaken.png",
+                bestTime: "May to September",
+                springTemp: "8-18°C (46-64°F)",
+                summerTemp: "12-24°C (54-75°F)",
+                currency: "Swiss Franc (CHF)",
+                language: "German (English widely spoken)",
+                gettingThere: "Train from Zurich Airport (2h), Geneva (3h), or Bern (1h). Direct connections from major Swiss cities.",
+                activities: ["Jungfraujoch - Top of Europe", "Harder Kulm viewpoint", "Boat trips on Lake Thun/Brienz", "Hike to Schynige Platte", "Paragliding", "Canyoning", "Visit Trümmelbach Falls", "Grindelwald day trip"],
+                accommodation: "Budget: €70-95/night | Mid-range: €95-150/night | Luxury: €150+/night. Many hostels and hotels available.",
+                hotels: "Budget: Backpackers Villa Sonnenhof (€60-80), Hotel Beausite (€75-95), Youth Hostel Interlaken (€50-70). Mid-range: Hotel Interlaken (€100-130), Hotel Metropole (€95-120), Hotel Krebs (€110-140). Luxury: Victoria-Jungfrau Grand Hotel (€200+), Hotel Bellevue (€180+), Lindner Grand Hotel (€170+). Hostels: Balmers Herberge (€40-60), Backpackers Villa (€50-70). Apartments: Many options (€80-150), some with lake views. Best areas: Town center (convenient), Höheweg (main street), near train station. Booking tip: Peak season (July-Aug) books out months ahead. Guest cards often include transport.",
+                localTips: "Get a Swiss Travel Pass for unlimited train travel. The town center is walkable. Many activities are weather-dependent. Book mountain excursions in advance. Free public transport with guest card.",
+                nearbyAttractions: "Grindelwald (30min), Lauterbrunnen (20min), Thun (20min), Brienz (15min), Jungfrau region (30-60min)",
+                transportDetails: "Excellent train connections. Free bus network with guest card. Boat services on both lakes. Cable cars to mountains. Bike rentals available.",
+                population: "5,600",
+                elevation: "568m (1,864ft)",
+                localCuisine: "Swiss specialties: Fondue, rösti, raclette, Swiss chocolate, local cheeses, excellent mountain cuisine, and traditional Swiss dishes.",
+                bestPhotoSpots: "Harder Kulm viewpoint, Jungfraujoch views, Lake Thun and Brienz, mountain peaks from town, and traditional Swiss architecture.",
+                safetyTips: "Extremely safe. Mountain activities require proper preparation. Check weather before excursions. Emergency: 112.",
+                budgetExample: "Budget day: €90 (Hostel €60, Food €25, Transport €5) | Mid-range: €130 (Hotel €95, Food €30, Activities €5) | Comfort: €200+ (Hotel €150, Food €40, Activities €10+)"
+            },
+            {
+                id: 4,
+                name: "Chamonix",
+                country: "France",
+                rating: 4.6,
+                priceRange: "mid",
+                price: "€70-€95",
+                walkability: "very-good",
+                transport: "very-good",
+                nearbyCity: "yes",
+                nearbyCityName: "Geneva (1.5h)",
+                description: "At the foot of Mont Blanc, Chamonix offers breathtaking mountain views and world-class hiking. The town is walkable with good public transport to trailheads. Spring and summer bring wildflowers and perfect hiking weather. Affordable hotels are available, especially in shoulder seasons.",
+                features: ["🏔️ Mont Blanc Views", "🥾 Hiking Paradise", "🚶 Very Walkable", "🚇 Good Transit", "💰 Mid-Range"],
+                stats: {
+                    walkability: 90,
+                    transport: 88,
+                    bikeability: 80
+                },
+                image: "images/chamonix.png",
+                bestTime: "June to September",
+                springTemp: "5-15°C (41-59°F)",
+                summerTemp: "10-22°C (50-72°F)",
+                currency: "Euro (€)",
+                language: "French (English spoken in tourist areas)",
+                gettingThere: "Bus from Geneva Airport (1.5h), train from Paris (6h) via Annecy. Direct bus connections from major cities.",
+                activities: ["Aiguille du Midi cable car", "Mer de Glace glacier", "Hike Tour du Mont Blanc", "Paragliding", "Mountain biking", "Via Ferrata", "Visit Montenvers", "Hike to Lac Blanc"],
+                accommodation: "Budget: €60-85/night | Mid-range: €85-140/night | Luxury: €140+/night. Many chalets and apartments.",
+                hotels: "Budget: Gîte Le Vagabond (€50-70), Hotel Le Faucigny (€65-85), Chamonix Youth Hostel (€45-60). Mid-range: Hotel Le Morgane (€95-120), Hotel Pointe Isabelle (€90-115), Hotel L'Oustalet (€100-130). Luxury: Hotel Mont-Blanc (€180+), Grand Hotel des Alpes (€200+), Hotel Hermitage (€220+). Chalets: Many rental chalets (€80-150/night), great for groups. Apartments: Self-catering options (€70-120). Best areas: Town center (walkable), Les Praz (quieter), near cable cars (convenient). Booking tip: Book early for summer. Many hotels include Multi-Pass. Chalets often require weekly bookings.",
+                localTips: "Get the Multi-Pass for cable cars and buses. Weather changes quickly - always check conditions. Book cable cars in advance. Many hotels offer free bus passes. Early morning starts recommended for popular trails.",
+                nearbyAttractions: "Annecy (1h), Geneva (1.5h), Courmayeur Italy (30min via tunnel), Megève (45min), Les Houches (10min)",
+                transportDetails: "Good bus network connecting to trailheads. Free shuttle buses in summer. Cable cars to mountains. Train to nearby towns. Bike rentals available.",
+                population: "8,800",
+                elevation: "1,035m (3,396ft)",
+                localCuisine: "Savoyard specialties: Fondue, raclette, tartiflette, local cheeses, excellent French wines, and traditional alpine dishes.",
+                bestPhotoSpots: "Aiguille du Midi cable car views, Mont Blanc from various viewpoints, Lac Blanc reflections, alpine meadows with wildflowers, and the charming town center.",
+                safetyTips: "Very safe. Mountain safety is crucial - check conditions before hiking. Be prepared for weather changes. Emergency: 112.",
+                budgetExample: "Budget day: €65 (Hostel €45, Food €15, Transport €5) | Mid-range: €100 (Hotel €75, Food €20, Activities €5) | Comfort: €160+ (Hotel €110, Food €35, Activities €15+)"
+            },
+            {
+                id: 5,
+                name: "Bled",
+                country: "Slovenia",
+                rating: 4.8,
+                priceRange: "budget",
+                price: "€40-€65",
+                walkability: "excellent",
+                transport: "good",
+                nearbyCity: "yes",
+                nearbyCityName: "Ljubljana (1h)",
+                description: "Lake Bled is one of Europe's most beautiful destinations, with an island church and medieval castle. The town is small and completely walkable, with bike rentals available. Public buses connect to Ljubljana and other destinations. Hotels are very affordable, making it perfect for extended stays.",
+                features: ["🏞️ Stunning Lake", "💰 Very Affordable", "🚶 Highly Walkable", "🚲 Bike-Friendly", "🏰 Historic Castle"],
+                stats: {
+                    walkability: 95,
+                    transport: 75,
+                    bikeability: 90
+                },
+                image: "images/bled.png",
+                bestTime: "May to September",
+                springTemp: "10-20°C (50-68°F)",
+                summerTemp: "15-26°C (59-79°F)",
+                currency: "Euro (€)",
+                language: "Slovenian (English widely spoken)",
+                gettingThere: "Bus from Ljubljana (1h), Ljubljana Airport (45min), or Zagreb (2h). Regular bus connections.",
+                activities: ["Row to Bled Island", "Visit Bled Castle", "Walk around the lake (6km)", "Hike to Ojstrica viewpoint", "Swim in the lake", "Visit Vintgar Gorge", "Bike to Bohinj", "Try Bled cream cake"],
+                accommodation: "Budget: €35-55/night | Mid-range: €55-90/night | Luxury: €90+/night. Very affordable guesthouses and hotels.",
+                hotels: "Budget: Bled Hostel (€25-35), Garni Hotel Bledec (€40-55), Hotel Lovec (€45-60). Mid-range: Hotel Park (€65-85), Vila Bled (€80-100), Hotel Triglav Bled (€70-90). Luxury: Grand Hotel Toplice (€120+), Vila Bled (€150+), Hotel Triglav (€110+). Guesthouses: Many family-run options (€35-60), often with breakfast. Apartments: Lake view apartments (€50-90), great for longer stays. Best areas: Near lake (views), town center (convenient), outskirts (value). Booking tip: Very affordable! Book 1-2 months ahead. Many include breakfast. Lake views worth the extra €10-20.",
+                localTips: "The lake walk is 6km and takes 1.5 hours. Rent a rowboat to visit the island. Try the famous Bled cream cake (kremšnita). Free parking available. Many hotels offer lake views. Book restaurants in advance during peak season.",
+                nearbyAttractions: "Ljubljana (1h), Vintgar Gorge (4km), Bohinj Lake (30min), Triglav National Park (30min), Postojna Cave (1.5h)",
+                transportDetails: "Regular buses to Ljubljana and nearby attractions. The town is completely walkable. Bike rentals available. Boat rentals for the lake.",
+                population: "8,200",
+                elevation: "475m (1,558ft)",
+                localCuisine: "Slovenian specialties: Kremšnita (Bled cream cake), local wines, traditional Slovenian dishes, excellent pastries, fresh lake fish, and regional cheeses.",
+                bestPhotoSpots: "Ojstrica viewpoint (best lake view), Bled Castle from the lake, island church from rowboat, Mala Osojnica viewpoint, and lakeside promenades at sunrise.",
+                safetyTips: "Extremely safe. Lake is safe for swimming in designated areas. Be careful on viewpoints - some paths are steep. Emergency: 112.",
+                budgetExample: "Budget day: €40 (Hostel €25, Food €12, Transport €3) | Mid-range: €70 (Hotel €50, Food €15, Activities €5) | Comfort: €120+ (Hotel €80, Food €25, Activities €15+)"
+            },
+            {
+                id: 6,
+                name: "Hallstatt",
+                country: "Austria",
+                rating: 4.7,
+                priceRange: "mid",
+                price: "€60-€85",
+                walkability: "excellent",
+                transport: "good",
+                nearbyCity: "yes",
+                nearbyCityName: "Salzburg (1.5h)",
+                description: "This UNESCO World Heritage village is one of Austria's most picturesque destinations. The entire village is walkable in minutes, with stunning lake and mountain views. While small, it offers good connections to Salzburg. Spring and summer showcase the village at its most beautiful.",
+                features: ["🏛️ UNESCO Site", "🚶 Completely Walkable", "🏞️ Lake Views", "💰 Affordable", "📸 Photogenic"],
+                stats: {
+                    walkability: 100,
+                    transport: 70,
+                    bikeability: 60
+                },
+                image: "images/hallstatt.png",
+                bestTime: "May to September",
+                springTemp: "8-18°C (46-64°F)",
+                summerTemp: "14-24°C (57-75°F)",
+                currency: "Euro (€)",
+                language: "German (English spoken)",
+                gettingThere: "Train from Salzburg (1.5h) or Vienna (3h) to Attnang-Puchheim, then bus to Hallstatt. Boat from Obertraun also available.",
+                activities: ["Visit Salt Mine", "Hike to 5 Fingers viewpoint", "Boat tour on Hallstätter See", "Visit Bone House", "Hike to Rudolf's Tower", "Explore Dachstein Caves", "Visit Hallstatt Museum", "Photography walks"],
+                accommodation: "Budget: €50-75/night | Mid-range: €75-120/night | Luxury: €120+/night. Limited but charming options.",
+                hotels: "Budget: Gasthof Simony (€55-70), Pension Sarstein (€50-65), Hallstatt Hideaway (€60-75). Mid-range: Heritage Hotel Hallstatt (€90-120), Seehotel Grüner Baum (€100-130), Hotel Hallstatt (€85-110). Luxury: Heritage Hotel (€150+), Seehotel Grüner Baum (€180+), Hallstatt Hideaway Premium (€160+). Guesthouses: Limited but charming (€50-80). Apartments: Very limited, book far ahead (€70-120). Best areas: Lakefront (premium), village center (convenient), any location is walkable. Booking tip: BOOK MONTHS AHEAD! Very limited options. Consider staying in Obertraun (10min away) for more choices.",
+                localTips: "Arrive early to avoid crowds. The village is tiny - everything is walkable. Book accommodation well in advance. Visit viewpoints early morning for best photos. Many day-trippers leave by 4pm.",
+                nearbyAttractions: "Salzburg (1.5h), Bad Ischl (30min), Dachstein Glacier (30min), Gosau (20min), Obertraun (10min), St. Wolfgang (1h)",
+                transportDetails: "Bus connections to nearby towns. Boat service on the lake. Limited parking - arrive early. Train station across the lake with ferry connection.",
+                population: "780",
+                elevation: "511m (1,677ft)",
+                localCuisine: "Austrian specialties: Fresh lake fish, traditional Austrian dishes, local beers, excellent coffee, and regional pastries. Try the local restaurants for authentic cuisine.",
+                bestPhotoSpots: "Classic viewpoint from across the lake (most famous), Skywalk Hallstatt, old town streets with colorful houses, lake reflections at sunrise, and mountain backdrop views.",
+                safetyTips: "Very safe village. Be respectful of residents - it's a living village. Arrive early to avoid crowds. Emergency: 112.",
+                budgetExample: "Budget day: €60 (Guesthouse €45, Food €12, Transport €3) | Mid-range: €90 (Hotel €70, Food €15, Activities €5) | Comfort: €140+ (Hotel €100, Food €25, Activities €15+)"
+            },
+            {
+                id: 7,
+                name: "Garmisch-Partenkirchen",
+                country: "Germany",
+                rating: 4.6,
+                priceRange: "budget",
+                price: "€50-€75",
+                walkability: "very-good",
+                transport: "very-good",
+                nearbyCity: "yes",
+                nearbyCityName: "Munich (1.5h)",
+                description: "A charming Bavarian town at the foot of Germany's highest peak, Zugspitze. The town is walkable with excellent hiking trails. Public transport connects to Munich and surrounding areas. Very affordable accommodation makes it ideal for longer stays. Spring brings beautiful wildflowers.",
+                features: ["🏔️ Zugspitze Views", "💰 Very Affordable", "🚶 Very Walkable", "🚇 Good Transit", "🍺 Bavarian Culture"],
+                stats: {
+                    walkability: 92,
+                    transport: 85,
+                    bikeability: 88
+                },
+                image: "images/garmisch.png",
+                bestTime: "May to September",
+                springTemp: "8-18°C (46-64°F)",
+                summerTemp: "12-24°C (54-75°F)",
+                currency: "Euro (€)",
+                language: "German (English widely spoken)",
+                gettingThere: "Train from Munich (1.5h), direct connections. Also accessible from Innsbruck (1h). Munich Airport is closest major airport.",
+                activities: ["Zugspitze cable car", "Hike Partnach Gorge", "Visit Olympic Ski Jump", "Hike to Eibsee Lake", "Mountain biking", "Visit Linderhof Palace", "Hike to Zugspitze", "Bavarian beer gardens"],
+                accommodation: "Budget: €40-65/night | Mid-range: €65-100/night | Luxury: €100+/night. Very affordable guesthouses and hotels.",
+                hotels: "Budget: Garmisch-Partenkirchen Hostel (€35-50), Hotel Garmischer Hof (€50-65), Gasthof Fraundorfer (€45-60). Mid-range: Hotel Zugspitze (€70-90), Hotel Reindl's Partenkirchener Hof (€75-95), Hotel Alpenhof (€80-100). Luxury: Hotel Zugspitze (€120+), Reindl's Partenkirchener Hof (€130+), Hotel Alpenhof (€140+). Guesthouses: Many traditional options (€40-70), often with breakfast. Apartments: Good selection (€50-90). Best areas: Partenkirchen (traditional), Garmisch (more options), near train station. Booking tip: Very affordable! Book 1-2 months ahead. Many include guest cards. Traditional Bavarian style available.",
+                localTips: "Get the Garmisch Card for discounts. The town is very walkable. Many hotels offer free guest cards with transport. Try local Bavarian cuisine. Book Zugspitze tickets in advance. Free parking available.",
+                nearbyAttractions: "Munich (1.5h), Innsbruck (1h), Mittenwald (20min), Eibsee (15min), Linderhof Palace (30min), Neuschwanstein Castle (1h)",
+                transportDetails: "Excellent train connections. Good local bus network. Cable cars to mountains. Bike rentals available. Free transport with guest card.",
+                population: "27,000",
+                elevation: "708m (2,323ft)",
+                localCuisine: "Bavarian specialties: Weisswurst, pretzels, local beers, hearty mountain dishes, excellent pastries, and traditional Bavarian cuisine.",
+                bestPhotoSpots: "Zugspitze from various viewpoints, Partnach Gorge, Eibsee Lake, Olympic Ski Jump, traditional Bavarian architecture, and alpine meadows.",
+                safetyTips: "Very safe. Mountain trails require proper footwear. Check weather before hiking. Emergency: 112.",
+                budgetExample: "Budget day: €55 (Hostel €35, Food €15, Transport €5) | Mid-range: €85 (Hotel €60, Food €20, Activities €5) | Comfort: €140+ (Hotel €90, Food €35, Activities €15+)"
+            },
+            {
+                id: 8,
+                name: "Cortina d'Ampezzo",
+                country: "Italy",
+                rating: 4.5,
+                priceRange: "mid",
+                price: "€75-€100",
+                walkability: "very-good",
+                transport: "good",
+                nearbyCity: "yes",
+                nearbyCityName: "Venice (2h)",
+                description: "In the heart of the Dolomites, Cortina offers stunning mountain scenery and Italian charm. The town center is walkable with good bus connections. While slightly pricier, it offers excellent value. Spring and summer are perfect for hiking the Dolomites, and Venice is accessible for day trips.",
+                features: ["🏔️ Dolomites", "🍝 Italian Cuisine", "🚶 Very Walkable", "💰 Mid-Range", "🥾 Hiking Trails"],
+                stats: {
+                    walkability: 90,
+                    transport: 80,
+                    bikeability: 75
+                },
+                image: "images/cortina.png",
+                bestTime: "June to September",
+                springTemp: "5-16°C (41-61°F)",
+                summerTemp: "10-22°C (50-72°F)",
+                currency: "Euro (€)",
+                language: "Italian (English spoken in tourist areas)",
+                gettingThere: "Bus from Venice (2h), train to Calalzo then bus (3h total), or drive. Venice Airport is closest major airport.",
+                activities: ["Hike Tre Cime di Lavaredo", "Via Ferrata routes", "Mountain biking", "Visit Lake Sorapis", "Hike Cinque Torri", "Visit Faloria cable car", "Rock climbing", "Italian cuisine tours"],
+                accommodation: "Budget: €65-90/night | Mid-range: €90-150/night | Luxury: €150+/night. Many charming hotels and apartments.",
+                hotels: "Budget: Hotel de la Poste (€70-90), Hotel Ancora (€65-85), B&B options (€60-80). Mid-range: Hotel Ampezzo (€100-130), Cristallo Palace (€110-140), Hotel Cortina (€95-120). Luxury: Cristallo Palace (€200+), Grand Hotel Savoia (€180+), Hotel de la Poste Premium (€160+). Apartments: Many options (€80-130), some with mountain views. Best areas: Town center (walkable), Corso Italia (main street), near cable cars. Booking tip: Book 2-3 months ahead. Many hotels offer ski/dolomite passes. Italian hospitality excellent.",
+                localTips: "The town center is pedestrian-friendly. Book restaurants in advance. Many hotels offer Dolomiti Superski passes. Early morning hikes recommended. Try local Tyrolean-Italian cuisine. Free parking outside center.",
+                nearbyAttractions: "Venice (2h), Tre Cime di Lavaredo (30min), Lake Braies (45min), Bolzano (1.5h), Lago di Sorapis (1h hike)",
+                transportDetails: "Good bus network to trailheads and nearby towns. Cable cars to mountains. Limited train access. Bike rentals available. Car recommended for flexibility.",
+                population: "5,800",
+                elevation: "1,224m (4,016ft)",
+                localCuisine: "Dolomite cuisine: Polenta, local cheeses, excellent pasta, regional wines, Tiroler specialties, and traditional Italian alpine dishes.",
+                bestPhotoSpots: "Tre Cime di Lavaredo, Lake Sorapis, Cinque Torri, Dolomite peaks from Faloria, town center with mountain backdrop, and alpine meadows.",
+                safetyTips: "Very safe. Mountain hiking requires experience. Check trail conditions. Be prepared for weather changes. Emergency: 112.",
+                budgetExample: "Budget day: €80 (Hostel €55, Food €20, Transport €5) | Mid-range: €120 (Hotel €90, Food €25, Activities €5) | Comfort: €180+ (Hotel €130, Food €40, Activities €10+)"
+            },
+            {
+                id: 9,
+                name: "Grindelwald",
+                country: "Switzerland",
+                rating: 4.7,
+                priceRange: "premium",
+                price: "€90-€130",
+                walkability: "good",
+                transport: "excellent",
+                nearbyCity: "yes",
+                nearbyCityName: "Bern (1.5h)",
+                description: "A stunning village in the Bernese Oberland with direct access to the Eiger, Mönch, and Jungfrau. Excellent train connections and walkable village center. While pricier, the location and views are unmatched. Perfect for spring and summer hiking with world-class mountain railways.",
+                features: ["🏔️ Eiger Views", "🚇 Excellent Trains", "🚶 Walkable", "🏞️ Alpine Paradise", "🚠 Mountain Railways"],
+                stats: {
+                    walkability: 85,
+                    transport: 98,
+                    bikeability: 80
+                },
+                image: "images/grindelwald.png",
+                bestTime: "June to September",
+                springTemp: "5-15°C (41-59°F)",
+                summerTemp: "10-20°C (50-68°F)",
+                currency: "Swiss Franc (CHF)",
+                language: "German (English widely spoken)",
+                gettingThere: "Train from Interlaken (35min), Bern (1.5h), or Zurich (2.5h). Excellent train connections from all major Swiss cities.",
+                activities: ["Jungfraujoch railway", "First Cliff Walk", "Hike to Bachalpsee", "Eiger Trail hike", "Mountain biking", "Paragliding", "Via Ferrata", "Gondola to First"],
+                accommodation: "Budget: €80-110/night | Mid-range: €110-180/night | Luxury: €180+/night. Many hotels and apartments available.",
+                hotels: "Budget: Mountain Hostel (€70-90), Hotel Eiger (€85-110), Gletschergarten (€80-100). Mid-range: Hotel Belvedere (€130-160), Hotel Spinne (€120-150), Hotel Eiger (€140-170). Luxury: Belvedere Grindelwald (€250+), Hotel Spinne (€220+), Grand Hotel Regina (€280+). Apartments: Many chalet-style (€100-180), great for families. Best areas: Village center (convenient), near First cable car, quieter outskirts. Booking tip: Book 3+ months ahead for summer. Many include guest cards. Mountain views worth premium.",
+                localTips: "Get the Jungfrau Travel Pass for unlimited travel. Book mountain railways in advance. The village is walkable but spread out. Many hotels offer free guest cards. Weather changes quickly - check conditions.",
+                nearbyAttractions: "Interlaken (35min), Lauterbrunnen (30min), Wengen (45min), Mürren (1h), Jungfraujoch (2h), Bern (1.5h)",
+                transportDetails: "Excellent train and cable car network. Free bus with guest card. Direct connections to major destinations. Bike rentals available.",
+                population: "3,800",
+                elevation: "1,034m (3,392ft)",
+                localCuisine: "Swiss alpine cuisine: Fondue, rösti, raclette, Swiss chocolate, local cheeses, excellent mountain restaurants, and traditional Swiss dishes.",
+                bestPhotoSpots: "Eiger, Mönch, and Jungfrau from village, Bachalpsee reflections, First Cliff Walk, Eiger Trail views, and traditional Swiss chalets.",
+                safetyTips: "Very safe. Mountain activities require proper preparation. Check weather and trail conditions. Emergency: 112.",
+                budgetExample: "Budget day: €110 (Hostel €70, Food €35, Transport €5) | Mid-range: €160 (Hotel €120, Food €35, Activities €5) | Comfort: €240+ (Hotel €180, Food €50, Activities €10+)"
+            },
+            {
+                id: 10,
+                name: "Zermatt",
+                country: "Switzerland",
+                rating: 4.8,
+                priceRange: "premium",
+                price: "€100-€150",
+                walkability: "excellent",
+                transport: "excellent",
+                nearbyCity: "no",
+                nearbyCityName: "None",
+                description: "Car-free village at the foot of the Matterhorn. Completely walkable with excellent public transport. While pricier, it's a unique experience. Spring and summer offer perfect hiking weather. The village is compact, making it easy to explore on foot or by bike.",
+                features: ["🚫 Car-Free", "🏔️ Matterhorn", "🚶 Highly Walkable", "🚇 Excellent Transit", "🚲 Bike-Friendly"],
+                stats: {
+                    walkability: 98,
+                    transport: 95,
+                    bikeability: 90
+                },
+                image: "images/zermatt.png",
+                bestTime: "June to September",
+                springTemp: "3-13°C (37-55°F)",
+                summerTemp: "8-18°C (46-64°F)",
+                currency: "Swiss Franc (CHF)",
+                language: "German (English widely spoken)",
+                gettingThere: "Train from Visp (1h from Brig), then cogwheel train to Zermatt. No cars allowed - park in Täsch and take train (5min).",
+                activities: ["Gornergrat railway", "Matterhorn Glacier Paradise", "5 Lakes Walk", "Hike to Hörnli Hut", "Mountain biking", "Via Ferrata", "Sunnegga funicular", "Schwarzsee"],
+                accommodation: "Budget: €90-130/night | Mid-range: €130-220/night | Luxury: €220+/night. Many hotels and apartments.",
+                hotels: "Budget: Zermatt Youth Hostel (€80-110), Hotel Bahnhof (€95-120), Matterhorn Hostel (€85-110). Mid-range: Hotel Alpenhof (€150-190), Hotel Walliserhof (€140-180), Hotel Excelsior (€160-200). Luxury: Zermatterhof (€350+), Mont Cervin Palace (€400+), Grand Hotel Zermatterhof (€450+). Apartments: Many options (€120-250), some with Matterhorn views. Best areas: Village center (walkable), near Gornergrat station, quieter outskirts. Booking tip: Book 4+ months ahead! Very popular. Car-free - park in Täsch. Many include guest cards. Matterhorn views premium.",
+                localTips: "Car-free village - park in Täsch. Get the Zermatt Card for discounts. The village is completely walkable. Book mountain railways in advance. Many hotels offer free guest cards. Electric taxis available.",
+                nearbyAttractions: "Täsch (5min train), Matterhorn Glacier Paradise (45min), Gornergrat (30min), Sunnegga (15min), Schwarzsee (1h hike)",
+                transportDetails: "Excellent train and cable car network. Free electric buses in village. Cogwheel trains to viewpoints. Bike and e-bike rentals available. No cars allowed.",
+                population: "5,800",
+                elevation: "1,620m (5,315ft)",
+                localCuisine: "Swiss mountain cuisine: Fondue, rösti, raclette, Swiss chocolate, local cheeses, excellent restaurants, and traditional alpine dishes.",
+                bestPhotoSpots: "Matterhorn from Gornergrat, Schwarzsee reflections, village streets with Matterhorn backdrop, mountain railway views, and sunrise/sunset on Matterhorn.",
+                safetyTips: "Very safe car-free village. Mountain activities require experience. Check weather before excursions. Altitude considerations. Emergency: 112.",
+                budgetExample: "Budget day: €120 (Hostel €80, Food €35, Transport €5) | Mid-range: €180 (Hotel €130, Food €40, Activities €10) | Comfort: €280+ (Hotel €200, Food €60, Activities €20+)"
+            }
+        ];
+
+        let selectedCities = [];
+        let filteredCities = [...cities];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCities(cities);
+            updateStats();
+        });
+
+        // Render Cities
+        function renderCities(citiesToRender) {
+            const grid = document.getElementById('citiesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (citiesToRender.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = citiesToRender.map(city => `
+                <div class="city-card ${selectedCities.includes(city.id) ? 'selected' : ''}" 
+                     data-city-id="${city.id}">
+                    <div class="city-image">
+                        <img src="${city.image}" alt="${city.name}, ${city.country}" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--accent), var(--secondary))';">
+                        <div class="city-badge">${city.country}</div>
+                    </div>
+                    <div class="city-content">
+                        <div class="city-header">
+                            <div>
+                                <div class="city-name">${city.name}</div>
+                                <div class="city-country">${city.country}</div>
+                            </div>
+                            <div class="city-rating">
+                                ${generateStars(city.rating)}
+                            </div>
+                        </div>
+                        <div class="city-features">
+                            ${city.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                        </div>
+                        <div class="city-stats">
+                            <div class="stat">
+                                <div class="stat-value">${city.stats.walkability}%</div>
+                                <div class="stat-label">Walkability</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${city.stats.transport}%</div>
+                                <div class="stat-label">Transport</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${city.stats.bikeability}%</div>
+                                <div class="stat-label">Bikeability</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${city.price}</div>
+                                <div class="stat-label">Per Night</div>
+                            </div>
+                        </div>
+                        <p class="city-description">${city.description}</p>
+                        
+                        <div class="card-actions">
+                            <button class="details-btn" onclick="event.stopPropagation(); openModal(${city.id})">
+                                View Details
+                            </button>
+                            <button class="compare-btn ${selectedCities.includes(city.id) ? 'selected' : ''}" onclick="event.stopPropagation(); toggleCitySelection(${city.id})">
+                                ${selectedCities.includes(city.id) ? '✓ Selected' : 'Compare'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generate Stars
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<span class="star">★</span>';
+            }
+            if (hasHalfStar) {
+                stars += '<span class="star">☆</span>';
+            }
+            for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+                stars += '<span class="star" style="color: #ddd;">★</span>';
+            }
+            return stars;
+        }
+
+        // Open Modal
+        function openModal(cityId) {
+            const city = cities.find(c => c.id === cityId);
+            if (!city) return;
+
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            modalTitle.textContent = `${city.name}, ${city.country}`;
+            
+            modalContent.innerHTML = `
+                <div class="detail-section">
+                    <h4>🌡️ Weather & Best Time</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Best Time</strong>
+                            <span>${city.bestTime || 'May to September'}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Spring Temp</strong>
+                            <span>${city.springTemp || '10-18°C'}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Summer Temp</strong>
+                            <span>${city.summerTemp || '15-25°C'}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Elevation</strong>
+                            <span>${city.elevation || 'N/A'}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>✈️ Getting There</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.gettingThere || 'Check local transport options'}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>🎯 Top Activities</h4>
+                    <ul class="detail-list">
+                        ${(city.activities || []).map(activity => `<li>${activity}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>🏨 Accommodation</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0; margin-bottom: 15px;">${city.accommodation || 'Various options available'}</p>
+                    ${city.hotels ? `
+                    <div style="margin-top: 15px;">
+                        <strong style="color: var(--dark); display: block; margin-bottom: 10px; font-size: 1rem;">Detailed Hotel Recommendations:</strong>
+                        <p style="color: var(--text-light); line-height: 1.9; margin: 0; white-space: pre-line;">${city.hotels}</p>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <div class="detail-section">
+                    <h4>💡 Local Tips</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.localTips || 'Enjoy your stay!'}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>📍 Nearby Attractions</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.nearbyAttractions || 'Explore the region'}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>🚇 Transport Details</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.transportDetails || 'Good public transport available'}</p>
+                </div>
+                
+                ${city.localCuisine ? `
+                <div class="detail-section">
+                    <h4>🍽️ Local Cuisine</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.localCuisine}</p>
+                </div>
+                ` : ''}
+                
+                ${city.bestPhotoSpots ? `
+                <div class="detail-section">
+                    <h4>📸 Best Photo Spots</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.bestPhotoSpots}</p>
+                </div>
+                ` : ''}
+                
+                ${city.safetyTips ? `
+                <div class="detail-section">
+                    <h4>🛡️ Safety Tips</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.safetyTips}</p>
+                </div>
+                ` : ''}
+                
+                ${city.budgetExample ? `
+                <div class="detail-section">
+                    <h4>💰 Daily Budget Example</h4>
+                    <p style="color: var(--text-light); line-height: 1.8; margin: 0;">${city.budgetExample}</p>
+                </div>
+                ` : ''}
+                
+                <div class="info-grid" style="margin-top: 20px;">
+                    <div class="info-item">
+                        <strong>Currency</strong>
+                        <span>${city.currency || 'Euro'}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Language</strong>
+                        <span>${city.language || 'Local language'}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Population</strong>
+                        <span>${city.population || 'N/A'}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Nearby City</strong>
+                        <span>${city.nearbyCity === 'yes' ? city.nearbyCityName : 'None nearby'}</span>
+                    </div>
+                </div>
+            `;
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Modal
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modalOverlay = document.getElementById('modalOverlay');
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Toggle City Selection
+        function toggleCitySelection(cityId) {
+            const index = selectedCities.indexOf(cityId);
+            if (index > -1) {
+                selectedCities.splice(index, 1);
+            } else {
+                if (selectedCities.length < 4) {
+                    selectedCities.push(cityId);
+                } else {
+                    alert('You can compare up to 4 cities at once.');
+                    return;
+                }
+            }
+            renderCities(filteredCities);
+            updateComparison();
+            updateStats();
+        }
+
+        // Apply Filters
+        function applyFilters() {
+            try {
+                const grid = document.getElementById('citiesGrid');
+                if (grid) {
+                    grid.classList.add('filtering');
+                }
+
+                // Small delay for smooth transition
+                setTimeout(() => {
+                    const priceFilter = document.getElementById('priceFilter')?.value || 'all';
+                    const walkabilityFilter = document.getElementById('walkabilityFilter')?.value || 'all';
+                    const transportFilter = document.getElementById('transportFilter')?.value || 'all';
+                    const nearbyCityFilter = document.getElementById('nearbyCityFilter')?.value || 'all';
+
+                    filteredCities = cities.filter(city => {
+                        const matchesPrice = priceFilter === 'all' || city.priceRange === priceFilter;
+                        const matchesWalkability = walkabilityFilter === 'all' || city.walkability === walkabilityFilter;
+                        const matchesTransport = transportFilter === 'all' || city.transport === transportFilter;
+                        const matchesNearby = nearbyCityFilter === 'all' || 
+                            (nearbyCityFilter === 'yes' && city.nearbyCity === 'yes') ||
+                            (nearbyCityFilter === 'no' && city.nearbyCity === 'no');
+
+                        return matchesPrice && matchesWalkability && matchesTransport && matchesNearby;
+                    });
+
+                    renderCities(filteredCities);
+                    updateStats();
+                    
+                    if (grid) {
+                        grid.classList.remove('filtering');
+                    }
+                }, 100);
+            } catch (error) {
+                console.error('Filter error:', error);
+                // If filters fail, show all cities
+                filteredCities = [...cities];
+                renderCities(filteredCities);
+                updateStats();
+                const grid = document.getElementById('citiesGrid');
+                if (grid) {
+                    grid.classList.remove('filtering');
+                }
+            }
+        }
+
+        // Clear Filters
+        function clearFilters() {
+            try {
+                const priceFilter = document.getElementById('priceFilter');
+                const walkabilityFilter = document.getElementById('walkabilityFilter');
+                const transportFilter = document.getElementById('transportFilter');
+                const nearbyCityFilter = document.getElementById('nearbyCityFilter');
+                
+                if (priceFilter) priceFilter.value = 'all';
+                if (walkabilityFilter) walkabilityFilter.value = 'all';
+                if (transportFilter) transportFilter.value = 'all';
+                if (nearbyCityFilter) nearbyCityFilter.value = 'all';
+                
+                filteredCities = [...cities];
+                renderCities(filteredCities);
+                updateStats();
+            } catch (error) {
+                console.error('Clear filters error:', error);
+                filteredCities = [...cities];
+                renderCities(filteredCities);
+                updateStats();
+            }
+        }
+
+        // Update Comparison
+        function updateComparison() {
+            const comparisonSection = document.getElementById('comparisonSection');
+            const comparisonTable = document.getElementById('comparisonTable');
+            
+            if (selectedCities.length === 0) {
+                comparisonSection.classList.remove('active');
+                return;
+            }
+
+            comparisonSection.classList.add('active');
+            
+            const selected = cities.filter(c => selectedCities.includes(c.id));
+            
+            let tableHTML = `
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            ${selected.map(c => `<th>${c.name}, ${c.country}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Rating</strong></td>
+                            ${selected.map(c => `<td>${generateStars(c.rating)} ${c.rating}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Price Range</strong></td>
+                            ${selected.map(c => `<td>${c.price}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Walkability</strong></td>
+                            ${selected.map(c => `<td>${c.stats.walkability}%</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Public Transport</strong></td>
+                            ${selected.map(c => `<td>${c.stats.transport}%</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Bikeability</strong></td>
+                            ${selected.map(c => `<td>${c.stats.bikeability}%</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Nearby Large City</strong></td>
+                            ${selected.map(c => `<td>${c.nearbyCity === 'yes' ? `✓ ${c.nearbyCityName}` : 'No'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Key Features</strong></td>
+                            ${selected.map(c => `<td>${c.features.slice(0, 3).join(', ')}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Best Time to Visit</strong></td>
+                            ${selected.map(c => `<td>${c.bestTime || 'May to September'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Summer Temperature</strong></td>
+                            ${selected.map(c => `<td>${c.summerTemp || '15-25°C'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Currency</strong></td>
+                            ${selected.map(c => `<td>${c.currency || 'Euro'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Language</strong></td>
+                            ${selected.map(c => `<td>${c.language || 'Local'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Population</strong></td>
+                            ${selected.map(c => `<td>${c.population || 'N/A'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>Elevation</strong></td>
+                            ${selected.map(c => `<td>${c.elevation || 'N/A'}</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            
+            comparisonTable.innerHTML = tableHTML;
+        }
+
+        // Clear Comparison
+        function clearComparison() {
+            selectedCities = [];
+            renderCities(filteredCities);
+            updateComparison();
+            updateStats();
+        }
+
+        // Update Stats
+        function updateStats() {
+            document.getElementById('totalCities').textContent = filteredCities.length;
+            document.getElementById('selectedCount').textContent = selectedCities.length;
+            
+            if (filteredCities.length > 0) {
+                const avgRating = (filteredCities.reduce((sum, c) => sum + c.rating, 0) / filteredCities.length).toFixed(1);
+                document.getElementById('avgRating').textContent = avgRating;
+                
+                // Calculate average price (rough estimate)
+                const priceValues = filteredCities.map(c => {
+                    const match = c.price.match(/€(\d+)/);
+                    return match ? parseInt(match[1]) : 75;
+                });
+                const avgPrice = Math.round(priceValues.reduce((sum, p) => sum + p, 0) / priceValues.length);
+                document.getElementById('avgPrice').textContent = `€${avgPrice}`;
+            }
+        }
+    </script>
+</body>
+</html>

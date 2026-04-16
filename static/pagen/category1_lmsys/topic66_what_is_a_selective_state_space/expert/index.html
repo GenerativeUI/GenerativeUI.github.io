@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selective State Space Models | Interactive Guide</title>
+    <meta name="description" content="Comprehensive interactive guide to Selective State Space Models (SSMs) and Mamba architecture - the linear-time alternative to Transformers">
+    <meta name="author" content="AI Research Guide">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Selective State Space Models | Interactive Guide">
+    <meta property="og:description" content="Learn about the revolutionary SSM architecture that's challenging Transformers with linear complexity and selective attention">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./ssm-hero.jpg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Selective State Space Models | Interactive Guide">
+    <meta name="twitter:description" content="Learn about the revolutionary SSM architecture that's challenging Transformers with linear complexity and selective attention">
+    <meta name="twitter:image" content="./ssm-hero.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Neural Network Inspired Color Scheme */
+            --background: 222 47% 4%;
+            --foreground: 210 40% 98%;
+            --card: 222 47% 6%;
+            --card-foreground: 210 40% 98%;
+            --primary: 214 100% 60%;
+            --primary-foreground: 222 47% 4%;
+            --primary-glow: 214 100% 75%;
+            --secondary: 270 95% 65%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 222 47% 12%;
+            --muted-foreground: 215 20% 65%;
+            --accent: 180 100% 60%;
+            --accent-foreground: 222 47% 4%;
+            --border: 222 47% 15%;
+            --input: 222 47% 12%;
+            --ring: 214 100% 60%;
+            --radius: 0.75rem;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 25% 25%, hsl(214 100% 60% / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, hsl(270 95% 65% / 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                hsl(var(--background) / 0.8), 
+                hsl(var(--background) / 0.6), 
+                hsl(var(--background) / 0.9));
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: hsl(var(--muted-foreground));
+            text-align: center;
+            max-width: 60rem;
+            margin: 0 auto 4rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, hsl(var(--card)), hsl(222 47% 8%));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
+        }
+
+        .btn-primary:hover {
+            background: hsl(var(--primary) / 0.9);
+        }
+
+        .btn-outline {
+            border: 1px solid hsl(var(--primary) / 0.5);
+            color: hsl(var(--foreground));
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            border-color: hsl(var(--primary));
+            background: hsl(var(--primary) / 0.1);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .math {
+            font-family: 'JetBrains Mono', monospace;
+            background: hsl(var(--muted) / 0.2);
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .matrix-cell {
+            width: 2rem;
+            height: 2rem;
+            background: hsl(var(--primary) / 0.2);
+            border: 1px solid hsl(var(--primary) / 0.3);
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s ease;
+        }
+
+        .matrix-cell:hover {
+            background: hsl(var(--primary) / 0.4);
+            transform: scale(1.1);
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 0.25rem;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .matrix-4x4 { grid-template-columns: repeat(4, 1fr); }
+        .matrix-4x3 { grid-template-columns: repeat(3, 1fr); }
+        .matrix-3x4 { grid-template-columns: repeat(4, 1fr); }
+        .matrix-3x3 { grid-template-columns: repeat(3, 1fr); }
+
+        .token {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            border: 1px solid;
+            transition: all 0.5s ease;
+            margin: 0.25rem;
+            display: inline-block;
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid hsl(var(--border) / 0.3);
+        }
+
+        .performance-table th {
+            color: hsl(var(--muted-foreground));
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid hsl(var(--border));
+        }
+
+        .badge-primary {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .badge-outline {
+            background: transparent;
+            color: hsl(var(--foreground));
+        }
+
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid hsl(var(--border) / 0.3);
+            text-align: center;
+        }
+
+        .footer a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: hsl(var(--primary));
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .animate-pulse {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-0.5rem); }
+        }
+
+        .animate-bounce {
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            color: hsl(var(--primary));
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .hero-content h1 {
+                font-size: 3rem !important;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Interactive Elements */
+        .interactive-matrix {
+            display: none;
+        }
+
+        .interactive-matrix.active {
+            display: block;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid hsl(var(--border));
+            background: transparent;
+            color: hsl(var(--foreground));
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            box-shadow: 0 0 30px hsl(var(--primary) / 0.3);
+        }
+
+        .app-section {
+            padding: 2rem 0;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <img src="./ssm-hero.jpg" alt="State Space Model Visualization">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content container">
+            <h1 class="gradient-text" style="font-size: 4rem; font-weight: bold; margin-bottom: 1.5rem;">
+                <span id="typed-text">Selective State Space Models</span><span class="animate-pulse">|</span>
+            </h1>
+            <p style="font-size: 1.5rem; color: hsl(var(--muted-foreground)); max-width: 60rem; margin: 0 auto 3rem;">
+                The revolutionary architecture that's changing how we process sequential data - 
+                combining the efficiency of linear models with the power of transformers
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 4rem; flex-wrap: wrap;">
+                <a href="#foundation" class="btn btn-primary">Explore the Mathematics</a>
+                <a href="#mamba" class="btn btn-outline">See Mamba Architecture</a>
+            </div>
+
+            <!-- Key Features Grid -->
+            <div class="grid grid-3" style="margin-bottom: 4rem;">
+                <div class="card" style="text-align: center;">
+                    <div style="color: hsl(var(--primary)); font-size: 2rem; margin-bottom: 1rem;">O(n)</div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Linear Complexity</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Process sequences in linear time, unlike quadratic attention mechanisms</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="color: hsl(var(--secondary)); font-size: 2rem; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Selective Mechanism</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Focus on relevant information with learned selection parameters</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="color: hsl(var(--accent)); font-size: 2rem; margin-bottom: 1rem;">🚀</div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">Efficient Inference</h3>
+                    <p style="color: hsl(var(--muted-foreground));">Constant memory usage during generation, perfect for long sequences</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator animate-bounce" onclick="scrollToSection('foundation')">
+            <i data-lucide="chevron-down" style="width: 2rem; height: 2rem;"></i>
+        </div>
+    </section>
+
+    <!-- Foundation Section -->
+    <section id="foundation" class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Mathematical Foundation</h2>
+            <p class="section-description">
+                State Space Models are defined by four matrices that govern the transformation of inputs to outputs through hidden states
+            </p>
+
+            <div class="grid grid-2" style="margin-bottom: 4rem;">
+                <div>
+                    <img src="./matrices-diagram.jpg" alt="Matrix Diagram" 
+                         style="width: 100%; border-radius: var(--radius); opacity: 0.6;">
+                </div>
+                <div>
+                    <div class="card">
+                        <h3 style="color: hsl(var(--primary)); font-size: 1.5rem; margin-bottom: 1rem;">Core SSM Equations</h3>
+                        <div class="math" style="margin-bottom: 1rem;">
+                            h<sub>t+1</sub> = <span style="color: hsl(var(--primary)); font-weight: bold;">A</span>h<sub>t</sub> + <span style="color: hsl(var(--secondary)); font-weight: bold;">B</span>x<sub>t</sub>
+                            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-top: 0.5rem;">State evolution</div>
+                        </div>
+                        <div class="math">
+                            y<sub>t</sub> = <span style="color: hsl(var(--accent)); font-weight: bold;">C</span>h<sub>t</sub> + <span style="color: hsl(var(--muted-foreground));">D</span>x<sub>t</sub>
+                            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-top: 0.5rem;">Output generation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Matrix Explorer -->
+            <div class="card">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Interactive Matrix Explorer</h3>
+                
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showMatrix('A')">Matrix A</button>
+                    <button class="tab-button" onclick="showMatrix('B')">Matrix B</button>
+                    <button class="tab-button" onclick="showMatrix('C')">Matrix C</button>
+                    <button class="tab-button" onclick="showMatrix('D')">Matrix D</button>
+                </div>
+
+                <div class="grid grid-2">
+                    <div style="text-align: center;">
+                        <div id="matrix-A" class="interactive-matrix active">
+                            <div class="matrix-grid matrix-4x4" id="matrix-A-grid"></div>
+                        </div>
+                        <div id="matrix-B" class="interactive-matrix">
+                            <div class="matrix-grid matrix-4x3" id="matrix-B-grid"></div>
+                        </div>
+                        <div id="matrix-C" class="interactive-matrix">
+                            <div class="matrix-grid matrix-3x4" id="matrix-C-grid"></div>
+                        </div>
+                        <div id="matrix-D" class="interactive-matrix">
+                            <div class="matrix-grid matrix-3x3" id="matrix-D-grid"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div id="matrix-info">
+                            <h4 style="font-size: 1.5rem; color: hsl(var(--primary)); margin-bottom: 1rem;">State Transition Matrix (A)</h4>
+                            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                Controls how the hidden state evolves over time. This matrix determines the dynamics of the system.
+                            </p>
+                            <div class="grid grid-2" style="gap: 1rem;">
+                                <div>
+                                    <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Dimension</div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.125rem; color: hsl(var(--primary));">N × N</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Role</div>
+                                    <div style="font-size: 0.875rem;">Maps current state to next state</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selective Section -->
+    <section id="selective" class="section" style="background: hsl(var(--muted) / 0.05);">
+        <div class="container">
+            <h2 class="section-title gradient-text">The Selective Mechanism</h2>
+            <p class="section-description">
+                Unlike traditional State Space Models with fixed parameters, Selective SSMs dynamically adjust their behavior based on input content
+            </p>
+
+            <div class="card">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <label style="display: flex; align-items: center; justify-content: center; gap: 1rem; font-size: 1.125rem;">
+                        <span>Traditional SSM</span>
+                        <input type="checkbox" id="selective-toggle" onchange="toggleSelective()" 
+                               style="width: 3rem; height: 1.5rem; appearance: none; background: hsl(var(--muted)); border-radius: 9999px; position: relative; cursor: pointer; transition: all 0.3s ease;">
+                        <span>Selective SSM</span>
+                    </label>
+                </div>
+
+                <div class="grid grid-2">
+                    <div style="text-align: center;">
+                        <h4 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Input Processing</h4>
+                        <div id="token-container">
+                            <!-- Tokens will be inserted here by JavaScript -->
+                        </div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-top: 1rem;" id="processing-description">
+                            All tokens processed equally
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <h4 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Parameter Behavior</h4>
+                        <div class="card" style="background: hsl(var(--muted) / 0.1); margin-bottom: 1rem;">
+                            <div style="margin-bottom: 0.5rem;">Matrix A Diagonal Values</div>
+                            <div class="matrix-grid" style="grid-template-columns: repeat(6, 1fr);" id="param-matrix">
+                                <!-- Matrix cells will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="card" style="background: hsl(var(--muted) / 0.1);">
+                            <div style="margin-bottom: 0.5rem;">Selection Parameters (Δ, B, C)</div>
+                            <div style="font-size: 0.875rem;" id="param-description">
+                                Δ, B, C = constant - Fixed values
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Insights -->
+                <div class="grid grid-2" style="margin-top: 3rem;">
+                    <div class="card" style="background: hsl(var(--primary) / 0.05); border-color: hsl(var(--primary) / 0.2);">
+                        <h5 style="color: hsl(var(--primary)); font-weight: 600; margin-bottom: 1rem;">Traditional SSM Issues</h5>
+                        <ul style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem;">• Fixed parameters for all inputs</li>
+                            <li style="margin-bottom: 0.5rem;">• Cannot focus on relevant information</li>
+                            <li style="margin-bottom: 0.5rem;">• Limited modeling capacity</li>
+                            <li>• Poor performance on complex tasks</li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="background: hsl(var(--secondary) / 0.05); border-color: hsl(var(--secondary) / 0.2);">
+                        <h5 style="color: hsl(var(--secondary)); font-weight: 600; margin-bottom: 1rem;">Selective SSM Advantages</h5>
+                        <ul style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem;">• Input-dependent parameter selection</li>
+                            <li style="margin-bottom: 0.5rem;">• Focus on important information</li>
+                            <li style="margin-bottom: 0.5rem;">• Better modeling of complex dependencies</li>
+                            <li>• Competitive with Transformers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selection Mechanism Details -->
+            <div class="card">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">How Selection Works</h3>
+                
+                <div class="grid grid-3">
+                    <div style="text-align: center;">
+                        <div style="width: 4rem; height: 4rem; background: hsl(var(--primary) / 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">1</div>
+                        <h4 style="font-size: 1.25rem; color: hsl(var(--primary)); margin-bottom: 1rem;">Input Analysis</h4>
+                        <p style="color: hsl(var(--muted-foreground));">
+                            The model analyzes input tokens to determine their relative importance and relevance
+                        </p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div style="width: 4rem; height: 4rem; background: hsl(var(--secondary) / 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">2</div>
+                        <h4 style="font-size: 1.25rem; color: hsl(var(--secondary)); margin-bottom: 1rem;">Parameter Generation</h4>
+                        <p style="color: hsl(var(--muted-foreground));">
+                            Selection functions generate input-dependent parameters Δ, B, and C matrices
+                        </p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div style="width: 4rem; height: 4rem; background: hsl(var(--accent) / 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">3</div>
+                        <h4 style="font-size: 1.25rem; color: hsl(var(--accent)); margin-bottom: 1rem;">Selective Processing</h4>
+                        <p style="color: hsl(var(--muted-foreground));">
+                            The SSM processes information with dynamic focus, ignoring irrelevant details
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mamba Section -->
+    <section id="mamba" class="section">
+        <div class="container">
+            <h2 class="section-title gradient-text">Mamba Architecture</h2>
+            <p class="section-description">
+                The first practical implementation of Selective State Space Models, achieving transformer-level performance with linear scaling
+            </p>
+
+            <!-- Architecture Diagram -->
+            <div class="card">
+                <div class="grid grid-2" style="gap: 3rem; align-items: center;">
+                    <div style="position: relative;">
+                        <img src="./mamba-architecture.jpg" alt="Mamba Architecture" 
+                             style="width: 100%; border-radius: var(--radius); opacity: 0.7;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom right, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1)); border-radius: var(--radius);"></div>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">Interactive Architecture Explorer</h3>
+                        
+                        <div class="grid grid-2" style="gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <button class="tab-button active" onclick="showComponent('input')">Input Projection</button>
+                            <button class="tab-button" onclick="showComponent('selection')">Selection Mechanism</button>
+                            <button class="tab-button" onclick="showComponent('ssm')">Selective SSM</button>
+                            <button class="tab-button" onclick="showComponent('output')">Output Projection</button>
+                        </div>
+
+                        <div class="card" style="background: hsl(var(--muted) / 0.1);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span class="badge badge-outline" id="component-badge">Input Projection</span>
+                            </div>
+                            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 1rem;" id="component-description">
+                                Input tokens are projected into higher dimensional space and split into multiple pathways for parallel processing.
+                            </p>
+                            <div id="component-details">
+                                <div style="font-size: 0.875rem; font-family: 'JetBrains Mono', monospace; background: hsl(var(--muted) / 0.2); padding: 0.5rem; border-radius: var(--radius); margin-bottom: 0.5rem;">Linear projection: x → [x₁, x₂, x₃]</div>
+                                <div style="font-size: 0.875rem; font-family: 'JetBrains Mono', monospace; background: hsl(var(--muted) / 0.2); padding: 0.5rem; border-radius: var(--radius); margin-bottom: 0.5rem;">Pathway splitting for selective mechanism</div>
+                                <div style="font-size: 0.875rem; font-family: 'JetBrains Mono', monospace; background: hsl(var(--muted) / 0.2); padding: 0.5rem; border-radius: var(--radius);">Activation functions applied</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Comparison -->
+            <div class="card">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Performance Comparison</h3>
+                
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Parameters</th>
+                            <th>Speed</th>
+                            <th>Memory</th>
+                            <th>Quality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-outline">Transformer</span></td>
+                            <td style="font-family: 'JetBrains Mono', monospace;">1.3B</td>
+                            <td>1.0x</td>
+                            <td>1.0x</td>
+                            <td>85%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">Mamba</span></td>
+                            <td style="font-family: 'JetBrains Mono', monospace;">1.4B</td>
+                            <td style="color: hsl(var(--primary)); font-weight: 600;">5.0x</td>
+                            <td style="color: hsl(var(--secondary)); font-weight: 600;">0.2x</td>
+                            <td style="color: hsl(var(--accent)); font-weight: 600;">87%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-outline">Linear Attention</span></td>
+                            <td style="font-family: 'JetBrains Mono', monospace;">1.3B</td>
+                            <td>2.0x</td>
+                            <td>0.5x</td>
+                            <td>78%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="grid grid-3" style="margin-top: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: hsl(var(--primary)); margin-bottom: 0.5rem;">5x</div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Faster inference</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: hsl(var(--secondary)); margin-bottom: 0.5rem;">80%</div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Less memory usage</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: hsl(var(--accent)); margin-bottom: 0.5rem;">O(n)</div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Linear scaling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Innovations -->
+            <div class="grid grid-2">
+                <div class="card" style="background: hsl(var(--primary) / 0.05); border-color: hsl(var(--primary) / 0.2);">
+                    <h4 style="color: hsl(var(--primary)); font-size: 1.25rem; margin-bottom: 1rem;">Hardware-Aware Design</h4>
+                    <ul style="color: hsl(var(--muted-foreground)); list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• Optimized for modern GPU architectures</li>
+                        <li style="margin-bottom: 0.5rem;">• Efficient memory access patterns</li>
+                        <li style="margin-bottom: 0.5rem;">• Parallel scan algorithms</li>
+                        <li>• Custom CUDA kernels</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: hsl(var(--secondary) / 0.05); border-color: hsl(var(--secondary) / 0.2);">
+                    <h4 style="color: hsl(var(--secondary)); font-size: 1.25rem; margin-bottom: 1rem;">Practical Advantages</h4>
+                    <ul style="color: hsl(var(--muted-foreground)); list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• Constant memory during generation</li>
+                        <li style="margin-bottom: 0.5rem;">• Handles arbitrarily long sequences</li>
+                        <li style="margin-bottom: 0.5rem;">• No attention bottlenecks</li>
+                        <li>• Simple architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="section" style="background: hsl(var(--muted) / 0.05);">
+        <div class="container">
+            <h2 class="section-title gradient-text">Real-World Applications</h2>
+            <p class="section-description">
+                Selective State Space Models are revolutionizing various domains with their efficient processing capabilities
+            </p>
+
+            <!-- Application Explorer -->
+            <div class="card">
+                <div class="tab-buttons" style="margin-bottom: 2rem;">
+                    <button class="tab-button active" onclick="showApplication('language')">Language Modeling</button>
+                    <button class="tab-button" onclick="showApplication('vision')">Computer Vision</button>
+                    <button class="tab-button" onclick="showApplication('audio')">Audio Processing</button>
+                    <button class="tab-button" onclick="showApplication('time_series')">Time Series</button>
+                </div>
+
+                <div class="grid grid-2" style="gap: 3rem;">
+                    <div id="app-content">
+                        <h3 style="font-size: 2rem; color: hsl(var(--primary)); margin-bottom: 1rem;" id="app-title">Language Modeling</h3>
+                        <p style="color: hsl(var(--muted-foreground)); font-size: 1.125rem; margin-bottom: 1.5rem;" id="app-description">
+                            Large language models with efficient long-context processing
+                        </p>
+
+                        <div>
+                            <h4 style="font-size: 1.25rem; margin-bottom: 1rem;">Use Cases</h4>
+                            <div class="grid grid-2" style="gap: 0.75rem;" id="app-examples">
+                                <div style="padding: 0.75rem; background: hsl(var(--muted) / 0.2); border-radius: var(--radius); font-size: 0.875rem;">Document summarization</div>
+                                <div style="padding: 0.75rem; background: hsl(var(--muted) / 0.2); border-radius: var(--radius); font-size: 0.875rem;">Code generation</div>
+                                <div style="padding: 0.75rem; background: hsl(var(--muted) / 0.2); border-radius: var(--radius); font-size: 0.875rem;">Conversational AI</div>
+                                <div style="padding: 0.75rem; background: hsl(var(--muted) / 0.2); border-radius: var(--radius); font-size: 0.875rem;">Machine translation</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <h4 style="font-size: 1.25rem; margin-bottom: 1rem;">Performance</h4>
+                            <div class="card" style="background: hsl(var(--primary) / 0.05); border-color: hsl(var(--primary) / 0.5);">
+                                <p style="font-weight: 600;" id="app-performance">95% of Transformer quality with 5x speed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="font-size: 1.25rem; margin-bottom: 1rem;">Available Models</h4>
+                        <div id="app-models">
+                            <div class="card" style="background: hsl(var(--muted) / 0.1); margin-bottom: 0.75rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600;">Mamba-130M</div>
+                                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Open source implementation</div>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <a href="#" class="btn btn-outline" style="padding: 0.5rem;">
+                                            <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-outline" style="padding: 0.5rem;">
+                                            <i data-lucide="external-link" style="width: 1rem; height: 1rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Research Papers -->
+            <div class="card">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Key Research Papers</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card" style="background: hsl(var(--muted) / 0.1); transition: all 0.3s ease;">
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div>
+                                <h4 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Mamba: Linear-Time Sequence Modeling with Selective State Spaces</h4>
+                                <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                    Albert Gu, Tri Dao • arXiv 2023
+                                </div>
+                                <span class="badge badge-outline" style="font-size: 0.75rem;">2,847 citations</span>
+                            </div>
+                            <a href="https://arxiv.org/abs/2312.00752" target="_blank" class="btn btn-outline" style="align-self: flex-start;">
+                                <i data-lucide="external-link" style="width: 1rem; height: 1rem; margin-right: 0.5rem;"></i>
+                                Read Paper
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Directions -->
+            <div class="grid grid-3">
+                <div class="card" style="background: hsl(var(--primary) / 0.05); border-color: hsl(var(--primary) / 0.2);">
+                    <h4 style="color: hsl(var(--primary)); font-size: 1.25rem; margin-bottom: 1rem;">Scaling</h4>
+                    <ul style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• Billion-parameter models</li>
+                        <li style="margin-bottom: 0.5rem;">• Multi-modal architectures</li>
+                        <li style="margin-bottom: 0.5rem;">• Distributed training</li>
+                        <li>• Hardware optimization</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: hsl(var(--secondary) / 0.05); border-color: hsl(var(--secondary) / 0.2);">
+                    <h4 style="color: hsl(var(--secondary)); font-size: 1.25rem; margin-bottom: 1rem;">Applications</h4>
+                    <ul style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• Genomics and biology</li>
+                        <li style="margin-bottom: 0.5rem;">• Climate modeling</li>
+                        <li style="margin-bottom: 0.5rem;">• Financial markets</li>
+                        <li>• Scientific computing</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: hsl(var(--accent) / 0.05); border-color: hsl(var(--accent) / 0.2);">
+                    <h4 style="color: hsl(var(--accent)); font-size: 1.25rem; margin-bottom: 1rem;">Research</h4>
+                    <ul style="color: hsl(var(--muted-foreground)); font-size: 0.875rem; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">• Theoretical foundations</li>
+                        <li style="margin-bottom: 0.5rem;">• Hybrid architectures</li>
+                        <li style="margin-bottom: 0.5rem;">• Interpretability</li>
+                        <li>• Efficiency improvements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                Interactive guide to Selective State Space Models
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.875rem; flex-wrap: wrap;">
+                <a href="https://arxiv.org/abs/2312.00752" target="_blank">Original Paper</a>
+                <a href="https://github.com/state-spaces/mamba" target="_blank">GitHub Repository</a>
+                <a href="https://mamba-ssm.readthedocs.io/" target="_blank">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Matrix data and descriptions
+        const matrixDescriptions = {
+            A: {
+                title: 'State Transition Matrix (A)',
+                description: 'Controls how the hidden state evolves over time. This matrix determines the dynamics of the system.',
+                dimension: 'N × N',
+                role: 'Maps current state to next state',
+                size: [4, 4]
+            },
+            B: {
+                title: 'Input Matrix (B)',
+                description: 'Projects input tokens into the state space. This matrix determines how inputs affect the hidden state.',
+                dimension: 'N × D',
+                role: 'Maps input to state updates',
+                size: [4, 3]
+            },
+            C: {
+                title: 'Output Matrix (C)',
+                description: 'Projects hidden states to output space. This matrix extracts relevant information for the output.',
+                dimension: 'D × N',
+                role: 'Maps state to output',
+                size: [3, 4]
+            },
+            D: {
+                title: 'Skip Connection (D)',
+                description: 'Direct input-to-output connection. Often omitted in practice for computational efficiency.',
+                dimension: 'D × D',
+                role: 'Direct input-output mapping',
+                size: [3, 3]
+            }
+        };
+
+        // Component descriptions  
+        const componentDescriptions = {
+            input: {
+                title: 'Input Projection',
+                description: 'Input tokens are projected into higher dimensional space and split into multiple pathways for parallel processing.',
+                details: [
+                    'Linear projection: x → [x₁, x₂, x₃]',
+                    'Pathway splitting for selective mechanism',
+                    'Activation functions applied'
+                ]
+            },
+            selection: {
+                title: 'Selection Mechanism',
+                description: 'The core innovation - parameters Δ, B, C are computed dynamically based on input content.',
+                details: [
+                    'Δ = Softplus(Linear(x₁))',
+                    'B = Linear(x₂)',
+                    'C = Linear(x₃)',
+                    'Input-dependent parameter generation'
+                ]
+            },
+            ssm: {
+                title: 'Selective SSM',
+                description: 'State space computation with selective parameters, enabling efficient sequence modeling.',
+                details: [
+                    'Discretization: Ā = discretize(Δ, A)',
+                    'State evolution: h_{t+1} = Ā·h_t + B̄·x_t',
+                    'Linear time complexity O(n)',
+                    'Parallel computation during training'
+                ]
+            },
+            output: {
+                title: 'Output Projection',
+                description: 'Final linear projection with optional gating for improved performance and stability.',
+                details: [
+                    'Output computation: y = C·h',
+                    'Optional gating mechanism',
+                    'Residual connections',
+                    'Layer normalization'
+                ]
+            }
+        };
+
+        // Application data
+        const applications = {
+            language: {
+                title: 'Language Modeling',
+                description: 'Large language models with efficient long-context processing',
+                examples: ['Document summarization', 'Code generation', 'Conversational AI', 'Machine translation'],
+                models: ['Mamba-130M', 'Mamba-370M', 'Mamba-790M', 'Mamba-1.4B', 'Mamba-2.8B'],
+                performance: '95% of Transformer quality with 5x speed',
+                color: 'primary'
+            },
+            vision: {
+                title: 'Computer Vision',
+                description: 'Efficient processing of high-resolution images and video sequences',
+                examples: ['Image classification', 'Object detection', 'Video understanding', 'Medical imaging'],
+                models: ['Vision Mamba', 'VMamba', 'MambaVision'],
+                performance: 'Linear scaling with image resolution',
+                color: 'secondary'
+            },
+            audio: {
+                title: 'Audio Processing',
+                description: 'Real-time audio processing with long-term dependencies',
+                examples: ['Speech recognition', 'Music generation', 'Audio classification', 'Sound separation'],
+                models: ['AudioMamba', 'SpeechMamba'],
+                performance: 'Real-time processing of long audio sequences',
+                color: 'accent'
+            },
+            time_series: {
+                title: 'Time Series',
+                description: 'Efficient modeling of long temporal sequences',
+                examples: ['Financial forecasting', 'Weather prediction', 'IoT sensor data', 'Healthcare monitoring'],
+                models: ['TSMamba', 'ForecastMamba'],
+                performance: 'Superior long-range dependency modeling',
+                color: 'primary'
+            }
+        };
+
+        // Initialize matrices
+        function initializeMatrices() {
+            ['A', 'B', 'C', 'D'].forEach(matrix => {
+                const grid = document.getElementById(`matrix-${matrix}-grid`);
+                if (grid) {
+                    const [rows, cols] = matrixDescriptions[matrix].size;
+                    grid.innerHTML = '';
+                    
+                    for (let i = 0; i < rows * cols; i++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'matrix-cell';
+                        cell.textContent = (Math.sin(i * 0.5) * 0.5 + 0.5).toFixed(1);
+                        grid.appendChild(cell);
+                    }
+                }
+            });
+        }
+
+        // Show matrix function
+        function showMatrix(matrix) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Hide all matrices
+            document.querySelectorAll('.interactive-matrix').forEach(m => m.classList.remove('active'));
+            
+            // Show selected matrix
+            document.getElementById(`matrix-${matrix}`).classList.add('active');
+
+            // Update info
+            const info = matrixDescriptions[matrix];
+            document.getElementById('matrix-info').innerHTML = `
+                <h4 style="font-size: 1.5rem; color: hsl(var(--primary)); margin-bottom: 1rem;">${info.title}</h4>
+                <p style="color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">${info.description}</p>
+                <div class="grid grid-2" style="gap: 1rem;">
+                    <div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Dimension</div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.125rem; color: hsl(var(--primary));">${info.dimension}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Role</div>
+                        <div style="font-size: 0.875rem;">${info.role}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize tokens
+        function initializeTokens() {
+            const tokens = ['The', 'cat', 'sat', 'on', 'the', 'mat', 'and', 'looked', 'around'];
+            const importanceMap = [0.8, 0.9, 0.4, 0.3, 0.2, 0.9, 0.3, 0.7, 0.6];
+            const container = document.getElementById('token-container');
+            
+            container.innerHTML = '';
+            tokens.forEach((token, index) => {
+                const tokenEl = document.createElement('span');
+                tokenEl.className = 'token';
+                tokenEl.textContent = token;
+                tokenEl.style.backgroundColor = `hsl(var(--primary) / 0.2)`;
+                tokenEl.style.borderColor = `hsl(var(--primary) / 0.5)`;
+                container.appendChild(tokenEl);
+            });
+        }
+
+        // Initialize parameter matrix
+        function initializeParamMatrix() {
+            const container = document.getElementById('param-matrix');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'matrix-cell';
+                cell.textContent = '0.90';
+                cell.style.backgroundColor = 'hsl(var(--primary) / 0.2)';
+                container.appendChild(cell);
+            }
+        }
+
+        // Toggle selective mechanism
+        function toggleSelective() {
+            const isSelective = document.getElementById('selective-toggle').checked;
+            const tokens = document.querySelectorAll('#token-container .token');
+            const paramCells = document.querySelectorAll('#param-matrix .matrix-cell');
+            const description = document.getElementById('processing-description');
+            const paramDesc = document.getElementById('param-description');
+            
+            const importanceMap = [0.8, 0.9, 0.4, 0.3, 0.2, 0.9, 0.3, 0.7, 0.6];
+            
+            tokens.forEach((token, index) => {
+                const importance = isSelective ? importanceMap[index] : 0.5;
+                token.style.backgroundColor = `hsl(var(--primary) / ${importance * 0.3})`;
+                token.style.borderColor = `hsl(var(--primary) / ${importance})`;
+                token.style.transform = `scale(${0.9 + importance * 0.2})`;
+                token.style.boxShadow = isSelective && importance > 0.6 ? '0 0 30px hsl(var(--primary) / 0.3)' : 'none';
+            });
+
+            paramCells.forEach((cell, index) => {
+                if (isSelective) {
+                    const value = 0.5 + Math.sin(index) * 0.3;
+                    cell.textContent = value.toFixed(2);
+                    cell.style.backgroundColor = `hsl(var(--primary) / ${0.1 + Math.abs(Math.sin(index)) * 0.4})`;
+                } else {
+                    cell.textContent = '0.90';
+                    cell.style.backgroundColor = 'hsl(var(--primary) / 0.2)';
+                }
+            });
+
+            description.textContent = isSelective 
+                ? "Tokens are weighted based on learned importance" 
+                : "All tokens processed equally";
+                
+            paramDesc.textContent = isSelective 
+                ? "Δ, B, C = f(x) - Input dependent" 
+                : "Δ, B, C = constant - Fixed values";
+                
+            // Update toggle appearance
+            const toggle = document.getElementById('selective-toggle');
+            toggle.style.backgroundColor = isSelective ? 'hsl(var(--primary))' : 'hsl(var(--muted))';
+        }
+
+        // Show component function
+        function showComponent(component) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update content
+            const info = componentDescriptions[component];
+            document.getElementById('component-badge').textContent = info.title;
+            document.getElementById('component-description').textContent = info.description;
+            
+            const detailsContainer = document.getElementById('component-details');
+            detailsContainer.innerHTML = '';
+            info.details.forEach(detail => {
+                const detailEl = document.createElement('div');
+                detailEl.style.cssText = 'font-size: 0.875rem; font-family: "JetBrains Mono", monospace; background: hsl(var(--muted) / 0.2); padding: 0.5rem; border-radius: var(--radius); margin-bottom: 0.5rem;';
+                detailEl.textContent = detail;
+                detailsContainer.appendChild(detailEl);
+            });
+        }
+
+        // Show application function
+        function showApplication(app) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update content
+            const info = applications[app];
+            document.getElementById('app-title').textContent = info.title;
+            document.getElementById('app-description').textContent = info.description;
+            document.getElementById('app-performance').textContent = info.performance;
+
+            // Update examples
+            const examplesContainer = document.getElementById('app-examples');
+            examplesContainer.innerHTML = '';
+            info.examples.forEach(example => {
+                const exampleEl = document.createElement('div');
+                exampleEl.style.cssText = 'padding: 0.75rem; background: hsl(var(--muted) / 0.2); border-radius: var(--radius); font-size: 0.875rem;';
+                exampleEl.textContent = example;
+                examplesContainer.appendChild(exampleEl);
+            });
+
+            // Update models
+            const modelsContainer = document.getElementById('app-models');
+            modelsContainer.innerHTML = '';
+            info.models.forEach(model => {
+                const modelEl = document.createElement('div');
+                modelEl.className = 'card';
+                modelEl.style.cssText = 'background: hsl(var(--muted) / 0.1); margin-bottom: 0.75rem;';
+                modelEl.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">${model}</div>
+                            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Open source implementation</div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a href="#" class="btn btn-outline" style="padding: 0.5rem;">
+                                <i data-lucide="github" style="width: 1rem; height: 1rem;"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline" style="padding: 0.5rem;">
+                                <i data-lucide="external-link" style="width: 1rem; height: 1rem;"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                modelsContainer.appendChild(modelEl);
+            });
+            
+            // Re-initialize icons for new elements
+            lucide.createIcons();
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMatrices();
+            initializeTokens();
+            initializeParamMatrix();
+            
+            // Style the selective toggle
+            const toggle = document.getElementById('selective-toggle');
+            toggle.style.cssText = `
+                width: 3rem; 
+                height: 1.5rem; 
+                appearance: none; 
+                background: hsl(var(--muted)); 
+                border-radius: 9999px; 
+                position: relative; 
+                cursor: pointer; 
+                transition: all 0.3s ease;
+            `;
+            
+            // Add toggle slider
+            toggle.addEventListener('change', function() {
+                this.style.backgroundColor = this.checked ? 'hsl(var(--primary))' : 'hsl(var(--muted))';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tel Aviv to Jerusalem Travel Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2D6CDF;
+            --accent-gold: #F6C945;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #343a40;
+            --text-color: #2d3748;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(120deg, rgba(45, 108, 223, 0.9), rgba(246, 201, 69, 0.8)), url('https://images.unsplash.com/photo-1581338834647-b0fb40704e21?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-gold);
+            color: var(--dark-gray);
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            background-color: #f8d671;
+        }
+
+        /* Distance & Context Section */
+        .context-section {
+            background-color: var(--light-gray);
+        }
+
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .stat-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+
+        .map-container {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .simple-map {
+            width: 100%;
+            height: 300px;
+            background: #e9f2ff;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .simple-map::before {
+            content: "";
+            position: absolute;
+            width: 80%;
+            height: 60%;
+            top: 20%;
+            left: 10%;
+            border: 2px dashed var(--primary-blue);
+            border-radius: 10px;
+        }
+
+        .simple-map::after {
+            content: "Tel Aviv ⇄ Jerusalem";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+        }
+
+        /* Travel Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-blue);
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .option-card.recommended {
+            border-top: 5px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card.recommended::before {
+            content: "RECOMMENDED";
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent-gold);
+            color: var(--dark-gray);
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+        }
+
+        .option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        .option-details {
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
+        .detail-item i {
+            color: var(--accent-gold);
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            background-color: var(--light-gray);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 16px 20px;
+            text-align: center;
+        }
+
+        .comparison-table thead {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--medium-gray);
+        }
+
+        .best-option {
+            background-color: rgba(246, 201, 69, 0.2) !important;
+            font-weight: 600;
+        }
+
+        .not-recommended {
+            background-color: rgba(220, 53, 69, 0.1) !important;
+            color: #dc3545;
+        }
+
+        /* Tips Section */
+        .tips-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tip-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--accent-gold);
+            min-width: 30px;
+        }
+
+        /* Interactive Section */
+        .interactive-section {
+            background-color: var(--light-gray);
+        }
+
+        .interactive-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .dropdown-card, .calculator-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .result-box {
+            background: #e9f2ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+            display: none;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-question {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .quiz-option {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent-gold);
+            background-color: rgba(246, 201, 69, 0.1);
+        }
+
+        .quiz-option.correct {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background-color: var(--light-gray);
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .summary-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        .summary-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .cta-container {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .context-grid, 
+            .interactive-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: white;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                width: 200px;
+                box-shadow: var(--shadow);
+                border-radius: var(--border-radius);
+                padding: 15px 0;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 50px 0;
+            }
+
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .option-card.recommended::before {
+                font-size: 0.7rem;
+                right: -40px;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .comparison-table table {
+                width: 600px;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0;
+                min-height: 55vh;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .tips-card, 
+            .option-card, 
+            .summary-card {
+                padding: 18px;
+            }
+
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .simple-map::after {
+                font-size: 1rem;
+                padding: 0 10px;
+                text-align: center;
+            }
+        }
+
+        .map-section {
+  padding: 50px 20px;
+  background: #f9fafb;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.map-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.map-container {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.map-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+
+/* ✅ Mobile responsive */
+@media (max-width: 768px) {
+  .map-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .map-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-section {
+    padding: 30px 10px;
+  }
+
+  .map-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .map-container {
+    padding: 8px;
+  }
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo"><i class="fas fa-route"></i> IsraelTravelGuide</a>
+            <ul class="nav-links">
+                <li><a href="#context">Distance</a></li>
+                <li><a href="#options">Options</a></li>
+                <li><a href="#comparison">Comparison</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#interactive">Calculator</a></li>
+            </ul>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>🚆 What's the Best Way to Travel from Tel Aviv to Jerusalem?</h1>
+            <p>Car, bus, train, or even plane? Here's a clear guide comparing all your options for the 60 km journey between Israel's two major cities.</p>
+            <a href="#options" class="btn">👉 Compare Travel Options</a>
+        </div>
+    </section>
+
+    <!-- Distance & Context Section -->
+    <section id="context" class="context-section">
+        <div class="container">
+            <h2>Distance & Context</h2>
+            <div class="context-grid">
+                <div>
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <i class="fas fa-road"></i>
+                            <h4>60 km</h4>
+                            <p>Distance</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <h4>45-75 min</h4>
+                            <p>Travel Time</p>
+                        </div>
+                    </div>
+                    <p>The journey between Tel Aviv and Jerusalem is one of the most traveled routes in Israel. Whether you're a tourist exploring the country's highlights or a local commuting for work, understanding the best transportation option for your needs is essential.</p>
+                    <p>The distance is approximately 60 kilometers (37 miles), with travel times varying based on mode of transport, time of day, and traffic conditions.</p>
+                </div>
+               <div class="container">
+    <h2>Tel Aviv → Jerusalem Route</h2>
+    <div class="map-container">
+      <img src="map1.jpg" alt="Tel Aviv to Jerusalem Map">
+    </div>
+  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Options Section -->
+    <section id="options" class="options-section">
+        <div class="container">
+            <h2>Travel Options</h2>
+            <div class="options-grid">
+                <div class="option-card recommended">
+                    <div class="option-icon">🚆</div>
+                    <h3>Train</h3>
+                    <p>Modern, comfortable rail service between city centers</p>
+                    <div class="option-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong>Time:</strong> 35-45 minutes</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-shekel-sign"></i>
+                            <div><strong>Cost:</strong> 20 NIS ($5.50).</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-up"></i>
+                            <div><strong>Pros:</strong> Fast, reliable, scenic views</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-down"></i>
+                            <div><strong>Cons:</strong> Limited operating hours on weekends</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-icon">🚌</div>
+                    <h3>Bus</h3>
+                    <p>Frequent bus service from central stations</p>
+                    <div class="option-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong>Time:</strong> 45-75 minutes</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-shekel-sign"></i>
+                            <div><strong>Cost:</strong> 16 NIS ($4.50).</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-up"></i>
+                            <div><strong>Pros:</strong> Cheap, runs 24/7 on weekdays</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-down"></i>
+                            <div><strong>Cons:</strong> Subject to traffic delays</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-icon">🚗</div>
+                    <h3>Car</h3>
+                    <p>Private car or taxi via Highway 1</p>
+                    <div class="option-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong>Time:</strong> 45-90 minutes</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-shekel-sign"></i>
+                            <div><strong>Cost:</strong> Gas + parking (often difficult in Jerusalem)</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-up"></i>
+                            <div><strong>Pros:</strong> Flexible, door-to-door</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-thumbs-down"></i>
+                            <div><strong>Cons:</strong> Traffic jams, parking issues, stress of driving</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-icon">✈️</div>
+                    <h3>Plane</h3>
+                    <p>Not practical.</p>
+                    <div class="option-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div><strong></strong> No commercial flights for this short distance.</div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-shekel-sign"></i>
+                            <div><strong>Verdict: Skip it</div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="comparison-section">
+        <div class="container">
+            <h2>Best Choice by Traveler Type</h2>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Traveler Type</th>
+                            <th>Time ⏱</th>
+                            <th>Cost 💰</th>
+                            <th>Flexibility 🎯</th>
+                            <th>Best Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Business Traveler</td>
+                            <td>Fastest</td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td class="best-option">Train</td>
+                        </tr>
+                        <tr>
+                            <td>Budget Traveler</td>
+                            <td>Moderate</td>
+                            <td>Cheapest</td>
+                            <td>High</td>
+                            <td class="best-option">Bus</td>
+                        </tr>
+                        <tr>
+                            <td>Family with Kids</td>
+                            <td>Variable</td>
+                            <td>Expensive</td>
+                            <td>Highest</td>
+                            <td class="best-option">Car</td>
+                        </tr>
+                        <tr>
+                            <td>Tourist</td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td class="best-option">Train</td>
+                        </tr>
+                        <tr class="not-recommended">
+                            <td>Not Recommended ❌</td>
+                            <td>Not Recommended ❌</td>
+                            <td>Not Recommended ❌</td>
+                            <td>Not Recommended ❌</td>
+                            <td>Plane</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+   <section id="tips" class="tips-section">
+    <div class="container">
+        <h2>Tips & Advice</h2>
+        <div class="tips-card">
+            <div class="tip-item">
+                <div class="tip-icon">🎫</div>
+                <div><strong>Buy Rav-Kav card:</strong> Or use mobile apps for tickets.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-icon">⚠️</div>
+                <div><strong>Rush hours:</strong> 7–9 am, 4–7 pm → avoid if possible.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-icon">✡️</div>
+                <div><strong>Shabbat:</strong> Trains and buses stop from Friday evening – Saturday evening. Plan accordingly.</div>
+            </div>
+            <div class="tip-item">
+                <div class="tip-icon">🚕</div>
+                <div><strong>Shared taxis (sherut):</strong> Operate on Shabbat and can be an alternative.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Interactive Section -->
+    <section id="interactive" class="interactive-section">
+        <div class="container">
+            <h2>Find Your Best Option</h2>
+            <div class="interactive-container">
+                <div class="dropdown-card">
+                    <h3>I want the...</h3>
+                    <div class="form-group">
+                        <select id="preference-select">
+                            <option value="">Select your priority</option>
+                            <option value="fastest">Fastest option</option>
+                            <option value="cheapest">Cheapest option</option>
+                            <option value="flexible">Most flexible option</option>
+                        </select>
+                    </div>
+                    <div id="recommendation-result" class="result-box">
+                        <!-- Result will appear here -->
+                    </div>
+                </div>
+                <div class="calculator-card">
+                    <h3>Trip Calculator</h3>
+                    <div class="form-group">
+                        <label for="travelers">Number of Travelers</label>
+                        <input type="number" id="travelers" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="luggage">Luggage (large items)</label>
+                        <input type="number" id="luggage" min="0" value="0">
+                    </div>
+                    <button class="btn" onclick="calculateTrip()">Calculate Best Option</button>
+                    <div id="calculation-result" class="result-box">
+                        <!-- Result will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+        <div class="container">
+            <h2>Quick Travel Quiz</h2>
+            <div class="quiz-container">
+                <div class="quiz-question">Which transportation option runs 24/7 on weekdays?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectOption(this)">A) Train</div>
+                    <div class="quiz-option" onclick="selectOption(this)">B) Bus</div>
+                    <div class="quiz-option" onclick="selectOption(this)">C) Plane</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Section -->
+    <section class="summary-section">
+        <div class="container">
+            <h2>Summary & Recommendations</h2>
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="summary-icon">🚆</div>
+                    <h3>For Speed → Train</h3>
+                    <p>Fastest option with consistent travel times, perfect for business travelers and tourists.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">🚌</div>
+                    <h3>For Budget → Bus</h3>
+                    <p>Most economical choice with frequent service, ideal for students and budget travelers.</p>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">🚗</div>
+                    <h3>For Flexibility → Car</h3>
+                    <p>Best for families with children or those needing to travel with lots of luggage.</p>
+                </div>
+            </div>
+            <div class="cta-container">
+                <a href="#context" class="btn">✨ Plan your perfect Tel Aviv ⇄ Jerusalem trip today!</a>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('section');
+        
+        const options = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, options);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Mobile navigation toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+            });
+        });
+        
+        // Interactive elements functionality
+        document.getElementById('preference-select').addEventListener('change', function() {
+            const resultBox = document.getElementById('recommendation-result');
+            const value = this.value;
+            
+            if (value === 'fastest') {
+                resultBox.innerHTML = '🚆 <strong>Train</strong> is the fastest option (35-45 minutes)';
+            } else if (value === 'cheapest') {
+                resultBox.innerHTML = '🚌 <strong>Bus</strong> is the cheapest option (₪16-₪22)';
+            } else if (value === 'flexible') {
+                resultBox.innerHTML = '🚗 <strong>Car</strong> offers the most flexibility';
+            }
+            
+            resultBox.style.display = 'block';
+        });
+        
+        function calculateTrip() {
+            const travelers = parseInt(document.getElementById('travelers').value) || 1;
+            const luggage = parseInt(document.getElementById('luggage').value) || 0;
+            const resultBox = document.getElementById('calculation-result');
+            
+            if (travelers > 3 || luggage > 2) {
+                resultBox.innerHTML = '🚗 <strong>Car</strong> is your best option for group/luggage flexibility';
+            } else if (travelers === 1 && luggage === 0) {
+                resultBox.innerHTML = '🚆 <strong>Train</strong> is recommended for speed and comfort';
+            } else {
+                resultBox.innerHTML = '🚌 <strong>Bus</strong> offers the best balance of cost and convenience';
+            }
+            
+            resultBox.style.display = 'block';
+        }
+        
+        function selectOption(option) {
+            // Reset all options
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark selected option
+            option.classList.add('selected');
+            
+            // Check if correct (Bus is the correct answer)
+            if (option.textContent.includes('B) Bus')) {
+                option.classList.add('correct');
+            } else {
+                option.classList.add('incorrect');
+                
+                // Show correct answer
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    if (opt.textContent.includes('B) Bus')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's the Man with the Master Plan?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --accent-light: #f472b6;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --gradient-2: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --gradient-3: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--gradient-3);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 1.2rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-2);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-1);
+            background-image: url('images/hero-background.png');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 7vw, 4rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .reveal-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .answer-box {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            display: block;
+            animation: fadeInScale 0.6s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4rem;
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* Timeline Section */
+        .timeline-container {
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: var(--gradient-2);
+            transform: translateX(-50%);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 45%;
+            cursor: pointer;
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            background: var(--gradient-2);
+            border: 6px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.6), 0 0 60px rgba(99, 102, 241, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .timeline-year {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timeline-desc {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 220px;
+            background: var(--gradient-2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover .gallery-image img {
+            transform: scale(1.1);
+        }
+
+        .gallery-content {
+            padding: 2rem;
+        }
+
+        .gallery-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gallery-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .gallery-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-question {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .quiz-option {
+            padding: 1.3rem 2rem;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .quiz-option:hover {
+            background: #f1f5f9;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            background: var(--gradient-2);
+            color: white;
+            border-color: var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .quiz-btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-btn.prev {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .quiz-btn.prev:hover {
+            background: #cbd5e1;
+        }
+
+        .quiz-btn.next {
+            background: var(--gradient-2);
+            color: white;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .result-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .result-description {
+            color: var(--text-light);
+            line-height: 1.9;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                line-height: 1.6;
+            }
+
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.75rem;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .hero {
+                padding: 1.5rem;
+                min-height: 90vh;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+                margin-bottom: 0.75rem;
+                line-height: 1.2;
+            }
+
+            .hero .subtitle {
+                font-size: clamp(0.875rem, 2vw, 1.125rem);
+                margin-bottom: 1.5rem;
+            }
+
+            .reveal-btn {
+                padding: 0.9rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            .answer-box {
+                margin-top: 1.5rem;
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .answer-box h2 {
+                font-size: 1.25rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .answer-box p {
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
+            }
+
+            .section-title {
+                font-size: clamp(1.5rem, 5vw, 2.25rem);
+                margin-bottom: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .timeline-container {
+                padding: 2rem 0;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 3rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .timeline-content {
+                width: 100%;
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+                width: 20px;
+                height: 20px;
+                border-width: 4px;
+            }
+
+            .timeline-year {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .timeline-name {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .timeline-desc {
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .gallery-card {
+                border-radius: 20px;
+            }
+
+            .gallery-image {
+                height: 180px;
+            }
+
+            .gallery-content {
+                padding: 1.5rem;
+            }
+
+            .gallery-name {
+                font-size: 1.25rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .gallery-title {
+                font-size: 0.85rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .gallery-desc {
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+
+            .quiz-container {
+                padding: 2rem 1.25rem;
+                border-radius: 25px;
+            }
+
+            .quiz-question {
+                font-size: 1.25rem;
+                margin-bottom: 1.75rem;
+            }
+
+            .quiz-options {
+                gap: 0.9rem;
+                margin-bottom: 1.75rem;
+            }
+
+            .quiz-option {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+                border-radius: 12px;
+            }
+
+            .quiz-btn {
+                padding: 0.85rem 2rem;
+                font-size: 0.9rem;
+                border-radius: 12px;
+            }
+
+            .quiz-result {
+                padding: 2rem 1rem;
+            }
+
+            .result-score {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .result-text {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            .result-description {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            .modal-overlay {
+                padding: 0.5rem;
+            }
+
+            .modal-content {
+                padding: 1.25rem 1rem;
+                border-radius: 20px;
+                max-height: 95vh;
+            }
+
+            .modal-close {
+                top: 0.75rem;
+                right: 0.75rem;
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
+            }
+
+            .modal-title {
+                font-size: 1.15rem;
+                padding-right: 2.5rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.3;
+            }
+
+            .modal-body {
+                font-size: 0.8rem;
+                line-height: 1.6;
+                margin-top: 0.5rem;
+            }
+
+            .modal-body strong {
+                font-size: 0.85rem;
+                margin-top: 1rem;
+                margin-bottom: 0.35rem;
+            }
+
+            .modal-body p {
+                margin-bottom: 0.65rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.6rem 0.75rem;
+            }
+
+            nav ul {
+                gap: 0.75rem;
+                font-size: 0.7rem;
+            }
+
+            nav a {
+                font-size: 0.7rem;
+            }
+
+            section {
+                padding: 2.5rem 0.75rem;
+            }
+
+            .hero {
+                padding: 1rem;
+                min-height: 85vh;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.25rem, 5vw, 2rem);
+                margin-bottom: 0.6rem;
+            }
+
+            .hero .subtitle {
+                font-size: clamp(0.8rem, 1.8vw, 1rem);
+                margin-bottom: 1.25rem;
+            }
+
+            .reveal-btn {
+                padding: 0.8rem 1.75rem;
+                font-size: 0.875rem;
+            }
+
+            .answer-box {
+                margin-top: 1.25rem;
+                padding: 1.25rem;
+                border-radius: 18px;
+            }
+
+            .answer-box h2 {
+                font-size: 1.1rem !important;
+                margin-bottom: 0.6rem !important;
+            }
+
+            .answer-box p {
+                font-size: 0.85rem !important;
+                line-height: 1.5 !important;
+            }
+
+            .section-title {
+                font-size: clamp(1.25rem, 4vw, 1.875rem);
+                margin-bottom: 2rem;
+            }
+
+            .timeline-container {
+                padding: 1.5rem 0;
+            }
+
+            .timeline-item {
+                padding-left: 2.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .timeline-content {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+
+            .timeline-year {
+                font-size: 0.85rem;
+            }
+
+            .timeline-name {
+                font-size: 1.1rem;
+            }
+
+            .timeline-desc {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            .gallery {
+                gap: 1.25rem;
+                margin-top: 1.5rem;
+            }
+
+            .gallery-image {
+                height: 160px;
+            }
+
+            .gallery-content {
+                padding: 1.25rem;
+            }
+
+            .gallery-name {
+                font-size: 1.1rem;
+            }
+
+            .gallery-title {
+                font-size: 0.8rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .gallery-desc {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            .quiz-container {
+                padding: 1.75rem 1rem;
+                border-radius: 20px;
+            }
+
+            .quiz-question {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .quiz-options {
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .quiz-option {
+                padding: 0.9rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            .quiz-btn {
+                padding: 0.75rem 1.75rem;
+                font-size: 0.85rem;
+            }
+
+            .quiz-result {
+                padding: 1.75rem 0.75rem;
+            }
+
+            .result-score {
+                font-size: 2.5rem;
+            }
+
+            .result-text {
+                font-size: 1.25rem;
+            }
+
+            .result-description {
+                font-size: 0.875rem;
+            }
+
+            .modal-overlay {
+                padding: 0.375rem;
+            }
+
+            .modal-content {
+                padding: 1rem 0.875rem;
+                border-radius: 18px;
+            }
+
+            .modal-close {
+                top: 0.5rem;
+                right: 0.5rem;
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1rem;
+                padding-right: 1.75rem;
+                margin-bottom: 0.4rem;
+                line-height: 1.25;
+            }
+
+            .modal-body {
+                font-size: 0.75rem;
+                line-height: 1.5;
+                margin-top: 0.4rem;
+            }
+
+            .modal-body strong {
+                font-size: 0.8rem;
+                margin-top: 0.875rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .modal-body p {
+                margin-bottom: 0.55rem;
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: var(--gradient-2);
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Section Backgrounds */
+        .section-bg {
+            background: var(--gradient-1);
+            position: relative;
+        }
+
+        .section-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+            margin: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.1);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dark);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(15, 23, 42, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close:active {
+            transform: rotate(90deg) scale(0.95);
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-right: 3rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .modal-body {
+            color: var(--text);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-top: 1rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        .modal-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-body strong {
+            color: var(--dark);
+            font-weight: 700;
+            display: block;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-body p:first-child strong {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">×</button>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero" onclick="scrollToSection('hero')">Home</a></li>
+            <li><a href="#timeline" onclick="scrollToSection('timeline')">Timeline</a></li>
+            <li><a href="#gallery" onclick="scrollToSection('gallery')">Gallery</a></li>
+            <li><a href="#quiz" onclick="scrollToSection('quiz')">Quiz</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Who's the Man with the Master Plan?</h1>
+            <p class="subtitle">Exploring the visionary minds behind history's greatest strategies and innovations</p>
+            <div class="answer-box">
+                <h2 style="background: var(--gradient-2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; font-family: 'Playfair Display', serif; font-size: 1.5rem;">The Answer:</h2>
+                <p style="font-size: 1rem; line-height: 1.7; color: var(--text);">
+                    The "man with the master plan" isn't a single person—it's a concept representing visionary leaders, strategic thinkers, and innovative planners throughout history. From ancient strategists like Sun Tzu and Alexander the Great to modern visionaries like Elon Musk and Larry Page, master planners are those who see beyond the present, anticipate challenges, and create comprehensive strategies to achieve extraordinary goals. <strong style="color: var(--primary);">You could be the next one!</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="section-bg">
+        <h2 class="section-title">Master Planners Through History</h2>
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('sun-tzu')">
+                    <div class="timeline-year">500 BCE</div>
+                    <div class="timeline-name">Sun Tzu</div>
+                    <div class="timeline-desc">Military Strategy - Author of "The Art of War," whose principles of strategy and planning remain influential today.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('leonardo')">
+                    <div class="timeline-year">1452-1519</div>
+                    <div class="timeline-name">Leonardo da Vinci</div>
+                    <div class="timeline-desc">Innovation - Renaissance polymath who planned revolutionary inventions centuries ahead of their time.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('napoleon')">
+                    <div class="timeline-year">1769-1821</div>
+                    <div class="timeline-name">Napoleon Bonaparte</div>
+                    <div class="timeline-desc">Military Strategy - Revolutionized warfare through meticulous planning, strategic thinking, and innovative tactics.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('edison')">
+                    <div class="timeline-year">1847-1931</div>
+                    <div class="timeline-name">Thomas Edison</div>
+                    <div class="timeline-desc">Innovation - Master-planned systematic innovation, creating the modern research laboratory with over 1,000 patents.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('tesla')">
+                    <div class="timeline-year">1856-1943</div>
+                    <div class="timeline-name">Nikola Tesla</div>
+                    <div class="timeline-desc">Innovation - Visionary inventor who planned systems that would power the modern world, including AC electricity.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('ford')">
+                    <div class="timeline-year">1863-1947</div>
+                    <div class="timeline-name">Henry Ford</div>
+                    <div class="timeline-desc">Industrial Revolution - Master-planned mass production, revolutionizing manufacturing and making automobiles accessible.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('disney')">
+                    <div class="timeline-year">1901-1966</div>
+                    <div class="timeline-name">Walt Disney</div>
+                    <div class="timeline-desc">Entertainment - Master-planned an entertainment empire spanning animation, theme parks, and media.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('buffett')">
+                    <div class="timeline-year">Born 1930</div>
+                    <div class="timeline-name">Warren Buffett</div>
+                    <div class="timeline-desc">Investment Strategy - Long-term strategic investor who plans decades ahead, building wealth through value investing.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('jobs')">
+                    <div class="timeline-year">1955-2011</div>
+                    <div class="timeline-name">Steve Jobs</div>
+                    <div class="timeline-desc">Technology Revolution - Master-planned the transformation of multiple industries through innovative products and design.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('gates')">
+                    <div class="timeline-year">Born 1955</div>
+                    <div class="timeline-name">Bill Gates</div>
+                    <div class="timeline-desc">Technology Revolution - Master-planned the personal computing revolution, co-founding Microsoft and transforming software.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('bezos')">
+                    <div class="timeline-year">Born 1964</div>
+                    <div class="timeline-name">Jeff Bezos</div>
+                    <div class="timeline-desc">E-Commerce Revolution - Master-planned the transformation of retail through Amazon's long-term strategic vision.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('page-brin')">
+                    <div class="timeline-year">Born 1973</div>
+                    <div class="timeline-name">Larry Page & Sergey Brin</div>
+                    <div class="timeline-desc">Information Revolution - Master-planned the organization of the world's information, revolutionizing search and knowledge access.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('zuckerberg')">
+                    <div class="timeline-year">Born 1984</div>
+                    <div class="timeline-name">Mark Zuckerberg</div>
+                    <div class="timeline-desc">Social Revolution - Master-planned the social networking revolution, connecting billions of people worldwide.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" onclick="showDetails('musk')">
+                    <div class="timeline-year">Born 1971</div>
+                    <div class="timeline-name">Elon Musk</div>
+                    <div class="timeline-desc">Future Vision - Master-planned the future of transportation, energy, and space exploration through Tesla, SpaceX, and Neuralink.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-bg">
+        <h2 class="section-title">Visionaries Who Changed the World</h2>
+        <div class="gallery">
+            <div class="gallery-card" onclick="showGalleryDetails('musk')">
+                <div class="gallery-image"><img src="images/elon-musk.png" alt="Elon Musk"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Elon Musk</div>
+                    <div class="gallery-title">Tech Visionary</div>
+                    <div class="gallery-desc">Master-planned the future of transportation, energy, and space exploration through Tesla, SpaceX, and Neuralink.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('bezos')">
+                <div class="gallery-image"><img src="images/jeff-bezos.png" alt="Jeff Bezos"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Jeff Bezos</div>
+                    <div class="gallery-title">E-Commerce Pioneer</div>
+                    <div class="gallery-desc">Planned and executed the transformation of retail through Amazon's long-term strategic vision.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('gates')">
+                <div class="gallery-image"><img src="images/bill-gates.png" alt="Bill Gates"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Bill Gates</div>
+                    <div class="gallery-title">Software Architect</div>
+                    <div class="gallery-desc">Master-planned the personal computing revolution and now focuses on global health and education.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('page-brin')">
+                <div class="gallery-image"><img src="images/google-founders.png" alt="Larry Page & Sergey Brin"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Larry Page & Sergey Brin</div>
+                    <div class="gallery-title">Google Co-Founders</div>
+                    <div class="gallery-desc">Master-planned the organization of the world's information, revolutionizing how we access knowledge.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('zuckerberg')">
+                <div class="gallery-image"><img src="images/mark-zuckerberg.png" alt="Mark Zuckerberg"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Mark Zuckerberg</div>
+                    <div class="gallery-title">Social Media Architect</div>
+                    <div class="gallery-desc">Master-planned the social networking revolution, connecting billions of people worldwide through Facebook and Meta.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('cook')">
+                <div class="gallery-image"><img src="images/tim-cook.png" alt="Tim Cook"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Tim Cook</div>
+                    <div class="gallery-title">Supply Chain Master</div>
+                    <div class="gallery-desc">Strategic planner who transformed Apple into the world's most valuable company through operational excellence.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('nadella')">
+                <div class="gallery-image"><img src="images/satya-nadella.png" alt="Satya Nadella"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Satya Nadella</div>
+                    <div class="gallery-title">Cloud Visionary</div>
+                    <div class="gallery-desc">Master-planned Microsoft's transformation into a cloud-first, AI-driven company, tripling its market value.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('buffett')">
+                <div class="gallery-image"><img src="images/warren-buffett.png" alt="Warren Buffett"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Warren Buffett</div>
+                    <div class="gallery-title">Investment Strategist</div>
+                    <div class="gallery-desc">Long-term strategic investor who plans decades ahead, building wealth through patient, calculated decisions.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('oprah')">
+                <div class="gallery-image"><img src="images/oprah-winfrey.png" alt="Oprah Winfrey"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Oprah Winfrey</div>
+                    <div class="gallery-title">Media Mogul</div>
+                    <div class="gallery-desc">Strategic planner who built a media empire through careful brand building and long-term vision.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('ma')">
+                <div class="gallery-image"><img src="images/jack-ma.png" alt="Jack Ma"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Jack Ma</div>
+                    <div class="gallery-title">E-Commerce Innovator</div>
+                    <div class="gallery-desc">Planned and executed Alibaba's rise, revolutionizing commerce in China and beyond.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('hastings')">
+                <div class="gallery-image"><img src="images/reed-hastings.png" alt="Reed Hastings"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Reed Hastings</div>
+                    <div class="gallery-title">Streaming Pioneer</div>
+                    <div class="gallery-desc">Master-planned the disruption of traditional entertainment through Netflix's streaming revolution.</div>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="showGalleryDetails('hoffman')">
+                <div class="gallery-image"><img src="images/reid-hoffman.png" alt="Reid Hoffman"></div>
+                <div class="gallery-content">
+                    <div class="gallery-name">Reid Hoffman</div>
+                    <div class="gallery-title">Network Strategist</div>
+                    <div class="gallery-desc">Co-founded LinkedIn and master-planned professional networking, transforming how people connect in business.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="section-bg">
+        <h2 class="section-title">Are You a Master Planner?</h2>
+        <div class="quiz-container">
+            <div id="quizContent">
+                <div class="quiz-question" id="questionText"></div>
+                <div class="quiz-options" id="optionsContainer"></div>
+                <div class="quiz-nav">
+                    <button class="quiz-btn prev" id="prevBtn" onclick="prevQuestion()" disabled>Previous</button>
+                    <button class="quiz-btn next" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+                </div>
+            </div>
+            <div class="quiz-result" id="quizResult">
+                <div class="result-score" id="resultScore"></div>
+                <div class="result-text" id="resultText"></div>
+                <div class="result-description" id="resultDescription"></div>
+                <button class="quiz-btn next" onclick="restartQuiz()" style="margin-top: 2rem;">Take Again</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        });
+
+        // Smooth Scroll Navigation
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Timeline Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            timelineObserver.observe(item);
+        });
+
+        // Timeline Details
+        const timelineDetails = {
+            'sun-tzu': {
+                title: 'Sun Tzu - The Art of Strategy',
+                content: '<p><strong>Background:</strong> Sun Tzu was a Chinese military strategist, philosopher, and general who lived during the Eastern Zhou period (771-256 BCE). His legendary work "The Art of War" remains one of the most influential military strategy texts in history.</p><p><strong>Master Plan:</strong> Sun Tzu\'s strategic philosophy emphasized preparation, understanding, and psychological warfare. His famous principle "Know yourself and know your enemy, and you can fight a hundred battles without disaster" reflects his systematic approach to planning. He believed that the best victory is won without fighting, emphasizing strategic positioning and timing over brute force.</p><p><strong>Key Strategies:</strong> His master plan approach included understanding terrain, weather, leadership, and discipline. He planned for multiple scenarios, emphasized deception and surprise, and believed in adapting strategies to changing circumstances. His principles of "winning before the battle" and "attacking the enemy\'s strategy" show his forward-thinking approach.</p><p><strong>Impact:</strong> Sun Tzu\'s strategic principles have influenced military leaders for over 2,000 years and are now applied to business, sports, and personal development. His emphasis on planning, preparation, and strategic thinking makes him one of history\'s greatest master planners.</p>'
+            },
+            'leonardo': {
+                title: 'Leonardo da Vinci - The Universal Planner',
+                content: '<p><strong>Background:</strong> Leonardo da Vinci (1452-1519) was an Italian Renaissance polymath whose interests spanned art, science, engineering, anatomy, and invention. He is considered one of the greatest minds in human history.</p><p><strong>Master Plan:</strong> Leonardo\'s master plan was to understand and improve everything through systematic observation, experimentation, and visionary thinking. He planned inventions that wouldn\'t be realized for centuries: helicopters, tanks, submarines, and even robots. His notebooks contain over 13,000 pages of detailed plans, sketches, and observations.</p><p><strong>Key Strategies:</strong> He combined art and science, believing that understanding nature\'s principles was key to innovation. His planning process involved detailed sketches, mathematical calculations, and iterative refinement. He planned city layouts, military fortifications, and hydraulic systems, always thinking decades or centuries ahead.</p><p><strong>Impact:</strong> Leonardo\'s forward-thinking plans influenced countless future inventors and engineers. His systematic approach to planning and documentation set standards for scientific and engineering practices. Many of his "impossible" inventions have since been realized, proving the power of visionary planning.</p>'
+            },
+            'napoleon': {
+                title: 'Napoleon Bonaparte - Military Mastermind',
+                content: '<p><strong>Background:</strong> Napoleon Bonaparte (1769-1821) was a French military commander and political leader who rose to prominence during the French Revolution and became Emperor of France. He is considered one of history\'s greatest military strategists.</p><p><strong>Master Plan:</strong> Napoleon\'s master plan involved revolutionizing warfare through speed, surprise, superior logistics, and innovative tactics. He planned campaigns years in advance, built extensive supply lines, and created a highly organized military system. His strategic planning extended beyond battles to governance, law (Napoleonic Code), and infrastructure.</p><p><strong>Key Strategies:</strong> He mastered the art of rapid movement, often marching his armies faster than enemies expected. His planning included detailed reconnaissance, strategic positioning, and psychological warfare. The Napoleonic Code, which he planned and implemented, standardized laws across Europe and influenced legal systems worldwide.</p><p><strong>Impact:</strong> Napoleon\'s strategic planning methods are still studied in military academies today. His emphasis on logistics, intelligence, and rapid decision-making transformed military strategy. His legal and administrative reforms had lasting impacts on European governance and law.</p>'
+            },
+            'edison': {
+                title: 'Thomas Edison - Systematic Innovator',
+                content: '<p><strong>Background:</strong> Thomas Edison (1847-1931) was an American inventor and businessman who held over 1,000 patents. He is credited with developing many devices that greatly influenced life around the world, including the phonograph, motion picture camera, and the long-lasting electric light bulb.</p><p><strong>Master Plan:</strong> Edison\'s master plan was systematic innovation through organized research. He created the first industrial research laboratory at Menlo Park, New Jersey, where he planned inventions methodically. His approach was to break down problems into smaller parts, test systematically, and iterate until success.</p><p><strong>Key Strategies:</strong> He famously said, "Genius is 1% inspiration and 99% perspiration," reflecting his belief in systematic planning and hard work. His laboratory employed teams of researchers working on multiple projects simultaneously. He planned for failure, viewing each unsuccessful attempt as learning that brought him closer to success.</p><p><strong>Impact:</strong> Edison\'s systematic approach to innovation transformed how inventions are developed. His research laboratory model became the standard for modern R&D departments. His planning and execution methods influenced countless future innovators and entrepreneurs, establishing the foundation for modern technological development.</p>'
+            },
+            'tesla': {
+                title: 'Nikola Tesla - Electrical Visionary',
+                content: '<p><strong>Background:</strong> Nikola Tesla (1856-1943) was a Serbian-American inventor, electrical engineer, mechanical engineer, and futurist. He is best known for his contributions to the design of the modern alternating current (AC) electricity supply system.</p><p><strong>Master Plan:</strong> Tesla\'s master plan was to provide free, wireless energy to the world. While not fully realized, his planning and inventions fundamentally shaped modern civilization. He envisioned a global wireless communication and power system that would connect the entire world.</p><p><strong>Key Strategies:</strong> Tesla planned entire systems rather than individual devices. His AC power system, which he planned and developed, became the standard for electrical power distribution. He designed the first hydroelectric power plant at Niagara Falls, planning the entire infrastructure. His Wardenclyffe Tower project was an ambitious plan for wireless power transmission.</p><p><strong>Impact:</strong> Tesla\'s AC power system revolutionized how electricity is generated and distributed. His inventions in radio, remote control, and wireless technology laid the foundation for modern communications. His visionary planning continues to inspire engineers and inventors today, with many of his ideas still being explored and developed.</p>'
+            },
+            'ford': {
+                title: 'Henry Ford - Mass Production Master',
+                content: '<p><strong>Background:</strong> Henry Ford (1863-1947) was an American industrialist and business magnate who founded the Ford Motor Company. He revolutionized manufacturing and made automobiles accessible to the average American.</p><p><strong>Master Plan:</strong> Ford\'s master plan revolutionized manufacturing through the assembly line. He planned to make automobiles affordable for everyone, transforming transportation and creating the modern industrial economy. His vision was to produce a reliable, affordable car that would change how people lived and worked.</p><p><strong>Key Strategies:</strong> He planned the entire production system, from raw materials to finished product. His moving assembly line reduced production time from 12 hours to 2.5 hours per car. He planned vertical integration, controlling every aspect of production. His $5 workday plan was strategic, ensuring his workers could afford the cars they built, creating a new market.</p><p><strong>Impact:</strong> Ford\'s mass production methods transformed manufacturing worldwide. His planning principles influenced industries beyond automobiles. The assembly line concept became standard in manufacturing, dramatically increasing productivity and lowering costs. His vision of affordable transportation changed society, enabling suburban development and personal mobility.</p>'
+            },
+            'disney': {
+                title: 'Walt Disney - Entertainment Empire Builder',
+                content: '<p><strong>Background:</strong> Walt Disney (1901-1966) was an American entrepreneur, animator, and film producer who co-founded The Walt Disney Company. He is considered a pioneer of the American animation industry and transformed entertainment.</p><p><strong>Master Plan:</strong> Disney\'s master plan created an entertainment empire spanning animation, theme parks, and media. He planned immersive experiences, timeless stories, and built a brand that continues to shape global culture. His vision extended far beyond individual films to entire entertainment ecosystems.</p><p><strong>Key Strategies:</strong> He planned Disneyland as a complete immersive world, not just an amusement park. His "imagineering" approach combined imagination with engineering, planning every detail of the guest experience. He planned for long-term brand building, creating characters and stories that would endure for generations. His strategic planning included merchandising, television, and theme parks as integrated parts of a larger vision.</p><p><strong>Impact:</strong> Disney\'s planning transformed entertainment and created a model for integrated media companies. His theme park planning influenced urban design and experience design. The Disney brand and characters he planned remain among the world\'s most recognized and valuable. His approach to storytelling and experience planning continues to influence entertainment, hospitality, and retail industries.</p>'
+            },
+            'jobs': {
+                title: 'Steve Jobs - Product Visionary',
+                content: '<p><strong>Background:</strong> Steve Jobs (1955-2011) was an American entrepreneur, inventor, and co-founder of Apple Inc. He revolutionized multiple industries through innovative products and design, transforming how people interact with technology.</p><p><strong>Master Plan:</strong> Jobs\' master plan was to create products that people didn\'t know they needed yet. His strategic planning combined technology, design, and user experience to transform industries from music to phones to computing. He planned entire ecosystems, not just individual products.</p><p><strong>Key Strategies:</strong> He planned products years in advance, often working on multiple generations simultaneously. His planning emphasized simplicity, elegance, and user experience over technical specifications. He planned integrated ecosystems where hardware, software, and services worked seamlessly together. His "reality distortion field" was actually careful planning and execution that made ambitious visions achievable.</p><p><strong>Impact:</strong> Jobs\' planning transformed Apple from near bankruptcy to the world\'s most valuable company. His products—iPod, iPhone, iPad—revolutionized their respective industries. His emphasis on design and user experience influenced countless companies. His planning and execution methods continue to be studied and emulated by entrepreneurs and product designers worldwide.</p>'
+            },
+            'buffett': {
+                title: 'Warren Buffett - Investment Mastermind',
+                content: '<p><strong>Background:</strong> Warren Buffett (born 1930) is an American investor, business tycoon, and philanthropist. He is considered one of the most successful investors in history and is the chairman and CEO of Berkshire Hathaway.</p><p><strong>Master Plan:</strong> Buffett\'s master plan: buy and hold great companies for decades, letting compound interest do the work. His long-term strategic thinking and value investing principles made him one of history\'s most successful investors, building wealth through patient, calculated decisions.</p><p><strong>Key Strategies:</strong> He plans investments for the long term, often holding stocks for decades. His planning involves deep research into companies\' fundamentals, competitive advantages, and management quality. He plans for economic cycles, buying when others are fearful. His "circle of competence" strategy involves only investing in businesses he understands deeply. He plans for compound growth, reinvesting dividends and letting time work its magic.</p><p><strong>Impact:</strong> Buffett\'s investment philosophy has influenced millions of investors worldwide. His annual letters to shareholders are master classes in strategic thinking and business analysis. His long-term planning approach has generated extraordinary returns over decades. His philanthropic planning, pledging to give away 99% of his wealth, demonstrates strategic thinking about legacy and impact.</p>'
+            },
+            'gates': {
+                title: 'Bill Gates - Software Revolution Architect',
+                content: '<p><strong>Background:</strong> Bill Gates (born 1955) is an American business magnate, software developer, investor, and philanthropist. He co-founded Microsoft Corporation, which became the world\'s largest personal-computer software company.</p><p><strong>Master Plan:</strong> Gates\' master plan was to put a computer on every desk and in every home. He co-founded Microsoft and planned the software revolution, then pivoted to planning solutions for global challenges like disease and climate change through the Gates Foundation.</p><p><strong>Key Strategies:</strong> He planned Microsoft\'s strategy around software licensing, creating a scalable business model. His planning emphasized partnerships, working with hardware manufacturers to ensure Microsoft software was pre-installed. He planned for platform dominance, creating operating systems and applications that became industry standards. After Microsoft, he planned the Gates Foundation\'s approach to global health, education, and climate change, applying strategic thinking to philanthropy.</p><p><strong>Impact:</strong> Gates\' planning helped create the personal computing revolution, making computers accessible to billions. Microsoft\'s software became the foundation for modern computing. His philanthropic planning through the Gates Foundation has saved millions of lives and improved education globally. His strategic approach to solving global challenges demonstrates how master planning can be applied to social impact.</p>'
+            },
+            'bezos': {
+                title: 'Jeff Bezos - E-Commerce Visionary',
+                content: '<p><strong>Background:</strong> Jeff Bezos (born 1964) is an American entrepreneur, media proprietor, and investor. He founded Amazon in 1994 and built it from an online bookstore into one of the world\'s largest e-commerce and cloud computing companies.</p><p><strong>Master Plan:</strong> Bezos\' master plan focused on long-term thinking, customer obsession, and building infrastructure that takes years to pay off. He planned and executed Amazon\'s transformation from online bookstore to global e-commerce and cloud computing giant, always thinking decades ahead.</p><p><strong>Key Strategies:</strong> His planning emphasizes "Day 1" thinking—always operating like a startup. He plans for customer obsession, making decisions based on long-term customer value rather than short-term profits. His infrastructure planning included building fulfillment centers, cloud computing (AWS), and logistics networks that became competitive advantages. He plans for multiple revenue streams, from retail to cloud services to devices. His Blue Origin venture demonstrates planning for space exploration and colonization.</p><p><strong>Impact:</strong> Bezos\' planning transformed retail, making e-commerce mainstream. Amazon Web Services (AWS) revolutionized cloud computing, powering much of the internet. His long-term thinking and willingness to invest in infrastructure created massive competitive advantages. His approach to planning and execution has influenced countless entrepreneurs and business leaders.</p>'
+            },
+            'page-brin': {
+                title: 'Larry Page & Sergey Brin - Information Organizers',
+                content: '<p><strong>Background:</strong> Larry Page (born 1973) and Sergey Brin (born 1973) are American computer scientists and internet entrepreneurs who co-founded Google. They met at Stanford University and created the search engine that would become the world\'s most used website.</p><p><strong>Master Plan:</strong> Page and Brin\'s master plan was to organize the world\'s information and make it universally accessible. Their PageRank algorithm revolutionized search, and their long-term vision expanded Google into AI, cloud computing, and countless innovations that shape our digital lives.</p><p><strong>Key Strategies:</strong> They planned Google\'s search algorithm to rank pages by relevance and importance, not just keyword matching. Their planning emphasized user experience, making search fast, accurate, and free. They planned for scale from the beginning, building infrastructure to handle billions of searches. Their "moonshot" planning approach encourages ambitious, long-term projects like self-driving cars, AI, and life extension. They planned Alphabet as a holding company to manage diverse ventures while maintaining focus.</p><p><strong>Impact:</strong> Google\'s search engine transformed how people access information, making knowledge instantly available. Their planning created one of the world\'s most valuable companies. Google\'s innovations in AI, cloud computing, and mobile technology have shaped the digital age. Their approach to planning ambitious, long-term projects has influenced how tech companies think about innovation and growth.</p>'
+            },
+            'zuckerberg': {
+                title: 'Mark Zuckerberg - Social Network Architect',
+                content: '<p><strong>Background:</strong> Mark Zuckerberg (born 1984) is an American internet entrepreneur and co-founder of Facebook (now Meta). He launched Facebook from his Harvard dorm room in 2004, and it grew into the world\'s largest social networking platform.</p><p><strong>Master Plan:</strong> Zuckerberg\'s master plan connected billions of people through social networking. His strategic vision expanded from a college network to a global platform, then to building the metaverse, fundamentally changing how people connect and share information worldwide.</p><p><strong>Key Strategies:</strong> He planned Facebook\'s growth strategy around network effects, starting with college campuses before expanding globally. His planning emphasized rapid iteration and "move fast and break things" philosophy. He planned strategic acquisitions (Instagram, WhatsApp) to expand the platform\'s reach. His planning for the metaverse represents a long-term vision for the future of digital interaction. He plans for global connectivity, working on internet access initiatives to bring more people online.</p><p><strong>Impact:</strong> Facebook transformed how people connect, share, and communicate globally. It created new forms of digital community and changed how information spreads. The platform has influenced politics, business, and culture worldwide. Zuckerberg\'s planning for the metaverse represents an ambitious vision for the next evolution of digital interaction, potentially transforming how people work, play, and connect.</p>'
+            },
+            'musk': {
+                title: 'Elon Musk - Multi-Planetary Visionary',
+                content: '<p><strong>Background:</strong> Elon Musk (born 1971) is a South African-born American entrepreneur and business magnate. He is the founder, CEO, and chief engineer of SpaceX; CEO and product architect of Tesla; and founder of The Boring Company and Neuralink.</p><p><strong>Master Plan:</strong> Musk\'s master plan involves making humanity a multi-planetary species. He plans decades ahead, from reusable rockets to Mars colonization, sustainable energy through Tesla, and neural interfaces through Neuralink, revolutionizing multiple industries simultaneously.</p><p><strong>Key Strategies:</strong> His "Master Plan" documents outline long-term visions for Tesla and SpaceX. He plans for vertical integration, controlling entire supply chains. His planning emphasizes first principles thinking, breaking down problems to fundamental physics. He plans for rapid iteration and learning from failure. His planning spans multiple industries—transportation, energy, space, and neuroscience—all working toward long-term goals of sustainable energy and space colonization.</p><p><strong>Impact:</strong> Tesla accelerated the transition to sustainable energy, making electric vehicles mainstream. SpaceX revolutionized space travel with reusable rockets, dramatically reducing costs. His companies are working toward Mars colonization, sustainable energy, and brain-computer interfaces. Musk\'s planning demonstrates how ambitious, long-term visions can drive innovation across multiple industries simultaneously.</p>'
+            }
+        };
+
+        // Modal Functions
+        function openModal(title, content) {
+            const modal = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = title;
+            modalBody.innerHTML = content;
+            
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
+            
+            // Trigger animation
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event) {
+            // Close modal if clicking on overlay (not on modal content)
+            if (event.target.id === 'modalOverlay') {
+                closeModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('modalOverlay');
+                if (modal.classList.contains('active')) {
+                    closeModal();
+                }
+            }
+        });
+
+        function showDetails(id) {
+            const detail = timelineDetails[id];
+            if (detail) {
+                openModal(detail.title, detail.content);
+            }
+        }
+
+        // Gallery Details
+        const galleryDetails = {
+            'musk': {
+                title: 'Elon Musk - Multi-Planetary Visionary',
+                content: '<p><strong>Background:</strong> Elon Musk (born 1971) is a South African-born American entrepreneur and business magnate. He is the founder, CEO, and chief engineer of SpaceX; CEO and product architect of Tesla; and founder of The Boring Company and Neuralink.</p><p><strong>Master Plan:</strong> Musk\'s master plan involves making humanity a multi-planetary species. He plans decades ahead, from reusable rockets to Mars colonization, sustainable energy through Tesla, and neural interfaces through Neuralink, revolutionizing multiple industries simultaneously.</p><p><strong>Key Achievements:</strong> Tesla has accelerated the transition to sustainable energy, making electric vehicles mainstream and building the world\'s largest fast-charging network. SpaceX revolutionized space travel with reusable rockets, dramatically reducing launch costs and making space more accessible. The company has successfully landed rockets, launched astronauts, and is working toward Mars colonization. Neuralink is developing brain-computer interfaces that could help treat neurological conditions.</p><p><strong>Strategic Approach:</strong> Musk uses first principles thinking, breaking down problems to fundamental physics. He plans for vertical integration, controlling entire supply chains. His companies emphasize rapid iteration and learning from failure. His planning spans multiple industries—transportation, energy, space, and neuroscience—all working toward long-term goals of sustainable energy and space colonization.</p><p><strong>Impact:</strong> Musk\'s companies have transformed their respective industries. Tesla accelerated global adoption of electric vehicles. SpaceX made space travel more affordable and accessible. His ambitious planning demonstrates how long-term visions can drive innovation across multiple industries simultaneously.</p>'
+            },
+            'bezos': {
+                title: 'Jeff Bezos - E-Commerce Visionary',
+                content: '<p><strong>Background:</strong> Jeff Bezos (born 1964) is an American entrepreneur, media proprietor, and investor. He founded Amazon in 1994 and built it from an online bookstore into one of the world\'s largest e-commerce and cloud computing companies.</p><p><strong>Master Plan:</strong> Bezos\' master plan focused on long-term thinking, customer obsession, and building infrastructure that takes years to pay off. He planned and executed Amazon\'s transformation from online bookstore to global e-commerce and cloud computing giant, always thinking decades ahead.</p><p><strong>Key Achievements:</strong> Amazon transformed retail, making e-commerce mainstream and convenient. Amazon Web Services (AWS) revolutionized cloud computing, powering much of the internet and becoming a major profit center. The company built extensive logistics networks, fulfillment centers, and delivery infrastructure. Blue Origin demonstrates Bezos\' commitment to space exploration and colonization.</p><p><strong>Strategic Approach:</strong> Bezos emphasizes "Day 1" thinking—always operating like a startup. He plans for customer obsession, making decisions based on long-term customer value rather than short-term profits. His infrastructure planning included building systems that became competitive advantages. He plans for multiple revenue streams, from retail to cloud services to devices.</p><p><strong>Impact:</strong> Amazon transformed how people shop and how businesses operate. AWS powers countless websites and applications. The company\'s logistics innovations have influenced supply chain management globally. Bezos\' long-term thinking and willingness to invest in infrastructure created massive competitive advantages.</p>'
+            },
+            'gates': {
+                title: 'Bill Gates - Software Revolution Architect',
+                content: '<p><strong>Background:</strong> Bill Gates (born 1955) is an American business magnate, software developer, investor, and philanthropist. He co-founded Microsoft Corporation, which became the world\'s largest personal-computer software company.</p><p><strong>Master Plan:</strong> Gates\' master plan was to put a computer on every desk and in every home. He co-founded Microsoft and planned the software revolution, then pivoted to planning solutions for global challenges like disease and climate change through the Gates Foundation.</p><p><strong>Key Achievements:</strong> Microsoft\'s Windows operating system became the standard for personal computers worldwide. Microsoft Office became essential software for businesses and individuals. The Gates Foundation has invested billions in global health, education, and climate initiatives, saving millions of lives through vaccination programs and disease eradication efforts.</p><p><strong>Strategic Approach:</strong> Gates planned Microsoft\'s strategy around software licensing, creating a scalable business model. His planning emphasized partnerships with hardware manufacturers. He planned for platform dominance, creating operating systems and applications that became industry standards. After Microsoft, he applied strategic thinking to philanthropy, focusing on measurable impact and long-term solutions.</p><p><strong>Impact:</strong> Gates helped create the personal computing revolution, making computers accessible to billions. Microsoft\'s software became the foundation for modern computing. His philanthropic planning through the Gates Foundation has saved millions of lives and improved education globally. His strategic approach to solving global challenges demonstrates how master planning can be applied to social impact.</p>'
+            },
+            'page-brin': {
+                title: 'Larry Page & Sergey Brin - Information Organizers',
+                content: '<p><strong>Background:</strong> Larry Page (born 1973) and Sergey Brin (born 1973) are American computer scientists and internet entrepreneurs who co-founded Google. They met at Stanford University and created the search engine that would become the world\'s most used website.</p><p><strong>Master Plan:</strong> Page and Brin\'s master plan was to organize the world\'s information and make it universally accessible. Their PageRank algorithm revolutionized search, and their long-term vision expanded Google into AI, cloud computing, and countless innovations that shape our digital lives.</p><p><strong>Key Achievements:</strong> Google\'s search engine transformed how people access information, processing billions of searches daily. The company developed Android, the world\'s most popular mobile operating system. Google Maps revolutionized navigation and location services. The company\'s AI research has advanced machine learning and artificial intelligence. Alphabet was created as a holding company to manage diverse ventures while maintaining focus.</p><p><strong>Strategic Approach:</strong> They planned Google\'s search algorithm to rank pages by relevance and importance, not just keyword matching. Their planning emphasized user experience, making search fast, accurate, and free. They planned for scale from the beginning, building infrastructure to handle billions of searches. Their "moonshot" planning approach encourages ambitious, long-term projects like self-driving cars, AI, and life extension.</p><p><strong>Impact:</strong> Google\'s search engine transformed how people access information, making knowledge instantly available. Their planning created one of the world\'s most valuable companies. Google\'s innovations in AI, cloud computing, and mobile technology have shaped the digital age. Their approach to planning ambitious, long-term projects has influenced how tech companies think about innovation and growth.</p>'
+            },
+            'zuckerberg': {
+                title: 'Mark Zuckerberg - Social Network Architect',
+                content: '<p><strong>Background:</strong> Mark Zuckerberg (born 1984) is an American internet entrepreneur and co-founder of Facebook (now Meta). He launched Facebook from his Harvard dorm room in 2004, and it grew into the world\'s largest social networking platform.</p><p><strong>Master Plan:</strong> Zuckerberg\'s master plan connected billions of people through social networking. His strategic vision expanded from a college network to a global platform, then to building the metaverse, fundamentally changing how people connect and share information worldwide.</p><p><strong>Key Achievements:</strong> Facebook grew from a college network to over 3 billion users across its platforms (Facebook, Instagram, WhatsApp). The platform has enabled new forms of digital community and communication. Strategic acquisitions of Instagram and WhatsApp expanded Meta\'s reach. The company is investing heavily in virtual and augmented reality technologies for the metaverse vision.</p><p><strong>Strategic Approach:</strong> Zuckerberg planned Facebook\'s growth strategy around network effects, starting with college campuses before expanding globally. His planning emphasized rapid iteration and "move fast and break things" philosophy. He planned strategic acquisitions to expand the platform\'s reach. His planning for the metaverse represents a long-term vision for the future of digital interaction. He plans for global connectivity, working on internet access initiatives.</p><p><strong>Impact:</strong> Facebook transformed how people connect, share, and communicate globally. It created new forms of digital community and changed how information spreads. The platform has influenced politics, business, and culture worldwide. Zuckerberg\'s planning for the metaverse represents an ambitious vision for the next evolution of digital interaction, potentially transforming how people work, play, and connect.</p>'
+            },
+            'cook': {
+                title: 'Tim Cook - Operational Excellence Master',
+                content: '<p><strong>Background:</strong> Tim Cook (born 1960) is an American business executive who has been the chief executive officer of Apple Inc. since 2011. He previously served as the company\'s chief operating officer under Steve Jobs.</p><p><strong>Master Plan:</strong> Cook\'s master plan transformed Apple into the world\'s most valuable company through operational excellence, supply chain mastery, and strategic product launches. He took over from Steve Jobs and focused on perfecting Apple\'s operations while maintaining innovation and ensuring sustainability.</p><p><strong>Key Achievements:</strong> Under Cook\'s leadership, Apple became the first company to reach a $3 trillion market valuation. He expanded Apple\'s global presence, opening stores and operations worldwide. He transformed Apple\'s supply chain into one of the most efficient in the world. Cook has emphasized sustainability, committing Apple to carbon neutrality and using recycled materials. He launched new product categories including Apple Watch and AirPods.</p><p><strong>Strategic Approach:</strong> Cook planned for operational excellence, optimizing every aspect of Apple\'s supply chain and manufacturing. His planning emphasizes sustainability and ethical manufacturing practices. He plans for global expansion while maintaining quality standards. His strategic planning focuses on maintaining Apple\'s innovation legacy while improving operational efficiency and profitability.</p><p><strong>Impact:</strong> Cook\'s operational planning made Apple the world\'s most valuable company. His emphasis on sustainability has influenced the tech industry\'s approach to environmental responsibility. His supply chain management has become a model for other companies. Cook demonstrated that operational excellence can be as important as product innovation in building a successful company.</p>'
+            },
+            'nadella': {
+                title: 'Satya Nadella - Cloud Transformation Leader',
+                content: '<p><strong>Background:</strong> Satya Nadella (born 1967) is an Indian-American business executive who has been the chief executive officer of Microsoft since 2014. He previously held leadership roles in Microsoft\'s cloud and enterprise divisions.</p><p><strong>Master Plan:</strong> Nadella\'s master plan transformed Microsoft into a cloud-first, AI-driven company. His strategic vision tripled Microsoft\'s market value by repositioning it as a leader in enterprise technology, cloud computing, and artificial intelligence.</p><p><strong>Key Achievements:</strong> Under Nadella\'s leadership, Microsoft Azure became one of the world\'s largest cloud computing platforms, competing directly with AWS. He shifted Microsoft\'s focus from Windows-centric to cloud and services. The company embraced open-source technologies, including acquiring GitHub. Microsoft\'s market value tripled during his tenure, reaching over $2 trillion. He launched Microsoft 365 and Teams, transforming how businesses collaborate.</p><p><strong>Strategic Approach:</strong> Nadella planned Microsoft\'s transformation around cloud computing and AI. He shifted the company culture from "know-it-all" to "learn-it-all," emphasizing growth mindset. His planning embraced partnerships and open-source technologies. He planned for enterprise customers, focusing on business solutions rather than just consumer products. His strategic vision positioned Microsoft as a leader in AI and cloud computing.</p><p><strong>Impact:</strong> Nadella\'s planning transformed Microsoft from a declining company to one of the world\'s most valuable. Azure became a major competitor in cloud computing. His emphasis on growth mindset and cultural transformation influenced how companies think about organizational change. Microsoft\'s success under Nadella demonstrates the power of strategic repositioning and long-term planning.</p>'
+            },
+            'buffett': {
+                title: 'Warren Buffett - Investment Mastermind',
+                content: '<p><strong>Background:</strong> Warren Buffett (born 1930) is an American investor, business tycoon, and philanthropist. He is considered one of the most successful investors in history and is the chairman and CEO of Berkshire Hathaway.</p><p><strong>Master Plan:</strong> Buffett\'s master plan: buy and hold great companies for decades, letting compound interest do the work. His long-term strategic thinking and value investing principles made him one of history\'s most successful investors, building wealth through patient, calculated decisions.</p><p><strong>Key Achievements:</strong> Buffett built Berkshire Hathaway into a massive holding company with investments in diverse industries. His investment strategy generated average annual returns of about 20% over decades. He became one of the world\'s wealthiest people through strategic investing. His annual letters to shareholders are master classes in business analysis and strategic thinking. He pledged to give away 99% of his wealth to philanthropy.</p><p><strong>Strategic Approach:</strong> Buffett plans investments for the long term, often holding stocks for decades. His planning involves deep research into companies\' fundamentals, competitive advantages, and management quality. He plans for economic cycles, buying when others are fearful. His "circle of competence" strategy involves only investing in businesses he understands deeply. He plans for compound growth, reinvesting dividends and letting time work its magic.</p><p><strong>Impact:</strong> Buffett\'s investment philosophy has influenced millions of investors worldwide. His long-term planning approach has generated extraordinary returns over decades. His emphasis on value investing and fundamental analysis has shaped investment strategies globally. His philanthropic planning demonstrates strategic thinking about legacy and impact. Buffett\'s success proves the power of patient, long-term strategic planning.</p>'
+            },
+            'oprah': {
+                title: 'Oprah Winfrey - Media Empire Builder',
+                content: '<p><strong>Background:</strong> Oprah Winfrey (born 1954) is an American talk show host, television producer, actress, author, and philanthropist. She is best known for "The Oprah Winfrey Show," which was the highest-rated television program of its kind in history.</p><p><strong>Master Plan:</strong> Oprah\'s master plan built a media empire through authentic connections, strategic partnerships, and a brand based on empowerment. She planned her rise from local TV to global influence, creating a media company that spans television, publishing, and philanthropy.</p><p><strong>Key Achievements:</strong> "The Oprah Winfrey Show" ran for 25 years and reached millions of viewers daily. She launched O, The Oprah Magazine, which became one of the most successful magazines in publishing history. She created OWN (Oprah Winfrey Network), a cable television network. She established Harpo Productions, producing films and television shows. Her book club selections have made numerous authors bestsellers. She has donated hundreds of millions to education and charitable causes.</p><p><strong>Strategic Approach:</strong> Oprah planned her brand around authenticity and empowerment. Her planning emphasized building genuine connections with audiences. She strategically expanded from television to publishing, film production, and network ownership. Her planning focused on creating content that inspires and empowers. She planned philanthropic initiatives that align with her brand values, particularly in education and women\'s empowerment.</p><p><strong>Impact:</strong> Oprah transformed daytime television and created a new model for talk shows. Her influence on book sales and cultural conversations is unparalleled. She became one of the most influential women in the world. Her planning and execution demonstrate how authentic brand building and strategic expansion can create a lasting media empire. Her philanthropic work has improved countless lives through education and empowerment initiatives.</p>'
+            },
+            'ma': {
+                title: 'Jack Ma - Digital Commerce Pioneer',
+                content: '<p><strong>Background:</strong> Jack Ma (born 1964) is a Chinese business magnate, investor, and philanthropist. He is the co-founder and former executive chairman of Alibaba Group, a multinational technology conglomerate.</p><p><strong>Master Plan:</strong> Ma\'s master plan was to make it easy to do business anywhere, connecting Chinese businesses with the global market. He planned and executed Alibaba\'s rise, revolutionizing commerce in China and creating one of the world\'s largest e-commerce platforms.</p><p><strong>Key Achievements:</strong> Alibaba became one of the world\'s largest e-commerce platforms, handling more transactions than Amazon and eBay combined. The company launched Taobao, Tmall, and Alipay, transforming how Chinese consumers shop and pay. Alibaba\'s IPO in 2014 was the largest in history at the time. The company expanded into cloud computing, digital media, and logistics. Ma became one of China\'s wealthiest people and a symbol of Chinese entrepreneurship.</p><p><strong>Strategic Approach:</strong> Ma planned Alibaba\'s strategy around connecting Chinese manufacturers with global markets. His planning emphasized understanding Chinese business culture and consumer behavior. He planned for mobile-first commerce, recognizing China\'s rapid smartphone adoption. His strategic planning included building payment systems (Alipay) and logistics networks to support e-commerce. He planned for long-term growth, investing in technology and infrastructure.</p><p><strong>Impact:</strong> Alibaba transformed commerce in China, making e-commerce mainstream. The company enabled millions of small businesses to reach global markets. Alipay revolutionized digital payments in China. Ma\'s success inspired countless Chinese entrepreneurs. His planning demonstrated how strategic vision can overcome technical limitations and create massive businesses. Alibaba\'s model influenced e-commerce strategies globally.</p>'
+            },
+            'hastings': {
+                title: 'Reed Hastings - Streaming Disruptor',
+                content: '<p><strong>Background:</strong> Reed Hastings (born 1960) is an American entrepreneur and the co-founder and co-CEO of Netflix. He previously founded Pure Software, which was acquired in 1997.</p><p><strong>Master Plan:</strong> Hastings\' master plan disrupted traditional entertainment through Netflix\'s strategic shift from DVDs to streaming. He planned the transformation of how people consume media globally, revolutionizing the entertainment industry.</p><p><strong>Key Achievements:</strong> Netflix transformed from a DVD rental service to the world\'s leading streaming platform with over 200 million subscribers globally. The company pioneered original content production, creating award-winning series and films. Netflix\'s recommendation algorithm revolutionized content discovery. The company expanded globally, making streaming available in over 190 countries. Netflix\'s success forced traditional media companies to launch their own streaming services.</p><p><strong>Strategic Approach:</strong> Hastings planned Netflix\'s transition from DVDs to streaming, recognizing the shift in consumer behavior. His planning emphasized data-driven content decisions, using viewer data to guide programming choices. He planned for global expansion, adapting content for different markets. His strategic planning included investing heavily in original content to reduce dependence on licensed content. He planned for technological innovation, improving streaming quality and user experience.</p><p><strong>Impact:</strong> Netflix transformed how people consume entertainment, making "binge-watching" mainstream. The company disrupted traditional television and cable industries. Netflix\'s original content production model influenced how media companies create and distribute content. The company\'s success forced the entire entertainment industry to adapt to streaming. Hastings\' planning demonstrated how strategic pivots and long-term vision can transform entire industries.</p>'
+            },
+            'hoffman': {
+                title: 'Reid Hoffman - Professional Network Architect',
+                content: '<p><strong>Background:</strong> Reid Hoffman (born 1967) is an American internet entrepreneur, venture capitalist, and author. He is the co-founder of LinkedIn and a partner at the venture capital firm Greylock Partners.</p><p><strong>Master Plan:</strong> Hoffman\'s master plan created the world\'s largest professional network through LinkedIn. He planned how professionals connect in business, transforming recruitment, networking, and career development globally.</p><p><strong>Key Achievements:</strong> LinkedIn grew to over 900 million members worldwide, becoming the largest professional network. The platform transformed how professionals network, find jobs, and develop careers. LinkedIn\'s recruitment tools revolutionized how companies find and hire talent. The company was acquired by Microsoft for $26.2 billion in 2016. Hoffman became a successful venture capitalist, investing in companies like Facebook, Airbnb, and Zynga.</p><p><strong>Strategic Approach:</strong> Hoffman planned LinkedIn\'s growth around professional value, not just social connections. His planning emphasized creating tools that help professionals advance their careers. He planned for network effects, where the platform becomes more valuable as more people join. His strategic planning included building recruitment and learning tools to create multiple revenue streams. He planned for long-term growth, focusing on building a sustainable business model.</p><p><strong>Impact:</strong> LinkedIn transformed professional networking, making it digital and global. The platform revolutionized recruitment and talent acquisition. LinkedIn\'s model influenced how professionals build and maintain professional relationships. The platform has become essential for career development and business networking. Hoffman\'s success as both an entrepreneur and investor demonstrates the power of strategic planning and network effects. His approach to building professional communities has influenced countless other platforms.</p>'
+            }
+        };
+
+        function showGalleryDetails(id) {
+            const detail = galleryDetails[id];
+            if (detail) {
+                openModal(detail.title, detail.content);
+            }
+        }
+
+        // Quiz System
+        const quizQuestions = [
+            {
+                question: 'When making decisions, you prefer to:',
+                options: [
+                    'Plan everything in detail before acting',
+                    'Make quick decisions and adapt as needed',
+                    'Consult others before deciding',
+                    'Go with your gut feeling'
+                ],
+                scores: [3, 2, 1, 0]
+            },
+            {
+                question: 'Your approach to long-term goals is:',
+                options: [
+                    'Break them into smaller milestones',
+                    'Focus on the end result and work backwards',
+                    'Set goals but stay flexible',
+                    'See where life takes you'
+                ],
+                scores: [2, 3, 1, 0]
+            },
+            {
+                question: 'When facing obstacles, you:',
+                options: [
+                    'Have contingency plans ready',
+                    'Analyze and create a new strategy',
+                    'Ask for help and advice',
+                    'Try different approaches until something works'
+                ],
+                scores: [3, 2, 1, 1]
+            },
+            {
+                question: 'Your time management style is:',
+                options: [
+                    'Highly organized with schedules and priorities',
+                    'Focus on important tasks first',
+                    'Handle tasks as they come',
+                    'Work best under pressure'
+                ],
+                scores: [3, 2, 1, 0]
+            },
+            {
+                question: 'When learning something new, you:',
+                options: [
+                    'Study the theory and plan your approach',
+                    'Learn by doing and experimenting',
+                    'Follow step-by-step guides',
+                    'Jump in and figure it out'
+                ],
+                scores: [2, 1, 2, 0]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let quizScore = 0;
+        let selectedOptions = [];
+
+        function initQuiz() {
+            currentQuestion = 0;
+            quizScore = 0;
+            selectedOptions = [];
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizResult').classList.remove('show');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('questionText').textContent = `Question ${currentQuestion + 1}: ${question.question}`;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'quiz-option';
+                if (selectedOptions[currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = selectedOptions[currentQuestion] === undefined;
+            
+            if (currentQuestion === quizQuestions.length - 1) {
+                document.getElementById('nextBtn').textContent = 'See Results';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next';
+            }
+        }
+
+        function selectOption(index) {
+            selectedOptions[currentQuestion] = index;
+            document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+                if (i === index) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (selectedOptions[currentQuestion] === undefined) return;
+
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showResults() {
+            // Calculate score
+            quizScore = 0;
+            quizQuestions.forEach((question, index) => {
+                const selectedIndex = selectedOptions[index];
+                if (selectedIndex !== undefined) {
+                    quizScore += question.scores[selectedIndex];
+                }
+            });
+
+            const maxScore = quizQuestions.length * 3;
+            const percentage = Math.round((quizScore / maxScore) * 100);
+
+            let resultText, resultDesc;
+            
+            if (percentage >= 80) {
+                resultText = 'Master Planner! 🎯';
+                resultDesc = 'You have exceptional strategic thinking and planning abilities. You think long-term, prepare for contingencies, and approach challenges systematically. You\'re the type of person who creates master plans and executes them successfully!';
+            } else if (percentage >= 60) {
+                resultText = 'Strategic Thinker 📊';
+                resultDesc = 'You have strong planning skills and think strategically about your goals. While you may not plan every detail, you have a good sense of direction and can adapt your plans as needed. Keep refining your planning skills!';
+            } else if (percentage >= 40) {
+                resultText = 'Flexible Planner 🔄';
+                resultDesc = 'You prefer flexibility over rigid planning, which can be a strength in rapidly changing situations. Consider developing more structured planning habits for long-term goals while maintaining your adaptability.';
+            } else {
+                resultText = 'Spontaneous Explorer 🌟';
+                resultDesc = 'You prefer to go with the flow rather than detailed planning. While spontaneity has its advantages, developing some planning skills could help you achieve bigger, more complex goals. Start small and build from there!';
+            }
+
+            document.getElementById('resultScore').textContent = `${percentage}%`;
+            document.getElementById('resultText').textContent = resultText;
+            document.getElementById('resultDescription').textContent = resultDesc;
+
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizResult').classList.add('show');
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        // Initialize quiz on page load
+        initQuiz();
+    </script>
+</body>
+</html>

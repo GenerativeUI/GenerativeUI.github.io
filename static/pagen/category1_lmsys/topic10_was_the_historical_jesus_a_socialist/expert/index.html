@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Was the Historical Jesus a Socialist?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166d67;
+            --accent1: #c44536;
+            --accent2: #e76f51;
+            --accent3: #2a9d8f;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 5rem 0;
+            
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #4a6fa5 0%, #166d67 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,138.7C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1s ease forwards;
+           
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease 0.3s forwards;
+           
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-heading::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent1), var(--accent2));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-1 {
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+        }
+
+        .section-2 {
+            background: linear-gradient(to bottom right, #fb9393, #ff9d9d);
+        }
+
+        .section-3 {
+            background:rgb(194, 255, 148);
+        }
+
+        .section-4 {
+            background: linear-gradient(to bottom right, #eeff0092, #8178046f);
+        }
+
+        .section-5 {
+            background: linear-gradient(to bottom right, #0c4680, #0d3457);
+            color: white;
+        }
+
+        /* Icon Styles */
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .icon-circle:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Teaching Points */
+        .teaching-point {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgb(232, 232, 232);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .teaching-point:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .teaching-point i {
+            font-size: 2rem;
+            color: var(--accent1);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .teaching-point h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .teaching-point p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Counterpoints Section */
+        .counterpoints-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .counterpoint {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .counterpoint:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .counterpoint-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4a6fa5 0%, #166d67 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .counterpoint h3 {
+            font-size: 1.4rem;
+            color: var(--accent1);
+            margin-bottom: 1rem;
+        }
+
+        .counterpoint p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent1), var(--accent3));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-left: 4px solid var(--accent1);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-right: 4px solid var(--accent3);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent2);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .conclusion-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+       
+          
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .teaching-point h3 {
+                font-size: 1.4rem;
+            }
+            
+            .teaching-point p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                left: 0 !important;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 20px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                border-left: 4px solid var(--accent1);
+                border-right: none;
+            }
+            
+            .counterpoints-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .teaching-point {
+                padding: 1rem;
+            }
+            
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+section {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+section.visible {
+  opacity: 1;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>✝️ Was Jesus a Socialist?</h1>
+                <p>Exploring history, faith, and economics through the teachings of Jesus.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Context -->
+    <section class="section-1">
+        <div class="container">
+            <h2 class="section-heading">Context</h2>
+            <div class="icon-container">
+                <div class="icon-circle">
+                    <i class="fas fa-book"></i>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Who was the historical Jesus?</h2>
+                <p>Jesus of Nazareth lived in 1st-century Judea under Roman rule. He was a religious teacher, healer, and leader whose words inspired early Christianity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Teachings That Sound "Socialist" -->
+    <section class="section-2">
+        <div class="container">
+            <h2 class="section-heading">Teachings That Sound "Socialist"</h2>
+            <div class="icon-container">
+                <div class="icon-circle">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+            </div>
+            
+            <div class="teaching-point">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>Sharing wealth</h3>
+                <p>"Sell what you own and give to the poor."</p>
+            </div>
+            
+            <div class="teaching-point">
+                <i class="fas fa-people-carry"></i>
+                <h3>Community living</h3>
+                <p>Early Christians often pooled resources to care for each other.</p>
+            </div>
+            
+            <div class="teaching-point">
+                <i class="fas fa-coins"></i>
+                <h3>Challenging wealth</h3>
+                <p>Jesus warned that "You cannot serve both God and money."</p>
+            </div>
+            
+            <div class="teaching-point">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Key Insight</h3>
+                <p>📌 These themes echo socialist values like wealth redistribution and prioritizing the poor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Counterpoints -->
+    <section class="section-3">
+        <div class="container">
+            <h2 class="section-heading">Counterpoints</h2>
+            <div class="icon-container">
+                <div class="icon-circle">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+            </div>
+            
+            <div class="counterpoints-container">
+                <div class="counterpoint">
+                    <div class="counterpoint-image">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h3>Not an Economic System</h3>
+                    <p>Jesus did not propose an economic system like modern socialism.</p>
+                </div>
+                
+                <div class="counterpoint">
+                    <div class="counterpoint-image">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <h3>Spiritual Teachings</h3>
+                    <p>His teachings were spiritual and moral rather than political.</p>
+                </div>
+                
+                <div class="counterpoint">
+                    <div class="counterpoint-image">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Personal Generosity</h3>
+                    <p>Many argue he focused on personal generosity, not government-enforced equality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Interactive Idea -->
+    <section class="section-4">
+        <div class="container">
+            <h2 class="section-heading">Interactive Idea</h2>
+            <div class="icon-container">
+                <div class="icon-circle">
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+            </div>
+            <div class="card">
+                <p>👉 A timeline slider showing how different eras interpreted Jesus politically:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Early Church</h3>
+                            <p>communal living</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Medieval Church</h3>
+                            <p>charity and almsgiving</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Modern Era</h3>
+                            <p>debates about capitalism vs. socialism in theology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Conclusion -->
+    <section class="section-5">
+        <div class="container">
+            <h2 class="section-heading" style="color: rgb(255, 255, 255);">Conclusion</h2>
+            <div class="icon-container">
+                <div class="icon-circle">
+                    <i class="fas fa-book-open"></i>
+                </div>
+            </div>
+            <div class="conclusion-content">
+                <span class="conclusion-icon"></span>
+                <p style="color:rgb(255, 255, 255)">Jesus wasn't a socialist in the modern sense, but his message of caring for the poor and rejecting greed has inspired many socialist movements and debates.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to check if an element is in the viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+
+            // Function to handle scroll events
+            function handleScroll() {
+                const sections = document.querySelectorAll('section');
+                
+                sections.forEach(section => {
+                    if (isInViewport(section) && !section.classList.contains('visible')) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+
+            // Initial check on page load
+            handleScroll();
+
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScroll);
+        });
+        
+document.addEventListener("DOMContentLoaded", function () {
+  const sections = document.querySelectorAll("section");
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        obs.unobserve(entry.target); // fade-in happens only once
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(sec => observer.observe(sec));
+});
+
+
+    </script>
+</body>
+</html>

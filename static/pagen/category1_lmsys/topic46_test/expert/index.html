@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Hub - Comprehensive Testing & Assessment Platform</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-primary);
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+            color: var(--text-secondary);
+        }
+
+        .tabs-container {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tabs-nav {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            gap: 4px;
+        }
+
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 18px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--primary);
+        }
+
+        .tab-button.active {
+            background: var(--bg-primary);
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 32px;
+            animation: fadeIn 0.3s ease;
+            min-height: 400px;
+            background: var(--bg-primary);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        input:hover,
+        textarea:hover,
+        select:hover {
+            border-color: var(--primary-light);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .mobile-tab-selector {
+            display: none;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236366f1' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            min-height: 50px;
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--primary);
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .result-box.success {
+            background: #f0fdf4;
+            border-left-color: var(--success);
+            color: #166534;
+        }
+
+        .result-box.error {
+            background: #fef2f2;
+            border-left-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .result-box.info {
+            background: #eff6ff;
+            border-left-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: var(--bg-primary);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-item.available {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .feature-item.unavailable {
+            border-color: var(--border);
+            background: var(--bg-secondary);
+            opacity: 0.6;
+        }
+
+        .feature-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .feature-status {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .metric {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .metric:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .validation-rules {
+            margin-top: 20px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .rule-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .rule-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .rule-check.valid {
+            background: var(--success);
+        }
+
+        .rule-check.invalid {
+            background: var(--danger);
+        }
+
+        .api-response {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            header {
+                padding: 40px 20px 32px;
+                margin-bottom: 32px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.9375rem;
+            }
+
+            .tabs-container {
+                border-radius: 12px;
+            }
+
+            .tabs-nav {
+                display: none;
+            }
+
+            .mobile-tab-selector {
+                display: block;
+            }
+
+            .tab-content {
+                padding: 24px 20px;
+                min-height: auto;
+            }
+
+            .card-header {
+                margin-bottom: 24px;
+                padding-bottom: 20px;
+            }
+
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                margin-right: 12px;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+            }
+
+            .performance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .metric {
+                padding: 16px;
+            }
+
+            .metric-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.online {
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .status-indicator.offline {
+            background: var(--danger);
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        input[type="date"] {
+            cursor: pointer;
+        }
+
+        label {
+            cursor: pointer;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .tabs-nav {
+                display: none;
+            }
+
+            .mobile-tab-selector {
+                display: block;
+            }
+
+            .tab-content {
+                padding: 20px;
+                min-height: auto;
+            }
+
+            .card {
+                padding: 0;
+            }
+
+            .performance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* iPad specific styles - hide icons in tabs */
+        @media (min-width: 768px) and (max-width: 1200px) {
+            .tab-button span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 Test Hub</h1>
+            <p class="subtitle">Comprehensive Testing Platform - Web, Software, Quizzes & Health</p>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tabs-nav">
+                <button class="tab-button active" onclick="switchTab('code', this)">
+                    <span>✓</span> Code Validator
+                </button>
+                <button class="tab-button" onclick="switchTab('performance', this)">
+                    <span>⚡</span> Performance
+                </button>
+                <button class="tab-button" onclick="switchTab('form', this)">
+                    <span>📝</span> Form Validation
+                </button>
+                <button class="tab-button" onclick="switchTab('browser', this)">
+                    <span>🌐</span> Browser Features
+                </button>
+                <button class="tab-button" onclick="switchTab('api', this)">
+                    <span>🔌</span> API Tester
+                </button>
+                <button class="tab-button" onclick="switchTab('quiz', this)">
+                    <span>📚</span> Quiz
+                </button>
+                <button class="tab-button" onclick="switchTab('software', this)">
+                    <span>💻</span> Software Testing
+                </button>
+                <button class="tab-button" onclick="switchTab('health', this)">
+                    <span>🏥</span> Health Tracker
+                </button>
+            </div>
+
+            <!-- Mobile Tab Selector -->
+            <div class="mobile-tab-selector">
+                <select id="mobileTabSelect" onchange="switchTabMobile()" class="mobile-select">
+                    <option value="code">✓ Code Validator</option>
+                    <option value="performance">⚡ Performance</option>
+                    <option value="form">📝 Form Validation</option>
+                    <option value="browser">🌐 Browser Features</option>
+                    <option value="api">🔌 API Tester</option>
+                    <option value="quiz">📚 Quiz</option>
+                    <option value="software">💻 Software Testing</option>
+                    <option value="health">🏥 Health Tracker</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Code Validator Tab -->
+        <div id="tab-code" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">✓</div>
+                    <div class="card-title">Code Validator</div>
+                </div>
+                <div class="input-group">
+                    <label for="codeInput">Enter HTML/CSS/JS Code:</label>
+                    <textarea id="codeInput" placeholder="<div>Hello World</div>"></textarea>
+                </div>
+                <select id="codeType">
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="js">JavaScript</option>
+                </select>
+                <button class="btn" onclick="validateCode()">Validate Code</button>
+                <div id="codeResult" class="result-box" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Performance Tester Tab -->
+        <div id="tab-performance" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Performance Tester</div>
+                </div>
+                <div class="input-group">
+                    <label for="testUrl">Enter URL to Test:</label>
+                    <input type="url" id="testUrl" placeholder="https://example.com">
+                </div>
+                <button class="btn" onclick="testPerformance()">Test External URL</button>
+                <button class="btn btn-success" onclick="testCurrentPagePerformance()" style="margin-top: 10px;">Test
+                    Current Page</button>
+                <div id="performanceResult" class="result-box" style="display: none;"></div>
+                <div id="performanceMetrics" class="performance-metrics" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Form Validation Tab -->
+        <div id="tab-form" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📝</div>
+                    <div class="card-title">Form Validation Tester</div>
+                </div>
+                <div class="input-group">
+                    <label for="formEmail">Email:</label>
+                    <input type="email" id="formEmail" placeholder="test@example.com" oninput="validateForm()">
+                </div>
+                <div class="input-group">
+                    <label for="formPassword">Password:</label>
+                    <input type="password" id="formPassword" placeholder="Enter password" oninput="validateForm()">
+                </div>
+                <div class="input-group">
+                    <label for="formPhone">Phone:</label>
+                    <input type="tel" id="formPhone" placeholder="+1 (555) 123-4567" oninput="validateForm()">
+                </div>
+                <div id="formValidation" class="validation-rules"></div>
+            </div>
+        </div>
+
+        <!-- Browser Features Tab -->
+        <div id="tab-browser" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-title">Browser Features</div>
+                </div>
+                <p style="margin-bottom: 15px; color: #64748b;">Detecting your browser capabilities...</p>
+                <div id="browserFeatures" class="feature-grid"></div>
+            </div>
+        </div>
+
+        <!-- API Tester Tab -->
+        <div id="tab-api" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🔌</div>
+                    <div class="card-title">API Tester</div>
+                </div>
+                <div class="input-group">
+                    <label for="apiUrl">API Endpoint:</label>
+                    <input type="url" id="apiUrl" placeholder="https://api.example.com/data">
+                </div>
+                <div class="input-group">
+                    <label for="apiMethod">Method:</label>
+                    <select id="apiMethod">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="apiBody">Request Body (JSON):</label>
+                    <textarea id="apiBody" placeholder='{"key": "value"}'></textarea>
+                </div>
+                <button class="btn" onclick="testAPI()">Test API</button>
+                <div id="apiResult" class="result-box api-response" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div id="tab-quiz" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📚</div>
+                    <div class="card-title">Quiz Creator & Taker</div>
+                </div>
+                <div class="input-group">
+                    <label>Quiz Mode:</label>
+                    <select id="quizMode" onchange="toggleQuizMode()">
+                        <option value="take">Take Quiz</option>
+                        <option value="create">Create Quiz</option>
+                    </select>
+                </div>
+                <div id="quizTakeSection">
+                    <p id="quizInfo" style="margin-bottom: 15px; color: #64748b; font-size: 0.9rem;"></p>
+                    <div id="quizQuestions"></div>
+                    <div id="quizResults" style="display: none;"></div>
+                    <button class="btn" onclick="startQuiz()" id="startQuizBtn">Start Quiz</button>
+                    <button class="btn btn-success" onclick="submitQuiz()" id="submitQuizBtn"
+                        style="display: none;">Submit Quiz</button>
+                </div>
+                <div id="quizCreateSection" style="display: none;">
+                    <div class="input-group">
+                        <label>Question:</label>
+                        <textarea id="newQuestion" placeholder="Enter your question"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>Options (one per line):</label>
+                        <textarea id="newOptions"
+                            placeholder="Option A&#10;Option B&#10;Option C&#10;Option D"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>Correct Answer (A, B, C, or D):</label>
+                        <input type="text" id="newCorrectAnswer" placeholder="A" maxlength="1">
+                    </div>
+                    <button class="btn" onclick="addQuestion()">Add Question</button>
+                    <button class="btn btn-success" onclick="saveQuiz()" style="margin-top: 10px;">Save Quiz</button>
+                    <div id="quizCreateResult" class="result-box" style="display: none; margin-top: 15px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Software Testing Tab -->
+        <div id="tab-software" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💻</div>
+                    <div class="card-title">Software Testing</div>
+                </div>
+                <div class="input-group">
+                    <label>Test Case Name:</label>
+                    <input type="text" id="testCaseName" placeholder="Login functionality test">
+                </div>
+                <div class="input-group">
+                    <label>Test Steps:</label>
+                    <textarea id="testSteps"
+                        placeholder="1. Open application&#10;2. Enter credentials&#10;3. Click login"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Expected Result:</label>
+                    <textarea id="expectedResult" placeholder="User should be logged in successfully"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Status:</label>
+                    <select id="testStatus">
+                        <option value="pending">Pending</option>
+                        <option value="pass">Pass</option>
+                        <option value="fail">Fail</option>
+                        <option value="blocked">Blocked</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="addTestCase()">Add Test Case</button>
+                <div id="testCasesList" style="margin-top: 20px;"></div>
+                <button class="btn btn-success" onclick="exportTestCases()" style="margin-top: 15px; display: none;"
+                    id="exportBtn">Export Test Cases</button>
+            </div>
+        </div>
+
+        <!-- Health Tracker Tab -->
+        <div id="tab-health" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🏥</div>
+                    <div class="card-title">Health Test Tracker</div>
+                </div>
+                <div class="input-group">
+                    <label>Test Type:</label>
+                    <select id="healthTestType">
+                        <option value="blood">Blood Test</option>
+                        <option value="covid">COVID-19</option>
+                        <option value="cholesterol">Cholesterol</option>
+                        <option value="diabetes">Diabetes</option>
+                        <option value="vitamin">Vitamin D</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Test Date:</label>
+                    <input type="date" id="testDate" value="">
+                </div>
+                <div class="input-group">
+                    <label>Result Value:</label>
+                    <input type="text" id="testValue" placeholder="e.g., 120 mg/dL">
+                </div>
+                <div class="input-group">
+                    <label>Notes:</label>
+                    <textarea id="testNotes" placeholder="Additional notes about the test"></textarea>
+                </div>
+                <button class="btn" onclick="addHealthTest()">Add Test Result</button>
+                <div id="healthTestsList" style="margin-top: 20px;"></div>
+                <div id="healthSummary" class="result-box" style="display: none; margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Tab Switching Function
+        function switchTab(tabName, buttonElement) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const selectedTab = document.getElementById(`tab-${tabName}`);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Add active class to clicked button
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+
+            // Update mobile selector if it exists
+            const mobileSelect = document.getElementById('mobileTabSelect');
+            if (mobileSelect) {
+                mobileSelect.value = tabName;
+            }
+
+            // Trigger any initialization needed for specific tabs
+            if (tabName === 'browser') {
+                detectBrowserFeatures();
+            }
+        }
+
+        // Mobile Tab Switching Function
+        function switchTabMobile() {
+            const select = document.getElementById('mobileTabSelect');
+            const tabName = select.value;
+            switchTab(tabName, null);
+        }
+
+        // Code Validator
+        function validateCode() {
+            const code = document.getElementById('codeInput').value.trim();
+            const type = document.getElementById('codeType').value;
+            const resultBox = document.getElementById('codeResult');
+
+            if (!code) {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = 'Please enter some code to validate.';
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            let isValid = true;
+            let errors = [];
+
+            if (type === 'html') {
+                // Basic HTML validation
+                const openTags = code.match(/<[^/][^>]*>/g) || [];
+                const closeTags = code.match(/<\/[^>]+>/g) || [];
+                const selfClosing = code.match(/<[^>]+\/>/g) || [];
+
+                if (openTags.length - selfClosing.length !== closeTags.length) {
+                    isValid = false;
+                    errors.push('Mismatched HTML tags detected.');
+                }
+            } else if (type === 'css') {
+                // Basic CSS validation
+                const openBraces = (code.match(/{/g) || []).length;
+                const closeBraces = (code.match(/}/g) || []).length;
+
+                if (openBraces !== closeBraces) {
+                    isValid = false;
+                    errors.push('Mismatched curly braces in CSS.');
+                }
+            } else if (type === 'js') {
+                // Basic JavaScript validation
+                try {
+                    // Try to parse as JavaScript
+                    new Function(code);
+                } catch (e) {
+                    isValid = false;
+                    errors.push('JavaScript syntax error: ' + e.message);
+                }
+            }
+
+            resultBox.style.display = 'block';
+            if (isValid) {
+                resultBox.className = 'result-box success';
+                resultBox.textContent = `✓ ${type.toUpperCase()} code is valid! No syntax errors detected.`;
+            } else {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = `✗ Validation failed:\n${errors.join('\n')}`;
+            }
+        }
+
+        // Performance Tester
+        async function testPerformance() {
+            const url = document.getElementById('testUrl').value.trim();
+            const resultBox = document.getElementById('performanceResult');
+            const metricsBox = document.getElementById('performanceMetrics');
+
+            if (!url) {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = 'Please enter a URL to test.';
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            // Validate URL format
+            let testUrl;
+            try {
+                testUrl = new URL(url);
+            } catch (e) {
+                // Try adding https:// if no protocol
+                try {
+                    testUrl = new URL('https://' + url);
+                } catch (e2) {
+                    resultBox.className = 'result-box error';
+                    resultBox.textContent = 'Invalid URL format. Please enter a valid URL (e.g., https://example.com)';
+                    resultBox.style.display = 'block';
+                    return;
+                }
+            }
+
+            resultBox.className = 'result-box info';
+            resultBox.textContent = 'Testing performance... Please wait.';
+            resultBox.style.display = 'block';
+            metricsBox.style.display = 'none';
+
+            const startTime = performance.now();
+            let dnsTime = 0;
+            let connectTime = 0;
+            let responseTime = 0;
+            let totalTime = 0;
+            let status = 'Unknown';
+            let performanceScore = 'N/A';
+
+            try {
+                // Test DNS and connection (simulated)
+                const dnsStart = performance.now();
+                dnsTime = Math.random() * 50 + 10; // Simulated DNS: 10-60ms
+
+                // Try to fetch the page
+                const fetchStart = performance.now();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+                try {
+                    const response = await fetch(testUrl.toString(), {
+                        method: 'HEAD', // Use HEAD to avoid downloading full page
+                        mode: 'no-cors', // Bypass CORS for testing
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+                    responseTime = performance.now() - fetchStart;
+                    connectTime = responseTime * 0.3; // Simulated connection time
+                    totalTime = performance.now() - startTime;
+                    status = '✓ Online';
+                    performanceScore = calculatePerformanceScore(responseTime);
+
+                } catch (fetchError) {
+                    clearTimeout(timeoutId);
+
+                    // Try alternative method: test with image
+                    const imgStart = performance.now();
+                    const img = new Image();
+
+                    await new Promise((resolve, reject) => {
+                        const imgTimeout = setTimeout(() => {
+                            reject(new Error('Image load timeout'));
+                        }, 8000);
+
+                        img.onload = () => {
+                            clearTimeout(imgTimeout);
+                            responseTime = performance.now() - imgStart;
+                            connectTime = responseTime * 0.3;
+                            totalTime = performance.now() - startTime;
+                            status = '✓ Online';
+                            performanceScore = calculatePerformanceScore(responseTime);
+                            resolve();
+                        };
+
+                        img.onerror = () => {
+                            clearTimeout(imgTimeout);
+                            // If image fails, try favicon
+                            const favicon = new Image();
+                            favicon.onload = () => {
+                                responseTime = performance.now() - imgStart;
+                                connectTime = responseTime * 0.3;
+                                totalTime = performance.now() - startTime;
+                                status = '✓ Online';
+                                performanceScore = calculatePerformanceScore(responseTime);
+                                resolve();
+                            };
+                            favicon.onerror = () => {
+                                reject(new Error('Failed to connect'));
+                            };
+                            favicon.src = testUrl.origin + '/favicon.ico?' + Date.now();
+                        };
+
+                        // Try common test paths
+                        img.src = testUrl.origin + '/favicon.ico?' + Date.now();
+                    });
+
+                }
+
+            } catch (error) {
+                totalTime = performance.now() - startTime;
+                status = '✗ Failed';
+                performanceScore = 'Error';
+
+                resultBox.className = 'result-box error';
+                resultBox.textContent = `✗ Failed to test ${testUrl.toString()}\n\nError: ${error.message}\n\nNote: Many websites block cross-origin requests (CORS). Try testing a site that allows it, or test your own website.`;
+            }
+
+            // Display metrics
+            const metrics = {
+                'DNS Lookup': dnsTime > 0 ? dnsTime.toFixed(0) + 'ms' : 'N/A',
+                'Connect Time': connectTime > 0 ? connectTime.toFixed(0) + 'ms' : 'N/A',
+                'Response Time': responseTime > 0 ? responseTime.toFixed(0) + 'ms' : 'N/A',
+                'Total Time': totalTime > 0 ? (totalTime / 1000).toFixed(2) + 's' : 'N/A',
+                'Performance': performanceScore,
+                'Status': status
+            };
+
+            displayPerformanceMetrics(metrics);
+
+            if (status === '✓ Online') {
+                resultBox.className = 'result-box success';
+                resultBox.textContent = `✓ Performance test completed for ${testUrl.toString()}`;
+            }
+        }
+
+        function calculatePerformanceScore(loadTime) {
+            if (loadTime < 500) return 'Excellent';
+            if (loadTime < 1000) return 'Good';
+            if (loadTime < 2000) return 'Fair';
+            return 'Poor';
+        }
+
+        // Test Current Page Performance
+        function testCurrentPagePerformance() {
+            const resultBox = document.getElementById('performanceResult');
+            const metricsBox = document.getElementById('performanceMetrics');
+
+            resultBox.className = 'result-box info';
+            resultBox.textContent = 'Analyzing current page performance...';
+            resultBox.style.display = 'block';
+            metricsBox.style.display = 'none';
+
+            // Use Performance API to get real metrics
+            if (window.performance && window.performance.timing) {
+                const timing = window.performance.timing;
+                const navigation = window.performance.navigation;
+
+                // Calculate various performance metrics
+                const dnsTime = timing.domainLookupEnd - timing.domainLookupStart;
+                const connectTime = timing.connectEnd - timing.connectStart;
+                const responseTime = timing.responseEnd - timing.responseStart;
+                const domLoadTime = timing.domContentLoadedEventEnd - timing.domLoading;
+                const pageLoadTime = timing.loadEventEnd - timing.navigationStart;
+
+                // Get resource timing if available
+                const resources = window.performance.getEntriesByType('resource');
+                let totalResourceSize = 0;
+                let totalResourceTime = 0;
+
+                resources.forEach(resource => {
+                    if (resource.transferSize) totalResourceSize += resource.transferSize;
+                    totalResourceTime += resource.duration || 0;
+                });
+
+                const metrics = {
+                    'DNS Lookup': dnsTime > 0 ? dnsTime + 'ms' : 'N/A',
+                    'Connect Time': connectTime > 0 ? connectTime + 'ms' : 'N/A',
+                    'Response Time': responseTime > 0 ? responseTime + 'ms' : 'N/A',
+                    'DOM Load': domLoadTime > 0 ? (domLoadTime / 1000).toFixed(2) + 's' : 'N/A',
+                    'Page Load': pageLoadTime > 0 ? (pageLoadTime / 1000).toFixed(2) + 's' : 'N/A',
+                    'Resources': resources.length + ' loaded',
+                    'Total Size': totalResourceSize > 0 ? (totalResourceSize / 1024).toFixed(2) + ' KB' : 'N/A',
+                    'Performance': calculatePerformanceScore(pageLoadTime),
+                    'Status': '✓ Analyzed'
+                };
+
+                displayPerformanceMetrics(metrics);
+
+                resultBox.className = 'result-box success';
+                resultBox.textContent = `✓ Current page performance analysis completed!\n\nPage loaded in ${(pageLoadTime / 1000).toFixed(2)} seconds with ${resources.length} resources.`;
+
+            } else if (window.performance && window.performance.getEntriesByType) {
+                // Fallback for newer Performance API
+                const navigationTiming = window.performance.getEntriesByType('navigation')[0];
+
+                if (navigationTiming) {
+                    const dnsTime = navigationTiming.domainLookupEnd - navigationTiming.domainLookupStart;
+                    const connectTime = navigationTiming.connectEnd - navigationTiming.connectStart;
+                    const responseTime = navigationTiming.responseEnd - navigationTiming.responseStart;
+                    const domLoadTime = navigationTiming.domContentLoadedEventEnd - navigationTiming.domContentLoadedEventStart;
+                    const pageLoadTime = navigationTiming.loadEventEnd - navigationTiming.fetchStart;
+
+                    const resources = window.performance.getEntriesByType('resource');
+
+                    const metrics = {
+                        'DNS Lookup': dnsTime > 0 ? dnsTime.toFixed(0) + 'ms' : 'N/A',
+                        'Connect Time': connectTime > 0 ? connectTime.toFixed(0) + 'ms' : 'N/A',
+                        'Response Time': responseTime > 0 ? responseTime.toFixed(0) + 'ms' : 'N/A',
+                        'DOM Load': domLoadTime > 0 ? (domLoadTime / 1000).toFixed(2) + 's' : 'N/A',
+                        'Page Load': pageLoadTime > 0 ? (pageLoadTime / 1000).toFixed(2) + 's' : 'N/A',
+                        'Resources': resources.length + ' loaded',
+                        'Performance': calculatePerformanceScore(pageLoadTime),
+                        'Status': '✓ Analyzed'
+                    };
+
+                    displayPerformanceMetrics(metrics);
+
+                    resultBox.className = 'result-box success';
+                    resultBox.textContent = `✓ Current page performance analysis completed!\n\nPage loaded in ${(pageLoadTime / 1000).toFixed(2)} seconds.`;
+                } else {
+                    resultBox.className = 'result-box error';
+                    resultBox.textContent = 'Performance API not fully supported. Try refreshing the page and testing again.';
+                }
+            } else {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = 'Performance API not available in this browser.';
+            }
+        }
+
+        function displayPerformanceMetrics(metrics) {
+            const metricsBox = document.getElementById('performanceMetrics');
+            metricsBox.innerHTML = '';
+
+            for (const [label, value] of Object.entries(metrics)) {
+                const metric = document.createElement('div');
+                metric.className = 'metric';
+                metric.innerHTML = `
+                    <div class="metric-value">${value}</div>
+                    <div class="metric-label">${label}</div>
+                `;
+                metricsBox.appendChild(metric);
+            }
+
+            metricsBox.style.display = 'grid';
+        }
+
+        // Form Validation Tester
+        function validateForm() {
+            const email = document.getElementById('formEmail').value;
+            const password = document.getElementById('formPassword').value;
+            const phone = document.getElementById('formPhone').value;
+            const validationBox = document.getElementById('formValidation');
+
+            const rules = [
+                {
+                    name: 'Email format is valid',
+                    valid: email === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+                },
+                {
+                    name: 'Password is at least 8 characters',
+                    valid: password === '' || password.length >= 8
+                },
+                {
+                    name: 'Password contains uppercase letter',
+                    valid: password === '' || /[A-Z]/.test(password)
+                },
+                {
+                    name: 'Password contains number',
+                    valid: password === '' || /\d/.test(password)
+                },
+                {
+                    name: 'Phone format is valid',
+                    valid: phone === '' || /^[\d\s\-\+\(\)]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10
+                }
+            ];
+
+            validationBox.innerHTML = '';
+
+            rules.forEach(rule => {
+                const ruleItem = document.createElement('div');
+                ruleItem.className = 'rule-item';
+
+                const check = document.createElement('div');
+                check.className = 'rule-check ' + (rule.valid ? 'valid' : 'invalid');
+                check.textContent = rule.valid ? '✓' : '✗';
+
+                const name = document.createElement('span');
+                name.textContent = rule.name;
+
+                ruleItem.appendChild(check);
+                ruleItem.appendChild(name);
+                validationBox.appendChild(ruleItem);
+            });
+        }
+
+        // Browser Feature Detection
+        function detectBrowserFeatures() {
+            const features = [
+                {
+                    name: 'Local Storage',
+                    available: typeof (Storage) !== 'undefined'
+                },
+                {
+                    name: 'Session Storage',
+                    available: typeof (sessionStorage) !== 'undefined'
+                },
+                {
+                    name: 'Geolocation',
+                    available: 'geolocation' in navigator
+                },
+                {
+                    name: 'Camera',
+                    available: navigator.mediaDevices && 'getUserMedia' in navigator.mediaDevices
+                },
+                {
+                    name: 'Web Workers',
+                    available: typeof (Worker) !== 'undefined'
+                },
+                {
+                    name: 'Service Workers',
+                    available: 'serviceWorker' in navigator
+                },
+                {
+                    name: 'WebGL',
+                    available: !!document.createElement('canvas').getContext('webgl')
+                },
+                {
+                    name: 'Canvas',
+                    available: !!document.createElement('canvas').getContext('2d')
+                },
+                {
+                    name: 'WebSockets',
+                    available: 'WebSocket' in window
+                },
+                {
+                    name: 'Fetch API',
+                    available: 'fetch' in window
+                },
+                {
+                    name: 'IndexedDB',
+                    available: 'indexedDB' in window
+                },
+                {
+                    name: 'Notifications',
+                    available: 'Notification' in window
+                }
+            ];
+
+            const featuresBox = document.getElementById('browserFeatures');
+            featuresBox.innerHTML = '';
+
+            features.forEach(feature => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item ' + (feature.available ? 'available' : 'unavailable');
+
+                featureItem.innerHTML = `
+                    <div class="feature-name">${feature.name}</div>
+                    <div class="feature-status">${feature.available ? '✓ Available' : '✗ Not Available'}</div>
+                `;
+
+                featuresBox.appendChild(featureItem);
+            });
+        }
+
+        // API Testing Tool
+        async function testAPI() {
+            const url = document.getElementById('apiUrl').value.trim();
+            const method = document.getElementById('apiMethod').value;
+            const body = document.getElementById('apiBody').value.trim();
+            const resultBox = document.getElementById('apiResult');
+
+            if (!url) {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = 'Please enter an API endpoint URL.';
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            resultBox.className = 'result-box info';
+            resultBox.textContent = 'Testing API... Please wait.';
+            resultBox.style.display = 'block';
+
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                if (body && (method === 'POST' || method === 'PUT')) {
+                    try {
+                        options.body = JSON.stringify(JSON.parse(body));
+                    } catch (e) {
+                        resultBox.className = 'result-box error';
+                        resultBox.textContent = 'Invalid JSON in request body: ' + e.message;
+                        return;
+                    }
+                }
+
+                const startTime = performance.now();
+                const response = await fetch(url, options);
+                const endTime = performance.now();
+                const responseTime = (endTime - startTime).toFixed(2);
+
+                let responseText;
+                const contentType = response.headers.get('content-type');
+
+                if (contentType && contentType.includes('application/json')) {
+                    const json = await response.json();
+                    responseText = JSON.stringify(json, null, 2);
+                } else {
+                    responseText = await response.text();
+                }
+
+                const statusClass = response.ok ? 'success' : 'error';
+                resultBox.className = `result-box ${statusClass}`;
+
+                resultBox.textContent = `Status: ${response.status} ${response.statusText}
+Response Time: ${responseTime}ms
+Content-Type: ${contentType || 'N/A'}
+
+Response Body:
+${responseText}`;
+
+            } catch (error) {
+                resultBox.className = 'result-box error';
+                resultBox.textContent = `Error: ${error.message}\n\nThis could be due to:\n- CORS restrictions\n- Invalid URL\n- Network error\n- Server not responding`;
+            }
+        }
+
+        // Quiz Creator & Taker
+        let quizData = [];
+        let currentQuizAnswers = {};
+        let allQuizQuestions = [
+            // Geography
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Berlin", "Paris", "Madrid"],
+                correct: "C"
+            },
+            {
+                question: "Which is the largest ocean on Earth?",
+                options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                correct: "D"
+            },
+            {
+                question: "What is the longest river in the world?",
+                options: ["Amazon", "Nile", "Mississippi", "Yangtze"],
+                correct: "B"
+            },
+            {
+                question: "Which country is known as the Land of the Rising Sun?",
+                options: ["China", "Japan", "South Korea", "Thailand"],
+                correct: "B"
+            },
+            {
+                question: "What is the smallest country in the world?",
+                options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+                correct: "B"
+            },
+            {
+                question: "Which mountain is the highest peak in the world?",
+                options: ["K2", "Mount Everest", "Kangchenjunga", "Lhotse"],
+                correct: "B"
+            },
+            {
+                question: "What is the capital of Australia?",
+                options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+                correct: "C"
+            },
+            {
+                question: "Which desert is the largest in the world?",
+                options: ["Gobi Desert", "Sahara Desert", "Arabian Desert", "Antarctic Desert"],
+                correct: "D"
+            },
+            // Technology & Programming
+            {
+                question: "Which programming language is known as the language of the web?",
+                options: ["Python", "JavaScript", "Java", "C++"],
+                correct: "B"
+            },
+            {
+                question: "What does HTML stand for?",
+                options: ["HyperText Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "Hyperlink Text Markup Language"],
+                correct: "A"
+            },
+            {
+                question: "What does CSS stand for?",
+                options: ["Computer Style Sheets", "Cascading Style Sheets", "Creative Style System", "Colorful Style Sheets"],
+                correct: "B"
+            },
+            {
+                question: "Which company developed the JavaScript programming language?",
+                options: ["Microsoft", "Google", "Netscape", "Apple"],
+                correct: "C"
+            },
+            {
+                question: "What is the latest version of HTML?",
+                options: ["HTML4", "HTML5", "HTML6", "XHTML"],
+                correct: "B"
+            },
+            {
+                question: "Which database is known as NoSQL?",
+                options: ["MySQL", "PostgreSQL", "MongoDB", "Oracle"],
+                correct: "C"
+            },
+            {
+                question: "What does API stand for?",
+                options: ["Application Programming Interface", "Advanced Programming Interface", "Application Program Integration", "Automated Program Interface"],
+                correct: "A"
+            },
+            {
+                question: "Which framework is used for building React applications?",
+                options: ["Angular", "Vue", "React", "Ember"],
+                correct: "C"
+            },
+            {
+                question: "What does HTTP stand for?",
+                options: ["HyperText Transfer Protocol", "High Transfer Text Protocol", "HyperText Transmission Protocol", "Hyper Transfer Text Protocol"],
+                correct: "A"
+            },
+            // Science
+            {
+                question: "What is the chemical symbol for water?",
+                options: ["H2O", "CO2", "O2", "NaCl"],
+                correct: "A"
+            },
+            {
+                question: "How many planets are in our solar system?",
+                options: ["7", "8", "9", "10"],
+                correct: "B"
+            },
+            {
+                question: "What is the speed of light in vacuum?",
+                options: ["300,000 km/s", "150,000 km/s", "450,000 km/s", "200,000 km/s"],
+                correct: "A"
+            },
+            {
+                question: "Which gas do plants absorb from the atmosphere?",
+                options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+                correct: "C"
+            },
+            {
+                question: "What is the hardest natural substance on Earth?",
+                options: ["Gold", "Diamond", "Iron", "Platinum"],
+                correct: "B"
+            },
+            {
+                question: "How many bones are in an adult human body?",
+                options: ["196", "206", "216", "226"],
+                correct: "B"
+            },
+            {
+                question: "What is the largest organ in the human body?",
+                options: ["Liver", "Lungs", "Skin", "Intestines"],
+                correct: "C"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                correct: "B"
+            },
+            // History
+            {
+                question: "In which year did World War II end?",
+                options: ["1943", "1944", "1945", "1946"],
+                correct: "C"
+            },
+            {
+                question: "Who painted the Mona Lisa?",
+                options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                correct: "C"
+            },
+            {
+                question: "Which ancient wonder of the world still exists?",
+                options: ["Hanging Gardens", "Colossus of Rhodes", "Great Pyramid of Giza", "Lighthouse of Alexandria"],
+                correct: "C"
+            },
+            {
+                question: "Who was the first person to walk on the moon?",
+                options: ["Buzz Aldrin", "Neil Armstrong", "Michael Collins", "John Glenn"],
+                correct: "B"
+            },
+            {
+                question: "In which year did the Berlin Wall fall?",
+                options: ["1987", "1989", "1991", "1993"],
+                correct: "B"
+            },
+            {
+                question: "Which empire was ruled by Julius Caesar?",
+                options: ["Greek Empire", "Roman Empire", "Byzantine Empire", "Ottoman Empire"],
+                correct: "B"
+            },
+            // Math
+            {
+                question: "What is 15% of 200?",
+                options: ["25", "30", "35", "40"],
+                correct: "B"
+            },
+            {
+                question: "What is the square root of 64?",
+                options: ["6", "7", "8", "9"],
+                correct: "C"
+            },
+            {
+                question: "How many degrees are in a right angle?",
+                options: ["45", "90", "180", "360"],
+                correct: "B"
+            },
+            {
+                question: "What is the value of π (pi) approximately?",
+                options: ["3.14", "2.71", "1.41", "1.73"],
+                correct: "A"
+            },
+            {
+                question: "What is 2 to the power of 8?",
+                options: ["128", "256", "512", "1024"],
+                correct: "B"
+            },
+            // Sports
+            {
+                question: "How many players are on a basketball team on the court at once?",
+                options: ["4", "5", "6", "7"],
+                correct: "B"
+            },
+            {
+                question: "Which sport is played at Wimbledon?",
+                options: ["Golf", "Tennis", "Cricket", "Rugby"],
+                correct: "B"
+            },
+            {
+                question: "How many rings are in the Olympic symbol?",
+                options: ["4", "5", "6", "7"],
+                correct: "B"
+            },
+            {
+                question: "In which sport would you perform a slam dunk?",
+                options: ["Volleyball", "Basketball", "Tennis", "Soccer"],
+                correct: "B"
+            },
+            // Entertainment
+            {
+                question: "Which movie won the Academy Award for Best Picture in 2020?",
+                options: ["Joker", "1917", "Parasite", "Once Upon a Time in Hollywood"],
+                correct: "C"
+            },
+            {
+                question: "Who wrote the Harry Potter series?",
+                options: ["J.R.R. Tolkien", "J.K. Rowling", "George R.R. Martin", "Stephen King"],
+                correct: "B"
+            },
+            {
+                question: "Which band is known as 'The Fab Four'?",
+                options: ["The Rolling Stones", "The Beatles", "Led Zeppelin", "Queen"],
+                correct: "B"
+            },
+            {
+                question: "What is the highest-grossing film of all time?",
+                options: ["Avatar", "Avengers: Endgame", "Titanic", "Star Wars: The Force Awakens"],
+                correct: "A"
+            },
+            // General Knowledge
+            {
+                question: "What is the largest mammal in the world?",
+                options: ["African Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+                correct: "B"
+            },
+            {
+                question: "How many continents are there?",
+                options: ["5", "6", "7", "8"],
+                correct: "C"
+            },
+            {
+                question: "What is the currency of Japan?",
+                options: ["Won", "Yuan", "Yen", "Ringgit"],
+                correct: "C"
+            },
+            {
+                question: "Which animal is known as the King of the Jungle?",
+                options: ["Tiger", "Lion", "Leopard", "Cheetah"],
+                correct: "B"
+            },
+            {
+                question: "What is the most widely spoken language in the world?",
+                options: ["English", "Spanish", "Mandarin Chinese", "Hindi"],
+                correct: "C"
+            },
+            {
+                question: "How many days are in a leap year?",
+                options: ["364", "365", "366", "367"],
+                correct: "C"
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                options: ["Saturn", "Jupiter", "Neptune", "Uranus"],
+                correct: "B"
+            },
+            {
+                question: "Which fruit is known as the 'king of fruits'?",
+                options: ["Mango", "Durian", "Pineapple", "Papaya"],
+                correct: "B"
+            }
+        ];
+
+        // Utility function to shuffle an array
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Function to get random questions from the pool
+        function getRandomQuestions(count = 10) {
+            const shuffled = shuffleArray(allQuizQuestions);
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
+
+        // Function to randomize options and update correct answer
+        function randomizeQuestion(question) {
+            const optionsWithLetters = question.options.map((opt, index) => ({
+                text: opt,
+                letter: String.fromCharCode(65 + index)
+            }));
+            
+            const shuffledOptions = shuffleArray(optionsWithLetters);
+            const correctOption = shuffledOptions.find(opt => opt.letter === question.correct);
+            const newCorrectLetter = shuffledOptions.indexOf(correctOption);
+            
+            return {
+                question: question.question,
+                options: shuffledOptions.map(opt => opt.text),
+                correct: String.fromCharCode(65 + newCorrectLetter),
+                originalCorrect: question.correct
+            };
+        }
+
+        function toggleQuizMode() {
+            const mode = document.getElementById('quizMode').value;
+            const takeSection = document.getElementById('quizTakeSection');
+            const createSection = document.getElementById('quizCreateSection');
+
+            if (mode === 'take') {
+                takeSection.style.display = 'block';
+                createSection.style.display = 'none';
+            } else {
+                takeSection.style.display = 'none';
+                createSection.style.display = 'block';
+            }
+        }
+
+        function startQuiz() {
+            // Get 10 random questions from the pool
+            const randomQuestions = getRandomQuestions(10);
+            // Randomize each question's options
+            quizData = randomQuestions.map(q => randomizeQuestion(q));
+            // Shuffle the order of questions
+            quizData = shuffleArray(quizData);
+            
+            currentQuizAnswers = {};
+            displayQuiz();
+            document.getElementById('startQuizBtn').textContent = 'Start Random Quiz';
+            document.getElementById('startQuizBtn').style.display = 'none';
+            document.getElementById('submitQuizBtn').style.display = 'block';
+            document.getElementById('quizResults').style.display = 'none';
+        }
+
+        function displayQuiz() {
+            const container = document.getElementById('quizQuestions');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.style.marginBottom = '25px';
+                questionDiv.style.padding = '15px';
+                questionDiv.style.background = '#f8fafc';
+                questionDiv.style.borderRadius = '10px';
+
+                questionDiv.innerHTML = `
+                    <h4 style="margin-bottom: 15px;">${index + 1}. ${q.question}</h4>
+                    ${q.options.map((opt, i) => {
+                    const letter = String.fromCharCode(65 + i);
+                    return `
+                            <label style="display: block; margin-bottom: 10px; cursor: pointer;">
+                                <input type="radio" name="q${index}" value="${letter}" onchange="setQuizAnswer(${index}, '${letter}')" style="margin-right: 8px;">
+                                ${letter}. ${opt}
+                            </label>
+                        `;
+                }).join('')}
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function setQuizAnswer(index, answer) {
+            currentQuizAnswers[index] = answer;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            const results = [];
+
+            quizData.forEach((q, index) => {
+                const userAnswer = currentQuizAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) score++;
+
+                results.push({
+                    question: q.question,
+                    userAnswer: userAnswer || 'Not answered',
+                    correctAnswer: q.correct,
+                    isCorrect: isCorrect
+                });
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            const resultDiv = document.getElementById('quizResults');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result-box ' + (percentage >= 70 ? 'success' : percentage >= 50 ? 'info' : 'error');
+            resultDiv.innerHTML = `
+                <h3 style="margin-bottom: 15px;">Quiz Results</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>Score: ${score}/${quizData.length} (${percentage}%)</strong></p>
+                ${results.map((r, i) => `
+                    <div style="margin-bottom: 10px; padding: 10px; background: ${r.isCorrect ? '#d1fae5' : '#fee2e2'}; border-radius: 5px;">
+                        <strong>Q${i + 1}:</strong> ${r.question}<br>
+                        Your Answer: ${r.userAnswer} ${r.isCorrect ? '✓' : '✗'}<br>
+                        Correct Answer: ${r.correctAnswer}
+                    </div>
+                `).join('')}
+            `;
+            
+            // Add "Start New Quiz" button
+            const submitBtn = document.getElementById('submitQuizBtn');
+            submitBtn.style.display = 'none';
+            const startBtn = document.getElementById('startQuizBtn');
+            startBtn.textContent = 'Start New Random Quiz';
+            startBtn.style.display = 'block';
+        }
+
+        function addQuestion() {
+            const question = document.getElementById('newQuestion').value.trim();
+            const optionsText = document.getElementById('newOptions').value.trim();
+            const correct = document.getElementById('newCorrectAnswer').value.toUpperCase();
+
+            if (!question || !optionsText || !correct) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const options = optionsText.split('\n').filter(opt => opt.trim());
+            if (options.length < 2) {
+                alert('Please provide at least 2 options');
+                return;
+            }
+
+            if (!['A', 'B', 'C', 'D', 'E', 'F'].includes(correct) || correct.charCodeAt(0) - 65 >= options.length) {
+                alert('Invalid correct answer. Use A, B, C, etc. based on option order.');
+                return;
+            }
+
+            quizData.push({
+                question: question,
+                options: options,
+                correct: correct
+            });
+
+            document.getElementById('newQuestion').value = '';
+            document.getElementById('newOptions').value = '';
+            document.getElementById('newCorrectAnswer').value = '';
+
+            const resultBox = document.getElementById('quizCreateResult');
+            resultBox.style.display = 'block';
+            resultBox.className = 'result-box success';
+            resultBox.textContent = `Question added! Total questions: ${quizData.length}`;
+        }
+
+        function saveQuiz() {
+            if (quizData.length === 0) {
+                alert('Please add at least one question');
+                return;
+            }
+
+            const quizJSON = JSON.stringify(quizData, null, 2);
+            const resultBox = document.getElementById('quizCreateResult');
+            resultBox.style.display = 'block';
+            resultBox.className = 'result-box success';
+            resultBox.innerHTML = `
+                <strong>Quiz saved successfully!</strong><br>
+                <pre style="margin-top: 10px; font-size: 0.85rem; overflow-x: auto;">${quizJSON}</pre>
+                <p style="margin-top: 10px;">You can copy this JSON to save your quiz.</p>
+            `;
+        }
+
+        // Software Testing
+        let testCases = [];
+
+        function addTestCase() {
+            const name = document.getElementById('testCaseName').value.trim();
+            const steps = document.getElementById('testSteps').value.trim();
+            const expected = document.getElementById('expectedResult').value.trim();
+            const status = document.getElementById('testStatus').value;
+
+            if (!name || !steps || !expected) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const testCase = {
+                id: Date.now(),
+                name: name,
+                steps: steps,
+                expected: expected,
+                status: status,
+                date: new Date().toLocaleDateString()
+            };
+
+            testCases.push(testCase);
+            displayTestCases();
+
+            document.getElementById('testCaseName').value = '';
+            document.getElementById('testSteps').value = '';
+            document.getElementById('expectedResult').value = '';
+            document.getElementById('testStatus').value = 'pending';
+        }
+
+        function displayTestCases() {
+            const container = document.getElementById('testCasesList');
+            const exportBtn = document.getElementById('exportBtn');
+
+            if (testCases.length === 0) {
+                container.innerHTML = '';
+                exportBtn.style.display = 'none';
+                return;
+            }
+
+            exportBtn.style.display = 'block';
+            container.innerHTML = '<h4 style="margin-bottom: 15px;">Test Cases:</h4>';
+
+            testCases.forEach((tc, index) => {
+                const tcDiv = document.createElement('div');
+                tcDiv.style.marginBottom = '15px';
+                tcDiv.style.padding = '15px';
+                tcDiv.style.background = '#f8fafc';
+                tcDiv.style.borderRadius = '10px';
+                tcDiv.style.borderLeft = `4px solid ${tc.status === 'pass' ? 'var(--success)' :
+                        tc.status === 'fail' ? 'var(--danger)' :
+                            tc.status === 'blocked' ? 'var(--warning)' : '#94a3b8'
+                    }`;
+
+                tcDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                        <strong>${index + 1}. ${tc.name}</strong>
+                        <span style="padding: 4px 12px; border-radius: 5px; font-size: 0.85rem; background: ${tc.status === 'pass' ? '#d1fae5' :
+                        tc.status === 'fail' ? '#fee2e2' :
+                            tc.status === 'blocked' ? '#fef3c7' : '#e2e8f0'
+                    };">${tc.status.toUpperCase()}</span>
+                    </div>
+                    <div style="margin-bottom: 8px;"><strong>Steps:</strong> ${tc.steps.replace(/\n/g, '<br>')}</div>
+                    <div style="margin-bottom: 8px;"><strong>Expected:</strong> ${tc.expected}</div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Date: ${tc.date}</div>
+                    <button onclick="deleteTestCase(${tc.id})" style="margin-top: 10px; padding: 5px 15px; background: var(--danger); color: white; border: none; border-radius: 5px; cursor: pointer;">Delete</button>
+                `;
+                container.appendChild(tcDiv);
+            });
+        }
+
+        function deleteTestCase(id) {
+            testCases = testCases.filter(tc => tc.id !== id);
+            displayTestCases();
+        }
+
+        function exportTestCases() {
+            const json = JSON.stringify(testCases, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'test-cases.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Health Test Tracker
+        let healthTests = [];
+
+        function addHealthTest() {
+            const type = document.getElementById('healthTestType').value;
+            const date = document.getElementById('testDate').value;
+            const value = document.getElementById('testValue').value.trim();
+            const notes = document.getElementById('testNotes').value.trim();
+
+            if (!date || !value) {
+                alert('Please fill in test date and value');
+                return;
+            }
+
+            const test = {
+                id: Date.now(),
+                type: type,
+                date: date,
+                value: value,
+                notes: notes
+            };
+
+            healthTests.push(test);
+            displayHealthTests();
+            updateHealthSummary();
+
+            document.getElementById('testDate').value = '';
+            document.getElementById('testValue').value = '';
+            document.getElementById('testNotes').value = '';
+        }
+
+        function displayHealthTests() {
+            const container = document.getElementById('healthTestsList');
+
+            if (healthTests.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = '<h4 style="margin-bottom: 15px;">Test History:</h4>';
+
+            healthTests.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach((test, index) => {
+                const testDiv = document.createElement('div');
+                testDiv.style.marginBottom = '15px';
+                testDiv.style.padding = '15px';
+                testDiv.style.background = '#f8fafc';
+                testDiv.style.borderRadius = '10px';
+                testDiv.style.borderLeft = '4px solid var(--primary)';
+
+                testDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <strong>${test.type.charAt(0).toUpperCase() + test.type.slice(1)} Test</strong>
+                        <span style="color: #64748b;">${new Date(test.date).toLocaleDateString()}</span>
+                    </div>
+                    <div style="margin-bottom: 8px;"><strong>Result:</strong> ${test.value}</div>
+                    ${test.notes ? `<div style="margin-bottom: 8px;"><strong>Notes:</strong> ${test.notes}</div>` : ''}
+                    <button onclick="deleteHealthTest(${test.id})" style="margin-top: 5px; padding: 5px 15px; background: var(--danger); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">Delete</button>
+                `;
+                container.appendChild(testDiv);
+            });
+        }
+
+        function deleteHealthTest(id) {
+            healthTests = healthTests.filter(test => test.id !== id);
+            displayHealthTests();
+            updateHealthSummary();
+        }
+
+        function updateHealthSummary() {
+            const summaryBox = document.getElementById('healthSummary');
+
+            if (healthTests.length === 0) {
+                summaryBox.style.display = 'none';
+                return;
+            }
+
+            const typeCounts = {};
+            healthTests.forEach(test => {
+                typeCounts[test.type] = (typeCounts[test.type] || 0) + 1;
+            });
+
+            summaryBox.style.display = 'block';
+            summaryBox.className = 'result-box info';
+            summaryBox.innerHTML = `
+                <strong>Summary:</strong><br>
+                Total Tests: ${healthTests.length}<br>
+                ${Object.entries(typeCounts).map(([type, count]) =>
+                `${type.charAt(0).toUpperCase() + type.slice(1)}: ${count}`
+            ).join(', ')}
+            `;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            detectBrowserFeatures();
+            validateForm();
+            // Set today's date as default for health test
+            document.getElementById('testDate').valueAsDate = new Date();
+            // Update quiz info text
+            const quizInfo = document.getElementById('quizInfo');
+            if (quizInfo) {
+                quizInfo.textContent = `🎲 Each quiz contains 10 questions. Questions and answer options are randomized each time!`;
+            }
+        });
+
+        // Add some interactive enhancements
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+
+</html>

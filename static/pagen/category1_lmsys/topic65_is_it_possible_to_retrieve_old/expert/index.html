@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieving Old News Headlines from Archive.org - Interactive Research Guide</title>
+    <meta name="description" content="Comprehensive guide to accessing historical news content from the Internet Archive. Learn methods, explore real examples, and use interactive tools to retrieve old headlines from 735+ billion archived web pages.">
+    <meta name="author" content="Archive Research Guide">
+    
+    <meta property="og:title" content="Retrieving Old News Headlines from Archive.org">
+    <meta property="og:description" content="Interactive guide to accessing historical news content from the Internet Archive's 735+ billion archived web pages">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(210, 24%, 16%);
+            --card: hsl(0, 0%, 100%);
+            --card-foreground: hsl(210, 24%, 16%);
+            --primary: hsl(210, 60%, 25%);
+            --primary-foreground: hsl(0, 0%, 98%);
+            --secondary: hsl(210, 20%, 95%);
+            --secondary-foreground: hsl(210, 24%, 16%);
+            --muted: hsl(210, 15%, 96%);
+            --muted-foreground: hsl(210, 12%, 45%);
+            --accent: hsl(35, 85%, 60%);
+            --accent-foreground: hsl(210, 24%, 16%);
+            --border: hsl(210, 15%, 90%);
+            --archive-teal: hsl(185, 60%, 35%);
+            --archive-teal-light: hsl(185, 40%, 85%);
+            --archive-amber: hsl(35, 85%, 60%);
+            --archive-amber-light: hsl(35, 60%, 90%);
+            --timeline-blue: hsl(220, 60%, 45%);
+            --vintage-orange: hsl(25, 85%, 55%);
+            --gradient-hero: linear-gradient(135deg, hsl(210, 60%, 25%), hsl(185, 60%, 35%));
+            --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(210, 15%, 98%));
+            --gradient-archive: linear-gradient(90deg, hsl(35, 85%, 60%), hsl(25, 85%, 55%));
+            --gradient-timeline: linear-gradient(45deg, hsl(220, 60%, 45%), hsl(185, 60%, 35%));
+            --shadow-card: 0 4px 12px hsl(210, 24%, 16%, 0.08);
+            --shadow-interactive: 0 8px 25px hsl(210, 60%, 25%, 0.15);
+            --shadow-glow: 0 0 20px hsl(185, 60%, 35%, 0.3);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: hsl(210, 40%, 8%);
+                --foreground: hsl(210, 20%, 90%);
+                --card: hsl(210, 35%, 12%);
+                --card-foreground: hsl(210, 20%, 90%);
+                --primary: hsl(185, 60%, 50%);
+                --primary-foreground: hsl(210, 40%, 8%);
+                --secondary: hsl(210, 25%, 18%);
+                --secondary-foreground: hsl(210, 20%, 90%);
+                --muted: hsl(210, 25%, 15%);
+                --muted-foreground: hsl(210, 15%, 65%);
+                --accent: hsl(35, 85%, 65%);
+                --accent-foreground: hsl(210, 40%, 8%);
+                --border: hsl(210, 25%, 20%);
+                --archive-teal: hsl(185, 60%, 50%);
+                --archive-teal-light: hsl(185, 40%, 20%);
+                --archive-amber: hsl(35, 85%, 65%);
+                --archive-amber-light: hsl(35, 60%, 15%);
+                --timeline-blue: hsl(220, 60%, 55%);
+                --vintage-orange: hsl(25, 85%, 60%);
+                --gradient-hero: linear-gradient(135deg, hsl(210, 40%, 8%), hsl(210, 35%, 12%));
+                --gradient-card: linear-gradient(180deg, hsl(210, 35%, 12%), hsl(210, 30%, 15%));
+                --gradient-archive: linear-gradient(90deg, hsl(35, 85%, 65%), hsl(25, 85%, 60%));
+                --gradient-timeline: linear-gradient(45deg, hsl(220, 60%, 55%), hsl(185, 60%, 50%));
+                --shadow-card: 0 4px 12px hsl(0, 0%, 0%, 0.3);
+                --shadow-interactive: 0 8px 25px hsl(0, 0%, 0%, 0.4);
+                --shadow-glow: 0 0 20px hsl(185, 60%, 50%, 0.4);
+            }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-hero);
+            background-image: url('archive-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--archive-amber);
+            color: var(--accent-foreground);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            background: var(--gradient-archive);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .button:hover {
+            opacity: 0.9;
+        }
+        
+        .button-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .button-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-alt {
+            background: var(--gradient-card);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--foreground);
+        }
+        
+        .section-description {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--muted-foreground);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            align-items: center;
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(185, 185, 185, 0.2);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-interactive);
+        }
+        
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            width: 4rem;
+            height: 4rem;
+            background: var(--archive-teal-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--archive-teal);
+            margin-bottom: 1rem;
+        }
+        
+        .card-text {
+            color: var(--muted-foreground);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-timeline);
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-dot {
+            width: 2rem;
+            height: 2rem;
+            background: var(--gradient-archive);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--archive-teal);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-description {
+            color: var(--muted-foreground);
+        }
+        
+        .tool-section {
+            background: var(--muted);
+            padding: 3rem;
+            border-radius: 1rem;
+            margin: 3rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+        
+        .input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            background: var(--background);
+            color: var(--foreground);
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: var(--archive-teal);
+            box-shadow: 0 0 0 3px rgba(185, 185, 185, 0.1);
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .example-card {
+            background: var(--card);
+            border: 1px solid rgba(185, 185, 185, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: var(--archive-teal);
+            margin-bottom: 0.5rem;
+        }
+        
+        .example-domain {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+        
+        .example-description {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--secondary-foreground);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        
+        .footer {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .footer h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: currentColor;
+        }
+        
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-card);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.125rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 1rem;
+            }
+            
+            .timeline-item {
+                gap: 1rem;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">Digital Archive Research</div>
+            <h1>Retrieving Old News Headlines from <span style="color: var(--archive-amber);">Archive.org</span></h1>
+            <p>Discover how to access decades of preserved news content from the Internet Archive's vast collection of over 735 billion web pages</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#interactive-tools" class="button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Start Exploring
+                </a>
+                <a href="#how-it-works" class="button button-outline">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="21,8 21,21 3,21 3,8"></polyline>
+                        <rect x="1" y="3" width="22" height="5"></rect>
+                        <line x1="10" y1="12" x2="10" y2="17"></line>
+                    </svg>
+                    How It Works
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">How Archive.org Preserves News History</h2>
+            <p class="section-description">
+                The Internet Archive's Wayback Machine captures snapshots of websites over time, 
+                creating a comprehensive historical record of digital news content.
+            </p>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg class="icon" style="width: 2rem; height: 2rem; color: var(--archive-teal);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12,6 12,12 16,14"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Time Capsules</h3>
+                    </div>
+                    <p class="card-text">
+                        Web crawlers capture and store complete snapshots of news websites at regular intervals, 
+                        preserving headlines, articles, and multimedia content.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg class="icon" style="width: 2rem; height: 2rem; color: var(--archive-teal);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Massive Scale</h3>
+                    </div>
+                    <p class="card-text">
+                        Over 735 billion web pages archived since 1996, including major news outlets 
+                        like CNN, BBC, Reuters, and thousands of smaller publications.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg class="icon" style="width: 2rem; height: 2rem; color: var(--archive-teal);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Public Access</h3>
+                    </div>
+                    <p class="card-text">
+                        Free access through the Wayback Machine interface and APIs, enabling researchers, 
+                        journalists, and historians to study media evolution.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-top: 4rem;">
+                <div>
+                    <img src="wayback-machine.jpg" alt="Wayback Machine concept" class="img-responsive animate-float">
+                </div>
+                <div>
+                    <h3 style="font-size: 2rem; color: var(--archive-teal); margin-bottom: 1.5rem;">The Wayback Machine</h3>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">
+                        Named after the "WABAC machine" from The Rocky and Bullwinkle Show, 
+                        the Wayback Machine allows you to travel back in time to see how websites appeared 
+                        on specific dates. This includes capturing breaking news as it happened, 
+                        preserving the immediate reactions and reporting of historical events.
+                    </p>
+                    <a href="https://web.archive.org" target="_blank" class="button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        Visit Wayback Machine
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Tools Section -->
+    <section id="interactive-tools" class="section">
+        <div class="container">
+            <h2 class="section-title">Interactive Archive Tools</h2>
+            <p class="section-description">
+                Build archive URLs and explore real examples of preserved news content.
+            </p>
+
+            <div class="tool-section">
+                <h3 style="color: var(--archive-teal); font-size: 1.5rem; margin-bottom: 1rem;">Archive URL Builder</h3>
+                <p style="color: var(--muted-foreground); margin-bottom: 2rem;">
+                    Build Wayback Machine URLs to access archived versions of news websites
+                </p>
+                
+                <form id="archive-form">
+                    <div class="form-group">
+                        <label class="label" for="website-url">Website URL</label>
+                        <input type="url" id="website-url" class="input" placeholder="https://cnn.com or bbc.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="label" for="archive-date">Specific Date (Optional)</label>
+                        <input type="date" id="archive-date" class="input">
+                        <small style="color: var(--muted-foreground);">Leave empty to get the latest archived version</small>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button type="submit" class="button">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            Build URL
+                        </button>
+                        <button type="button" id="check-btn" class="button button-outline">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            Check Available
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="result" style="margin-top: 2rem; display: none;">
+                    <div style="background: var(--archive-teal-light); padding: 1rem; border-radius: 0.5rem; border: 1px solid rgba(185, 185, 185, 0.3);">
+                        <strong style="color: var(--archive-teal);">Generated Archive URL:</strong>
+                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+                            <code id="generated-url" style="flex: 1; padding: 0.5rem; background: var(--background); border-radius: 0.25rem; font-size: 0.875rem; word-break: break-all;"></code>
+                            <button id="open-btn" class="button" style="padding: 0.5rem 1rem;">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15,3 21,3 21,9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-top: 3rem;">
+                <img src="news-timeline.jpg" alt="News timeline evolution" class="img-responsive">
+                <div class="card">
+                    <h4 style="color: var(--archive-teal); font-size: 1.125rem; margin-bottom: 1rem;">Quick Tips</h4>
+                    <ul style="color: var(--muted-foreground); line-height: 1.8;">
+                        <li>• Use specific dates for historical events (9/11, elections, etc.)</li>
+                        <li>• Try wildcard searches with * to see all available snapshots</li>
+                        <li>• Remove "www." prefix if the site doesn't load</li>
+                        <li>• Check both desktop and mobile versions of news sites</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Examples Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Real Archive Examples</h2>
+            <p class="section-description">
+                Explore actual archived news websites from pivotal moments in history.
+            </p>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-title">CNN</div>
+                    <div class="example-domain">cnn.com</div>
+                    <div class="example-description">Major news coverage from one of the most archived news sites</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Breaking news coverage</span>
+                        <span class="tag">Historical events</span>
+                        <span class="tag">Archive since 1996</span>
+                    </div>
+                    <a href="https://web.archive.org/web/20010911/cnn.com" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">BBC News</div>
+                    <div class="example-domain">bbc.co.uk</div>
+                    <div class="example-description">International news coverage with extensive historical archives</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Global coverage</span>
+                        <span class="tag">Y2K coverage</span>
+                        <span class="tag">Archive since 1997</span>
+                    </div>
+                    <a href="https://web.archive.org/web/20000101/bbc.co.uk" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">The New York Times</div>
+                    <div class="example-domain">nytimes.com</div>
+                    <div class="example-description">Comprehensive archive of America's newspaper of record</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Millennium coverage</span>
+                        <span class="tag">Financial news</span>
+                        <span class="tag">Archive since 1996</span>
+                    </div>
+                    <a href="https://web.archive.org/web/19991231/nytimes.com" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">TechCrunch</div>
+                    <div class="example-domain">techcrunch.com</div>
+                    <div class="example-description">Technology news and startup coverage from the early 2000s</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Early tech coverage</span>
+                        <span class="tag">Startup news</span>
+                        <span class="tag">Web 2.0 era</span>
+                    </div>
+                    <a href="https://web.archive.org/web/20050611/techcrunch.com" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">Reuters</div>
+                    <div class="example-domain">reuters.com</div>
+                    <div class="example-description">Financial and international news wire service archives</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Market coverage</span>
+                        <span class="tag">Breaking news</span>
+                        <span class="tag">International scope</span>
+                    </div>
+                    <a href="https://web.archive.org/web/20000310/reuters.com" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">Washington Post</div>
+                    <div class="example-domain">washingtonpost.com</div>
+                    <div class="example-description">Political and national news coverage archives</div>
+                    <div style="margin-bottom: 1rem;">
+                        <span class="tag">Political coverage</span>
+                        <span class="tag">Election news</span>
+                        <span class="tag">Investigative journalism</span>
+                    </div>
+                    <a href="https://web.archive.org/web/20010120/washingtonpost.com" target="_blank" class="button" style="width: 100%; justify-content: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15,3 21,3 21,9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        View Archive
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methods Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Retrieval Methods</h2>
+            <p class="section-description">
+                Choose the approach that best fits your technical skills and project requirements.
+            </p>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="card-title">🌐 Manual Wayback Machine Search</h3>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
+                        The simplest way to find archived news headlines using the web interface
+                    </p>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="background: #e8f5e8; padding: 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">
+                            <strong>Difficulty:</strong> <span style="color: #22c55e;">Beginner</span>
+                        </div>
+                    </div>
+                    <ul style="color: var(--muted-foreground); margin-bottom: 1.5rem;">
+                        <li>• Go to web.archive.org</li>
+                        <li>• Enter the news website URL</li>
+                        <li>• Select a date from the calendar</li>
+                        <li>• Browse the archived page</li>
+                    </ul>
+                    <a href="https://web.archive.org" target="_blank" class="button">Learn More</a>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">⚡ Wayback Machine API</h3>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
+                        Use official APIs to programmatically access archived content
+                    </p>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="background: #fef3cd; padding: 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">
+                            <strong>Difficulty:</strong> <span style="color: #f59e0b;">Intermediate</span>
+                        </div>
+                    </div>
+                    <ul style="color: var(--muted-foreground); margin-bottom: 1.5rem;">
+                        <li>• Use Availability API to check archives</li>
+                        <li>• Query CDX API for capture lists</li>
+                        <li>• Fetch archived content using URLs</li>
+                        <li>• Parse HTML to extract headlines</li>
+                    </ul>
+                    <a href="https://archive.org/help/wayback_api.php" target="_blank" class="button">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Archive Evolution Timeline</h2>
+            <p class="section-description">
+                Discover how news archival has evolved from the early days of the web to today.
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg class="icon" style="color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1996</div>
+                        <div class="timeline-title">Internet Archive Founded</div>
+                        <div class="timeline-description">Brewster Kahle founded the Internet Archive to preserve digital history</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg class="icon" style="color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2001</div>
+                        <div class="timeline-title">Wayback Machine Launched</div>
+                        <div class="timeline-description">Public access to archived web pages became available</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg class="icon" style="color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2013</div>
+                        <div class="timeline-title">API Access Introduced</div>
+                        <div class="timeline-description">Programmatic access to archives became available</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <svg class="icon" style="color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-title">735+ Billion Pages Archived</div>
+                        <div class="timeline-description">Current scale of the Internet Archive preservation effort</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3>Start Your Archive Research</h3>
+            <p>Whether you're a researcher, journalist, or curious individual, the Internet Archive provides unprecedented access to historical news content.</p>
+            <a href="https://web.archive.org" target="_blank" class="button">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="21,8 21,21 3,21 3,8"></polyline>
+                    <rect x="1" y="3" width="22" height="5"></rect>
+                    <line x1="10" y1="12" x2="10" y2="17"></line>
+                </svg>
+                Begin Your Research
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Archive URL Builder functionality
+        const form = document.getElementById('archive-form');
+        const checkBtn = document.getElementById('check-btn');
+        const result = document.getElementById('result');
+        const generatedUrl = document.getElementById('generated-url');
+        const openBtn = document.getElementById('open-btn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            buildArchiveURL();
+        });
+
+        checkBtn.addEventListener('click', function() {
+            checkAvailability();
+        });
+
+        function buildArchiveURL() {
+            const url = document.getElementById('website-url').value;
+            const date = document.getElementById('archive-date').value;
+
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            const cleanURL = url.replace(/^https?:\/\//, '');
+            let archiveURL;
+
+            if (date) {
+                const formattedDate = date.replace(/\D/g, '');
+                archiveURL = `https://web.archive.org/web/${formattedDate}/${cleanURL}`;
+            } else {
+                archiveURL = `https://web.archive.org/web/*/${cleanURL}`;
+            }
+
+            generatedUrl.textContent = archiveURL;
+            openBtn.onclick = () => window.open(archiveURL, '_blank');
+            result.style.display = 'block';
+        }
+
+        async function checkAvailability() {
+            const url = document.getElementById('website-url').value;
+            
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            checkBtn.textContent = 'Checking...';
+            checkBtn.disabled = true;
+
+            try {
+                const cleanURL = url.replace(/^https?:\/\//, '').replace(/^www\./, '');
+                const apiURL = `https://archive.org/wayback/available?url=${encodeURIComponent('https://' + cleanURL)}`;
+                
+                const response = await fetch(apiURL);
+                const data = await response.json();
+                
+                if (data.archived_snapshots?.closest?.available) {
+                    const snapshotDate = new Date(data.archived_snapshots.closest.timestamp).toLocaleDateString();
+                    alert(`Archive found! Latest snapshot from ${snapshotDate}`);
+                    generatedUrl.textContent = data.archived_snapshots.closest.url;
+                    openBtn.onclick = () => window.open(data.archived_snapshots.closest.url, '_blank');
+                    result.style.display = 'block';
+                } else {
+                    alert('No archive found for this URL');
+                }
+            } catch (error) {
+                alert('Unable to check archive availability');
+            } finally {
+                checkBtn.textContent = 'Check Available';
+                checkBtn.disabled = false;
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation classes when elements come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and timeline items
+        document.querySelectorAll('.card, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

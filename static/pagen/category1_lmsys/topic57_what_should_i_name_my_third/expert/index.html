@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sibling Name Intelligence Platform v2</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#0f0f1e;--bg-card:#1a1a2e;--bg-elevated:#242438;
+            --border:#2d2d44;--border-active:#4a4a6a;
+            --text:#e8e8f0;--text-muted:#a0a0b8;--text-dim:#70708a;
+            --accent:#7c3aed;--accent-light:#a78bfa;--accent-glow:rgba(124,58,237,0.3);
+            --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+            --gradient:linear-gradient(135deg,#7c3aed,#a855f7);
+        }
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+            background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;
+        }
+        .app-container{max-width:1600px;margin:0 auto;padding:20px}
+        header{text-align:center;padding:40px 20px 30px;border-bottom:1px solid var(--border)}
+        h1{font-size:2.5rem;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+        .tagline{color:var(--text-muted);font-size:1rem}
+        .version-badge{display:inline-block;background:var(--accent-glow);color:var(--accent-light);padding:4px 12px;border-radius:20px;font-size:0.75rem;margin-left:8px}
+        .main-grid{display:grid;grid-template-columns:350px 1fr;gap:24px;margin-top:24px}
+        @media(max-width:1200px){.main-grid{grid-template-columns:1fr}}
+        .sidebar{display:flex;flex-direction:column;gap:20px}
+        .card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color 0.3s}
+        .card:hover{border-color:var(--border-active)}
+        .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+        .card-title{font-size:1.1rem;font-weight:600;color:var(--accent-light)}
+        .badge{background:var(--accent-glow);color:var(--accent-light);padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600}
+        .sibling-name{background:var(--bg-elevated);padding:16px;border-radius:8px;margin-bottom:12px;cursor:pointer;transition:all 0.3s;border:2px solid transparent}
+        .sibling-name:hover{border-color:var(--accent);transform:translateX(4px)}
+        .sibling-name.expanded{border-color:var(--accent-light)}
+        .name-display{font-size:1.3rem;font-weight:600;margin-bottom:8px;color:var(--text)}
+        .name-parts{display:flex;gap:8px;margin-bottom:8px}
+        .name-part{background:var(--bg-card);padding:4px 10px;border-radius:6px;font-size:0.85rem;color:var(--text-muted)}
+        .name-details{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:none}
+        .sibling-name.expanded .name-details{display:block;animation:slideDown 0.3s ease-out}
+        @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        .detail-row{display:flex;justify-content:space-between;margin:8px 0;font-size:0.9rem}
+        .detail-label{color:var(--text-dim)}
+        .detail-value{color:var(--text);font-weight:500}
+        .pattern-visual{display:flex;gap:4px;margin-top:8px}
+        .syllable-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);opacity:0.6}
+        .syllable-dot.stressed{opacity:1;transform:scale(1.3)}
+        .control-group{margin-bottom:20px}
+        .control-label{display:block;margin-bottom:8px;font-size:0.9rem;font-weight:500;color:var(--text-muted)}
+        .select-custom{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:0.95rem;cursor:pointer;transition:border-color 0.3s}
+        .select-custom:focus{outline:none;border-color:var(--accent)}
+        .slider-container{position:relative;padding:8px 0}
+        .slider{width:100%;height:6px;border-radius:3px;background:var(--border);outline:none;-webkit-appearance:none;appearance:none}
+        .slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;transition:transform 0.2s}
+        .slider::-webkit-slider-thumb:hover{transform:scale(1.2)}
+        .slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+        .slider-labels{display:flex;justify-content:space-between;margin-top:4px;font-size:0.75rem;color:var(--text-dim)}
+        .toggle-switch{position:relative;display:inline-block;width:50px;height:26px}
+        .toggle-switch input{opacity:0;width:0;height:0}
+        .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--border);border-radius:26px;transition:0.3s}
+        .toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:4px;bottom:4px;background:white;border-radius:50%;transition:0.3s}
+        input:checked+.toggle-slider{background:var(--accent)}
+        input:checked+.toggle-slider:before{transform:translateX(24px)}
+        .btn{background:var(--gradient);color:white;border:none;border-radius:8px;padding:12px 24px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;width:100%}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px var(--accent-glow)}
+        .btn:active{transform:translateY(0)}
+        .btn-secondary{background:var(--bg-elevated);border:1px solid var(--border)}
+        .btn-secondary:hover{background:var(--bg-card);box-shadow:none}
+        .main-content{display:flex;flex-direction:column;gap:24px}
+        .tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:2px solid var(--border)}
+        .tab{padding:12px 20px;background:none;border:none;color:var(--text-muted);font-size:0.95rem;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.3s}
+        .tab:hover{color:var(--text)}
+        .tab.active{color:var(--accent-light);border-bottom-color:var(--accent)}
+        .tab-content{display:none}
+        .tab-content.active{display:block;animation:fadeIn 0.3s ease-out}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+        .name-result-card{background:var(--bg-elevated);border:2px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.3s;position:relative}
+        .name-result-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+        .name-result-card.selected{border-color:var(--success);background:rgba(16,185,129,0.1)}
+        .name-result-card.comparing{border-color:var(--warning);background:rgba(245,158,11,0.1)}
+        .comparison-badge{position:absolute;top:10px;right:10px;background:var(--warning);color:white;padding:4px 8px;border-radius:6px;font-size:0.7rem;font-weight:700}
+        .result-name{font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:8px}
+        .result-origin{font-size:0.85rem;color:var(--text-muted);margin-bottom:12px}
+        .harmony-score{display:flex;align-items:center;gap:8px;margin-top:12px}
+        .score-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+        .score-fill{height:100%;background:var(--gradient);transition:width 0.5s ease-out}
+        .score-value{font-weight:600;color:var(--accent-light);font-size:0.9rem}
+        .result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+        .tag{background:var(--bg-card);border:1px solid var(--border);padding:4px 10px;border-radius:12px;font-size:0.75rem;color:var(--text-muted)}
+        .detail-panel{position:fixed;top:0;right:-500px;width:500px;height:100vh;background:var(--bg-card);border-left:1px solid var(--border);box-shadow:-10px 0 30px rgba(0,0,0,0.5);overflow-y:auto;transition:right 0.4s ease-out;z-index:1000;padding:30px}
+        .detail-panel.open{right:0}
+        @media(max-width:768px){.detail-panel{width:100%;right:-100%}}
+        .panel-close{position:absolute;top:20px;right:20px;width:32px;height:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s}
+        .panel-close:hover{background:var(--danger);border-color:var(--danger)}
+        .panel-header{margin-bottom:24px}
+        .panel-name{font-size:2rem;font-weight:700;margin-bottom:8px}
+        .panel-section{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+        .panel-section:last-child{border-bottom:none}
+        .section-title{font-size:1.1rem;font-weight:600;color:var(--accent-light);margin-bottom:12px}
+        .trait-bars{display:flex;flex-direction:column;gap:12px}
+        .trait-bar{display:flex;flex-direction:column;gap:4px}
+        .trait-name{font-size:0.9rem;color:var(--text-muted)}
+        .trait-visual{display:flex;align-items:center;gap:10px}
+        .trait-progress{flex:1;height:10px;background:var(--border);border-radius:5px;overflow:hidden}
+        .trait-progress-fill{height:100%;background:var(--gradient);transition:width 0.6s ease-out}
+        .trait-score{font-weight:600;color:var(--text);font-size:0.9rem;min-width:35px}
+        .middle-names-list{display:flex;flex-direction:column;gap:8px}
+        .middle-name-option{background:var(--bg-elevated);padding:12px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.3s;border:1px solid transparent}
+        .middle-name-option:hover{border-color:var(--accent);transform:translateX(4px)}
+        .quiz-container{background:var(--bg-elevated);border-radius:12px;padding:30px;max-width:700px;margin:0 auto}
+        .quiz-progress{display:flex;gap:8px;margin-bottom:24px}
+        .progress-dot{flex:1;height:4px;background:var(--border);border-radius:2px;transition:background 0.3s}
+        .progress-dot.completed{background:var(--accent)}
+        .progress-dot.current{background:var(--accent-light)}
+        .quiz-question{margin-bottom:24px}
+        .question-text{font-size:1.2rem;font-weight:600;margin-bottom:20px;color:var(--text)}
+        .quiz-options{display:flex;flex-direction:column;gap:12px}
+        .quiz-option{background:var(--bg-card);border:2px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px}
+        .quiz-option:hover{border-color:var(--accent);transform:translateX(4px)}
+        .quiz-option.selected{border-color:var(--accent);background:var(--accent-glow)}
+        .option-emoji{font-size:1.5rem}
+        .option-text{flex:1}
+        .option-label{font-weight:600;margin-bottom:4px}
+        .option-desc{font-size:0.85rem;color:var(--text-muted)}
+        .quiz-nav{display:flex;gap:12px;margin-top:24px}
+        .style-indicator{background:var(--gradient);color:white;padding:20px;border-radius:12px;text-align:center;margin-top:20px}
+        .style-name{font-size:1.5rem;font-weight:700;margin-bottom:8px}
+        .style-desc{font-size:0.95rem;opacity:0.9}
+        .influence-summary{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:16px}
+        .influence-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+        .influence-item:last-child{border-bottom:none}
+        .influence-label{color:var(--text-muted);font-size:0.9rem}
+        .influence-value{color:var(--accent-light);font-weight:600}
+        .comparison-container{background:var(--bg-elevated);border-radius:12px;padding:24px}
+        .comparison-selector{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+        .compare-slot{flex:1;min-width:200px;background:var(--bg-card);border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;color:var(--text-dim);font-size:0.9rem;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;position:relative}
+        .compare-slot:hover{border-color:var(--accent)}
+        .compare-slot.filled{border-style:solid;border-color:var(--accent);background:var(--accent-glow)}
+        .compare-slot.filled .slot-name{font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:8px}
+        .compare-slot.filled .slot-origin{font-size:0.85rem;color:var(--text-muted);margin-bottom:8px}
+        .remove-compare{background:var(--danger);color:white;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer;margin-top:8px;transition:transform 0.2s}
+        .remove-compare:hover{transform:scale(1.05)}
+        .comparison-table{margin-top:24px;overflow-x:auto}
+        .comparison-table table{width:100%;border-collapse:collapse}
+        .comparison-table th,.comparison-table td{padding:16px;text-align:left;border-bottom:1px solid var(--border)}
+        .comparison-table th{background:var(--bg-card);color:var(--accent-light);font-weight:600;font-size:0.9rem}
+        .comparison-table td{color:var(--text)}
+        .metric-cell{display:flex;align-items:center;gap:8px}
+        .metric-indicator{font-size:1.2rem}
+        .best-choice{background:rgba(16,185,129,0.1);border-left:4px solid var(--success)}
+        .recommendation-card{background:var(--accent-glow);padding:24px;border-radius:12px;margin-top:24px;border:2px solid var(--accent)}
+        .recommendation-title{font-size:1.3rem;font-weight:700;color:var(--success);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .recommendation-body{color:var(--text);line-height:1.8;font-size:0.95rem}
+        .recommendation-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+        .recommendation-metric{background:var(--bg-card);padding:12px;border-radius:8px;text-align:center}
+        .metric-label{font-size:0.8rem;color:var(--text-muted);margin-bottom:4px}
+        .metric-value{font-size:1.4rem;font-weight:700;color:var(--accent-light)}
+        .empty-state{text-align:center;padding:60px 20px;color:var(--text-dim)}
+        .empty-state-icon{font-size:3rem;margin-bottom:16px;opacity:0.5}
+        .empty-state-text{font-size:1.1rem}
+        .score-breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+        .breakdown-item{background:var(--bg-card);padding:12px;border-radius:8px}
+        .breakdown-label{font-size:0.85rem;color:var(--text-muted);margin-bottom:6px}
+        .breakdown-score{font-size:1.3rem;font-weight:700;color:var(--accent-light)}
+        .breakdown-bar{height:6px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden}
+        .breakdown-bar-fill{height:100%;background:var(--accent);transition:width 0.5s}
+        .sibling-comparison{background:var(--bg-elevated);padding:16px;border-radius:10px;margin-top:12px}
+        .comparison-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+        .comparison-row:last-child{border-bottom:none}
+        .comparison-metric{font-size:0.9rem;color:var(--text-muted)}
+        .comparison-values{display:flex;gap:16px}
+        .comparison-value{font-size:0.9rem;font-weight:600}
+        .compatibility-badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;margin-left:8px}
+        .compatibility-high{background:rgba(16,185,129,0.2);color:var(--success)}
+        .compatibility-medium{background:rgba(245,158,11,0.2);color:var(--warning)}
+        .compatibility-low{background:rgba(239,68,68,0.2);color:var(--danger)}
+        .insight-box{background:var(--bg-elevated);border-left:3px solid var(--accent);padding:16px;border-radius:8px;margin-top:16px}
+        .insight-text{color:var(--text);line-height:1.7;font-size:0.95rem}
+        .quiz-influence-badge{display:inline-block;background:rgba(124,58,237,0.2);border:1px solid var(--accent);padding:4px 10px;border-radius:12px;font-size:0.75rem;color:var(--accent-light);margin-left:8px}
+        .selection-mode-banner{background:var(--warning);color:var(--bg);padding:12px 20px;border-radius:8px;margin-bottom:16px;text-align:center;font-weight:600;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}
+    
+
+        /* ДОПОЛНИТЕЛЬНЫЕ ВИЗУАЛЬНЫЕ УЛУЧШЕНИЯ */
+
+        /* Тонкий паттерн фона */
+        body::before{
+            content:'';
+            position:fixed;
+            top:0;left:0;right:0;bottom:0;
+            background:radial-gradient(circle at 20% 30%,rgba(124,58,237,0.03) 0%,transparent 50%),
+                       radial-gradient(circle at 80% 70%,rgba(124,58,237,0.03) 0%,transparent 50%);
+            pointer-events:none;
+            z-index:0;
+        }
+
+        .app-container{position:relative;z-index:1}
+
+        /* Улучшенные glow эффекты */
+        .btn-primary{
+            box-shadow:0 4px 15px rgba(124,58,237,0.4);
+        }
+
+        .btn-primary:hover{
+            box-shadow:0 6px 20px rgba(124,58,237,0.5);
+        }
+
+        h1{
+            text-shadow:0 0 30px rgba(124,58,237,0.5);
+        }
+
+        /* Анимация для карточек */
+        @keyframes cardEntry{
+            from{opacity:0;transform:translateY(20px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+
+        .name-card{
+            animation:cardEntry 0.4s ease-out;
+        }
+
+        .name-card:nth-child(2){animation-delay:0.05s}
+        .name-card:nth-child(3){animation-delay:0.1s}
+        .name-card:nth-child(4){animation-delay:0.15s}
+
+        /* Декоративные иконки */
+        .card-title::before{
+            content:'';
+            display:inline-block;
+            width:8px;
+            height:8px;
+            background:var(--gradient);
+            border-radius:50%;
+            margin-right:8px;
+            box-shadow:0 0 8px var(--accent-glow);
+        }
+
+        /* Улучшенные тени для глубины */
+        .card:hover{
+            box-shadow:0 8px 30px rgba(0,0,0,0.4),0 0 0 1px var(--border-active);
+        }
+
+        .name-card:hover{
+            box-shadow:0 10px 40px rgba(0,0,0,0.5),0 0 0 1px var(--accent),0 0 20px rgba(124,58,237,0.3);
+        }
+
+        /* Фоновые изображения для пустых состояний */
+        .empty-state{
+            background:radial-gradient(circle at center,rgba(124,58,237,0.05),transparent),
+                       url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><text x="50%%" y="50%%" text-anchor="middle" dy=".3em" font-size="80" fill="rgba(124,58,237,0.1)">✨</text></svg>') center/80px no-repeat;
+        }
+
+        /* Градиентная обводка для важных элементов */
+        .harmony-score{
+            position:relative;
+            box-shadow:0 0 15px var(--accent-glow);
+        }
+
+        /* Иконки для типов имён */
+        .sibling-name::before{
+            content:'👶';
+            position:absolute;
+            right:16px;
+            top:16px;
+            font-size:20px;
+            opacity:0.2;
+            transition:all 0.3s ease;
+        }
+
+        .sibling-name:hover::before{
+            opacity:0.5;
+            transform:scale(1.2);
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <h1>Sibling Name Intelligence Platform</h1>
+        <p class="tagline">Thoughtfully designed naming system · Cultural meaning analysis · Balanced harmony scoring</p>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Sibling Baseline</h2>
+                    <span class="badge">2 Names</span>
+                </div>
+                <div class="sibling-name" onclick="toggleSiblingAnalysis(0)">
+                    <div class="name-display">Ruby Kali</div>
+                    <div class="name-parts">
+                        <span class="name-part">Ruby</span>
+                        <span class="name-part">Kali</span>
+                    </div>
+                    <div class="name-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Cultural Origin</span>
+                            <span class="detail-value">Latin + Sanskrit</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Syllable Pattern</span>
+                            <span class="detail-value">2 + 2</span>
+                        </div>
+                        <div class="pattern-visual">
+                            <div class="syllable-dot stressed"></div>
+                            <div class="syllable-dot"></div>
+                            <div class="syllable-dot stressed"></div>
+                            <div class="syllable-dot"></div>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Semantic Category</span>
+                            <span class="detail-value">Gemstone + Divine</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Vowel Ratio</span>
+                            <span class="detail-value">50% (4/8)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Ending Sound</span>
+                            <span class="detail-value">Open (i)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sibling-name" onclick="toggleSiblingAnalysis(1)">
+                    <div class="name-display">Raja Ishaan</div>
+                    <div class="name-parts">
+                        <span class="name-part">Raja</span>
+                        <span class="name-part">Ishaan</span>
+                    </div>
+                    <div class="name-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Cultural Origin</span>
+                            <span class="detail-value">Sanskrit + Sanskrit</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Syllable Pattern</span>
+                            <span class="detail-value">2 + 2</span>
+                        </div>
+                        <div class="pattern-visual">
+                            <div class="syllable-dot stressed"></div>
+                            <div class="syllable-dot"></div>
+                            <div class="syllable-dot"></div>
+                            <div class="syllable-dot stressed"></div>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Semantic Category</span>
+                            <span class="detail-value">Royalty + Divine</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Vowel Ratio</span>
+                            <span class="detail-value">55% (6/11)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Ending Sound</span>
+                            <span class="detail-value">Nasal (n)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Generation Controls</h2>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Gender</label>
+                    <select class="select-custom" id="genderControl" onchange="handleControlChange()">
+                        <option value="neutral">Gender Neutral</option>
+                        <option value="feminine">Feminine</option>
+                        <option value="masculine">Masculine</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Cultural Weight</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="70" class="slider" id="culturalSlider" oninput="handleControlChange()">
+                        <div class="slider-labels">
+                            <span>Western</span>
+                            <span>Hybrid</span>
+                            <span>Indian</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Uniqueness</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="60" class="slider" id="uniquenessSlider" oninput="handleControlChange()">
+                        <div class="slider-labels">
+                            <span>Common</span>
+                            <span>Unique</span>
+                            <span>Rare</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Style Balance</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="styleSlider" oninput="handleControlChange()">
+                        <div class="slider-labels">
+                            <span>Spiritual</span>
+                            <span>Balanced</span>
+                            <span>Modern</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" style="display:flex;justify-content:space-between;align-items:center">
+                        <span>Strict Sibling Harmony</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="harmonyToggle" checked onchange="handleControlChange()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                </div>
+
+                <button class="btn" onclick="regenerateNames()">Generate Names</button>
+                <button class="btn btn-secondary" onclick="showQuiz()" style="margin-top:12px">Take Style Quiz</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('results')">Generated Names</button>
+                <button class="tab" onclick="switchTab('quiz')">Style Quiz</button>
+                <button class="tab" onclick="switchTab('compare')">Compare Names</button>
+            </div>
+
+            <div class="tab-content active" id="resultsTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Name Candidates</h2>
+                        <span class="badge" id="resultsCount">0 names</span>
+                    </div>
+                    <div id="selectionModeBanner"></div>
+                    <div class="results-grid" id="resultsGrid">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🎯</div>
+                            <div class="empty-state-text">Click "Generate Names" to see personalized suggestions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="quizTab">
+                <div class="quiz-container">
+                    <div class="quiz-progress" id="quizProgress"></div>
+                    <div id="quizContent"></div>
+                    <div class="quiz-nav">
+                        <button class="btn btn-secondary" onclick="prevQuizQuestion()" id="prevBtn" style="display:none">Previous</button>
+                        <button class="btn" onclick="nextQuizQuestion()" id="nextBtn">Next</button>
+                    </div>
+                    <div id="styleResult" style="display:none"></div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="compareTab">
+                <div class="comparison-container">
+                    <h2 style="margin-bottom:20px">Side-by-Side Comparison</h2>
+                    <div class="comparison-selector">
+                        <div class="compare-slot" onclick="initiateSlotSelection(0)" id="slot0">
+                            <div>Click to select name</div>
+                        </div>
+                        <div class="compare-slot" onclick="initiateSlotSelection(1)" id="slot1">
+                            <div>Click to select name</div>
+                        </div>
+                        <div class="compare-slot" onclick="initiateSlotSelection(2)" id="slot2">
+                            <div>Click to select name</div>
+                        </div>
+                    </div>
+                    <div id="comparisonContent"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="detail-panel" id="detailPanel">
+    <div class="panel-close" onclick="closeDetailPanel()">×</div>
+    <div id="panelContent"></div>
+</div>
+
+<script>
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE MANAGEMENT v2 - Centralized state with transitions
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    const STATE = {
+        // Generation parameters
+        culturalWeight: 70,
+        uniqueness: 60,
+        style: 50,
+        gender: 'neutral',
+        harmonyMode: true,
+
+        // Quiz state
+        quizStep: 0,
+        quizAnswers: {},
+        quizWeights: {strength:0, elegance:0, spirituality:0, uniqueness:0, modernity:0, cultural:0},
+        quizCompleted: false,
+        userStyle: '',
+
+        // Generated results
+        generatedNames: [],
+        selectedName: null,
+
+        // Comparison state
+        comparisonSlots: [null, null, null],
+        selectionModeActive: false,
+        targetSlotIndex: null,
+
+        // UI state
+        detailPanelOpen: false,
+        activeTab: 'results',
+
+        // Semantic tracking for redundancy penalty
+        semanticUsage: {}
+    };
+
+    const SIBLING_BASELINE = [
+        {
+            first: 'Ruby', middle: 'Kali',
+            culture: ['Latin', 'Sanskrit'],
+            syllables: [2, 2],
+            stress: [1, 0, 1, 0],
+            semantic: ['gemstone', 'divine'],
+            style: 'modern-spiritual',
+            gender: 'feminine',
+            vowelRatio: 0.5,
+            endingSound: 'open'
+        },
+        {
+            first: 'Raja', middle: 'Ishaan',
+            culture: ['Sanskrit', 'Sanskrit'],
+            syllables: [2, 2],
+            stress: [1, 0, 0, 1],
+            semantic: ['royalty', 'divine'],
+            style: 'traditional-royal',
+            gender: 'masculine',
+            vowelRatio: 0.55,
+            endingSound: 'nasal'
+        }
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // NAME DATABASE v2 - Enhanced with phonetic properties
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    const NAME_DATABASE = {
+        masculine: [
+            {name:'Arjun',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['warrior','hero'],traits:{strength:90,elegance:70,spirituality:85,uniqueness:60,modernity:70},meaning:'Bright warrior, Pandava prince from Mahabharata',middleNames:['Dev','Kumar','Veer'],vowelRatio:0.4,endingSound:'nasal',consonantDensity:0.6},
+            {name:'Vihaan',culture:'Sanskrit',syllables:2,stress:[0,1],semantic:['divine','dawn'],traits:{strength:75,elegance:85,spirituality:90,uniqueness:70,modernity:85},meaning:'Dawn, morning light, beginning of new day',middleNames:['Raj','Krishna','Om'],vowelRatio:0.5,endingSound:'nasal',consonantDensity:0.5},
+            {name:'Rohan',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['ascending','nature'],traits:{strength:80,elegance:80,spirituality:75,uniqueness:55,modernity:80},meaning:'Ascending, rising, sandalwood',middleNames:['Dev','Jai','Arya'],vowelRatio:0.4,endingSound:'nasal',consonantDensity:0.6},
+            {name:'Zain',culture:'Arabic',syllables:1,stress:[1],semantic:['beauty','excellence'],traits:{strength:70,elegance:95,spirituality:70,uniqueness:75,modernity:90},meaning:'Beauty, grace, and excellence',middleNames:['Ali','Malik','Omar'],vowelRatio:0.5,endingSound:'nasal',consonantDensity:0.5},
+            {name:'Kian',culture:'Persian',syllables:2,stress:[1,0],semantic:['royal','ancient'],traits:{strength:85,elegance:75,spirituality:65,uniqueness:80,modernity:75},meaning:'Ancient king, realm, foundation',middleNames:['Darius','Cyrus','Arman'],vowelRatio:0.5,endingSound:'nasal',consonantDensity:0.5},
+            {name:'Aarav',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['peace','wisdom'],traits:{strength:70,elegance:80,spirituality:85,uniqueness:65,modernity:80},meaning:'Peaceful, wise, sound of music',middleNames:['Dev','Mohan','Prakash'],vowelRatio:0.6,endingSound:'closed',consonantDensity:0.4},
+            {name:'Reyansh',culture:'Sanskrit',syllables:2,stress:[0,1],semantic:['divine','light'],traits:{strength:80,elegance:85,spirituality:95,uniqueness:70,modernity:75},meaning:'Ray of Vishnu, divine light',middleNames:['Kumar','Anand','Hari'],vowelRatio:0.43,endingSound:'closed',consonantDensity:0.57},
+            {name:'Nayan',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['vision','beauty'],traits:{strength:65,elegance:90,spirituality:75,uniqueness:75,modernity:85},meaning:'Beautiful eyes, vision, observer',middleNames:['Deep','Raj','Kiran'],vowelRatio:0.6,endingSound:'nasal',consonantDensity:0.4},
+            {name:'Vivaan',culture:'Sanskrit',syllables:2,stress:[0,1],semantic:['life','energy'],traits:{strength:85,elegance:70,spirituality:80,uniqueness:68,modernity:82},meaning:'Full of life, energetic spirit',middleNames:['Shree','Om','Tej'],vowelRatio:0.5,endingSound:'nasal',consonantDensity:0.5},
+            {name:'Aayan',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['path','divine'],traits:{strength:75,elegance:85,spirituality:90,uniqueness:72,modernity:78},meaning:'Gift of God, path, soaked in God',middleNames:['Jai','Mohan','Ravi'],vowelRatio:0.6,endingSound:'nasal',consonantDensity:0.4},
+            {name:'Orion',culture:'Greek',syllables:3,stress:[0,1,0],semantic:['hunter','celestial'],traits:{strength:95,elegance:70,spirituality:65,uniqueness:85,modernity:80},meaning:'Hunter constellation, son of Poseidon',middleNames:['Sky','Atlas','Leo'],vowelRatio:0.6,endingSound:'nasal',consonantDensity:0.4},
+            {name:'Phoenix',culture:'Greek',syllables:2,stress:[1,0],semantic:['rebirth','mythic'],traits:{strength:90,elegance:75,spirituality:85,uniqueness:95,modernity:90},meaning:'Immortal bird, rebirth, resurrection',middleNames:['Ash','Blaze','Ray'],vowelRatio:0.43,endingSound:'closed',consonantDensity:0.57},
+            {name:'Atlas',culture:'Greek',syllables:2,stress:[1,0],semantic:['strength','mythic'],traits:{strength:100,elegance:65,spirituality:60,uniqueness:80,modernity:75},meaning:'Bearer of heavens, enduring strength',middleNames:['Storm','Stone','Cole'],vowelRatio:0.4,endingSound:'closed',consonantDensity:0.6},
+            {name:'Rowan',culture:'Celtic',syllables:2,stress:[1,0],semantic:['nature','tree'],traits:{strength:75,elegance:80,spirituality:70,uniqueness:75,modernity:85},meaning:'Little red tree, mountain ash',middleNames:['Ash','Oak','Reed'],vowelRatio:0.4,endingSound:'nasal',consonantDensity:0.6},
+            {name:'Felix',culture:'Latin',syllables:2,stress:[1,0],semantic:['luck','joy'],traits:{strength:65,elegance:85,spirituality:60,uniqueness:70,modernity:90},meaning:'Lucky, successful, fortunate one',middleNames:['Kai','Rex','Jude'],vowelRatio:0.4,endingSound:'closed',consonantDensity:0.6}
+        ],
+        feminine: [
+            {name:'Aadhya',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['divine','first'],traits:{strength:85,elegance:90,spirituality:95,uniqueness:70,modernity:75},meaning:'First power, goddess Durga, beginning',middleNames:['Devi','Lakshmi','Priya'],vowelRatio:0.67,endingSound:'open',consonantDensity:0.33},
+            {name:'Saanvi',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['divine','prosperity'],traits:{strength:75,elegance:95,spirituality:90,uniqueness:72,modernity:82},meaning:'Goddess Lakshmi, knowledge, prosperity',middleNames:['Sri','Maya','Ananya'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Kiara',culture:'Italian',syllables:3,stress:[0,1,0],semantic:['light','clarity'],traits:{strength:70,elegance:95,spirituality:70,uniqueness:75,modernity:95},meaning:'Light, clear, bright as day',middleNames:['Rose','Luna','Mae'],vowelRatio:0.6,endingSound:'open',consonantDensity:0.4},
+            {name:'Zara',culture:'Arabic',syllables:2,stress:[1,0],semantic:['princess','flower'],traits:{strength:80,elegance:95,spirituality:70,uniqueness:80,modernity:90},meaning:'Princess, blooming flower, radiance',middleNames:['Amara','Layla','Noor'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Myra',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['sweet','beloved'],traits:{strength:70,elegance:95,spirituality:75,uniqueness:78,modernity:88},meaning:'Sweet like nectar, beloved',middleNames:['Devi','Rani','Jaya'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Riya',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['singer','grace'],traits:{strength:65,elegance:95,spirituality:80,uniqueness:60,modernity:85},meaning:'Graceful singer, one who sings',middleNames:['Priya','Devi','Maya'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Ananya',culture:'Sanskrit',syllables:3,stress:[0,1,0],semantic:['unique','incomparable'],traits:{strength:80,elegance:90,spirituality:85,uniqueness:90,modernity:78},meaning:'One of a kind, matchless, unique',middleNames:['Sri','Lakshmi','Devi'],vowelRatio:0.67,endingSound:'open',consonantDensity:0.33},
+            {name:'Navya',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['new','young'],traits:{strength:75,elegance:85,spirituality:75,uniqueness:75,modernity:95},meaning:'New, young, praiseworthy',middleNames:['Priya','Anjali','Isha'],vowelRatio:0.4,endingSound:'open',consonantDensity:0.6},
+            {name:'Diya',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['light','lamp'],traits:{strength:70,elegance:90,spirituality:95,uniqueness:65,modernity:80},meaning:'Divine lamp, light, radiance',middleNames:['Sri','Jyoti','Rani'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Leela',culture:'Sanskrit',syllables:2,stress:[1,0],semantic:['divine','play'],traits:{strength:75,elegance:95,spirituality:95,uniqueness:80,modernity:70},meaning:'Divine play of gods, cosmic dance',middleNames:['Devi','Maya','Shree'],vowelRatio:0.6,endingSound:'open',consonantDensity:0.4},
+            {name:'Aurora',culture:'Latin',syllables:3,stress:[0,1,0],semantic:['dawn','goddess'],traits:{strength:75,elegance:100,spirituality:80,uniqueness:85,modernity:85},meaning:'Goddess of dawn, northern lights',middleNames:['Rose','Sky','Mae'],vowelRatio:0.67,endingSound:'open',consonantDensity:0.33},
+            {name:'Luna',culture:'Latin',syllables:2,stress:[1,0],semantic:['moon','celestial'],traits:{strength:70,elegance:95,spirituality:85,uniqueness:75,modernity:90},meaning:'Moon goddess, lunar beauty',middleNames:['Rose','Sky','Pearl'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Aria',culture:'Italian',syllables:3,stress:[1,0,0],semantic:['music','air'],traits:{strength:65,elegance:100,spirituality:75,uniqueness:82,modernity:95},meaning:'Beautiful melody, air, song',middleNames:['Rose','Grace','Belle'],vowelRatio:0.75,endingSound:'open',consonantDensity:0.25},
+            {name:'Nova',culture:'Latin',syllables:2,stress:[1,0],semantic:['new','star'],traits:{strength:80,elegance:85,spirituality:70,uniqueness:95,modernity:100},meaning:'New star, sudden brightness',middleNames:['Sky','Reign','Blaze'],vowelRatio:0.5,endingSound:'open',consonantDensity:0.5},
+            {name:'Iris',culture:'Greek',syllables:2,stress:[1,0],semantic:['rainbow','goddess'],traits:{strength:70,elegance:95,spirituality:85,uniqueness:78,modernity:82},meaning:'Rainbow goddess, colorful messenger',middleNames:['Rose','Dawn','Faye'],vowelRatio:0.5,endingSound:'closed',consonantDensity:0.5}
+        ]
+    };
+
+    const QUIZ_QUESTIONS = [
+        {
+            q: 'What matters most to you in a name?',
+            options: [
+                {emoji:'🏛️', label:'Cultural Heritage', desc:'Deep cultural roots and tradition', weight:{cultural:20, spirituality:15}},
+                {emoji:'✨', label:'Uniqueness', desc:'Stands out and memorable', weight:{uniqueness:25, modernity:10}},
+                {emoji:'🎵', label:'Sound & Flow', desc:'Beautiful pronunciation', weight:{elegance:20}},
+                {emoji:'💫', label:'Meaning & Depth', desc:'Powerful significance', weight:{spirituality:20, strength:10}}
+            ]
+        },
+        {
+            q: 'How do you envision your child?',
+            options: [
+                {emoji:'👑', label:'Leader', desc:'Strong, confident, commanding', weight:{strength:25, modernity:10}},
+                {emoji:'🌸', label:'Gentle Soul', desc:'Kind, elegant, graceful', weight:{elegance:25, spirituality:15}},
+                {emoji:'🔥', label:'Trailblazer', desc:'Bold, unique, modern', weight:{uniqueness:20, modernity:25}},
+                {emoji:'🧘', label:'Spiritual', desc:'Wise, balanced, connected', weight:{spirituality:30}}
+            ]
+        },
+        {
+            q: 'Cultural connection preference?',
+            options: [
+                {emoji:'🕉️', label:'Deep Indian Roots', desc:'Strong Sanskrit heritage', weight:{cultural:30, spirituality:10}},
+                {emoji:'🌍', label:'Global Fusion', desc:'Multicultural blend', weight:{modernity:20, uniqueness:15}},
+                {emoji:'⚖️', label:'Balanced Mix', desc:'Best of both worlds', weight:{cultural:15, modernity:15}},
+                {emoji:'🗽', label:'Modern Western', desc:'Contemporary and universal', weight:{modernity:25, uniqueness:10}}
+            ]
+        },
+        {
+            q: 'Name length preference?',
+            options: [
+                {emoji:'⚡', label:'Short & Punchy', desc:'2-4 letters, easy', weight:{modernity:15, uniqueness:10}},
+                {emoji:'🎯', label:'Standard', desc:'5-6 letters, classic', weight:{elegance:15}},
+                {emoji:'📜', label:'Longer Form', desc:'7+ letters, elaborate', weight:{elegance:20, spirituality:10}}
+            ]
+        },
+        {
+            q: 'How important is name uniqueness?',
+            options: [
+                {emoji:'💎', label:'Very Rare', desc:'Almost never heard', weight:{uniqueness:30, modernity:10}},
+                {emoji:'🌟', label:'Uncommon', desc:'Special but not weird', weight:{uniqueness:20, elegance:10}},
+                {emoji:'🤝', label:'Familiar', desc:'Recognizable and easy', weight:{modernity:10, strength:5}}
+            ]
+        }
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // NAME INTELLIGENCE ENGINE v2 - Enhanced Analysis
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    const NameIntelligence = {
+        // Calculate vowel/consonant ratio
+        calculateVowelRatio: function(name) {
+            const vowels = (name.match(/[aeiouAEIOU]/g) || []).length;
+            return vowels / name.length;
+        },
+
+        // Classify ending sound type
+        classifyEndingSound: function(name) {
+            const lastChar = name.toLowerCase().slice(-1);
+            if (['a', 'e', 'i', 'o', 'u'].includes(lastChar)) return 'open';
+            if (['n', 'm', 'ng'].includes(lastChar)) return 'nasal';
+            return 'closed';
+        },
+
+        // Calculate sibling rhythm compatibility
+        calculateRhythmCompatibility: function(nameData) {
+            const siblingPatterns = SIBLING_BASELINE.map(s => s.syllables.reduce((a,b) => a+b, 0));
+            const avgSiblingLength = siblingPatterns.reduce((a,b) => a+b, 0) / siblingPatterns.length;
+            const totalSyllables = nameData.syllables;
+            const diff = Math.abs(totalSyllables - avgSiblingLength);
+            return Math.max(0, 100 - (diff * 20));
+        },
+
+        // Calculate semantic redundancy penalty
+        calculateSemanticPenalty: function(semantic) {
+            let penalty = 0;
+            semantic.forEach(s => {
+                const usageCount = STATE.semanticUsage[s] || 0;
+                penalty += usageCount * 5;
+            });
+            return Math.min(penalty, 30);
+        },
+
+        // Enhanced harmony score calculation with new metrics
+        calculateEnhancedHarmony: function(nameData) {
+            let score = 0;
+            const subscores = {};
+
+            // 1. Syllable pattern match (25 points max)
+            const rhythmScore = this.calculateRhythmCompatibility(nameData);
+            subscores.rhythm = rhythmScore * 0.25;
+            score += subscores.rhythm;
+
+            // 2. Cultural alignment (30 points max)
+            let culturalScore = 0;
+            if (nameData.culture === 'Sanskrit') {
+                culturalScore = 30;
+            } else if (nameData.culture.includes('Sanskrit')) {
+                culturalScore = 20;
+            } else if (['Arabic', 'Persian', 'Hebrew'].includes(nameData.culture)) {
+                culturalScore = 15;
+            } else {
+                culturalScore = 10;
+            }
+
+            // Apply cultural weight from controls
+            if (STATE.culturalWeight > 60) {
+                culturalScore *= (STATE.culturalWeight / 100);
+            } else {
+                culturalScore *= 0.5;
+            }
+
+            // Apply quiz influence
+            if (STATE.quizCompleted && STATE.quizWeights.cultural > 30) {
+                culturalScore *= 1.2;
+            }
+
+            subscores.cultural = Math.min(culturalScore, 30);
+            score += subscores.cultural;
+
+            // 3. Semantic balance (20 points max)
+            const hasDivine = nameData.semantic.includes('divine');
+            const hasRoyal = nameData.semantic.includes('royalty');
+            const hasNature = nameData.semantic.some(s => ['nature', 'celestial', 'gemstone'].includes(s));
+
+            let semanticScore = 0;
+            if (hasDivine) semanticScore += 10;
+            if (hasRoyal) semanticScore += 8;
+            if (hasNature) semanticScore += 7;
+
+            // Apply redundancy penalty
+            const penalty = this.calculateSemanticPenalty(nameData.semantic);
+            semanticScore = Math.max(0, semanticScore - penalty);
+
+            subscores.semantic = Math.min(semanticScore, 20);
+            score += subscores.semantic;
+
+            // 4. Phonetic flow (15 points max)
+            let phoneticScore = 10;
+
+            // Vowel ratio similarity to siblings
+            const siblingVowelAvg = (SIBLING_BASELINE[0].vowelRatio + SIBLING_BASELINE[1].vowelRatio) / 2;
+            const vowelDiff = Math.abs(nameData.vowelRatio - siblingVowelAvg);
+            phoneticScore += Math.max(0, 5 - (vowelDiff * 20));
+
+            subscores.phonetic = Math.min(phoneticScore, 15);
+            score += subscores.phonetic;
+
+            // 5. Trait compatibility (15 points max)
+            let traitScore = 0;
+
+            // Check if traits align with quiz preferences
+            if (STATE.quizCompleted) {
+                Object.keys(nameData.traits).forEach(trait => {
+                    const quizWeight = STATE.quizWeights[trait] || 0;
+                    const traitValue = nameData.traits[trait];
+                    if (quizWeight > 20 && traitValue > 75) {
+                        traitScore += 3;
+                    }
+                });
+            } else {
+                traitScore = 10;
+            }
+
+            subscores.traits = Math.min(traitScore, 15);
+            score += subscores.traits;
+
+            // Apply harmony mode multiplier
+            if (STATE.harmonyMode) {
+                score = Math.min(score, 100);
+            } else {
+                score *= 0.85;
+            }
+
+            return {
+                total: Math.round(score),
+                breakdown: subscores
+            };
+        },
+
+        // Generate explainable insight text from scores
+        generateInsight: function(nameData, scores) {
+            const insights = [];
+
+            if (scores.breakdown.cultural > 25) {
+                insights.push(`Strong cultural alignment with ${SIBLING_BASELINE[1].first}'s Sanskrit heritage`);
+            } else if (scores.breakdown.cultural < 15) {
+                insights.push(`Offers cultural diversity as a Western-origin name like ${SIBLING_BASELINE[0].first}`);
+            }
+
+            if (scores.breakdown.rhythm > 20) {
+                insights.push(`Perfect syllable rhythm matching both siblings' 2+2 pattern`);
+            }
+
+            if (nameData.semantic.includes('divine')) {
+                insights.push(`Maintains the divine/spiritual theme present in both Kali and Ishaan`);
+            }
+
+            if (scores.breakdown.semantic < 10) {
+                insights.push(`Introduces fresh semantic territory while maintaining family harmony`);
+            }
+
+            if (nameData.vowelRatio > 0.55) {
+                insights.push(`Vowel-rich name creates melodic flow with siblings`);
+            }
+
+            return insights.join('. ') + '.';
+        }
+    };
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATE TRANSITION FUNCTIONS - Centralized updates
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function updateState(updates) {
+        Object.assign(STATE, updates);
+        renderDependentViews();
+    }
+
+    function renderDependentViews() {
+        // Re-render any views that depend on state
+        if (STATE.activeTab === 'results' && STATE.generatedNames.length > 0) {
+            displayResults();
+        }
+        if (STATE.activeTab === 'compare') {
+            updateComparisonView();
+        }
+    }
+
+    function handleControlChange() {
+        STATE.culturalWeight = parseInt(document.getElementById('culturalSlider').value);
+        STATE.uniqueness = parseInt(document.getElementById('uniquenessSlider').value);
+        STATE.style = parseInt(document.getElementById('styleSlider').value);
+        STATE.gender = document.getElementById('genderControl').value;
+        STATE.harmonyMode = document.getElementById('harmonyToggle').checked;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // UI INTERACTION FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function toggleSiblingAnalysis(index) {
+        const cards = document.querySelectorAll('.sibling-name');
+        cards[index].classList.toggle('expanded');
+    }
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById(tabName + 'Tab').classList.add('active');
+
+        STATE.activeTab = tabName;
+
+        if (tabName === 'compare') {
+            updateComparisonView();
+        }
+
+        // Clear selection mode when switching tabs
+        if (STATE.selectionModeActive) {
+            cancelSelectionMode();
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // NAME GENERATION v2 - Enhanced with weighted randomness
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function regenerateNames() {
+        handleControlChange();
+
+        // Reset semantic usage tracking
+        STATE.semanticUsage = {};
+
+        const genderFilter = STATE.gender === 'neutral'
+            ? ['masculine', 'feminine']
+            : [STATE.gender];
+
+        let pool = [];
+        genderFilter.forEach(g => {
+            if (NAME_DATABASE[g]) {
+                pool.push(...NAME_DATABASE[g].map(n => ({...n, genderCategory: g})));
+            }
+        });
+
+        // Enhanced filtering with near-match tolerance
+        pool = pool.filter(n => {
+            // Cultural weight filter (more tolerant)
+            if (STATE.culturalWeight > 80 && n.culture !== 'Sanskrit') {
+                if (Math.random() > 0.2) return false; // 20% chance to include anyway
+            }
+            if (STATE.culturalWeight < 20 && n.culture === 'Sanskrit') {
+                if (Math.random() > 0.3) return false;
+            }
+
+            // Uniqueness filter (gradient instead of hard cutoff)
+            const uniquenessMatch = Math.abs(n.traits.uniqueness - STATE.uniqueness);
+            if (uniquenessMatch > 40 && Math.random() > 0.15) return false;
+
+            // Style filter (spiritual vs modern)
+            if (STATE.style > 70 && n.traits.modernity < 60 && Math.random() > 0.25) return false;
+            if (STATE.style < 30 && n.traits.spirituality < 60 && Math.random() > 0.25) return false;
+
+            // Strict harmony mode
+            if (STATE.harmonyMode) {
+                const isCulturalMatch = ['Sanskrit', 'Arabic', 'Persian', 'Hebrew'].some(c => n.culture.includes(c));
+                if (!isCulturalMatch && Math.random() > 0.1) return false;
+            }
+
+            return true;
+        });
+
+        // Calculate enhanced harmony scores
+        pool = pool.map(n => {
+            const harmonyData = NameIntelligence.calculateEnhancedHarmony(n);
+            return {
+                ...n,
+                harmonyScore: harmonyData.total,
+                scoreBreakdown: harmonyData.breakdown,
+                insight: NameIntelligence.generateInsight(n, harmonyData)
+            };
+        });
+
+        // Sort by harmony score
+        pool.sort((a, b) => b.harmonyScore - a.harmonyScore);
+
+        // Dynamic result count based on strictness
+        const resultCount = STATE.harmonyMode ? 10 : 15;
+        STATE.generatedNames = pool.slice(0, resultCount);
+
+        // Track semantic usage for redundancy penalty
+        STATE.generatedNames.forEach(n => {
+            n.semantic.forEach(s => {
+                STATE.semanticUsage[s] = (STATE.semanticUsage[s] || 0) + 1;
+            });
+        });
+
+        displayResults();
+    }
+
+    function displayResults() {
+        const grid = document.getElementById('resultsGrid');
+        const count = document.getElementById('resultsCount');
+        count.textContent = STATE.generatedNames.length + ' names';
+
+        if (STATE.generatedNames.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🎯</div><div class="empty-state-text">Adjust filters and generate names</div></div>';
+            return;
+        }
+
+        grid.innerHTML = '';
+        STATE.generatedNames.forEach((name, idx) => {
+            const card = document.createElement('div');
+            card.className = 'name-result-card';
+
+            const isInComparison = STATE.comparisonSlots.some(s => s && s.name === name.name);
+            if (isInComparison) {
+                card.classList.add('comparing');
+            }
+
+            let badges = '';
+            if (isInComparison) {
+                badges = '<div class="comparison-badge">In Compare</div>';
+            }
+            if (STATE.quizCompleted && name.harmonyScore > 85) {
+                badges += '<span class="quiz-influence-badge">Quiz Match</span>';
+            }
+
+            card.innerHTML = `
+      ${badges}
+      <div class="result-name">${name.name}</div>
+      <div class="result-origin">${name.culture}</div>
+      <div class="harmony-score">
+        <div class="score-bar">
+          <div class="score-fill" style="width:${name.harmonyScore}%"></div>
+        </div>
+        <div class="score-value">${name.harmonyScore}</div>
+      </div>
+      <div class="result-tags">
+        ${name.semantic.map(s => `<span class="tag">${s}</span>`).join('')}
+      </div>
+    `;
+
+            card.onclick = () => {
+                if (STATE.selectionModeActive) {
+                    selectNameForComparison(name);
+                } else {
+                    openDetailPanel(name);
+                }
+            };
+
+            grid.appendChild(card);
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DETAIL PANEL v2 - Enhanced with sibling comparison
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function openDetailPanel(nameData) {
+        if (STATE.selectionModeActive) return;
+
+        STATE.selectedName = nameData;
+        STATE.detailPanelOpen = true;
+
+        const panel = document.getElementById('detailPanel');
+        const content = document.getElementById('panelContent');
+
+        // Calculate sibling-specific compatibility
+        const siblingCompatibility = calculateSiblingCompatibility(nameData);
+
+        content.innerHTML = `
+    <div class="panel-header">
+      <div class="panel-name">${nameData.name}</div>
+      <div style="color:var(--text-muted)">${nameData.culture} · ${nameData.syllables} syllables</div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Meaning & Origin</div>
+      <p style="color:var(--text);line-height:1.8">${nameData.meaning}</p>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Harmony Score Breakdown</div>
+      <div style="text-align:center;font-size:3rem;font-weight:700;color:var(--accent-light);margin:20px 0">
+        ${nameData.harmonyScore}
+        ${STATE.quizCompleted ? '<span class="quiz-influence-badge">Quiz Influenced</span>' : ''}
+      </div>
+      <div class="score-breakdown">
+        <div class="breakdown-item">
+          <div class="breakdown-label">Cultural Fit</div>
+          <div class="breakdown-score">${Math.round(nameData.scoreBreakdown.cultural)}</div>
+          <div class="breakdown-bar"><div class="breakdown-bar-fill" style="width:${(nameData.scoreBreakdown.cultural/30)*100}%"></div></div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Rhythm Match</div>
+          <div class="breakdown-score">${Math.round(nameData.scoreBreakdown.rhythm)}</div>
+          <div class="breakdown-bar"><div class="breakdown-bar-fill" style="width:${(nameData.scoreBreakdown.rhythm/25)*100}%"></div></div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Semantic Balance</div>
+          <div class="breakdown-score">${Math.round(nameData.scoreBreakdown.semantic)}</div>
+          <div class="breakdown-bar"><div class="breakdown-bar-fill" style="width:${(nameData.scoreBreakdown.semantic/20)*100}%"></div></div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Phonetic Flow</div>
+          <div class="breakdown-score">${Math.round(nameData.scoreBreakdown.phonetic)}</div>
+          <div class="breakdown-bar"><div class="breakdown-bar-fill" style="width:${(nameData.scoreBreakdown.phonetic/15)*100}%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Sibling Compatibility Analysis</div>
+      <div class="sibling-comparison">
+        <div class="comparison-row">
+          <div class="comparison-metric">vs Ruby Kali</div>
+          <div class="comparison-values">
+            <span class="comparison-value">Cultural: ${siblingCompatibility.ruby.cultural}%</span>
+            <span class="comparison-value">Phonetic: ${siblingCompatibility.ruby.phonetic}%</span>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-metric">vs Raja Ishaan</div>
+          <div class="comparison-values">
+            <span class="comparison-value">Cultural: ${siblingCompatibility.raja.cultural}%</span>
+            <span class="comparison-value">Phonetic: ${siblingCompatibility.raja.phonetic}%</span>
+          </div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-metric">Overall Compatibility</div>
+          <div class="comparison-values">
+            <span class="compatibility-badge ${getCompatibilityClass(siblingCompatibility.overall)}">
+              ${siblingCompatibility.overall}% ${getCompatibilityLabel(siblingCompatibility.overall)}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="insight-text">${nameData.insight}</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Name Traits</div>
+      <div class="trait-bars">
+        ${Object.entries(nameData.traits).map(([trait, val]) => `
+          <div class="trait-bar">
+            <div class="trait-name">${trait.charAt(0).toUpperCase() + trait.slice(1)}</div>
+            <div class="trait-visual">
+              <div class="trait-progress"><div class="trait-progress-fill" style="width:${val}%"></div></div>
+              <div class="trait-score">${val}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Suggested Middle Names</div>
+      <div class="middle-names-list">
+        ${nameData.middleNames.map(mn => `
+          <div class="middle-name-option">
+            <div>
+              <div style="font-weight:600">${nameData.name} ${mn}</div>
+              <div style="font-size:0.85rem;color:var(--text-muted)">Full name combination</div>
+            </div>
+            <div class="badge">Try it</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <button class="btn" onclick="addToComparisonFromPanel('${nameData.name}')">Add to Comparison</button>
+  `;
+
+        panel.classList.add('open');
+    }
+
+    function calculateSiblingCompatibility(nameData) {
+        const ruby = SIBLING_BASELINE[0];
+        const raja = SIBLING_BASELINE[1];
+
+        // vs Ruby Kali
+        const rubyCultural = calculateCulturalSimilarity(nameData, ruby);
+        const rubyPhonetic = calculatePhoneticSimilarity(nameData, ruby);
+
+        // vs Raja Ishaan
+        const rajaCultural = calculateCulturalSimilarity(nameData, raja);
+        const rajaPhonetic = calculatePhoneticSimilarity(nameData, raja);
+
+        const overall = Math.round((rubyCultural + rubyPhonetic + rajaCultural + rajaPhonetic) / 4);
+
+        return {
+            ruby: {cultural: rubyCultural, phonetic: rubyPhonetic},
+            raja: {cultural: rajaCultural, phonetic: rajaPhonetic},
+            overall
+        };
+    }
+
+    function calculateCulturalSimilarity(name1, name2) {
+        const cultures1 = Array.isArray(name1.culture) ? name1.culture : [name1.culture];
+        const cultures2 = name2.culture;
+
+        const overlap = cultures1.some(c => cultures2.includes(c));
+        return overlap ? 90 : 45;
+    }
+
+    function calculatePhoneticSimilarity(name1, name2) {
+        let score = 50;
+
+        // Vowel ratio similarity
+        const vowelDiff = Math.abs(name1.vowelRatio - name2.vowelRatio);
+        score += Math.max(0, 25 - (vowelDiff * 100));
+
+        // Ending sound match
+        if (name1.endingSound === name2.endingSound) {
+            score += 25;
+        }
+
+        return Math.round(Math.min(score, 100));
+    }
+
+    function getCompatibilityClass(score) {
+        if (score >= 75) return 'compatibility-high';
+        if (score >= 50) return 'compatibility-medium';
+        return 'compatibility-low';
+    }
+
+    function getCompatibilityLabel(score) {
+        if (score >= 75) return 'Excellent';
+        if (score >= 50) return 'Good';
+        return 'Fair';
+    }
+
+    function closeDetailPanel() {
+        document.getElementById('detailPanel').classList.remove('open');
+        STATE.detailPanelOpen = false;
+        STATE.selectedName = null;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // COMPARISON SYSTEM v2 - Fully Functional
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function initiateSlotSelection(slotIndex) {
+        if (STATE.comparisonSlots[slotIndex] !== null) {
+            // Remove if already filled
+            STATE.comparisonSlots[slotIndex] = null;
+            updateComparisonView();
+            displayResults(); // Update result cards
+            return;
+        }
+
+        // Enter selection mode
+        STATE.selectionModeActive = true;
+        STATE.targetSlotIndex = slotIndex;
+
+        // Switch to results tab if not already there
+        if (STATE.activeTab !== 'results') {
+            switchTab('results');
+            setTimeout(() => showSelectionModeBanner(), 100);
+        } else {
+            showSelectionModeBanner();
+        }
+    }
+
+    function showSelectionModeBanner() {
+        const banner = document.getElementById('selectionModeBanner');
+        banner.innerHTML = `
+    <div class="selection-mode-banner">
+      🎯 Selection Mode Active - Click a name to add to comparison slot ${STATE.targetSlotIndex + 1}
+      <button style="margin-left:20px;background:var(--bg);color:var(--text);border:1px solid var(--border);padding:6px 16px;border-radius:6px;cursor:pointer" onclick="cancelSelectionMode()">Cancel</button>
+    </div>
+  `;
+    }
+
+    function cancelSelectionMode() {
+        STATE.selectionModeActive = false;
+        STATE.targetSlotIndex = null;
+        document.getElementById('selectionModeBanner').innerHTML = '';
+    }
+
+    function selectNameForComparison(nameData) {
+        if (!STATE.selectionModeActive) return;
+
+        STATE.comparisonSlots[STATE.targetSlotIndex] = nameData;
+        cancelSelectionMode();
+        switchTab('compare');
+        updateComparisonView();
+    }
+
+    function addToComparisonFromPanel(nameTxt) {
+        const nameData = STATE.generatedNames.find(n => n.name === nameTxt);
+        if (!nameData) return;
+
+        const emptySlot = STATE.comparisonSlots.findIndex(s => s === null);
+        if (emptySlot !== -1) {
+            STATE.comparisonSlots[emptySlot] = nameData;
+            closeDetailPanel();
+            switchTab('compare');
+            updateComparisonView();
+        } else {
+            alert('All comparison slots are full. Remove a name first.');
+        }
+    }
+
+    function updateComparisonView() {
+        // Update slot displays
+        STATE.comparisonSlots.forEach((name, idx) => {
+            const slot = document.getElementById('slot' + idx);
+            if (name) {
+                slot.classList.add('filled');
+                slot.innerHTML = `
+        <div class="slot-name">${name.name}</div>
+        <div class="slot-origin">${name.culture}</div>
+        <div style="font-size:0.85rem;color:var(--text-muted)">Score: ${name.harmonyScore}</div>
+        <button class="remove-compare" onclick="removeFromSlot(${idx})">Remove</button>
+      `;
+            } else {
+                slot.classList.remove('filled');
+                slot.innerHTML = '<div>Click to select name</div>';
+            }
+        });
+
+        // Render comparison table
+        renderComparisonTable();
+    }
+
+    function removeFromSlot(idx) {
+        STATE.comparisonSlots[idx] = null;
+        updateComparisonView();
+        if (STATE.activeTab === 'results') {
+            displayResults();
+        }
+    }
+
+    function renderComparisonTable() {
+        const container = document.getElementById('comparisonContent');
+        const names = STATE.comparisonSlots.filter(n => n !== null);
+
+        if (names.length < 2) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚖️</div><div class="empty-state-text">Select at least 2 names to compare</div></div>';
+            return;
+        }
+
+        // Determine best choice
+        const bestIdx = names.reduce((best, n, i) => (n.harmonyScore > names[best].harmonyScore ? i : best), 0);
+        const bestName = names[bestIdx];
+
+        // Build comparison metrics
+        const metrics = [
+            {label: 'Harmony Score', getValue: n => n.harmonyScore, isBest: (v, max) => v === max},
+            {label: 'Cultural Fit', getValue: n => Math.round(n.scoreBreakdown.cultural), isBest: (v, max) => v === max},
+            {label: 'Rhythm Match', getValue: n => Math.round(n.scoreBreakdown.rhythm), isBest: (v, max) => v === max},
+            {label: 'Semantic Balance', getValue: n => Math.round(n.scoreBreakdown.semantic), isBest: (v, max) => v === max},
+            {label: 'Phonetic Flow', getValue: n => Math.round(n.scoreBreakdown.phonetic), isBest: (v, max) => v === max},
+            {label: 'Cultural Origin', getValue: n => n.culture, isBest: () => false},
+            {label: 'Syllables', getValue: n => n.syllables, isBest: () => false},
+            {label: 'Vowel Ratio', getValue: n => Math.round(n.vowelRatio * 100) + '%', isBest: () => false},
+            {label: 'Ending Sound', getValue: n => n.endingSound, isBest: () => false},
+            {label: 'Strength', getValue: n => n.traits.strength, isBest: (v, max) => v === max},
+            {label: 'Elegance', getValue: n => n.traits.elegance, isBest: (v, max) => v === max},
+            {label: 'Spirituality', getValue: n => n.traits.spirituality, isBest: (v, max) => v === max},
+            {label: 'Uniqueness', getValue: n => n.traits.uniqueness, isBest: (v, max) => v === max},
+            {label: 'Modernity', getValue: n => n.traits.modernity, isBest: (v, max) => v === max}
+        ];
+
+        let tableHTML = '<div class="comparison-table"><table><thead><tr><th>Metric</th>';
+        names.forEach((n, i) => {
+            tableHTML += `<th>${n.name} ${i === bestIdx ? '🏆' : ''}</th>`;
+        });
+        tableHTML += '</tr></thead><tbody>';
+
+        metrics.forEach(metric => {
+            const values = names.map(n => metric.getValue(n));
+            const maxValue = typeof values[0] === 'number' ? Math.max(...values) : null;
+
+            tableHTML += '<tr><td>' + metric.label + '</td>';
+            values.forEach((val, idx) => {
+                const isBest = maxValue !== null && metric.isBest(val, maxValue);
+                const cellClass = isBest ? 'best-choice' : '';
+                const indicator = isBest ? '↑ ' : '';
+                tableHTML += `<td class="${cellClass}"><div class="metric-cell"><span class="metric-indicator">${indicator}</span>${val}</div></td>`;
+            });
+            tableHTML += '</tr>';
+        });
+
+        tableHTML += '</tbody></table></div>';
+
+        // Generate recommendation reasoning
+        const reasoning = generateComparisonReasoning(bestName, names);
+
+        container.innerHTML = tableHTML + `
+    <div class="recommendation-card">
+      <div class="recommendation-title">🎯 Recommended Choice: ${bestName.name}</div>
+      <div class="recommendation-body">${reasoning}</div>
+      <div class="recommendation-metrics">
+        <div class="recommendation-metric">
+          <div class="metric-label">Overall Score</div>
+          <div class="metric-value">${bestName.harmonyScore}</div>
+        </div>
+        <div class="recommendation-metric">
+          <div class="metric-label">Cultural Match</div>
+          <div class="metric-value">${Math.round(bestName.scoreBreakdown.cultural)}</div>
+        </div>
+        <div class="recommendation-metric">
+          <div class="metric-label">Sibling Harmony</div>
+          <div class="metric-value">${Math.round(bestName.scoreBreakdown.rhythm)}</div>
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    function generateComparisonReasoning(bestName, allNames) {
+        const reasons = [];
+
+        // Harmony score leadership
+        const scoreDiff = bestName.harmonyScore - Math.max(...allNames.filter(n => n !== bestName).map(n => n.harmonyScore));
+        if (scoreDiff > 10) {
+            reasons.push(`<strong>${bestName.name}</strong> leads with a significantly higher harmony score of ${bestName.harmonyScore}, outperforming alternatives by ${scoreDiff} points`);
+        } else {
+            reasons.push(`<strong>${bestName.name}</strong> achieves the highest harmony score of ${bestName.harmonyScore}`);
+        }
+
+        // Cultural strength
+        if (bestName.scoreBreakdown.cultural > 25) {
+            reasons.push(`Its ${bestName.culture} origin provides excellent cultural alignment with Raja Ishaan's Sanskrit heritage`);
+        }
+
+        // Rhythm match
+        if (bestName.scoreBreakdown.rhythm > 20) {
+            reasons.push(`The ${bestName.syllables}-syllable structure creates perfect rhythmic harmony with both siblings' naming patterns`);
+        }
+
+        // Semantic contribution
+        const hasDivine = bestName.semantic.includes('divine');
+        const hasRoyal = bestName.semantic.includes('royalty');
+        if (hasDivine && hasRoyal) {
+            reasons.push(`It uniquely combines both divine and royal semantic themes present across Ruby Kali and Raja Ishaan`);
+        } else if (hasDivine) {
+            reasons.push(`The divine semantic category maintains the spiritual thread woven through Kali and Ishaan`);
+        }
+
+        // Trait excellence
+        const topTrait = Object.entries(bestName.traits).reduce((top, [key, val]) => val > top[1] ? [key, val] : top, ['', 0]);
+        if (topTrait[1] > 85) {
+            reasons.push(`Exceptionally high ${topTrait[0]} trait (${topTrait[1]}) adds distinctive character to the family name portfolio`);
+        }
+
+        return reasons.join('. ') + '.';
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // QUIZ SYSTEM v2 - Enhanced with feedback loop
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function showQuiz() {
+        switchTab('quiz');
+        STATE.quizStep = 0;
+        STATE.quizAnswers = {};
+        STATE.quizWeights = {strength:0, elegance:0, spirituality:0, uniqueness:0, modernity:0, cultural:0};
+        renderQuiz();
+    }
+
+    function renderQuiz() {
+        const progress = document.getElementById('quizProgress');
+        const content = document.getElementById('quizContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const result = document.getElementById('styleResult');
+
+        progress.innerHTML = '';
+        for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'progress-dot';
+            if (i < STATE.quizStep) dot.classList.add('completed');
+            if (i === STATE.quizStep) dot.classList.add('current');
+            progress.appendChild(dot);
+        }
+
+        if (STATE.quizStep >= QUIZ_QUESTIONS.length) {
+            content.style.display = 'none';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            result.style.display = 'block';
+            showQuizResult();
+            return;
+        }
+
+        content.style.display = 'block';
+        result.style.display = 'none';
+        prevBtn.style.display = STATE.quizStep > 0 ? 'block' : 'none';
+        nextBtn.textContent = STATE.quizStep === QUIZ_QUESTIONS.length - 1 ? 'See Results' : 'Next';
+
+        const q = QUIZ_QUESTIONS[STATE.quizStep];
+        const selectedIdx = STATE.quizAnswers[STATE.quizStep];
+
+        content.innerHTML = `
+    <div class="quiz-question">
+      <div class="question-text">${q.q}</div>
+      <div class="quiz-options">
+        ${q.options.map((opt, idx) => `
+          <div class="quiz-option ${selectedIdx === idx ? 'selected' : ''}" onclick="selectQuizOption(${idx})">
+            <div class="option-emoji">${opt.emoji}</div>
+            <div class="option-text">
+              <div class="option-label">${opt.label}</div>
+              <div class="option-desc">${opt.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+    }
+
+    function selectQuizOption(idx) {
+        const q = QUIZ_QUESTIONS[STATE.quizStep];
+        const opt = q.options[idx];
+
+        // Remove previous answer weights if changing answer
+        if (STATE.quizAnswers[STATE.quizStep] !== undefined) {
+            const prevOpt = q.options[STATE.quizAnswers[STATE.quizStep]];
+            Object.entries(prevOpt.weight).forEach(([k, v]) => {
+                STATE.quizWeights[k] -= v;
+            });
+        }
+
+        // Add new answer weights
+        STATE.quizAnswers[STATE.quizStep] = idx;
+        Object.entries(opt.weight).forEach(([k, v]) => {
+            STATE.quizWeights[k] = (STATE.quizWeights[k] || 0) + v;
+        });
+
+        renderQuiz();
+    }
+
+    function nextQuizQuestion() {
+        if (STATE.quizAnswers[STATE.quizStep] === undefined) {
+            alert('Please select an option before continuing');
+            return;
+        }
+
+        STATE.quizStep++;
+        renderQuiz();
+    }
+
+    function prevQuizQuestion() {
+        if (STATE.quizStep > 0) {
+            STATE.quizStep--;
+            renderQuiz();
+        }
+    }
+
+    function showQuizResult() {
+        const scores = STATE.quizWeights;
+        let style = 'Balanced Harmonist';
+        let desc = 'You value balance across all dimensions of naming';
+
+        // Determine dominant style
+        if (scores.spirituality > 60) {
+            style = 'Spiritual Traditionalist';
+            desc = 'Deep cultural roots and divine meaning guide your naming philosophy';
+            STATE.culturalWeight = 85;
+            STATE.style = 25;
+        } else if (scores.modernity > 60) {
+            style = 'Modern Innovator';
+            desc = 'Contemporary, unique names that break tradition appeal to you';
+            STATE.culturalWeight = 30;
+            STATE.style = 85;
+            STATE.uniqueness = 80;
+        } else if (scores.cultural > 50) {
+            style = 'Cultural Curator';
+            desc = 'Heritage preservation and traditional values drive your choices';
+            STATE.culturalWeight = 90;
+            STATE.style = 40;
+        } else if (scores.uniqueness > 60) {
+            style = 'Uniqueness Seeker';
+            desc = 'Rare and distinctive names that stand apart matter most';
+            STATE.uniqueness = 90;
+            STATE.style = 70;
+        } else if (scores.elegance > 60) {
+            style = 'Aesthetic Perfectionist';
+            desc = 'Beauty of sound and graceful flow are your top priorities';
+            STATE.uniqueness = 65;
+        }
+
+        STATE.userStyle = style;
+        STATE.quizCompleted = true;
+
+        // Update UI controls to reflect quiz results
+        document.getElementById('culturalSlider').value = STATE.culturalWeight;
+        document.getElementById('uniquenessSlider').value = STATE.uniqueness;
+        document.getElementById('styleSlider').value = STATE.style;
+
+        const influenceHTML = `
+    <div class="influence-summary">
+      <div style="font-weight:600;margin-bottom:12px;color:var(--accent-light)">Your Naming Preferences</div>
+      ${Object.entries(scores).filter(([k,v]) => v > 15).sort((a,b) => b[1] - a[1]).map(([k,v]) => `
+        <div class="influence-item">
+          <div class="influence-label">${k.charAt(0).toUpperCase() + k.slice(1)}</div>
+          <div class="influence-value">${v} points</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+        document.getElementById('styleResult').innerHTML = `
+    <div class="style-indicator">
+      <div class="style-name">${style}</div>
+      <div class="style-desc">${desc}</div>
+    </div>
+    ${influenceHTML}
+    <button class="btn" onclick="applyQuizResults()" style="margin-top:20px">Generate Names Based on My Style</button>
+  `;
+    }
+
+    function applyQuizResults() {
+        regenerateNames();
+        switchTab('results');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    // Initialize app on load
+    window.addEventListener('DOMContentLoaded', () => {
+        // Set initial control values from state
+        document.getElementById('culturalSlider').value = STATE.culturalWeight;
+        document.getElementById('uniquenessSlider').value = STATE.uniqueness;
+        document.getElementById('styleSlider').value = STATE.style;
+        document.getElementById('genderControl').value = STATE.gender;
+        document.getElementById('harmonyToggle').checked = STATE.harmonyMode;
+
+        // Generate initial results
+        regenerateNames();
+    });
+
+    // Prevent detail panel from closing when clicking inside
+    document.addEventListener('DOMContentLoaded', () => {
+        const panel = document.getElementById('detailPanel');
+        panel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+
+    // Close detail panel on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && STATE.detailPanelOpen) {
+            closeDetailPanel();
+        }
+        if (e.key === 'Escape' && STATE.selectionModeActive) {
+            cancelSelectionMode();
+        }
+    });
+</script>
+</body>
+</html>

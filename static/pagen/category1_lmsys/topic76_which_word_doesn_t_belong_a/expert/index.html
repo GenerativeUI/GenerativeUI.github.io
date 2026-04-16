@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Word Doesn't Belong? - Interactive Puzzle Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <i class="fas fa-brain"></i>
+                Word Puzzle Challenge
+            </h1>
+            <nav class="nav">
+                <a href="#answer" class="nav-link">Answer</a>
+                <a href="#try-it" class="nav-link">Test Your Brain</a>
+                <a href="#insight" class="nav-link">Category Insight</a>
+                <a href="#facts" class="nav-link">Fun Facts</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section - Direct Answer -->
+    <section id="answer" class="hero">
+        <div class="hero-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="answer-section">
+                    <div class="hero-badge">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Brain Teaser Solved</span>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        The word that doesn't belong is:
+                        <span class="highlight-answer">
+                            <span class="answer-word">Car</span>
+                        </span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        <span class="fruits-text">Apple, Orange, and Banana</span> are 
+                        <span class="category-highlight fruits">fruits</span>, but 
+                        <span class="category-highlight vehicle">Car</span> is a 
+                        <span class="category-highlight vehicle">vehicle</span>. 
+                        That's why it stands out!
+                    </p>
+                    
+                    <div class="visual-explanation">
+                        <div class="explanation-card fruits-card">
+                            <div class="card-header">
+                                <div class="category-icon-large fruits">
+                                    <span class="fruit-emoji">🍎</span>
+                                </div>
+                                <h3>Fruits</h3>
+                                <div class="category-count">3 items</div>
+                            </div>
+                            <div class="items-showcase">
+                                <div class="showcase-item" data-delay="0">
+                                    <div class="item-icon">
+                                        <span class="fruit-emoji">🍎</span>
+                                    </div>
+                                    <span class="item-name">Apple</span>
+                                </div>
+                                <div class="showcase-item" data-delay="0.2">
+                                    <div class="item-icon">
+                                        <span class="fruit-emoji">🍊</span>
+                                    </div>
+                                    <span class="item-name">Orange</span>
+                                </div>
+                                <div class="showcase-item" data-delay="0.4">
+                                    <div class="item-icon">
+                                        <span class="fruit-emoji">🍌</span>
+                                    </div>
+                                    <span class="item-name">Banana</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="vs-separator">
+                            <div class="vs-line"></div>
+                            <div class="vs-text">VS</div>
+                            <div class="vs-line"></div>
+                        </div>
+                        
+                        <div class="explanation-card vehicle-card">
+                            <div class="card-header">
+                                <div class="category-icon-large vehicle">
+                                    <span class="fruit-emoji">🚗</span>
+                                </div>
+                                <h3>Vehicle</h3>
+                                <div class="category-count">1 item</div>
+                            </div>
+                            <div class="items-showcase">
+                                <div class="showcase-item odd-one-out" data-delay="0.6">
+                                    <div class="item-icon">
+                                        <span class="fruit-emoji">🚗</span>
+                                    </div>
+                                    <span class="item-name">Car</span>
+                                    <div class="odd-badge">Odd One Out</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Your Brain Section -->
+    <section id="try-it" class="try-it-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🤔 Test Your Brain</h2>
+                <p>Think you've got it? Put your pattern recognition skills to the test!</p>
+            </div>
+            
+            <div class="puzzle-container">
+                <div class="puzzle-question">
+                    <h3>Which word doesn't belong?</h3>
+                </div>
+                
+                <div class="options-grid">
+                    <button class="option-btn" data-option="A" data-word="Apple">
+                        <span class="option-letter">A.</span>
+                        <span class="option-word">Apple</span>
+                        <span class="fruit-emoji option-icon">🍎</span>
+                    </button>
+                    
+                    <button class="option-btn" data-option="B" data-word="Car">
+                        <span class="option-letter">B.</span>
+                        <span class="option-word">Car</span>
+                        <span class="fruit-emoji option-icon">🚗</span>
+                    </button>
+                    
+                    <button class="option-btn" data-option="C" data-word="Orange">
+                        <span class="option-letter">C.</span>
+                        <span class="option-word">Orange</span>
+                        <span class="fruit-emoji option-icon">🍊</span>
+                    </button>
+                    
+                    <button class="option-btn" data-option="D" data-word="Banana">
+                        <span class="option-letter">D.</span>
+                        <span class="option-word">Banana</span>
+                        <span class="fruit-emoji option-icon">🍌</span>
+                    </button>
+                </div>
+                
+                <div class="feedback-container">
+                    <div class="feedback hidden" id="feedback">
+                        <div class="feedback-icon"></div>
+                        <div class="feedback-text"></div>
+                        <div class="feedback-explanation"></div>
+                        <button class="try-again-btn">Try Another Puzzle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Insight Section -->
+    <section id="insight" class="insight-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Category Insight</h2>
+                <p>Understanding what makes something a fruit vs. a vehicle</p>
+            </div>
+            
+            <div class="category-cards">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <span class="fruit-emoji">🍎</span>
+                    </div>
+                    <h3>What makes something a fruit?</h3>
+                    <p>Fruits are parts of plants that usually contain seeds. They're often edible, sweet, and colorful, and grow on plants.</p>
+                    <div class="examples">
+                        <span class="example-tag">🍎 Apple</span>
+                        <span class="example-tag">🍌 Banana</span>
+                        <span class="example-tag">🍊 Orange</span>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <span class="fruit-emoji">🚗</span>
+                    </div>
+                    <h3>What makes something a vehicle?</h3>
+                    <p>Vehicles are tools or machines that move people or goods from one place to another. Some use engines (like cars), while others use human power (like bicycles).</p>
+                    <div class="examples">
+                        <span class="example-tag">🚗 Car</span>
+                        <span class="example-tag">🚲 Bicycle</span>
+                        <span class="example-tag">🚌 Bus</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="visual-comparison-section">
+                <h3>Side-by-Side Categories</h3>
+                <p class="comparison-description">These are completely different categories with no overlap</p>
+                <div class="comparison-container">
+                    <div class="comparison-circle fruits">
+                        <h4>Fruits</h4>
+                        <ul>
+                            <li>🍎 Apple</li>
+                            <li>🍌 Banana</li>
+                            <li>🍊 Orange</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-circle vehicles">
+                        <h4>Vehicles</h4>
+                        <ul>
+                            <li>🚗 Car</li>
+                            <li>🚲 Bicycle</li>
+                            <li>🚌 Bus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Classification Game -->
+    <section class="classification-game-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Try the Classification Game</h2>
+                <p>Drag and drop words into the correct categories to test your understanding</p>
+            </div>
+            
+            <div class="classification-game">
+                <div class="words-to-sort">
+                    <h3>Words to Sort</h3>
+                    <div class="draggable-words">
+                        <div class="draggable-word" draggable="true" data-category="fruit">Apple</div>
+                        <div class="draggable-word" draggable="true" data-category="vehicle">Car</div>
+                        <div class="draggable-word" draggable="true" data-category="fruit">Orange</div>
+                        <div class="draggable-word" draggable="true" data-category="fruit">Banana</div>
+                        <div class="draggable-word" draggable="true" data-category="vehicle">Bicycle</div>
+                        <div class="draggable-word" draggable="true" data-category="fruit">Grape</div>
+                    </div>
+                </div>
+                
+                <div class="categories">
+                    <div class="category-box" data-category="fruit">
+                        <h3><span class="fruit-emoji">🍎</span> Fruits</h3>
+                        <div class="drop-zone"></div>
+                    </div>
+                    
+                    <div class="category-box" data-category="vehicle">
+                        <h3><span class="fruit-emoji">🚗</span> Vehicles</h3>
+                        <div class="drop-zone"></div>
+                    </div>
+                </div>
+                
+                <div class="classification-feedback">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Drag words to their correct categories!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Fun Facts Section -->
+    <section id="facts" class="facts-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Fun Facts & Knowledge Boost</h2>
+                <p>Learn interesting facts about the words from our puzzles</p>
+            </div>
+            
+            <div class="facts-grid">
+                <div class="fact-card" data-category="fruit">
+                    <div class="fact-icon">
+                        <span class="fruit-emoji">🍎</span>
+                    </div>
+                    <h3>Apple Facts</h3>
+                    <ul>
+                        <li>There are over 7,500 varieties of apples worldwide</li>
+                        <li>Apples float in water because 25% of their volume is air</li>
+                        <li>The science of apple growing is called pomology</li>
+                        <li><strong>Fun fact:</strong> "An apple a day keeps the doctor away" dates back to 19th century Wales!</li>
+                    </ul>
+                </div>
+                
+                <div class="fact-card" data-category="fruit">
+                    <div class="fact-icon">
+                        <span class="fruit-emoji">🍊</span>
+                    </div>
+                    <h3>Orange Facts</h3>
+                    <ul>
+                        <li>Botanically, oranges are a special type of berry called a hesperidium</li>
+                        <li>Brazil produces 30% of the world's oranges</li>
+                        <li>Orange peels contain more vitamin C than the fruit</li>
+                        <li><strong>Fun fact:</strong> Oranges are the most popular fruit in the world!</li>
+                    </ul>
+                </div>
+                
+                <div class="fact-card" data-category="fruit">
+                    <div class="fact-icon">
+                        <span class="fruit-emoji">🍌</span>
+                    </div>
+                    <h3>Banana Facts</h3>
+                    <ul>
+                        <li>Bananas are berries, and the plant is actually a giant herb</li>
+                        <li>Bananas are naturally radioactive due to potassium-40</li>
+                        <li>The strings on bananas are called phloem bundles</li>
+                        <li><strong>Fun fact:</strong> Cavendish bananas may go extinct due to a fungal disease!</li>
+                    </ul>
+                </div>
+                
+                <div class="fact-card" data-category="vehicle">
+                    <div class="fact-icon">
+                        <span class="fruit-emoji">🚗</span>
+                    </div>
+                    <h3>Car Facts</h3>
+                    <ul>
+                        <li>The first car was invented in 1886 by Karl Benz</li>
+                        <li>There are over 1 billion cars in the world today</li>
+                        <li>The average car has 30,000 parts</li>
+                        <li><strong>Fun fact:</strong> The world's first speeding ticket was issued in 1902 for going 45 mph!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Word Puzzle Challenge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

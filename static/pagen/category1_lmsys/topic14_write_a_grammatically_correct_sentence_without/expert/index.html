@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The One-Time Letter Challenge: Crafting Sentences Without Repetition</title>
+    <style>
+        /* CSS Variables for easy customization */
+        :root {
+            /* Accent color - change this value to modify the accent color throughout */
+            --accent-color: #4a6fa5;
+            /* Font settings - change these to modify fonts */
+            --primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --monospace-font: 'Courier New', Courier, monospace;
+            /* Animation timing - change this to adjust animation duration */
+            --animation-duration: 800ms;
+        }
+
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--primary-font);
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero section */
+       .hero {
+  position: relative;
+  height: 80vh; /* Adjust hero height (desktop default) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+  padding: 1rem; /* for spacing on small screens */
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* keeps image proportion but fills area */
+  z-index: -1; /* send behind text */
+  filter: brightness(0.6); /* dark overlay for text readability */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px; /* prevents text from stretching too wide */
+}
+
+/* ----- TYPOGRAPHY ----- */
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* ----- RESPONSIVE ADJUSTMENTS ----- */
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh; /* shorter hero on tablets */
+  }
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 50vh; /* smaller hero for mobiles */
+    padding: 0.5rem;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+  .hero p {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 768px) {
+    .hero {
+        height: 60vh;
+        padding-top: 150px; /* space for header */
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1 rem;
+        line-height: 1.2; /* prevent wrapping overflow */
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 480px) {
+    .hero {
+        height: auto;
+        padding: 100px 1rem 2rem 1rem;
+    }
+}
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Subtle overlay */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Section styles */
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--animation-duration) ease, transform var(--animation-duration) ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+           
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .text-content {
+            padding: 1rem;
+        }
+
+        .image-content {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        /* Example styles */
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .example {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .monospace {
+            font-family: var(--monospace-font);
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        /* Interactive section */
+        .interactive {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: var(--primary-font);
+            margin-bottom: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #3a5a84;
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .highlight {
+            color: #e53e3e;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .section-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-content {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Image placeholder styles */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #eaeaea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h2 {
+    font-size: 28px; /* Default for desktop */
+}
+
+@media (max-width: 1024px) {
+    h2 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo">Unique Letters</div>
+            <div class="menu-toggle">☰</div>
+            <ul class="nav-menu">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#try-it">Try It</a></li>
+                <li><a href="#fun-fact">Fun Fact</a></li>
+                <li><a href="#closing">Closing</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+       <section class="hero">
+    <!-- Hero image (replace with your own image file, e.g. sec1.webp) -->
+    <img src="sec1.webp" 
+         alt="Abstract representation of unique letters forming a sentence" 
+         class="hero-bg">
+
+    <div class="hero-content">
+        <h1>The One-Time Letter Challenge: Crafting Sentences Without Repetition</h1>
+        <p>Can you write a grammatically correct sentence without reusing any letter more than once?</p>
+    </div>
+</section>
+
+        <section id="introduction">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Introduction</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <h3>What's the challenge?</h3>
+                        <p>Normally, we reuse letters all the time when writing. But what if you could write a whole, correct sentence where no letter is used more than once? That's the puzzle here.</p>
+                        <p>This fun exercise blends grammar, creativity, and wordplay — like a mini linguistic puzzle!</p>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add introduction image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                        <img src="sec2.jpeg" alt="Unique alphabet letters scattered creatively" class="intro-img">
+                        <div class="image-placeholder">
+                            Introduction image placeholder - linguistic puzzle concept
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Examples of Unique-Letter Sentences</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <div class="examples">
+                            <div class="example">"Fly now." (All letters unique, still a correct sentence.)</div>
+                            <div class="example">"Jump, fox."</div>
+                            <div class="example">"Go."</div>
+                            <div class="example">"I am."</div>
+                        </div>
+                        <p>These are short, but they all make sense and follow grammar rules.</p>
+                        <p>✨ The longer the sentence, the harder it gets, because you quickly run out of letters from the 26-letter English alphabet.</p>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add examples image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                        <!-- REPLACE: Add examples image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+<img src="sec3.jfif" alt="Illustration of unique-letter example sentences on colorful cards" class="examples-img">
+
+                        <div class="image-placeholder">
+                            Examples image placeholder - showing various sentence examples
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenges">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Why It's Tricky</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <ul>
+                            <li>English uses common letters a lot (like <span class="monospace">e</span>, <span class="monospace">a</span>, <span class="monospace">t</span>).</li>
+                            <li>To avoid repetition, you need to think creatively.</li>
+                            <li>Grammar must still make sense — no random word soup!</li>
+                        </ul>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add challenges image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                         <img src="sec4.jpeg" alt="Person struggling with repeated letters in a word puzzle" class="challenges-img">
+                        <div class="image-placeholder">
+                            Challenges image placeholder - representing difficulty of the challenge
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="try-it">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Try It Yourself (Interactive Idea 💡)</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>👉 Create an interactive text box where users can type their own sentence.</p>
+                        <p>The tool checks if any letter repeats.</p>
+                        <p>If it's valid, show: 🎉 "Congrats! You wrote a unique-letter sentence!"</p>
+                        <p>If not, highlight the repeated letters in red.</p>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add interactive section image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                         
+<img src="sec5.jpeg" alt="Person struggling with repeated letters in a word puzzle" class="challenges-img">
+
+                        <div class="image-placeholder">
+                            Interactive section image placeholder - typing or puzzle concept
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interactive">
+                    <textarea id="sentence-input" placeholder="Type your sentence here..."></textarea>
+                    <button id="check-button">Check My Sentence</button>
+                    <div id="result-message" class="result"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fun-fact">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Fun Fact</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>This puzzle is related to something called a "heterogram" — a word, phrase, or sentence with no repeated letters.</p>
+                        <p>Example: "Jump frog, why vex bad luck?" (longer and much harder, but still works).</p>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add fun fact image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                         <img src="sec6.1.png" alt="Person struggling with repeated letters in a word puzzle" class="challenges-img">
+                        <div class="image-placeholder">
+                            Fun fact image placeholder - interesting fact visualization
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="closing">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span>🔹</span> Closing</h2>
+                </div>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>This challenge is not just wordplay — it's also a brain workout.</p>
+                        <p>Next time you're bored, see how long of a heterogram sentence you can come up with. Who knows, you might invent a record-breaking phrase!</p>
+                    </div>
+                    <div class="image-content">
+                        <!-- REPLACE: Add closing image here (suggested size: 1200x800 desktop, 1080x720 mobile) -->
+                         <img src="sec7.png" alt="Person struggling with repeated letters in a word puzzle" class="challenges-img">
+                        <div class="image-placeholder">
+                            Closing image placeholder - brain workout or achievement concept
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                navMenu.classList.remove('active');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Unobserve after animation to ensure it only happens once
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Interactive sentence checker
+        const sentenceInput = document.getElementById('sentence-input');
+        const checkButton = document.getElementById('check-button');
+        const resultMessage = document.getElementById('result-message');
+        
+        
+           checkButton.addEventListener('click', () => {
+    const sentence = sentenceInput.value;
+    const result = checkUniqueLetters(sentence);
+    
+    if (result.isUnique) {
+        resultMessage.textContent = '🎉 Congrats! You wrote a unique-letter sentence!';
+        resultMessage.className = 'result success';
+    } else {
+        // Highlight repeated letters
+        let highlightedText = '';
+        const lowerSentence = sentence.toLowerCase();
+        for (let char of sentence) {
+            if (/[a-zA-Z]/.test(char) && result.repeatedLetters.includes(char.toLowerCase())) {
+                highlightedText += `<span class="highlight">${char}</span>`;
+            } else {
+                highlightedText += char;
+            }
+        }
+
+        resultMessage.innerHTML = `Your sentence has repeated letters: ${highlightedText}`;
+        resultMessage.className = 'result error';
+    }
+    
+    resultMessage.style.display = 'block';
+});
+
+        
+        function checkUniqueLetters(sentence) {
+            // Remove non-alphabet characters and convert to lowercase
+            const cleanSentence = sentence.replace(/[^a-zA-Z]/g, '').toLowerCase();
+            const seenLetters = new Set();
+            const repeatedLetters = new Set();
+            
+            for (let letter of cleanSentence) {
+                if (seenLetters.has(letter)) {
+                    repeatedLetters.add(letter);
+                } else {
+                    seenLetters.add(letter);
+                }
+            }
+            
+            return {
+                isUnique: repeatedLetters.size === 0,
+                repeatedLetters: Array.from(repeatedLetters)
+            };
+        }
+
+        /* 
+        PERFORMANCE TIPS FOR IMAGES:
+        1. Use WebP format for better compression (with JPEG/PNG fallbacks)
+        2. Implement lazy loading for images below the fold
+        3. Compress images before uploading (aim for <100KB where possible)
+        4. Use responsive images with srcset for different screen sizes
+        5. Consider using CDN for image delivery
+        6. Optimize image dimensions to match display size
+        Example for responsive images:
+        <img src="image-small.jpg" 
+             srcset="image-small.jpg 600w, image-medium.jpg 900w, image-large.jpg 1200w"
+             sizes="(max-width: 768px) 100vw, 50vw"
+             alt="Descriptive alt text">
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Unlikely Predictions - Interactive Dashboard</title>
+    <meta name="description" content="Explore unlikely cultural, social, and political predictions for 2024 through an interactive futuristic dashboard">
+    <style>
+        /* Tailwind CSS Reset & Base */
+        *, ::before, ::after {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+            border-color: #e5e7eb;
+        }
+        
+        html {
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            -moz-tab-size: 4;
+            tab-size: 4;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            font-feature-settings: normal;
+            font-variation-settings: normal;
+        }
+        
+        body {
+            margin: 0;
+            line-height: inherit;
+        }
+        
+        hr {
+            height: 0;
+            color: inherit;
+            border-top-width: 1px;
+        }
+        
+        abbr:where([title]) {
+            text-decoration: underline dotted;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-size: inherit;
+            font-weight: inherit;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+        
+        b, strong {
+            font-weight: bolder;
+        }
+        
+        code, kbd, samp, pre {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 1em;
+        }
+        
+        small {
+            font-size: 80%;
+        }
+        
+        sub, sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        
+        sub {
+            bottom: -0.25em;
+        }
+        
+        sup {
+            top: -0.5em;
+        }
+        
+        table {
+            text-indent: 0;
+            border-color: inherit;
+            border-collapse: collapse;
+        }
+        
+        button, input, optgroup, select, textarea {
+            font-family: inherit;
+            font-size: 100%;
+            font-weight: inherit;
+            line-height: inherit;
+            color: inherit;
+            margin: 0;
+            padding: 0;
+        }
+        
+        button, select {
+            text-transform: none;
+        }
+        
+        button, [type='button'], [type='reset'], [type='submit'] {
+            -webkit-appearance: button;
+            background-color: transparent;
+            background-image: none;
+        }
+        
+        :-moz-focusring {
+            outline: auto;
+        }
+        
+        :-moz-ui-invalid {
+            box-shadow: none;
+        }
+        
+        progress {
+            vertical-align: baseline;
+        }
+        
+        ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+            height: auto;
+        }
+        
+        [type='search'] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px;
+        }
+        
+        ::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+        
+        ::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            font: inherit;
+        }
+        
+        summary {
+            display: list-item;
+        }
+        
+        blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
+            margin: 0;
+        }
+        
+        fieldset {
+            margin: 0;
+            padding: 0;
+        }
+        
+        legend {
+            padding: 0;
+        }
+        
+        ol, ul, menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        input::placeholder, textarea::placeholder {
+            opacity: 1;
+            color: #9ca3af;
+        }
+        
+        button, [role="button"] {
+            cursor: pointer;
+        }
+        
+        :disabled {
+            cursor: default;
+        }
+        
+        img, svg, video, canvas, audio, iframe, embed, object {
+            display: block;
+            vertical-align: middle;
+        }
+        
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        [hidden] {
+            display: none;
+        }
+
+        /* Design System Variables */
+        :root {
+            --background: 224 25% 8%;
+            --foreground: 210 40% 98%;
+            --card: 224 30% 12%;
+            --card-foreground: 210 40% 98%;
+            --popover: 224 30% 12%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 270 85% 60%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 224 30% 18%;
+            --secondary-foreground: 210 40% 85%;
+            --muted: 224 20% 15%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 200 85% 55%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 85% 60%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 224 30% 25%;
+            --input: 224 30% 18%;
+            --ring: 270 85% 60%;
+            --radius: 0.75rem;
+            --neon-purple: 270 85% 60%;
+            --neon-blue: 200 85% 55%;
+            --neon-pink: 320 85% 65%;
+            --neon-green: 140 85% 55%;
+            --crystal-glow: 270 85% 60%;
+            --gradient-primary: linear-gradient(135deg, hsl(270 85% 60%), hsl(200 85% 55%));
+            --gradient-card: linear-gradient(145deg, hsl(224 30% 12%), hsl(224 25% 10%));
+            --gradient-hero: linear-gradient(180deg, hsl(224 25% 8%), hsl(270 15% 5%));
+            --glow-primary: 0 0 30px hsl(270 85% 60% / 0.5);
+            --glow-accent: 0 0 20px hsl(200 85% 55% / 0.4);
+            --shadow-card: 0 8px 32px hsl(270 85% 60% / 0.1);
+            --transition-glow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Base Styles */
+        body {
+            background: var(--gradient-hero);
+            color: hsl(var(--foreground));
+            min-height: 100vh;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        /* Utility Classes */
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-10 { z-index: 10; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .hidden { display: none; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-col { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        .flex-row-reverse { flex-direction: row-reverse; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .min-h-screen { min-height: 100vh; }
+        .w-full { width: 100%; }
+        .w-32 { width: 8rem; }
+        .w-24 { width: 6rem; }
+        .w-12 { width: 3rem; }
+        .w-5 { width: 1.25rem; }
+        .w-4 { width: 1rem; }
+        .w-1 { width: 0.25rem; }
+        .h-full { height: 100%; }
+        .h-32 { height: 8rem; }
+        .h-24 { height: 6rem; }
+        .h-12 { height: 3rem; }
+        .h-5 { height: 1.25rem; }
+        .h-4 { height: 1rem; }
+        .h-2 { height: 0.5rem; }
+        .max-w-6xl { max-width: 72rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-2xl { max-width: 42rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mt-8 { margin-top: 2rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .pr-8 { padding-right: 2rem; }
+        .pl-8 { padding-left: 2rem; }
+        .rounded { border-radius: 0.25rem; }
+        .rounded-md { border-radius: 0.375rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-full { border-radius: 9999px; }
+        .border { border-width: 1px; }
+        .border-2 { border-width: 2px; }
+        .border-t { border-top-width: 1px; }
+        .bg-opacity-20 { --tw-bg-opacity: 0.2; }
+        .opacity-20 { opacity: 0.2; }
+        .opacity-50 { opacity: 0.5; }
+        .opacity-80 { opacity: 0.8; }
+        .overflow-hidden { overflow: hidden; }
+        .cursor-pointer { cursor: pointer; }
+        .transition-all { transition-property: all; }
+        .duration-300 { transition-duration: 300ms; }
+        .duration-500 { transition-duration: 500ms; }
+        .duration-1000 { transition-duration: 1000ms; }
+        .ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+        .transform { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)); }
+        .-translate-x-1\/2 { --tw-translate-x: -50%; }
+        .scale-95 { --tw-scale-x: .95; --tw-scale-y: .95; }
+        .scale-100 { --tw-scale-x: 1; --tw-scale-y: 1; }
+        .scale-105 { --tw-scale-x: 1.05; --tw-scale-y: 1.05; }
+        .scale-125 { --tw-scale-x: 1.25; --tw-scale-y: 1.25; }
+
+        /* Text Styles */
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .text-6xl { font-size: 3.75rem; line-height: 1; }
+        .text-8xl { font-size: 6rem; line-height: 1; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .leading-relaxed { line-height: 1.625; }
+        .tracking-wide { letter-spacing: 0.025em; }
+        .uppercase { text-transform: uppercase; }
+
+        /* Colors */
+        .text-foreground { color: hsl(var(--foreground)); }
+        .text-primary { color: hsl(var(--primary)); }
+        .text-accent { color: hsl(var(--accent)); }
+        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+        .text-neon-purple { color: hsl(var(--neon-purple)); }
+        .text-neon-blue { color: hsl(var(--neon-blue)); }
+        .text-neon-pink { color: hsl(var(--neon-pink)); }
+        .text-neon-green { color: hsl(var(--neon-green)); }
+        .text-destructive { color: hsl(var(--destructive)); }
+        .text-transparent { color: transparent; }
+        .bg-card { background-color: hsl(var(--card)); }
+        .bg-secondary { background-color: hsl(var(--secondary)); }
+        .bg-primary { background-color: hsl(var(--primary)); }
+        .bg-accent { background-color: hsl(var(--accent)); }
+        .bg-neon-purple { background-color: hsl(var(--neon-purple)); }
+        .bg-neon-blue { background-color: hsl(var(--neon-blue)); }
+        .bg-neon-green { background-color: hsl(var(--neon-green)); }
+        .bg-neon-pink { background-color: hsl(var(--neon-pink)); }
+        .bg-gradient-primary { background-image: var(--gradient-primary); }
+        .bg-gradient-card { background-image: var(--gradient-card); }
+        .bg-gradient-hero { background-image: var(--gradient-hero); }
+        .bg-clip-text { background-clip: text; }
+        .bg-cover { background-size: cover; }
+        .bg-center { background-position: center; }
+        .border-border { border-color: hsl(var(--border)); }
+        .border-primary { border-color: hsl(var(--primary)); }
+        .border-accent { border-color: hsl(var(--accent)); }
+        .border-neon-green { border-color: hsl(var(--neon-green)); }
+        .border-neon-blue { border-color: hsl(var(--neon-blue)); }
+        .border-neon-pink { border-color: hsl(var(--neon-pink)); }
+
+        /* Custom Components */
+        .prediction-card {
+            background: var(--gradient-card);
+            border: 1px solid hsl(var(--border));
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .prediction-card:hover {
+            box-shadow: var(--glow-primary);
+            border-color: hsl(var(--primary) / 0.5);
+        }
+
+        .crystal-ball {
+            background: var(--gradient-primary);
+            border-radius: 9999px;
+            padding: 2rem;
+            box-shadow: var(--glow-primary);
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .probability-meter {
+            background-color: hsl(var(--secondary));
+            border-radius: 9999px;
+            height: 0.5rem;
+            overflow: hidden;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: all 0.5s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: transparent;
+            background: var(--gradient-primary);
+            background-clip: text;
+        }
+
+        .prediction-text {
+            font-size: 1.125rem;
+            line-height: 1.625;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid hsl(var(--ring));
+            outline-offset: 2px;
+        }
+
+        .btn:disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: hsl(var(--primary-foreground));
+            height: 2.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-primary:hover {
+            box-shadow: var(--glow-primary);
+        }
+
+        .btn-lg {
+            height: 2.75rem;
+            padding: 0.5rem 2rem;
+        }
+
+        .btn-sm {
+            height: 2.25rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .btn-outline {
+            border: 1px solid hsl(var(--border));
+            background-color: transparent;
+            color: hsl(var(--foreground));
+            height: 2.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: hsl(var(--foreground));
+            height: 2.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-ghost:hover {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            padding: 0.125rem 0.625rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .badge-cultural {
+            background-color: hsl(var(--neon-pink) / 0.2);
+            color: hsl(var(--neon-pink));
+            border-color: hsl(var(--neon-pink) / 0.3);
+        }
+
+        .badge-political {
+            background-color: hsl(var(--neon-blue) / 0.2);
+            color: hsl(var(--neon-blue));
+            border-color: hsl(var(--neon-blue) / 0.3);
+        }
+
+        .badge-social {
+            background-color: hsl(var(--neon-green) / 0.2);
+            color: hsl(var(--neon-green));
+            border-color: hsl(var(--neon-green) / 0.3);
+        }
+
+        /* Responsive Grid */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-8 > * + * { margin-top: 2rem; }
+        .space-y-12 > * + * { margin-top: 3rem; }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .sm\\:flex-row { flex-direction: row; }
+        }
+
+        @media (min-width: 768px) {
+            .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+            .md\\:text-8xl { font-size: 6rem; line-height: 1; }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .lg\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+
+        /* Timeline Specific Styles */
+        .timeline-event-left { width: 41.666667%; text-align: right; padding-right: 2rem; }
+        .timeline-event-right { width: 41.666667%; text-align: left; padding-left: 2rem; }
+        .timeline-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            border: 2px solid hsl(var(--primary));
+            background-color: hsl(var(--card));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0.25rem;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Hero Section -->
+        <section class="relative py-20 px-4 text-center overflow-hidden">
+            <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('hero-bg.jpg')"></div>
+            <div class="relative z-10 max-w-6xl mx-auto">
+                <h1 class="text-6xl md:text-8xl font-bold mb-6 text-transparent bg-gradient-primary bg-clip-text">
+                    2024 Predictions
+                </h1>
+                <p class="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Explore unlikely cultural, social, and political events that could reshape our world in 2024. 
+                    Interactive predictions powered by data analysis and expert insights.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="btn btn-primary btn-lg" onclick="scrollToSection('predictions')">
+                        Explore Predictions
+                    </button>
+                    <button class="btn btn-outline btn-lg" onclick="generatePrediction()">
+                        Generate Random
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crystal Ball Generator -->
+        <section class="py-16 px-4" id="generator">
+            <div class="max-w-6xl mx-auto">
+                <div class="prediction-card text-center max-w-2xl mx-auto">
+                    <div class="crystal-ball mx-auto mb-6 w-32 h-32 flex items-center justify-center">
+                        <img id="crystal-ball-img" src="crystal-ball.jpg" alt="Crystal Ball" class="w-24 h-24 rounded-full bg-cover animate-pulse">
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold mb-6 text-transparent bg-gradient-primary bg-clip-text">
+                        Crystal Ball Predictions
+                    </h2>
+                    
+                    <div id="prediction-content" class="transition-all duration-500">
+                        <div class="mb-4">
+                            <span id="prediction-category" class="badge badge-cultural">CULTURAL</span>
+                        </div>
+                        
+                        <p id="prediction-text" class="text-lg leading-relaxed text-muted-foreground mb-6">
+                            A major social media platform will completely pivot to become a virtual reality workspace by December 2024
+                        </p>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-muted-foreground">Unlikely Probability</span>
+                                <span id="prediction-probability" class="text-sm font-bold text-primary">15%</span>
+                            </div>
+                            <div class="probability-meter">
+                                <div id="probability-bar" class="probability-fill" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="generate-btn" class="btn btn-primary btn-lg" onclick="generatePrediction()">
+                        Generate New Prediction
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Predictions Grid -->
+        <section class="py-16 px-4" id="predictions">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title text-center">Cultural Predictions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="cultural-icon.jpg" alt="cultural" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-cultural">CULTURAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">AI-Generated Music Dominance</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                Virtual artists created entirely by AI will produce 3 of the top 10 Billboard hits, revolutionizing the music industry.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">25%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                With advances in AI music generation and virtual performer technology, we're seeing the emergence of fully synthetic artists. These AI entities could capture audiences through perfect algorithmic composition and never-aging virtual personas, potentially disrupting traditional record labels and artist management.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="cultural-icon.jpg" alt="cultural" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-cultural">CULTURAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">Metaverse Fashion Week</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                A major fashion week will be held entirely in virtual reality, with digital clothing sales exceeding physical sales.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">40%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                The convergence of NFTs, virtual worlds, and luxury fashion brands is creating new markets for digital wearables. As virtual meetings and metaverse experiences become mainstream, the demand for digital fashion could surpass traditional clothing in specific demographics.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="political-icon.jpg" alt="political" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-political">POLITICAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">Cryptocurrency Legal Tender</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                At least 3 G20 nations officially adopt a major cryptocurrency as legal tender alongside their national currency.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">30%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                Following El Salvador's Bitcoin adoption, other nations facing currency instability or seeking to attract crypto businesses might follow suit. Economic pressures and the growing institutional acceptance of cryptocurrencies could accelerate this trend among developing economies.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title text-center">Social Predictions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="cultural-icon.jpg" alt="social" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-social">SOCIAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">4-Day Work Week Global Adoption</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                Over 25% of Fortune 500 companies permanently implement a 4-day work week after productivity studies show improved results.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">50%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                Post-pandemic work culture shifts and successful 4-day week trials in Iceland, Belgium, and the UK are building momentum. Companies facing talent retention challenges may adopt this as a competitive advantage, especially in knowledge work sectors.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="cultural-icon.jpg" alt="social" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-social">SOCIAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">Digital Nomad Visa Expansion</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                Over 50 countries launch digital nomad visa programs, creating a new class of location-independent global citizens.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">65%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                The success of Estonia's and Portugal's digital nomad visas has sparked global competition for remote workers. Countries seeking economic recovery and population growth are likely to launch similar programs, potentially reshaping global mobility and taxation.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card cursor-pointer" onclick="flipCard(this)">
+                        <div class="card-content">
+                            <div class="flex items-start justify-between mb-4">
+                                <img src="cultural-icon.jpg" alt="social" class="w-12 h-12 rounded-lg opacity-80">
+                                <span class="badge badge-social">SOCIAL</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-3 text-foreground">Virtual Reality Social Platform</h3>
+                            
+                            <p class="prediction-text text-muted-foreground mb-6">
+                                A VR social platform surpasses 100 million active users, becoming the first 'metaverse' to achieve mainstream adoption.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-muted-foreground">Probability</span>
+                                        <span class="text-sm font-bold text-primary">20%</span>
+                                    </div>
+                                    <div class="probability-meter">
+                                        <div class="probability-fill" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <button class="btn btn-outline btn-sm">↑ Likely</button>
+                                        <button class="btn btn-outline btn-sm">↓ Unlikely</button>
+                                    </div>
+                                    <span class="text-xs text-muted-foreground">Votes: 0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back hidden">
+                            <h3 class="text-xl font-bold mb-4 text-primary">Details & Analysis</h3>
+                            <p class="text-muted-foreground leading-relaxed mb-6">
+                                While current VR adoption remains niche, advances in affordable headsets and spatial computing could reach a tipping point. The platform that combines social interaction, gaming, and productivity in an intuitive VR environment could achieve viral growth.
+                            </p>
+                            <div class="flex gap-4 text-sm">
+                                <div>
+                                    <span class="text-muted-foreground">Impact Level: </span>
+                                    <span class="text-accent font-semibold">High</span>
+                                </div>
+                                <div>
+                                    <span class="text-muted-foreground">Timeframe: </span>
+                                    <span class="text-accent font-semibold">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title text-center">Prediction Analytics</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="prediction-card text-center">
+                        <div class="p-6">
+                            <div class="text-4xl font-bold mb-2 text-neon-purple" id="stat-predictions">0</div>
+                            <div class="text-sm text-muted-foreground uppercase tracking-wide">Predictions Generated</div>
+                        </div>
+                    </div>
+                    <div class="prediction-card text-center">
+                        <div class="p-6">
+                            <div class="text-4xl font-bold mb-2 text-neon-blue" id="stat-probability">0%</div>
+                            <div class="text-sm text-muted-foreground uppercase tracking-wide">Average Probability</div>
+                        </div>
+                    </div>
+                    <div class="prediction-card text-center">
+                        <div class="p-6">
+                            <div class="text-4xl font-bold mb-2 text-neon-green" id="stat-category">0%</div>
+                            <div class="text-sm text-muted-foreground uppercase tracking-wide">Most Likely Category</div>
+                        </div>
+                    </div>
+                    <div class="prediction-card text-center">
+                        <div class="p-6">
+                            <div class="text-4xl font-bold mb-2 text-neon-pink" id="stat-accuracy">0%</div>
+                            <div class="text-sm text-muted-foreground uppercase tracking-wide">Crystal Ball Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 px-4 text-center border-t border-border">
+            <div class="max-w-6xl mx-auto">
+                <p class="text-muted-foreground mb-4">
+                    Predictions generated through analysis of current trends, expert opinions, and statistical modeling.
+                </p>
+                <p class="text-sm text-muted-foreground">
+                    Remember: These are speculative predictions for entertainment and discussion purposes.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Prediction data
+        const predictions = [
+            {
+                text: "A major social media platform will completely pivot to become a virtual reality workspace by December 2024",
+                category: "Cultural",
+                probability: 15
+            },
+            {
+                text: "At least 3 countries will officially adopt a 4-day work week as national policy in 2024",
+                category: "Social", 
+                probability: 25
+            },
+            {
+                text: "A celebrity will be elected to a major political office despite having no prior political experience",
+                category: "Political",
+                probability: 30
+            },
+            {
+                text: "Digital nomad visas will be offered by over 50 countries, creating a global remote worker migration",
+                category: "Social",
+                probability: 60
+            },
+            {
+                text: "A major streaming service will pivot to live interactive content, making viewers part of the show",
+                category: "Cultural", 
+                probability: 40
+            },
+            {
+                text: "Cryptocurrency will become legal tender in at least 5 more countries following El Salvador's model",
+                category: "Political",
+                probability: 35
+            },
+            {
+                text: "AI-generated music will dominate the charts, with virtual artists outselling human musicians",
+                category: "Cultural",
+                probability: 20
+            },
+            {
+                text: "A major climate protest movement will succeed in shutting down a fossil fuel company",
+                category: "Political", 
+                probability: 45
+            }
+        ];
+
+        let currentPredictionIndex = 0;
+        let isGenerating = false;
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            animateStats();
+        });
+
+        function generatePrediction() {
+            if (isGenerating) return;
+            
+            isGenerating = true;
+            const btn = document.getElementById('generate-btn');
+            const img = document.getElementById('crystal-ball-img');
+            const content = document.getElementById('prediction-content');
+            
+            btn.textContent = 'Consulting the Crystal Ball...';
+            btn.disabled = true;
+            img.classList.add('animate-spin');
+            content.style.opacity = '0.5';
+            content.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * predictions.length);
+                const prediction = predictions[randomIndex];
+                
+                document.getElementById('prediction-text').textContent = prediction.text;
+                document.getElementById('prediction-probability').textContent = prediction.probability + '%';
+                document.getElementById('probability-bar').style.width = prediction.probability + '%';
+                
+                const categoryBadge = document.getElementById('prediction-category');
+                categoryBadge.textContent = prediction.category.toUpperCase();
+                categoryBadge.className = 'badge badge-' + prediction.category.toLowerCase();
+                
+                img.classList.remove('animate-spin');
+                img.classList.add('animate-pulse');
+                content.style.opacity = '1';
+                content.style.transform = 'scale(1)';
+                
+                btn.textContent = 'Generate New Prediction';
+                btn.disabled = false;
+                isGenerating = false;
+            }, 1000);
+        }
+
+        function flipCard(card) {
+            const content = card.querySelector('.card-content');
+            const back = card.querySelector('.card-back');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                back.classList.add('hidden');
+            } else {
+                content.classList.add('hidden');
+                back.classList.remove('hidden');
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        function animateStats() {
+            const stats = [
+                { id: 'stat-predictions', target: 847, suffix: '' },
+                { id: 'stat-probability', target: 28, suffix: '%' },
+                { id: 'stat-category', target: 45, suffix: '%' },
+                { id: 'stat-accuracy', target: 73, suffix: '%' }
+            ];
+
+            stats.forEach(stat => {
+                animateValue(stat.id, 0, stat.target, 2000, stat.suffix);
+            });
+        }
+
+        function animateValue(id, start, end, duration, suffix) {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 50);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    element.textContent = end + suffix;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, 50);
+        }
+    </script>
+</body>
+</html>

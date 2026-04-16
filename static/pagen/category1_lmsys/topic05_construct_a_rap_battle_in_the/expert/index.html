@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeus vs Pikachu - Clash of Thunder Gods</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: linear-gradient(45deg, #FFD700 0%, #FFA500 25%, #1E3A8A 50%, #3B82F6 75%, #FFFF00 100%);
+            background-size: 400% 400%;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            animation: dynamicBackground 6s ease-in-out infinite;
+        }
+
+        @keyframes dynamicBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 58, 138, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+            animation: lightning 2s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes lightning {
+            0% { 
+                opacity: 0.6;
+                filter: blur(2px);
+            }
+            25% {
+                opacity: 0.9;
+                filter: blur(0px);
+            }
+            50% { 
+                opacity: 1;
+                filter: blur(1px);
+            }
+            75% {
+                opacity: 0.8;
+                filter: blur(0px);
+            }
+            100% { 
+                opacity: 0.7;
+                filter: blur(2px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInDown 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FFFF00, #FFD700);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite, titleMove 4s ease-in-out infinite;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px #FFD700);
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 30px #FFA500) drop-shadow(0 0 40px #FFFF00);
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes titleMove {
+            0%, 100% { 
+                background-position: 0% 50%;
+                transform: translateY(0px);
+            }
+            25% {
+                transform: translateY(-2px);
+            }
+            50% { 
+                background-position: 100% 50%;
+                transform: translateY(0px);
+            }
+            75% {
+                transform: translateY(2px);
+            }
+        }
+
+        .hero h1::before {
+            content: '⚡';
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: sparkLeft 2s ease-in-out infinite;
+        }
+
+        .hero h1::after {
+            content: '⚡';
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: sparkRight 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkLeft {
+            0%, 100% { 
+                transform: translateY(-50%) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateY(-50%) rotate(20deg) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        @keyframes sparkRight {
+            0%, 100% { 
+                transform: translateY(-50%) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateY(-50%) rotate(-20deg) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #FF6B6B;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: #FF5252;
+        }
+
+        /* Intro Section */
+        .intro {
+            padding: 80px 0;
+            margin: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .character-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .character-card:hover::before {
+            opacity: 1;
+            animation: shine 1.5s forwards;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(30deg) translateY(-100%);
+            }
+            100% {
+                transform: rotate(30deg) translateY(100%);
+            }
+        }
+
+        .character-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .character-card.zeus {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.2));
+        }
+
+        .character-card.pikachu {
+            background: linear-gradient(135deg, rgba(255, 255, 0, 0.2), rgba(255, 193, 7, 0.2));
+        }
+
+        .character-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .character-card:hover .character-image::after {
+            animation: reflect 1.5s forwards;
+        }
+
+        @keyframes reflect {
+            0% {
+                left: -50%;
+                top: -50%;
+            }
+            100% {
+                left: 50%;
+                top: 50%;
+            }
+        }
+
+        .character-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .character-card:hover .character-image img {
+            transform: scale(1.1);
+        }
+
+        .character-card h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Battle Section */
+        .battle {
+            padding: 80px 0;
+            margin: 40px 20px;
+        }
+
+        .battle h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .verse {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            border-left: 5px solid;
+            opacity: 0;
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-100%);
+        }
+
+        .verse.show::before {
+            animation: verseShine 1s forwards;
+        }
+
+        @keyframes verseShine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .verse.verse-left {
+            transform: translateX(-100px);
+        }
+
+        .verse.verse-right {
+            transform: translateX(100px);
+        }
+
+        .verse.zeus {
+            border-left-color: #FFD700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 0, 0, 0.4));
+        }
+
+        .verse.pikachu {
+            border-left-color: #FFFF00;
+            background: linear-gradient(135deg, rgba(255, 255, 0, 0.1), rgba(0, 0, 0, 0.4));
+        }
+
+        .verse.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .verse-header {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .verse-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Poll Section */
+        .poll {
+            padding: 80px 0;
+            margin: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .poll h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+
+        .poll-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .vote-button {
+            padding: 20px 30px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vote-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .vote-button:hover::before {
+            opacity: 1;
+        }
+
+        .vote-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .vote-button:hover .vote-image {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .vote-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .vote-button.zeus-vote {
+            background: #4169E1;
+            color: white;
+        }
+
+        .vote-button.pikachu-vote {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .vote-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .vote-result {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            display: none;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #1E3A8A, #3B82F6, #FFFF00);
+            background-size: 400% 400%;
+            animation: dynamicBackground 6s ease-in-out infinite;
+        }
+
+        .footer h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .footer p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .split-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .poll-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .vote-button {
+                min-width: 250px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Battle Start Button */
+        .battle-control {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .start-battle {
+            padding: 15px 30px;
+            background: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-battle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .start-battle:hover::before {
+            left: 100%;
+        }
+
+        .start-battle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6);
+            background: #8E24AA;
+        }
+
+        .start-battle:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Lightning effect for verses */
+        .lightning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes lightningFlash {
+            0%, 100% { opacity: 0; }
+            25%, 75% { opacity: 0.9; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(1000px) rotate(720deg);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Lightning Effect -->
+    <div class="lightning" id="lightning"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>🎤 Zeus vs. Pikachu – Clash of Thunder Gods</h1>
+            <p>Who wins when Mount Olympus meets Pokémon power? A rap showdown between the King of the Gods and the electric mouse.</p>
+            <a href="#battle" class="cta-button">👉 Watch the Battle</a>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro">
+        <div class="container">
+            <div class="split-layout">
+                <div class="character-card zeus">
+                    <div class="character-image">
+                        <img src="Zeus.png" alt="Zeus" onerror="this.src='https://via.placeholder.com/150/4169E1/FFFFFF?text=Zeus'">
+                    </div>
+                    <h3>Zeus</h3>
+                    <p>Greek god of thunder, king of Olympus, wields the thunderbolt.</p>
+                </div>
+                <div class="character-card pikachu">
+                    <div class="character-image">
+                         <img src="Pikachu.jpg" alt="Pikachu" onerror="this.src='https://via.placeholder.com/150/FFD700/000000?text=Pikachu'">
+                    </div>
+                    <h3>Pikachu</h3>
+                    <p>Pokémon mascot, small but mighty, master of electricity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Battle Section -->
+    <section class="battle" id="battle">
+        <div class="container">
+            <h2>🎤 The Rap Battle</h2>
+            
+            <div class="battle-control">
+                <button class="start-battle" onclick="startBattle()">Start the Battle!</button>
+            </div>
+
+            <div class="verse zeus verse-left" id="verse1">
+                <div class="verse-header">🎤 Verse 1 – Zeus</div>
+                <div class="verse-text">"I'm the storm-bringer, Olympian king with the crown, When I throw a thunderbolt, I'll strike you down. You're a mascot plush toy, squeaky little squealer, I rule gods and mortals — you're stuck with Ash Ketchum as your dealer."</div>
+            </div>
+
+            <div class="verse pikachu verse-right" id="verse2">
+                <div class="verse-header">🎤 Verse 2 – Pikachu</div>
+                <div class="verse-text">"Pika-pi! Hear the sparks when I shock this faker, You're just a myth, old man — I'm a franchise moneymaker. From Tokyo to Times Square, my face runs the globe, You're stuck in dusty textbooks, wearing bedsheet robes."</div>
+            </div>
+
+            <div class="verse zeus verse-left" id="verse3">
+                <div class="verse-header">🎤 Verse 3 – Zeus</div>
+                <div class="verse-text">"You're a rodent in a cage, can't fight without a trainer, I conquered Titans solo, cosmic force no brainer. I fathered heroes, gods — legends bow to me, You faint after one battle? Pathetic, truly."</div>
+            </div>
+
+            <div class="verse pikachu verse-right" id="verse4">
+                <div class="verse-header">🎤 Verse 4 – Pikachu</div>
+                <div class="verse-text">"Thunderbolt, Quick Attack, I've got the whole moveset, While your love life's a scandal full of drama and regret. You're forgotten by the youth, I'm their Saturday show, Pikachu wins again — Pika! — now you know."</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poll Section -->
+    <section class="poll">
+        <div class="container">
+            <h2>Who won the battle?</h2>
+            <div class="poll-buttons">
+                <button class="vote-button zeus-vote" onclick="vote('zeus')">
+                    <div class="vote-image">
+                       <img src="Zeus.png" alt="Zeus" onerror="this.src='https://via.placeholder.com/40/4169E1/FFFFFF?text=Z'">
+                    </div>
+                    Zeus
+                </button>
+                <button class="vote-button pikachu-vote" onclick="vote('pikachu')">
+                    <div class="vote-image">
+                        <img src="Pikachu.jpg" alt="Pikachu" onerror="this.src='https://via.placeholder.com/40/FFD700/000000?text=P'">
+                    </div>
+                    Pikachu
+                </button>
+            </div>
+            <div class="vote-result" id="voteResult"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2>Summary</h2>
+            <p>The battle of sparks: Zeus brings divine thunder, Pikachu brings pop-culture clout. Who reigns supreme? The audience decides.</p>
+            <a href="#poll" class="cta-button">🔥 Cast your vote & share the battle!</a>
+        </div>
+    </footer>
+
+    <script>
+        // Audio elements for sound effects (only for voting)
+        const thunderSound = new Audio('thunder.mp3');
+        const pikaSound = new Audio('Pikachu.mp3');
+        
+        // Set audio properties
+        thunderSound.volume = 0.7;
+        pikaSound.volume = 0.8;
+        
+        // Lightning flash effect
+        function flashLightning() {
+            const lightning = document.getElementById('lightning');
+            lightning.style.animation = 'none';
+            setTimeout(() => {
+                lightning.style.animation = 'lightningFlash 0.5s';
+            }, 10);
+        }
+        
+        // Confetti effect
+        function createConfetti(color) {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.background = color;
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        let battleStarted = false;
+
+        function startBattle() {
+            if (battleStarted && document.querySelector('.start-battle').textContent === 'Replay Battle') {
+                resetBattle();
+                setTimeout(startBattle, 100);
+                return;
+            }
+            
+            if (battleStarted) return;
+            
+            battleStarted = true;
+            const startButton = document.querySelector('.start-battle');
+            startButton.textContent = 'Battle in Progress...';
+            startButton.disabled = true;
+            
+            const verses = document.querySelectorAll('.verse');
+            
+            verses.forEach((verse, index) => {
+                setTimeout(() => {
+                    verse.classList.add('show');
+                    
+                    // Re-enable button after last verse
+                    if (index === verses.length - 1) {
+                        setTimeout(() => {
+                            startButton.textContent = 'Replay Battle';
+                            startButton.disabled = false;
+                        }, 1000);
+                    }
+                }, (index + 1) * 2000); // 2 second delay between verses
+            });
+        }
+
+        function vote(character) {
+            const resultDiv = document.getElementById('voteResult');
+            const buttons = document.querySelectorAll('.vote-button');
+            
+            // Disable buttons after voting
+            buttons.forEach(button => {
+                button.style.opacity = '0.6';
+                button.style.cursor = 'not-allowed';
+                button.onclick = null;
+            });
+            
+            // Play sound based on vote (only place where sound is played)
+            if (character === 'zeus') {
+                thunderSound.currentTime = 0;
+                thunderSound.play();
+                flashLightning();
+                resultDiv.innerHTML = '⚡ You voted for Zeus! The King of Olympus appreciates your support!';
+                resultDiv.style.background = 'linear-gradient(45deg, rgba(65, 105, 225, 0.3), rgba(30, 58, 138, 0.3))';
+                createConfetti('#4169E1');
+            } else {
+                pikaSound.currentTime = 0;
+                pikaSound.play();
+                resultDiv.innerHTML = '⚡ You voted for Pikachu! Pika pika! The electric mouse is electrified!';
+                resultDiv.style.background = 'linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 255, 0, 0.3))';
+                createConfetti('#FFD700');
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+
+        // Smooth scrolling for CTA button
+        document.querySelector('.hero .cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('battle').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Reset battle function for replay
+        function resetBattle() {
+            battleStarted = false;
+            const verses = document.querySelectorAll('.verse');
+            verses.forEach(verse => {
+                verse.classList.remove('show');
+            });
+        }
+    </script>
+</body>
+</html>

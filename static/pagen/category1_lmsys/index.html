@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category 1 — LMSYS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #e5e7eb;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 1rem 2rem 1.5rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-home {
+      background: #6366f1;
+      color: white;
+    }
+
+    .btn-home:hover {
+      background: #4f46e5;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d1d5db;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-github {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d1d5db;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-github:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .header-title {
+      text-align: center;
+    }
+
+    .header-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-title .subtitle {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    .header-title .subtitle a {
+      color: #c7d2fe;
+      text-decoration: underline;
+    }
+
+    .header-title .subtitle a:hover {
+      color: #fff;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .topic-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      transition: all 0.2s;
+      min-height: 3.5rem;
+      min-width: 0;
+    }
+
+    .topic-card:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .topic-links {
+      display: flex;
+      gap: 0.4rem;
+      margin-left: auto;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .link-btn.expert {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+
+    .link-btn.expert:hover {
+      background: rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+    }
+
+    .link-btn.genui {
+      background: rgba(45, 212, 191, 0.1);
+      color: #2dd4bf;
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    .link-btn.genui:hover {
+      background: rgba(45, 212, 191, 0.2);
+      color: #5eead4;
+    }
+
+    .topic-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2rem;
+      height: 2rem;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .topic-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #d1d5db;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .topic-card:hover .topic-name {
+      color: #e5e7eb;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .topic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-top">
+      <div class="header-links">
+        <a href="../../../index.html" class="btn btn-home">
+          <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+          Project Page
+        </a>
+        <a href="../index.html" class="btn btn-back">← PAGEN</a>
+      </div>
+      <a href="https://github.com/GenerativeUI/GenerativeUI.github.io/tree/main/static/pagen/category1_lmsys"
+        class="btn btn-github" target="_blank">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+        GitHub
+      </a>
+    </div>
+    <div class="header-title">
+      <h1>Category 1 — LMSYS</h1>
+      <p class="subtitle">Expert: human-expert generated websites. GenUI: automatically generated by our system, powered
+        by Gemini 2.5. See <a href="https://arxiv.org/pdf/2604.09577" target="_blank">paper</a> for more details.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="topic-grid">
+      <div class="topic-card" title="What is the difference between marriage license and marriage certificate?">
+        <span class="topic-num">01</span>
+        <span class="topic-name">What is the difference between marriage license and marriage certificate?</span>
+        <span class="topic-links">
+          <a href="topic01_what_is_the_difference_between_marriage/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic01_what_is_the_difference_between_marriage/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="explain function calling. how would you call a function?">
+        <span class="topic-num">02</span>
+        <span class="topic-name">explain function calling. how would you call a function?</span>
+        <span class="topic-links">
+          <a href="topic02_explain_function_calling_how_would_you/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic02_explain_function_calling_how_would_you/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="How can I create a test set for a very rare category? I want to build a classifier.">
+        <span class="topic-num">03</span>
+        <span class="topic-name">How can I create a test set for a very rare category? I want to build a
+          classifier.</span>
+        <span class="topic-links">
+          <a href="topic03_how_can_i_create_a_test/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic03_how_can_i_create_a_test/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What is the best way to travel from Tel-Aviv to Jerusalem? Car? Bus? Plane?">
+        <span class="topic-num">04</span>
+        <span class="topic-name">What is the best way to travel from Tel-Aviv to Jerusalem? Car? Bus? Plane?</span>
+        <span class="topic-links">
+          <a href="topic04_what_is_the_best_way_to/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic04_what_is_the_best_way_to/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Construct a rap battle, in the style of Epic Rap Battles of History, with rhyme and meter and personal attacks relevant to each character, between Pikachu and Zeus. Each participant gets 2 verses. There is no announcer and Zeus goes first.">
+        <span class="topic-num">05</span>
+        <span class="topic-name">Construct a rap battle, in the style of Epic Rap Battles of History, with rhyme and
+          meter and personal attacks releva&hellip;</span>
+        <span class="topic-links">
+          <a href="topic05_construct_a_rap_battle_in_the/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic05_construct_a_rap_battle_in_the/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Bacteria is life on Mars but a heartbeat isn&#x27;t life on earth? What is this quote from?">
+        <span class="topic-num">06</span>
+        <span class="topic-name">Bacteria is life on Mars but a heartbeat isn&#x27;t life on earth? What is this quote
+          from?</span>
+        <span class="topic-links">
+          <a href="topic06_bacteria_is_life_on_mars_but/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic06_bacteria_is_life_on_mars_but/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="translate to russian the followig sentence Big landlords used software to collude on rent prices, DC lawsuit says">
+        <span class="topic-num">07</span>
+        <span class="topic-name">translate to russian the followig sentence Big landlords used software to collude on
+          rent prices, DC lawsuit says</span>
+        <span class="topic-links">
+          <a href="topic07_translate_to_russian_the_followig_sentence/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic07_translate_to_russian_the_followig_sentence/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="write a python function to upload all the files from one local folder to one directory of an S3 bucket">
+        <span class="topic-num">08</span>
+        <span class="topic-name">write a python function to upload all the files from one local folder to one directory
+          of an S3 bucket</span>
+        <span class="topic-links">
+          <a href="topic08_write_a_python_function_to_upload/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic08_write_a_python_function_to_upload/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Can you create a caption using this, thanks? Gus noticed some Molly Fish looking uncomfortable in the chilly weather and wants to give them a more comfortable tropical climate that is better suited for them. He needs your help setting up a safe warm AquaGrove for the Molly Fish while we wait for the winter to die down!">
+        <span class="topic-num">09</span>
+        <span class="topic-name">Can you create a caption using this, thanks? Gus noticed some Molly Fish looking
+          uncomfortable in the chilly weather &hellip;</span>
+        <span class="topic-links">
+          <a href="topic09_can_you_create_a_caption_using/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic09_can_you_create_a_caption_using/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="was the historical jesus a socialist">
+        <span class="topic-num">10</span>
+        <span class="topic-name">was the historical jesus a socialist</span>
+        <span class="topic-links">
+          <a href="topic10_was_the_historical_jesus_a_socialist/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic10_was_the_historical_jesus_a_socialist/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What&#x27;s the best first move in tic-tac-toe?">
+        <span class="topic-num">11</span>
+        <span class="topic-name">What&#x27;s the best first move in tic-tac-toe?</span>
+        <span class="topic-links">
+          <a href="topic11_what_s_the_best_first_move/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic11_what_s_the_best_first_move/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Write me a poem in urdu in the style of Iqbal on selflessness">
+        <span class="topic-num">12</span>
+        <span class="topic-name">Write me a poem in urdu in the style of Iqbal on selflessness</span>
+        <span class="topic-links">
+          <a href="topic12_write_me_a_poem_in_urdu/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic12_write_me_a_poem_in_urdu/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="what do you know about real estate">
+        <span class="topic-num">13</span>
+        <span class="topic-name">what do you know about real estate</span>
+        <span class="topic-links">
+          <a href="topic13_what_do_you_know_about_real/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic13_what_do_you_know_about_real/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Write a grammatically correct sentence without reusing any letter more than once">
+        <span class="topic-num">14</span>
+        <span class="topic-name">Write a grammatically correct sentence without reusing any letter more than once</span>
+        <span class="topic-links">
+          <a href="topic14_write_a_grammatically_correct_sentence_without/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic14_write_a_grammatically_correct_sentence_without/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how to delete kcptun on server?">
+        <span class="topic-num">15</span>
+        <span class="topic-name">how to delete kcptun on server?</span>
+        <span class="topic-links">
+          <a href="topic15_how_to_delete_kcptun_on_server/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic15_how_to_delete_kcptun_on_server/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Mary has 6 others siblings named Monday, Tuesday, Wednesday, Thursday, Friday, and Saturday. That is the name of the last child?">
+        <span class="topic-num">16</span>
+        <span class="topic-name">Mary has 6 others siblings named Monday, Tuesday, Wednesday, Thursday, Friday, and
+          Saturday. That is the name of the &hellip;</span>
+        <span class="topic-links">
+          <a href="topic16_mary_has_6_others_siblings_named/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic16_mary_has_6_others_siblings_named/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What is the scientific probability of earth being the only habitable planet in the universe?">
+        <span class="topic-num">17</span>
+        <span class="topic-name">What is the scientific probability of earth being the only habitable planet in the
+          universe?</span>
+        <span class="topic-links">
+          <a href="topic17_what_is_the_scientific_probability_of/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic17_what_is_the_scientific_probability_of/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Write a python code that calculates sum of 5 and 10.">
+        <span class="topic-num">18</span>
+        <span class="topic-name">Write a python code that calculates sum of 5 and 10.</span>
+        <span class="topic-links">
+          <a href="topic18_write_a_python_code_that_calculates/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic18_write_a_python_code_that_calculates/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Who made you?">
+        <span class="topic-num">19</span>
+        <span class="topic-name">Who made you?</span>
+        <span class="topic-links">
+          <a href="topic19_who_made_you/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic19_who_made_you/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Can you explain what the Cypher Query Language is?">
+        <span class="topic-num">20</span>
+        <span class="topic-name">Can you explain what the Cypher Query Language is?</span>
+        <span class="topic-links">
+          <a href="topic20_can_you_explain_what_the_cypher/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic20_can_you_explain_what_the_cypher/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="what was LFC starting lineup against brighton">
+        <span class="topic-num">21</span>
+        <span class="topic-name">what was LFC starting lineup against brighton</span>
+        <span class="topic-links">
+          <a href="topic21_what_was_lfc_starting_lineup_against/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic21_what_was_lfc_starting_lineup_against/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What is &quot;The Bloody Lip Bar and Grill&quot;?">
+        <span class="topic-num">22</span>
+        <span class="topic-name">What is &quot;The Bloody Lip Bar and Grill&quot;?</span>
+        <span class="topic-links">
+          <a href="topic22_what_is_the_bloody_lip_bar/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic22_what_is_the_bloody_lip_bar/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="could you tell a funny and whimsical story about the Smurfs and Sanatana Lopes from Glee">
+        <span class="topic-num">23</span>
+        <span class="topic-name">could you tell a funny and whimsical story about the Smurfs and Sanatana Lopes from
+          Glee</span>
+        <span class="topic-links">
+          <a href="topic23_could_you_tell_a_funny_and/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic23_could_you_tell_a_funny_and/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Conjoined twins , lisa , heather , heather is bad.">
+        <span class="topic-num">24</span>
+        <span class="topic-name">Conjoined twins , lisa , heather , heather is bad.</span>
+        <span class="topic-links">
+          <a href="topic24_conjoined_twins_lisa_heather_heather_is/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic24_conjoined_twins_lisa_heather_heather_is/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Are all countries obliged to not conduct nuclear weapons testing">
+        <span class="topic-num">25</span>
+        <span class="topic-name">Are all countries obliged to not conduct nuclear weapons testing</span>
+        <span class="topic-links">
+          <a href="topic25_are_all_countries_obliged_to_not/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic25_are_all_countries_obliged_to_not/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Estimate the number of dinosaur skeletons in the United States and explain your reasoning.">
+        <span class="topic-num">26</span>
+        <span class="topic-name">Estimate the number of dinosaur skeletons in the United States and explain your
+          reasoning.</span>
+        <span class="topic-links">
+          <a href="topic26_estimate_the_number_of_dinosaur_skeletons/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic26_estimate_the_number_of_dinosaur_skeletons/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What’s the best prank to play on a friend?">
+        <span class="topic-num">27</span>
+        <span class="topic-name">What’s the best prank to play on a friend?</span>
+        <span class="topic-links">
+          <a href="topic27_what_s_the_best_prank_to/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic27_what_s_the_best_prank_to/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Write me a useful discord command, one would consider more of a utility in python that would be imported into the mainbot script via a setup function like &quot;def setup()">
+        <span class="topic-num">28</span>
+        <span class="topic-name">Write me a useful discord command, one would consider more of a utility in python that
+          would be imported into the mai&hellip;</span>
+        <span class="topic-links">
+          <a href="topic28_write_me_a_useful_discord_command/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic28_write_me_a_useful_discord_command/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="make a haiku on bacon the food">
+        <span class="topic-num">29</span>
+        <span class="topic-name">make a haiku on bacon the food</span>
+        <span class="topic-links">
+          <a href="topic29_make_a_haiku_on_bacon_the/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic29_make_a_haiku_on_bacon_the/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Roleplay a szenario where a macro sized skunk anthro male stomps towards a city.">
+        <span class="topic-num">30</span>
+        <span class="topic-name">Roleplay a szenario where a macro sized skunk anthro male stomps towards a city.</span>
+        <span class="topic-links">
+          <a href="topic30_roleplay_a_szenario_where_a_macro/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic30_roleplay_a_szenario_where_a_macro/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="i have this: import logo from &#x27;.\/ressources\/logo.png&#x27;; import &#x27;.\/App.css&#x27;; import React from &#x27;react&#x27; import { BrowserRouter, Routes, Route } from &#x27;react-router-dom&#x27;; import ExampleComponent from &#x27;.\/components\/ExampleComponent&#x27;; import Layout from &quot;.\/components\/Layout&quot;; import Home from &#x27;.\/components\/Home&#x27; \/\/import { Layout, Menu } from &#x27;antd&#x27;; const { Header, Content, Footer } = Layout; function App() { return ( &lt;BrowserRouter&gt; &lt;Routes&gt; &lt;Route path=&quot;\/&quot; element={&lt;Layout \/&gt;}\/&gt; &lt;Route index element={&lt;Home \/&gt;}\/&gt; &lt;Route path=&quot;\/Test&quot; element={&lt;ExampleComponent \/&gt;}\/&gt; &lt;\/Routes&gt; &lt;\/BrowserRouter&gt; ); } export default App; now the navigation is only visible on the root path \/ not on the others why?">
+        <span class="topic-num">31</span>
+        <span class="topic-name">i have this: import logo from &#x27;.\/ressources\/logo.png&#x27;; import
+          &#x27;.\/App.css&#x27;; import React from &#x27;react&#x27; import { Brow&hellip;</span>
+        <span class="topic-links">
+          <a href="topic31_i_have_this_import_logo_from/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic31_i_have_this_import_logo_from/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="I have frozen cod filets, tomatoes, lemons, bell peppers, fresh mozzarella cheese and arugula. Can you come up with some suggestions for things I can make for dinner? Do not assume I have anything else. If there are any additional ingredients that are necessary to make the dish, ask me if I have them. Once I confirm what I have or do not have, please generate suggestions for items I can prepare in under 30 minutes.">
+        <span class="topic-num">32</span>
+        <span class="topic-name">I have frozen cod filets, tomatoes, lemons, bell peppers, fresh mozzarella cheese and
+          arugula. Can you come up with s&hellip;</span>
+        <span class="topic-links">
+          <a href="topic32_i_have_frozen_cod_filets_tomatoes/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic32_i_have_frozen_cod_filets_tomatoes/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="&quot;texts = [text.split() for text in df[&quot;&quot;text_processed&quot;&quot;]] wordsList = [] for text in texts: wordsList.extend(text) wordsList = list(set(wordsList)) print(len(wordsList)) with open(&quot;&quot;.\/new_ap\/vocab.txt&quot;&quot;, &quot;&quot;w&quot;&quot;) as f: for word in wordsList: f.write(word + &quot;&quot;
+&quot;&quot;) # this have really bad time complexity, not optimized and reeeallly slow, please fix with open(&quot;&quot;.\/new_ap\/ap.dat&quot;&quot;, &quot;&quot;w&quot;&quot;) as f: for text in texts: f.write(str(len(text)) + &quot;&quot; &quot;&quot;) for word in text: f.write(str(wordsList.index(word)) + &quot;&quot;:&quot;&quot; + str(text.count(word)) + &quot;&quot; &quot;&quot;) f.write(&quot;&quot;
+&quot;&quot;) &quot;">
+        <span class="topic-num">33</span>
+        <span class="topic-name">&quot;texts = [text.split() for text in df[&quot;&quot;text_processed&quot;&quot;]]
+          wordsList = [] for text in texts: wordsList.extend(text) w&hellip;</span>
+        <span class="topic-links">
+          <a href="topic33_texts_text_split_for_text_in/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic33_texts_text_split_for_text_in/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Hi who are you">
+        <span class="topic-num">34</span>
+        <span class="topic-name">Hi who are you</span>
+        <span class="topic-links">
+          <a href="topic34_hi_who_are_you/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic34_hi_who_are_you/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="The following is a command that the user is about to run in bash. Please determine if the command is safe to use. Only respond with YES or NO. Command: ls -la Safe:">
+        <span class="topic-num">35</span>
+        <span class="topic-name">The following is a command that the user is about to run in bash. Please determine if
+          the command is safe to use. Onl&hellip;</span>
+        <span class="topic-links">
+          <a href="topic35_the_following_is_a_command_that/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic35_the_following_is_a_command_that/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Today I have three apples. Yesterday I ate one apple. How many apples do I have today?">
+        <span class="topic-num">36</span>
+        <span class="topic-name">Today I have three apples. Yesterday I ate one apple. How many apples do I have
+          today?</span>
+        <span class="topic-links">
+          <a href="topic36_today_i_have_three_apples_yesterday/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic36_today_i_have_three_apples_yesterday/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Explain why we can&#x27;t achieve nuclear fusion for energy supply">
+        <span class="topic-num">37</span>
+        <span class="topic-name">Explain why we can&#x27;t achieve nuclear fusion for energy supply</span>
+        <span class="topic-links">
+          <a href="topic37_explain_why_we_can_t_achieve/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic37_explain_why_we_can_t_achieve/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which is better to visit, Anguilla or Saba?">
+        <span class="topic-num">38</span>
+        <span class="topic-name">Which is better to visit, Anguilla or Saba?</span>
+        <span class="topic-links">
+          <a href="topic38_which_is_better_to_visit_anguilla/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic38_which_is_better_to_visit_anguilla/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Which of the following metals has the lowest melting point? Question 3 options: Nb Ru Mo Tc Cd">
+        <span class="topic-num">39</span>
+        <span class="topic-name">Which of the following metals has the lowest melting point? Question 3 options: Nb Ru
+          Mo Tc Cd</span>
+        <span class="topic-links">
+          <a href="topic39_which_of_the_following_metals_has/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic39_which_of_the_following_metals_has/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="write the lyrics to a rap song about some dude called &quot;phogos&quot;">
+        <span class="topic-num">40</span>
+        <span class="topic-name">write the lyrics to a rap song about some dude called &quot;phogos&quot;</span>
+        <span class="topic-links">
+          <a href="topic40_write_the_lyrics_to_a_rap/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic40_write_the_lyrics_to_a_rap/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="tell me a joke containing Tiger and Mobile phone?">
+        <span class="topic-num">41</span>
+        <span class="topic-name">tell me a joke containing Tiger and Mobile phone?</span>
+        <span class="topic-links">
+          <a href="topic41_tell_me_a_joke_containing_tiger/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic41_tell_me_a_joke_containing_tiger/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="#include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;ctype.h&gt; int main() { char *file = &quot;text.txt&quot;; FILE *fileOpen = fopen(file, &quot;r&quot;); char carattere; int contaMaiuscole = 0; int contaMinuscole = 0; int contaNumeri = 0; int contaspazi = 0; int contaPunteggiatura = 0; do { carattere = fgetc(fileOpen); if (isspace(carattere)) { contaspazi++; } else if (islower(carattere)) { contaMinuscole++; } else if (isupper(carattere)){ contaMaiuscole++; } else if (isdigit(carattere)) { contaNumeri++; } else if (ispunct(carattere)) { contaPunteggiatura++; } } while (carattere != EOF); printf(&quot;%d %d %d %d %d&quot;, contaspazi, contaMinuscole, contaMaiuscole, contaNumeri, contaPunteggiatura); fclose(fileOpen); } explain this code">
+        <span class="topic-num">42</span>
+        <span class="topic-name">#include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include &lt;ctype.h&gt; int main()
+          { char *file = &quot;text.txt&quot;; FILE *fileOpen = fope&hellip;</span>
+        <span class="topic-links">
+          <a href="topic42_include_stdio_h_include_stdlib_h/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic42_include_stdio_h_include_stdlib_h/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Write OCL statement each Employee working in the Company should have an age greater than 22, we represent this in OCL as:">
+        <span class="topic-num">43</span>
+        <span class="topic-name">Write OCL statement each Employee working in the Company should have an age greater
+          than 22, we represent this in OCL&hellip;</span>
+        <span class="topic-links">
+          <a href="topic43_write_ocl_statement_each_employee_working/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic43_write_ocl_statement_each_employee_working/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Who&#x27;s the man with the master plan?">
+        <span class="topic-num">44</span>
+        <span class="topic-name">Who&#x27;s the man with the master plan?</span>
+        <span class="topic-links">
+          <a href="topic44_who_s_the_man_with_the/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic44_who_s_the_man_with_the/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Below is a pair of sentimentally equivalent sentences. The second one known as a paraphrase of the first one. provide me with another paraphrase containing EXACTLY THE SAME NUMBER OF WORDS AS THE FIRST SENTENCE: 1st sentence: &quot;The Securities and Exchange Commission yesterday said companies trading on the biggest U.S. markets must win shareholder approval before granting stock options and other stock-based compensation plans to corporate executives.&quot; 2nd sentence: &quot;Companies trading on the biggest stock markets must get shareholder approval before granting stock options and other equity compensation under rules cleared yesterday by the Securities and Exchange Commission.&quot;">
+        <span class="topic-num">45</span>
+        <span class="topic-name">Below is a pair of sentimentally equivalent sentences. The second one known as a
+          paraphrase of the first one. provide&hellip;</span>
+        <span class="topic-links">
+          <a href="topic45_below_is_a_pair_of_sentimentally/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic45_below_is_a_pair_of_sentimentally/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="test">
+        <span class="topic-num">46</span>
+        <span class="topic-name">test</span>
+        <span class="topic-links">
+          <a href="topic46_test/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic46_test/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Rick and Morty open a portal to the real world to tell the writers to try harder.">
+        <span class="topic-num">47</span>
+        <span class="topic-name">Rick and Morty open a portal to the real world to tell the writers to try
+          harder.</span>
+        <span class="topic-links">
+          <a href="topic47_rick_and_morty_open_a_portal/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic47_rick_and_morty_open_a_portal/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="what is the most beautiful town or city near mountains in europe that has amazing public transportation, very walkable or bikeable? Has relatively cheap hotels and is a great place to stay for a couple weeks. You can name several, also a positive if its relatively nearby a large town or city. doesnt have to be super nearby. I dont care for skiing, will be going in spring\/summer">
+        <span class="topic-num">48</span>
+        <span class="topic-name">what is the most beautiful town or city near mountains in europe that has amazing
+          public transportation, very walkabl&hellip;</span>
+        <span class="topic-links">
+          <a href="topic48_what_is_the_most_beautiful_town/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic48_what_is_the_most_beautiful_town/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Explain how macros are recursively expanded in c">
+        <span class="topic-num">49</span>
+        <span class="topic-name">Explain how macros are recursively expanded in c</span>
+        <span class="topic-links">
+          <a href="topic49_explain_how_macros_are_recursively_expanded/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic49_explain_how_macros_are_recursively_expanded/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Write the best prompt that I should input to get the best response from you to generate a comprehensive outline for the &quot;Keeping Pests Away Without Harmful Pesticides - Eco-Friendly Pest Control Tips&quot; blog post for Eco-Safe Home website. Target relevant keywords in the headings, with a great introduction to grab the readers’ attention, tells the readers the importance of the blog topic. summarizes the post’s purpose and strengthens why readers should continue reading the article. Include a Compelling Call to Action in the conclusion. Add a Table of Contents. The audience includes homeowners, parents, and individuals interested in eco-friendly practices and sustainable solutions. Tone should be Informative, engaging, empowering, practical, and positive.">
+        <span class="topic-num">50</span>
+        <span class="topic-name">Write the best prompt that I should input to get the best response from you to generate
+          a comprehensive outline for t&hellip;</span>
+        <span class="topic-links">
+          <a href="topic50_write_the_best_prompt_that_i/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic50_write_the_best_prompt_that_i/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="I need to wake up at 4.44am to go to the gym. I get back around 6.30am and start working. If I finish work at 4.30pm, how many small breaks can I take throughout the work period so that I have plenty of energy throughout the day?">
+        <span class="topic-num">51</span>
+        <span class="topic-name">I need to wake up at 4.44am to go to the gym. I get back around 6.30am and start
+          working. If I finish work at 4.30pm,&hellip;</span>
+        <span class="topic-links">
+          <a href="topic51_i_need_to_wake_up_at/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic51_i_need_to_wake_up_at/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What is the moral of Wall-e?">
+        <span class="topic-num">52</span>
+        <span class="topic-name">What is the moral of Wall-e?</span>
+        <span class="topic-links">
+          <a href="topic52_what_is_the_moral_of_wall/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic52_what_is_the_moral_of_wall/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how can I write a function in Rust that reverses a string?">
+        <span class="topic-num">53</span>
+        <span class="topic-name">how can I write a function in Rust that reverses a string?</span>
+        <span class="topic-links">
+          <a href="topic53_how_can_i_write_a_function/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic53_how_can_i_write_a_function/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Are CO2 emissions a serious problem?">
+        <span class="topic-num">54</span>
+        <span class="topic-name">Are CO2 emissions a serious problem?</span>
+        <span class="topic-links">
+          <a href="topic54_are_co2_emissions_a_serious_problem/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic54_are_co2_emissions_a_serious_problem/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What is the origin story of the kool-aid man? I don&#x27;t mean in real life, I mean the lore of the character- where he came from, why he is the way he is, etc.">
+        <span class="topic-num">55</span>
+        <span class="topic-name">What is the origin story of the kool-aid man? I don&#x27;t mean in real life, I mean
+          the lore of the character- where he c&hellip;</span>
+        <span class="topic-links">
+          <a href="topic55_what_is_the_origin_story_of/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic55_what_is_the_origin_story_of/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="what to put on rover profile for &quot;Important to know about their pets ahead of time&quot; on pet sitter profile completion? please list important things and format in a readable, attractive copy-paste way">
+        <span class="topic-num">56</span>
+        <span class="topic-name">what to put on rover profile for &quot;Important to know about their pets ahead of
+          time&quot; on pet sitter profile completion?&hellip;</span>
+        <span class="topic-links">
+          <a href="topic56_what_to_put_on_rover_profile/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic56_what_to_put_on_rover_profile/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What should I name my third child. First child is named Ruby Kali, and the second child is named Raja Ishaan. Before we begin selecting the name of the third child please analyze the first two children’s names and point out anything about the name or etymology of each that you notice.">
+        <span class="topic-num">57</span>
+        <span class="topic-name">What should I name my third child. First child is named Ruby Kali, and the second child
+          is named Raja Ishaan. Before &hellip;</span>
+        <span class="topic-links">
+          <a href="topic57_what_should_i_name_my_third/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic57_what_should_i_name_my_third/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="why a fake short summary on why the game &quot;among us&quot; is made by evil reptilians who own xbox and logitec mouse pads, make it extra goofy and derranged for humour">
+        <span class="topic-num">58</span>
+        <span class="topic-name">why a fake short summary on why the game &quot;among us&quot; is made by evil
+          reptilians who own xbox and logitec mouse pads, m&hellip;</span>
+        <span class="topic-links">
+          <a href="topic58_why_a_fake_short_summary_on/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic58_why_a_fake_short_summary_on/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Write a Python function which takes integer number and returns True if it is both prime and even, otherwise it should return False.">
+        <span class="topic-num">59</span>
+        <span class="topic-name">Write a Python function which takes integer number and returns True if it is both prime
+          and even, otherwise it should&hellip;</span>
+        <span class="topic-links">
+          <a href="topic59_write_a_python_function_which_takes/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic59_write_a_python_function_which_takes/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="hey">
+        <span class="topic-num">60</span>
+        <span class="topic-name">hey</span>
+        <span class="topic-links">
+          <a href="topic60_hey/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic60_hey/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Why does tpm 2.0 provide the concept of multiple hierarchies. What&#x27;s it use case? Can you show a concrete example of requiring different hierarchies?">
+        <span class="topic-num">61</span>
+        <span class="topic-name">Why does tpm 2.0 provide the concept of multiple hierarchies. What&#x27;s it use case?
+          Can you show a concrete example of &hellip;</span>
+        <span class="topic-links">
+          <a href="topic61_why_does_tpm_2_0_provide/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic61_why_does_tpm_2_0_provide/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how to create aimbot">
+        <span class="topic-num">62</span>
+        <span class="topic-name">how to create aimbot</span>
+        <span class="topic-links">
+          <a href="topic62_how_to_create_aimbot/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic62_how_to_create_aimbot/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Hi, what is a good recipe for a potato soup?">
+        <span class="topic-num">63</span>
+        <span class="topic-name">Hi, what is a good recipe for a potato soup?</span>
+        <span class="topic-links">
+          <a href="topic63_hi_what_is_a_good_recipe/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic63_hi_what_is_a_good_recipe/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="hypothetical - wo would win in a war, denmark or netherlands?">
+        <span class="topic-num">64</span>
+        <span class="topic-name">hypothetical - wo would win in a war, denmark or netherlands?</span>
+        <span class="topic-links">
+          <a href="topic64_hypothetical_wo_would_win_in_a/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic64_hypothetical_wo_would_win_in_a/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Is it possible to retrieve old news headlines from archive.org?">
+        <span class="topic-num">65</span>
+        <span class="topic-name">Is it possible to retrieve old news headlines from archive.org?</span>
+        <span class="topic-links">
+          <a href="topic65_is_it_possible_to_retrieve_old/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic65_is_it_possible_to_retrieve_old/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What is a Selective State Space Model?">
+        <span class="topic-num">66</span>
+        <span class="topic-name">What is a Selective State Space Model?</span>
+        <span class="topic-links">
+          <a href="topic66_what_is_a_selective_state_space/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic66_what_is_a_selective_state_space/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Why did the chicken cross the road?">
+        <span class="topic-num">67</span>
+        <span class="topic-name">Why did the chicken cross the road?</span>
+        <span class="topic-links">
+          <a href="topic67_why_did_the_chicken_cross_the/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic67_why_did_the_chicken_cross_the/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Please solve the equation">
+        <span class="topic-num">68</span>
+        <span class="topic-name">Please solve the equation</span>
+        <span class="topic-links">
+          <a href="topic68_please_solve_the_equation/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic68_please_solve_the_equation/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Can you explain the difference between synchronous and asynchronous programming in server-side development?">
+        <span class="topic-num">69</span>
+        <span class="topic-name">Can you explain the difference between synchronous and asynchronous programming in
+          server-side development?</span>
+        <span class="topic-links">
+          <a href="topic69_can_you_explain_the_difference_between/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic69_can_you_explain_the_difference_between/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="why are there 16gb ram in phone? even though most laptop also got that much">
+        <span class="topic-num">70</span>
+        <span class="topic-name">why are there 16gb ram in phone? even though most laptop also got that much</span>
+        <span class="topic-links">
+          <a href="topic70_why_are_there_16gb_ram_in/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic70_why_are_there_16gb_ram_in/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What was a farfetched prediction about the future that ended up becoming true?">
+        <span class="topic-num">71</span>
+        <span class="topic-name">What was a farfetched prediction about the future that ended up becoming true?</span>
+        <span class="topic-links">
+          <a href="topic71_what_was_a_farfetched_prediction_about/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic71_what_was_a_farfetched_prediction_about/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Make specific unlikely predictions for cultural, social or political events that could occur in 2024.">
+        <span class="topic-num">72</span>
+        <span class="topic-name">Make specific unlikely predictions for cultural, social or political events that could
+          occur in 2024.</span>
+        <span class="topic-links">
+          <a href="topic72_make_specific_unlikely_predictions_for_cultural/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic72_make_specific_unlikely_predictions_for_cultural/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="I have a text file with questions separated by a single &quot;-&quot; character. Something like this: Why is the sky blue? - What is your favorite color: a) blue b) red c) green d) none of the above - Do you like pizza? - etc. I&#x27;d like to read this file into a list in Python, so that each question is an element in this list. How do I do that?">
+        <span class="topic-num">73</span>
+        <span class="topic-name">I have a text file with questions separated by a single &quot;-&quot; character.
+          Something like this: Why is the sky blue? - Wh&hellip;</span>
+        <span class="topic-links">
+          <a href="topic73_i_have_a_text_file_with/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic73_i_have_a_text_file_with/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="How would society be different if economic growth was impossible and instead was shrinking?">
+        <span class="topic-num">74</span>
+        <span class="topic-name">How would society be different if economic growth was impossible and instead was
+          shrinking?</span>
+        <span class="topic-links">
+          <a href="topic74_how_would_society_be_different_if/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic74_how_would_society_be_different_if/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="How lang chain works">
+        <span class="topic-num">75</span>
+        <span class="topic-name">How lang chain works</span>
+        <span class="topic-links">
+          <a href="topic75_how_lang_chain_works/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic75_how_lang_chain_works/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which word doesn&#x27;t belong? A. Apple B. Car C. Orange D. Banana">
+        <span class="topic-num">76</span>
+        <span class="topic-name">Which word doesn&#x27;t belong? A. Apple B. Car C. Orange D. Banana</span>
+        <span class="topic-links">
+          <a href="topic76_which_word_doesn_t_belong_a/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic76_which_word_doesn_t_belong_a/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Explain about the MIT license.">
+        <span class="topic-num">77</span>
+        <span class="topic-name">Explain about the MIT license.</span>
+        <span class="topic-links">
+          <a href="topic77_explain_about_the_mit_license/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic77_explain_about_the_mit_license/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Give outline of critical concepts in personal finance">
+        <span class="topic-num">78</span>
+        <span class="topic-name">Give outline of critical concepts in personal finance</span>
+        <span class="topic-links">
+          <a href="topic78_give_outline_of_critical_concepts_in/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic78_give_outline_of_critical_concepts_in/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="There is a rainstorm, there is thunder and lightning. You see a snake slither past you. It&#x27;s wet and slippery from the rain. Can you discern the shape of the raindrops?">
+        <span class="topic-num">79</span>
+        <span class="topic-name">There is a rainstorm, there is thunder and lightning. You see a snake slither past you.
+          It&#x27;s wet and slippery from th&hellip;</span>
+        <span class="topic-links">
+          <a href="topic79_there_is_a_rainstorm_there_is/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic79_there_is_a_rainstorm_there_is/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What inspired Leonardo da Vinci to create his famous painting &quot;Mona Lisa,&quot; and who modeled for him?">
+        <span class="topic-num">80</span>
+        <span class="topic-name">What inspired Leonardo da Vinci to create his famous painting &quot;Mona Lisa,&quot;
+          and who modeled for him?</span>
+        <span class="topic-links">
+          <a href="topic80_what_inspired_leonardo_da_vinci_to/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic80_what_inspired_leonardo_da_vinci_to/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What&#x27;s funnier than 420?">
+        <span class="topic-num">81</span>
+        <span class="topic-name">What&#x27;s funnier than 420?</span>
+        <span class="topic-links">
+          <a href="topic81_what_s_funnier_than_420/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic81_what_s_funnier_than_420/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how can I get minecraft java to run better?">
+        <span class="topic-num">82</span>
+        <span class="topic-name">how can I get minecraft java to run better?</span>
+        <span class="topic-links">
+          <a href="topic82_how_can_i_get_minecraft_java/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic82_how_can_i_get_minecraft_java/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="If you were a type of cheese, which one would you be?">
+        <span class="topic-num">83</span>
+        <span class="topic-name">If you were a type of cheese, which one would you be?</span>
+        <span class="topic-links">
+          <a href="topic83_if_you_were_a_type_of/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic83_if_you_were_a_type_of/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="If 3 + 4 = 19 5 + 6 = 41 2 + 8 = 66 5 + 1 = 6 then 1 + 3 = ? explain your reasoning step by step.">
+        <span class="topic-num">84</span>
+        <span class="topic-name">If 3 + 4 = 19 5 + 6 = 41 2 + 8 = 66 5 + 1 = 6 then 1 + 3 = ? explain your reasoning
+          step by step.</span>
+        <span class="topic-links">
+          <a href="topic84_if_3_4_19_5_6/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic84_if_3_4_19_5_6/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Given 4 floats representing the elements of a quaternion, how can I identify which is the scalar component without knowing the convention beforehand?">
+        <span class="topic-num">85</span>
+        <span class="topic-name">Given 4 floats representing the elements of a quaternion, how can I identify which is
+          the scalar component without kn&hellip;</span>
+        <span class="topic-links">
+          <a href="topic85_given_4_floats_representing_the_elements/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic85_given_4_floats_representing_the_elements/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What is faster: a car that can travel at 20kmh or a bicycle that can travel at 20kmh? Answer with one word.">
+        <span class="topic-num">86</span>
+        <span class="topic-name">What is faster: a car that can travel at 20kmh or a bicycle that can travel at 20kmh?
+          Answer with one word.</span>
+        <span class="topic-links">
+          <a href="topic86_what_is_faster_a_car_that/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic86_what_is_faster_a_car_that/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Give 10 useful suggestions how to best prepare, find opportunities and make use of future super intelligence and AGI. No bullshit please avoid giving me cliche advices.">
+        <span class="topic-num">87</span>
+        <span class="topic-name">Give 10 useful suggestions how to best prepare, find opportunities and make use of
+          future super intelligence and AGI.&hellip;</span>
+        <span class="topic-links">
+          <a href="topic87_give_10_useful_suggestions_how_to/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic87_give_10_useful_suggestions_how_to/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="consider this, i make graphic designs(t shirts, wall art posters, ecc) i want to sell them on pod websites, i have some designs that are for example vector illustrations, and i have many more that are watercolors, would it be more profitable to make multiple different accounts specialized on the artstyle or just upload different artstyles in the same shop categorized properly? research for success, stories on redbubble and such websites and elaborate a strategy that is the most profitable possible in terms of sales, be concise in your reply,">
+        <span class="topic-num">88</span>
+        <span class="topic-name">consider this, i make graphic designs(t shirts, wall art posters, ecc) i want to sell
+          them on pod websites, i have so&hellip;</span>
+        <span class="topic-links">
+          <a href="topic88_consider_this_i_make_graphic_designs/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic88_consider_this_i_make_graphic_designs/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="If you have a cube with each side measuring 2 inches, what is the total surface area of the cube?">
+        <span class="topic-num">89</span>
+        <span class="topic-name">If you have a cube with each side measuring 2 inches, what is the total surface area of
+          the cube?</span>
+        <span class="topic-links">
+          <a href="topic89_if_you_have_a_cube_with/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic89_if_you_have_a_cube_with/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="List all oncology drugs approved in or after 2020. Show only: Drug name(s), company, indication, year of approval.">
+        <span class="topic-num">90</span>
+        <span class="topic-name">List all oncology drugs approved in or after 2020. Show only: Drug name(s), company,
+          indication, year of approval.</span>
+        <span class="topic-links">
+          <a href="topic90_list_all_oncology_drugs_approved_in/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic90_list_all_oncology_drugs_approved_in/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="regroup these words into categories: bakery,candy,gummy bears,pastry,fish,meat,fruit,biscuit,cookies,vegetable,food can,dogs and cats,coffee,chocolate,food,prepared meal,toys,burger,plush">
+        <span class="topic-num">91</span>
+        <span class="topic-name">regroup these words into categories: bakery,candy,gummy
+          bears,pastry,fish,meat,fruit,biscuit,cookies,vegetable,food c&hellip;</span>
+        <span class="topic-links">
+          <a href="topic91_regroup_these_words_into_categories_bakery/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic91_regroup_these_words_into_categories_bakery/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="What are the biggest advances that have made VR more mainstream, since the original Oculus Rift?">
+        <span class="topic-num">92</span>
+        <span class="topic-name">What are the biggest advances that have made VR more mainstream, since the original
+          Oculus Rift?</span>
+        <span class="topic-links">
+          <a href="topic92_what_are_the_biggest_advances_that/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic92_what_are_the_biggest_advances_that/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

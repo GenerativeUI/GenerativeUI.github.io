@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Eco‑Safe Home – Prompt Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        :root {
+            --bg: #020617;
+            --bg-alt: #020a16;
+            --card: rgba(15, 23, 42, 0.96);
+            --card-soft: rgba(15, 23, 42, 0.9);
+            --border: rgba(148, 163, 184, 0.55);
+            --accent: #22c55e;
+            --accent-soft: rgba(34, 197, 94, 0.2);
+            --accent-blue: #38bdf8;
+            --danger: #f97373;
+            --warning: #facc15;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --shadow-main: 0 30px 90px rgba(15, 23, 42, 0.98);
+            --shadow-soft: 0 22px 70px rgba(15, 23, 42, 0.95);
+            --radius-lg: 1.7rem;
+            --radius-md: 1.1rem;
+            --radius-pill: 999px;
+            --transition-fast: 0.18s ease-out;
+            --transition: 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+            "Segoe UI", sans-serif;
+            background:
+                    radial-gradient(circle at top left, rgba(34, 197, 94, 0.26), transparent 55%),
+                    radial-gradient(circle at top right, rgba(56, 189, 248, 0.24), transparent 55%),
+                    radial-gradient(circle at bottom, rgba(16, 185, 129, 0.18), transparent 60%),
+                    #020617;
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem 1rem 2.6rem;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1.6rem 0.7rem 2rem;
+            }
+        }
+
+        .shell {
+            width: 100%;
+            max-width: 1240px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(145deg, #020617, #020818);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            box-shadow: var(--shadow-main);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shell::before {
+            content: "";
+            position: absolute;
+            inset: -25%;
+            background:
+                    radial-gradient(circle at 0% 0%, rgba(34, 197, 94, 0.2), transparent 55%),
+                    radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.18), transparent 55%);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .shell-inner {
+            position: relative;
+            z-index: 1;
+            padding: 2.1rem 2rem 2.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .shell-inner {
+                padding: 1.6rem 1.1rem 1.9rem;
+            }
+        }
+
+        /* Header */
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 2.1rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 900px) {
+            .top-row {
+                flex-direction: column;
+                gap: 1.4rem;
+            }
+        }
+
+        .badge-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(34, 197, 94, 0.6);
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: normal;
+        }
+
+        .badge-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.4);
+            flex-shrink: 0;
+        }
+
+        h1 {
+            margin-top: 0.9rem;
+            font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 640px;
+        }
+
+        h1 span.gradient {
+            background: linear-gradient(120deg, #22c55e, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            margin-top: 0.65rem;
+            font-size: 0.94rem;
+            color: var(--muted);
+            max-width: 640px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .hero-subtitle strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .hero-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.95rem;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.8rem;
+            color: var(--muted);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .hero-chip span.icon {
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .top-right {
+            min-width: 210px;
+            max-width: 320px;
+            text-align: right;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .top-right p {
+            margin-top: 0.8rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Layout main */
+
+        .layout-main {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+            gap: 1.7rem;
+            margin-top: 1.2rem;
+        }
+
+        @media (max-width: 980px) {
+            .layout-main {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 1.4rem;
+            }
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .panel {
+            background: var(--card-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            padding: 1.4rem 1.35rem 1.35rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.16), transparent 65%);
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .panel-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.9rem;
+            align-items: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .panel-title {
+            font-size: 0.86rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--muted);
+        }
+
+        .panel-title span {
+            color: var(--accent);
+        }
+
+        .panel-caption {
+            margin-top: 0.2rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            max-width: 420px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .panel-badge {
+            padding: 0.32rem 0.7rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.96);
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+
+        /* Controls left */
+
+        .section-label {
+            margin-top: 0.85rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--muted);
+        }
+
+        .section-label span {
+            color: var(--accent);
+        }
+
+        .control-grid-2 {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 0.75rem 1.1rem;
+        }
+
+        @media (max-width: 700px) {
+            .control-grid-2 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .field-label {
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.4rem;
+        }
+
+        .field-label span.hint {
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.88);
+            white-space: nowrap;
+        }
+
+        .field-input {
+            width: 100%;
+            border-radius: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617 70%);
+            color: var(--text);
+            padding: 0.55rem 0.8rem;
+            font-size: 0.8rem;
+            outline: none;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+            transform var(--transition-fast);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .field-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4), 0 22px 70px rgba(15, 23, 42, 1);
+            transform: translateY(-0.5px);
+        }
+
+        .field-input::placeholder {
+            color: rgba(148, 163, 184, 0.8);
+        }
+
+        /* Custom select */
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .field-select {
+            width: 100%;
+            border-radius: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background:
+                    radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617 70%);
+            color: var(--text);
+            padding: 0.55rem 2.2rem 0.55rem 0.8rem;
+            font-size: 0.8rem;
+            outline: none;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+            transform var(--transition-fast), background-color var(--transition-fast);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+
+        .field-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4), 0 22px 70px rgba(15, 23, 42, 1);
+            transform: translateY(-0.5px);
+        }
+
+        .select-wrapper::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            right: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.2 3.2L5 7l3.8-3.8' stroke='%23a5f3fc' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.9;
+        }
+
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .chip {
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.65);
+            background: rgba(15, 23, 42, 0.97);
+            padding: 0.3rem 0.85rem;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .chip span.icon {
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .chip.active {
+            border-color: var(--accent);
+            background: rgba(22, 163, 74, 0.16);
+            color: #bbf7d0;
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.45);
+        }
+
+        .hint-row {
+            margin-top: 0.35rem;
+            font-size: 0.74rem;
+            color: var(--muted);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .hint-row strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Modules section */
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.65rem;
+            margin-top: 0.4rem;
+        }
+
+        @media (min-width: 900px) {
+            .modules-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .module-card {
+            position: relative;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.97);
+            padding: 0.7rem 0.85rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.78rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            transition: all var(--transition);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .module-card:hover {
+            border-color: rgba(148, 163, 184, 0.98);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 45px rgba(15, 23, 42, 0.96);
+        }
+
+        .module-card.active {
+            border-color: var(--accent);
+            background: rgba(22, 163, 74, 0.16);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4),
+            0 14px 45px rgba(15, 23, 42, 0.96);
+        }
+
+        .module-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .module-title {
+            font-weight: 500;
+            color: #e5f9ed;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .module-tag {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(148, 163, 184, 0.96);
+        }
+
+        .module-icon {
+            font-size: 1.1rem;
+            filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.85));
+            flex-shrink: 0;
+        }
+
+        .module-desc {
+            font-size: 0.72rem;
+            color: rgba(203, 213, 225, 0.92);
+        }
+
+        /* Toggles row */
+
+        .toggle-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.55rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (min-width: 900px) {
+            .toggle-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .toggle {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.97);
+            font-size: 0.75rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .toggle:hover {
+            border-color: rgba(148, 163, 184, 0.95);
+        }
+
+        .toggle.active {
+            border-color: var(--accent);
+            background: rgba(22, 163, 74, 0.18);
+            color: #bbf7d0;
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+        }
+
+        .toggle-bullet {
+            width: 26px;
+            height: 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.75);
+            background: rgba(15, 23, 42, 1);
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 0.16rem;
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.98);
+            transition: all var(--transition-fast);
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8);
+        }
+
+        .toggle.active .toggle-bullet {
+            border-color: rgba(34, 197, 94, 0.9);
+            background: rgba(22, 163, 74, 0.4);
+        }
+
+        .toggle.active .toggle-knob {
+            transform: translateX(9px);
+            background: #bbf7d0;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+        }
+
+        .toggle-title {
+            font-weight: 500;
+            font-size: 0.78rem;
+        }
+
+        .toggle-desc {
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.94);
+        }
+
+        /* Right column: prompt + preview */
+
+        .prompt-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 1050px) {
+            .prompt-layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        textarea#promptOutput {
+            width: 100%;
+            min-height: 320px;
+            max-height: 480px;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.8);
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617 70%);
+            color: #e5e7eb;
+            padding: 1rem 1.05rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+            transform var(--transition-fast);
+        }
+
+        textarea#promptOutput:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.45),
+            0 26px 80px rgba(15, 23, 42, 1);
+            transform: translateY(-0.5px);
+        }
+
+        .prompt-toolbar {
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.7rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.74rem;
+            color: var(--muted);
+        }
+
+        .toolbar-left {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            align-items: center;
+        }
+
+        .toolbar-pill {
+            padding: 0.35rem 0.7rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.98);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .toolbar-pill span.dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .toolbar-pill span.warn {
+            background: var(--warning);
+        }
+
+        .toolbar-pill span.danger {
+            background: var(--danger);
+        }
+
+        .toolbar-pill strong {
+            color: #e5e7eb;
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border-radius: var(--radius-pill);
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.55rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .btn span.icon {
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #022c22;
+            box-shadow: 0 16px 45px rgba(22, 163, 74, 0.6);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 60px rgba(22, 163, 74, 0.78);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.97);
+            color: var(--muted);
+        }
+
+        .btn-outline:hover {
+            border-color: rgba(148, 163, 184, 1);
+            color: #e5e7eb;
+            box-shadow: 0 16px 50px rgba(15, 23, 42, 1);
+            transform: translateY(-0.5px);
+        }
+
+        /* Stats + example outline */
+
+        .prompt-side-card {
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 0.98);
+            padding: 0.9rem 0.95rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            height: 100%;
+        }
+
+        .side-title {
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.96);
+        }
+
+        .side-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.55rem;
+        }
+
+        .stat-chip {
+            padding: 0.45rem 0.5rem;
+            border-radius: 0.75rem;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            font-size: 0.73rem;
+        }
+
+        .stat-label {
+            color: rgba(148, 163, 184, 0.96);
+        }
+
+        .stat-value {
+            font-variant-numeric: tabular-nums;
+            color: #e5e7eb;
+            font-size: 0.86rem;
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-top: 0.2rem;
+            font-size: 0.73rem;
+        }
+
+        .score-bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 1);
+            border: 1px solid rgba(30, 64, 175, 0.9);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .score-bar-fill {
+            position: absolute;
+            inset: 0;
+            transform-origin: left center;
+            transform: scaleX(0.6);
+            background: linear-gradient(90deg, #22c55e, #38bdf8);
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
+            transition: transform 0.25s ease-out;
+        }
+
+        .outline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.2rem;
+        }
+
+        .outline-pill {
+            padding: 0.26rem 0.65rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: rgba(15, 23, 42, 1);
+            font-size: 0.68rem;
+            color: rgba(148, 163, 184, 0.92);
+        }
+
+        .outline-list {
+            margin-top: 0.4rem;
+            list-style: none;
+            padding-left: 0;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .outline-item {
+            display: flex;
+            gap: 0.4rem;
+            font-size: 0.74rem;
+            color: rgba(203, 213, 225, 0.92);
+            margin-bottom: 0.25rem;
+        }
+
+        .outline-item span.idx {
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.96);
+            flex-shrink: 0;
+        }
+
+        /* Result preview (approximate LLM output) */
+
+        .result-panel {
+            margin-top: 1.1rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.75);
+            background: rgba(15, 23, 42, 0.98);
+            padding: 0.85rem 0.95rem 0.8rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.6rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .result-title {
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.96);
+        }
+
+        .result-badge {
+            padding: 0.24rem 0.65rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(148, 163, 184, 0.75);
+            background: rgba(15, 23, 42, 1);
+            font-size: 0.68rem;
+            color: rgba(148, 163, 184, 0.96);
+        }
+
+        pre#resultPreview {
+            margin-top: 0.25rem;
+            border-radius: 0.8rem;
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), #020617);
+            border: 1px solid rgba(31, 41, 55, 0.9);
+            padding: 0.7rem 0.85rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            max-height: 240px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            color: #e5e7eb;
+        }
+
+        /* Toast */
+
+        .toast {
+            position: fixed;
+            bottom: 1.6rem;
+            right: 1.6rem;
+            min-width: 230px;
+            max-width: 300px;
+            padding: 0.75rem 0.95rem;
+            border-radius: 0.95rem;
+            border: 1px solid rgba(34, 197, 94, 0.65);
+            background: rgba(15, 23, 42, 0.98);
+            color: #e5e7eb;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            box-shadow: 0 18px 60px rgba(15, 23, 42, 1);
+            z-index: 40;
+            animation: toast-in 0.2s ease-out forwards;
+        }
+
+        @keyframes toast-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-icon {
+            font-size: 1rem;
+        }
+
+        .toast-body strong {
+            color: #bbf7d0;
+        }
+
+        /* Footer */
+
+        .footer-note {
+            margin-top: 1.4rem;
+            font-size: 0.74rem;
+            color: rgba(148, 163, 184, 0.96);
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .footer-note span.highlight {
+            color: var(--accent);
+        }
+
+        .kbd {
+            display: inline-block;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            border: 1px solid rgba(148, 163, 184, 0.9);
+            background: rgba(15, 23, 42, 0.98);
+            font-size: 0.72rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+        }
+    
+
+        /* IMAGE STYLES */
+        .hero-image {
+            width: 100%;
+            height: 320px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            margin-top: 1.2rem;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(34, 197, 94, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(34, 197, 94, 0.3),
+                0 0 40px rgba(34, 197, 94, 0.2);
+        }
+
+        .module-image {
+            width: 100%;
+            height: 140px;
+            border-radius: 0.75rem;
+            object-fit: cover;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            filter: brightness(0.9) saturate(0.9);
+        }
+
+        .module-card:hover .module-image {
+            filter: brightness(1) saturate(1.1);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(34, 197, 94, 0.2);
+            transform: scale(1.02);
+        }
+
+        .module-card.active .module-image {
+            filter: brightness(1.05) saturate(1.1);
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 
+                0 8px 20px rgba(34, 197, 94, 0.2),
+                0 0 0 1px rgba(34, 197, 94, 0.3),
+                inset 0 0 20px rgba(34, 197, 94, 0.05);
+        }
+
+        /* PREMIUM VISUAL ENHANCEMENTS */
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.35); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 20% 30%, rgba(34, 197, 94, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.15), transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(circle at 90% 70%, rgba(139, 92, 246, 0.08), transparent 40%),
+                linear-gradient(135deg, #020617 0%, #0a1628 50%, #020617 100%) !important;
+        }
+
+        .shell {
+            background: linear-gradient(145deg, rgba(2, 6, 23, 0.98), rgba(2, 8, 24, 0.95)) !important;
+            box-shadow: 
+                0 50px 100px -20px rgba(0, 0, 0, 0.8),
+                0 30px 60px -30px rgba(34, 197, 94, 0.2),
+                inset 0 1px 0 rgba(148, 163, 184, 0.1) !important;
+            backdrop-filter: blur(20px);
+        }
+
+        .shell::before {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .badge-main {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(22, 163, 74, 0.1)) !important;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        .badge-dot {
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        h1 {
+            text-shadow: 0 2px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        /* ВИПРАВЛЕННЯ: gradient має бути прозорим і показувати тільки текст */
+        h1 span.gradient {
+            background: linear-gradient(135deg, #22c55e 0%, #38bdf8 50%, #10b981 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text !important;
+            -moz-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            -moz-text-fill-color: transparent !important;
+            color: transparent !important;
+            animation: shimmer 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.4));
+            display: inline;
+        }
+
+        .panel {
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .field-input:focus, .field-select:focus {
+            box-shadow: 
+                0 0 0 3px rgba(34, 197, 94, 0.15),
+                0 8px 24px rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .chip.active {
+            box-shadow: 
+                0 0 20px rgba(34, 197, 94, 0.3),
+                0 4px 16px rgba(34, 197, 94, 0.2) !important;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .module-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .module-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .module-card.active {
+            box-shadow: 
+                0 0 30px rgba(34, 197, 94, 0.25),
+                0 8px 24px rgba(0, 0, 0, 0.4) !important;
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%) !important;
+            box-shadow: 
+                0 4px 16px rgba(34, 197, 94, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 24px rgba(34, 197, 94, 0.5),
+                0 0 40px rgba(34, 197, 94, 0.3) !important;
+        }
+
+        textarea#promptOutput:focus {
+            box-shadow: 
+                0 0 0 3px rgba(34, 197, 94, 0.15),
+                0 8px 32px rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .score-bar-fill {
+            box-shadow: 
+                0 0 20px rgba(34, 197, 94, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.6), rgba(56, 189, 248, 0.6));
+            border-radius: 5px;
+        }
+
+        ::selection {
+            background: rgba(34, 197, 94, 0.3);
+            color: #e5e7eb;
+        }
+
+    </style>
+</head>
+<body>
+<div class="shell">
+    <div class="shell-inner">
+        <header class="top-row">
+            <div>
+                <div class="badge-main">
+                    <span class="badge-dot"></span>
+                    <span>Eco‑Safe Home Prompt Lab</span>
+                </div>
+                <h1>
+                    Build a <span class="gradient">bullet‑proof prompt</span> for eco‑friendly pest‑control blog posts
+                </h1>
+                <p class="hero-subtitle">
+                    This lab lets you configure a <strong>long‑form, SEO‑ready outline</strong> for non‑toxic pest control content and instantly see both the prompt text and an approximate outline result.
+                </p>
+                <div class="hero-metrics">
+                    <div class="hero-chip">
+                        <span class="icon">🌿</span>
+                        <span>Eco‑friendly, family‑safe focus</span>
+                    </div>
+                    <div class="hero-chip">
+                        <span class="icon">🧠</span>
+                        <span>H1 / H2 / H3 structure only</span>
+                    </div>
+                    <div class="hero-chip">
+                        <span class="icon">🔍</span>
+                        <span>SEO & real‑world scenarios</span>
+                    </div>
+
+                </div>
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=400&fit=crop" 
+                     alt="Modern eco-friendly home" 
+                     class="hero-image"
+                     loading="lazy" />
+            </div>
+            <div class="top-right">
+                <div style="display:flex;justify-content:flex-end;gap:0.5rem;flex-wrap:wrap;">
+                    <div class="pill">Client ready</div>
+                    <div class="pill">Interactive</div>
+                </div>
+                <p>
+                    Use the left column to tune the prompt. On the right, you see the full prompt text and a live outline preview that updates as you change modules, tone, and depth.
+                </p>
+            </div>
+        </header>
+
+        <main class="layout-main">
+            <!-- LEFT COLUMN -->
+            <div class="column">
+                <!-- Core + tone panel -->
+                <section class="panel">
+                    <div class="panel-inner">
+                        <div class="panel-header">
+                            <div>
+                                <div class="panel-title">Prompt <span>Controls</span></div>
+                                <div class="panel-caption">
+                                    Fill these fields once and reuse the prompt for any eco‑friendly pest‑control topic.
+                                </div>
+                            </div>
+                            <div class="panel-badge">Step 1 · Context</div>
+                        </div>
+
+                        <div class="section-label">
+                            Core <span>context</span>
+                        </div>
+                        <div class="control-grid-2">
+                            <div>
+                                <div class="field-label">
+                                    <span>Website / brand name</span>
+                                    <span class="hint">Used in intro & CTA</span>
+                                </div>
+                                <input
+                                        id="fieldSiteName"
+                                        class="field-input"
+                                        type="text"
+                                        placeholder="Eco‑Safe Home"
+                                        value="Eco‑Safe Home"
+                                />
+                            </div>
+                            <div>
+                                <div class="field-label">
+                                    <span>Article title (H1)</span>
+                                    <span class="hint">Main blog title</span>
+                                </div>
+                                <input
+                                        id="fieldTitle"
+                                        class="field-input"
+                                        type="text"
+                                        value="Keeping Pests Away Without Harmful Pesticides – Eco-Friendly Pest Control Tips"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="control-grid-2" style="margin-top:0.7rem;">
+                            <div>
+                                <div class="field-label">
+                                    <span>Primary audience</span>
+                                    <span class="hint">2–3 personas max</span>
+                                </div>
+                                <input
+                                        id="fieldAudience"
+                                        class="field-input"
+                                        type="text"
+                                        value="homeowners, parents, and people who care about eco-friendly, family-safe solutions"
+                                />
+                            </div>
+                            <div>
+                                <div class="field-label">
+                                    <span>Region / market</span>
+                                    <span class="hint">Optional</span>
+                                </div>
+                                <input
+                                        id="fieldRegion"
+                                        class="field-input"
+                                        type="text"
+                                        placeholder="e.g. US & Canada, UK, EU, Australia"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="section-label" style="margin-top:1rem;">
+                            Tone &amp; <span>SEO</span>
+                        </div>
+                        <div class="chips-row" id="toneChips">
+                            <button class="chip active" type="button" data-tone="balanced">
+                                <span class="icon">🧩</span>
+                                <span>Balanced expert & friendly</span>
+                            </button>
+                            <button class="chip" type="button" data-tone="warm">
+                                <span class="icon">🤝</span>
+                                <span>Warm & reassuring</span>
+                            </button>
+                            <button class="chip" type="button" data-tone="authoritative">
+                                <span class="icon">📘</span>
+                                <span>Authoritative & data‑driven</span>
+                            </button>
+                            <button class="chip" type="button" data-tone="playful">
+                                <span class="icon">🌈</span>
+                                <span>Light & playful</span>
+                            </button>
+                        </div>
+
+                        <div class="control-grid-2" style="margin-top:0.7rem;">
+                            <div>
+                                <div class="field-label">
+                                    <span>SEO focus keywords</span>
+                                    <span class="hint">Comma‑separated</span>
+                                </div>
+                                <input
+                                        id="fieldKeywords"
+                                        class="field-input"
+                                        type="text"
+                                        value="eco-friendly pest control, non-toxic pest control, natural pest repellents, pet-safe pest control, organic garden pest control"
+                                />
+                            </div>
+                            <div>
+                                <div class="field-label">
+                                    <span>Outline depth</span>
+                                    <span class="hint">H2 / H3 level</span>
+                                </div>
+                                <div class="select-wrapper">
+                                    <select id="fieldDepth" class="field-select">
+                                        <option value="lean">Lean (compact, H2 only)</option>
+                                        <option value="standard" selected>Standard (H2 + some H3)</option>
+                                        <option value="detailed">Detailed (H2 + rich H3 notes)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modules + toggles panel -->
+                <section class="panel">
+                    <div class="panel-inner">
+                        <div class="panel-header">
+                            <div>
+                                <div class="panel-title">Content <span>Modules</span></div>
+                                <div class="panel-caption">
+                                    Switch modules on/off to see how both the prompt and example outline adjust.
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" type="button" id="btnPresetEditorial">
+                                <span class="icon">✨</span>
+                                Editorial preset
+                            </button>
+                        </div>
+
+                        <div class="section-label">
+                            Sections to <span>include</span>
+                        </div>
+                        <div class="modules-grid" id="modulesGrid">
+                            <div class="module-card active" data-module="prevention">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Home & kitchen prevention</div>
+                                        <div class="module-tag">Core</div>
+                                    </div>
+                                    <div class="module-icon">🏠</div>
+                                </div>
+                                <p class="module-desc">
+                                    Everyday steps: sealing entry points, food storage, cleaning routines, and waste management.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&h=400&fit=crop" alt="Clean kitchen" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card active" data-module="garden">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Garden & yard pests</div>
+                                        <div class="module-tag">Core</div>
+                                    </div>
+                                    <div class="module-icon">🌱</div>
+                                </div>
+                                <p class="module-desc">
+                                    Companion planting, soil health, physical barriers, and supporting natural predators.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=400&fit=crop" alt="Organic garden" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card active" data-module="kidsPets">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Kids & pets safety</div>
+                                        <div class="module-tag">Trust</div>
+                                    </div>
+                                    <div class="module-icon">🧒🐶</div>
+                                </div>
+                                <p class="module-desc">
+                                    Non‑toxic solutions near nurseries, play areas, and pet zones; what to avoid and why.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=400&fit=crop" alt="Child with pet" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card active" data-module="compare">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Chemicals vs eco‑approach</div>
+                                        <div class="module-tag">Must‑have</div>
+                                    </div>
+                                    <div class="module-icon">⚖️</div>
+                                </div>
+                                <p class="module-desc">
+                                    Quick comparison between chemical “quick fixes” and sustainable eco‑friendly methods.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=400&fit=crop" alt="Natural products" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card active" data-module="plan">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">1‑week action plan</div>
+                                        <div class="module-tag">Conversion</div>
+                                    </div>
+                                    <div class="module-icon">🗓️</div>
+                                </div>
+                                <p class="module-desc">
+                                    Simple 7‑day plan so readers can implement the ideas without feeling overwhelmed.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=400&fit=crop" alt="Planning" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card" data-module="faq">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">FAQ / objections</div>
+                                        <div class="module-tag">Optional</div>
+                                    </div>
+                                    <div class="module-icon">❓</div>
+                                </div>
+                                <p class="module-desc">
+                                    Cost, effectiveness vs chemicals, speed of results, and safety in special situations.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop" alt="Information" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card" data-module="myths">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Myth‑busting block</div>
+                                        <div class="module-tag">Optional</div>
+                                    </div>
+                                    <div class="module-icon">🧪</div>
+                                </div>
+                                <p class="module-desc">
+                                    “Natural = weak?”, “No smell = no effect?” and other myths debunked with simple examples.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=400&fit=crop" alt="Ideas" class="module-image" loading="lazy" />
+                            </div>
+
+                            <div class="module-card" data-module="cta">
+                                <div class="module-top">
+                                    <div>
+                                        <div class="module-title">Conversion‑focused CTA</div>
+                                        <div class="module-tag">Optional</div>
+                                    </div>
+                                    <div class="module-icon">📩</div>
+                                </div>
+                                <p class="module-desc">
+                                    Invite readers to download a checklist, join a newsletter, or book an eco‑friendly inspection.
+                                </p>
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop" alt="Community" class="module-image" loading="lazy" />
+                            </div>
+                        </div>
+
+                        <div class="section-label" style="margin-top:0.9rem;">
+                            Outline <span>behaviour</span>
+                        </div>
+                        <div class="toggle-row" id="extrasRow">
+                            <div class="toggle active" data-extra="examples">
+                                <div class="toggle-bullet">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                                <div>
+                                    <div class="toggle-title">Real‑life scenarios</div>
+                                    <div class="toggle-desc">
+                                        Include ants, fruit flies, mosquitoes, pantry moths, and similar everyday pests.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="toggle active" data-extra="seoNotes">
+                                <div class="toggle-bullet">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                                <div>
+                                    <div class="toggle-title">SEO implementation notes</div>
+                                    <div class="toggle-desc">
+                                        Ask for best practices for headings, meta description, and internal links.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="toggle" data-extra="story">
+                                <div class="toggle-bullet">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                                <div>
+                                    <div class="toggle-title">Mini story / hook</div>
+                                    <div class="toggle-desc">
+                                        Start with a short scenario instead of a generic textbook intro.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="toggle" data-extra="local">
+                                <div class="toggle-bullet">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                                <div>
+                                    <div class="toggle-title">Climate / region aware</div>
+                                    <div class="toggle-desc">
+                                        Reflect seasonal and regional pest patterns when a region is set.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="hint-row">
+                            Try to keep at least <strong>5 modules</strong> active for a full‑length outline example.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="column">
+                <section class="panel">
+                    <div class="panel-inner">
+                        <div class="panel-header">
+                            <div>
+                                <div class="panel-title">Final <span>Prompt</span></div>
+                                <div class="panel-caption">
+                                    This is what you paste into ChatGPT or any LLM. It updates live from your selections.
+                                </div>
+                            </div>
+                            <div class="panel-badge">Step 2 · Prompt</div>
+                        </div>
+
+                        <div class="prompt-layout">
+                            <div>
+                                <textarea id="promptOutput" spellcheck="false"></textarea>
+
+                                <div class="prompt-toolbar">
+                                    <div class="toolbar-left">
+                                        <div class="toolbar-pill">
+                                            <span class="dot"></span>
+                                            <span>Length: <strong id="statLength">long‑form</strong></span>
+                                        </div>
+                                        <div class="toolbar-pill">
+                                            <span class="dot warn"></span>
+                                            <span>Words (approx.): <strong id="statWords">0</strong></span>
+                                        </div>
+                                        <div class="toolbar-pill">
+                                            <span class="dot danger"></span>
+                                            <span>Characters: <strong id="statChars">0</strong></span>
+                                        </div>
+                                    </div>
+                                    <div class="toolbar-right">
+                                        <button class="btn btn-outline" type="button" id="btnPresetShort">
+                                            <span class="icon">⚡</span>
+                                            Shorter outline
+                                        </button>
+                                        <button class="btn btn-primary" type="button" id="btnCopy">
+                                            <span class="icon">📋</span>
+                                            Copy prompt
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <aside class="prompt-side-card">
+                                <div class="side-title">Prompt stats & key sections</div>
+                                <div class="side-grid">
+                                    <div class="stat-chip">
+                                        <span class="stat-label">Completeness score</span>
+                                        <span class="stat-value" id="scoreLabel">7/10</span>
+                                    </div>
+                                    <div class="stat-chip">
+                                        <span class="stat-label">Modules on</span>
+                                        <span class="stat-value" id="statModules">0</span>
+                                    </div>
+                                    <div class="stat-chip">
+                                        <span class="stat-label">Extras on</span>
+                                        <span class="stat-value" id="statExtras">0</span>
+                                    </div>
+                                </div>
+
+                                <div class="score-row">
+                                    <span>Prompt readiness</span>
+                                    <div class="score-bar">
+                                        <div class="score-bar-fill" id="scoreFill"></div>
+                                    </div>
+                                </div>
+
+                                <div class="outline-tags" id="outlineTags"></div>
+
+                                <ul class="outline-list" id="outlineList"></ul>
+                            </aside>
+                        </div>
+
+                        <div class="result-panel">
+                            <div class="result-header">
+                                <div class="result-title">Approximate outline the AI will return</div>
+                                <div class="result-badge">Step 3 · Result preview</div>
+                            </div>
+                            <pre id="resultPreview"></pre>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer-note">
+        <span>
+          Tip: click inside the prompt and press
+          <span class="kbd">Ctrl</span> + <span class="kbd">A</span>, then
+          <span class="kbd">Ctrl</span> + <span class="kbd">C</span> to copy everything.
+        </span>
+            <span>
+          For Upwork, this page looks like a finished “prompt product”: interactive controls, live stats, and a simulated outline result – no backend needed. <span class="highlight">Just open in browser.</span>
+        </span>
+        </footer>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const siteNameEl = document.getElementById("fieldSiteName");
+        const titleEl = document.getElementById("fieldTitle");
+        const audienceEl = document.getElementById("fieldAudience");
+        const regionEl = document.getElementById("fieldRegion");
+        const keywordsEl = document.getElementById("fieldKeywords");
+        const depthEl = document.getElementById("fieldDepth");
+        const toneChips = Array.from(
+            document.querySelectorAll("#toneChips .chip")
+        );
+        const moduleCards = Array.from(
+            document.querySelectorAll("#modulesGrid .module-card")
+        );
+        const extraToggles = Array.from(
+            document.querySelectorAll("#extrasRow .toggle")
+        );
+
+        const promptOutput = document.getElementById("promptOutput");
+        const statWords = document.getElementById("statWords");
+        const statChars = document.getElementById("statChars");
+        const statLength = document.getElementById("statLength");
+        const scoreFill = document.getElementById("scoreFill");
+        const scoreLabel = document.getElementById("scoreLabel");
+        const statModules = document.getElementById("statModules");
+        const statExtras = document.getElementById("statExtras");
+        const outlineTags = document.getElementById("outlineTags");
+        const outlineList = document.getElementById("outlineList");
+        const resultPreview = document.getElementById("resultPreview");
+
+        const btnCopy = document.getElementById("btnCopy");
+        const btnPresetShort = document.getElementById("btnPresetShort");
+        const btnPresetEditorial = document.getElementById("btnPresetEditorial");
+
+        const state = {
+            tone: "balanced",
+            modules: new Set(["prevention", "garden", "kidsPets", "compare", "plan"]),
+            extras: new Set(["examples", "seoNotes"]),
+        };
+
+        function getToneDescription(tone) {
+            switch (tone) {
+                case "warm":
+                    return "warm, reassuring, conversational and family‑oriented";
+                case "authoritative":
+                    return "calm, authoritative, data‑informed but still approachable";
+                case "playful":
+                    return "light, playful, but still practical and trustworthy";
+                default:
+                    return "informative, engaging, empowering, practical, and positive";
+            }
+        }
+
+        function buildPrompt() {
+            const siteName = siteNameEl.value.trim() || "Eco‑Safe Home";
+            const title =
+                titleEl.value.trim() ||
+                "Keeping Pests Away Without Harmful Pesticides – Eco-Friendly Pest Control Tips";
+            const audience =
+                audienceEl.value.trim() ||
+                "homeowners, parents, and people who care about eco-friendly, family-safe solutions";
+            const region = regionEl.value.trim();
+            const keywords = keywordsEl.value.trim();
+            const depth = depthEl.value;
+
+            const toneDescription = getToneDescription(state.tone);
+
+            const includeExamples = state.extras.has("examples");
+            const includeSeoNotes = state.extras.has("seoNotes");
+            const includeStory = state.extras.has("story");
+            const includeLocal = state.extras.has("local");
+
+            const hasPrevention = state.modules.has("prevention");
+            const hasGarden = state.modules.has("garden");
+            const hasKidsPets = state.modules.has("kidsPets");
+            const hasCompare = state.modules.has("compare");
+            const hasPlan = state.modules.has("plan");
+            const hasFaq = state.modules.has("faq");
+            const hasMyths = state.modules.has("myths");
+            const hasCta = state.modules.has("cta");
+
+            const lines = [];
+
+            lines.push(
+                "You are an expert content strategist and SEO copywriter for eco-friendly home and garden blogs."
+            );
+            lines.push("");
+            lines.push(
+                `Your task: create a comprehensive outline for a ${depth === "lean" ? "medium-length" : depth === "standard" ? "long-form" : "in‑depth, long-form"} blog post titled **“${title}”** for the **${siteName}** website.`
+            );
+            lines.push("");
+
+            lines.push("**Audience and tone**");
+            lines.push(`- Primary audience: ${audience}.`);
+            if (region) {
+                lines.push(`- Region / market focus: ${region}.`);
+            }
+            lines.push(
+                `- Tone: ${toneDescription}. Avoid fear-mongering and overly technical jargon; focus on clear, realistic, step-by-step solutions.`
+            );
+            lines.push("");
+
+            lines.push("**Main goals of the article**");
+            lines.push(
+                "- Explain why reducing harmful pesticide use matters for families, pets, local ecosystems, and the wider environment."
+            );
+            lines.push(
+                "- Show readers practical, easy-to-follow alternatives they can actually try at home without needing specialist equipment."
+            );
+            lines.push(
+                "- Help the article rank for relevant eco-friendly pest control keywords by using natural, reader-first SEO best practices."
+            );
+            if (keywords) {
+                lines.push(
+                    `- Prioritize these keyphrases (without keyword stuffing): ${keywords}.`
+                );
+            }
+            lines.push("");
+
+            lines.push("**Introduction requirements**");
+            if (includeStory) {
+                lines.push(
+                    "- Open with a short, relatable story (2–3 sentences) about a typical family or homeowner struggling with pests but nervous about chemical sprays."
+                );
+            } else {
+                lines.push(
+                    "- Start with a strong hook or short scenario about common pest problems in a family home or garden."
+                );
+            }
+            lines.push(
+                "- Briefly explain the risks of traditional chemical pesticides for children, babies, pets, pollinators (like bees and butterflies), and soil and water health."
+            );
+            lines.push(
+                "- Clearly state what readers will learn in this blog post and why now is the right time to switch to safer, eco-friendly habits."
+            );
+            lines.push(
+                "- Set expectations for the structure: prevention first, then remedies, then a simple action plan."
+            );
+            lines.push("");
+            lines.push(
+                "- Immediately after the introduction, include a clear **Table of Contents** with numbered sections and subsections that reflect the structure of the post."
+            );
+            lines.push("");
+
+            lines.push("**Core body structure and sections**");
+            lines.push(
+                "- Organize the body into logical sections using keyword-rich but natural H2 headings and optional H3 subheadings."
+            );
+            lines.push(
+                "- Prioritize prevention and home maintenance before you describe any remedies or products."
+            );
+            lines.push("");
+
+            if (hasPrevention) {
+                lines.push("1. **Eco-friendly pest prevention inside the home (H2)**");
+                lines.push(
+                    "   - Focus first on simple habit changes: cleanliness routines, decluttering, vacuuming, wiping surfaces, and dealing with crumbs and spills quickly."
+                );
+                lines.push(
+                    "   - Explain how sealing cracks, gaps, and entry points around doors, windows, and baseboards helps keep pests out."
+                );
+                lines.push(
+                    "   - Cover proper food and waste storage: airtight containers, compost management, pet food bowls, and trash bins."
+                );
+                if (includeExamples) {
+                    lines.push(
+                        "   - Include real-life scenarios such as: ants in the kitchen, fruit flies around a compost caddy, pantry moths in dry goods, or cockroaches in warm, damp areas."
+                    );
+                }
+                lines.push("");
+            }
+
+            if (hasGarden) {
+                lines.push("2. **Garden- and yard-friendly pest control (H2)**");
+                lines.push(
+                    "   - Show how healthy soil, proper watering, and plant diversity naturally reduce pest pressure."
+                );
+                lines.push(
+                    "   - Explain companion planting and using beneficial insects (ladybugs, lacewings, etc.) as natural allies."
+                );
+                lines.push(
+                    "   - Mention physical barriers (row covers, netting, copper tape for slugs) and how to use them safely."
+                );
+                if (includeExamples) {
+                    lines.push(
+                        "   - Give specific examples: protecting vegetable beds from slugs and snails, keeping aphids off roses, deterring mosquitoes from standing water, and keeping pests out of kids’ outdoor play areas."
+                    );
+                }
+                lines.push(
+                    "   - Emphasize protecting pollinators and beneficial insects by timing any interventions carefully and avoiding broad-spectrum sprays."
+                );
+                lines.push("");
+            }
+
+            if (hasKidsPets) {
+                lines.push("3. **Non-toxic pest control around kids and pets (H2)**");
+                lines.push(
+                    "   - Explain principles for choosing child-safe and pet-safe solutions (clear labeling, avoiding certain active ingredients, no sprays on toys or pet bedding, etc.)."
+                );
+                lines.push(
+                    "   - Address common household pests that parents worry about: fleas and ticks, mosquitoes in the yard, and crawling insects around play areas."
+                );
+                lines.push(
+                    "   - Give practical placement tips for traps and barriers so they work without putting children or animals at risk."
+                );
+                lines.push(
+                    "   - Include a short note on when to consult a pediatrician or vet if there are health concerns."
+                );
+                lines.push("");
+            }
+
+            if (hasCompare) {
+                lines.push(
+                    "4. **Quick chemical fixes vs. sustainable eco-friendly approaches (H2)**"
+                );
+                lines.push(
+                    "   - Briefly compare “spray-and-forget” chemical solutions with integrated, eco-friendly approaches."
+                );
+                lines.push(
+                    "   - Highlight long-term benefits of eco-friendly methods: reduced exposure to toxins, healthier soil and pollinators, fewer recurring infestations, and better indoor air quality."
+                );
+                lines.push(
+                    "   - Make it clear that the article does *not* give medical or regulatory advice, but focuses on practical, safer household habits."
+                );
+                lines.push("");
+            }
+
+            if (hasPlan) {
+                lines.push(
+                    "5. **How to create your eco-friendly pest control plan this week (H2)**"
+                );
+                lines.push(
+                    "   - Turn the article into action with 3–5 simple steps a busy reader can complete within 7 days."
+                );
+                lines.push(
+                    "   - Order the steps from easiest to more advanced, so readers feel early wins."
+                );
+                lines.push(
+                    "   - Encourage readers to track changes (fewer ants, fewer bites, healthier plants) so they can see that eco-friendly solutions work."
+                );
+                lines.push("");
+            }
+
+            if (hasFaq) {
+                lines.push("6. **Short FAQ: eco-friendly pest control (H2)**");
+                lines.push(
+                    "   - Answer 4–6 of the most common questions briefly (2–3 sentences each)."
+                );
+                lines.push(
+                    "   - Example topics: “Is eco-friendly pest control really as effective?”, “Will it cost more than chemical sprays?”, “How quickly should I expect results?”, “Is it safe during pregnancy or with newborns?”, “What if my neighbor still uses strong chemicals?”."
+                );
+                lines.push("");
+            }
+
+            if (hasMyths) {
+                lines.push("7. **Myths and misconceptions to avoid (H2)**");
+                lines.push(
+                    "   - Debunk common myths, such as: “Natural = weak,” “If I don’t smell chemicals, nothing is working,” or “Eco-friendly methods are too complicated and time-consuming.”"
+                );
+                lines.push(
+                    "   - Contrast each myth with a clear, encouraging truth and one simple example or tip."
+                );
+                lines.push("");
+            }
+
+            if (hasCta) {
+                lines.push("8. **Conclusion and call to action (H2)**");
+            } else {
+                lines.push("**Conclusion and call to action**");
+            }
+            lines.push(
+                "- Summarize the main benefits of keeping pests away without harmful pesticides (health, comfort, peace of mind, environmental impact)."
+            );
+            lines.push(
+                "- Reassure readers that they do not have to be perfect: even a few changes can make a meaningful difference."
+            );
+            lines.push(
+                "- Include a clear call to action, such as trying one or two specific tips this week, exploring more resources on the site, or downloading a printable checklist or quick-start guide."
+            );
+            lines.push("");
+
+            if (includeLocal && region) {
+                lines.push("**Regional and seasonal considerations**");
+                lines.push(
+                    `- Briefly mention how common pests and best practices might change depending on the climate and seasons in **${region}** (for example, winter rodents vs. summer mosquitoes).`
+                );
+                lines.push(
+                    "- Encourage the reader to adapt timing and examples in the outline to match local weather patterns and regulations."
+                );
+                lines.push("");
+            }
+
+            if (includeSeoNotes) {
+                lines.push("**SEO and formatting guidelines for the outline**");
+                lines.push(
+                    "- Format the response as a clean, hierarchical outline using clear H1, H2, and optional H3 labels (no HTML)."
+                );
+                lines.push(
+                    "- Make headings descriptive and keyword-rich but still natural and reader-friendly, not robotic."
+                );
+                lines.push(
+                    "- Under each heading or subheading, include short explanatory notes or bullet points so a content writer could draft the article from the outline alone."
+                );
+                lines.push(
+                    "- Suggest where to place internal links to other eco-friendly or safety-related resources on the same website."
+                );
+                lines.push(
+                    "- If possible, propose one concise meta description idea (around 150–160 characters) that reflects the core benefit and keyphrase."
+                );
+                lines.push("");
+            } else {
+                lines.push("**Formatting instructions**");
+                lines.push(
+                    "- Format the response as a clean outline using H1 / H2 / H3 labels (no HTML)."
+                );
+                lines.push(
+                    "- Make headings themselves keyword-rich but still natural and readable."
+                );
+                lines.push(
+                    "- Use short explanatory notes or bullet points under each heading so the outline can be handed directly to a content writer."
+                );
+                lines.push("");
+            }
+
+            if (includeExamples) {
+                lines.push("**Examples and scenarios**");
+                lines.push(
+                    "- Throughout the outline, reference specific, everyday examples such as: ants in the kitchen, fruit flies around fruit bowls, pantry moths in grains, spiders in basements, mosquitoes in backyards, and pests around kids’ play areas or pet zones."
+                );
+                lines.push(
+                    "- When you mention any remedy, emphasize non-toxic, family-safe, and pet-safe options first."
+                );
+                lines.push("");
+            }
+
+            return lines.join("\n");
+        }
+
+        function buildApproximateResult() {
+            const title =
+                titleEl.value.trim() ||
+                "Keeping Pests Away Without Harmful Pesticides – Eco-Friendly Pest Control Tips";
+            const hasPrevention = state.modules.has("prevention");
+            const hasGarden = state.modules.has("garden");
+            const hasKidsPets = state.modules.has("kidsPets");
+            const hasCompare = state.modules.has("compare");
+            const hasPlan = state.modules.has("plan");
+            const hasFaq = state.modules.has("faq");
+            const hasMyths = state.modules.has("myths");
+            const hasCta = state.modules.has("cta");
+            const includeStory = state.extras.has("story");
+
+            const lines = [];
+
+            if (includeStory) {
+                lines.push(
+                    "Intro: short story about a family that tried one strong spray, then switched to gentler, eco‑friendly habits."
+                );
+            } else {
+                lines.push(
+                    "Intro: direct hook about common kitchen and garden pests and the wish to avoid harsh chemicals."
+                );
+            }
+            lines.push("");
+
+            lines.push("H1: " + title);
+            lines.push("");
+
+            lines.push("H2: Why eco‑friendly pest control matters");
+            lines.push("  H3: Hidden costs of harsh chemical sprays");
+            lines.push("  H3: How safer methods protect families, pets, and pollinators");
+            lines.push("");
+
+            if (hasPrevention) {
+                lines.push("H2: Simple prevention wins inside your home");
+                lines.push("  H3: Close the doors – sealing the most common entry points");
+                lines.push("  H3: Kitchen and pantry habits that quietly starve pests");
+                lines.push("  H3: Smart food and waste storage that still fits busy life");
+                lines.push("");
+            }
+
+            if (hasGarden) {
+                lines.push("H2: Building a pest‑smart, pollinator‑friendly garden");
+                lines.push("  H3: Soil health and plant diversity as your first “pesticide”");
+                lines.push("  H3: Companion planting and natural predators that do the work for you");
+                lines.push("  H3: Physical barriers that protect crops without hurting bees");
+                lines.push("");
+            }
+
+            if (hasKidsPets) {
+                lines.push("H2: Keeping kids and pets safe while you fight pests");
+                lines.push("  H3: How to read labels and avoid risky ingredients");
+                lines.push("  H3: Placing traps and barriers where little hands and paws can’t reach");
+                lines.push("  H3: When to talk to your pediatrician or vet");
+                lines.push("");
+            }
+
+            if (hasCompare) {
+                lines.push("H2: Chemical quick fixes vs. sustainable eco‑friendly habits");
+                lines.push("  H3: Why “kill everything now” often leads to repeat infestations");
+                lines.push("  H3: The long‑term payoff of gentler, prevention‑first strategies");
+                lines.push("");
+            }
+
+            if (hasPlan) {
+                lines.push("H2: Your 7‑day eco‑friendly pest control action plan");
+                lines.push("  H3: Day 1–2 · Quick wins inside the kitchen and pantry");
+                lines.push("  H3: Day 3–4 · Sealing key gaps and entry points");
+                lines.push("  H3: Day 5–6 · Garden tweaks and outdoor hotspots");
+                lines.push("  H3: Day 7 · Review results and plan next month");
+                lines.push("");
+            }
+
+            if (hasFaq) {
+                lines.push("H2: Quick answers to common questions");
+                lines.push("  H3: “Is eco‑friendly pest control really as effective?”");
+                lines.push("  H3: “Will this cost more than traditional sprays?”");
+                lines.push("  H3: “How long until I notice fewer pests?”");
+                lines.push("");
+            }
+
+            if (hasMyths) {
+                lines.push("H2: Myths that keep pests in your home");
+                lines.push("  H3: “Natural = weak and slow”");
+                lines.push("  H3: “If it doesn’t smell toxic, it doesn’t work”");
+                lines.push("");
+            }
+
+            if (hasCta) {
+                lines.push("H2: Next steps with Eco‑Safe Home");
+                lines.push("  H3: Downloadable checklist and fridge‑friendly reminders");
+                lines.push("  H3: When it makes sense to call an eco‑friendly professional");
+                lines.push("");
+            } else {
+                lines.push("H2: Bringing it all together");
+                lines.push("  H3: Small changes that add up over one season");
+                lines.push("  H3: How to stay consistent without feeling overwhelmed");
+                lines.push("");
+            }
+
+            return lines.join("\n");
+        }
+
+        function updateScoreAndOutline() {
+            const moduleCount = state.modules.size;
+            const extrasCount = state.extras.size;
+            let score = 4 + moduleCount + extrasCount;
+            if (score > 10) score = 10;
+            if (score < 1) score = 1;
+
+            const ratio = score / 10;
+            scoreFill.style.transform = "scaleX(" + ratio.toFixed(2) + ")";
+            scoreLabel.textContent = score + "/10";
+            statModules.textContent = moduleCount.toString();
+            statExtras.textContent = extrasCount.toString();
+
+            const tags = [];
+            if (state.modules.has("prevention")) tags.push("Home prevention");
+            if (state.modules.has("garden")) tags.push("Garden & yard");
+            if (state.modules.has("kidsPets")) tags.push("Kids & pets");
+            if (state.modules.has("compare")) tags.push("Chemicals vs eco");
+            if (state.modules.has("plan")) tags.push("1‑week plan");
+            if (state.modules.has("faq")) tags.push("FAQ");
+            if (state.modules.has("myths")) tags.push("Myths");
+            if (state.modules.has("cta")) tags.push("CTA");
+
+            outlineTags.innerHTML = "";
+            tags.forEach(function (t) {
+                const span = document.createElement("span");
+                span.className = "outline-pill";
+                span.textContent = t;
+                outlineTags.appendChild(span);
+            });
+
+            const exampleItems = [];
+            exampleItems.push("Introduction + promise of safer, eco-friendly pest control.");
+            if (state.modules.has("prevention"))
+                exampleItems.push("H2: Everyday prevention wins inside the home.");
+            if (state.modules.has("garden"))
+                exampleItems.push("H2: Building a resilient, pest-smart garden.");
+            if (state.modules.has("kidsPets"))
+                exampleItems.push("H2: Safer spaces for kids and pets.");
+            if (state.modules.has("compare"))
+                exampleItems.push("H2: Why harsh chemicals backfire long-term.");
+            if (state.modules.has("plan"))
+                exampleItems.push("H2: Your 7-day action plan.");
+            if (state.modules.has("faq"))
+                exampleItems.push("H2: Short FAQ about cost, speed, and safety.");
+            if (state.modules.has("myths"))
+                exampleItems.push("H2: Myths that keep pests in your home.");
+            exampleItems.push("Conclusion + next steps and gentle CTA.");
+
+            outlineList.innerHTML = "";
+            exampleItems.forEach(function (text, idx) {
+                const li = document.createElement("li");
+                li.className = "outline-item";
+                const idxSpan = document.createElement("span");
+                idxSpan.className = "idx";
+                idxSpan.textContent = (idx + 1) + ".";
+                const txtSpan = document.createElement("span");
+                txtSpan.textContent = text;
+                li.appendChild(idxSpan);
+                li.appendChild(txtSpan);
+                outlineList.appendChild(li);
+            });
+
+            resultPreview.textContent = buildApproximateResult();
+        }
+
+        function updatePrompt() {
+            const prompt = buildPrompt();
+            promptOutput.value = prompt;
+
+            const charCount = prompt.length;
+            const wordCount = prompt
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean).length;
+
+            statChars.textContent = charCount.toString();
+            statWords.textContent = wordCount.toString();
+
+            let lengthLabel = "long‑form";
+            if (wordCount < 500) lengthLabel = "compact";
+            else if (wordCount < 900) lengthLabel = "standard";
+            statLength.textContent = lengthLabel;
+
+            updateScoreAndOutline();
+        }
+
+        function setTone(tone) {
+            state.tone = tone;
+            toneChips.forEach(function (chip) {
+                chip.classList.toggle(
+                    "active",
+                    chip.getAttribute("data-tone") === tone
+                );
+            });
+            updatePrompt();
+        }
+
+        function toggleModule(moduleName) {
+            if (state.modules.has(moduleName)) {
+                state.modules.delete(moduleName);
+            } else {
+                state.modules.add(moduleName);
+            }
+            moduleCards.forEach(function (card) {
+                const name = card.getAttribute("data-module");
+                card.classList.toggle("active", state.modules.has(name));
+            });
+            updatePrompt();
+        }
+
+        function toggleExtra(extraName) {
+            if (state.extras.has(extraName)) {
+                state.extras.delete(extraName);
+            } else {
+                state.extras.add(extraName);
+            }
+            extraToggles.forEach(function (toggle) {
+                const name = toggle.getAttribute("data-extra");
+                toggle.classList.toggle("active", state.extras.has(name));
+            });
+            updatePrompt();
+        }
+
+        function attachEvents() {
+            [siteNameEl, titleEl, audienceEl, regionEl, keywordsEl].forEach(
+                function (el) {
+                    el.addEventListener("input", updatePrompt);
+                }
+            );
+            depthEl.addEventListener("change", updatePrompt);
+
+            toneChips.forEach(function (chip) {
+                chip.addEventListener("click", function () {
+                    const tone = chip.getAttribute("data-tone");
+                    setTone(tone);
+                });
+            });
+
+            moduleCards.forEach(function (card) {
+                card.addEventListener("click", function () {
+                    const moduleName = card.getAttribute("data-module");
+                    toggleModule(moduleName);
+                });
+            });
+
+            extraToggles.forEach(function (toggle) {
+                toggle.addEventListener("click", function () {
+                    const name = toggle.getAttribute("data-extra");
+                    toggleExtra(name);
+                });
+            });
+
+            btnCopy.addEventListener("click", function () {
+                promptOutput.select();
+                try {
+                    const ok = document.execCommand("copy");
+                    if (ok) {
+                        showToast("Prompt copied", "Paste it into ChatGPT or any other AI assistant.");
+                    } else {
+                        showToast("Copy not allowed", "Select the text and use Ctrl+C / Cmd+C manually.");
+                    }
+                } catch (e) {
+                    showToast("Copy not allowed", "Select the text and use Ctrl+C / Cmd+C manually.");
+                }
+                promptOutput.setSelectionRange(0, 0);
+            });
+
+            btnPresetShort.addEventListener("click", function () {
+                depthEl.value = "lean";
+                state.modules.delete("faq");
+                state.modules.delete("myths");
+                moduleCards.forEach(function (card) {
+                    const name = card.getAttribute("data-module");
+                    card.classList.toggle("active", state.modules.has(name));
+                });
+                updatePrompt();
+            });
+
+            btnPresetEditorial.addEventListener("click", function () {
+                depthEl.value = "detailed";
+                ["prevention", "garden", "kidsPets", "compare", "plan", "faq", "myths", "cta"].forEach(
+                    function (m) {
+                        state.modules.add(m);
+                    }
+                );
+                ["examples", "seoNotes", "story", "local"].forEach(function (x) {
+                    state.extras.add(x);
+                });
+                moduleCards.forEach(function (card) {
+                    const name = card.getAttribute("data-module");
+                    card.classList.toggle("active", state.modules.has(name));
+                });
+                extraToggles.forEach(function (toggle) {
+                    const name = toggle.getAttribute("data-extra");
+                    toggle.classList.toggle("active", state.extras.has(name));
+                });
+                setTone("balanced");
+                updatePrompt();
+            });
+        }
+
+        let toastTimeout = null;
+        function showToast(title, message) {
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+                toastTimeout = null;
+            }
+            const existing = document.querySelector(".toast");
+            if (existing) existing.remove();
+
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerHTML =
+                '<div class="toast-icon">✅</div>' +
+                '<div class="toast-body"><strong>' +
+                title +
+                "</strong><br/>" +
+                message +
+                "</div>";
+            document.body.appendChild(toast);
+
+            toastTimeout = setTimeout(function () {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateY(6px)";
+                setTimeout(function () {
+                    toast.remove();
+                }, 200);
+            }, 2600);
+        }
+
+        attachEvents();
+        updatePrompt();
+    })();
+</script>
+</body>
+</html>

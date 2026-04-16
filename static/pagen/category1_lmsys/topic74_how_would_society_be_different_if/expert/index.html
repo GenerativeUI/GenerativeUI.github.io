@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Growth Society: Life Beyond Economic Growth | Interactive Exploration</title>
+    <meta name="description" content="Discover how society would transform if we prioritized wellbeing over endless economic growth. Explore real examples, research data, and interactive scenarios of post-growth living.">
+    <meta name="keywords" content="degrowth, post-growth society, sustainability, work-life balance, climate change, economic alternatives, wellbeing economics">
+    <meta name="author" content="Post-Growth Research">
+
+    <meta property="og:title" content="Post-Growth Society: Life Beyond Economic Growth">
+    <meta property="og:description" content="Interactive exploration of how society would transform with degrowth economics - featuring real examples like Iceland's 4-day work week success.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./images/community-garden.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Post-Growth Society: Life Beyond Economic Growth">
+    <meta name="twitter:description" content="Explore how prioritizing wellbeing over growth could transform our world. Real examples and research-backed insights.">
+    <meta name="twitter:image" content="./images/community-garden.jpg">
+
+    <style>
+        /* Post-Growth Society Design System - Earth-centered, sustainable design */
+        :root {
+            /* Earth-tone color palette for sustainability theme */
+            --background: 47 15% 97%;
+            --foreground: 162 100% 8%;
+            --card: 50 25% 95%;
+            --card-foreground: 162 100% 8%;
+            --primary: 162 100% 25%;
+            --primary-foreground: 47 15% 97%;
+            --primary-glow: 162 80% 35%;
+            --secondary: 28 100% 85%;
+            --secondary-foreground: 162 100% 12%;
+            --muted: 95 25% 88%;
+            --muted-foreground: 162 50% 35%;
+            --accent: 15 75% 65%;
+            --accent-foreground: 47 15% 97%;
+            --destructive: 45 100% 55%;
+            --destructive-foreground: 162 100% 8%;
+            --border: 95 25% 85%;
+            --radius: 0.75rem;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 4px 20px hsl(var(--primary) / 0.1);
+            --shadow-strong: 0 10px 40px hsl(var(--primary) / 0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: 162 25% 8%;
+                --foreground: 47 40% 92%;
+                --card: 162 20% 12%;
+                --card-foreground: 47 40% 92%;
+                --primary: 162 80% 45%;
+                --primary-foreground: 162 25% 8%;
+                --primary-glow: 162 70% 55%;
+                --secondary: 28 50% 25%;
+                --secondary-foreground: 47 40% 92%;
+                --muted: 162 15% 18%;
+                --muted-foreground: 162 20% 65%;
+                --accent: 15 65% 55%;
+                --accent-foreground: 162 25% 8%;
+                --destructive: 45 85% 50%;
+                --destructive-foreground: 162 25% 8%;
+                --border: 162 15% 20%;
+                --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
+                --shadow-strong: 0 10px 40px hsl(0 0% 0% / 0.4);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero .highlight {
+            color: hsl(var(--primary-glow));
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: hsl(var(--primary-glow));
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: hsl(var(--primary));
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards */
+        .card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: hsl(var(--primary));
+        }
+
+        .card p {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 1rem;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Comparison Section */
+        .comparison {
+            background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)));
+        }
+
+        .comparison-card {
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .growth-society {
+            background: hsla(0, 84%, 60%, 0.1);
+            border: 1px solid hsla(0, 84%, 60%, 0.2);
+        }
+
+        .post-growth-society {
+            background: hsla(var(--primary), 0.1);
+            border: 1px solid hsl(var(--primary) / 0.2);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge-destructive {
+            background: hsl(var(--destructive));
+            color: hsl(var(--destructive-foreground));
+        }
+
+        .badge-primary {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)));
+        }
+
+        .benefit-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .benefit-icon.green { background: hsl(var(--primary)); }
+        .benefit-icon.blue { background: hsl(210, 100%, 50%); }
+        .benefit-icon.cyan { background: hsl(180, 100%, 50%); }
+        .benefit-icon.orange { background: hsl(var(--accent)); }
+        .benefit-icon.pink { background: hsl(320, 100%, 50%); }
+        .benefit-icon.purple { background: hsl(270, 100%, 50%); }
+
+        /* Progress Bar */
+        .progress {
+            width: 100%;
+            height: 0.75rem;
+            background: hsl(var(--muted));
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: hsl(var(--primary));
+            border-radius: 9999px;
+            transition: width 1s ease-out;
+        }
+
+        /* Image Styles */
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-strong);
+            margin: 2rem 0;
+        }
+
+        .example-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* Interactive Elements */
+        .interactive-btn {
+            background: hsl(var(--card));
+            border: 2px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin: 0.5rem;
+        }
+
+        .interactive-btn:hover,
+        .interactive-btn.active {
+            border-color: hsl(var(--primary));
+            background: hsl(var(--primary) / 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero" id="hero">
+        <div class="hero-content">
+            <div class="badge badge-primary">🌱 Post-Growth Economics</div>
+            <h1>
+                What if Society<br>
+                <span class="highlight">Chose Wellbeing</span><br>
+                Over Growth?
+            </h1>
+            <p>
+                Explore how prioritizing sustainability, community, and quality of life over endless 
+                economic expansion could transform our world—with real examples and research-backed insights.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat1">32%</div>
+                    <div class="stat-label">Work Hours Reduced</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat2">68%</div>
+                    <div class="stat-label">CO₂ Emissions Down</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat3">75%</div>
+                    <div class="stat-label">Community Engagement Up</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat4">58%</div>
+                    <div class="stat-label">Life Satisfaction Improved</div>
+                </div>
+            </div>
+
+            <img src="./images/community-garden.jpg" alt="Community garden representing post-growth society" class="hero-image">
+
+            <div>
+                <a href="#comparison" class="btn btn-primary">Explore the Alternative</a>
+                <a href="#examples" class="btn btn-secondary">See Real Examples</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="comparison">
+        <h2 class="section-title">Society Comparison</h2>
+        <p class="section-subtitle">
+            Explore how different aspects of life would change in a post-growth society
+        </p>
+
+        <div class="grid grid-2">
+            <div class="comparison-card growth-society">
+                <div class="badge badge-destructive">Current</div>
+                <h3>Growth-Based Society</h3>
+                <h4>Work & Employment</h4>
+                <p>40-50+ hours per week, increasing overtime culture, high stress, burnout epidemic, competitive work environment.</p>
+                
+                <h4>Community & Social Life</h4>
+                <p>Isolated individuals, competitive culture, less family time, weakened social bonds, consumer-driven relationships.</p>
+                
+                <h4>Environment</h4>
+                <p>Rapid resource depletion, pollution, climate crisis, biodiversity loss, unsustainable consumption patterns.</p>
+            </div>
+
+            <div class="comparison-card post-growth-society">
+                <div class="badge badge-primary">Alternative</div>
+                <h3>Post-Growth Society</h3>
+                <h4>Work & Employment</h4>
+                <p>25-32 hours per week, mandatory rest periods, reduced stress, focus on mental wellness, work-life balance prioritized.</p>
+                
+                <h4>Community & Social Life</h4>
+                <p>Strong communities, cooperation culture, shared resources, family focus, meaningful relationships, collective well-being.</p>
+                
+                <h4>Environment</h4>
+                <p>Regenerative practices, circular economy, restored ecosystems, carbon neutrality, sustainable living standards.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Examples Section -->
+    <section id="examples">
+        <h2 class="section-title">Real-World Success Stories</h2>
+        <p class="section-subtitle">
+            Countries and organizations already implementing post-growth principles with measurable results
+        </p>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <img src="./images/iceland-success.jpg" alt="Iceland's 4-day work week success" class="example-image">
+                <div class="badge badge-primary">Proven Success</div>
+                <h3>Iceland: National 4-Day Work Week</h3>
+                <p><strong>Period:</strong> 2015-2022<br>
+                <strong>Participants:</strong> 51% of workforce (35,000+ workers)</p>
+                
+                <h4>Key Results:</h4>
+                <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                    <li>Economic growth outperformed European peers</li>
+                    <li>No reduction in productivity or service quality</li>
+                    <li>65% improvement in worker wellbeing</li>
+                    <li>40% reduction in stress levels</li>
+                    <li>78% better work-life balance</li>
+                    <li>Increased gender equality in domestic responsibilities</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <img src="./images/work-life-balance.jpg" alt="Work-life balance visualization" class="example-image">
+                <h3>Key Performance Indicators</h3>
+                <div style="margin: 1rem 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Productivity</span>
+                        <strong style="color: hsl(var(--primary));">Maintained</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Worker Wellbeing</span>
+                        <strong style="color: hsl(var(--primary));">+65%</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Stress Levels</span>
+                        <strong style="color: hsl(var(--primary));">-40%</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Work-Life Balance</span>
+                        <strong style="color: hsl(var(--primary));">+78%</strong>
+                    </div>
+                </div>
+                <p style="font-style: italic; font-size: 0.9rem;">
+                    Iceland's experiment proves that reducing work hours doesn't harm the economy. 
+                    Their GDP growth outperformed most European countries while dramatically improving quality of life.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <h2 class="section-title">Measurable Benefits</h2>
+        <p class="section-subtitle">
+            Research shows significant improvements across multiple indicators in post-growth economies
+        </p>
+
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="benefit-icon green">🌱</div>
+                <h3>Carbon Emissions</h3>
+                <p>Reduction in CO2 emissions</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">68%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 68%;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="benefit-icon blue">💧</div>
+                <h3>Water Usage</h3>
+                <p>Decrease in water consumption</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">45%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 45%;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="benefit-icon cyan">🌬️</div>
+                <h3>Air Quality</h3>
+                <p>Improvement in air purity</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">72%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 72%;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="benefit-icon orange">♻️</div>
+                <h3>Waste Reduction</h3>
+                <p>Less waste through circular economy</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">85%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="benefit-icon pink">💗</div>
+                <h3>Mental Health</h3>
+                <p>Reduced stress and anxiety</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">58%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 58%;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="benefit-icon purple">👥</div>
+                <h3>Social Cohesion</h3>
+                <p>Stronger community bonds</p>
+                <div style="font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary)); margin: 1rem 0;">63%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 63%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background: hsl(var(--primary) / 0.05); border-color: hsl(var(--primary) / 0.2); text-align: center; max-width: 800px; margin: 2rem auto;">
+            <p style="font-style: italic; font-size: 0.9rem;">
+                * Data synthesized from research on degrowth economies, circular economy studies, 
+                and real-world examples like Iceland's 4-day work week implementation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Daily Life Scenarios -->
+    <section>
+        <h2 class="section-title">Daily Life Transformation</h2>
+        <p class="section-subtitle">
+            How different aspects of daily life would change in a post-growth society
+        </p>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <h3>🏢 Work Life</h3>
+                <p><strong>Current:</strong> 8-hour days, 5 days/week, commute stress, limited vacation, performance pressure</p>
+                <p><strong>Post-Growth:</strong> 6-hour days, 4 days/week, flexible remote work, sabbaticals, collaborative goals</p>
+                <h4>Benefits:</h4>
+                <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                    <li>40% more personal time</li>
+                    <li>Reduced stress and burnout</li>
+                    <li>Better work-life integration</li>
+                    <li>Focus on meaningful tasks</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🛒 Consumption</h3>
+                <p><strong>Current:</strong> Fast fashion, planned obsolescence, impulse buying, debt culture, disposal mindset</p>
+                <p><strong>Post-Growth:</strong> Repair cafes, sharing economy, quality over quantity, circular design, collaborative consumption</p>
+                <h4>Benefits:</h4>
+                <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                    <li>85% less waste generation</li>
+                    <li>Stronger local economies</li>
+                    <li>Higher product quality</li>
+                    <li>Community connections</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🏠 Housing & Communities</h3>
+                <p><strong>Current:</strong> Individual ownership focus, suburban sprawl, isolation, housing as investment</p>
+                <p><strong>Post-Growth:</strong> Co-housing communities, shared spaces, walkable neighborhoods, housing as human right</p>
+                <h4>Benefits:</h4>
+                <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                    <li>60% lower housing costs</li>
+                    <li>Stronger social bonds</li>
+                    <li>Reduced environmental impact</li>
+                    <li>Intergenerational support</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🎓 Education</h3>
+                <p><strong>Current:</strong> Competition-based, standardized testing, career preparation focus, student debt</p>
+                <p><strong>Post-Growth:</strong> Collaborative learning, life skills focus, creativity emphasis, free education</p>
+                <h4>Benefits:</h4>
+                <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                    <li>Lifelong learning culture</li>
+                    <li>Reduced academic stress</li>
+                    <li>Practical skill development</li>
+                    <li>Creative expression</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environmental Transformation -->
+    <section>
+        <h2 class="section-title">Environmental Transformation</h2>
+        <p class="section-subtitle">
+            The dramatic environmental benefits of choosing wellbeing over endless growth
+        </p>
+
+        <div class="card">
+            <img src="./images/before-after-environment.jpg" alt="Environmental transformation comparison" style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius); margin-bottom: 1rem;">
+            <h3>From Extraction to Regeneration</h3>
+            <div class="grid grid-2" style="gap: 2rem; margin-top: 2rem;">
+                <div>
+                    <h4 style="color: hsl(var(--destructive)); margin-bottom: 1rem;">Growth-Based Impact</h4>
+                    <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                        <li>Resource depletion at unprecedented rates</li>
+                        <li>Climate change acceleration</li>
+                        <li>Biodiversity loss and ecosystem collapse</li>
+                        <li>Pollution of air, water, and soil</li>
+                        <li>Waste accumulation and disposal crisis</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: hsl(var(--primary)); margin-bottom: 1rem;">Post-Growth Restoration</h4>
+                    <ul style="margin-left: 1rem; color: hsl(var(--muted-foreground));">
+                        <li>Circular economy eliminating waste</li>
+                        <li>Carbon neutrality and climate stabilization</li>
+                        <li>Ecosystem restoration and rewilding</li>
+                        <li>Clean air and water for all</li>
+                        <li>Sustainable resource management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section style="text-align: center; background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow))); color: white; border-radius: var(--radius); margin: 2rem 0;">
+        <h2 class="section-title" style="color: white;">A Different Path Forward</h2>
+        <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9);">
+            The evidence shows that prioritizing wellbeing over endless growth isn't just possible—it's already happening and working.
+        </p>
+        <div class="grid grid-3" style="margin: 2rem 0;">
+            <div style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700;">51%</div>
+                <div>of Iceland's workforce adopted the 4-day week</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700;">0%</div>
+                <div>productivity loss reported</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700;">65%</div>
+                <div>improvement in worker wellbeing</div>
+            </div>
+        </div>
+        <p style="font-size: 1.1rem; max-width: 800px; margin: 2rem auto;">
+            Post-growth economics offers a vision of society where human flourishing and environmental restoration 
+            take priority over GDP growth. The transition is challenging but achievable, as real-world examples demonstrate.
+        </p>
+    </section>
+
+    <script>
+        // Simple interactivity for stat animation
+        let statAnimating = true;
+        const stats = [
+            { element: document.getElementById('stat1'), target: 32, current: 0 },
+            { element: document.getElementById('stat2'), target: 68, current: 0 },
+            { element: document.getElementById('stat3'), target: 75, current: 0 },
+            { element: document.getElementById('stat4'), target: 58, current: 0 }
+        ];
+
+        function animateStats() {
+            if (!statAnimating) return;
+            
+            stats.forEach(stat => {
+                if (stat.current < stat.target) {
+                    stat.current += Math.ceil(stat.target / 50);
+                    if (stat.current > stat.target) stat.current = stat.target;
+                    stat.element.textContent = stat.current + '%';
+                }
+            });
+
+            if (stats.every(stat => stat.current >= stat.target)) {
+                statAnimating = false;
+            } else {
+                requestAnimationFrame(animateStats);
+            }
+        }
+
+        // Start animation when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(animateStats, 1000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Simple intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections for animations
+        document.querySelectorAll('.card, section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Hero section is always visible
+        document.querySelector('.hero').style.opacity = '1';
+        document.querySelector('.hero').style.transform = 'translateY(0)';
+    </script>
+</body>
+</html>

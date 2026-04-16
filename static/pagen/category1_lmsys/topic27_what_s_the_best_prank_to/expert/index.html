@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<title>What’s the best prank to play on a friend</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 50px 15px !important;
+	    margin: 0 auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	.home{
+		position: relative;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #7563ffc4;
+		z-index: 1;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	  position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 50%;   
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	.pb_0{
+		padding-bottom: 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_3 img,.sec_4 img{
+	    height: 450px;
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	.box{
+		width: 80%;
+		margin: 0 auto;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.pb_50{
+		padding-bottom: 50px;
+	}
+/*	.sec_3 .container,.sec_5 .container{
+		padding: 0px 15px !important;
+	}*/
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+
+	/* card Animation Start */
+.act__block .w_33 {
+    width: calc(33.33% - 15px);
+}
+.act_card.card {
+  cursor: pointer;
+}
+
+.content {
+  text-align: center;
+  position: relative;
+  transition: all 1s;
+  background-color: rgb(127, 204, 240);
+  padding: 200px 0px;
+  transform-style: preserve-3d;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+}
+
+.act_card.card:hover .content {
+  transform: rotateY(0.5turn);
+}
+
+.front,
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 2em;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    background: #0000004a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    transform: translateZ(5rem);
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    height: 100%;
+    z-index: 1;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    -webkit-text-fill-color: #fff;
+    -webkit-text-stroke-width: 1px;
+    text-shadow: 3px 3px 0 #e54c81, -1px -1px 0 #e54c81, 1px -1px 0 #e54c81, -1px 1px 0 #e54c81, 1px 1px 0 #e54c81;
+}
+
+.subtitle {
+  transform: translateZ(2rem);
+}
+
+.back {
+  transform: rotateY(0.5turn);
+}
+
+.description {
+  transform: translateZ(3rem);
+}
+
+/* Card animation End */
+
+	@media (max-width: 768px){
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+		.sec_3 img{
+			height: unset;
+		}
+	}
+	@media (max-width: 768px){
+		h1{
+			font-size: 40px;
+		}
+		h2{
+			font-size: 25px;
+		}
+		.col_rev{
+			flex-direction: column-reverse;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 40px;
+		}
+		h2{
+			font-size: 25px;
+		}
+	}
+</style>
+</head>
+<body style="background: #9293ce; color: #fff;">
+<div class="">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container">
+				<div class="box text_center">
+					<span data-aos="fade-right" data-aos-duration="1500">Playful, harmless, and memorable — the best pranks are the ones everyone can laugh about afterward.</span>
+					<h1 data-aos="zoom-in" data-aos-duration="2000">What’s the Best Prank to Play on a Friend?</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">A great prank should surprise without hurting: no damage, no permanent mess, and definitely no emotional or physical harm. Below you’ll find easy, low-risk ideas that work for roommates, coworkers, or close friends - plus quick rules to keep things fun and friendly.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2 pb_0" style="background: #fff; color:#000;">
+		<div class="container ">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.jpg"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">What makes a prank “the best”?</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">The best prank is short, reversible, and tailored to the person you’re pranking. It should create a moment of shock or confusion that quickly turns into laughter. Know your friend’s boundaries (no phobias, medical issues, or sensory triggers), keep it legal, and make it easy to undo. If there’s any chance your friend will be genuinely upset, don’t do it.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2 pb_0">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">				
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Quick safety & etiquette guide</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">Always check three things before you prank: health (no heart conditions, epilepsy, severe anxiety, or phobias), context (workplace rules or public spaces), and property (no expensive or irreplaceable items). Reveal the joke quickly, apologize if it goes sideways, and help clean up or restore anything you changed. A follow-up treat - coffee, snack, or a small gift - goes a long way.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a4.jpg"></div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_3  " style="background: #fff; color:#000;">
+		<div class="container text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">Top easy, harmless pranks</h2>
+			<p class="pb_50" data-aos="zoom-in" data-aos-duration="2000">Not every prank needs to be complicated to get a laugh. Some of the simplest tricks create the biggest reactions — especially when they’re safe, quick to set up, and easy to undo. Below are some lighthearted ideas you can try on a friend without crossing the line.</p>
+			
+
+	<!-- act__block Start -->
+
+			<div class="d_flex space_bt mb_center mb_direc">
+					<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p1.jpg');">
+						           <div class="front">
+						               <h3 class="title">Desktop Switcheroo</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #e54c81; color: #fff;">
+						           		<p class="description">Take a quick screenshot of a friend’s desktop, set it as the wallpaper, then hide the real icons. They’ll click things that won’t open — funny and completely reversible.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+					<div class="w_33" data-aos="fade-up" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p2.png');">
+						           <div class="front">
+						               <h3 class="title">Balloon Avalanche</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #00aae7; color: #fff;">
+						                <p class="description">Tape a sheet or trash bag full of inflated balloons above a door so they tumble in when the door opens. Big laugh, minimal cleanup.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+					<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p3.jpg');">
+						           <div class="front">
+						               <h3 class="title">Mouse Sensor Tape</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #b5b500; color: #fff;">
+						                <p class="description">Stick a tiny piece of opaque tape over the bottom of an optical mouse. It stops working and is fixed in seconds. Low-stress and office-friendly.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+				</div>
+				<div class="d_flex space_bt mb_center mb_direc">
+					<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p4.jpg');">
+						           <div class="front">
+						               <h3 class="title">Classic Wallpaper Crack</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #b5b500; color: #fff;">
+						               <p class="description">Set a “cracked screen” image as their phone or computer wallpaper. Instant panic → instant relief. Don’t do this with people who panic easily.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+					<div class="w_33" data-aos="fade-up" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p5.jpg');">
+						           <div class="front">
+						               <h3 class="title">Chair Height Swap</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #e54c81; color: #fff;">
+						               <p class="description">Lower or raise a swivel chair a couple of notches for a surprising but harmless change when they sit. Make sure it’s safe and won’t cause a fall.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+					<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+						<div class="card act_card">
+							 <div class="card">
+						       <div class="content" style="background-image: url('assets/img/p6.jpg');">
+						           <div class="front">
+						               <h3 class="title">Voice Assistant Nickname</h3>
+						               <!-- <p class="subtitle">Hover me :)</p> -->
+						           </div>
+
+						           <div class="back" style="background-color: #00aae7; color: #fff;">
+						               <p class="description">If a friend uses a smart speaker, change the nickname or routine to something silly (with their account permission later). It’s playful and easy to reverse.</p>
+						           </div>
+						       </div>
+						   </div>
+						</div>
+					</div>
+				</div>
+				<div class="d_flex space_bt mb_center mb_direc">
+				<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+					<div class="card act_card">
+						 <div class="card">
+					       <div class="content" style="background-image: url('assets/img/p7.jpg');">
+					           <div class="front">
+					               <h3 class="title">Wrapped Room / Desk</h3>
+					               <!-- <p class="subtitle">Hover me :)</p> -->
+					           </div>
+
+					           <div class="back" style="background-color: #00aae7; color: #fff;">
+					               <p class="description">Cover a coworker’s desk or a room in cling film or gift wrap. Takes time to set up but is visually impressive and easy to undo if you help unwrap.</p>
+					           </div>
+					       </div>
+					   </div>
+					</div>
+				</div>
+				<div class="w_33">
+					<div class="card act_card" data-aos="fade-up" data-aos-duration="1600">
+						 <div class="card">
+					       <div class="content" style="background-image: url('assets/img/p8.jpg');">
+					           <div class="front">
+					               <h3 class="title">Soap That Won’t Lather</h3>
+					               <!-- <p class="subtitle">Hover me :)</p> -->
+					           </div>
+
+					           <div class="back" style="background-color: #b5b500; color: #fff;">
+					               <p class="description">Coat a bar of soap in clear nail polish and leave it in the bathroom. No matter how much your friend rubs, it won’t lather. A quick rinse restores the fun.</p>
+					           </div>
+					       </div>
+					   </div>
+					</div>
+				</div>
+				<div class="w_33" data-aos="zoom-in" data-aos-duration="1600">
+					<div class="card act_card">
+						 <div class="card">
+					       <div class="content" style="background-image: url('assets/img/p9.jpg');">
+					           <div class="front">
+					               <h3 class="title">Auto-Correct Swap</h3>
+					               <!-- <p class="subtitle">Hover me :)</p> -->
+					           </div>
+
+					           <div class="back" style="background-color: #e54c81; color: #fff;">
+					           		<p class="description">If you have permission or quick access, change a common word in your friend’s phone auto-correct settings to something silly. Just make sure you switch it back afterward.</p>
+					           </div>
+					       </div>
+					   </div>
+					</div>
+				</div>
+			</div>
+
+	<!-- act__block End -->
+
+
+			<p style="color:#000;" >These playful pranks prove that you don’t need to go over the top to make your friend laugh. A little creativity, good timing, and sensitivity to your friend’s comfort level can turn an ordinary day into one they’ll remember with a smile.</p>
+		</div>
+	</div>
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

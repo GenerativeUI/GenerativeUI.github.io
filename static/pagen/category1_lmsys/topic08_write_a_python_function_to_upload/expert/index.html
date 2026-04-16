@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files to S3 with Python</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --error: #ff6b6b;
+            --warning: #ffd166;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), #7209b7);
+            background-size: 200% 200%;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
+            animation: shine 10s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .subheadline {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 8px 20px var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .code-block {
+            background-color: #2b2d42;
+            color: #e9ecef;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .copy-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .copy-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success);
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 3px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h4 i {
+            color: var(--error);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .card p {
+            color: var(--dark);
+            font-size: 1rem;
+            margin-bottom: 0;
+            flex-grow: 1;
+        }
+
+        .notes {
+            background: linear-gradient(135deg, #eef7ff 0%, #e2f0ff 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .notes h3 {
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notes h3 i {
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 992px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .subheadline {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .code-block {
+                padding: 15px;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .subheadline {
+                font-size: 1rem;
+            }
+            
+            .copy-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            header {
+                padding: 70px 0;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>💻 Upload All Files from a Local Folder to S3 with Python</h1>
+            <p class="subheadline">A simple Python script using boto3 to upload an entire folder into an Amazon S3 bucket.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="requirements">
+            <h2>Requirements</h2>
+            
+                1) Python 3.x</li>
+                2) boto3 library installed</li>
+                3) AWS credentials configured (via aws configure or environment variables).</li>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Installation Command</span>
+                    <button class="copy-btn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                <pre>pip install boto3</pre>
+            </div>
+        </section>
+
+        <section id="python-function">
+            <h2>Python Function</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Python Code</span>
+                    <button class="copy-btn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                <pre>import os
+import boto3
+
+def upload_folder_to_s3(local_folder, bucket_name, s3_folder):
+    """
+    Uploads all files from a local folder to a specific S3 bucket directory.
+    
+    :param local_folder: Path to your local folder
+    :param bucket_name: Name of your S3 bucket
+    :param s3_folder: S3 folder path where files should be uploaded
+    """
+    s3 = boto3.client('s3')
+    
+    for root, dirs, files in os.walk(local_folder):
+        for file in files:
+            local_path = os.path.join(root, file)
+            relative_path = os.path.relpath(local_path, local_folder)
+            s3_path = os.path.join(s3_folder, relative_path).replace("\\", "/")
+            
+            print(f"Uploading {local_path} to s3://{bucket_name}/{s3_path}")
+            s3.upload_file(local_path, bucket_name, s3_path)</pre>
+            </div>
+        </section>
+
+        <section id="example-usage">
+            <h2>Example Usage</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Usage Example</span>
+                    <button class="copy-btn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                <pre>upload_folder_to_s3(
+    local_folder="my_local_data",
+    bucket_name="my-s3-bucket",
+    s3_folder="backups/2025"
+)</pre>
+            </div>
+            <p>✅ This will upload everything in my_local_data/ into s3://my-s3-bucket/backups/2025/.</p>
+        </section>
+
+        <section id="common-errors">
+            <h2>Common Errors</h2>
+            <div class="info-cards">
+                <div class="card">
+                    <h4><i class="fas fa-exclamation-circle"></i> Permissions Issues</h4>
+                    <p>Ensure your IAM user has the necessary s3:PutObject permissions to upload files to the S3 bucket. Check both the bucket policy and IAM user permissions.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-key"></i> Missing Credentials</h4>
+                    <p>AWS credentials must be configured either via the AWS CLI or environment variables for boto3 to authenticate. Verify your credentials are set correctly.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-folder"></i> Bucket Doesn't Exist</h4>
+                    <p>Verify that the S3 bucket name you're trying to upload to actually exists in your AWS account and is in the correct region.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-network-wired"></i> Network Connectivity</h4>
+                    <p>Check your internet connection and ensure you can reach AWS S3 endpoints from your network. Firewall rules may be blocking the connection.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes">
+            <h2>Notes</h2>
+            <div class="notes">
+                <h3><i class="fas fa-info-circle"></i> Important Considerations</h3>
+                <p>Make sure your IAM user has s3:PutObject permissions.</p>
+                <p>boto3 will automatically handle large files with multipart upload.</p>
+                <p>For large folders, consider adding error handling and retry logic for failed uploads.</p>
+            </div>
+        </section>
+    </main>
+
+   
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Copy code functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.parentElement.nextElementSibling;
+                const textToCopy = codeBlock.textContent;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    this.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

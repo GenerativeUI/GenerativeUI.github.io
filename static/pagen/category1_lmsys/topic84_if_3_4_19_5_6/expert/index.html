@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mathematical Pattern Puzzle: Crack the Code</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <i class="fas fa-calculator"></i>
+          <span>Math Puzzle</span>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <a href="#answer" class="nav-link">Answer</a>
+          <a href="#reasoning" class="nav-link">Reasoning</a>
+          <a href="#alternatives" class="nav-link">Patterns</a>
+          <a href="#challenge" class="nav-link">Challenge</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+        <div class="nav-toggle" id="navToggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Instant Answer Section -->
+    <section id="answer" class="answer-section">
+      <div class="container">
+        <div class="answer-content">
+          <div class="question-context">
+            <h3>Original Puzzle</h3>
+            <div class="puzzle-statement">
+              <p>
+                If <strong>3 + 4 = 19</strong>, <strong>5 + 6 = 41</strong>,
+                <strong>2 + 8 = 66</strong>, <strong>5 + 1 = 6</strong>, then
+                <strong>1 + 3 = ?</strong>
+              </p>
+            </div>
+          </div>
+
+          <h2 class="section-title">
+            <i class="fas fa-check-circle"></i>
+            The Answer
+          </h2>
+
+          <div class="answer-reveal" id="answerReveal">
+            <div class="answer-card">
+              <div class="answer-number">
+                <span id="finalAnswer">10</span>
+              </div>
+              <div class="answer-explanation">
+                <p>The answer is <strong>10</strong></p>
+                <p class="answer-formula">Using the pattern: a + b = a + b²</p>
+                <p class="answer-calculation">1 + 3 = 1 + 3² = 1 + 9 = 10</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="confidence-meter">
+            <div class="confidence-label">Pattern Confidence</div>
+            <div class="confidence-bar">
+              <div class="confidence-fill" style="width: 100%"></div>
+            </div>
+            <div class="confidence-text">
+              100% - Perfect pattern match for all equations!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step-by-Step Reasoning Section -->
+    <section id="reasoning" class="reasoning-section">
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-list-ol"></i>
+          Step-by-Step Reasoning
+        </h2>
+
+        <div class="reasoning-steps">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Analyze Each Equation</h3>
+              <p>Let's examine each equation to find the hidden pattern:</p>
+              <div class="equation-analysis">
+                <div class="equation-item">
+                  <span class="eq">3 + 4 = 19</span>
+                  <span class="note"
+                    >Traditional addition would give 7, not 19</span
+                  >
+                </div>
+                <div class="equation-item">
+                  <span class="eq">5 + 6 = 41</span>
+                  <span class="note"
+                    >Traditional addition would give 11, not 41</span
+                  >
+                </div>
+                <div class="equation-item">
+                  <span class="eq">2 + 8 = 66</span>
+                  <span class="note"
+                    >Traditional addition would give 10, not 66</span
+                  >
+                </div>
+                <div class="equation-item">
+                  <span class="eq">5 + 1 = 6</span>
+                  <span class="note">This follows traditional addition!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Discover the Pattern</h3>
+              <p>Let's try the pattern: <strong>a + b = a + b²</strong></p>
+              <div class="pattern-tests">
+                <div class="pattern-test">
+                  <h4>Testing the Pattern: a + b = a + b²</h4>
+                  <div class="test-equations">
+                    <div class="test-eq">
+                      <span>3 + 4 = 3 + 4² = 3 + 16 = 19</span>
+                      <i class="fas fa-check success"></i>
+                    </div>
+                    <div class="test-eq">
+                      <span>5 + 6 = 5 + 6² = 5 + 36 = 41</span>
+                      <i class="fas fa-check success"></i>
+                    </div>
+                    <div class="test-eq">
+                      <span>2 + 8 = 2 + 8² = 2 + 64 = 66</span>
+                      <i class="fas fa-check success"></i>
+                    </div>
+                    <div class="test-eq">
+                      <span>5 + 1 = 5 + 1² = 5 + 1 = 6</span>
+                      <i class="fas fa-check success"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Apply Pattern to Find Answer</h3>
+              <p>Using the discovered pattern for 1 + 3:</p>
+              <div class="final-calculation">
+                <div class="calc-step">
+                  <span class="calc-label">Pattern:</span>
+                  <span class="calc-formula">a + b = a + b²</span>
+                </div>
+                <div class="calc-step">
+                  <span class="calc-label">Substitute:</span>
+                  <span class="calc-formula">1 + 3 = 1 + 3²</span>
+                </div>
+                <div class="calc-step">
+                  <span class="calc-label">Calculate:</span>
+                  <span class="calc-formula">1 + 3 = 1 + 9 = 10</span>
+                </div>
+                <div class="calc-result">
+                  <span class="result-label">Answer:</span>
+                  <span class="result-value">10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Common Alternative Patterns Section -->
+    <section id="alternatives" class="alternatives-section">
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-lightbulb"></i>
+          Common Alternative Patterns
+        </h2>
+        <p class="section-subtitle">
+          Mathematical puzzles often have multiple valid interpretations. Here
+          are other possible patterns:
+        </p>
+
+        <div class="patterns-grid">
+          <div class="pattern-card" data-pattern="multiply-add">
+            <div class="pattern-header">
+              <h3>Multiply + Add Pattern</h3>
+              <div class="pattern-formula">a + b = (a × b) + (a + b)</div>
+            </div>
+            <div class="pattern-explanation">
+              <p>Multiply the numbers, then add their sum</p>
+            </div>
+            <div class="pattern-examples">
+              <div class="example">
+                <span class="equation"
+                  >3 + 4 = (3×4) + (3+4) = 12 + 7 = 19</span
+                >
+                <span class="status success">✓ Works</span>
+              </div>
+              <div class="example">
+                <span class="equation"
+                  >5 + 6 = (5×6) + (5+6) = 30 + 11 = 41</span
+                >
+                <span class="status success">✓ Works</span>
+              </div>
+              <div class="example">
+                <span class="equation"
+                  >2 + 8 = (2×8) + (2+8) = 16 + 10 = 26</span
+                >
+                <span class="status error">✗ Should be 66</span>
+              </div>
+            </div>
+            <div class="pattern-confidence">
+              <span class="confidence-label">Confidence: 75%</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" style="width: 75%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pattern-card" data-pattern="square-sum">
+            <div class="pattern-header">
+              <h3>Square Sum Pattern</h3>
+              <div class="pattern-formula">a + b = a² + b²</div>
+            </div>
+            <div class="pattern-explanation">
+              <p>Add the squares of both numbers</p>
+            </div>
+            <div class="pattern-examples">
+              <div class="example">
+                <span class="equation">3 + 4 = 3² + 4² = 9 + 16 = 25</span>
+                <span class="status error">✗ Should be 19</span>
+              </div>
+              <div class="example">
+                <span class="equation">5 + 6 = 5² + 6² = 25 + 36 = 61</span>
+                <span class="status error">✗ Should be 41</span>
+              </div>
+              <div class="example">
+                <span class="equation">2 + 8 = 2² + 8² = 4 + 64 = 68</span>
+                <span class="status error">✗ Should be 66</span>
+              </div>
+            </div>
+            <div class="pattern-confidence">
+              <span class="confidence-label">Confidence: 0%</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pattern-card" data-pattern="concatenate">
+            <div class="pattern-header">
+              <h3>Concatenation Pattern</h3>
+              <div class="pattern-formula">a + b = ab (join digits)</div>
+            </div>
+            <div class="pattern-explanation">
+              <p>Join the digits together</p>
+            </div>
+            <div class="pattern-examples">
+              <div class="example">
+                <span class="equation">3 + 4 = 34</span>
+                <span class="status error">✗ Should be 19</span>
+              </div>
+              <div class="example">
+                <span class="equation">5 + 6 = 56</span>
+                <span class="status error">✗ Should be 41</span>
+              </div>
+              <div class="example">
+                <span class="equation">2 + 8 = 28</span>
+                <span class="status error">✗ Should be 66</span>
+              </div>
+            </div>
+            <div class="pattern-confidence">
+              <span class="confidence-label">Confidence: 0%</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pattern-card" data-pattern="fibonacci">
+            <div class="pattern-header">
+              <h3>Fibonacci-Style Pattern</h3>
+              <div class="pattern-formula">a + b = next in sequence</div>
+            </div>
+            <div class="pattern-explanation">
+              <p>Based on position in Fibonacci sequence</p>
+            </div>
+            <div class="pattern-examples">
+              <div class="example">
+                <span class="equation">3 + 4 = position-based calculation</span>
+                <span class="status error">✗ Complex, doesn't match</span>
+              </div>
+              <div class="example">
+                <span class="equation">5 + 6 = sequence logic</span>
+                <span class="status error">✗ Doesn't fit pattern</span>
+              </div>
+              <div class="example">
+                <span class="equation">2 + 8 = sequence position</span>
+                <span class="status error">✗ No clear match</span>
+              </div>
+            </div>
+            <div class="pattern-confidence">
+              <span class="confidence-label">Confidence: 0%</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pattern-card featured" data-pattern="correct">
+            <div class="pattern-header">
+              <h3>✅ Correct Pattern</h3>
+              <div class="pattern-formula">a + b = a + b²</div>
+            </div>
+            <div class="pattern-explanation">
+              <p>Add the first number to the square of the second number</p>
+            </div>
+            <div class="pattern-examples">
+              <div class="example">
+                <span class="equation">3 + 4 = 3 + 4² = 3 + 16 = 19</span>
+                <span class="status success">✓ Perfect match</span>
+              </div>
+              <div class="example">
+                <span class="equation">5 + 6 = 5 + 6² = 5 + 36 = 41</span>
+                <span class="status success">✓ Perfect match</span>
+              </div>
+              <div class="example">
+                <span class="equation">2 + 8 = 2 + 8² = 2 + 64 = 66</span>
+                <span class="status success">✓ Perfect match</span>
+              </div>
+            </div>
+            <div class="pattern-confidence">
+              <span class="confidence-label">Confidence: 100%</span>
+              <div class="confidence-bar">
+                <div class="confidence-fill" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alternatives-insight">
+          <h3>🧠 Why Multiple Patterns Matter</h3>
+          <div class="insight-content">
+            <div class="insight-item">
+              <i class="fas fa-search"></i>
+              <div>
+                <h4>Pattern Recognition</h4>
+                <p>
+                  Mathematical puzzles teach us to look for multiple possible
+                  solutions and evaluate their validity.
+                </p>
+              </div>
+            </div>
+            <div class="insight-item">
+              <i class="fas fa-brain"></i>
+              <div>
+                <h4>Critical Thinking</h4>
+                <p>
+                  Testing different approaches helps develop logical reasoning
+                  and problem-solving skills.
+                </p>
+              </div>
+            </div>
+            <div class="insight-item">
+              <i class="fas fa-lightbulb"></i>
+              <div>
+                <h4>Creative Problem Solving</h4>
+                <p>
+                  Sometimes the most obvious solution isn't the correct one -
+                  creativity matters in mathematics.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge Mode Section -->
+    <section id="challenge" class="challenge-section">
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-trophy"></i>
+          Challenge Mode
+        </h2>
+        <p class="section-subtitle">
+          Now that you understand the pattern, try solving these new puzzles!
+        </p>
+
+        <div class="challenge-content">
+          <div class="challenge-grid">
+            <div class="challenge-card" data-challenge="1">
+              <div class="challenge-header">
+                <h3>Challenge 1: Basic Pattern</h3>
+                <div class="difficulty-badge easy">Easy</div>
+              </div>
+              <div class="challenge-puzzle">
+                <div class="puzzle-equations">
+                  <div class="equation">7 + 2 = ?</div>
+                  <div class="equation">4 + 9 = ?</div>
+                  <div class="equation">6 + 3 = ?</div>
+                </div>
+              </div>
+              <div class="challenge-input">
+                <input
+                  type="number"
+                  placeholder="Answer 1"
+                  class="challenge-answer"
+                  data-answer="11"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 2"
+                  class="challenge-answer"
+                  data-answer="85"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 3"
+                  class="challenge-answer"
+                  data-answer="15"
+                />
+                <button class="check-btn">
+                  <i class="fas fa-check"></i>
+                  Check Answers
+                </button>
+              </div>
+              <div class="challenge-result"></div>
+            </div>
+
+            <div class="challenge-card" data-challenge="2">
+              <div class="challenge-header">
+                <h3>Challenge 2: Mixed Numbers</h3>
+                <div class="difficulty-badge medium">Medium</div>
+              </div>
+              <div class="challenge-puzzle">
+                <div class="puzzle-equations">
+                  <div class="equation">8 + 1 = ?</div>
+                  <div class="equation">9 + 5 = ?</div>
+                  <div class="equation">2 + 7 = ?</div>
+                </div>
+              </div>
+              <div class="challenge-input">
+                <input
+                  type="number"
+                  placeholder="Answer 1"
+                  class="challenge-answer"
+                  data-answer="9"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 2"
+                  class="challenge-answer"
+                  data-answer="34"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 3"
+                  class="challenge-answer"
+                  data-answer="51"
+                />
+                <button class="check-btn">
+                  <i class="fas fa-check"></i>
+                  Check Answers
+                </button>
+              </div>
+              <div class="challenge-result"></div>
+            </div>
+
+            <div class="challenge-card" data-challenge="3">
+              <div class="challenge-header">
+                <h3>Challenge 3: Advanced</h3>
+                <div class="difficulty-badge hard">Hard</div>
+              </div>
+              <div class="challenge-puzzle">
+                <div class="puzzle-equations">
+                  <div class="equation">10 + 0 = ?</div>
+                  <div class="equation">3 + 7 = ?</div>
+                  <div class="equation">1 + 1 = ?</div>
+                </div>
+              </div>
+              <div class="challenge-input">
+                <input
+                  type="number"
+                  placeholder="Answer 1"
+                  class="challenge-answer"
+                  data-answer="10"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 2"
+                  class="challenge-answer"
+                  data-answer="52"
+                />
+                <input
+                  type="number"
+                  placeholder="Answer 3"
+                  class="challenge-answer"
+                  data-answer="2"
+                />
+                <button class="check-btn">
+                  <i class="fas fa-check"></i>
+                  Check Answers
+                </button>
+              </div>
+              <div class="challenge-result"></div>
+            </div>
+          </div>
+
+          <div class="challenge-stats">
+            <h3>Your Progress</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number" id="challengesSolved">0</span>
+                  <span class="stat-label">Challenges Solved</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number" id="correctAnswers">0</span>
+                  <span class="stat-label">Correct Answers</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-number" id="accuracy">0%</span>
+                  <span class="stat-label">Accuracy</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="challenge-tips">
+            <h3>💡 Tips for Success</h3>
+            <div class="tips-grid">
+              <div class="tip-item">
+                <i class="fas fa-lightbulb"></i>
+                <p>Remember the pattern: <strong>a + b = a + b²</strong></p>
+              </div>
+              <div class="tip-item">
+                <i class="fas fa-calculator"></i>
+                <p>Square the second number, then add the first number</p>
+              </div>
+              <div class="tip-item">
+                <i class="fas fa-eye"></i>
+                <p>Double-check your calculations before submitting</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions Section -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <h2 class="section-title">
+          <i class="fas fa-question-circle"></i>
+          Frequently Asked Questions
+        </h2>
+        <p class="section-subtitle">
+          Get answers to common questions about mathematical patterns and
+          puzzles!
+        </p>
+
+        <div class="faq-content">
+          <div class="faq-grid">
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>What is the correct pattern for this puzzle?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  The correct pattern is <strong>a + b = a + b²</strong>. This
+                  means you add the first number to the square of the second
+                  number. For example: 3 + 4 = 3 + 4² = 3 + 16 = 19.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>Why are there multiple possible patterns?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Mathematical puzzles often have multiple valid
+                  interpretations. This teaches critical thinking and pattern
+                  recognition skills. The key is to test each pattern against
+                  all given examples to find the one that works consistently.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>How can I improve my pattern recognition skills?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Practice regularly with different types of puzzles, look for
+                  multiple possible patterns, test your hypotheses
+                  systematically, and don't be afraid to try creative
+                  approaches. Start with simple patterns and gradually work up
+                  to more complex ones.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>What if I get the wrong answer?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Don't worry! Getting the wrong answer is part of the learning
+                  process. Review your reasoning, try a different approach, and
+                  use the step-by-step breakdown to understand where you might
+                  have gone wrong. Every mistake is a learning opportunity.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>Are there other similar mathematical puzzles?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Yes! There are many similar puzzles involving number patterns,
+                  sequences, and mathematical relationships. Check out our
+                  "Related Brain Teasers" section for more puzzles to practice
+                  with, including Fibonacci sequences, prime numbers, and logic
+                  puzzles.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>Can I use a calculator for these puzzles?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  While calculators can help with calculations, the real
+                  challenge is recognizing the pattern itself. Try to solve the
+                  pattern first, then use a calculator to verify your answer.
+                  The goal is to develop your mathematical intuition and
+                  problem-solving skills.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          © <span id="currentYear"></span> All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

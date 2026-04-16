@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime & Even Numbers: The Mathematical Paradox</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --danger: #f5576c;
+            --success: #38ef7d;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text: #2d3748;
+            --border: #e2e8f0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background:
+                    radial-gradient(circle at 0% 0%, rgba(255,255,255,0.22), transparent 58%),
+                    radial-gradient(circle at 100% 0%, rgba(255,255,255,0.18), transparent 55%),
+                    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 0 20px 40px;
+        }
+
+        #particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+
+        .notification {
+            background: rgba(255,255,255,0.96);
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 12px 40px rgba(15,23,42,0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInRight 0.3s ease;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9em;
+            backdrop-filter: blur(14px);
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf3, #f0fdf4);
+        }
+        .notification.error {
+            border-left-color: var(--danger);
+            background: linear-gradient(135deg, #fef2f2, #fff1f2);
+        }
+
+        .notification-icon {
+            font-size: 1.3em;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .notification-message {
+            font-size: 0.85em;
+            color: #64748b;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.6em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 0.03em;
+            background: linear-gradient(120deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 10px 28px rgba(15,23,42,0.7);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+            opacity: 0.97;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 0 4px 18px rgba(15,23,42,0.6);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 8px 16px;
+            border-radius: 14px;
+            background: radial-gradient(circle at 0 0, rgba(255,255,255,0.24), transparent 60%);
+            box-shadow: 0 12px 30px rgba(15,23,42,0.45);
+            border: 1px solid rgba(209,213,219,0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        /* section nav chips */
+        .section-nav {
+            display: inline-flex;
+            gap: 8px;
+            margin-top: 22px;
+            padding: 6px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.16);
+            box-shadow: 0 12px 32px rgba(15,23,42,0.4);
+        }
+
+        .section-nav a {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.8em;
+            color: #e5e7eb;
+            text-decoration: none;
+            border: 1px solid transparent;
+            background: rgba(15,23,42,0.5);
+            transition: all 0.2s ease;
+        }
+
+        .section-nav a:hover {
+            background: rgba(129,140,248,0.95);
+            border-color: rgba(191,219,254,0.9);
+        }
+
+        .section-nav a span {
+            opacity: 0.8;
+            margin-right: 4px;
+        }
+
+        .section {
+            position: relative;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.16);
+            border: 1px solid rgba(226,232,240,0.9);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            inset: -20%;
+            background:
+                    radial-gradient(circle at 0 0, rgba(102,126,234,0.09), transparent 60%),
+                    radial-gradient(circle at 100% 100%, rgba(244,114,182,0.06), transparent 55%);
+            opacity: 1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(15,23,42,0.18);
+            border-color: rgba(129,140,248,0.85);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-icon {
+            width: 38px;
+            height: 38px;
+            background: radial-gradient(circle at 30% 0, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            color: white;
+            box-shadow: 0 0 18px rgba(129,140,248,0.7);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .section-description {
+            color: #4b5563;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 0 0, rgba(102,126,234,0.12), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(15,23,42,0.18);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .card-content {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 6px;
+            margin: 20px 0;
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .number-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            box-shadow: 0 0 0 rgba(15,23,42,0);
+        }
+
+        .number-cell.composite {
+            background: #e5e7eb;
+            color: #94a3b8;
+        }
+
+        .number-cell.prime {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .number-cell.even-prime {
+            background: linear-gradient(135deg, var(--accent), var(--danger));
+            color: white;
+            box-shadow: 0 0 12px rgba(244,114,182,0.7);
+        }
+
+        .number-cell:hover {
+            transform: translateY(-2px) scale(1.12);
+            box-shadow: 0 8px 18px rgba(15,23,42,0.35);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 2px 8px rgba(245, 87, 108, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(245, 87, 108, 0.8);
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.25s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            font-size: 0.9em;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+            background: rgba(255,255,255,0.8);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .calculator-wrapper {
+            background: linear-gradient(135deg, #f8fafc 0%, #e9edf7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+            font-size: 0.85em;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 0.95em;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.25s ease;
+            background: white;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            padding: 10px 24px;
+            font-size: 0.95em;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-size: 210% 210%;
+            color: white;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 10px 25px rgba(79,70,229,0.55);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(79,70,229,0.7);
+            background-position: 100% 0;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            box-shadow: 0 8px 22px rgba(55,65,81,0.6);
+        }
+
+        .btn-small {
+            padding: 6px 16px;
+            font-size: 0.85em;
+        }
+
+        .result-panel {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .result-panel.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        .result-header.true {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+
+        .result-header.false {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .detail-label {
+            font-size: 0.75em;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        .code-container {
+            margin: 20px 0;
+        }
+
+        .code-header {
+            background: #111827;
+            padding: 10px 16px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-lang {
+            color: white;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .code-block {
+            background: radial-gradient(circle at 0 0, #111827, #020617);
+            color: #e2e8f0;
+            padding: 24px;
+            border-radius: 0 0 10px 10px;
+            overflow-x: auto;
+            font-family: 'Monaco', monospace;
+            font-size: 1em;
+            line-height: 1.8;
+            max-height: 450px;
+            overflow-y: auto;
+            box-shadow: 0 18px 45px rgba(15,23,42,0.9);
+            border: 1px solid #020617;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .keyword { color: #c678dd; }
+        .function { color: #61afef; }
+        .string { color: #98c379; }
+        .comment { color: #6b7280; font-style: italic; }
+        .number { color: #f59e0b; }
+
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .stat-mini {
+            background: linear-gradient(135deg, #f9fafb, #e5e7eb);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-mini-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-mini-label {
+            font-size: 0.8em;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e7f3ff, #cfe7ff);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+        }
+
+        .tool-container {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .divisor-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tree-node {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .tree-node.factor {
+            background: linear-gradient(135deg, #38ef7d, #11998e);
+        }
+
+        .live-counter {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            padding: 25px;
+            border-radius: 14px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 18px 45px rgba(88,28,135,0.75);
+        }
+
+        .counter-value {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .counter-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .counter-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 12px 28px rgba(15,23,42,0.18);
+        }
+
+        .quiz-question {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #eef2ff;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--danger);
+            background: #f8d7da;
+        }
+
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-letter {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .quiz-explanation {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary);
+            display: none;
+            font-size: 0.9em;
+        }
+
+        .quiz-explanation.show {
+            display: block;
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .game-display {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: inset 0 0 0 1px rgba(226,232,240,0.9);
+        }
+
+        /* Hero visual card for SVG */
+        .hero-visual-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px 18px 16px;
+            margin-bottom: 26px;
+            box-shadow: 0 14px 38px rgba(15,23,42,0.22);
+            border: 1px solid rgba(209,213,219,0.9);
+            overflow: hidden;
+        }
+
+        .hero-visual-card::before {
+            content: "Prime ∩ Even = {2}";
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.72em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(17,24,39,0.96);
+            color: #e5e7eb;
+            border: 1px solid rgba(129,140,248,0.85);
+        }
+
+        .hero-visual-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .hero-visual-subtitle {
+            font-size: 0.9em;
+            color: #4b5563;
+            margin-bottom: 12px;
+        }
+
+        .hero-visual-container {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #020617;
+            border: 1px solid rgba(15,23,42,0.9);
+        }
+
+        .hero-visual-container svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0 10px 30px;
+            }
+
+            .hero-title {
+                font-size: 2.1em;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .interactive-grid {
+                grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .counter-value {
+                font-size: 2em;
+            }
+
+            .section-nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<canvas id="particles-bg"></canvas>
+<div class="notification-container" id="notificationContainer"></div>
+
+<div class="container">
+    <header>
+        <h1 class="hero-title">Prime & Even Numbers</h1>
+        <p class="hero-subtitle">The Mathematical Paradox: Only 2 Can Be Both Prime and Even</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-number">∞</span>
+                <span class="hero-stat-label">Prime Numbers</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">1</span>
+                <span class="hero-stat-label">Even Prime</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-number">25</span>
+                <span class="hero-stat-label">Primes under 100</span>
+            </div>
+        </div>
+
+        <div class="section-nav">
+            <a href="#explorer"><span>🎮</span>Explorer</a>
+            <a href="#tools"><span>🧮</span>Tools</a>
+            <a href="#game"><span>🎲</span>Game</a>
+            <a href="#code"><span>💻</span>Code</a>
+        </div>
+    </header>
+
+    <!-- Hero Visual: primes & evens -->
+    <div class="hero-visual-card">
+        <h2 class="hero-visual-title">Visual proof: only 2 is both prime and even</h2>
+        <p class="hero-visual-subtitle">
+            Circles show prime numbers, squares show even numbers. The glowing 2 in the center belongs to both sets.
+        </p>
+
+        <div class="hero-visual-container">
+            <!-- HERO VISUAL with white arrows & glow -->
+            <svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="primeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                    </linearGradient>
+
+                    <linearGradient id="evenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f5576c;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+                    </linearGradient>
+
+                    <linearGradient id="specialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#38ef7d;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#11998e;stop-opacity:1" />
+                    </linearGradient>
+
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+
+                    <filter id="strongGlow">
+                        <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+
+                    <pattern id="heroGrid" width="50" height="50" patternUnits="userSpaceOnUse">
+                        <path d="M 50 0 L 0 0 0 50" fill="none"
+                              stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    </pattern>
+
+                    <!-- white arrows -->
+                    <marker id="arrowWhite" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                        <path d="M2,2 L2,10 L10,6 z" fill="white"/>
+                    </marker>
+                </defs>
+
+                <!-- Background grid -->
+                <rect width="900" height="450" fill="url(#heroGrid)" opacity="0.6"/>
+
+                <!-- Title -->
+                <text x="450" y="35" text-anchor="middle" fill="white"
+                      font-size="18" font-weight="600" opacity="0.95">
+                    ✨ Visual Proof: Only 2 Belongs to Both Sets ✨
+                </text>
+
+                <!-- Prime Numbers Section -->
+                <text x="450" y="60" text-anchor="middle" fill="white"
+                      font-size="19" font-weight="bold" opacity="0.9">
+                    Prime Numbers (Circles)
+                </text>
+
+                <circle cx="250" cy="130" r="28" fill="url(#primeGrad)" opacity="0.9" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <text x="250" y="138" text-anchor="middle" fill="white"
+                      font-size="22" font-weight="bold">3</text>
+
+                <circle cx="380" cy="150" r="28" fill="url(#primeGrad)" opacity="0.9" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.8;1;0.8" dur="3.3s" repeatCount="indefinite"/>
+                </circle>
+                <text x="380" y="158" text-anchor="middle" fill="white"
+                      font-size="22" font-weight="bold">5</text>
+
+                <circle cx="520" cy="140" r="28" fill="url(#primeGrad)" opacity="0.9" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.8;1;0.8" dur="3.6s" repeatCount="indefinite"/>
+                </circle>
+                <text x="520" y="148" text-anchor="middle" fill="white"
+                      font-size="22" font-weight="bold">7</text>
+
+                <circle cx="650" cy="125" r="28" fill="url(#primeGrad)" opacity="0.9" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.8;1;0.8" dur="3.1s" repeatCount="indefinite"/>
+                </circle>
+                <text x="650" y="133" text-anchor="middle" fill="white"
+                      font-size="22" font-weight="bold">11</text>
+
+                <!-- white dashed connection lines -->
+                <line x1="250" y1="130" x2="380" y2="150"
+                      stroke="white" stroke-width="2.4"
+                      stroke-dasharray="6,6" opacity="0.85">
+                    <animate attributeName="stroke-dashoffset" values="0;12"
+                             dur="1.5s" repeatCount="indefinite"/>
+                </line>
+                <line x1="380" y1="150" x2="520" y2="140"
+                      stroke="white" stroke-width="2.4"
+                      stroke-dasharray="6,6" opacity="0.85">
+                    <animate attributeName="stroke-dashoffset" values="0;12"
+                             dur="1.5s" repeatCount="indefinite"/>
+                </line>
+                <line x1="520" y1="140" x2="650" y2="125"
+                      stroke="white" stroke-width="2.4"
+                      stroke-dasharray="6,6" opacity="0.85">
+                    <animate attributeName="stroke-dashoffset" values="0;12"
+                             dur="1.5s" repeatCount="indefinite"/>
+                </line>
+
+                <!-- CENTER: number 2 with strong glow -->
+                <g filter="url(#strongGlow)">
+                    <circle cx="450" cy="225" r="50" fill="url(#specialGrad)" opacity="0.97">
+                        <animate attributeName="r" values="50;58;50" dur="2.6s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="450" cy="225" r="64" fill="none"
+                            stroke="#38ef7d" stroke-width="3" opacity="0.7">
+                        <animate attributeName="r" values="64;76;64" dur="2.6s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2.6s"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="450" cy="225" r="82" fill="none"
+                            stroke="#38ef7d" stroke-width="2" opacity="0.4">
+                        <animate attributeName="r" values="82;96;82" dur="2.6s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.4;0.08;0.4" dur="2.6s"
+                                 repeatCount="indefinite"/>
+                    </circle>
+                </g>
+                <text x="450" y="236" text-anchor="middle" fill="white"
+                      font-size="36" font-weight="bold">2</text>
+                <text x="450" y="295" text-anchor="middle"
+                      fill="#bbf7d0" font-size="16" font-weight="bold">
+                    ★ The only even prime ★
+                </text>
+
+                <!-- Even Numbers Section -->
+                <text x="450" y="350" text-anchor="middle" fill="white"
+                      font-size="19" font-weight="bold" opacity="0.9">
+                    Even Numbers (Squares)
+                </text>
+
+                <rect x="225" y="370" width="50" height="50" rx="10"
+                      fill="url(#evenGrad)" opacity="0.8" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.7;0.9;0.7"
+                             dur="3s" repeatCount="indefinite"/>
+                </rect>
+                <text x="250" y="402" text-anchor="middle"
+                      fill="white" font-size="22" font-weight="bold">4</text>
+
+                <rect x="355" y="370" width="50" height="50" rx="10"
+                      fill="url(#evenGrad)" opacity="0.8" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.7;0.9;0.7"
+                             dur="3.3s" repeatCount="indefinite"/>
+                </rect>
+                <text x="380" y="402" text-anchor="middle"
+                      fill="white" font-size="22" font-weight="bold">6</text>
+
+                <rect x="495" y="370" width="50" height="50" rx="10"
+                      fill="url(#evenGrad)" opacity="0.8" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.7;0.9;0.7"
+                             dur="3.6s" repeatCount="indefinite"/>
+                </rect>
+                <text x="520" y="402" text-anchor="middle"
+                      fill="white" font-size="22" font-weight="bold">8</text>
+
+                <rect x="625" y="370" width="50" height="50" rx="10"
+                      fill="url(#evenGrad)" opacity="0.8" filter="url(#glow)">
+                    <animate attributeName="opacity" values="0.7;0.9;0.7"
+                             dur="3.9s" repeatCount="indefinite"/>
+                </rect>
+                <text x="650" y="402" text-anchor="middle"
+                      fill="white" font-size="22" font-weight="bold">10</text>
+
+                <!-- White arrows to center 2 -->
+                <path d="M 250 160 Q 300 190 400 215"
+                      stroke="white" stroke-width="3" fill="none" opacity="0.9"
+                      marker-end="url(#arrowWhite)"/>
+                <path d="M 250 370 Q 300 305 400 235"
+                      stroke="white" stroke-width="3" fill="none" opacity="0.9"
+                      marker-end="url(#arrowWhite)"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">🎯</div>
+            <h2 class="section-title">The Challenge</h2>
+        </div>
+        <p class="section-description">
+            Write a Python function that returns True if a number is both prime AND even, otherwise False.
+        </p>
+
+        <div class="card-grid">
+            <div class="card" onclick="showCardInfo('prime')">
+                <span class="card-icon">🔍</span>
+                <h3 class="card-title">Prime Number</h3>
+                <p class="card-content">Natural number greater than 1 divisible only by 1 and itself</p>
+            </div>
+            <div class="card" onclick="showCardInfo('even')">
+                <span class="card-icon">➗</span>
+                <h3 class="card-title">Even Number</h3>
+                <p class="card-content">Integer divisible by 2 without remainder</p>
+            </div>
+            <div class="card" onclick="showCardInfo('paradox')">
+                <span class="card-icon">💡</span>
+                <h3 class="card-title">The Paradox</h3>
+                <p class="card-content">Only 2 satisfies both! Click to learn why</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-box-title">
+                <span>💡</span> Key Insight
+            </div>
+            <p>If a number greater than 2 is even, it is divisible by 2, meaning it has at least 3 divisors. This violates the prime definition!</p>
+        </div>
+    </div>
+
+    <!-- Live Prime Counter -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">⚡</div>
+            <h2 class="section-title">Live Prime Generator</h2>
+        </div>
+        <p class="section-description">Watch primes being discovered in real-time! Start the counter and see how primes are distributed.</p>
+
+        <div class="live-counter">
+            <div class="counter-label">Currently Checking</div>
+            <div class="counter-value" id="liveNumber">2</div>
+            <div class="counter-label" id="liveStatus">Ready</div>
+            <div class="counter-controls">
+                <button class="btn" onclick="startLiveCounter()">▶ Start</button>
+                <button class="btn btn-secondary" onclick="stopLiveCounter()">⏸ Pause</button>
+                <button class="btn btn-secondary" onclick="resetLiveCounter()">⟲ Reset</button>
+            </div>
+        </div>
+
+        <div class="stats-mini">
+            <div class="stat-mini">
+                <span class="stat-mini-value" id="totalChecked">0</span>
+                <span class="stat-mini-label">Checked</span>
+            </div>
+            <div class="stat-mini">
+                <span class="stat-mini-value" id="primesFound">0</span>
+                <span class="stat-mini-label">Primes</span>
+            </div>
+            <div class="stat-mini">
+                <span class="stat-mini-value" id="evenPrimes">0</span>
+                <span class="stat-mini-label">Even Primes</span>
+            </div>
+            <div class="stat-mini">
+                <span class="stat-mini-value" id="primeRate">0%</span>
+                <span class="stat-mini-label">Prime Rate</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Number Explorer -->
+    <div class="section" id="explorer">
+        <div class="section-header">
+            <div class="section-icon">🎮</div>
+            <h2 class="section-title">Interactive Number Explorer</h2>
+        </div>
+        <p class="section-description">
+            Click any number to see instant analysis. Pink cell equals the magic number 2!
+        </p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('grid1-tab', this)">1-100</button>
+            <button class="tab" onclick="switchTab('grid2-tab', this)">101-200</button>
+            <button class="tab" onclick="switchTab('primes-tab', this)">Primes Only</button>
+        </div>
+
+        <div id="grid1-tab" class="tab-content active">
+            <div class="interactive-grid" id="grid1"></div>
+        </div>
+
+        <div id="grid2-tab" class="tab-content">
+            <div class="interactive-grid" id="grid2"></div>
+        </div>
+
+        <div id="primes-tab" class="tab-content">
+            <div class="stats-mini">
+                <div class="stat-mini">
+                    <span class="stat-mini-value" id="primeCount">0</span>
+                    <span class="stat-mini-label">Total Primes</span>
+                </div>
+                <div class="stat-mini">
+                    <span class="stat-mini-value">1</span>
+                    <span class="stat-mini-label">Even Primes</span>
+                </div>
+                <div class="stat-mini">
+                    <span class="stat-mini-value" id="oddPrimeCount">0</span>
+                    <span class="stat-mini-label">Odd Primes</span>
+                </div>
+            </div>
+            <div class="interactive-grid" id="gridPrimes"></div>
+        </div>
+
+        <div id="numberDetailPanel" class="result-panel"></div>
+    </div>
+
+    <!-- Prime & Even Checker -->
+    <div class="section" id="tools">
+        <div class="section-header">
+            <div class="section-icon">🧮</div>
+            <h2 class="section-title">Prime & Even Checker</h2>
+        </div>
+        <p class="section-description">
+            Enter any number for detailed analysis including prime factorization and divisibility.
+        </p>
+
+        <div class="calculator-wrapper">
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Number to analyze</label>
+                    <input type="number" id="calcInput" placeholder="e.g., 42" value="17">
+                </div>
+                <div class="input-group" style="flex: 0;">
+                    <label class="input-label">&nbsp;</label>
+                    <button class="btn" onclick="analyzeNumber()">
+                        <span>🔍</span> Analyze
+                    </button>
+                </div>
+            </div>
+
+            <div id="calcResult" class="result-panel"></div>
+        </div>
+    </div>
+
+    <!-- Prime Factorization Tool -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">🌳</div>
+            <h2 class="section-title">Prime Factorization Tree</h2>
+        </div>
+        <p class="section-description">
+            Break down any number into its prime factors. Watch the tree build!
+        </p>
+
+        <div class="tool-container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Number to factorize</label>
+                    <input type="number" id="factorInput" placeholder="e.g., 60" value="60">
+                </div>
+                <div class="input-group" style="flex: 0;">
+                    <label class="input-label">&nbsp;</label>
+                    <button class="btn btn-small" onclick="factorizeNumber()">🌲 Build Tree</button>
+                </div>
+            </div>
+
+            <div id="factorTree"></div>
+        </div>
+    </div>
+
+    <!-- Prime Number Game -->
+    <div class="section" id="game">
+        <div class="section-header">
+            <div class="section-icon">🎲</div>
+            <h2 class="section-title">Prime Number Game</h2>
+        </div>
+        <p class="section-description">
+            Test your intuition! Can you guess if a random number is prime?
+        </p>
+
+        <div class="game-container">
+            <div class="game-display" id="gameNumber">?</div>
+            <div style="margin: 15px 0;">
+                <div style="font-size: 0.9em; color: #64748b;">
+                    Score: <strong id="gameScore">0</strong> / <strong id="gameTotal">0</strong>
+                </div>
+            </div>
+            <div class="counter-controls">
+                <button class="btn" onclick="guessGame('prime')">✓ Prime</button>
+                <button class="btn btn-secondary" onclick="guessGame('composite')">✗ Composite</button>
+                <button class="btn btn-secondary" onclick="newGameNumber()">🔄 New Number</button>
+            </div>
+            <div id="gameResult" style="margin-top: 15px; font-weight: 600;"></div>
+        </div>
+    </div>
+
+    <!-- Nth Prime Finder -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">🔢</div>
+            <h2 class="section-title">Nth Prime Finder</h2>
+        </div>
+        <p class="section-description">
+            Find any prime by its position. What is the 100th prime? 1000th? Try it!
+        </p>
+
+        <div class="tool-container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="input-label">Find the Nth prime</label>
+                    <input type="number" id="nthInput" placeholder="e.g., 100" value="10" min="1" max="10000">
+                </div>
+                <div class="input-group" style="flex: 0;">
+                    <label class="input-label">&nbsp;</label>
+                    <button class="btn btn-small" onclick="findNthPrime()">🎯 Find Prime</button>
+                </div>
+            </div>
+
+            <div id="nthResult" class="result-panel"></div>
+        </div>
+    </div>
+
+    <!-- Code Implementation -->
+    <div class="section" id="code">
+        <div class="section-header">
+            <div class="section-icon">💻</div>
+            <h2 class="section-title">Python Implementation</h2>
+        </div>
+        <p class="section-description">
+            Clean, optimized code with detailed comments.
+        </p>
+
+        <div class="code-container">
+            <div class="code-header">
+                <span class="code-lang">🐍 Python</span>
+                <button class="btn btn-small" onclick="copyCode()">📋 Copy</button>
+            </div>
+            <div class="code-block">
+<pre id="pythonCode"><span class="keyword">def</span> <span class="function">is_prime_and_even</span>(n: <span class="keyword">int</span>) -> <span class="keyword">bool</span>:
+    <span class="comment">"""Returns True if number is both prime AND even."""</span>
+    <span class="keyword">if</span> n &lt; <span class="number">2</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    <span class="keyword">if</span> n % <span class="number">2</span> != <span class="number">0</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    <span class="keyword">return</span> n == <span class="number">2</span>
+
+
+<span class="keyword">def</span> <span class="function">is_prime</span>(n: <span class="keyword">int</span>) -> <span class="keyword">bool</span>:
+    <span class="comment">"""Check if number is prime."""</span>
+    <span class="keyword">if</span> n &lt; <span class="number">2</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    <span class="keyword">if</span> n == <span class="number">2</span>:
+        <span class="keyword">return</span> <span class="keyword">True</span>
+    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">0</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="number">3</span>, <span class="keyword">int</span>(n ** <span class="number">0.5</span>) + <span class="number">1</span>, <span class="number">2</span>):
+        <span class="keyword">if</span> n % i == <span class="number">0</span>:
+            <span class="keyword">return</span> <span class="keyword">False</span>
+    <span class="keyword">return</span> <span class="keyword">True</span>
+
+
+<span class="comment"># Test</span>
+<span class="function">print</span>(<span class="function">is_prime_and_even</span>(<span class="number">2</span>))   <span class="comment"># True</span>
+<span class="function">print</span>(<span class="function">is_prime_and_even</span>(<span class="number">4</span>))   <span class="comment"># False</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">🎓</div>
+            <h2 class="section-title">Test Your Knowledge</h2>
+        </div>
+
+        <div class="quiz-card">
+            <div class="quiz-question">Q1: Why is 2 the only even prime?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="answerQuiz(this, false, 0)">
+                    <div class="option-letter">A</div>
+                    <div>Because it is the smallest even number</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, true, 0)">
+                    <div class="option-letter">B</div>
+                    <div>Any even number greater than 2 has at least 3 divisors</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, false, 0)">
+                    <div class="option-letter">C</div>
+                    <div>Mathematicians made it a special case</div>
+                </div>
+            </div>
+            <div class="quiz-explanation">
+                <strong>Correct!</strong> Any even number greater than 2 can be divided by 2, giving it at least 3 divisors.
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <div class="quiz-question">Q2: What does is_prime_and_even(100) return?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="answerQuiz(this, false, 1)">
+                    <div class="option-letter">A</div>
+                    <div>True</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, true, 1)">
+                    <div class="option-letter">B</div>
+                    <div>False</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, false, 1)">
+                    <div class="option-letter">C</div>
+                    <div>Error</div>
+                </div>
+            </div>
+            <div class="quiz-explanation">
+                <strong>Correct!</strong> 100 is even but not prime. It has many divisors.
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <div class="quiz-question">Q3: How many even prime numbers exist?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="answerQuiz(this, false, 2)">
+                    <div class="option-letter">A</div>
+                    <div>None</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, true, 2)">
+                    <div class="option-letter">B</div>
+                    <div>Exactly one: the number 2</div>
+                </div>
+                <div class="quiz-option" onclick="answerQuiz(this, false, 2)">
+                    <div class="option-letter">C</div>
+                    <div>Infinitely many</div>
+                </div>
+            </div>
+            <div class="quiz-explanation">
+                <strong>Correct!</strong> Only 2 is both even and prime!
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-icon">🎯</div>
+            <h2 class="section-title">Key Takeaways</h2>
+        </div>
+
+        <div class="info-box" style="background: linear-gradient(135deg, #d4edda, #c3e6cb); border-left-color: #38ef7d;">
+            <div class="info-box-title" style="color: #155724;">
+                <span>✅</span> The Bottom Line
+            </div>
+            <p>The function returns True for exactly ONE value: n = 2. Any even number greater than 2 is divisible by 2, making it composite!</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <span class="card-icon">📐</span>
+                <h3 class="card-title">Math Concept</h3>
+                <p class="card-content">Understanding divisibility and prime definitions</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">💻</span>
+                <h3 class="card-title">Algorithm</h3>
+                <p class="card-content">Optimized primality testing</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🎯</span>
+                <h3 class="card-title">Application</h3>
+                <p class="card-content">Common interview question</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let liveCounterInterval = null;
+    let currentLiveNumber = 2;
+    let totalChecked = 0;
+    let primesFound = 0;
+    let evenPrimesFound = 0;
+    let quizAnswered = [false, false, false];
+    let gameNumber = 0;
+    let gameScore = 0;
+    let gameTotal = 0;
+
+    function isPrime(n) {
+        if (n < 2) return false;
+        if (n === 2) return true;
+        if (n % 2 === 0) return false;
+
+        for (let i = 3; i <= Math.sqrt(n); i += 2) {
+            if (n % i === 0) return false;
+            return false;
+        }
+        return true;
+    }
+
+    function isPrimeAndEven(n) {
+        if (n < 2) return false;
+        if (n % 2 !== 0) return false;
+        return n === 2;
+    }
+
+    function getFactors(n) {
+        const factors = [];
+        for (let i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) {
+                factors.push(i);
+                if (i !== n / i) factors.push(n / i);
+            }
+        }
+        return factors.sort((a, b) => a - b);
+    }
+
+    function primeFactorization(n) {
+        const factors = [];
+        let d = 2;
+        while (d * d <= n) {
+            while (n % d === 0) {
+                factors.push(d);
+                n /= d;
+            }
+            d++;
+        }
+        if (n > 1) factors.push(n);
+        return factors;
+    }
+
+    function showNotification(title, message, type = 'info') {
+        const container = document.getElementById('notificationContainer');
+        const notification = document.createElement('div');
+        notification.className = 'notification ' + type;
+
+        const icons = { success: '✓', error: '✗', info: 'ℹ' };
+
+        notification.innerHTML =
+            '<span class="notification-icon">' + icons[type] + '</span>' +
+            '<div class="notification-content">' +
+            '<div class="notification-title">' + title + '</div>' +
+            '<div class="notification-message">' + message + '</div>' +
+            '</div>';
+
+        container.appendChild(notification);
+        setTimeout(() => {
+            notification.style.animation = 'slideInRight 0.3s ease reverse';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    function initParticles() {
+        const canvas = document.getElementById('particles-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+
+        const particles = [];
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                dx: (Math.random() - 0.5) * 0.4,
+                dy: (Math.random() - 0.5) * 0.4,
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // particles
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+                ctx.fill();
+            });
+
+            // connection lines
+            const maxDist = 120;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const a = particles[i];
+                    const b = particles[j];
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDist) {
+                        const alpha = 0.18 * (1 - dist / maxDist);
+                        ctx.strokeStyle = 'rgba(226, 232, 240,' + alpha + ')';
+                        ctx.lineWidth = 0.6;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    function populateGrid(containerId, start, end) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        for (let i = start; i <= end; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'number-cell';
+            cell.textContent = i;
+
+            if (isPrimeAndEven(i)) {
+                cell.classList.add('even-prime');
+            } else if (isPrime(i)) {
+                cell.classList.add('prime');
+            } else {
+                cell.classList.add('composite');
+            }
+
+            cell.onclick = () => showNumberDetail(i);
+            container.appendChild(cell);
+        }
+    }
+
+    function populatePrimesGrid() {
+        const container = document.getElementById('gridPrimes');
+        container.innerHTML = '';
+        let count = 0;
+
+        for (let i = 2; i <= 200; i++) {
+            if (isPrime(i)) {
+                count++;
+                const cell = document.createElement('div');
+                cell.className = 'number-cell';
+                cell.textContent = i;
+
+                if (i === 2) cell.classList.add('even-prime');
+                else cell.classList.add('prime');
+
+                cell.onclick = () => showNumberDetail(i);
+                container.appendChild(cell);
+            }
+        }
+
+        document.getElementById('primeCount').textContent = count;
+        document.getElementById('oddPrimeCount').textContent = count - 1;
+    }
+
+    function showNumberDetail(n) {
+        const panel = document.getElementById('numberDetailPanel');
+        const factors = getFactors(n);
+        const primeFactors = primeFactorization(n);
+        const isPrimeNum = isPrime(n);
+        const isEven = n % 2 === 0;
+        const isBoth = isPrimeAndEven(n);
+
+        let html = '<div class="result-header ' + (isBoth ? 'true' : 'false') + '">';
+        html += isBoth ? '✓ Both Prime & Even!' : '✗ Not both prime and even';
+        html += '</div>';
+
+        html += '<div class="result-details">';
+        html += '<div class="detail-item"><div class="detail-label">Number</div><div class="detail-value">' + n + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Prime?</div><div class="detail-value">' + (isPrimeNum ? 'Yes ✓' : 'No ✗') + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Even?</div><div class="detail-value">' + (isEven ? 'Yes ✓' : 'No ✗') + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Divisors</div><div class="detail-value">' + factors.join(', ') + '</div></div>';
+        if (primeFactors.length > 0) {
+            html += '<div class="detail-item"><div class="detail-label">Prime Factors</div><div class="detail-value">' + primeFactors.join(' × ') + '</div></div>';
+        }
+        html += '</div>';
+
+        panel.innerHTML = html;
+        panel.classList.add('show');
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    function startLiveCounter() {
+        if (liveCounterInterval) return;
+
+        liveCounterInterval = setInterval(() => {
+            document.getElementById('liveNumber').textContent = currentLiveNumber;
+            totalChecked++;
+
+            if (isPrime(currentLiveNumber)) {
+                primesFound++;
+                document.getElementById('liveStatus').textContent = '✓ Prime Found!';
+                if (currentLiveNumber === 2) {
+                    evenPrimesFound = 1;
+                }
+            } else {
+                document.getElementById('liveStatus').textContent = '✗ Composite';
+            }
+
+            document.getElementById('totalChecked').textContent = totalChecked;
+            document.getElementById('primesFound').textContent = primesFound;
+            document.getElementById('evenPrimes').textContent = evenPrimesFound;
+            document.getElementById('primeRate').textContent =
+                ((primesFound / totalChecked) * 100).toFixed(1) + '%';
+
+            currentLiveNumber++;
+            if (currentLiveNumber > 1000) currentLiveNumber = 2;
+        }, 100);
+    }
+
+    function stopLiveCounter() {
+        clearInterval(liveCounterInterval);
+        liveCounterInterval = null;
+        document.getElementById('liveStatus').textContent = 'Paused';
+    }
+
+    function resetLiveCounter() {
+        stopLiveCounter();
+        currentLiveNumber = 2;
+        totalChecked = 0;
+        primesFound = 0;
+        evenPrimesFound = 0;
+        document.getElementById('liveNumber').textContent = '2';
+        document.getElementById('liveStatus').textContent = 'Ready';
+        document.getElementById('totalChecked').textContent = '0';
+        document.getElementById('primesFound').textContent = '0';
+        document.getElementById('evenPrimes').textContent = '0';
+        document.getElementById('primeRate').textContent = '0%';
+    }
+
+    function analyzeNumber() {
+        const n = parseInt(document.getElementById('calcInput').value);
+        if (isNaN(n) || n < 1) {
+            showNotification('Invalid Input', 'Please enter a positive integer', 'error');
+            return;
+        }
+
+        const panel = document.getElementById('calcResult');
+        const factors = getFactors(n);
+        const primeFactors = primeFactorization(n);
+        const isPrimeNum = isPrime(n);
+        const isEven = n % 2 === 0;
+        const isBoth = isPrimeAndEven(n);
+
+        let html = '<div class="result-header ' + (isBoth ? 'true' : 'false') + '">';
+        html += isBoth ? '🎉 ' + n + ' is BOTH Prime & Even!' : '📊 Analysis of ' + n;
+        html += '</div>';
+
+        html += '<div class="result-details">';
+        html += '<div class="detail-item"><div class="detail-label">Number</div><div class="detail-value">' + n + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Prime?</div><div class="detail-value">' + (isPrimeNum ? 'Yes ✓' : 'No ✗') + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Even?</div><div class="detail-value">' + (isEven ? 'Yes ✓' : 'No ✗') + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Both?</div><div class="detail-value">' + (isBoth ? 'Yes ✓' : 'No ✗') + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">Divisor Count</div><div class="detail-value">' + factors.length + '</div></div>';
+        html += '<div class="detail-item"><div class="detail-label">All Divisors</div><div class="detail-value">' + factors.join(', ') + '</div></div>';
+        if (primeFactors.length > 0) {
+            html += '<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Prime Factorization</div><div class="detail-value">' + n + ' = ' + primeFactors.join(' × ') + '</div></div>';
+        }
+        html += '</div>';
+
+        panel.innerHTML = html;
+        panel.classList.add('show');
+    }
+
+    function factorizeNumber() {
+        const n = parseInt(document.getElementById('factorInput').value);
+        if (isNaN(n) || n < 2) {
+            showNotification('Invalid Input', 'Please enter a number >= 2', 'error');
+            return;
+        }
+
+        const factors = primeFactorization(n);
+        const container = document.getElementById('factorTree');
+
+        let html = '<div class="divisor-tree">';
+        html += '<div class="tree-level"><div class="tree-node">' + n + '</div></div>';
+
+        if (factors.length === 0 || (factors.length === 1 && factors[0] === n)) {
+            html += '<div style="margin-top: 15px; text-align: center; font-weight: 600; color: var(--primary);">';
+            html += 'This number is already prime!</div>';
+        } else {
+            html += '<div class="tree-level">';
+            factors.forEach(f => {
+                html += '<div class="tree-node factor">' + f + '</div>';
+            });
+            html += '</div>';
+            html += '<div style="margin-top: 15px; text-align: center; font-size: 0.95em;">';
+            html += '<strong>' + n + '</strong> = <strong>' + factors.join(' × ') + '</strong>';
+            html += '</div>';
+        }
+
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    function newGameNumber() {
+        gameNumber = Math.floor(Math.random() * 199) + 2;
+        document.getElementById('gameNumber').textContent = gameNumber;
+        document.getElementById('gameResult').textContent = '';
+    }
+
+    function guessGame(guess) {
+        const actualPrime = isPrime(gameNumber);
+        const correct = (guess === 'prime' && actualPrime) || (guess === 'composite' && !actualPrime);
+
+        gameTotal++;
+        if (correct) gameScore++;
+
+        document.getElementById('gameScore').textContent = gameScore;
+        document.getElementById('gameTotal').textContent = gameTotal;
+
+        const result = document.getElementById('gameResult');
+        if (correct) {
+            result.textContent = '✓ Correct! ' + gameNumber + ' is ' + (actualPrime ? 'prime' : 'composite');
+            result.style.color = 'var(--success)';
+            showNotification('Correct!', gameNumber + ' is ' + (actualPrime ? 'prime' : 'composite'), 'success');
+        } else {
+            result.textContent = '✗ Wrong! ' + gameNumber + ' is ' + (actualPrime ? 'prime' : 'composite');
+            result.style.color = 'var(--danger)';
+            showNotification('Wrong!', gameNumber + ' is ' + (actualPrime ? 'prime' : 'composite'), 'error');
+        }
+
+        setTimeout(newGameNumber, 2000);
+    }
+
+    function findNthPrime() {
+        const n = parseInt(document.getElementById('nthInput').value);
+        if (isNaN(n) || n < 1 || n > 10000) {
+            showNotification('Invalid Input', 'Please enter number between 1 and 10000', 'error');
+            return;
+        }
+
+        let count = 0;
+        let candidate = 2;
+        let result = 2;
+
+        while (count < n && candidate <= 200000) {
+            if (isPrime(candidate)) {
+                count++;
+                result = candidate;
+            }
+            candidate++;
+        }
+
+        const panel = document.getElementById('nthResult');
+        let html = '<div class="result-header true">';
+        html += '🎯 The ' + n + getOrdinalSuffix(n) + ' prime is: <strong style="font-size: 1.3em;">' + result + '</strong>';
+        html += '</div>';
+
+        if (result === 2) {
+            html += '<p style="margin-top: 15px; color: #155724; font-weight: 600;">✨ This is the only even prime number!</p>';
+        }
+
+        panel.innerHTML = html;
+        panel.classList.add('show');
+    }
+
+    function getOrdinalSuffix(n) {
+        const j = n % 10;
+        const k = n % 100;
+        if (j === 1 && k !== 11) return 'st';
+        if (j === 2 && k !== 12) return 'nd';
+        if (j === 3 && k !== 13) return 'rd';
+        return 'th';
+    }
+
+    function answerQuiz(element, isCorrect, idx) {
+        if (quizAnswered[idx]) return;
+        quizAnswered[idx] = true;
+
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const explanation = element.parentElement.nextElementSibling;
+
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            showNotification('Correct!', 'Well done!', 'success');
+        } else {
+            element.classList.add('wrong');
+            options.forEach(opt => {
+                if (opt !== element && opt.onclick && opt.onclick.toString().includes('true')) {
+                    opt.classList.add('correct');
+                }
+            });
+            showNotification('Incorrect', 'Check the green answer', 'error');
+        }
+
+        explanation.classList.add('show');
+    }
+
+    function copyCode() {
+        const code = document.getElementById('pythonCode').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            showNotification('Copied!', 'Code copied to clipboard', 'success');
+        });
+    }
+
+    function showCardInfo(type) {
+        const messages = {
+            prime: 'A prime number has exactly 2 divisors: 1 and itself. Examples: 2, 3, 5, 7, 11…',
+            even: 'An even number is divisible by 2. Examples: 2, 4, 6, 8, 10…',
+            paradox: 'Only 2 is both prime AND even. Any even number > 2 has at least 3 divisors.'
+        };
+        showNotification('Info', messages[type], 'info');
+    }
+
+    window.addEventListener('load', () => {
+        initParticles();
+        populateGrid('grid1', 1, 100);
+        populateGrid('grid2', 101, 200);
+        populatePrimesGrid();
+        newGameNumber();
+    });
+
+    window.addEventListener('resize', () => {
+        const canvas = document.getElementById('particles-bg');
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+    });
+</script>
+</body>
+</html>

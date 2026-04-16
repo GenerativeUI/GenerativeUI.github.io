@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Synchronous vs Asynchronous (Server-side) — Interactive Mini-App</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa7b2;--accent:#7dd3fc;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071026 0%,#071a2a 100%);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:32px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+    .logo{width:72px;height:72px;padding:12px;background:var(--glass);border-radius:14px;display:flex;align-items:center;justify-content:center}
+    .logo svg{width:48px;height:48px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:18px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr} .toc{order:2}}
+
+    /* Cards */
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .section-title{display:flex;justify-content:space-between;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* visualizer */
+    .visualizer{height:260px;border-radius:10px;background:linear-gradient(90deg,#021322,#051827);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .node{width:120px;height:120px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .loop{position:absolute;left:18px;top:18px;right:18px;bottom:18px;border-radius:12px;pointer-events:none}
+
+    /* controls */
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{background:#07172a;color:var(--accent);border:1px solid rgba(125,211,252,0.12);padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+    /* list */
+    ul.features{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+    ul.features li{display:flex;gap:10px;align-items:flex-start}
+    .dot{width:8px;height:8px;border-radius:3px;background:var(--accent);margin-top:6px}
+
+    /* right column */
+    .toc{position:sticky;top:20px}
+    .card.small{padding:12px}
+
+    pre{background:#01131a;padding:12px;border-radius:8px;color:#d7f9ff;overflow:auto}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,"Roboto Mono","Courier New",monospace;font-size:13px}
+
+    .badge{background:rgba(125,211,252,0.06);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600}
+    .quiz{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .result{margin-top:8px;padding:10px;border-radius:8px}
+    .footnotes{font-size:13px;color:var(--muted);margin-top:12px}
+
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo card" aria-hidden>
+        <!-- simple SVG logo -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="52" height="44" rx="8" fill="#072340"/><path d="M18 26h28M18 34h20" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <h1>Synchronous vs Asynchronous — Server-side Explained</h1>
+        <p class="lead">Interactive mini-app: visualizers, runnable examples, quick quiz, and curated resources to master sync vs async on the server.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <!-- Section 1: What & Why -->
+        <section class="card" id="what-why">
+          <div class="section-title">
+            <h2>What & Why</h2>
+            <span class="badge">Core concepts</span>
+          </div>
+          <p class="muted">Synchronous code executes in a predictable, step-by-step order and blocks until each step finishes. Asynchronous code allows the program to start operations (especially I/O) and continue doing other work while waiting for results, improving responsiveness and throughput for I/O-bound server workloads.</p>
+          <ul class="features">
+            <li><div class="dot" aria-hidden></div><div><strong>Synchronous (blocking)</strong> — easy to reason about but can make servers unresponsive while waiting on slow I/O.</div></li>
+            <li><div class="dot" aria-hidden></div><div><strong>Asynchronous (non‑blocking)</strong> — frees the thread to handle other requests while I/O completes (callbacks, promises, async/await, event-loop).</div></li>
+            <li><div class="dot" aria-hidden></div><div><strong>Event loop (server-side JS)</strong> — central mechanism that schedules callbacks and timers without blocking the single main thread (Node.js uses libuv under the hood).</div></li>
+          </ul>
+          <div class="footnotes">Sources: MDN, Node.js Guides, Nordic APIs — see resources section for links and short summaries.</div>
+        </section>
+
+        <!-- Section 2: Interactive Visualizer -->
+        <section class="card" id="visualizer">
+          <div class="section-title"><h2>Event Loop & Concurrency Visualizer</h2><span class="muted">Simulate task scheduling</span></div>
+          <div class="visualizer" id="viz" aria-hidden>
+            <div class="loop" id="loopLayer"></div>
+            <div style="display:flex;gap:12px;z-index:2;align-items:center">
+              <div class="node" id="serverNode"><strong>Server</strong><div class="muted" style="font-size:12px">main thread</div></div>
+              <div style="color:var(--muted)">↔</div>
+              <div class="node" id="ioNode"><strong>I/O</strong><div class="muted" style="font-size:12px">offloaded</div></div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="spawnSync">Spawn <strong>sync</strong> task</button>
+            <button id="spawnAsync">Spawn <strong>async</strong> task</button>
+            <button class="ghost" id="clearViz">Clear</button>
+          </div>
+          <p class="muted" style="margin-top:10px">Click <em>spawn sync</em> to run a CPU-blocking task (simulated busy-wait) — you will notice UI freeze. Click <em>spawn async</em> to schedule an I/O-style task that doesn't block the main thread.</p>
+        </section>
+
+        <!-- Section 3: Try-it code panel -->
+        <section class="card" id="examples">
+          <div class="section-title"><h2>Runnable Examples</h2><span class="muted">Node-style snippets (simulated)</span></div>
+          <p class="muted">Toggle between patterns and run the simulation to see flow order and timing.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <button id="ex-callback">Callback</button>
+            <button id="ex-promise">Promise</button>
+            <button id="ex-async">async/await</button>
+          </div>
+          <pre id="code" aria-hidden><code>// click a pattern above</code></pre>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="runExample">Run</button>
+            <button class="ghost" id="resetLog">Reset Log</button>
+          </div>
+          <div id="log" style="margin-top:12px;background:#01161c;padding:10px;border-radius:8px;max-height:220px;overflow:auto;color:#cfeefb"></div>
+        </section>
+
+        <!-- Section 4: Quick Quiz -->
+        <section class="card" id="quiz">
+          <div class="section-title"><h2>Quick Quiz</h2><span class="muted">Check your understanding</span></div>
+          <div class="quiz" id="quizArea">
+            <div>
+              <label>1) Which is best for heavy CPU-bound work on Node.js?</label>
+              <div style="display:flex;gap:8px;margin-top:6px"><button data-answer="a">A — Synchronous on main thread</button><button data-answer="b">B — Offload (worker threads / separate process)</button></div>
+            </div>
+            <div>
+              <label>2) Which pattern avoids blocking the event loop?</label>
+              <div style="display:flex;gap:8px;margin-top:6px"><button data-answer="c">A — setTimeout / Promise-based I/O</button><button data-answer="d">B — long for-loop blocking thread</button></div>
+            </div>
+            <div class="result" id="quizResult" style="display:none"></div>
+          </div>
+        </section>
+
+        <!-- Section 5: Resources & Takeaways -->
+        <section class="card" id="resources">
+          <div class="section-title"><h2>Resources & Takeaways</h2><span class="muted">Curated for server-side devs</span></div>
+          <ol style="margin-top:8px">
+            <li><strong>MDN — Asynchronous JavaScript</strong>: explanation of async concepts, promises, async/await.</li>
+            <li><strong>Node.js Guides — Event Loop</strong>: how Node's event loop & libuv achieve non-blocking I/O.</li>
+            <li><strong>Nordic APIs</strong>: differences between synchronous and asynchronous APIs and when to use each.</li>
+          </ol>
+          <p class="muted">Key takeaways: prefer async/non-blocking I/O for high-concurrency servers; keep CPU-heavy tasks off the main thread; use the pattern that makes your system simpler and maintainable for given constraints.</p>
+        </section>
+
+        <footer class="muted">Built for learning — interactive demos simulate server-side behavior in the browser. Not a runtime replacement for true server execution.</footer>
+      </main>
+
+      <aside class="toc">
+        <div class="card small">
+          <h3 style="margin:0 0 8px">At a glance</h3>
+          <p class="muted">Sections: What & Why · Visualizer · Runnable Examples · Quiz · Resources</p>
+          <div style="display:flex;gap:8px;margin-top:8px"><button onclick="document.getElementById('visualizer').scrollIntoView({behavior:'smooth'})" class="ghost">Open Visualizer</button><button onclick="document.getElementById('examples').scrollIntoView({behavior:'smooth'})">Run Examples</button></div>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Quick definitions</h4>
+          <p class="muted" style="margin-top:8px">Synchronous = blocking; Asynchronous = non-blocking. Event loop coordinates callbacks and microtasks.</p>
+        </div>
+
+        <div class="card small" style="margin-top:12px">
+          <h4 style="margin:0">Citations</h4>
+          <ol class="muted" style="margin-top:8px">
+            <li>MDN — Asynchronous JS</li>
+            <li>Node.js Guides — Event Loop</li>
+            <li>Nordic APIs — Async vs Sync</li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // --- Visualizer logic ---
+    const viz = document.getElementById('viz');
+    const loopLayer = document.getElementById('loopLayer');
+    const spawnSync = document.getElementById('spawnSync');
+    const spawnAsync = document.getElementById('spawnAsync');
+    const clearViz = document.getElementById('clearViz');
+
+    function appendBubble(text, x, y, color){
+      const el = document.createElement('div');
+      el.style.position='absolute';el.style.left=(x||50)+'%';el.style.top=(y||50)+'%';el.style.transform='translate(-50%,-50%)';
+      el.style.padding='8px 12px';el.style.borderRadius='8px';el.style.background='rgba(125,211,252,0.08)';el.style.color='var(--accent)';el.style.backdropFilter='blur(4px)';el.style.fontSize='13px';el.textContent=text;
+      loopLayer.appendChild(el);
+      setTimeout(()=>{el.style.transition='opacity 700ms, transform 700ms';el.style.opacity='0';el.style.transform='translate(-50%,-120%)';setTimeout(()=>el.remove(),800)},1600);
+    }
+
+    function busyWait(ms){ const end=Date.now()+ms; while(Date.now()<end){} }
+
+    spawnSync.addEventListener('click',()=>{
+      appendBubble('sync task started',50,60);
+      // simulate blocking CPU work
+      const t0=performance.now();
+      busyWait(800);
+      const t1=performance.now();
+      appendBubble('sync finished ('+Math.round(t1-t0)+'ms)',50,40);
+    });
+
+    spawnAsync.addEventListener('click',()=>{
+      appendBubble('async I/O requested',30,60);
+      // simulate offloaded I/O with setTimeout
+      setTimeout(()=>{appendBubble('I/O ready — callback queued',70,40)},900);
+      appendBubble('main continues',50,50);
+    });
+
+    clearViz.addEventListener('click',()=>{loopLayer.innerHTML=''});
+
+    // --- Examples logic ---
+    const code = document.getElementById('code');
+    const log = document.getElementById('log');
+    let currentPattern = '';
+
+    document.getElementById('ex-callback').addEventListener('click',()=>{
+      currentPattern='callback';
+      code.textContent = `console.log('start');\nfs.readFile('file', (err, data) => {\n  console.log('file read');\n});\nconsole.log('end');`;
+    });
+    document.getElementById('ex-promise').addEventListener('click',()=>{
+      currentPattern='promise';
+      code.textContent = `console.log('start');\nreadFilePromised('file').then(()=> console.log('file read'));\nconsole.log('end');`;
+    });
+    document.getElementById('ex-async').addEventListener('click',()=>{
+      currentPattern='async';
+      code.textContent = `console.log('start');\nasync function run(){\n  await readFilePromised('file');\n  console.log('file read after await');\n}\nrun();\nconsole.log('end');`;
+    });
+
+    function appendLog(line){ const el=document.createElement('div'); el.textContent=line; log.appendChild(el); log.scrollTop = log.scrollHeight; }
+    document.getElementById('runExample').addEventListener('click',()=>{
+      log.innerHTML='';
+      if(currentPattern==='callback'){
+        appendLog('start');
+        // simulate async I/O via setTimeout
+        setTimeout(()=>{appendLog('file read (callback)')},700);
+        appendLog('end');
+      } else if(currentPattern==='promise'){
+        appendLog('start');
+        new Promise(resolve=>setTimeout(resolve,700)).then(()=>appendLog('file read (promise)'));
+        appendLog('end');
+      } else if(currentPattern==='async'){
+        appendLog('start');
+        (async ()=>{ await new Promise(r=>setTimeout(r,700)); appendLog('file read after await'); })();
+        appendLog('end');
+      } else { appendLog('Choose a pattern first.'); }
+    });
+    document.getElementById('resetLog').addEventListener('click',()=>{log.innerHTML=''});
+
+    // --- Quiz logic ---
+    document.querySelectorAll('#quizArea button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ans=btn.getAttribute('data-answer');
+        const res=document.getElementById('quizResult'); res.style.display='block';
+        if(ans==='b' || ans==='c'){
+          res.style.background='#06261a';res.style.color='#8df3c8';res.textContent='Correct! Good job.';
+        } else {
+          res.style.background='#2a0f12';res.style.color='#ffb4b4';res.textContent='Not quite — rethink blocking vs offloading.';
+        }
+      })
+    });
+
+    // Accessibility: keyboard quick keys
+    window.addEventListener('keydown',e=>{
+      if(e.key==='1') document.getElementById('spawnSync').click();
+      if(e.key==='2') document.getElementById('spawnAsync').click();
+    });
+  </script>
+</body>
+</html>

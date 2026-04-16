@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's the Best First Move in Tic-Tac-Toe?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f9c74f;
+            --danger: #f94144;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 70px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-left: 5px solid var(--accent);
+            padding-left: 1rem;
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(58, 12, 163, 0.1) 100%);
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--dark);
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        /* Strategy Grid */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 2rem 0;
+        }
+
+        .grid-item {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .grid-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid-item p {
+            font-size: 0.9rem;
+        }
+
+        .grid-item.corner {
+            border-top: 5px solid var(--success);
+        }
+
+        .grid-item.center {
+            border-top: 5px solid var(--warning);
+        }
+
+        .grid-item.edge {
+            border-top: 5px solid var(--danger);
+        }
+
+        /* Tic-Tac-Toe Board */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .cell:hover {
+            background: #f0f0f0;
+        }
+
+        .cell.x {
+            color: var(--primary);
+        }
+
+        .cell.o {
+            color: var(--accent);
+        }
+
+        /* Tips List */
+        .tips-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .tips-list li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .tips-list li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .strategy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container fade-in">
+            <nav>
+                <div class="logo">Tic-Tac-Toe</div>
+                <ul class="nav-links">
+                    <li><a href="#basics">Basics</a></li>
+                    <li><a href="#best-move">Best Move</a></li>
+                    <li><a href="#strategy">Strategy</a></li>
+                    <li><a href="#tips">Tips</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1>🎲 Mastering Tic-Tac-Toe: The Best First Move</h1>
+            <p>Want to never lose again? Let's break down the winning strategies.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="basics" class="card fade-in">
+            <h2>The Basics</h2>
+            <p>Tic-tac-toe is a 3x3 grid game played by two players: X and O.</p>
+            <p>The goal: get three in a row (horizontally, vertically, or diagonally).</p>
+            <p>The first move matters — it sets the stage for winning or forcing a draw.</p>
+        </section>
+
+        <section id="best-move" class="card fade-in">
+            <h2>Best First Move</h2>
+            <p><strong>✅ Take the corner.</strong></p>
+            <p>Starting in a corner gives you the highest chance to win or force a draw.</p>
+            <p>From the corner, you can create multiple winning opportunities.</p>
+            <p><strong>⚠️ The center</strong> is also strong, but corners create more fork possibilities.</p>
+            <p><strong>❌ The worst first move</strong> is the edge — it gives the opponent control.</p>
+            
+            <div class="strategy-grid">
+                <div class="grid-item corner">
+                    <h3>Corner Move</h3>
+                    <p>Best starting position with most opportunities to create winning lines</p>
+                </div>
+                <div class="grid-item center">
+                    <h3>Center Move</h3>
+                    <p>Good defensive move but offers fewer offensive opportunities</p>
+                </div>
+                <div class="grid-item edge">
+                    <h3>Edge Move</h3>
+                    <p>Weakest starting position with limited strategic options</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="card fade-in">
+            <h2>Strategy Visuals</h2>
+            <p>Try clicking on different squares to see the recommended strategies:</p>
+            
+            <div class="game-board">
+                <div class="cell" data-position="top-left">•</div>
+                <div class="cell" data-position="top-middle">•</div>
+                <div class="cell" data-position="top-right">•</div>
+                <div class="cell" data-position="middle-left">•</div>
+                <div class="cell" data-position="center">•</div>
+                <div class="cell" data-position="middle-right">•</div>
+                <div class="cell" data-position="bottom-left">•</div>
+                <div class="cell" data-position="bottom-middle">•</div>
+                <div class="cell" data-position="bottom-right">•</div>
+            </div>
+            
+            <div id="strategy-info" style="text-align: center; margin-top: 2rem; min-height: 150px;">
+                <p>Click on a square to see strategy information</p>
+            </div>
+        </section>
+
+        <section id="tips" class="card fade-in">
+            <h2>Quick Strategy Tips</h2>
+            <ul class="tips-list">
+                <li>If opponent takes the center, go for a corner.</li>
+                <li>Always block their row of 2.</li>
+                <li>Aim to create a "fork" (two winning chances at once).</li>
+                <li>Control the center when possible to limit opponent's options.</li>
+                <li>Watch for diagonal opportunities, they're often overlooked.</li>
+            </ul>
+        </section>
+
+        <section id="conclusion" class="card fade-in">
+            <h2>Conclusion</h2>
+            <p>👉 The corner move is the strongest start. If both players know the strategy, tic-tac-toe always ends in a draw. But if you start strong, you'll never lose.</p>
+            <p>Remember that while the corner is statistically the best first move, adapting to your opponent's moves is key to maintaining your advantage throughout the game.</p>
+        </section>
+    </div>
+
+    
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Strategy board interaction
+        const cells = document.querySelectorAll('.cell');
+        const strategyInfo = document.getElementById('strategy-info');
+        
+        const strategies = {
+            'top-left': {
+                title: 'Corner Move (Best)',
+                description: 'Starting in a corner gives you the most opportunities to create winning lines. From here, you can potentially create forks (multiple winning threats) that are hard to defend against.',
+                result: 'Highest win probability'
+            },
+            'top-middle': {
+                title: 'Edge Move (Worst)',
+                description: 'Starting on an edge gives your opponent more opportunities to control the board. This is the weakest starting position with limited strategic options.',
+                result: 'Lowest win probability'
+            },
+            'top-right': {
+                title: 'Corner Move (Best)',
+                description: 'Like all corners, this position offers multiple winning paths and opportunities to create forks that are difficult to defend against.',
+                result: 'Highest win probability'
+            },
+            'middle-left': {
+                title: 'Edge Move (Worst)',
+                description: 'Edge moves limit your options and give your opponent more control over the board dynamics.',
+                result: 'Lowest win probability'
+            },
+            'center': {
+                title: 'Center Move (Good)',
+                description: 'The center is a strong defensive position that gives you control over the board. However, it offers fewer offensive opportunities compared to corner moves.',
+                result: 'Good for forcing draws'
+            },
+            'middle-right': {
+                title: 'Edge Move (Worst)',
+                description: 'This position makes it harder to create multiple threats and gives your opponent more options to control the game.',
+                result: 'Lowest win probability'
+            },
+            'bottom-left': {
+                title: 'Corner Move (Best)',
+                description: 'Corner positions provide the most strategic flexibility and opportunities to create winning combinations.',
+                result: 'Highest win probability'
+            },
+            'bottom-middle': {
+                title: 'Edge Move (Worst)',
+                description: 'Starting on an edge minimizes your strategic options and makes it easier for your opponent to counter your moves.',
+                result: 'Lowest win probability'
+            },
+            'bottom-right': {
+                title: 'Corner Move (Best)',
+                description: 'As with all corners, this position maximizes your chances of creating multiple winning threats that are difficult to defend against.',
+                result: 'Highest win probability'
+            }
+        };
+
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                const position = cell.getAttribute('data-position');
+                const strategy = strategies[position];
+                
+                // Clear previous content and add new strategy info
+                strategyInfo.innerHTML = `
+                    <h3>${strategy.title}</h3>
+                    <p>${strategy.description}</p>
+                    <p><strong>Result: ${strategy.result}</strong></p>
+                `;
+                
+                // Add visual feedback for the selected cell
+                cells.forEach(c => c.style.backgroundColor = '');
+                cell.style.backgroundColor = 'rgba(67, 97, 238, 0.1)';
+            });
+        });
+
+        // Make header sticky on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Get Minecraft Java to Run Better - Ultimate Performance Guide</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-cube"></i>
+                <span>Minecraft Performance</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#intro">Why It Lags</a></li>
+                <li><a href="#quick-fixes">Quick Fixes</a></li>
+                <li><a href="#launcher-tweaks">Launcher & Java</a></li>
+                <li><a href="#performance-mods">Performance Mods</a></li>
+                <li><a href="#system-tips">System Tips</a></li>
+                <li><a href="#checklist">Checklist</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>How to Get Minecraft Java to Run Better</h1>
+                <p class="hero-subtitle">Unlock smooth gameplay with proven optimization techniques, performance mods,
+                    and expert tips</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-target="300">0</span>
+                        <span class="stat-label">+ FPS Boost</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="90">0</span>
+                        <span class="stat-label">% Less Lag</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="15">0</span>
+                        <span class="stat-label">+ Pro Tips</span>
+                    </div>
+                </div>
+                <button class="cta-button" onclick="scrollToSection('intro')">
+                    <i class="fas fa-rocket"></i>
+                    Boost My FPS 🚀
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="assets/images/minecraft-performance.png" alt="Minecraft Performance Optimization"
+                        class="hero-image">
+                </div>
+                <div class="fps-indicator">
+                    <span class="fps-label">FPS</span>
+                    <span class="fps-value" id="fpsCounter">60</span>
+                </div>
+            </div>
+
+            <!-- Floating particles -->
+            <div class="hero-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="intro" class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Why Minecraft Java Edition Often Runs Poorly</h2>
+                <div class="intro-grid">
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fab fa-java"></i>
+                        </div>
+                        <h3>Java-Based Architecture</h3>
+                        <p>Minecraft Java runs on the JVM, which adds extra memory and CPU overhead compared to native
+                            applications.</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>Outdated Engine Design</h3>
+                        <p>Minecraft's core engine still struggles to take advantage of modern GPUs and multi-core CPUs.
+                        </p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>High Single-Core CPU Dependence</h3>
+                        <p>Minecraft relies more on single-thread speed than multiple cores, which explains why some
+                            CPUs underperform despite having many cores.</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>System Limitations</h3>
+                        <p>Even powerful PCs can struggle due to inefficient chunk loading, entity processing, and world
+                            generation algorithms.</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3>Resource-Intensive Mods & Shaders</h3>
+                        <p>Popular mods like OptiFine shaders, resource packs, and gameplay mods often cause major
+                            performance drops, especially on lower-end systems.</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="card-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Network & Server Lag</h3>
+                        <p>Multiplayer servers introduce latency, connection issues, and desync, which can feel like
+                            performance problems even on powerful PCs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Fixes Section -->
+    <section id="quick-fixes" class="section bg-light">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Quick Fixes for Everyone (No Mods Needed)</h2>
+                <p class="section-subtitle">These in-game settings can provide immediate performance improvements</p>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-eye"></i> Render Distance</h3>
+                            <div class="setting-control">
+                                <input type="range" id="renderDistance" min="2" max="32" value="12" class="slider">
+                                <span class="slider-value">12 chunks</span>
+                            </div>
+                        </div>
+                        <p>Lower render distance dramatically improves FPS. Try 8-12 chunks for optimal balance.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value high">High</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-palette"></i> Graphics Quality</h3>
+                            <div class="setting-control">
+                                <select id="graphicsQuality" class="setting-select">
+                                    <option value="fast">Fast</option>
+                                    <option value="fancy" selected>Fancy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p>Set to "Fast" for better performance. Disables fancy lighting and effects.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value high">High</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-snowflake"></i> Particles</h3>
+                            <div class="setting-control">
+                                <select id="particles" class="setting-select">
+                                    <option value="all">All</option>
+                                    <option value="decreased">Decreased</option>
+                                    <option value="minimal" selected>Minimal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p>Reduce particles to minimal for better performance, especially in combat.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value medium">Medium</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-sync"></i> V-Sync</h3>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" id="vsync">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <p>Disable V-Sync for higher FPS, but may cause screen tearing.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value medium">Medium</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-cloud"></i> Fancy Clouds</h3>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" id="fancyClouds" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <p>Disable fancy clouds for a small but noticeable FPS boost.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value low">Low</span>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3><i class="fas fa-layer-group"></i> Mipmaps</h3>
+                            <div class="setting-control">
+                                <select id="mipmaps" class="setting-select">
+                                    <option value="0">Off</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4" selected>4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p>Lower mipmap levels can improve performance on older graphics cards.</p>
+                        <div class="fps-impact">
+                            <span class="impact-label">FPS Impact:</span>
+                            <span class="impact-value low">Low</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pro-tip-box">
+                    <div class="pro-tip-content">
+                        <i class="fas fa-lightbulb"></i>
+                        <div class="pro-tip-text">
+                            <strong>Pro Tip:</strong> Adjust one setting at a time and test FPS. This way, you'll know
+                            which change helps the most on your computer.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mobile-note">
+                    <div class="mobile-note-content">
+                        <i class="fas fa-laptop"></i>
+                        <div class="mobile-note-text">
+                            <strong>For laptops or older PCs:</strong> Start with Render Distance 6–8 and Graphics =
+                            Fast.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Launcher & Java Tweaks Section -->
+    <section id="launcher-tweaks" class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Launcher & Java Tweaks</h2>
+                <p class="section-subtitle">Advanced optimizations for better performance</p>
+
+                <div class="tweaks-grid">
+                    <div class="tweak-card">
+                        <div class="tweak-header">
+                            <i class="fas fa-memory"></i>
+                            <h3>RAM Allocation</h3>
+                        </div>
+                        <div class="tweak-content">
+                            <p><strong>Recommended RAM allocation:</strong></p>
+                            <ul>
+                                <li>4GB RAM system: Allocate 2-3GB</li>
+                                <li>8GB RAM system: Allocate 4-5GB</li>
+                                <li>16GB+ RAM system: Allocate 6-8GB</li>
+                            </ul>
+                            <div class="code-block">
+                                <code>-Xmx4G -Xms4G</code>
+                                <button class="copy-btn" onclick="copyToClipboard('-Xmx4G -Xms4G')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <p class="warning">⚠️ Don't allocate more than 8GB — it can cause garbage collection lag.
+                                Too little RAM (under 2GB) can cause stuttering.</p>
+                        </div>
+                    </div>
+
+                    <div class="tweak-card">
+                        <div class="tweak-header">
+                            <i class="fab fa-java"></i>
+                            <h3>Java Version</h3>
+                        </div>
+                        <div class="tweak-content">
+                            <p><strong>Use Java 17 or newer:</strong></p>
+                            <ul>
+                                <li>Better performance than older Java versions</li>
+                                <li>Improved garbage collection</li>
+                                <li>Better memory management</li>
+                            </ul>
+                            <p class="note">💡 Minecraft Java Edition 1.18+ requires Java 17.</p>
+                            <div class="download-links">
+                                <a href="https://adoptium.net/" target="_blank" class="download-link">
+                                    <i class="fas fa-download"></i>
+                                    Download Java 17
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tweak-card">
+                        <div class="tweak-header">
+                            <i class="fas fa-rocket"></i>
+                            <h3>JVM Arguments</h3>
+                        </div>
+                        <div class="tweak-content">
+                            <p><strong>Advanced JVM arguments for better performance:</strong></p>
+                            <div class="code-block">
+                                <code>-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1</code>
+                                <button class="copy-btn"
+                                    onclick="copyToClipboard('-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <p class="note">💡 These JVM arguments are advanced. If you experience crashes or
+                                instability, remove them and try default settings.</p>
+                        </div>
+                    </div>
+
+                    <div class="tweak-card">
+                        <div class="tweak-header">
+                            <i class="fas fa-cube"></i>
+                            <h3>Alternative Launchers</h3>
+                        </div>
+                        <div class="tweak-content">
+                            <p><strong>Better launchers for performance:</strong></p>
+                            <div class="launcher-options">
+                                <div class="launcher-option">
+                                    <h4>Prism Launcher</h4>
+                                    <p>Modern, feature-rich launcher with better mod management</p>
+                                    <a href="https://prismlauncher.org/" target="_blank"
+                                        class="launcher-link">Download</a>
+                                </div>
+                                <div class="launcher-option">
+                                    <h4>MultiMC</h4>
+                                    <p>Lightweight launcher with excellent performance</p>
+                                    <a href="https://multimc.org/" target="_blank" class="launcher-link">Download</a>
+                                </div>
+                                <div class="launcher-option">
+                                    <h4>ATLauncher</h4>
+                                    <p>Popular for modpacks with easy installation</p>
+                                    <a href="https://atlauncher.com/" target="_blank" class="launcher-link">Download</a>
+                                </div>
+                                <div class="launcher-option">
+                                    <h4>GDLauncher</h4>
+                                    <p>Modern, cross-platform launcher with clean interface</p>
+                                    <a href="https://gdevs.io/" target="_blank" class="launcher-link">Download</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Mods Section -->
+    <section id="performance-mods" class="section bg-light">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Performance Mods (Biggest Boost)</h2>
+                <p class="section-subtitle">These mods can dramatically improve your FPS and reduce lag</p>
+
+                <div class="mods-grid">
+                    <div class="mod-card featured">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>Sodium</h3>
+                                <span class="mod-version">Fabric/NeoForge</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="recommended-label">RECOMMENDED</span>
+                                <span class="rating-stars">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>The ultimate rendering optimization mod.</strong> Can increase FPS by 200-500% on
+                                many systems.</p>
+                            <ul>
+                                <li>Optimizes chunk rendering</li>
+                                <li>Reduces CPU usage by up to 90%</li>
+                                <li>Better memory management</li>
+                                <li>Compatible with most mods</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://modrinth.com/mod/sodium" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>Lithium</h3>
+                                <span class="mod-version">Fabric/NeoForge</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="rating-stars">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>Server-side optimizations</strong> that improve game logic and entity processing.
+                            </p>
+                            <ul>
+                                <li>Optimizes mob AI</li>
+                                <li>Improves physics calculations</li>
+                                <li>Better chunk loading</li>
+                                <li>Reduces TPS lag</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://modrinth.com/mod/lithium" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>Starlight</h3>
+                                <span class="mod-version">Fabric/Forge</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="rating-stars">★★★★☆</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>Lighting engine optimization</strong> that fixes Minecraft's inefficient lighting
+                                system.</p>
+                            <ul>
+                                <li>Faster world loading</li>
+                                <li>Reduced lighting lag</li>
+                                <li>Better chunk generation</li>
+                                <li>Compatible with Sodium</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://modrinth.com/mod/starlight" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-compress"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>FerriteCore</h3>
+                                <span class="mod-version">Fabric/Forge</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="rating-stars">★★★★☆</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>Memory optimization mod</strong> that reduces RAM usage and improves garbage
+                                collection.</p>
+                            <ul>
+                                <li>Reduces memory usage</li>
+                                <li>Better garbage collection</li>
+                                <li>Fixes memory leaks</li>
+                                <li>Works with all mods</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://modrinth.com/mod/ferrite-core" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>Iris Shaders</h3>
+                                <span class="mod-version">Fabric</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="rating-stars">★★★★☆</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>Shader support for Sodium</strong> - use shaders without OptiFine's performance
+                                impact.</p>
+                            <ul>
+                                <li>Shader support with Sodium</li>
+                                <li>Better performance than OptiFine</li>
+                                <li>Compatible with most shaders</li>
+                                <li>Regular updates</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://irisshaders.net/" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mod-card">
+                        <div class="mod-header">
+                            <div class="mod-icon">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div class="mod-info">
+                                <h3>OptiFine</h3>
+                                <span class="mod-version">Forge/Fabric</span>
+                            </div>
+                            <div class="mod-rating">
+                                <span class="rating-stars">★★★☆☆</span>
+                            </div>
+                        </div>
+                        <div class="mod-content">
+                            <p><strong>Classic optimization mod</strong> with shader support, but slower updates than
+                                Sodium.</p>
+                            <p class="note">💡 Still widely used, but better alternatives exist (Sodium + Iris).</p>
+                            <ul>
+                                <li>Shader support</li>
+                                <li>HD texture support</li>
+                                <li>Dynamic lighting</li>
+                                <li>Zoom feature</li>
+                            </ul>
+                            <div class="mod-links">
+                                <a href="https://optifine.net/" target="_blank" class="mod-link">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modpack-suggestion">
+                    <h3>🚀 Recommended Performance Modpack</h3>
+                    <div class="modpack-card">
+                        <h4>Fabulously Optimized</h4>
+                        <p>A curated collection of the best performance mods, pre-configured for maximum FPS boost.</p>
+                        <div class="modpack-features">
+                            <span class="feature-tag">Sodium</span>
+                            <span class="feature-tag">Lithium</span>
+                            <span class="feature-tag">Starlight</span>
+                            <span class="feature-tag">FerriteCore</span>
+                            <span class="feature-tag">Iris Shaders</span>
+                        </div>
+                        <a href="https://modrinth.com/modpack/fabulously-optimized" target="_blank"
+                            class="modpack-link">
+                            <i class="fas fa-download"></i>
+                            Download Modpack
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System & Hardware Tips Section -->
+    <section id="system-tips" class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">System & Hardware Tips</h2>
+                <p class="section-subtitle">Optimize your system for the best Minecraft performance</p>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Keep Drivers Updated</h3>
+                        <p>Always use the latest graphics drivers for your GPU. Outdated drivers can cause significant
+                            performance issues.</p>
+                        <p class="note">💡 You can also use NVIDIA GeForce Experience or AMD Adrenalin software to
+                            automatically keep drivers up to date.</p>
+                        <div class="tip-links">
+                            <a href="https://www.nvidia.com/drivers/" target="_blank">NVIDIA</a>
+                            <a href="https://www.amd.com/support" target="_blank">AMD</a>
+                            <a href="https://www.intel.com/content/www/us/en/support/articles/000005629/graphics.html"
+                                target="_blank">Intel</a>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h3>Close Background Apps</h3>
+                        <p>Close unnecessary programs, especially browsers with many tabs, Discord, and other
+                            resource-heavy applications.</p>
+                        <p class="note">💡 Check Task Manager for hidden background tasks (Spotify, OneDrive sync, etc.)
+                            that may use CPU or RAM. Also disable startup apps in Task Manager → Startup tab.</p>
+                        <div class="tip-checklist">
+                            <label><input type="checkbox"> Close Chrome/Firefox tabs</label>
+                            <label><input type="checkbox"> Disable Discord overlay</label>
+                            <label><input type="checkbox"> Close streaming software</label>
+                            <label><input type="checkbox"> Check Task Manager for hidden processes</label>
+                            <label><input type="checkbox"> Disable unnecessary startup apps</label>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Dedicated vs Integrated GPU</h3>
+                        <p>Ensure Minecraft uses your dedicated graphics card, especially on laptops with both
+                            integrated and dedicated GPUs.</p>
+                        <div class="gpu-settings">
+                            <h4>NVIDIA Control Panel:</h4>
+                            <ol>
+                                <li>Right-click desktop → NVIDIA Control Panel</li>
+                                <li>Manage 3D Settings → Program Settings</li>
+                                <li>Add javaw.exe → High-performance NVIDIA processor</li>
+                            </ol>
+                            <p class="note">💡 On Windows 10/11, you can also set Minecraft's GPU in Settings → System →
+                                Display → Graphics Settings.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-hdd"></i>
+                        </div>
+                        <h3>SSD Benefits</h3>
+                        <p>Install Minecraft on an SSD for faster world loading, chunk generation, and overall
+                            responsiveness.</p>
+                        <p class="note">💡 NVMe SSDs are even faster than SATA SSDs, reducing load times further.</p>
+                        <div class="ssd-comparison">
+                            <div class="comparison-item">
+                                <span class="comparison-label">HDD:</span>
+                                <span class="comparison-time">30-60s loading</span>
+                            </div>
+                            <div class="comparison-item">
+                                <span class="comparison-label">SSD:</span>
+                                <span class="comparison-time">5-15s loading</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <h3>Keep PC Cool</h3>
+                        <p>Overheating can cause thermal throttling, significantly reducing performance. Keep your PC
+                            well-ventilated.</p>
+                        <div class="cooling-tips">
+                            <ul>
+                                <li>Clean dust from fans and heatsinks</li>
+                                <li>Ensure proper airflow</li>
+                                <li>Monitor temperatures with MSI Afterburner, HWMonitor, or HWInfo</li>
+                                <li>Consider better cooling solutions</li>
+                                <li>For laptops: consider undervolting or limiting FPS to reduce heat</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <h3>Windows Optimizations</h3>
+                        <p>Optimize Windows settings for gaming performance.</p>
+                        <div class="windows-tips">
+                            <ul>
+                                <li>Keep Game Mode ON (helps prioritize games)</li>
+                                <li>Disable Xbox Game Bar overlay (can cause stutter)</li>
+                                <li>Use High Performance or Ultimate Performance power plan</li>
+                                <li>Disable unnecessary startup programs</li>
+                                <li>Disable Windows Defender real-time scanning for Minecraft folder</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-memory"></i>
+                        </div>
+                        <h3>RAM Allocation Tip</h3>
+                        <p>Allocate the right amount of RAM to Minecraft for optimal performance.</p>
+                        <p class="note">💡 Allocate 4–6 GB RAM to Minecraft in the launcher. Avoid allocating more than
+                            half your system's total RAM.</p>
+                        <div class="ram-tips">
+                            <ul>
+                                <li>Too little RAM (under 2GB): Causes stuttering and lag</li>
+                                <li>Too much RAM (over 8GB): Can cause garbage collection lag</li>
+                                <li>Sweet spot: 4-6GB for most systems</li>
+                                <li>Leave 2-4GB for Windows and other programs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Checklist Section -->
+    <section id="checklist" class="section bg-light">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Interactive Optimization Checklist</h2>
+                <p class="section-subtitle">Track your progress and ensure you've applied all optimizations</p>
+
+                <div class="checklist-container">
+                    <div class="checklist-section">
+                        <h3><i class="fas fa-gamepad"></i> In-Game Settings</h3>
+                        <div class="checklist-items">
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Lowered render distance to 8-12 chunks</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Set graphics quality to "Fast"</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Disabled fancy clouds</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Reduced particles to minimal</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Disabled V-Sync</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Set entity distance to 75-100%</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Lowered simulation distance to 4-6 chunks</span>
+                                <span class="checklist-impact">High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Turned off smooth lighting or set to minimum</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3><i class="fas fa-cogs"></i> Launcher & Java</h3>
+                        <div class="checklist-items">
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Allocated appropriate RAM (4-6GB)</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Avoided allocating more than half of system RAM</span>
+                                <span class="checklist-impact">High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Updated to Java 17 or newer</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Added optimized JVM arguments</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Disabled Fullscreen Optimizations (Windows)</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Using alternative launcher (Prism/MultiMC)</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3><i class="fas fa-puzzle-piece"></i> Performance Mods</h3>
+                        <div class="checklist-items">
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed Sodium (rendering optimization)</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed Lithium (game logic optimization)</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed Phosphor/Starlight (lighting optimization)</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed FerriteCore (memory optimization)</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed Cull Leaves (transparent leaves
+                                    optimization)</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Installed Entity Culling (stops rendering hidden
+                                    entities)</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3><i class="fas fa-desktop"></i> System Optimization</h3>
+                        <div class="checklist-items">
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Updated graphics drivers</span>
+                                <span class="checklist-impact">High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Closed unnecessary background apps</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Ensured dedicated GPU usage</span>
+                                <span class="checklist-impact">Very High Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Minecraft installed on SSD</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Enabled Game Mode, disabled Xbox Game Bar</span>
+                                <span class="checklist-impact">Low Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Set Windows Power Plan to High/Ultimate Performance</span>
+                                <span class="checklist-impact">Medium Impact</span>
+                            </label>
+                            <label class="checklist-item">
+                                <input type="checkbox" class="checklist-checkbox">
+                                <span class="checklist-text">Kept PC cool (fans clean, temps monitored)</span>
+                                <span class="checklist-impact">High Impact</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-summary">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressCount">0</span> of <span id="totalCount">28</span> optimizations completed
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Should I use OptiFine or Sodium?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Sodium is generally better for performance.</strong> It provides higher FPS
+                                boosts and updates faster for new Minecraft versions. However, OptiFine offers more
+                                features like built-in shader support and HD texture compatibility. If you only want
+                                performance, choose Sodium. If you need shaders and don't mind slightly lower
+                                performance, OptiFine is still viable.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How much RAM should I allocate to Minecraft?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Avoid allocating more than 8GB.</strong> For most systems: 4GB RAM total =
+                                allocate 2-3GB, 8GB RAM total = allocate 4-5GB, 16GB+ RAM = allocate 6-8GB. Allocating
+                                too much RAM can cause garbage collection lag and actually hurt performance.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I use Sodium with shaders?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Yes, with Iris Shaders.</strong> Install Iris Shaders alongside Sodium to use
+                                shaders without OptiFine. Iris provides better performance than OptiFine's shader
+                                support and is regularly updated for new Minecraft versions.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Why is my FPS still low after optimization?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Check your hardware limitations.</strong> If you're still getting low FPS after
+                                optimization, your system might be hitting hardware limits. Consider upgrading your CPU,
+                                GPU, or RAM. Also ensure you're using your dedicated graphics card and not integrated
+                                graphics.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Are these optimizations safe?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Yes, all optimizations are safe.</strong> These are standard performance tweaks
+                                used by the Minecraft community. The mods mentioned are well-established and trusted.
+                                Always download mods from official sources like Modrinth or CurseForge.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What if I'm on a low-end laptop?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Focus on the most impactful optimizations.</strong> Start with minimal settings
+                                (render distance 6-8, graphics on Fast), install Sodium + Lithium for the biggest FPS
+                                boost, lower your resolution if needed, and ensure you're not using integrated graphics.
+                                These changes can make Minecraft playable even on older hardware.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is Bedrock Edition faster than Java?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Yes, Bedrock Edition runs smoother on weaker PCs.</strong> It's optimized for
+                                modern devices and mobile platforms, so it generally performs better on low-end
+                                hardware. However, Java Edition allows for more mods, better customization, and access
+                                to the full modding ecosystem. Choose Bedrock for performance, Java for features.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do performance mods affect multiplayer?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>No, most client-side performance mods don't change gameplay.</strong> Mods like
+                                Sodium, Lithium, and FerriteCore only optimize rendering and game logic on your end -
+                                they don't modify how the game works with other players. However, always check server
+                                rules as some servers may have restrictions on certain mods.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Minecraft Performance Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

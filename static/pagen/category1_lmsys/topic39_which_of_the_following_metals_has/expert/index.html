@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+	<title>Which of the following metals has the lowest melting point?</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 50px 15px !important;
+	    margin: 0 auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	 position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 50%;   
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	.pb_0{
+		padding-bottom: 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	.sec_3 img{
+		height: 120px;
+		object-fit: contain;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_4 img{
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	.box{
+		width: 80%;
+		margin: 0 auto;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.sec_3 .container,.sec_5 .container{
+		padding: 0px 15px !important;
+	}
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+	.home{
+		position: relative;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000db;
+		z-index: 1;
+	}
+	.pb_50{
+		padding-bottom: 50px;
+	}
+/* Flickity	*/
+	.carousel-cell {
+	  width: 28%;
+	  margin-right: 10px;
+	  counter-increment: carousel-cell;
+	}
+	.flickity-button{
+	    color: #fff;
+    	background: #000;
+	}
+
+/* end  */
+	@media (max-width: 768px){
+		.carousel-cell {
+		  width: 100%;
+		}
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 42px;
+		}
+		h2{
+			font-size: 30px;
+		}
+	}
+</style>
+</head>
+<body style="background: #FFFDD0; color: #000;">
+<div class="">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container" style="color: #fff !important;">
+				<div class="box text_center">
+					<h1 data-aos="fade-right" data-aos-duration="1500">Which of the Following Metals Has the Lowest Melting Point?</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">Understanding the melting points of metals is essential in chemistry and material science. The melting point determines how a metal can be used, especially in industries that deal with high heat such as aerospace, electronics, or energy production. In this question, we’re tasked with finding out which metal among the given options has the lowest melting point.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_3 p_50 pb_0">
+		<div class="container p_50 text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000" class="pb_50">The Question</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000" class="">The multiple-choice question is:</p>
+			<p data-aos="zoom-in" data-aos-duration="2000" class="">“Which of the following metals has the lowest melting point?”</p>
+			<p data-aos="zoom-in" data-aos-duration="2000" class="pb_50">Options:</p>
+			<div class="pb_50">
+			<div class="carousel" data-flickity='{ "wrapAround": true, "pageDots": false, "autoPlay": true }'>
+			  	<div class="carousel-cell">
+			  			<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/l1.png">
+						<h3 data-aos="zoom-in" data-aos-duration="2000">Niobium (Nb)</h3>
+			  	</div>
+			  	<div class="carousel-cell">
+			  			<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/l2.png">
+						<h3 data-aos="zoom-in" data-aos-duration="2000">Ruthenium (Ru)</h3>
+			  	</div>
+			  	<div class="carousel-cell">
+			  			<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/l3.png">
+						<h3 data-aos="zoom-in" data-aos-duration="2000">Molybdenum (Mo)</h3>
+			  	</div>
+			  	<div class="carousel-cell">
+			  			<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/l4.png">
+						<h3 data-aos="zoom-in" data-aos-duration="2000">Technetium (Tc)</h3>
+			  	</div>
+			  	<div class="carousel-cell">
+			  			<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/l5.png">
+						<h3 data-aos="zoom-in" data-aos-duration="2000">Cadmium (Cd)</h3>
+			  	</div>
+			</div>
+			</div>
+			<p data-aos="zoom-in" data-aos-duration="2000" class="">To answer this, let’s look at each element in detail.</p>
+		</div>
+	</div>
+	
+	
+	<div class="sec_4 pb_0">
+		<div class="container p_50 text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">Strength on the Bench</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000">Slot kept plenty of firepower and leadership ready to step in:</p>
+			<div class="d_flex space_bt p_50">
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c1.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Niobium (Nb)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Niobium is a refractory metal, meaning it has an exceptionally high melting point of about 2,477 °C. This property makes it valuable in superalloys for jet engines and rockets. Its strength at high temperatures eliminates it from being the lowest melting point in this list.</p>
+				</div>
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c2.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Ruthenium (Ru)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Ruthenium is a rare transition metal with a melting point of 2,334 °C. It is often used in electronics, catalysts, and wear-resistant coatings. Its high heat tolerance means it is also not a candidate for the lowest melting point among the options.</p>
+				</div>
+				<div class="w_33 m_0">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c3.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Molybdenum (Mo)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Molybdenum is another refractory metal, melting at an impressive 2,623 °C. Because of its strength and stability at high temperatures, it is widely used in industrial furnaces, steel alloys, and aerospace components. Clearly, this rules it out as the lowest-melting metal here.</p>
+				</div>
+			</div>
+			<div class="d_flex space_bt ">
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c4.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Technetium (Tc)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Technetium has a melting point of about 2,157 °C. While lower than Nb, Ru, and Mo, it is still far too high compared to a soft, low-melting metal. Since technetium is also radioactive, its applications are limited mainly to medical imaging rather than heat-based industries.</p>
+				</div>
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c5.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Cadmium (Cd)</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Cadmium is the clear outlier. Its melting point is only 321 °C, which is extremely low compared to the thousands of degrees required to melt the other metals listed. Because of this, cadmium is soft and easily deformed, which makes it useful in low-melting alloys, coatings, and batteries but unsuitable for high-temperature environments.</p>
+				</div>
+				<div class="w_33">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/c5.svg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">The Answer</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Among the metals listed, Cadmium (Cd) has the lowest melting point. Its softness and low heat tolerance set it apart from the other transition and refractory metals.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container ">
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Conclusion</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">This comparison demonstrates the wide range of melting points among metals. While elements like Niobium, Ruthenium, Molybdenum, and Technetium excel in high-temperature stability, Cadmium sits on the opposite end of the spectrum, making it the correct answer to the question.</p>
+				</div>
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.jpg"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

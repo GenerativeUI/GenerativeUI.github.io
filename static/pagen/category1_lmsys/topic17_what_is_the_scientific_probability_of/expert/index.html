@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is the Probability That Earth Is the Only Habitable Planet?</title>
+  <meta name="description" content="Explore the fascinating question of Earth's uniqueness in the universe. Learn about the Drake Equation, Fermi Paradox, and scientific estimates of habitable planets in our cosmos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f1419;
+      --bg-secondary: #1a1f2e;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --cosmic-blue: #60a5fa;
+      --stellar-gold: #fbbf24;
+      --nebula-purple: #a855f7;
+      --border-color: #334155;
+      --card-bg: rgba(30, 41, 59, 0.8);
+      --card-border: rgba(71, 85, 105, 0.3);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1e293b 0%, #0f172a 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Starfield Background */
+    .starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    .star:nth-child(odd) {
+      animation-delay: 1s;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Floating cosmic elements */
+    .cosmic-element {
+      position: fixed;
+      pointer-events: none;
+      z-index: 5;
+      font-size: 20px;
+      animation: float-up 20s linear;
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: slideDown 1.2s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { 
+        opacity: 0; 
+        transform: translateY(-50px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .universe-icon {
+      font-size: 80px;
+      display: inline-block;
+      animation: orbit 10s linear infinite;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 20px var(--cosmic-blue));
+    }
+
+    @keyframes orbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .header h1 {
+      font-size: clamp(28px, 6vw, 56px);
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--cosmic-blue), var(--nebula-purple), var(--stellar-gold));
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientText 4s ease infinite;
+      line-height: 1.2;
+    }
+
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Card styles */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 32px;
+      margin: 32px 0;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--card-border);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      animation: fadeInUp 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.4s; }
+    .card:nth-child(4) { animation-delay: 0.6s; }
+    .card:nth-child(5) { animation-delay: 0.8s; }
+    .card:nth-child(6) { animation-delay: 1.0s; }
+    .card:nth-child(7) { animation-delay: 1.2s; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.7s;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 20px 60px rgba(96, 165, 250, 0.2),
+        0 0 0 1px rgba(96, 165, 250, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card h2 {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--cosmic-blue);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card h2 .emoji {
+      font-size: 1.5em;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .card p {
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card li {
+      padding: 16px 0;
+      position: relative;
+      padding-left: 40px;
+      color: var(--text-secondary);
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      animation: slideInLeft 0.6s ease-out forwards;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .card li:nth-child(1) { animation-delay: 0.1s; }
+    .card li:nth-child(2) { animation-delay: 0.2s; }
+    .card li:nth-child(3) { animation-delay: 0.3s; }
+    .card li:nth-child(4) { animation-delay: 0.4s; }
+
+    .card li:last-child {
+      border-bottom: none;
+    }
+
+    .card li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      font-size: 18px;
+      color: var(--cosmic-blue);
+      text-shadow: 0 0 10px var(--cosmic-blue), 0 0 20px var(--nebula-purple);
+      animation: sparkle 1.5s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      from { 
+        color: var(--cosmic-blue); 
+        text-shadow: 0 0 10px var(--cosmic-blue), 0 0 20px var(--nebula-purple);
+        transform: scale(1);
+      }
+      to { 
+        color: var(--nebula-purple); 
+        text-shadow: 0 0 15px var(--nebula-purple), 0 0 25px var(--cosmic-blue);
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes slideInLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Scale list special styling */
+    .universe-scale-list li::before {
+      font-size: 24px;
+      top: 12px;
+    }
+
+    .scale-icon {
+      position: absolute;
+      left: 0;
+      top: 16px;
+      font-size: 24px;
+      color: var(--cosmic-blue);
+    }
+
+    /* Drake Equation */
+    .equation-container {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 32px;
+      border-radius: 24px;
+      margin: 24px 0;
+      border: 2px solid rgba(96, 165, 250, 0.3);
+      text-align: center;
+    }
+
+    .equation {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(18px, 3vw, 28px);
+      color: var(--cosmic-blue);
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(96, 165, 250, 0.1);
+      border-radius: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+
+    .equation:hover {
+      background: rgba(96, 165, 250, 0.2);
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.2);
+    }
+
+    .variables-container {
+      margin-top: 24px;
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .variables-container.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .variable-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .variable-symbol {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: var(--stellar-gold);
+      min-width: 2rem;
+      font-size: 16px;
+    }
+
+    .variable-meaning {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    /* Fermi Paradox highlight */
+    .paradox-highlight {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      position: relative;
+    }
+
+    .paradox-highlight::before {
+      content: '⚠️';
+      position: absolute;
+      top: -15px;
+      left: 24px;
+      background: var(--bg-primary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 20px;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Solar system */
+    .solar-system {
+      position: relative;
+      height: 300px;
+      margin: 40px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sun {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, var(--stellar-gold), #f59e0b);
+      border-radius: 50%;
+      box-shadow: 0 0 40px #f59e0b;
+      position: absolute;
+      z-index: 10;
+      animation: pulse 3s infinite;
+    }
+
+    .orbit-path {
+      position: absolute;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      border-radius: 50%;
+      width: 240px;
+      height: 240px;
+    }
+
+    .earth {
+      width: 24px;
+      height: 24px;
+      background: radial-gradient(circle, #3b82f6, #10b981);
+      border-radius: 50%;
+      position: absolute;
+      animation: orbit-earth 15s infinite linear;
+      transform-origin: 120px 0px;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    }
+
+    @keyframes orbit-earth {
+      from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+    }
+
+    /* Probability meter */
+    .probability-meter {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 32px;
+      border-radius: 24px;
+      margin: 32px 0;
+      text-align: center;
+      border: 2px solid rgba(251, 191, 36, 0.4);
+    }
+
+    .probability-meter h3 {
+      color: var(--stellar-gold);
+      font-size: 24px;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .meter-bar {
+      width: 100%;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 24px 0;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e);
+      width: 0%;
+      border-radius: 12px;
+      transition: width 3s ease;
+      position: relative;
+    }
+
+    .meter-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .meter-explanation {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+      text-align: left;
+    }
+
+    .explanation-item {
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid;
+    }
+
+    .math-explanation {
+      background: rgba(96, 165, 250, 0.1);
+      border-color: rgba(96, 165, 250, 0.3);
+    }
+
+    .practical-explanation {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .explanation-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .math-explanation .explanation-title {
+      color: var(--cosmic-blue);
+    }
+
+    .practical-explanation .explanation-title {
+      color: var(--stellar-gold);
+    }
+
+    /* Conclusion */
+    .conclusion {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(96, 165, 250, 0.2));
+      border: 2px solid rgba(168, 85, 247, 0.4);
+      text-align: center;
+    }
+
+    .conclusion h2 {
+      color: var(--nebula-purple);
+      justify-content: center;
+    }
+
+    .conclusion ul {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .conclusion li::before {
+      content: '🎯';
+      color: var(--nebula-purple);
+      text-shadow: 0 0 10px var(--nebula-purple), 0 0 20px var(--cosmic-blue);
+    }
+
+    @keyframes conclusionPulse {
+      from { 
+        color: var(--nebula-purple);
+        transform: scale(1); 
+      }
+      to { 
+        color: var(--cosmic-blue);
+        transform: scale(1.2); 
+      }
+    }
+
+    .conclusion li::before {
+      animation: conclusionPulse 2s infinite alternate;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+      
+      .card {
+        padding: 24px;
+        margin: 24px 0;
+        border-radius: 20px;
+      }
+      
+      .equation {
+        font-size: 16px;
+        padding: 16px;
+      }
+      
+      .probability-meter {
+        padding: 24px;
+      }
+      
+      .solar-system {
+        height: 200px;
+      }
+      
+      .sun {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .orbit-path {
+        width: 160px;
+        height: 160px;
+      }
+      
+      .earth {
+        width: 16px;
+        height: 16px;
+        transform-origin: 80px 0px;
+        animation: orbit-earth-small 15s infinite linear;
+      }
+      
+      .meter-explanation {
+        grid-template-columns: 1fr;
+      }
+      
+      .universe-icon {
+        font-size: 60px;
+      }
+      
+      .card:hover {
+        transform: translateY(-4px) scale(1.01);
+      }
+    }
+
+    @keyframes orbit-earth-small {
+      from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div class="starfield" id="starfield"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="universe-icon">🌍</div>
+      <h1>What Is the Probability That Earth Is the Only Habitable Planet in the Universe?</h1>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🤔</span>The Big Question</h2>
+      <p>We often wonder: Are we alone in the universe?</p>
+      <p>Is Earth really the only planet that can support life? Or are there countless other worlds out there, waiting to be discovered?</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🌌</span>The Scale of the Universe</h2>
+      <ul class="universe-scale-list">
+        <li><span class="scale-icon">🌌</span>The observable universe contains around <strong>2 trillion galaxies</strong>.</li>
+        <li><span class="scale-icon">⭐</span>Each galaxy has <strong>billions of stars</strong>, and most stars likely have planets.</li>
+        <li><span class="scale-icon">🪐</span>That means there could be <strong>sextillions (10²¹+) of planets</strong> in the universe.</li>
+        <li><span class="scale-icon">📊</span>With such huge numbers, the idea that only one planet — Earth — is habitable seems <strong>statistically extremely unlikely</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🧮</span>The Drake Equation</h2>
+      <p>Scientists use something called the Drake Equation to estimate the number of civilizations in our galaxy.</p>
+      <div class="equation-container">
+        <div class="equation" onclick="toggleDrakeVariables()">N = R* × fp × ne × fl × fi × fc × L</div>
+        <p style="color: var(--text-muted); margin-top: 12px;">Click to learn what each variable means!</p>
+        
+        <div class="variables-container" id="drakeVariables">
+          <div class="variable-item">
+            <span class="variable-symbol">N</span>
+            <span class="variable-meaning">Number of civilizations in our galaxy</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">R*</span>
+            <span class="variable-meaning">Average rate of star formation per year</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">fp</span>
+            <span class="variable-meaning">Fraction of stars that have planets</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">ne</span>
+            <span class="variable-meaning">Number of planets in habitable zone per star</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">fl</span>
+            <span class="variable-meaning">Fraction of planets where life emerges</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">fi</span>
+            <span class="variable-meaning">Fraction where intelligent life develops</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">fc</span>
+            <span class="variable-meaning">Fraction that develop communication technology</span>
+          </div>
+          <div class="variable-item">
+            <span class="variable-symbol">L</span>
+            <span class="variable-meaning">Length of time civilizations can communicate</span>
+          </div>
+        </div>
+      </div>
+      <p>It considers:</p>
+      <ul>
+        <li>🌟 Star formation rates</li>
+        <li>🪐 Fraction of stars with planets</li>
+        <li>🌱 Number of planets that could support life</li>
+        <li>🧠 Probability life emerges and evolves into intelligence</li>
+      </ul>
+      <p style="color: var(--stellar-gold); margin-top: 16px;">While the numbers are uncertain, most solutions suggest many possible habitable worlds.</p>
+    </div>
+
+    <div class="card paradox-highlight">
+      <h2><span class="emoji">👽</span>The Fermi Paradox</h2>
+      <p style="font-size: 18px; margin-bottom: 16px;"><strong>But here's the twist:</strong></p>
+      <div style="background: rgba(239, 68, 68, 0.1); padding: 24px; border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.3); text-align: center; margin: 24px 0;">
+        <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">
+          If life is so probable, why haven't we found evidence of it yet?
+        </p>
+        <p>
+          This is called the <strong style="color: #ef4444;">Fermi Paradox</strong> — the contradiction between high probability and lack of proof.
+        </p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+        <div style="padding: 16px; background: rgba(96, 165, 250, 0.1); border-radius: 12px; border: 1px solid rgba(96, 165, 250, 0.3);">
+          <h4 style="color: var(--cosmic-blue); margin-bottom: 8px;">High Probability</h4>
+          <p style="font-size: 14px;">Mathematical models suggest millions of habitable worlds should exist</p>
+        </div>
+        <div style="padding: 16px; background: rgba(239, 68, 68, 0.1); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3);">
+          <h4 style="color: #ef4444; margin-bottom: 8px;">Zero Evidence</h4>
+          <p style="font-size: 14px;">Despite decades of searching, we have found no confirmed signs of life</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">📊</span>So, What's the Probability?</h2>
+      
+      <div class="solar-system">
+        <div class="orbit-path"></div>
+        <div class="sun"></div>
+        <div class="earth"></div>
+      </div>
+      
+      <div class="probability-meter">
+        <h3>Earth Being Unique</h3>
+        <div class="meter-bar">
+          <div class="meter-fill" id="probabilityFill"></div>
+        </div>
+        <div class="meter-explanation">
+          <div class="explanation-item math-explanation">
+            <div class="explanation-title">Mathematically:</div>
+            <div>The chance Earth is the only habitable planet is close to zero given the massive numbers.</div>
+          </div>
+          <div class="explanation-item practical-explanation">
+            <div class="explanation-title">Practically:</div>
+            <div>We still have no confirmed detection of extraterrestrial life, so the answer remains unknown.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card conclusion">
+      <h2><span class="emoji">🎯</span>Takeaway</h2>
+      <ul>
+        <li>Earth is likely not unique in being habitable.</li>
+        <li>But until we detect life elsewhere, we live in a universe that is at once statistically crowded with possibilities and yet silent in evidence.</li>
+      </ul>
+      <div style="margin-top: 32px; padding: 24px; background: rgba(96, 165, 250, 0.1); border-radius: 16px; border: 1px solid rgba(96, 165, 250, 0.3);">
+        <p style="font-size: 18px; font-weight: 600; color: var(--cosmic-blue);">
+          The search continues... 🔭
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create starfield
+    function createStars() {
+      const starfield = document.getElementById('starfield');
+      const numStars = window.innerWidth < 768 ? 50 : 100;
+      
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starfield.appendChild(star);
+      }
+    }
+
+    // Create floating cosmic elements
+    function createCosmicElements() {
+      const elements = ['✨', '💫', '⭐', '🌠', '🪐', '🌙'];
+      
+      setInterval(() => {
+        const element = document.createElement('div');
+        element.className = 'cosmic-element';
+        element.textContent = elements[Math.floor(Math.random() * elements.length)];
+        element.style.left = Math.random() * 100 + '%';
+        element.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        element.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        
+        document.body.appendChild(element);
+        
+        setTimeout(() => {
+          if (element.parentNode) {
+            element.remove();
+          }
+        }, 25000);
+      }, 3000);
+    }
+
+    // Animate probability meter
+    function animateProbabilityMeter() {
+      const fill = document.getElementById('probabilityFill');
+      setTimeout(() => {
+        fill.style.width = '5%'; // Very low probability
+      }, 1000);
+    }
+
+    // Toggle Drake Equation variables
+    function toggleDrakeVariables() {
+      const container = document.getElementById('drakeVariables');
+      container.classList.toggle('show');
+      
+      // Log interaction
+      console.log('Drake equation variables toggled');
+    }
+
+    // Intersection Observer for animations
+    function setupScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            
+            // Trigger probability meter animation when it comes into view
+            if (entry.target.querySelector('#probabilityFill')) {
+              setTimeout(() => animateProbabilityMeter(), 500);
+            }
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.card').forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    // Add hover effects to cards
+    function setupCardInteractions() {
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = '';
+        });
+      });
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      createCosmicElements();
+      setupScrollAnimations();
+      setupCardInteractions();
+      
+      // Trigger initial probability meter animation after page load
+      setTimeout(() => animateProbabilityMeter(), 2000);
+    });
+
+    // Handle window resize for responsive starfield
+    window.addEventListener('resize', function() {
+      const starfield = document.getElementById('starfield');
+      starfield.innerHTML = '';
+      createStars();
+    });
+  </script>
+</body>
+</html>

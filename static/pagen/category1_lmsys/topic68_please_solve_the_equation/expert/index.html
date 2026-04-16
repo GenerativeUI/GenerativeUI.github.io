@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equation Solver - Interactive Mathematical Education Tool</title>
+    <meta name="description" content="Master mathematics with our interactive equation solver. Get step-by-step solutions for linear and quadratic equations, visualize graphs, and practice with unlimited problems.">
+    <meta name="keywords" content="equation solver, mathematics, algebra, quadratic equations, linear equations, math education, step-by-step solutions, graph visualizer">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Complete CSS with all mathematical styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Mathematical Design System */
+            --background: hsl(245, 50%, 98%);
+            --foreground: hsl(220, 25%, 15%);
+            --surface: hsl(0, 0%, 100%);
+            
+            --primary: hsl(215, 85%, 35%);
+            --primary-light: hsl(215, 85%, 55%);
+            --primary-dark: hsl(215, 85%, 25%);
+            --primary-foreground: hsl(0, 0%, 100%);
+            
+            --accent: hsl(150, 60%, 45%);
+            --accent-light: hsl(150, 60%, 65%);
+            --accent-foreground: hsl(0, 0%, 100%);
+            
+            --solution: hsl(35, 85%, 55%);
+            --solution-light: hsl(35, 85%, 75%);
+            --solution-foreground: hsl(0, 0%, 100%);
+            
+            --error: hsl(355, 85%, 55%);
+            --error-light: hsl(355, 85%, 75%);
+            --error-foreground: hsl(0, 0%, 100%);
+            
+            --muted: hsl(220, 15%, 95%);
+            --muted-foreground: hsl(220, 15%, 45%);
+            --border: hsl(220, 15%, 88%);
+            --input: hsl(220, 15%, 96%);
+            
+            --shadow-soft: 0 4px 20px hsl(220, 25%, 15%, 0.08);
+            --shadow-medium: 0 8px 30px hsl(220, 25%, 15%, 0.12);
+            --shadow-equation: 0 2px 12px hsl(215, 85%, 35%, 0.15);
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--background), var(--surface));
+            color: var(--foreground);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .font-math {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Styling */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--muted);
+            border-radius: 2rem;
+            padding: 0.25rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+            color: var(--foreground);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-btn:hover:not(.active) {
+            background: var(--surface);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(66, 139, 202, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--solution));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: var(--primary-foreground);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(150, 190, 155, 0.05);
+            border-color: var(--accent);
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-2px);
+        }
+
+        /* Mathematical Input Styling */
+        .equation-input {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            font-size: 1.125rem;
+            font-family: 'JetBrains Mono', monospace;
+            width: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .equation-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-equation);
+        }
+
+        /* Solution Display */
+        .solution-display {
+            background: linear-gradient(90deg, rgba(255, 165, 0, 0.1), rgba(255, 200, 87, 0.1));
+            border-left: 4px solid var(--solution);
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 1rem 0;
+        }
+
+        .solution-step {
+            background: rgba(150, 190, 155, 0.05);
+            border-left: 2px solid rgba(150, 190, 155, 0.3);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        .solution-step:hover {
+            background: rgba(150, 190, 155, 0.1);
+            border-left-color: rgba(150, 190, 155, 0.5);
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        /* Sections */
+        .section {
+            padding: 4rem 1rem;
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--muted-foreground);
+            font-size: 1.125rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .badge-accent {
+            background: var(--accent);
+            color: var(--accent-foreground);
+        }
+
+        .badge-solution {
+            background: var(--solution);
+            color: var(--solution-foreground);
+        }
+
+        .badge-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary); }
+        .text-accent { color: var(--accent); }
+        .text-solution { color: var(--solution); }
+        .text-error { color: var(--error); }
+        .text-muted { color: var(--muted-foreground); }
+
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .font-medium { font-weight: 500; }
+
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .grid-cols-2 { grid-template-columns: 1fr; }
+            .grid-cols-3 { grid-template-columns: 1fr; }
+            .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 3rem 1rem; }
+            .section { padding: 2rem 1rem; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scale-in {
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid var(--border);
+            padding: 3rem 1rem;
+            text-align: center;
+            color: var(--muted-foreground);
+        }
+
+        /* Interactive States */
+        .interactive:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Input Groups */
+        .input-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-group input {
+            flex: 1;
+        }
+
+        /* Example Buttons */
+        .example-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .example-btn:hover {
+            background: rgba(66, 139, 202, 0.05);
+            border-color: rgba(66, 139, 202, 0.3);
+        }
+
+        /* Error States */
+        .error-message {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(220, 38, 127, 0.1);
+            border: 1px solid rgba(220, 38, 127, 0.2);
+            border-radius: 0.5rem;
+            color: var(--error);
+            font-weight: 500;
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📊</div>
+                    <div>
+                        <div class="logo-text">EquationSolver</div>
+                        <div style="font-size: 0.75rem; color: var(--muted-foreground);">Interactive Mathematics</div>
+                    </div>
+                </div>
+                
+                <nav class="nav">
+                    <button class="nav-btn active" onclick="scrollToSection('solver')">🧮 Solver</button>
+                    <button class="nav-btn" onclick="scrollToSection('types')">📚 Types</button>
+                    <button class="nav-btn" onclick="scrollToSection('practice')">🎯 Practice</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="math-hero.jpg" alt="Mathematical formulas and equations" class="hero-bg">
+        <div class="hero-content fade-in-up">
+            <div class="hero-badge">
+                ✨ Interactive Mathematical Education
+            </div>
+            
+            <h1 class="hero-title">Solve Any Equation</h1>
+            
+            <p class="hero-subtitle">
+                Master mathematics with our interactive equation solver. Get step-by-step solutions, 
+                visualize graphs, and practice with unlimited problems.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="scrollToSection('solver')">
+                    🧮 Start Solving
+                </button>
+                <button class="btn btn-outline" onclick="scrollToSection('types')">
+                    Learn Equation Types
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Solver Section -->
+    <section id="solver" class="section fade-in-up">
+        <div class="card">
+            <div class="text-center mb-6">
+                <h2 class="section-title">🧮 Interactive Equation Solver</h2>
+                <p class="section-subtitle">
+                    Enter any linear or quadratic equation and get instant solutions with step-by-step explanations
+                </p>
+            </div>
+
+            <div id="solver-content">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="equation-input" 
+                        class="equation-input" 
+                        placeholder="Enter equation (e.g., 2x + 5 = 13)"
+                        value="2x + 5 = 13"
+                    >
+                    <button class="btn btn-primary" onclick="solveEquation()">
+                        ⚡ Solve
+                    </button>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Try these examples:</p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="example-btn" onclick="setExample('2x + 5 = 13')">2x + 5 = 13</button>
+                        <button class="example-btn" onclick="setExample('x^2 - 4x + 3 = 0')">x² - 4x + 3 = 0</button>
+                        <button class="example-btn" onclick="setExample('3x - 7 = 2x + 8')">3x - 7 = 2x + 8</button>
+                        <button class="example-btn" onclick="setExample('x^2 = 16')">x² = 16</button>
+                    </div>
+                </div>
+
+                <div id="solution-container" style="display: none;">
+                    <div class="solution-display scale-in">
+                        <div class="mb-2">
+                            <span class="text-muted">Equation:</span> 
+                            <span id="original-equation" class="font-math" style="margin-left: 0.5rem;"></span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-muted">Solution:</span> 
+                            <span id="solution-result" class="font-math font-bold text-solution" style="margin-left: 0.5rem;"></span>
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                            Type: <span id="equation-type"></span>
+                        </div>
+                    </div>
+
+                    <div id="steps-container" style="display: none;">
+                        <h4 class="font-semibold text-primary mb-4">Step-by-step solution:</h4>
+                        <div id="solution-steps"></div>
+                    </div>
+                </div>
+
+                <div id="error-container" style="display: none;">
+                    <div class="error-message">
+                        ⚠️ <span id="error-message"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equation Types Section -->
+    <section id="types" class="section fade-in-up">
+        <div class="text-center mb-6">
+            <h2 class="section-title">📚 Types of Equations</h2>
+            <p class="section-subtitle">
+                Explore different types of mathematical equations, their characteristics, and real-world applications
+            </p>
+        </div>
+
+        <div class="grid grid-cols-3">
+            <div class="card">
+                <div class="mb-4">
+                    <h3 class="font-bold text-primary text-xl mb-2">Linear Equations</h3>
+                    <p class="text-muted" style="font-size: 0.875rem;">
+                        First-degree equations with variables raised to the power of 1
+                    </p>
+                </div>
+
+                <div class="card" style="background: var(--muted); margin-bottom: 1rem;">
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">General Form:</span>
+                        <div class="font-math font-medium">ax + b = 0</div>
+                    </div>
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Example:</span>
+                        <div class="font-math font-medium">2x + 5 = 13</div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Solution:</span>
+                        <div class="font-math font-bold text-primary">x = 4</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1rem;">💡</span>
+                        <span style="font-size: 0.875rem; font-weight: 500; color: var(--solution);">Applications</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 0.25rem;">
+                        <div>→ Distance calculations</div>
+                        <div>→ Rate problems</div>
+                        <div>→ Simple interest</div>
+                        <div>→ Break-even analysis</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%;" onclick="setExample('2x + 5 = 13')">
+                    Try This Example
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="mb-4">
+                    <h3 class="font-bold text-accent text-xl mb-2">Quadratic Equations</h3>
+                    <p class="text-muted" style="font-size: 0.875rem;">
+                        Second-degree equations with variables raised to the power of 2
+                    </p>
+                </div>
+
+                <div class="card" style="background: var(--muted); margin-bottom: 1rem;">
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">General Form:</span>
+                        <div class="font-math font-medium">ax² + bx + c = 0</div>
+                    </div>
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Example:</span>
+                        <div class="font-math font-medium">x² - 5x + 6 = 0</div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Solution:</span>
+                        <div class="font-math font-bold text-accent">x = 2 or x = 3</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1rem;">💡</span>
+                        <span style="font-size: 0.875rem; font-weight: 500; color: var(--solution);">Applications</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 0.25rem;">
+                        <div>→ Projectile motion</div>
+                        <div>→ Area optimization</div>
+                        <div>→ Parabolic paths</div>
+                        <div>→ Profit modeling</div>
+                    </div>
+                </div>
+
+                <button class="btn" style="width: 100%; background: var(--accent); color: var(--accent-foreground);" onclick="setExample('x^2 = 16')">
+                    Try This Example
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="mb-4">
+                    <h3 class="font-bold text-solution text-xl mb-2">Systems of Equations</h3>
+                    <p class="text-muted" style="font-size: 0.875rem;">
+                        Multiple equations with multiple variables solved simultaneously
+                    </p>
+                </div>
+
+                <div class="card" style="background: var(--muted); margin-bottom: 1rem;">
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">General Form:</span>
+                        <div class="font-math font-medium">{ax + by = c, dx + ey = f}</div>
+                    </div>
+                    <div class="mb-2">
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Example:</span>
+                        <div class="font-math font-medium">{2x + y = 7, x - y = 2}</div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--muted-foreground);">Solution:</span>
+                        <div class="font-math font-bold text-solution">x = 3, y = 1</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1rem;">💡</span>
+                        <span style="font-size: 0.875rem; font-weight: 500; color: var(--solution);">Applications</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 0.25rem;">
+                        <div>→ Supply and demand</div>
+                        <div>→ Mixture problems</div>
+                        <div>→ Investment planning</div>
+                        <div>→ Resource allocation</div>
+                    </div>
+                </div>
+
+                <button class="btn" style="width: 100%; background: var(--solution); color: var(--solution-foreground);" onclick="alert('Systems of equations require specialized solving methods!')">
+                    Learn More
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Tips Section -->
+        <div class="card mt-6">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-semibold text-primary">Quick Tips for Solving Equations</h3>
+            </div>
+            <div class="grid grid-cols-3">
+                <div class="text-center">
+                    <div style="width: 3rem; height: 3rem; background: rgba(66, 139, 202, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span class="text-primary font-bold">1</span>
+                    </div>
+                    <h4 class="font-medium mb-2">Isolate the Variable</h4>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        Use inverse operations to get the variable by itself on one side
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div style="width: 3rem; height: 3rem; background: rgba(150, 190, 155, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span class="text-accent font-bold">2</span>
+                    </div>
+                    <h4 class="font-medium mb-2">Keep It Balanced</h4>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        Whatever you do to one side, do the same to the other side
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div style="width: 3rem; height: 3rem; background: rgba(255, 165, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <span class="text-solution font-bold">3</span>
+                    </div>
+                    <h4 class="font-medium mb-2">Check Your Answer</h4>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                        Substitute your solution back into the original equation
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Problems Section -->
+    <section id="practice" class="section fade-in-up">
+        <div class="text-center mb-6">
+            <h2 class="section-title">🎯 Practice Problems</h2>
+            <p class="section-subtitle">
+                Test your equation-solving skills with interactive practice problems
+            </p>
+        </div>
+
+        <div class="grid grid-cols-3">
+            <div style="grid-column: span 2;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; justify-content: between; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="badge badge-accent">EASY</span>
+                            <span class="badge badge-outline font-math">linear</span>
+                        </div>
+                        <button class="btn" style="font-size: 0.875rem; padding: 0.5rem 1rem;" onclick="generateNewProblem()">
+                            🔄 New Problem
+                        </button>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <div class="card" style="background: rgba(66, 139, 202, 0.05); border: 1px solid rgba(66, 139, 202, 0.2); padding: 1.5rem;">
+                            <div style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Solve for x:</div>
+                            <div id="practice-equation" class="font-math font-bold text-primary" style="font-size: 2rem;">
+                                x + 5 = 12
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1rem;">
+                            <div class="input-group">
+                                <input 
+                                    type="text" 
+                                    id="practice-answer" 
+                                    class="equation-input" 
+                                    placeholder="Enter your answer (e.g., x = 5)"
+                                >
+                                <button class="btn btn-primary" onclick="checkPracticeAnswer()">
+                                    Check Answer
+                                </button>
+                            </div>
+
+                            <button class="btn btn-outline" onclick="showHint()" style="margin-top: 0.5rem;">
+                                Need a hint?
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="practice-result" style="display: none;"></div>
+                    <div id="practice-hint" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card mb-4">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <span style="font-size: 1.25rem;">🏆</span>
+                        <h3 class="font-semibold text-solution">Your Progress</h3>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div class="text-center p-4" style="background: rgba(255, 165, 0, 0.1); border-radius: 0.5rem;">
+                            <div class="text-2xl font-bold text-solution" id="accuracy">0%</div>
+                            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Accuracy</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2" style="gap: 0.5rem;">
+                            <div class="text-center p-3" style="background: rgba(150, 190, 155, 0.1); border-radius: 0.5rem;">
+                                <div class="font-bold text-accent" id="correct-count">0</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">Correct</div>
+                            </div>
+                            <div class="text-center p-3" style="background: var(--muted); border-radius: 0.5rem;">
+                                <div class="font-bold" id="total-count">0</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">Total</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <h3 class="font-semibold text-primary mb-4">Difficulty Level</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <button class="btn" style="width: 100%; background: var(--accent); color: var(--accent-foreground); justify-content: flex-start;" onclick="setDifficulty('easy')">
+                            Easy
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%; justify-content: flex-start;" onclick="setDifficulty('medium')">
+                            Medium
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%; justify-content: flex-start;" onclick="setDifficulty('hard')">
+                            Hard
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="font-semibold text-primary mb-3">Quick Reference</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
+                        <div>
+                            <span class="font-medium">Linear:</span> ax + b = 0
+                        </div>
+                        <div>
+                            <span class="font-medium">Quadratic:</span> ax² + bx + c = 0
+                        </div>
+                        <div>
+                            <span class="font-medium">Square root:</span> x² = n → x = ±√n
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Overview -->
+    <section class="section fade-in-up">
+        <div class="text-center mb-8">
+            <h2 class="section-title">Why Choose Our Equation Solver?</h2>
+        </div>
+        
+        <div class="grid grid-cols-4">
+            <div class="card text-center">
+                <div style="width: 4rem; height: 4rem; background: rgba(66, 139, 202, 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">
+                    🧮
+                </div>
+                <h3 class="font-semibold text-primary mb-2">Instant Solutions</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    Get immediate answers to linear and quadratic equations with detailed explanations
+                </p>
+            </div>
+            
+            <div class="card text-center">
+                <div style="width: 4rem; height: 4rem; background: rgba(150, 190, 155, 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">
+                    📈
+                </div>
+                <h3 class="font-semibold text-accent mb-2">Visual Learning</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    See equations come to life with interactive graphs and visual representations
+                </p>
+            </div>
+            
+            <div class="card text-center">
+                <div style="width: 4rem; height: 4rem; background: rgba(255, 165, 0, 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">
+                    🎯
+                </div>
+                <h3 class="font-semibold text-solution mb-2">Practice Mode</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    Test your skills with unlimited practice problems and track your progress
+                </p>
+            </div>
+            
+            <div class="card text-center">
+                <div style="width: 4rem; height: 4rem; background: rgba(220, 38, 127, 0.1); border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">
+                    📚
+                </div>
+                <h3 class="font-semibold text-error mb-2">Learn by Doing</h3>
+                <p style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    Understand different equation types and their real-world applications
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <div style="width: 2rem; height: 2rem; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem;">
+                    📊
+                </div>
+                <span class="text-xl font-bold" style="background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    EquationSolver
+                </span>
+            </div>
+            <p class="text-muted mb-4">
+                Making mathematics accessible and interactive for everyone
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                <span>© 2024 EquationSolver</span>
+                <span>•</span>
+                <span>Interactive Math Education</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mathematical equation solver JavaScript
+        let currentPractice = {
+            equation: 'x + 5 = 12',
+            answer: 'x = 7',
+            difficulty: 'easy'
+        };
+        
+        let practiceStats = {
+            correct: 0,
+            total: 0
+        };
+
+        // Navigation functionality
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Update active nav button
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        }
+
+        // Equation solver functionality
+        function setExample(equation) {
+            document.getElementById('equation-input').value = equation;
+            document.getElementById('solution-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'none';
+        }
+
+        function solveEquation() {
+            const equation = document.getElementById('equation-input').value.trim();
+            const solutionContainer = document.getElementById('solution-container');
+            const errorContainer = document.getElementById('error-container');
+            
+            // Hide previous results
+            solutionContainer.style.display = 'none';
+            errorContainer.style.display = 'none';
+
+            if (!equation) {
+                showError('Please enter an equation');
+                return;
+            }
+
+            if (!equation.includes('=')) {
+                showError('Equation must contain an equals sign (=)');
+                return;
+            }
+
+            try {
+                const result = parseAndSolve(equation);
+                showSolution(equation, result);
+            } catch (error) {
+                showError('Unable to solve equation. Please check your input.');
+            }
+        }
+
+        function parseAndSolve(equation) {
+            const cleanEq = equation.replace(/\s/g, '');
+            const [leftSide, rightSide] = cleanEq.split('=');
+
+            // Check if quadratic
+            if (cleanEq.includes('x^2') || cleanEq.includes('x²')) {
+                return solveQuadratic(leftSide, rightSide);
+            } else {
+                return solveLinear(leftSide, rightSide);
+            }
+        }
+
+        function solveLinear(leftSide, rightSide) {
+            const steps = [];
+            steps.push(`Original equation: ${leftSide} = ${rightSide}`);
+
+            // Simple linear equation solver for basic cases
+            if (leftSide === 'x' && !isNaN(rightSide)) {
+                return {
+                    solution: `x = ${rightSide}`,
+                    steps: steps,
+                    type: 'Linear Equation'
+                };
+            }
+
+            // Handle cases like "2x + 5 = 13"
+            const leftCoeff = extractCoefficient(leftSide);
+            const leftConstant = extractConstant(leftSide);
+            const rightCoeff = extractCoefficient(rightSide);
+            const rightConstant = extractConstant(rightSide);
+
+            const finalCoeff = leftCoeff - rightCoeff;
+            const finalConstant = rightConstant - leftConstant;
+
+            if (finalCoeff !== 0) {
+                if (finalConstant !== 0) {
+                    steps.push(`Rearrange: ${finalCoeff}x = ${finalConstant}`);
+                }
+
+                const solution = finalConstant / finalCoeff;
+                steps.push(`Divide by ${finalCoeff}: x = ${finalConstant}/${finalCoeff}`);
+
+                if (Number.isInteger(solution)) {
+                    steps.push(`Simplify: x = ${solution}`);
+                    return {
+                        solution: `x = ${solution}`,
+                        steps: steps,
+                        type: 'Linear Equation'
+                    };
+                } else {
+                    return {
+                        solution: `x = ${solution.toFixed(3)}`,
+                        steps: steps,
+                        type: 'Linear Equation'
+                    };
+                }
+            }
+
+            return {
+                solution: 'Unable to solve',
+                steps: steps,
+                type: 'Linear Equation'
+            };
+        }
+
+        function solveQuadratic(leftSide, rightSide) {
+            const steps = [];
+            steps.push(`Original equation: ${leftSide} = ${rightSide}`);
+
+            // Handle simple cases like x^2 = 16
+            if ((leftSide === 'x^2' || leftSide === 'x²') && !isNaN(rightSide)) {
+                const value = parseFloat(rightSide);
+                if (value >= 0) {
+                    const sqrt = Math.sqrt(value);
+                    steps.push(`Take square root of both sides: x = ±√${value}`);
+                    if (Number.isInteger(sqrt)) {
+                        steps.push(`Simplify: x = ±${sqrt}`);
+                        return {
+                            solution: `x = ${sqrt} or x = ${-sqrt}`,
+                            steps: steps,
+                            type: 'Quadratic Equation'
+                        };
+                    } else {
+                        return {
+                            solution: `x = ±${sqrt.toFixed(3)}`,
+                            steps: steps,
+                            type: 'Quadratic Equation'
+                        };
+                    }
+                } else {
+                    return {
+                        solution: 'No real solutions',
+                        steps: [...steps, 'Cannot take square root of negative number'],
+                        type: 'Quadratic Equation'
+                    };
+                }
+            }
+
+            return {
+                solution: 'Use quadratic formula: x = (-b ± √(b²-4ac)) / 2a',
+                steps: [...steps, 'Rearrange to standard form: ax² + bx + c = 0', 'Apply quadratic formula'],
+                type: 'Quadratic Equation'
+            };
+        }
+
+        function extractCoefficient(expression) {
+            const xMatch = expression.match(/([+-]?\d*\.?\d*)x/);
+            if (xMatch) {
+                const coeff = xMatch[1];
+                if (coeff === '' || coeff === '+') return 1;
+                if (coeff === '-') return -1;
+                return parseFloat(coeff);
+            }
+            return 0;
+        }
+
+        function extractConstant(expression) {
+            let withoutX = expression.replace(/([+-]?\d*\.?\d*)x/g, '');
+            if (withoutX === '') return 0;
+            const terms = withoutX.match(/[+-]?\d+\.?\d*/g) || ['0'];
+            return terms.reduce((sum, term) => sum + parseFloat(term), 0);
+        }
+
+        function showSolution(equation, result) {
+            document.getElementById('original-equation').textContent = equation;
+            document.getElementById('solution-result').textContent = result.solution;
+            document.getElementById('equation-type').textContent = result.type;
+
+            const stepsContainer = document.getElementById('solution-steps');
+            if (result.steps && result.steps.length > 0) {
+                stepsContainer.innerHTML = result.steps.map((step, index) => 
+                    `<div class="solution-step">
+                        <span style="font-size: 0.875rem; color: var(--muted-foreground); margin-right: 0.5rem;">
+                            Step ${index + 1}:
+                        </span>
+                        <span class="font-math">${step}</span>
+                    </div>`
+                ).join('');
+                document.getElementById('steps-container').style.display = 'block';
+            } else {
+                document.getElementById('steps-container').style.display = 'none';
+            }
+
+            document.getElementById('solution-container').style.display = 'block';
+        }
+
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error-container').style.display = 'block';
+        }
+
+        // Practice problems functionality
+        const problems = {
+            easy: [
+                { equation: 'x + 5 = 12', answer: 'x = 7' },
+                { equation: '2x = 10', answer: 'x = 5' },
+                { equation: 'x - 3 = 8', answer: 'x = 11' },
+                { equation: '3x + 2 = 14', answer: 'x = 4' },
+                { equation: 'x^2 = 25', answer: 'x = 5 or x = -5' },
+                { equation: 'x^2 = 9', answer: 'x = 3 or x = -3' }
+            ],
+            medium: [
+                { equation: '2x + 7 = 3x - 1', answer: 'x = 8' },
+                { equation: '4(x - 2) = 12', answer: 'x = 5' },
+                { equation: '3x - 5 = 2x + 9', answer: 'x = 14' }
+            ],
+            hard: [
+                { equation: '2x^2 - 8 = 0', answer: 'x = 2 or x = -2' }
+            ]
+        };
+
+        function generateNewProblem() {
+            const difficulty = currentPractice.difficulty;
+            const problemsForDifficulty = problems[difficulty];
+            const randomProblem = problemsForDifficulty[Math.floor(Math.random() * problemsForDifficulty.length)];
+            
+            currentPractice = {
+                equation: randomProblem.equation,
+                answer: randomProblem.answer,
+                difficulty: difficulty
+            };
+
+            document.getElementById('practice-equation').textContent = randomProblem.equation;
+            document.getElementById('practice-answer').value = '';
+            document.getElementById('practice-result').style.display = 'none';
+            document.getElementById('practice-hint').style.display = 'none';
+        }
+
+        function checkPracticeAnswer() {
+            const userAnswer = document.getElementById('practice-answer').value.trim().toLowerCase();
+            const correctAnswer = currentPractice.answer.toLowerCase();
+            
+            const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(correctAnswer);
+            
+            practiceStats.total++;
+            if (isCorrect) {
+                practiceStats.correct++;
+            }
+
+            updateProgressDisplay();
+            showPracticeResult(isCorrect, userAnswer, currentPractice.answer);
+
+            if (isCorrect) {
+                setTimeout(() => {
+                    generateNewProblem();
+                }, 2000);
+            }
+        }
+
+        function normalizeAnswer(answer) {
+            return answer
+                .replace(/\s/g, '')
+                .replace(/x=/g, '')
+                .replace(/or/g, ',')
+                .split(',')
+                .map(s => s.trim())
+                .sort()
+                .join(',');
+        }
+
+        function showPracticeResult(isCorrect, userAnswer, correctAnswer) {
+            const resultContainer = document.getElementById('practice-result');
+            
+            resultContainer.innerHTML = `
+                <div class="solution-display scale-in" style="border-left-color: ${isCorrect ? 'var(--accent)' : 'var(--error)'};">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1.25rem;">${isCorrect ? '✅' : '❌'}</span>
+                        <span class="font-bold" style="color: ${isCorrect ? 'var(--accent)' : 'var(--error)'};">
+                            ${isCorrect ? 'Correct!' : 'Not quite right'}
+                        </span>
+                    </div>
+                    <div style="font-size: 0.875rem;">
+                        <div class="font-math">
+                            <span class="text-muted">Your answer:</span> ${userAnswer}
+                        </div>
+                        ${!isCorrect ? `
+                            <div class="font-math">
+                                <span class="text-muted">Correct answer:</span> ${correctAnswer}
+                            </div>
+                        ` : ''}
+                    </div>
+                    ${isCorrect ? '<div style="font-size: 0.875rem; color: var(--accent); margin-top: 0.5rem;">🎉 Moving to next problem...</div>' : ''}
+                </div>
+            `;
+            
+            resultContainer.style.display = 'block';
+        }
+
+        function updateProgressDisplay() {
+            const accuracy = practiceStats.total > 0 ? Math.round((practiceStats.correct / practiceStats.total) * 100) : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            document.getElementById('correct-count').textContent = practiceStats.correct;
+            document.getElementById('total-count').textContent = practiceStats.total;
+        }
+
+        function showHint() {
+            const hintContainer = document.getElementById('practice-hint');
+            let hint = '';
+            
+            if (currentPractice.equation.includes('x^2')) {
+                hint = 'Tip: For x² = n, take the square root of both sides. Remember ±!';
+            } else {
+                hint = 'Tip: Use inverse operations to isolate x. Remember to do the same thing to both sides!';
+            }
+            
+            hintContainer.innerHTML = `
+                <div style="background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.2); border-radius: 0.5rem; padding: 0.75rem;">
+                    <div style="font-size: 0.875rem; color: var(--solution); font-weight: 500;">
+                        💡 ${hint}
+                    </div>
+                </div>
+            `;
+            hintContainer.style.display = 'block';
+        }
+
+        function setDifficulty(level) {
+            currentPractice.difficulty = level;
+            
+            // Update button styles
+            document.querySelectorAll('[onclick^="setDifficulty"]').forEach(btn => {
+                btn.className = 'btn btn-outline';
+                btn.style.width = '100%';
+                btn.style.justifyContent = 'flex-start';
+            });
+            
+            event.target.className = 'btn';
+            event.target.style.width = '100%';
+            event.target.style.background = 'var(--accent)';
+            event.target.style.color = 'var(--accent-foreground)';
+            event.target.style.justifyContent = 'flex-start';
+            
+            generateNewProblem();
+        }
+
+        // Allow Enter key to solve equations
+        document.getElementById('equation-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                solveEquation();
+            }
+        });
+
+        document.getElementById('practice-answer').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPracticeAnswer();
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            generateNewProblem();
+        });
+    </script>
+</body>
+</html>

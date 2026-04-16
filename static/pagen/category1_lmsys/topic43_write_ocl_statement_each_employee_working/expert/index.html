@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCL Statement: Employee Age Constraint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.85), rgba(139, 92, 246, 0.85)),
+                        url('images/hero-section.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.4), rgba(30, 41, 59, 0.3));
+            z-index: 0;
+        }
+
+        header > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-top: 10px;
+        }
+
+        /* Section Styles */
+        section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '▸';
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        /* OCL Statement Display */
+        .ocl-statement {
+            background: #0f172a;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            margin: 20px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .ocl-statement code {
+            color: var(--success);
+            background: transparent;
+        }
+
+        .ocl-keyword {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .ocl-constraint {
+            color: var(--accent-color);
+        }
+
+        .ocl-property {
+            color: var(--success);
+        }
+
+
+        /* Examples Grid */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        @media (min-width: 1400px) {
+            .examples-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .example-card {
+            background: #0f172a;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .example-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .example-code {
+            color: var(--text-secondary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Syntax Guide */
+        .syntax-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .syntax-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            background: #0f172a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .syntax-table th,
+        .syntax-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-bg);
+        }
+
+        .syntax-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .syntax-table tr:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .syntax-code {
+            font-family: 'Courier New', monospace;
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Visual Elements */
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3));
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Image Styles */
+        .content-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--primary-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .image-caption {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .image-grid .content-image {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .content-image {
+                border-radius: 8px;
+                margin: 20px 0;
+            }
+
+            .image-caption {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+
+            /* Syntax table mobile styles */
+            .syntax-table th,
+            .syntax-table td {
+                padding: 12px 10px;
+                font-size: 0.81rem;
+            }
+
+            .syntax-table th {
+                font-size: 0.855rem;
+            }
+
+            /* Examples grid mobile styles */
+            .examples-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 15px;
+            }
+
+            .example-card {
+                padding: 15px;
+            }
+
+            .example-title {
+                font-size: 0.855rem;
+                margin-bottom: 8px;
+            }
+
+            .example-card p {
+                font-size: 0.765rem;
+                margin-bottom: 8px;
+                line-height: 1.5;
+            }
+
+            .example-card .ocl-statement {
+                padding: 12px 15px;
+                font-size: 0.765rem !important;
+                margin: 8px 0 !important;
+            }
+
+            .example-card .ocl-statement code {
+                line-height: 1.5;
+            }
+
+            .example-card:hover {
+                transform: none;
+            }
+
+            /* Main OCL statement mobile styles */
+            .ocl-statement {
+                padding: 15px;
+                font-size: 0.855rem;
+                margin: 15px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary-color);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="icon">📋</div>
+            <h1>OCL Statement: Employee Age Constraint</h1>
+            <p class="subtitle">Learn about Object Constraint Language statements and their syntax</p>
+        </header>
+
+        <!-- About OCL Section -->
+        <section id="about-ocl">
+            <h2>What is OCL?</h2>
+            <p style="margin-bottom: 20px; font-size: 1.05rem;">
+                <strong style="color: var(--primary-color);">Object Constraint Language (OCL)</strong> is a formal language used to express constraints and rules on UML models and other MOF (Meta-Object Facility) compliant modeling languages. OCL allows you to specify business rules and constraints that cannot be expressed through diagrammatic notation alone.
+            </p>
+            <div style="background: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid var(--primary-color);">
+                <h3 style="color: var(--primary-color); margin-bottom: 12px;">Key Characteristics of OCL:</h3>
+                <ul style="list-style: none; padding: 0; line-height: 2; color: var(--text-secondary);">
+                    <li style="margin-bottom: 8px;">• <strong style="color: var(--text-primary);">Declarative:</strong> Describes what must be true, not how to enforce it</li>
+                    <li style="margin-bottom: 8px;">• <strong style="color: var(--text-primary);">Side-effect free:</strong> Cannot modify the model, only query it</li>
+                    <li style="margin-bottom: 8px;">• <strong style="color: var(--text-primary);">Type-safe:</strong> All expressions are well-typed and checked</li>
+                    <li style="margin-bottom: 8px;">• <strong style="color: var(--text-primary);">Standardized:</strong> Defined by OMG (Object Management Group) specification</li>
+                    <li>• <strong style="color: var(--text-primary);">UML Integration:</strong> Works seamlessly with UML class diagrams and models</li>
+                </ul>
+            </div>
+            <div class="image-container">
+                <img src="images/uml-class-diagram.png" alt="UML Class Diagram showing Employee class structure" class="content-image">
+                <p class="image-caption">UML Class Diagram: Employee class with attributes and relationships</p>
+            </div>
+        </section>
+
+        <!-- Main OCL Statement Section -->
+        <section id="main-statement">
+            <h2>OCL Statement</h2>
+            <p style="margin-bottom: 15px; font-size: 1.1rem;">
+                Each Employee working in the Company should have an age greater than 22. We represent this in OCL as:
+            </p>
+            <div class="ocl-statement">
+                <code>
+                    <span class="ocl-keyword">context</span> Employee<br>
+                    <span class="ocl-keyword">inv</span> <span class="ocl-constraint">ageConstraint</span>:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.age</span> &gt; 22
+                </code>
+            </div>
+            <div class="image-container">
+                <img src="images/ocl-in-editor.png" alt="OCL statement in code editor with syntax highlighting" class="content-image">
+                <p class="image-caption">OCL constraint as it appears in a modern code editor with syntax highlighting</p>
+            </div>
+            <div style="margin-top: 20px; padding: 20px; background: #0f172a; border-radius: 8px; border-left: 4px solid var(--success);">
+                <h3 style="color: var(--success); margin-bottom: 12px;">What This Constraint Does:</h3>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px;">
+                    This OCL invariant constraint enforces a business rule that <strong style="color: var(--text-primary);">every Employee object in the Company system must have an age property value strictly greater than 22</strong>. This means:
+                </p>
+                <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2;">
+                    <li style="margin-bottom: 8px;">✓ Employees with age 23, 24, 25, etc. are <strong style="color: var(--success);">valid</strong></li>
+                    <li style="margin-bottom: 8px;">✗ Employees with age 22 or less are <strong style="color: var(--error);">invalid</strong> and violate the constraint</li>
+                    <li style="margin-bottom: 8px;">The constraint is checked automatically whenever an Employee instance is created or modified</li>
+                    <li>If violated, the system should reject the operation and prevent the invalid state</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Understanding the Constraint -->
+        <section id="understanding">
+            <h2>Understanding the Constraint</h2>
+            <p style="margin-bottom: 20px; font-size: 1.05rem;">
+                The OCL statement defines a business rule that must be satisfied by all instances of the Employee class. Let's break down what this constraint means:
+            </p>
+            <div style="background: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Constraint Breakdown:</h3>
+                <ul style="list-style: none; padding: 0; line-height: 2;">
+                    <li style="margin-bottom: 12px;">
+                        <strong style="color: var(--primary-color);">context Employee:</strong> 
+                        <span style="color: var(--text-secondary);">This specifies that the constraint applies to the Employee class in the Company model.</span>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <strong style="color: var(--primary-color);">inv ageConstraint:</strong> 
+                        <span style="color: var(--text-secondary);">The keyword "inv" declares an invariant - a condition that must always be true for every Employee instance.</span>
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <strong style="color: var(--primary-color);">self.age > 22:</strong> 
+                        <span style="color: var(--text-secondary);">"self" refers to the current Employee instance, and the expression ensures the age property is strictly greater than 22.</span>
+                    </li>
+                </ul>
+            </div>
+            <p style="margin-top: 20px; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary);">Business Logic:</strong> This constraint enforces a company policy that all employees must be at least 23 years old. Any attempt to create or modify an Employee instance with an age of 22 or less would violate this constraint and should be rejected by the system.
+            </p>
+            <div class="image-container">
+                <img src="images/constraint-flow.png" alt="OCL constraint validation flow diagram" class="content-image">
+                <p class="image-caption">Constraint Validation Flow: How OCL constraints are evaluated during object creation and modification</p>
+            </div>
+        </section>
+
+        <!-- OCL Syntax Guide -->
+        <section id="syntax">
+            <h2>OCL Syntax Guide</h2>
+            <p style="margin-bottom: 20px;">Understanding the components and syntax of an OCL constraint statement:</p>
+            <div class="syntax-table-wrapper">
+                <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="syntax-code">context</span></td>
+                        <td>Specifies the class, operation, or type to which the constraint applies. It establishes the scope of the constraint.</td>
+                        <td><span class="syntax-code">context Employee</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">inv</span></td>
+                        <td>Invariant keyword - declares a constraint that must always be true for all instances of the context class. The constraint is checked whenever the object state changes.</td>
+                        <td><span class="syntax-code">inv ageConstraint</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">constraintName</span></td>
+                        <td>An optional name for the constraint that helps identify it. Follows the "inv" keyword and is separated by a colon.</td>
+                        <td><span class="syntax-code">ageConstraint:</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">self</span></td>
+                        <td>A reserved keyword that refers to the current instance of the class specified in the context. It's used to access properties and operations of the object.</td>
+                        <td><span class="syntax-code">self.age</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">property access</span></td>
+                        <td>Accesses a property or attribute of the current instance using dot notation. Properties are defined in the UML class diagram.</td>
+                        <td><span class="syntax-code">self.age</span>, <span class="syntax-code">self.salary</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">comparison operators</span></td>
+                        <td>Standard comparison operators for numeric and other types: &gt; (greater than), &lt; (less than), &gt;= (greater or equal), &lt;= (less or equal), = (equal), &lt;&gt; (not equal).</td>
+                        <td><span class="syntax-code">&gt; 22</span>, <span class="syntax-code">&lt;&gt; null</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="syntax-code">literals</span></td>
+                        <td>Constant values used in constraints. Can be integers, real numbers, strings (in quotes), booleans (true/false), or null.</td>
+                        <td><span class="syntax-code">22</span>, <span class="syntax-code">"text"</span>, <span class="syntax-code">true</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div style="margin-top: 25px; padding: 20px; background: #0f172a; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                <h3 style="color: var(--accent-color); margin-bottom: 10px;">Key Points:</h3>
+                <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                    <li style="margin-bottom: 8px; color: var(--text-secondary);">
+                        • OCL constraints are declarative - they describe <em>what</em> must be true, not <em>how</em> to enforce it
+                    </li>
+                    <li style="margin-bottom: 8px; color: var(--text-secondary);">
+                        • Invariants are evaluated whenever the object's state changes (creation, modification, deletion)
+                    </li>
+                    <li style="margin-bottom: 8px; color: var(--text-secondary);">
+                        • If a constraint evaluates to false, the operation that caused the state change should be rejected
+                    </li>
+                    <li style="color: var(--text-secondary);">
+                        • OCL is side-effect free - constraints cannot modify the model, only query it
+                    </li>
+                </ul>
+            </div>
+            <div class="image-container">
+                <img src="images/ocl-syntax-diagram.png" alt="OCL syntax structure diagram" class="content-image">
+                <p class="image-caption">OCL Syntax Structure: Visual breakdown of OCL statement components</p>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>More OCL Examples</h2>
+            <p style="margin-bottom: 20px;">Explore other common OCL constraint patterns used in enterprise applications:</p>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-title">📊 Salary Constraint</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Ensures all employees have a minimum salary requirement of $50,000. This is useful for enforcing company-wide compensation policies.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">minSalary</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.salary</span> &gt;= 50000
+                        </code>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">📅 Hire Date Validation</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Ensures the hire date is not in the future. This prevents logical errors where employees are hired before the current date. Uses OCL's date comparison operators.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">validHireDate</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.hireDate</span> &lt;= <span class="ocl-keyword">Date</span>::<span class="ocl-property">now</span>()
+                        </code>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">🔗 Association Constraint</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Ensures every employee must be associated with a department. This enforces mandatory relationships in the data model.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">hasDepartment</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.department</span> &lt;&gt; <span class="ocl-keyword">null</span>
+                        </code>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">📧 Email Format Validation</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Validates that the email address contains the '@' symbol, ensuring basic email format compliance. Uses OCL string operations.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">validEmail</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.email</span>.<span class="ocl-keyword">size</span>() &gt; 0 <span class="ocl-keyword">and</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.email</span>.<span class="ocl-keyword">indexOf</span>('@') &gt; 0
+                        </code>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">🔢 Age Range Constraint</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Ensures employee age is within a valid working range (between 18 and 70 years). Useful for retirement and legal compliance.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">validAgeRange</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.age</span> &gt;= 18 <span class="ocl-keyword">and</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.age</span> &lt;= 70
+                        </code>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-title">💼 Manager Constraint</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 10px;">
+                        Ensures that managers have at least 5 years of experience. This enforces business rules for promotion eligibility.
+                    </p>
+                    <div class="ocl-statement" style="margin-top: 15px; font-size: 0.95rem;">
+                        <code>
+                            <span class="ocl-keyword">context</span> Employee<br>
+                            <span class="ocl-keyword">inv</span> <span class="ocl-constraint">managerExperience</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.role</span> = 'Manager' <span class="ocl-keyword">implies</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="ocl-property">self.experienceYears</span> &gt;= 5
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scroll animation for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation to sections on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Heading Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<!-- para font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<title>Write me a useful discord command, one would consider more of a utility in python that would be imported into the mainbot script via a setup function like “def setup()</title>
+<style type="">
+	*{
+		padding: 0px;
+		margin: 0px;
+		box-sizing: border-box;
+	}
+	.container ,.head_container{
+	    max-width: 1450px;
+	    padding: 50px 15px !important;
+	    margin: 0 auto;
+	    width: 100%;
+	}
+	.head_container{
+		padding: 15px 15px !important;
+	}
+	ul{
+		margin-left: 20px;
+    	margin-bottom: 10px;
+	}
+	.home {
+	  	height: 100vh;
+	  	position: relative;
+	}
+	img{
+		padding-bottom: 10px;
+	}
+	.home video {
+	  	object-fit: cover;
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	 	 position: absolute;
+	  	z-index: 1;
+	}
+	.banner{
+		position: relative;
+		display: block;
+		width: 100%;
+	}
+	.overlay{
+	    position: absolute;
+	    position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+	    /*top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #020024;
+	    background: linear-gradient(90deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, rgba(0, 212, 255, 0) 100%);*/
+	    z-index: 1;
+	    display: block;
+	}
+	h1,h2,h3,h4,h5,h6{
+		font-family: "Outfit", sans-serif;
+	}
+	p,span,a,label,li{
+	    font-family: "Mulish", sans-serif;
+	    font-size: 16px;
+	    letter-spacing: 1px;
+	}
+	.box{
+		width: 70%;  
+		margin: 0 auto; 
+		text-align: center;
+	}
+	h1{
+		font-size: 65px;
+		text-transform: uppercase;
+	}
+	h2{
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+	span{
+		text-transform: uppercase;
+		margin-bottom:10px;
+		font-weight: 600;
+	    display: block;
+	    line-height: 1.6em;
+	}
+	p{
+		line-height: 1.6em;
+		margin-bottom: 10px;
+	}
+	.p_50{
+		padding:50px 0px;
+	}
+	img{
+		width: 100%;
+	}
+	label{
+		text-transform: uppercase;
+	}
+	.w_50{
+		width: calc(50% - 10px);
+	}
+	/* Core styles/functionality */
+	.tab {
+	  position: relative;
+	}
+	.tab input {
+	  position: absolute;
+	  opacity: 0;
+	  z-index: -1;
+	}
+	.tab__content {
+	  max-height: 0;
+	  overflow: hidden;
+	  transition: all 0.35s;
+	}
+	.tab input:checked ~ .tab__content {
+	  max-height: 100%;
+	}
+
+	/* Visual styles */
+	.accordion {
+	  color: var(--theme);
+	  border: 2px solid #fff;
+	  border-radius: 0.5rem;
+	  overflow: hidden;
+	}
+	.tab__label,
+	.tab__close {
+	  display: flex;
+	  color: #000;
+	  background: #fff;
+	  cursor: pointer;
+	}
+	.tab__label {
+	  justify-content: space-between;
+	  padding: 1rem;
+	}
+	.tab__label::after {
+	  content: "\276F";
+	  width: 1em;
+	  height: 1em;
+	  text-align: center;
+	  transform: rotate(90deg);
+	  transition: all 0.5s;
+	}
+	.tab input:checked + .tab__label::after {
+	  transform: rotate(270deg);
+	}
+	.tab__content p{
+	  margin: 0;
+	  padding: 1rem;
+	}
+	.tab__content ul{
+	  margin: 0;
+	  padding:1rem;
+      list-style-type: none;
+	}
+	.tab__content li{
+	  margin: 0;
+	  padding:0rem;
+	  padding-bottom:1rem;
+      list-style-type: none;
+	}
+	.tab__close {
+	  justify-content: flex-end;
+	  padding: 0.5rem 1rem;
+	  font-size: 0.75rem;
+	}
+	.accordion--radio {
+	  --theme: var(--secondary);
+	}
+
+	/* Arrow animation */
+	.tab input:not(:checked) + .tab__label:hover::after {
+	  animation: bounce .5s infinite;
+	}
+	@keyframes bounce {
+	  25% {
+	    transform: rotate(90deg) translate(.25rem);
+	  }
+	  75% {
+	    transform: rotate(90deg) translate(-.25rem);
+	  }
+	}
+	.d_flex{
+		display: flex;
+	}
+	.al_center{
+		align-items: center;
+	}
+	.space_bt{
+		justify-content: space-between;
+	}
+	.w_80{
+		width: 80%;
+	}
+	.text_center{
+		text-align: center;
+	}
+	.margin_auto{
+		margin: 0 auto;
+	}
+	.w_33{
+		width: calc(33.33% - 15px);
+	}
+	.w_25{
+		width: calc(25% - 15px);
+	}
+	.sec_3 img,.sec_4 img{
+	    height: 350px;
+    	object-fit: cover;
+	}
+	.sec_5 img{
+		height: 80px;
+    	object-fit: contain;
+	}
+	.pt_50{
+		padding-top: 50px;
+	}
+	h3{
+		padding-bottom: 10px;
+	}
+	.sec_3 .container,.sec_5 .container{
+		padding: 0px 15px !important;
+	}
+	.sec_3 .p_50,.sec_5 .p_50{
+		padding-bottom: 0px !important;
+	}
+	.d_hide{
+		display: none;
+	}
+	.home{
+		position: relative;
+	}
+	.home:after{
+		content:'';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: #000000c4;
+		z-index: 1;
+	}
+	@media (max-width: 768px){
+		.d_flex {
+			flex-direction: column;
+		}
+		.w_50,.w_33,.w_25{
+			width: 100%;
+			text-align: center;
+			padding-bottom: 30px;
+		}
+		.order{
+			flex-direction: column-reverse;
+		}
+		.sec_6{
+			text-align: center;
+		}
+		.m_30{
+			padding-bottom: 30px;
+		}
+		.m_0{
+			padding-bottom: 0px !important;
+		}
+		#m_hide{
+			display: none;
+		}
+		.box{
+			width: 100%;
+			text-align: center;
+		}
+		.d_hide{
+			display: block;
+		}
+	}
+	@media (max-width: 494px){
+		h1{
+			font-size: 50px;
+		}
+		h2{
+			font-size: 30px;
+		}
+	}
+</style>
+</head>
+<body style="background: #000; color: #fff;">
+<div class="">
+	<div class="banner">
+		<div class="home">
+			<video id="myVideo" class="m_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/banner.mp4" type="video/mp4">
+			</video>
+			<video id="myVideo" class="d_hide" width="320" height="240" autoplay muted loop> 
+			  <source src="assets/img/m_banner.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div class="">
+			<div class="overlay container">
+				<div class="box">
+					<span data-aos="fade-right" data-aos-duration="1500">Why Utility Commands Matter</span>
+					<h1 data-aos="zoom-in" data-aos-duration="2000">A Useful Discord Command in Python</h1>
+					<p data-aos="zoom-in" data-aos-duration="2000">When building a Discord bot, utility commands are just as important as fun or moderation tools. A well-designed utility command helps improve user experience, keeps servers organized, and gives your bot practical value. One common approach in Discord bot development is to structure commands as separate modules and import them into the main bot using a setup() function. This keeps your project clean, modular, and easy to maintain.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="sec_5">
+		<div class="container text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">Why Modular Utility Commands Matter</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000">Discord bots often grow quickly, with dozens of features ranging from moderation to music. Without modularization, your code can become messy and hard to debug. By separating commands into dedicated files, you:</p>
+			<div class="d_flex space_bt p_50">
+				<div class="w_25">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a1.png">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Organized Codebase</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Keeping your bot’s commands in separate files ensures that your main script doesn’t become cluttered. This makes it easier to read and maintain over time.</p>
+				</div>
+				<div class="w_25">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a2.png">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Easier Updates & New Features</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">By isolating commands, you can add or remove features without rewriting large portions of your main bot script. This keeps development fast and flexible.</p>
+				</div>
+				<div class="w_25">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a3.png">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Simplified Debugging</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">When an error occurs, it’s easier to pinpoint the problem if commands are organized in their own modules. You only need to check the specific file instead of scanning the entire project.</p>
+				</div>
+				<div class="w_25 m_0">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a4.png">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Reusable Modules</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">Utility commands can be lifted from one project and reused in another with minimal changes. This saves time and effort in future development.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_2">
+		<div class="container p_50">
+			<div class="d_flex al_center space_bt order">
+				<div class="w_50 m_0"><img class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a5.png"></div>
+				<div class="w_50">
+					<h2 data-aos="zoom-in" data-aos-duration="2000">Example: A Server Information Command</h2>
+					<p data-aos="zoom-in" data-aos-duration="2000">One of the most useful utility commands is a server info command. It gives admins and members quick insight into their server’s statistics. Here’s an example written in Python using discord.py, structured for modular import:</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec_4">
+		<div class="container p_50 text_center">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">How This Works</h2>
+			<p data-aos="zoom-in" data-aos-duration="2000">This modular approach not only makes your bot cleaner to manage but also ensures that each command can be developed, tested, and maintained independently. As your project grows, organizing features into separate files with clear setup functions will save time, reduce errors, and keep your bot scalable for future improvements.</p>
+			<div class="d_flex space_bt p_50">
+				<div class="w_50">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/g1.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Cog Structure</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">The ServerInfo class inherits from commands.Cog, which provides a clean way to group commands and keep them modular.</p>
+				</div>
+				<div class="w_50">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/g2.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Command Definition</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">The @commands.command decorator defines the serverinfo command, making it easy for users to trigger the function by typing !serverinfo (or your chosen prefix).</p>
+				</div>
+			</div>
+			<div class="d_flex al_center space_bt ">
+				<div class="w_50">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/g3.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Command Execution</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">When the command is called, the bot generates and sends an embed containing details such as the server name, ID, owner, member count, and creation date.</p>
+				</div>
+				<div class="w_50 m_0">
+					<img data-aos="zoom-in" data-aos-duration="2000" src="assets/img/g4.jpg">
+					<h3 data-aos="zoom-in" data-aos-duration="2000">Setup Function</h3>
+					<p data-aos="zoom-in" data-aos-duration="2000">The setup() function acts as the entry point that allows the main bot script to load this module with bot.add_cog(ServerInfo(bot)).</p>
+				</div>
+			</div>
+			<p data-aos="zoom-in" data-aos-duration="2000">In your main bot file, you would simply load this module:</p>
+			<img style="height: unset; width:unset;" class="m_0" data-aos="zoom-in" data-aos-duration="2000" src="assets/img/a6.png">
+		</div>
+	</div>
+	<div class="sec_6">
+		<div class="container">
+			<h2 data-aos="zoom-in" data-aos-duration="2000">Conclusion</h2>
+			<p class="m_30" data-aos="zoom-in" data-aos-duration="2000">A well-crafted utility command like serverinfo adds real value to your Discord bot. By structuring it with a setup() function and modular imports, you ensure your project remains clean, scalable, and easy to expand in the future. Whether you’re building tools for fun communities or professional servers, utility commands are what transform your bot into a reliable assistant.</p>
+		</div>
+	</div>
+</div>
+<script>
+  AOS.init();
+</script>
+</body>
+</html>

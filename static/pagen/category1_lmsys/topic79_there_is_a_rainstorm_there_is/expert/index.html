@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raindrop Shapes in Thunderstorms: A Stormy Encounter</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-cloud-rain"></i>
+          <span>Raindrop Science</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#physics">Physics</a></li>
+          <li><a href="#storm">Storm</a></li>
+          <li><a href="#snake">Snake</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="hero-background">
+        <div class="rain-animation"></div>
+        <div class="lightning-flash"></div>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="title-line">Raindrops in Thunderstorms</span>
+          <span class="title-line highlight"
+            >The Hidden Physics of Water Droplets</span
+          >
+        </h1>
+        <p class="hero-subtitle">
+          As you watch a snake slither past in the storm, the raindrops on its
+          scales aren't teardrop-shaped at all. In lightning flashes, you'd see
+          them as rounded or flattened spheres — but falling so fast, they appear
+          as streaks to the naked eye.
+        </p>
+        
+        <div class="quick-answer-box">
+          <div class="answer-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="answer-content">
+            <h3>Quick Answer</h3>
+            <p>
+              <strong>Raindrops are not teardrop-shaped</strong> — that's a myth from 
+              cartoons. Small raindrops stay nearly spherical because of surface 
+              tension, while larger ones flatten at the bottom and bulge at the 
+              sides, looking more like a hamburger bun. In a thunderstorm, with 
+              heavy rain and strong winds, you'd actually see them as blurred 
+              streaks, not distinct shapes, because they fall so fast past your eyes.
+            </p>
+          </div>
+        </div>
+        
+        <div class="hero-cta">
+          <button
+            class="cta-button primary"
+            onclick="scrollToSection('physics')"
+          >
+            <i class="fas fa-play"></i>
+            Start Exploring
+          </button>
+          <button
+            class="cta-button secondary"
+            onclick="scrollToSection('snake')"
+          >
+            <i class="fas fa-microscope"></i>
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- Raindrop Physics Section -->
+    <section id="physics" class="physics-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>The Physics of Raindrop Shapes</h2>
+          <p>
+            Contrary to popular belief, raindrops are not tear-shaped. Discover
+            the real physics behind their formation.
+          </p>
+        </div>
+
+        <div class="physics-content">
+          <div class="physics-visualization">
+            <div class="raindrop-simulator">
+              <div class="simulator-controls">
+                <div class="control-group">
+                  <label for="dropSize">Drop Diameter (mm)</label>
+                  <input
+                    type="range"
+                    id="dropSize"
+                    min="0.5"
+                    max="8"
+                    step="0.1"
+                    value="2"
+                  />
+                  <span class="value-display" id="sizeValue">2.0 mm</span>
+                </div>
+                <div class="control-group">
+                  <label for="windSpeed">Wind Speed (m/s)</label>
+                  <input
+                    type="range"
+                    id="windSpeed"
+                    min="0"
+                    max="25"
+                    step="0.5"
+                    value="5"
+                  />
+                  <span class="value-display" id="windValue">5.0 m/s</span>
+                </div>
+                <div class="control-group">
+                  <label for="airPressure">Air Pressure (kPa)</label>
+                  <input
+                    type="range"
+                    id="airPressure"
+                    min="80"
+                    max="110"
+                    step="1"
+                    value="101"
+                  />
+                  <span class="value-display" id="pressureValue">101 kPa</span>
+                </div>
+                <div class="control-group">
+                  <label for="airTemp">Air Temperature (°C)</label>
+                  <input
+                    type="range"
+                    id="airTemp"
+                    min="-10"
+                    max="30"
+                    step="1"
+                    value="15"
+                  />
+                  <span class="value-display" id="tempValue">15°C</span>
+                </div>
+              </div>
+              <div class="raindrop-display">
+                <div class="raindrop-container">
+                  <div class="raindrop" id="animatedDrop"></div>
+                  <div class="air-flow-indicators" id="airFlowIndicators"></div>
+                </div>
+                <div class="drop-info">
+                  <div class="info-item">
+                    <span class="label">Shape:</span>
+                    <span class="value" id="shapeType">Hamburger Bun</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">Terminal Velocity:</span>
+                    <span class="value" id="terminalVelocity">6.5 m/s</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">Reynolds Number:</span>
+                    <span class="value" id="reynoldsNumber">1,200</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">Deformation Factor:</span>
+                    <span class="value" id="deformationFactor">0.85</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">Surface Tension:</span>
+                    <span class="value" id="surfaceTension">0.073 N/m</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="physics-explanation">
+            <div class="explanation-card">
+              <div class="card-icon">
+                <i class="fas fa-atom"></i>
+              </div>
+              <h3>Surface Tension</h3>
+              <p>
+                Water molecules are held together by hydrogen bonds, creating
+                surface tension that initially forms spherical droplets. This is
+                why small raindrops start as perfect spheres.
+              </p>
+            </div>
+
+            <div class="explanation-card">
+              <div class="card-icon">
+                <i class="fas fa-wind"></i>
+              </div>
+              <h3>Air Resistance</h3>
+              <p>
+                As raindrops fall, air resistance flattens the bottom while the
+                top remains curved, creating the characteristic "hamburger bun"
+                shape rather than the tear shape we imagine.
+              </p>
+            </div>
+
+            <div class="explanation-card">
+              <div class="card-icon">
+                <i class="fas fa-balance-scale"></i>
+              </div>
+              <h3>Forces in Balance</h3>
+              <p>
+                When raindrops exceed 4mm in diameter, surface tension can no
+                longer hold them together, causing them to break apart into
+                smaller droplets.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Thunderstorm Dynamics Section -->
+    <section id="storm" class="storm-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Thunderstorm Formation & Lightning</h2>
+          <p>
+            Understanding the powerful forces that create the perfect conditions
+            for raindrop formation.
+          </p>
+        </div>
+
+        <div class="storm-content">
+          <div class="storm-timeline">
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-thermometer-half"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Surface Heating</h3>
+                <p class="timeline-description">
+                  Surface heating creates temperature gradients, with warm air
+                  pockets becoming buoyant and rising through the atmosphere.
+                </p>
+                <div class="timeline-stats">
+                  <span class="stat">Temperature: 25-35°C</span>
+                  <span class="stat">Humidity: 70-90%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Updraft Formation</h3>
+                <p class="timeline-description">
+                  Rising air creates powerful updrafts reaching speeds of 50+
+                  m/s, carrying moisture high into the atmosphere where
+                  temperatures drop below freezing.
+                </p>
+                <div class="timeline-stats">
+                  <span class="stat">Speed: 50+ m/s</span>
+                  <span class="stat">Height: 10-15 km</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Charge Separation</h3>
+                <p class="timeline-description">
+                  Ice and water particles transfer charge during collisions,
+                  creating electrical charges. Positive charges accumulate at
+                  the top, negative at the bottom.
+                </p>
+                <div class="timeline-stats">
+                  <span class="stat">Voltage: 100-1000 million V</span>
+                  <span class="stat">Current: 30,000+ A</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Lightning Discharge</h3>
+                <p class="timeline-description">
+                  When electrical potential becomes too great, lightning
+                  discharges occur, heating air to 30,000°C and creating the
+                  thunder we hear.
+                </p>
+                <div class="timeline-stats">
+                  <span class="stat">Temperature: 30,000°C</span>
+                  <span class="stat">Flash: 0.1-0.2s (strokes: μs)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-tint"></i>
+              </div>
+              <div class="timeline-content">
+                <h3>Raindrop Formation</h3>
+                <p class="timeline-description">
+                  In the turbulent storm environment, raindrops grow through
+                  collision and coalescence, typically reaching 2-5mm with
+                  extreme cases up to 8mm before falling to earth.
+                </p>
+                <div class="timeline-stats">
+                  <span class="stat">Size: 2-5mm (up to 8mm)</span>
+                  <span class="stat">Speed: 6-9 m/s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="storm-facts">
+            <div class="fact-card">
+              <div class="fact-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <div class="fact-content">
+                <h4>Lightning Facts</h4>
+                <ul>
+                  <li>Lightning strikes Earth 100 times per second</li>
+                  <li>Each bolt contains 100-1000 million volts</li>
+                  <li>
+                    Temperature reaches 30,000°C (5x hotter than the sun's
+                    surface)
+                  </li>
+                  <li>Thunder travels at 343 m/s (speed of sound)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-icon">
+                <i class="fas fa-cloud-rain"></i>
+              </div>
+              <div class="fact-content">
+                <h4>Storm Energy</h4>
+                <ul>
+                  <li>Average thunderstorm releases 10^15 joules of energy</li>
+                  <li>
+                    Comparable to a small nuclear explosion's energy release
+                  </li>
+                  <li>Can produce 1,000+ lightning strikes per hour</li>
+                  <li>Rainfall rates can exceed 100 mm/hour</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-icon">
+                <i class="fas fa-wind"></i>
+              </div>
+              <div class="fact-content">
+                <h4>Wind Dynamics</h4>
+                <ul>
+                  <li>Updrafts can reach 50+ m/s (180+ km/h)</li>
+                  <li>Downdrafts create microbursts and gust fronts</li>
+                  <li>Wind shear helps maintain storm structure</li>
+                  <li>Can produce tornadoes under right conditions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snake Behavior Section -->
+    <section id="snake" class="snake-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Snakes in the Rain: A Wet Encounter</h2>
+          <p>
+            Discover why snakes become more active during thunderstorms and how
+            they navigate the wet world.
+          </p>
+        </div>
+
+        <div class="snake-content">
+          <div>
+            <div class="snake-intro">
+              <div class="intro-text">
+                <h3>Why Snakes Emerge During Storms</h3>
+                <p>
+                  Contrary to popular belief, snakes don't hide from rain. They
+                  actually become more active during thunderstorms for several
+                  fascinating reasons related to their biology and hunting
+                  behavior.
+                </p>
+              </div>
+              <div class="intro-stats">
+                <div class="stat-item">
+                  <span class="stat-number">Significantly</span>
+                  <span class="stat-label">More Active</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">Dramatically</span>
+                  <span class="stat-label">Better Hunting</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">24h</span>
+                  <span class="stat-label">Peak Activity</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="snake-facts">
+              <div class="fact-highlight">
+                <div class="fact-icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="fact-content">
+                  <h4>Did You Know?</h4>
+                  <p>
+                    Some snake species can detect rain up to 24 hours before it
+                    arrives through changes in barometric pressure, giving them
+                    time to prepare for the hunting opportunities ahead.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="snake-behaviors">
+            <div class="behavior-card">
+              <div class="behavior-header">
+                <div class="behavior-icon">
+                  <i class="fas fa-search"></i>
+                </div>
+                <div class="behavior-badge">Primary</div>
+              </div>
+              <h4>Hunting Activity</h4>
+              <p>
+                Snakes become more active during rain because their prey (frogs,
+                rodents) are also more active. The wet conditions make hunting
+                easier as prey seeks shelter.
+              </p>
+              <div class="behavior-details">
+                <span class="detail-tag">Prey Movement</span>
+                <span class="detail-tag">Wet Conditions</span>
+                <span class="detail-tag">Increased Success</span>
+              </div>
+            </div>
+
+            <div class="behavior-card">
+              <div class="behavior-header">
+                <div class="behavior-icon">
+                  <i class="fas fa-home"></i>
+                </div>
+                <div class="behavior-badge">Survival</div>
+              </div>
+              <h4>Seeking Shelter</h4>
+              <p>
+                When their underground dens flood, snakes must find higher
+                ground. This often brings them into contact with humans in
+                garages, sheds, or even homes.
+              </p>
+              <div class="behavior-details">
+                <span class="detail-tag">Flooding</span>
+                <span class="detail-tag">Higher Ground</span>
+                <span class="detail-tag">Human Contact</span>
+              </div>
+            </div>
+
+            <div class="behavior-card">
+              <div class="behavior-header">
+                <div class="behavior-icon">
+                  <i class="fas fa-tint"></i>
+                </div>
+                <div class="behavior-badge">Health</div>
+              </div>
+              <h4>Skin Moisture</h4>
+              <p>
+                Rain can aid shedding and hydration. Some snakes have even been
+                observed drinking raindrops directly off their scales.
+              </p>
+              <div class="behavior-details">
+                <span class="detail-tag">Skin Shedding</span>
+                <span class="detail-tag">Hydration</span>
+                <span class="detail-tag">Direct Drinking</span>
+              </div>
+            </div>
+
+            <div class="behavior-card">
+              <div class="behavior-header">
+                <div class="behavior-icon">
+                  <i class="fas fa-thermometer-half"></i>
+                </div>
+                <div class="behavior-badge">Biology</div>
+              </div>
+              <h4>Temperature Regulation</h4>
+              <p>
+                As ectothermic creatures, snakes rely on external heat. Rain cools
+                their surroundings, prompting them to seek warmer, drier spots.
+              </p>
+              <div class="behavior-details">
+                <span class="detail-tag">Ectothermic</span>
+                <span class="detail-tag">Heat Seeking</span>
+                <span class="detail-tag">Temperature Control</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>
+            Common questions about raindrops, thunderstorms, and the fascinating
+            physics behind them.
+          </p>
+        </div>
+
+        <div class="faq-content">
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Why aren't raindrops tear-shaped like we see in cartoons?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Contrary to popular belief, raindrops are not tear-shaped! They
+                start as spherical droplets due to surface tension, but as they
+                fall through the air, air resistance flattens the bottom while
+                the top remains curved, creating a "hamburger bun" shape. Only
+                very small droplets (less than 1mm) remain nearly spherical.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>If raindrops aren't tear-shaped, why do we think they are?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Because raindrops move quickly, our eyes see them as streaks, and
+                art/cartoons simplified this into a teardrop symbol. Real
+                raindrops are nearly spherical or bun-shaped, but motion blur
+                and artistic convention have created the teardrop myth.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What's the largest raindrop ever recorded?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                The largest raindrops typically reach about 6-8mm in diameter
+                before breaking apart due to air resistance. Drops larger than
+                4mm become unstable and split into smaller droplets. The
+                theoretical maximum is around 8mm, but most raindrops are much
+                smaller, averaging 1-2mm.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How fast do raindrops fall?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Raindrop speed depends on size, but most fall at 6-9 meters per
+                second (13-20 mph). Small drops (1mm) fall at about 4 m/s, while
+                large drops (5mm) can reach 9 m/s. This is their "terminal
+                velocity" - the maximum speed where air resistance balances
+                gravity.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Why do snakes come out during rain?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Snakes become more active during rain for several reasons: their
+                underground dens may flood, forcing them to seek higher ground;
+                their prey (frogs, rodents) are also more active; the moisture
+                helps with skin shedding; and they may be hunting for food
+                that's easier to catch in wet conditions.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How does lightning form in thunderstorms?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Lightning forms when ice particles and water droplets collide in
+                the storm cloud, creating electrical charges. Positive charges
+                accumulate at the top of the cloud, negative charges at the
+                bottom. When the electrical potential difference becomes too
+                great (millions of volts), lightning discharges occur, heating
+                the air to 30,000°C.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>
+                Can you really tell how far away lightning is by counting
+                seconds?
+              </h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Yes! Since light travels much faster than sound, you can
+                estimate lightning distance by counting seconds between the
+                flash and thunder. Sound travels at about 343 m/s (1,125 ft/s),
+                so divide the seconds by 3 to get approximate distance in
+                kilometers, or by 5 for miles. For example, 3 seconds = about 1
+                km away.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Why do some raindrops feel harder than others?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                The "hardness" you feel depends on raindrop size and speed.
+                Larger drops (3-5mm) have more mass and hit with greater force.
+                Wind can also accelerate drops horizontally, making them feel
+                harder. Temperature affects this too - colder drops are denser
+                and feel more solid.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What causes the different colors in rainbows?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Rainbows form when sunlight enters raindrops and gets refracted
+                (bent) and internally reflected. Different wavelengths of light
+                bend at slightly different angles, separating white light into
+                its component colors. The size and shape of raindrops affect
+                the rainbow's appearance - larger, more spherical drops create
+                brighter, more distinct rainbows.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Why does rain sometimes smell?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                The distinctive "rain smell" is called petrichor, caused by plant
+                oils and soil bacteria released into the air. Ozone from
+                lightning also contributes to the fresh, clean scent we
+                associate with thunderstorms.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Can thunderstorms cause tornadoes?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Yes! Severe thunderstorms with strong wind shear can develop
+                into supercells, which are the primary producers of tornadoes.
+                The rotating updrafts in supercells create the perfect
+                conditions for tornado formation.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Why do double rainbows form?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Double rainbows occur when light undergoes two internal
+                reflections inside raindrops instead of one. The secondary
+                rainbow appears above the primary one with reversed colors
+                (red on the inside, violet on the outside) and is typically
+                dimmer.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>How long does a typical thunderstorm last?</h3>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Most thunderstorms last 30 minutes to 1 hour, but severe
+                storms can persist much longer. Supercell thunderstorms can
+                last several hours, while multicell systems may continue for
+                many hours as new cells develop and replace old ones.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <p>
+            &copy; <span id="currentYear"></span> Raindrop Science. All rights
+            reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

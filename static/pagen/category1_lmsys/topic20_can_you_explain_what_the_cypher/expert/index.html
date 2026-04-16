@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cypher Query Language - Graph Database Power</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <div class="container nav-container">
+          <div class="nav-brand">
+            <div class="logo">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <circle cx="8" cy="8" r="3" fill="#3b82f6" />
+                <circle cx="24" cy="8" r="3" fill="#06b6d4" />
+                <circle cx="16" cy="24" r="3" fill="#f97316" />
+                <line
+                  x1="8"
+                  y1="8"
+                  x2="24"
+                  y2="8"
+                  stroke="#3b82f6"
+                  stroke-width="2"
+                />
+                <line
+                  x1="24"
+                  y1="8"
+                  x2="16"
+                  y2="24"
+                  stroke="#06b6d4"
+                  stroke-width="2"
+                />
+                <line
+                  x1="16"
+                  y1="24"
+                  x2="8"
+                  y2="8"
+                  stroke="#f97316"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <span class="brand-text">CypherQL</span>
+          </div>
+
+          <div class="nav-menu" id="navMenu">
+            <a href="#introduction" class="nav-link">Introduction</a>
+            <a href="#why-cypher" class="nav-link">Why Cypher?</a>
+            <a href="#concepts" class="nav-link">Core Concepts</a>
+            <a href="#visualization" class="nav-link">Visualization</a>
+            <a href="#playground" class="nav-link">Try It</a>
+          </div>
+
+          <div class="nav-actions">
+            <a href="#playground" class="nav-cta">Get Started</a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="graph-animation">
+          <svg class="hero-graph" viewBox="0 0 800 400">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Connections -->
+            <line class="connection" x1="200" y1="150" x2="350" y2="100" />
+            <line class="connection" x1="350" y1="100" x2="500" y2="150" />
+            <line class="connection" x1="500" y1="150" x2="600" y2="250" />
+            <line class="connection" x1="350" y1="100" x2="400" y2="280" />
+            <line class="connection" x1="200" y1="150" x2="300" y2="300" />
+
+            <!-- Nodes -->
+            <circle class="node node-primary" cx="200" cy="150" r="20" />
+            <circle class="node node-secondary" cx="350" cy="100" r="18" />
+            <circle class="node node-accent" cx="500" cy="150" r="16" />
+            <circle class="node node-primary" cx="600" cy="250" r="14" />
+            <circle class="node node-secondary" cx="400" cy="280" r="15" />
+            <circle class="node node-accent" cx="300" cy="300" r="13" />
+          </svg>
+        </div>
+      </div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="search-icon">🔎</span>
+            What is Cypher Query Language?
+          </h1>
+          <p class="hero-subtitle">
+            The powerful query language for Neo4j and graph databases.
+          </p>
+          <button class="cta-button" onclick="scrollToSection('introduction')">
+            Explore Cypher
+            <span class="arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="section">
+      <div class="container">
+        <h2 class="section-title">Introduction</h2>
+        <div class="intro-grid">
+          <div class="intro-text">
+            <p>
+              Cypher Query Language (CQL) is the declarative query language used
+              to interact with Neo4j, a popular graph database.
+            </p>
+            <p>
+              It's designed to make working with connected data intuitive and
+              expressive.
+            </p>
+            <p>
+              Instead of rows and columns, Cypher deals with
+              <strong>nodes</strong> (entities) and
+              <strong>relationships</strong> (connections).
+            </p>
+          </div>
+          <div class="intro-visual">
+            <div class="comparison-card">
+              <div class="comparison-item">
+                <h4>Traditional SQL</h4>
+                <div class="table-representation">
+                  <div class="table-row">
+                    <span>ID</span><span>Name</span><span>Age</span>
+                  </div>
+                  <div class="table-row">
+                    <span>1</span><span>Alice</span><span>30</span>
+                  </div>
+                  <div class="table-row">
+                    <span>2</span><span>Bob</span><span>25</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comparison-arrow">→</div>
+              <div class="comparison-item">
+                <h4>Cypher Graph</h4>
+                <svg class="mini-graph" viewBox="0 0 200 100">
+                  <line
+                    x1="50"
+                    y1="50"
+                    x2="150"
+                    y2="50"
+                    stroke="#3b82f6"
+                    stroke-width="2"
+                  />
+                  <circle cx="50" cy="50" r="15" fill="#3b82f6" />
+                  <circle cx="150" cy="50" r="15" fill="#06b6d4" />
+                  <text
+                    x="50"
+                    y="75"
+                    text-anchor="middle"
+                    fill="#374151"
+                    font-size="10"
+                  >
+                    Alice
+                  </text>
+                  <text
+                    x="150"
+                    y="75"
+                    text-anchor="middle"
+                    fill="#374151"
+                    font-size="10"
+                  >
+                    Bob
+                  </text>
+                  <text
+                    x="100"
+                    y="45"
+                    text-anchor="middle"
+                    fill="#6b7280"
+                    font-size="8"
+                  >
+                    FRIEND
+                  </text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Cypher Section -->
+    <section id="why-cypher" class="section bg-alternate">
+      <div class="container">
+        <h2 class="section-title">Why Cypher?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🧩</div>
+            <h3>Simple Syntax</h3>
+            <p>
+              Uses ASCII-art-like patterns to represent nodes and relationships.
+            </p>
+            <div class="feature-example">
+              <code>(Alice)-[:FRIEND]->(Bob)</code>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Efficient</h3>
+            <p>Optimized for traversing large, complex networks.</p>
+            <div class="feature-example">
+              <code>MATCH (a)-[*1..3]-(b)</code>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Real-World Modeling</h3>
+            <p>
+              Great for social networks, recommendation engines, fraud
+              detection, etc.
+            </p>
+            <div class="feature-example">
+              <code>(:User)-[:LIKES]->(:Product)</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Concepts Section -->
+    <section id="concepts" class="section">
+      <div class="container">
+        <h2 class="section-title">Core Concepts</h2>
+        <div class="concepts-grid">
+          <!-- Nodes -->
+          <div class="concept-card" data-concept="nodes">
+            <div class="concept-header">
+              <h3>Nodes</h3>
+              <p>Represent entities (e.g., a person, product, or place)</p>
+            </div>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Creating a Node</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code class="language-cypher">CREATE (p:Person {name: "Alice"})</code></pre>
+            </div>
+            <div class="concept-visual">
+              <svg viewBox="0 0 150 100">
+                <circle
+                  cx="75"
+                  cy="50"
+                  r="25"
+                  fill="#3b82f6"
+                  class="node-demo"
+                />
+                <text
+                  x="75"
+                  y="55"
+                  text-anchor="middle"
+                  fill="white"
+                  font-size="12"
+                >
+                  Alice
+                </text>
+                <text
+                  x="75"
+                  y="85"
+                  text-anchor="middle"
+                  fill="#374151"
+                  font-size="10"
+                >
+                  :Person
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Relationships -->
+          <div class="concept-card" data-concept="relationships">
+            <div class="concept-header">
+              <h3>Relationships</h3>
+              <p>Show how nodes connect</p>
+            </div>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Creating a Relationship</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code class="language-cypher">MATCH (a:Person {name: "Alice"}), (b:Person {name: "Bob"})
+CREATE (a)-[:FRIEND]->(b)</code></pre>
+            </div>
+            <div class="concept-visual">
+              <svg viewBox="0 0 200 100">
+                <line
+                  x1="50"
+                  y1="50"
+                  x2="150"
+                  y2="50"
+                  stroke="#06b6d4"
+                  stroke-width="3"
+                  marker-end="url(#arrowhead)"
+                />
+                <circle cx="50" cy="50" r="20" fill="#3b82f6" />
+                <circle cx="150" cy="50" r="20" fill="#3b82f6" />
+                <text
+                  x="50"
+                  y="55"
+                  text-anchor="middle"
+                  fill="white"
+                  font-size="10"
+                >
+                  Alice
+                </text>
+                <text
+                  x="150"
+                  y="55"
+                  text-anchor="middle"
+                  fill="white"
+                  font-size="10"
+                >
+                  Bob
+                </text>
+                <text
+                  x="100"
+                  y="42"
+                  text-anchor="middle"
+                  fill="#06b6d4"
+                  font-size="8"
+                >
+                  FRIEND
+                </text>
+                <defs>
+                  <marker
+                    id="arrowhead"
+                    markerWidth="10"
+                    markerHeight="7"
+                    refX="9"
+                    refY="3.5"
+                    orient="auto"
+                  >
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#06b6d4" />
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Queries -->
+          <div class="concept-card" data-concept="queries">
+            <div class="concept-header">
+              <h3>Queries</h3>
+              <p>Ask questions about the graph</p>
+            </div>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-title">Finding Relationships</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code class="language-cypher">MATCH (a:Person)-[:FRIEND]->(b:Person)
+RETURN a.name, b.name</code></pre>
+            </div>
+            <div class="concept-visual query-result">
+              <div class="result-table">
+                <div class="result-header">
+                  <span>a.name</span>
+                  <span>b.name</span>
+                </div>
+                <div class="result-row">
+                  <span>Alice</span>
+                  <span>Bob</span>
+                </div>
+                <div class="result-row">
+                  <span>Carol</span>
+                  <span>Dave</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visual Example Section -->
+    <section id="visualization" class="section bg-alternate">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="chart-icon">📊</span>
+          Interactive Graph Visualization
+        </h2>
+        <p class="section-description">
+          Click on nodes to explore their relationships and see the connections
+          light up!
+        </p>
+
+        <div class="graph-container">
+          <div class="graph-controls">
+            <button class="control-btn active" onclick="showExample('friends')">
+              Friend Network
+            </button>
+            <button class="control-btn" onclick="showExample('products')">
+              Product Recommendations
+            </button>
+            <button class="control-btn" onclick="showExample('movies')">
+              Movie Database
+            </button>
+          </div>
+
+          <div class="interactive-graph">
+            <svg id="mainGraph" viewBox="0 0 800 500">
+              <!-- Graph content will be populated by JavaScript -->
+            </svg>
+          </div>
+
+          <div class="graph-info">
+            <div class="info-panel">
+              <h4 id="selectedNode">Click a node to explore</h4>
+              <div id="nodeDetails" class="node-details"></div>
+            </div>
+            <div class="query-panel">
+              <h4>Current Query</h4>
+              <pre
+                id="currentQuery"
+              ><code class="language-cypher">// Click on nodes to see dynamic queries</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fun Facts Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Fun Facts</h2>
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="fact-icon">📌</div>
+            <p>Cypher was inspired by SQL, but optimized for graphs.</p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon">📌</div>
+            <p>
+              It powers not just Neo4j, but also the openCypher project — making
+              graph databases more accessible.
+            </p>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon">📌</div>
+            <p>
+              Neo4j chose the name "Cypher" because of its connection to
+              patterns and codes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section id="playground" class="section bg-alternate">
+      <div class="container">
+        <h2 class="section-title">
+          <span class="pointer">👉</span>
+          Try It Yourself
+        </h2>
+        <p class="section-description">
+          A mini "Cypher playground" where you can type simple Cypher queries
+          and see example graph output.
+        </p>
+
+        <div class="playground">
+          <div class="playground-editor">
+            <div class="editor-header">
+              <h4>Cypher Query Editor</h4>
+              <div class="editor-controls">
+                <button class="example-btn" onclick="loadExample('basic')">
+                  Basic Query
+                </button>
+                <button
+                  class="example-btn"
+                  onclick="loadExample('relationship')"
+                >
+                  Find Friends
+                </button>
+                <button class="example-btn" onclick="loadExample('complex')">
+                  Complex Pattern
+                </button>
+                <button class="run-btn" onclick="runQuery()">Run Query</button>
+              </div>
+            </div>
+            <textarea
+              id="queryEditor"
+              placeholder="Type your Cypher query here...
+Example:
+MATCH (n:Person)
+RETURN n.name
+LIMIT 5"
+            >
+MATCH (n:Person)
+RETURN n.name
+LIMIT 5</textarea
+            >
+          </div>
+
+          <div class="playground-results">
+            <div class="results-header">
+              <h4>Query Results</h4>
+              <div class="result-stats">
+                <span id="resultStats">Ready to run query</span>
+              </div>
+            </div>
+            <div id="queryResults" class="results-content">
+              <div class="placeholder-message">
+                <div class="placeholder-icon">⚡</div>
+                <p>Run a query to see results here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="query-help">
+          <h4>Quick Reference</h4>
+          <div class="help-grid">
+            <div class="help-item">
+              <code>MATCH (n)</code>
+              <span>Find all nodes</span>
+            </div>
+            <div class="help-item">
+              <code>RETURN n.name</code>
+              <span>Return node property</span>
+            </div>
+            <div class="help-item">
+              <code>(a)-[:FRIEND]->(b)</code>
+              <span>Find friendship relationship</span>
+            </div>
+            <div class="help-item">
+              <code>LIMIT 10</code>
+              <span>Limit results to 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom">
+          <p>&copy; 2025 Cypher Query Language Guide.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+i have this: import logo from '.\/ressources\/logo.png';
+import '.\/App.css';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ExampleComponent from '.\/components\/ExampleComponent';
+import Layout from ".\/components\/Layout";
+import Home from '.\/components\/Home'
+\/\/import { Layout, Menu } from 'antd';
+
+const { Header, Content, Footer } = Layout;
+
+function App() {
+ return (
+ <BrowserRouter>
+ <Routes>
+ <Route path="\/" element={<Layout \/>}\/>
+ <Route index element={<Home \/>}\/>
+ <Route path="\/Test" element={<ExampleComponent \/>}\/>
+ <\/Routes>
+ <\/BrowserRouter>
+ );
+}
+
+export default App; now the navigation is only visible on the root path \/ not on the others why?

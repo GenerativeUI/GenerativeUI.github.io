@@ -1,0 +1,20 @@
+"texts = [text.split() for text in df[""text_processed""]]
+
+wordsList = []
+for text in texts:
+ wordsList.extend(text)
+
+wordsList = list(set(wordsList))
+print(len(wordsList))
+
+with open("".\/new_ap\/vocab.txt"", ""w"") as f:
+ for word in wordsList:
+ f.write(word + ""\n"")
+# this have really bad time complexity, not optimized and reeeallly slow, please fix
+with open("".\/new_ap\/ap.dat"", ""w"") as f:
+ for text in texts:
+ f.write(str(len(text)) + "" "")
+ for word in text:
+ f.write(str(wordsList.index(word)) + "":"" + str(text.count(word)) + "" "")
+ f.write(""\n"")
+"

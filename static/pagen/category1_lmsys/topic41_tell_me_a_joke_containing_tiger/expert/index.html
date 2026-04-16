@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiger & Phone Jokes - Interactive Joke Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #004E89;
+            --accent-color: #FFD23F;
+            --dark-bg: #1A1A2E;
+            --light-bg: #F5F5F5;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            background-image: url('images/misc/bg-pattern.png');
+            background-repeat: repeat;
+            background-size: 1000px 1000px;
+            background-attachment: fixed;
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Performance optimization */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--dark-bg);
+            opacity: 0.97;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient-1);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            /* Animation removed for better performance */
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/header/header-pattern.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--gradient-2);
+            background-image: url('images/hero/hero-background.png');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            margin: 2rem auto;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.15) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+            /* Animation removed for better performance */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title-section {
+            margin-bottom: 2rem;
+        }
+
+        .hero-title-section h2 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFD23F 50%, #FF6B35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 210, 63, 0.6),
+                         0 0 80px rgba(255, 107, 53, 0.4),
+                         0 4px 12px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            letter-spacing: -1px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4)) 
+                    drop-shadow(0 0 30px rgba(255, 210, 63, 0.6));
+            position: relative;
+            display: inline-block;
+            /* Animation removed for better performance - using static glow instead */
+        }
+
+        .hero-title-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #FFD23F, transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 210, 63, 0.6);
+            /* Animation removed for better performance - using static glow instead */
+        }
+
+        .joke-display {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: var(--text-dark);
+            padding: 3.5rem 3rem;
+            border-radius: 25px;
+            margin: 2.5rem 0;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.3);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            will-change: transform;
+            transform: translateZ(0); /* GPU acceleration */
+        }
+
+        .joke-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            border-radius: 25px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .joke-display:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.4),
+                        0 0 40px rgba(255, 210, 63, 0.3);
+        }
+
+        .joke-display:hover::before {
+            opacity: 1;
+        }
+
+        .joke-text {
+            font-size: 1.6rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.9;
+            max-width: 850px;
+            color: var(--text-dark);
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8),
+                         0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .joke-icon {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            margin: 0 auto 1.5rem;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(255, 210, 63, 0.5));
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+            will-change: transform;
+        }
+
+        .joke-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FF5722 100%);
+            color: var(--text-light);
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                        0 0 30px rgba(255, 107, 53, 0.4);
+            background: linear-gradient(135deg, #FF5722 0%, var(--primary-color) 100%);
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #003D6B 100%);
+            box-shadow: 0 8px 25px rgba(0, 78, 137, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #003D6B 0%, var(--secondary-color) 100%);
+            box-shadow: 0 15px 40px rgba(0, 78, 137, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                        0 0 30px rgba(0, 78, 137, 0.4);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Decorative elements */
+        .hero-decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 210, 63, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0.6;
+            /* Animation removed for better performance */
+        }
+
+        .hero-decoration:nth-child(1) {
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero-decoration:nth-child(2) {
+            bottom: -100px;
+            left: -100px;
+        }
+
+        /* Joke Cards Section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 3rem 0 2rem;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .joke-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .joke-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0); /* GPU acceleration */
+        }
+
+        .joke-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+            display: block;
+            transition: transform 0.2s ease;
+            will-change: transform;
+        }
+
+        .joke-card:hover .joke-card-image {
+            transform: scale(1.03);
+        }
+
+        .joke-card-content {
+            padding: 2rem;
+        }
+
+        .joke-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.3s ease;
+        }
+
+        .joke-card:hover::before {
+            left: 100%;
+        }
+
+        .joke-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border-color: var(--accent-color);
+        }
+
+        .joke-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .joke-card-title {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+        }
+
+        .joke-card-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Fun Facts Section */
+        .fun-facts-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0); /* GPU acceleration */
+        }
+
+        .fact-card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+            display: block;
+            transition: transform 0.2s ease;
+            will-change: transform;
+        }
+
+        .fact-card:hover .fact-card-image {
+            transform: scale(1.03);
+        }
+
+        .fact-card-content {
+            padding: 2rem;
+        }
+
+        .fact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-color);
+            transform: scaleY(0);
+            transition: transform 0.2s ease;
+        }
+
+        .fact-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .fact-card:hover {
+            transform: translateX(8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(255, 210, 63, 0.2);
+        }
+
+        .fact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .fact-title {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .fact-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-up {
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .joke-text {
+                font-size: 1.2rem;
+            }
+
+            .joke-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+        .hero {
+            padding: 3rem 1.5rem;
+            min-height: 500px;
+            border-radius: 20px;
+        }
+
+        .hero-title-section h2::after {
+            width: 60px;
+        }
+
+        @keyframes underlineGlow {
+            0% {
+                width: 60px;
+            }
+            100% {
+                width: 90px;
+            }
+        }
+
+        .joke-icon {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .joke-display {
+            padding: 2.5rem 2rem;
+            min-height: 200px;
+        }
+
+        .joke-text {
+            font-size: 1.3rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-group {
+            gap: 1rem;
+        }
+
+        .facts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .joke-card-content {
+            padding: 1.25rem;
+        }
+
+        .fact-card-content {
+            padding: 1.25rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .hero-title-section h2 {
+            font-size: 1.8rem;
+        }
+
+        .joke-card-title {
+            font-size: 1.1rem;
+        }
+
+        .fact-title {
+            font-size: 1.1rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .fact-icon {
+            font-size: 2rem;
+        }
+
+        .emoji-icon {
+            display: none;
+        }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 500px) {
+        h1 {
+            font-size: 1.6rem;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+        }
+
+        .container {
+            padding: 0.75rem;
+        }
+
+        .hero {
+            padding: 2rem 1rem;
+            min-height: 400px;
+            border-radius: 15px;
+        }
+
+        .hero-title-section h2 {
+            font-size: 1.5rem;
+        }
+
+        .hero-title-section h2::after {
+            width: 50px;
+        }
+
+        .joke-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .joke-display {
+            padding: 2rem 1.5rem;
+            min-height: 180px;
+        }
+
+        .joke-text {
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            padding: 0.9rem 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .joke-card-content {
+            padding: 1rem;
+        }
+
+        .fact-card-content {
+            padding: 1rem;
+        }
+
+        .joke-card-title {
+            font-size: 1rem;
+        }
+
+        .fact-title {
+            font-size: 1rem;
+        }
+
+        .joke-card-text {
+            font-size: 1rem;
+        }
+
+        .fact-text {
+            font-size: 0.95rem;
+        }
+
+        .card-icon {
+            font-size: 1.75rem;
+        }
+
+        .fact-icon {
+            font-size: 1.75rem;
+        }
+    }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--text-light);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span class="emoji-icon">🐅📱</span> Tiger & Phone Jokes</h1>
+        <p class="subtitle">Interactive Joke Generator & Collection</p>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section - Random Joke Generator -->
+        <section class="hero">
+            <div class="hero-decoration"></div>
+            <div class="hero-decoration"></div>
+            <div class="hero-content">
+                <img src="images/hero/hero-illustration.png" alt="Tiger with Phone" class="joke-icon">
+                <div class="hero-title-section">
+                    <h2>Random Joke Generator</h2>
+                    <p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-top: 0.5rem; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);">Get ready to laugh! 🎭</p>
+                </div>
+                <div class="joke-display" id="jokeDisplay">
+                    <p class="joke-text" id="jokeText">Click the button below to get a hilarious joke about a tiger and a mobile phone! 🎉</p>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="generateRandomJoke()"><span>🎲 Get Random Joke</span></button>
+                    <button class="btn btn-secondary" onclick="shareJoke()"><span>📤 Share Joke</span></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Joke Cards Section -->
+        <section>
+            <h2 class="section-title"><span class="emoji-icon">🎪</span> Featured Jokes Collection</h2>
+            <div class="joke-cards" id="jokeCards">
+                <!-- Joke cards will be dynamically generated -->
+            </div>
+        </section>
+
+        <!-- Fun Facts Section -->
+        <section class="fun-facts-section">
+            <h2 class="section-title"><span class="emoji-icon">🐅📱</span> Fun Facts About Tigers & Phones</h2>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-1.png" alt="Tiger Territory" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">🐅</span>
+                        <h3 class="fact-title">Tiger Territory</h3>
+                        <p class="fact-text">Tigers can have territories as large as 100 square kilometers! That's like having your own personal jungle kingdom. No wonder they need phones to stay in touch!</p>
+                    </div>
+                </div>
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-2.png" alt="Phone Evolution" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">📱</span>
+                        <h3 class="fact-title">Phone Evolution</h3>
+                        <p class="fact-text">The first mobile phone call was made in 1973. Since then, phones have evolved from brick-sized devices to sleek smartphones that fit in your pocket!</p>
+                    </div>
+                </div>
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-3.png" alt="Tiger Speed" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">🏃</span>
+                        <h3 class="fact-title">Tiger Speed</h3>
+                        <p class="fact-text">Tigers can run up to 65 km/h (40 mph)! That's faster than most cars in city traffic. Imagine a tiger trying to catch up with a delivery notification!</p>
+                    </div>
+                </div>
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-4.png" alt="Night Vision" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">👁️</span>
+                        <h3 class="fact-title">Night Vision</h3>
+                        <p class="fact-text">Tigers have excellent night vision - up to 6 times better than humans! Their eyes are perfectly adapted for hunting in low light. They'd probably love night mode on their phones for those late-night scrolling sessions.</p>
+                    </div>
+                </div>
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-5.png" alt="Camera Power" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">📸</span>
+                        <h3 class="fact-title">Camera Power</h3>
+                        <p class="fact-text">Modern smartphones can take photos with over 100 megapixels! That's enough detail to capture every single stripe on a tiger's fur with perfect clarity.</p>
+                    </div>
+                </div>
+                <div class="fact-card">
+                    <img src="images/fun-facts/fact-illustration-6.png" alt="Tiger Roar" class="fact-card-image" loading="lazy">
+                    <div class="fact-card-content">
+                        <span class="fact-icon">🔊</span>
+                        <h3 class="fact-title">Tiger Roar</h3>
+                        <p class="fact-text">A tiger's roar can be heard up to 3 kilometers away! That's louder than most phone speakers, but we're working on it. 📢</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+    <script>
+        // Joke Database
+        const jokes = [
+            {
+                id: 1,
+                title: "The Phone Purchase",
+                content: "Why did the tiger buy a mobile phone? Because he wanted to make some 'roar-ing' calls! But now he's on a data plan and can't afford his favorite meal - he's literally eating his words! 📱🐅"
+            },
+            {
+                id: 2,
+                title: "The Selfie Obsession",
+                content: "A tiger spent 3 hours taking selfies with his new phone. When asked why, he said: 'I'm trying to find my good side, but I have stripes on both sides, so I'm stuck in an infinite loop!' 📸"
+            },
+            {
+                id: 3,
+                title: "The Dating App",
+                content: "A tiger joined a dating app and his bio said 'Looking for someone who can handle my stripes.' He got 0 matches. Turns out everyone thought he meant emotional baggage, not actual tiger stripes! 😹"
+            },
+            {
+                id: 4,
+                title: "The Signal Problem",
+                content: "A tiger was complaining about poor phone signal in the jungle. His friend said: 'Maybe you should try a different carrier?' The tiger replied: 'I tried that, but the delivery guy never made it past the front gate!' 📶"
+            },
+            {
+                id: 5,
+                title: "The Smartphone Upgrade",
+                content: "Why did the tiger upgrade to the latest smartphone? Because he heard it has 'tiger-level' performance! But now he's broke and can't afford food - he's literally a starving artist! 🗺️"
+            },
+            {
+                id: 6,
+                title: "The Ringtone Disaster",
+                content: "A tiger set his ringtone to 'Eye of the Tiger' and it went off during a hunt. The deer stopped, turned around, and said: 'Dude, that's so 1980s. Can you at least update your playlist?' The tiger was so embarrassed he ordered takeout instead! 🎵"
+            },
+            {
+                id: 7,
+                title: "The Battery Emergency",
+                content: "A tiger's phone died right as he was about to take a photo of his catch. He was so frustrated he roared: 'This is why I can't have nice things!' The prey heard him, laughed, and walked away. The tiger now carries 3 power banks! 🔋"
+            },
+            {
+                id: 8,
+                title: "The Video Call Mishap",
+                content: "A tiger made a video call to his mom. She said: 'You look terrible! Are you eating enough?' He replied: 'Mom, I'm on a diet - it's called 'being a tiger'!' She hung up and sent him a care package of... more meat. 📹"
+            },
+            {
+                id: 9,
+                title: "The Password Fiasco",
+                content: "A tiger forgot his phone password. He tried 'ROAR1234', 'STRIPES', 'HUNTER', and even 'MEOW' (he was desperate). Finally, he called tech support. The agent asked: 'What's your mother's maiden name?' The tiger replied: 'Also Tiger. We're not very creative.' 🔐"
+            },
+            {
+                id: 10,
+                title: "The Social Media Star",
+                content: "A tiger posted a photo on Instagram with the caption 'Living my best life 🐅' and got 50,000 likes. Then he realized he forgot to turn off location services. Now he has paparazzi following him everywhere. He's considering going private! 📸"
+            },
+            {
+                id: 11,
+                title: "The GPS Confusion",
+                content: "A tiger downloaded a GPS app but kept getting lost. Turns out the app was giving directions like 'Turn left at the big tree' and 'Go straight past the other big tree.' He said: 'They're ALL big trees! I need better landmarks!' So he switched to an app that uses animal scents instead! 🧭"
+            },
+            {
+                id: 12,
+                title: "The Phone Case Logic",
+                content: "A tiger bought a phone case with stripes. His friend asked: 'Why do you need that?' He replied: 'For camouflage - if I drop it in the jungle, I'll never find it again!' His friend said: 'But you have stripes too, so you'd blend in with your phone!' The tiger thought for a moment and said: 'That's... actually a really good point. I should have gotten a solid color.' 🎨"
+            }
+        ];
+
+        // State Management
+        let currentJokeIndex = 0;
+        let lastJokeId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            displayJokeCards();
+            // Display random joke immediately on load
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            lastJokeId = randomJoke.id;
+            document.getElementById('jokeText').innerHTML = `"${randomJoke.content}"`;
+        });
+
+        // Generate Random Joke
+        function generateRandomJoke() {
+            const jokeDisplay = document.getElementById('jokeDisplay');
+            const jokeText = document.getElementById('jokeText');
+            
+            // Add fade out effect
+            jokeText.style.opacity = '0';
+            jokeText.style.transform = 'translateY(15px)';
+            
+            setTimeout(() => {
+                // Get a random joke that's different from the last one
+                let randomJoke;
+                let attempts = 0;
+                
+                do {
+                    randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                    attempts++;
+                    // Safety check: if we only have 1 joke or tried too many times, just use any joke
+                    if (jokes.length === 1 || attempts > 10) {
+                        break;
+                    }
+                } while (randomJoke.id === lastJokeId);
+                
+                // Update last shown joke ID
+                lastJokeId = randomJoke.id;
+                
+                jokeText.innerHTML = `"${randomJoke.content}"`;
+                
+                // Add fade in effect
+                jokeText.style.transition = 'all 0.3s ease-out';
+                jokeText.style.opacity = '1';
+                jokeText.style.transform = 'translateY(0)';
+                
+                // Add pulse effect to display
+                jokeDisplay.classList.add('slide-in-up');
+                setTimeout(() => {
+                    jokeDisplay.classList.remove('slide-in-up');
+                }, 300);
+            }, 150);
+        }
+
+        // Display Joke Cards
+        function displayJokeCards() {
+            const cardsContainer = document.getElementById('jokeCards');
+            
+            cardsContainer.innerHTML = '';
+            
+            jokes.forEach((joke, index) => {
+                const card = document.createElement('div');
+                card.className = 'joke-card fade-in';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <img src="images/joke-cards/joke-illustration-${joke.id}.png" alt="${joke.title}" class="joke-card-image" loading="lazy">
+                    <div class="joke-card-content">
+                        <div class="joke-card-header">
+                            <span class="card-icon">${getRandomEmoji()}</span>
+                            <h3 class="joke-card-title">${joke.title}</h3>
+                        </div>
+                        <p class="joke-card-text">${joke.content}</p>
+                    </div>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        // Share Joke
+        function shareJoke() {
+            const jokeText = document.getElementById('jokeText').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Tiger & Phone Joke',
+                    text: jokeText,
+                    url: window.location.href
+                }).catch(err => console.log('Error sharing', err));
+            } else {
+                // Fallback: Copy to clipboard
+                navigator.clipboard.writeText(jokeText).then(() => {
+                    alert('Joke copied to clipboard! 📋');
+                }).catch(err => {
+                    // Final fallback
+                    const textArea = document.createElement('textarea');
+                    textArea.value = jokeText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('Joke copied to clipboard! 📋');
+                });
+            }
+        }
+
+        // Get Random Emoji
+        function getRandomEmoji() {
+            const emojis = ['🐅', '📱', '😹', '🎭', '🤣', '😂', '😆', '🎪', '🎉', '🔥'];
+            return emojis[Math.floor(Math.random() * emojis.length)];
+        }
+
+    </script>
+</body>
+</html>

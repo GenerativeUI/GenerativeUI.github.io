@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+int main()
+{
+ char *file = "text.txt";
+ FILE *fileOpen = fopen(file, "r");
+ 
+ char carattere;
+ int contaMaiuscole = 0;
+ int contaMinuscole = 0;
+ int contaNumeri = 0;
+ int contaspazi = 0;
+ int contaPunteggiatura = 0;
+ 
+ do {
+ carattere = fgetc(fileOpen);
+ 
+ if (isspace(carattere)) {
+ contaspazi++;
+ } else if (islower(carattere)) {
+ contaMinuscole++;
+ } else if (isupper(carattere)){
+ contaMaiuscole++;
+ } else if (isdigit(carattere)) {
+ contaNumeri++;
+ } else if (ispunct(carattere)) {
+ contaPunteggiatura++;
+ }
+
+ } while (carattere != EOF);
+ 
+ 
+ printf("%d %d %d %d %d", contaspazi, contaMinuscole, contaMaiuscole, contaNumeri, contaPunteggiatura);
+ 
+ fclose(fileOpen);
+}
+explain this code

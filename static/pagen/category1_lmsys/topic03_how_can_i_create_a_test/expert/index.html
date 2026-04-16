@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Test Sets for Rare Categories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --gray: #6b7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 3rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Hero Section */
+       .hero {
+    position: relative;
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* Pattern overlay */
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.3;
+    animation: movePattern 12s linear infinite;
+  }
+
+  @keyframes movePattern {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100px 100px;
+    }
+  }
+
+  /* Content */
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 1;
+    animation: fadeSlide 1.2s ease-out;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+
+  /* Button */
+  .btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #ffcc00;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn:hover {
+    background: #ffdb4d;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Animations */
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 60px 15px;
+    }
+
+    .hero h1 {
+      font-size: 1.8rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      font-size: 0.9rem;
+    }
+  }
+        
+        /* Section Styles */
+        .section-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Challenge Section */
+        .challenge-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .challenge-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .challenge-visual {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary) 1%, 
+                var(--gray) 1% 100%
+            );
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .pie-chart::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .chart-label {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .label-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .color-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        /* Workflow Section */
+        .workflow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .step {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        
+        /* Metrics Section */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        /* Interactive Widget */
+        .widget {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Quiz Section */
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-question {
+            margin-bottom: 30px;
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #f9fafb;
+        }
+        
+        .quiz-option.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+        }
+        
+        .quiz-option.incorrect {
+            background: #fee2e2;
+            border-color: var(--danger);
+        }
+        
+        /* Checklist */
+        .checklist {
+            margin: 30px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .checklist-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -20px;
+                transform: translateX(50%);
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+            }
+            
+            .results {
+                grid-template-columns: 1fr;
+            }
+            
+            .challenge-container {
+                flex-direction: column;
+            }
+        }
+      section
+      {
+        margin: 10px;
+        padding: 10px;
+      }
+
+      /* ✅ Wrap-Up Section Styling */
+.wrap-up {
+  background: linear-gradient(135deg, #9740f3, #2575fc);
+  padding: 80px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.wrap-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.wrap-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+.wrap-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.cta-container {
+  margin-top: 40px;
+}
+
+.btn-cta {
+  display: inline-block;
+  background: #fff;
+  color: #2575fc;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-cta:hover {
+  background: #2575fc;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ✅ Mobile */
+@media (max-width: 600px) {
+  .wrap-card {
+    padding: 25px 20px;
+  }
+  .wrap-title {
+    font-size: 1.6rem;
+  }
+  .btn-cta {
+    font-size: 0.9rem;
+    padding: 12px 20px;
+  }
+}
+
+  @media (max-width: 768px) {
+    .challenge-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .challenge-text {
+      text-align: left;
+    }
+  }
+.fade-section {
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  will-change: opacity;
+}
+
+/* Fade-in when visible */
+.fade-section.visible {
+  opacity: 1;
+}
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+  <section class="hero fade-section">
+  <div class="hero-pattern"></div>
+  <div class="container hero-content">
+    <h1>🧪 How to Build a Test Set for Rare Categories</h1>
+    <p>
+      When your dataset has very few examples of a certain class, testing your
+      classifier becomes tricky. Here's how to carefully design a test set that
+      gives you reliable results.
+    </p>
+    <a href="#section1" class="btn">👉 Learn the Strategies</a>
+  </div>
+</section>
+
+    <!-- Section 1: Why Rare Categories Are a Challenge -->
+    <section id="section1 fade-section">
+        <div class="container">
+            <h2>Why Rare Categories Are a Challenge</h2>
+            <div class="challenge-container">
+                <div class="challenge-text">
+                    <p>In machine learning, imbalanced datasets are those where one class is significantly underrepresented compared to others. A common example is fraud detection, where only 1% of transactions might be fraudulent while 99% are normal.</p>
+                    <p>This creates several challenges:</p>
+                    <ul>
+                        <li>Not enough samples to properly train and test models</li>
+                        <li>Classifiers tend to be biased toward the majority class</li>
+                        <li>Standard accuracy metrics become misleading</li>
+                        <li>Risk of models that fail to detect the rare but important cases</li>
+                    </ul>
+                </div>
+                <div class="challenge-visual">
+                    <div class="pie-chart"></div>
+                    <div class="chart-label">
+                        <div class="label-item">
+                            <div class="color-box" style="background-color: var(--primary);"></div>
+                            <span>1% Rare Category</span>
+                        </div>
+                        <div class="label-item">
+                            <div class="color-box" style="background-color: var(--gray);"></div>
+                            <span>99% Normal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Strategies for Creating a Test Set -->
+    <section style="background-color: #f8f9fa;"  class="fade-section">
+        <div class="container">
+            <h2>Strategies for Creating a Test Set</h2>
+            <div class="card-container">
+                <div class="card">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Stratified Sampling</h3>
+                    <p>Make sure your test set includes the same proportion of rare vs. common examples as the full dataset. Example: If rare class = 1%, keep that ratio in your test set.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-copy"></i>
+                    <h3>Oversampling Rare Category</h3>
+                    <p>Duplicate or generate synthetic examples (e.g., SMOTE) to have enough samples to evaluate performance.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Cross-Validation</h3>
+                    <p>Use k-fold cross-validation with stratification to maximize usage of the few rare samples you have.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-database"></i>
+                    <h3>External Collection</h3>
+                    <p>If possible, gather more real-world rare examples (e.g., fraud reports, medical cases).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Example Workflow -->
+    <section class="fade-section" >
+        <div class="container">
+            <h2>Example Workflow</h2>
+            <div class="section-content">
+                <p>Let's consider a fraud detection dataset with 99,000 normal transactions and 1,000 fraudulent ones (1% rare class).</p>
+                
+                <div class="workflow-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Split</h3>
+                        <p>Separate data into training and test sets</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Stratify</h3>
+                        <p>Ensure both sets maintain the 1% rare class ratio</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Oversample</h3>
+                        <p>Use SMOTE or similar to generate synthetic rare examples</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Evaluate</h3>
+                        <p>Test using appropriate metrics for imbalanced data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Key Metrics for Rare Categories -->
+    <section style="background-color: #f8f9fa;" class="fade-section">
+        <div class="container">
+            <h2>Key Metrics for Rare Categories</h2>
+            <div class="section-content">
+                <p>Accuracy is misleading for imbalanced datasets. A classifier that always predicts the majority class would achieve high accuracy but be practically useless.</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Precision</div>
+                        <p>How many predicted positives are correct.</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Recall</div>
+                        <p>How many actual positives were caught.</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">F1-Score</div>
+                        <p>Balance of precision & recall.</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">ROC-AUC/PR-AUC</div>
+                        <p>Robust for imbalanced data.</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Visual Idea:</div>
+                        <p>Small graph showing precision-recall tradeoff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Interactive Widget -->
+    <section class="fade-section">
+        <div class="container">
+            <h2>Test Set Split Calculator</h2>
+            <div class="section-content">
+                <p>See how different splitting strategies affect the representation of rare categories in your test set.</p>
+                
+                <div class="widget">
+                    <div class="input-group">
+                        <label for="datasetSize">Dataset Size</label>
+                        <input type="range" id="datasetSize" min="1000" max="100000" step="1000" value="10000">
+                        <span id="datasetSizeValue">10,000</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="rarePercentage">Rare Class Percentage</label>
+                        <input type="range" id="rarePercentage" min="0.1" max="10" step="0.1" value="1">
+                        <span id="rarePercentageValue">1%</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="testSize">Test Set Percentage</label>
+                        <input type="range" id="testSize" min="10" max="50" step="5" value="20">
+                        <span id="testSizeValue">20%</span>
+                    </div>
+                    
+                    <div class="results">
+                        <div class="result-card">
+                            <div class="result-title">Random Split</div>
+                            <div class="result-value" id="randomResult">~8 rare samples</div>
+                            <p>Rare samples in test set</p>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-title">Stratified Split</div>
+                            <div class="result-value" id="stratifiedResult">10 rare samples</div>
+                            <p>Rare samples in test set</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Quick Quiz -->
+    <section style="background-color: #f8f9fa;" id="quiz" class="fade-section" >
+        <div class="container">
+            <h2>Quick Quiz</h2>
+            <div class="section-content">
+                <p>Test your understanding of handling rare categories in machine learning.</p>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h3>What happens if you use random sampling on an imbalanced dataset?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="true">Rare class may vanish from test set</div>
+                            <div class="quiz-option" data-correct="false">It guarantees balanced representation</div>
+                            <div class="quiz-option" data-correct="false">It improves model accuracy</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>Which metric is most important for rare classes?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false">Accuracy</div>
+                            <div class="quiz-option" data-correct="true">Recall</div>
+                            <div class="quiz-option" data-correct="false">Training time</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3>What technique generates synthetic data?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-correct="false">Stratified sampling</div>
+                            <div class="quiz-option" data-correct="true">Oversampling</div>
+                            <div class="quiz-option" data-correct="false">External collection</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Wrap-Up -->
+ <section class="wrap-up" class="fade-section">
+  <div class="container">
+    <h2 class="wrap-title">Wrap-Up</h2>
+    <div class="wrap-card">
+      <p>
+        Rare categories make testing hard because they’re underrepresented.  
+        Use stratified sampling, oversampling, and cross-validation to ensure your test set is meaningful.  
+        <br><br>
+        Always evaluate with metrics like <strong>precision, recall, and F1-score</strong>.
+      </p>
+
+      <div class="cta-container">
+        <a href="#quiz" class="btn-cta">
+          🚀 Build a smarter test set today and make your classifier truly reliable!
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Interactive widget functionality
+        const datasetSize = document.getElementById('datasetSize');
+        const datasetSizeValue = document.getElementById('datasetSizeValue');
+        const rarePercentage = document.getElementById('rarePercentage');
+        const rarePercentageValue = document.getElementById('rarePercentageValue');
+        const testSize = document.getElementById('testSize');
+        const testSizeValue = document.getElementById('testSizeValue');
+        const randomResult = document.getElementById('randomResult');
+        const stratifiedResult = document.getElementById('stratifiedResult');
+
+        function updateWidget() {
+            const totalSamples = parseInt(datasetSize.value);
+            const rarePct = parseFloat(rarePercentage.value);
+            const testPct = parseInt(testSize.value);
+            
+            // Format values for display
+            datasetSizeValue.textContent = totalSamples.toLocaleString();
+            rarePercentageValue.textContent = rarePct + '%';
+            testSizeValue.textContent = testPct + '%';
+            
+            // Calculate results
+            const rareSamples = Math.round(totalSamples * (rarePct / 100));
+            const testSamples = Math.round(totalSamples * (testPct / 100));
+            
+            // For random split, we can't guarantee any rare samples
+            const randomRareSamples = Math.round(testSamples * (rarePct / 100));
+            
+            // For stratified split, we maintain the proportion
+            const stratifiedRareSamples = Math.round(testSamples * (rarePct / 100));
+            
+            // Update results
+            randomResult.textContent = `~${randomRareSamples} rare samples`;
+            stratifiedResult.textContent = `${stratifiedRareSamples} rare samples`;
+        }
+
+        // Initialize widget
+        updateWidget();
+
+        // Add event listeners for sliders
+        datasetSize.addEventListener('input', updateWidget);
+        rarePercentage.addEventListener('input', updateWidget);
+        testSize.addEventListener('input', updateWidget);
+
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Remove any existing classes from siblings
+                this.parentNode.querySelectorAll('.quiz-option').forEach(sibling => {
+                    sibling.classList.remove('correct', 'incorrect');
+                });
+                
+                // Add appropriate class to clicked option
+                if (isCorrect) {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    
+                    // Also highlight the correct answer
+                    this.parentNode.querySelector('[data-correct="true"]').classList.add('correct');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.fade-section');
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // 🔥 Stop observing after first reveal
+        }
+      });
+    },
+    { threshold: 0.2 } // Trigger when 20% is visible
+  );
+
+  sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

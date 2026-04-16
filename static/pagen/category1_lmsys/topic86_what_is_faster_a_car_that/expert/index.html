@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car vs Bicycle: The Speed Question</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Speed Comparison</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#intro" class="nav-link">Question</a>
+                <a href="#perception" class="nav-link">Perception</a>
+                <a href="#factors" class="nav-link">Factors</a>
+                <a href="#practical" class="nav-link">Applications</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="intro" class="hero">
+        <div class="hero-background">
+            <div class="hero-particles"></div>
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Speed Challenge</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">What is faster:</span>
+                    <span class="title-highlight">a car at 20km/h</span>
+                    <span class="title-line">or</span>
+                    <span class="title-highlight">a bicycle at 20km/h?</span>
+                </h1>
+                
+                <div class="answer-showcase">
+                    <div class="answer-container">
+                        <div class="answer-box">
+                            <div class="answer-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="answer-content">
+                                <span class="answer-label">The Answer:</span>
+                                <span class="answer-word" id="answerWord">Equal</span>
+                            </div>
+                            <div class="answer-sparkle">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="hero-subtitle">
+                    But speed is just the beginning of the story. Let's explore what really matters when comparing these two modes of transportation.
+                </p>
+
+                <div class="hero-cta">
+                    <button class="cta-button primary" onclick="scrollToSection('perception')">
+                        <span>Discover More</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="speed-arena">
+                    <div class="race-track">
+                        <div class="track-line"></div>
+                        <div class="track-line"></div>
+                        <div class="track-line"></div>
+                    </div>
+                    
+                    <div class="vehicle-container car-container">
+                        <div class="vehicle car" id="heroCar">
+                            <div class="vehicle-glow"></div>
+                            <i class="fas fa-car"></i>
+                            <div class="speed-badge">20 km/h</div>
+                            <div class="speed-trail"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="vs-battle">
+                        <div class="vs-circle">
+                            <span class="vs-text">VS</span>
+                            <div class="vs-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="vehicle-container bike-container">
+                        <div class="vehicle bicycle" id="heroBike">
+                            <div class="vehicle-glow"></div>
+                            <i class="fas fa-bicycle"></i>
+                            <div class="speed-badge">20 km/h</div>
+                            <div class="speed-trail"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="finish-line">
+                        <div class="finish-flag">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-stats-modern">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">20</div>
+                            <div class="stat-unit">km/h</div>
+                            <div class="stat-label">Same Speed</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-unit">factors</div>
+                            <div class="stat-label">Beyond Speed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Speed vs Perception Section -->
+    <section id="perception" class="perception">
+        <div class="container">
+            <h2 class="section-title">Speed vs. Perception</h2>
+            <p class="section-subtitle">Why does a car at 20 km/h feel slow while a bicycle at 20 km/h feels fast?</p>
+            
+            <div class="perception-grid">
+                <div class="perception-card">
+                    <div class="card-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Car at 20 km/h</h3>
+                    <div class="feeling-meter">
+                        <div class="meter-label">Feels:</div>
+                        <div class="meter-bar slow">
+                            <div class="meter-fill"></div>
+                            <span class="meter-text">Slow</span>
+                        </div>
+                    </div>
+                    <ul class="perception-list">
+                        <li><i class="fas fa-check"></i> Comfortable seating</li>
+                        <li><i class="fas fa-check"></i> Climate control</li>
+                        <li><i class="fas fa-check"></i> Effortless acceleration</li>
+                        <li><i class="fas fa-times"></i> Feels sluggish</li>
+                    </ul>
+                    <div class="contextual-example">
+                        <i class="fas fa-quote-left"></i>
+                        <span>Like crawling in traffic</span>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                </div>
+
+                <div class="perception-card">
+                    <div class="card-icon">
+                        <i class="fas fa-bicycle"></i>
+                    </div>
+                    <h3>Bicycle at 20 km/h</h3>
+                    <div class="feeling-meter">
+                        <div class="meter-label">Feels:</div>
+                        <div class="meter-bar fast">
+                            <div class="meter-fill"></div>
+                            <span class="meter-text">Fast</span>
+                        </div>
+                    </div>
+                    <ul class="perception-list">
+                        <li><i class="fas fa-check"></i> Wind in your face</li>
+                        <li><i class="fas fa-check"></i> Physical exertion</li>
+                        <li><i class="fas fa-check"></i> Direct control</li>
+                        <li><i class="fas fa-check"></i> Feels exhilarating</li>
+                    </ul>
+                    <div class="contextual-example">
+                        <i class="fas fa-quote-left"></i>
+                        <span>Like sprinting down the street</span>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perception-explainer">
+                <div class="explainer-content">
+                    <div class="explainer-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="explainer-text">
+                        <h4>The Science Behind Speed Perception</h4>
+                        <p>Our brains perceive speed relative to effort, environment, and motion cues. In a car, smooth suspension and protection make 20 km/h feel slow, while on a bike, exposure to wind and effort make it feel fast.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Factors Beyond Speed Section -->
+    <section id="factors" class="factors">
+        <div class="container">
+            <h2 class="section-title">Factors Beyond Speed</h2>
+            <p class="section-subtitle">Speed is just one measure. Here are other important considerations:</p>
+
+            <div class="factors-grid">
+                <div class="factor-card" data-factor="efficiency">
+                    <div class="factor-header">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Efficiency</h3>
+                    </div>
+                    <div class="factor-content">
+                        <div class="comparison-bar">
+                            <div class="comparison-item bike">
+                                <span class="label">Bicycle</span>
+                                <div class="bar">
+                                    <div class="fill" style="width: 95%"></div>
+                                </div>
+                                <span class="value">95%</span>
+                            </div>
+                            <div class="comparison-item car">
+                                <span class="label">Car</span>
+                                <div class="bar">
+                                    <div class="fill" style="width: 25%"></div>
+                                </div>
+                                <span class="value">25%</span>
+                            </div>
+                        </div>
+                        <p>Bicycles convert human energy directly to motion, while cars lose energy through heat and friction.</p>
+                    </div>
+                </div>
+
+                <div class="factor-card" data-factor="safety">
+                    <div class="factor-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Safety</h3>
+                    </div>
+                    <div class="factor-content">
+                        <div class="safety-metrics">
+                            <div class="metric">
+                                <div class="metric-icon bike">
+                                    <i class="fas fa-bicycle"></i>
+                                </div>
+                                <div class="metric-info">
+                                    <h4>Bicycle</h4>
+                                    <p>Depends on environment, traffic, and protective gear</p>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-icon car">
+                                    <i class="fas fa-car"></i>
+                                </div>
+                                <div class="metric-info">
+                                    <h4>Car</h4>
+                                    <p>Protected by metal frame, airbags, and safety systems</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="factor-card" data-factor="practicality">
+                    <div class="factor-header">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Practicality</h3>
+                    </div>
+                    <div class="factor-content">
+                        <div class="practicality-scenarios">
+                            <div class="scenario">
+                                <h4>City Commute</h4>
+                                <div class="scenario-result bike-wins">
+                                    <i class="fas fa-bicycle"></i>
+                                    <span>Bike wins</span>
+                                </div>
+                            </div>
+                            <div class="scenario">
+                                <h4>Highway Travel</h4>
+                                <div class="scenario-result car-wins">
+                                    <i class="fas fa-car"></i>
+                                    <span>Car wins</span>
+                                </div>
+                            </div>
+                            <div class="scenario">
+                                <h4>Short Trips</h4>
+                                <div class="scenario-result bike-wins">
+                                    <i class="fas fa-bicycle"></i>
+                                    <span>Bike wins</span>
+                                </div>
+                            </div>
+                            <div class="scenario">
+                                <h4>Long Distance</h4>
+                                <div class="scenario-result car-wins">
+                                    <i class="fas fa-car"></i>
+                                    <span>Car wins</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="factor-card" data-factor="environment">
+                    <div class="factor-header">
+                        <i class="fas fa-globe"></i>
+                        <h3>Environment</h3>
+                    </div>
+                    <div class="factor-content">
+                        <div class="environmental-impact">
+                            <div class="emission-comparison">
+                                <div class="emission-item bike-emission">
+                                    <div class="emission-icon">
+                                        <i class="fas fa-bicycle"></i>
+                                    </div>
+                                    <div class="emission-data">
+                                        <div class="emission-value">0g</div>
+                                        <div class="emission-label">CO₂/km</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="emission-vs">
+                                    <span>VS</span>
+                                </div>
+                                
+                                <div class="emission-item car-emission">
+                                    <div class="emission-icon">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <div class="emission-data">
+                                        <div class="emission-value">120g</div>
+                                        <div class="emission-label">CO₂/km</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="emission-bar-comparison">
+                                <div class="emission-bar bike-bar">
+                                    <div class="bar-fill bike-fill"></div>
+                                    <span class="bar-label">Bicycle</span>
+                                </div>
+                                <div class="emission-bar car-bar">
+                                    <div class="bar-fill car-fill"></div>
+                                    <span class="bar-label">Car</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Bicycles produce zero emissions during use, while cars contribute to air pollution and carbon emissions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="factors-summary">
+                <div class="summary-content">
+                    <div class="summary-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="summary-text">
+                        <h4>The Complete Picture</h4>
+                        <p>While speed is equal, bicycles excel in efficiency and short commutes, cars dominate in long-distance comfort and safety. The right choice depends on context.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practical Applications Section -->
+    <section id="practical" class="practical">
+        <div class="container">
+            <h2 class="section-title">Practical Applications</h2>
+            <p class="section-subtitle">Real-world scenarios where context matters more than raw speed</p>
+
+            <div class="applications-grid">
+                <div class="application-card">
+                    <div class="app-header">
+                        <i class="fas fa-city"></i>
+                        <h3>Urban Environment</h3>
+                    </div>
+                    <div class="app-content">
+                        <div class="app-stats">
+                            <div class="stat">
+                                <span class="stat-number">15-25</span>
+                                <span class="stat-unit">km/h</span>
+                                <span class="stat-label">Average city speed</span>
+                            </div>
+                        </div>
+                        <p>In congested cities, bicycles often match or exceed car speeds due to traffic and parking constraints.</p>
+                        <div class="app-benefits">
+                            <span class="benefit">No parking fees</span>
+                            <span class="benefit">Lane filtering</span>
+                            <span class="benefit">Zero emissions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>Health & Fitness</h3>
+                    </div>
+                    <div class="app-content">
+                        <div class="health-metrics">
+                            <div class="metric">
+                                <i class="fas fa-fire"></i>
+                                <span>300-500 calories/hour</span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-lungs"></i>
+                                <span>Improved cardiovascular health</span>
+                            </div>
+                        </div>
+                        <p>Cycling provides exercise benefits that cars simply cannot match, making it "faster" toward health goals.</p>
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-header">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Cost Efficiency</h3>
+                    </div>
+                    <div class="app-content">
+                        <div class="cost-comparison">
+                            <div class="cost-item">
+                                <span class="cost-label">Bicycle</span>
+                                <span class="cost-value">$0.10/km</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Car</span>
+                                <span class="cost-value">$0.50/km</span>
+                            </div>
+                        </div>
+                        <p>When factoring in fuel, maintenance, insurance, and depreciation, bicycles are significantly more cost-effective.</p>
+                    </div>
+                </div>
+
+                <div class="application-card">
+                    <div class="app-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>Time Reliability</h3>
+                    </div>
+                    <div class="app-content">
+                        <div class="reliability-comparison">
+                            <div class="reliability-item bike-reliability">
+                                <div class="reliability-details">
+                                    <div class="reliability-icon">
+                                        <i class="fas fa-bicycle"></i>
+                                    </div>
+                                    <h4>Bicycle</h4>
+                                    <p>More predictable in traffic-heavy areas</p>
+                                    <div class="reliability-pros">
+                                        <span class="pro-tag">Consistent timing</span>
+                                        <span class="pro-tag">No traffic jams</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="reliability-vs">
+                                <span>VS</span>
+                            </div>
+                            
+                            <div class="reliability-item car-reliability">
+                                <div class="reliability-details">
+                                    <div class="reliability-icon">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <h4>Car</h4>
+                                    <p>More reliable for longer trips, less weather-dependent</p>
+                                    <div class="reliability-pros">
+                                        <span class="pro-tag">Weather protection</span>
+                                        <span class="pro-tag">Long distance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Bicycles offer consistent timing in urban areas, while cars provide reliability for longer journeys and adverse weather conditions.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="conclusion">
+                <h3>The Real Answer</h3>
+                <p>While both vehicles travel at the same speed, the "fastest" choice depends on your goals:</p>
+                <div class="conclusion-grid">
+                    <div class="conclusion-item">
+                        <i class="fas fa-bicycle"></i>
+                        <h4>Choose Bicycle For:</h4>
+                        <ul>
+                            <li>Short urban trips</li>
+                            <li>Health and fitness</li>
+                            <li>Cost savings</li>
+                            <li>Environmental impact</li>
+                        </ul>
+                    </div>
+                    <div class="conclusion-item">
+                        <i class="fas fa-car"></i>
+                        <h4>Choose Car For:</h4>
+                        <ul>
+                            <li>Long distances</li>
+                            <li>Weather protection</li>
+                            <li>Carrying capacity</li>
+                            <li>Comfort and convenience</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Common questions about speed, cycling, and urban transportation</p>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Is 20 km/h fast for a bicycle?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>20 km/h is considered a moderate to good cycling speed for most people. Recreational cyclists typically average 15-20 km/h, while commuters often maintain 18-25 km/h. Professional cyclists can exceed 40 km/h on flat terrain.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Why does the average car speed in cities seem so low?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Urban car speeds are limited by traffic lights, congestion, pedestrian crossings, and speed limits. Even on roads with 50 km/h limits, actual average speeds often drop to 20-30 km/h due to frequent stops and traffic flow interruptions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What's the typical cycling commute distance?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most cycling commutes range from 3-15 km, with 5-10 km being the sweet spot for many urban commuters. At 20 km/h, a 10 km commute takes about 30 minutes, making it competitive with car travel in congested cities.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Which is more energy efficient at 20 km/h?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bicycles are dramatically more energy efficient. A cyclist uses about 0.1 kWh per 20 km, while a car uses 1-2 kWh for the same distance. The bicycle is 10-20 times more efficient, converting human energy directly into motion with minimal waste.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>How do weather conditions affect both vehicles?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Weather significantly impacts cycling comfort and safety, while cars are largely weather-independent. Rain, wind, and extreme temperatures can make cycling challenging or dangerous, whereas cars provide protection and climate control regardless of conditions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What about parking and accessibility?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bicycles excel in urban parking - they can be secured almost anywhere and often closer to destinations. Cars require dedicated parking spaces and may face restrictions in city centers. Bikes also access bike lanes, paths, and areas where cars cannot go.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Speed Comparison Study. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

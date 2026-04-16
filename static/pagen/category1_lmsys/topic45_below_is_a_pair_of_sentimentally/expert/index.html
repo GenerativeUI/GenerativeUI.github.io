@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equivalent Sentences - Paraphrase Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            position: relative;
+            background-image: url('images/hero-background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        header:hover::before {
+            opacity: 0.9;
+        }
+
+        header > * {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+            line-height: 1.7;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        /* Original Sentence Section */
+        .original-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--warning);
+            margin-bottom: 30px;
+        }
+
+        .original-label {
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .original-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .word-count-badge {
+            display: inline-block;
+            background: var(--warning);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* Paraphrase Examples */
+        .paraphrase-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .paraphrase-box {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .paraphrase-box:hover {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            transform: translateX(5px);
+        }
+
+        .paraphrase-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .paraphrase-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .paraphrase-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .paraphrase-count {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Reveal Button */
+        .reveal-btn {
+            background: var(--bg-gradient);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+        }
+
+        .reveal-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .reveal-btn:active {
+            transform: scale(0.98);
+        }
+
+        .hidden-paraphrase {
+            display: none;
+        }
+
+        .hidden-paraphrase.revealed {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Additional Examples Section */
+        .example-item {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .example-item h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .example-sentences {
+            display: grid;
+            gap: 15px;
+        }
+
+        .sentence-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .sentence-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .sentence-box.original {
+            border-color: var(--warning);
+            background: #fef3c7;
+        }
+
+        .sentence-box.paraphrase {
+            border-color: var(--success);
+            background: #ecfdf5;
+        }
+
+        .sentence-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .sentence-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Related Examples Section Styles */
+        .related-examples-grid {
+            display: grid;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .related-example-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .related-example-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .related-example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-color);
+        }
+
+        .related-example-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .example-number {
+            background: var(--bg-gradient);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .example-header h3 {
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .example-sentences-wrapper {
+            margin-top: 20px;
+        }
+
+        .sentence-pair-enhanced {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sentence-box-enhanced {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .sentence-box-enhanced:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .sentence-box-enhanced.original-enhanced {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: var(--warning);
+        }
+
+        .sentence-box-enhanced.paraphrase-enhanced {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-color: var(--success);
+        }
+
+        .sentence-header-enhanced {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .sentence-icon {
+            font-size: 1.5rem;
+        }
+
+        .sentence-label-enhanced {
+            flex: 1;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+        }
+
+        .word-count-badge-enhanced {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .sentence-content-enhanced {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .arrow-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 15px;
+        }
+
+        .connector-line {
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .connector-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            background: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            animation: rotateConnector 3s ease-in-out infinite;
+        }
+
+        @keyframes rotateConnector {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* Responsive adjustments for related examples */
+        @media (max-width: 768px) {
+            .sentence-pair-enhanced {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .arrow-connector {
+                flex-direction: row;
+                padding: 8px 0;
+            }
+
+            .connector-line {
+                width: 30px;
+                height: 2px;
+            }
+
+            .connector-icon {
+                transform: rotate(90deg);
+            }
+
+            .related-example-card {
+                padding: 15px;
+            }
+
+            .example-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Word Chip Styles for Comparison */
+        .word-chip {
+            background: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease;
+        }
+
+        .word-chip:hover {
+            transform: scale(1.1);
+            border-color: var(--primary-color);
+        }
+
+        .word-chip.changed {
+            background: #fef3c7;
+            border-color: var(--warning);
+        }
+
+        .word-chip.same {
+            background: #d1fae5;
+            border-color: var(--success);
+        }
+
+        /* Techniques Section Styles */
+        .techniques-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .technique-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .technique-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .technique-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .technique-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .technique-card.technique-1 {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .technique-card.technique-2 {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        .technique-card.technique-3 {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        }
+
+        .technique-card.technique-4 {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+        }
+
+        .technique-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .technique-card:nth-child(2) .technique-icon {
+            animation-delay: 0.5s;
+        }
+
+        .technique-card:nth-child(3) .technique-icon {
+            animation-delay: 1s;
+        }
+
+        .technique-card:nth-child(4) .technique-icon {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .technique-card h3 {
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .technique-examples {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .example-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .technique-card:hover .example-item {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.02);
+        }
+
+        .word-from {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .word-to {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+
+        .technique-desc {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed rgba(0, 0, 0, 0.1);
+            font-style: italic;
+        }
+
+        /* Responsive adjustments for techniques */
+        @media (max-width: 768px) {
+            .techniques-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .technique-card {
+                padding: 18px;
+            }
+
+            .technique-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Interactive Word Comparison Tool Styles */
+        .comparison-container {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-select-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .comparison-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .label-icon {
+            font-size: 1.3rem;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .comparison-select {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            color: var(--text-dark);
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-select:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+        }
+
+        .comparison-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .select-wrapper:hover .select-arrow {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .word-comparison-wrapper {
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .word-comparison-wrapper.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comparison-header-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .comparison-title-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .comparison-title-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .comparison-title-box.original-title {
+            border-left: 4px solid var(--warning);
+        }
+
+        .comparison-title-box.paraphrase-title {
+            border-left: 4px solid var(--success);
+        }
+
+        .title-icon {
+            font-size: 1.8rem;
+        }
+
+        .comparison-title-box h3 {
+            flex: 1;
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .word-count-badge-small {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .comparison-words-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+            margin-bottom: 30px;
+        }
+
+        .words-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            min-height: 150px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .original-words-container {
+            border: 2px solid #fef3c7;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .paraphrase-words-container {
+            border: 2px solid #d1fae5;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .words-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .comparison-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 10px;
+        }
+
+        .divider-line {
+            flex: 1;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            min-height: 50px;
+        }
+
+        .divider-text {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .key-changes-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #bae6fd;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .changes-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .changes-icon {
+            font-size: 1.8rem;
+        }
+
+        .changes-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .changes-content {
+            color: var(--text-dark);
+            line-height: 2;
+            font-size: 1rem;
+        }
+
+        .changes-content strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .change-item {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .change-item:hover {
+            background: #f8fafc;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced word chips for comparison */
+        .words-display .word-chip {
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            margin: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .words-display .word-chip:hover {
+            transform: scale(1.15);
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .words-display .word-chip.changed {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #f87171;
+            color: #991b1b;
+            font-weight: 600;
+            animation: highlightPulse 2s ease-in-out infinite;
+        }
+
+        .words-display .word-chip.same {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #10b981;
+            color: #065f46;
+            font-weight: 500;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% {
+                box-shadow: 0 2px 8px rgba(248, 113, 113, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 16px rgba(248, 113, 113, 0.5);
+            }
+        }
+
+        /* Responsive adjustments for comparison tool */
+        @media (max-width: 768px) {
+            .comparison-words-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .comparison-divider {
+                flex-direction: row;
+                padding: 8px 0;
+            }
+
+            .divider-line {
+                width: 100%;
+                height: 2px;
+                min-height: 2px;
+            }
+
+            .comparison-header-section {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-container {
+                padding: 15px;
+            }
+        }
+
+        /* Interactive Comparison */
+        .comparison-tool {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-header h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .word-highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header {
+                padding: 30px 15px;
+                min-height: 200px;
+                background-attachment: scroll;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                letter-spacing: -0.3px;
+            }
+
+            header p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+                padding: 0 10px;
+            }
+
+            .card {
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 15px;
+            }
+
+            .card h2 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .card-icon {
+                font-size: 1.5rem;
+            }
+
+            .original-section {
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 12px;
+            }
+
+            .original-label {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+            }
+
+            .original-text {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .word-count-badge {
+                padding: 4px 12px;
+                font-size: 0.8rem;
+                margin-top: 10px;
+            }
+
+            .paraphrase-grid {
+                gap: 15px;
+                margin-top: 15px;
+            }
+
+            .paraphrase-box {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .paraphrase-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.85rem;
+                top: 10px;
+                right: 10px;
+            }
+
+            .paraphrase-label {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+
+            .paraphrase-text {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }
+
+            .paraphrase-count {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+
+            .reveal-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                margin: 15px 0;
+            }
+
+            .sentence-pair {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .example-item {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .example-item h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .example-sentences {
+                gap: 12px;
+            }
+
+            .sentence-box {
+                padding: 12px;
+            }
+
+            .sentence-label {
+                font-size: 0.7rem;
+                margin-bottom: 6px;
+            }
+
+            .sentence-content {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .related-examples-grid {
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            .related-example-card {
+                padding: 15px;
+            }
+
+            .example-header {
+                gap: 10px;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+            }
+
+            .example-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+
+            .example-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .sentence-pair-enhanced {
+                gap: 12px;
+            }
+
+            .sentence-box-enhanced {
+                padding: 15px;
+            }
+
+            .sentence-header-enhanced {
+                gap: 8px;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+            }
+
+            .sentence-icon {
+                font-size: 1.2rem;
+            }
+
+            .sentence-label-enhanced {
+                font-size: 0.85rem;
+            }
+
+            .word-count-badge-enhanced {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+
+            .sentence-content-enhanced {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .arrow-connector {
+                padding: 8px 0;
+            }
+
+            .connector-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.5rem;
+            }
+
+            .techniques-grid {
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .technique-card {
+                padding: 18px;
+            }
+
+            .technique-icon {
+                font-size: 2.5rem;
+                margin-bottom: 12px;
+            }
+
+            .technique-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .technique-examples {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .example-item {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .word-from, .word-to {
+                padding: 4px 10px;
+                font-size: 0.85rem;
+            }
+
+            .arrow {
+                font-size: 1.2rem;
+            }
+
+            .technique-desc {
+                font-size: 0.85rem;
+                margin-top: 12px;
+                padding-top: 12px;
+            }
+
+            .comparison-container {
+                padding: 15px;
+                margin-top: 15px;
+            }
+
+            .comparison-label {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .label-icon {
+                font-size: 1.1rem;
+            }
+
+            .comparison-select {
+                padding: 12px 40px 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            .comparison-header-section {
+                gap: 12px;
+                margin-bottom: 15px;
+            }
+
+            .comparison-title-box {
+                padding: 15px;
+            }
+
+            .title-icon {
+                font-size: 1.4rem;
+            }
+
+            .comparison-title-box h3 {
+                font-size: 1rem;
+            }
+
+            .word-count-badge-small {
+                padding: 3px 10px;
+                font-size: 0.75rem;
+            }
+
+            .comparison-words-grid {
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .words-container {
+                padding: 15px;
+                min-height: 120px;
+            }
+
+            .words-display {
+                gap: 6px;
+            }
+
+            .words-display .word-chip {
+                font-size: 0.85rem;
+                padding: 6px 10px;
+            }
+
+            .key-changes-section {
+                padding: 18px;
+            }
+
+            .changes-header {
+                gap: 10px;
+                margin-bottom: 15px;
+                padding-bottom: 12px;
+            }
+
+            .changes-icon {
+                font-size: 1.4rem;
+            }
+
+            .changes-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .changes-content {
+                font-size: 0.9rem;
+                line-height: 1.7;
+            }
+
+            .change-item {
+                padding: 8px 12px;
+                margin-bottom: 8px;
+                font-size: 0.85rem;
+            }
+
+            .comparison-tool {
+                padding: 18px;
+            }
+
+            .comparison-header h3 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .stats-grid {
+                gap: 12px;
+                margin-top: 15px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
+            /* Additional mobile-specific adjustments */
+            p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            h4 {
+                font-size: 1rem;
+            }
+
+            ul, ol {
+                padding-left: 18px;
+            }
+
+            li {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+
+            header {
+                padding: 25px 10px;
+                min-height: 180px;
+            }
+
+            header h1 {
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+            }
+
+            header p {
+                font-size: 0.8rem;
+                padding: 0 5px;
+            }
+
+            .card {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .card h2 {
+                font-size: 1.15rem;
+                margin-bottom: 12px;
+            }
+
+            .original-text {
+                font-size: 0.95rem;
+            }
+
+            .paraphrase-text {
+                font-size: 0.9rem;
+            }
+
+            .sentence-content-enhanced {
+                font-size: 0.9rem;
+            }
+
+            .technique-card {
+                padding: 15px;
+            }
+
+            .technique-icon {
+                font-size: 2rem;
+            }
+
+            .comparison-container {
+                padding: 12px;
+            }
+
+            .words-container {
+                padding: 12px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+        .card:nth-child(5) { animation-delay: 0.4s; }
+
+        /* Visual Elements */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Equivalent Sentences: Paraphrase Examples</h1>
+        <p>Below is a pair of sentimentally equivalent sentences. The second one is known as a paraphrase of the first one. Here are additional paraphrases containing EXACTLY THE SAME NUMBER OF WORDS.</p>
+    </header>
+
+    <div class="container">
+        <!-- Original Sentence -->
+        <div class="card">
+            <h2>Original Sentence</h2>
+            <div class="original-section">
+                <div class="original-label">1st Sentence</div>
+                <p class="original-text" id="original-sentence">The Securities and Exchange Commission yesterday said companies trading on the biggest U.S. markets must win shareholder approval before granting stock options and other stock-based compensation plans to corporate executives.</p>
+                <span class="word-count-badge" id="original-count">30 words</span>
+            </div>
+        </div>
+
+        <!-- Given Paraphrase -->
+        <div class="card">
+            <h2>Given Paraphrase Example</h2>
+            <div class="paraphrase-box">
+                <span class="paraphrase-number">2</span>
+                <div class="paraphrase-label">2nd Sentence (Given Paraphrase)</div>
+                <p class="paraphrase-text">Companies trading on the biggest stock markets must get shareholder approval before granting stock options and other equity compensation under rules cleared yesterday by the Securities and Exchange Commission.</p>
+                    <span class="paraphrase-count" id="given-count">30 words</span>
+            </div>
+        </div>
+
+        <!-- Additional Paraphrases -->
+        <div class="card">
+            <h2>Additional Paraphrases</h2>
+            <p style="margin-bottom: 20px; color: var(--text-light);">Click the button below to reveal more paraphrases with the exact same word count:</p>
+            <button class="reveal-btn" onclick="revealParaphrases()">Reveal Additional Paraphrases</button>
+            
+            <div class="paraphrase-grid">
+                <!-- Paraphrase 3 -->
+                <div class="paraphrase-box hidden-paraphrase" id="paraphrase-3">
+                    <span class="paraphrase-number">3</span>
+                    <div class="paraphrase-label">Paraphrase 3</div>
+                    <p class="paraphrase-text">Yesterday the Securities and Exchange Commission stated that companies trading on the biggest U.S. markets must obtain shareholder approval before granting equity options and other compensation plans to corporate executives.</p>
+                    <span class="paraphrase-count">30 words</span>
+                </div>
+
+                <!-- Paraphrase 4 -->
+                <div class="paraphrase-box hidden-paraphrase" id="paraphrase-4">
+                    <span class="paraphrase-number">4</span>
+                    <div class="paraphrase-label">Paraphrase 4</div>
+                    <p class="paraphrase-text">Under regulations approved yesterday by the Securities and Exchange Commission, firms trading on the biggest U.S. markets must secure shareholder consent before providing options and equity compensation to corporate executives.</p>
+                    <span class="paraphrase-count">30 words</span>
+                </div>
+
+                <!-- Paraphrase 5 -->
+                <div class="paraphrase-box hidden-paraphrase" id="paraphrase-5">
+                    <span class="paraphrase-number">5</span>
+                    <div class="paraphrase-label">Paraphrase 5</div>
+                    <p class="paraphrase-text">The Securities and Exchange Commission announced yesterday that businesses operating on the biggest U.S. markets must receive shareholder approval prior to granting equity options and stock-based remuneration to executive officers.</p>
+                    <span class="paraphrase-count">30 words</span>
+                </div>
+
+                <!-- Paraphrase 6 -->
+                <div class="paraphrase-box hidden-paraphrase" id="paraphrase-6">
+                    <span class="paraphrase-number">6</span>
+                    <div class="paraphrase-label">Paraphrase 6</div>
+                    <p class="paraphrase-text">Corporations trading on the biggest U.S. markets must obtain shareholder approval before granting options and equity compensation to corporate executives under rules cleared yesterday by the Securities and Exchange Commission.</p>
+                    <span class="paraphrase-count">30 words</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Examples -->
+        <div class="card">
+            <h2>Related Examples: Financial & Regulatory Context</h2>
+            <p style="margin-bottom: 25px; color: var(--text-light); text-align: center; font-size: 1.05rem;">Explore more examples of equivalent sentences in financial and regulatory contexts</p>
+            
+            <div class="related-examples-grid">
+                <div class="related-example-card">
+                    <div class="example-header">
+                        <div class="example-number">1</div>
+                        <h3>SEC Regulatory Requirements</h3>
+                    </div>
+                    <div class="example-sentences-wrapper">
+                        <div class="sentence-pair-enhanced">
+                            <div class="sentence-box-enhanced original-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">📝</span>
+                                    <span class="sentence-label-enhanced">Original</span>
+                                    <span class="word-count-badge-enhanced">24 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">The Securities and Exchange Commission requires public companies to disclose all material information to investors in a timely and accurate manner.</div>
+                            </div>
+                            <div class="arrow-connector">
+                                <span class="connector-line"></span>
+                                <span class="connector-icon">⇄</span>
+                                <span class="connector-line"></span>
+                            </div>
+                            <div class="sentence-box-enhanced paraphrase-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">✨</span>
+                                    <span class="sentence-label-enhanced">Paraphrase</span>
+                                    <span class="word-count-badge-enhanced">24 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">Public companies must reveal all significant information to investors promptly and accurately under requirements set by the Securities and Exchange Commission.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="related-example-card">
+                    <div class="example-header">
+                        <div class="example-number">2</div>
+                        <h3>Shareholder Rights</h3>
+                    </div>
+                    <div class="example-sentences-wrapper">
+                        <div class="sentence-pair-enhanced">
+                            <div class="sentence-box-enhanced original-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">📝</span>
+                                    <span class="sentence-label-enhanced">Original</span>
+                                    <span class="word-count-badge-enhanced">20 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">Shareholders have the right to vote on major corporate decisions including mergers, acquisitions, and changes to corporate governance structures.</div>
+                            </div>
+                            <div class="arrow-connector">
+                                <span class="connector-line"></span>
+                                <span class="connector-icon">⇄</span>
+                                <span class="connector-line"></span>
+                            </div>
+                            <div class="sentence-box-enhanced paraphrase-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">✨</span>
+                                    <span class="sentence-label-enhanced">Paraphrase</span>
+                                    <span class="word-count-badge-enhanced">20 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">Investors possess the right to cast votes on significant corporate choices such as mergers, acquisitions, and modifications to governance frameworks.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="related-example-card">
+                    <div class="example-header">
+                        <div class="example-number">3</div>
+                        <h3>Executive Compensation</h3>
+                    </div>
+                    <div class="example-sentences-wrapper">
+                        <div class="sentence-pair-enhanced">
+                            <div class="sentence-box-enhanced original-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">📝</span>
+                                    <span class="sentence-label-enhanced">Original</span>
+                                    <span class="word-count-badge-enhanced">22 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">Corporate boards must carefully evaluate executive compensation packages to ensure they align with company performance and shareholder interests.</div>
+                            </div>
+                            <div class="arrow-connector">
+                                <span class="connector-line"></span>
+                                <span class="connector-icon">⇄</span>
+                                <span class="connector-line"></span>
+                            </div>
+                            <div class="sentence-box-enhanced paraphrase-enhanced">
+                                <div class="sentence-header-enhanced">
+                                    <span class="sentence-icon">✨</span>
+                                    <span class="sentence-label-enhanced">Paraphrase</span>
+                                    <span class="word-count-badge-enhanced">22 words</span>
+                                </div>
+                                <div class="sentence-content-enhanced">Company boards should thoroughly assess executive remuneration plans to guarantee they correspond with firm performance and investor interests.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Comparison Tool -->
+        <div class="card">
+            <h2>Word Count Verification</h2>
+            <div class="comparison-tool">
+                <div class="comparison-header">
+                    <h3>Verify Word Counts</h3>
+                    <p style="color: var(--text-light);">All paraphrases maintain the exact same word count as the original sentence</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-original">30</div>
+                        <div class="stat-label">Original Words</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-paraphrases">6</div>
+                        <div class="stat-label">Paraphrases</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-match">100%</div>
+                        <div class="stat-label">Word Match Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Techniques -->
+        <div class="card">
+            <h2>Paraphrasing Techniques Used</h2>
+            <p style="margin-bottom: 25px; color: var(--text-light); text-align: center; font-size: 1.05rem;">Explore the key techniques employed to create equivalent sentences with matching word counts</p>
+            <div class="techniques-grid">
+                <div class="technique-card technique-1">
+                    <div class="technique-icon">🔄</div>
+                    <h3>Synonym Replacement</h3>
+                    <div class="technique-examples">
+                        <div class="example-item">
+                            <span class="word-from">"said"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"stated"</span>
+                        </div>
+                        <div class="example-item">
+                            <span class="word-from">"must"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"should"</span>
+                        </div>
+                        <div class="example-item">
+                            <span class="word-from">"win"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"obtain"</span>
+                        </div>
+                    </div>
+                    <p class="technique-desc">Replace words with their synonyms while maintaining the same word count</p>
+                </div>
+                
+                <div class="technique-card technique-2">
+                    <div class="technique-icon">📐</div>
+                    <h3>Sentence Restructuring</h3>
+                    <div class="technique-examples">
+                        <div class="example-item">
+                            <span class="word-from">"yesterday said"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"said yesterday"</span>
+                        </div>
+                        <div class="example-item">
+                            <span class="word-from">"at the start"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"beginning with"</span>
+                        </div>
+                    </div>
+                    <p class="technique-desc">Rearranging clauses and phrases while preserving meaning and word count</p>
+                </div>
+                
+                <div class="technique-card technique-3">
+                    <div class="technique-icon">🔀</div>
+                    <h3>Word Order Changes</h3>
+                    <div class="technique-examples">
+                        <div class="example-item">
+                            <span class="word-from">"SEC yesterday"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"yesterday SEC"</span>
+                        </div>
+                        <div class="example-item">
+                            <span class="word-from">"companies trading"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"trading companies"</span>
+                        </div>
+                    </div>
+                    <p class="technique-desc">Moving temporal phrases and restructuring subject-verb-object patterns</p>
+                </div>
+                
+                <div class="technique-card technique-4">
+                    <div class="technique-icon">📊</div>
+                    <h3>Phrase Substitution</h3>
+                    <div class="technique-examples">
+                        <div class="example-item">
+                            <span class="word-from">"stock-based"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"equity-based"</span>
+                        </div>
+                        <div class="example-item">
+                            <span class="word-from">"compensation"</span>
+                            <span class="arrow">→</span>
+                            <span class="word-to">"remuneration"</span>
+                        </div>
+                    </div>
+                    <p class="technique-desc">Substituting phrases with equivalent multi-word expressions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What Are Equivalent Sentences -->
+        <div class="card">
+            <h2>Understanding Equivalent Sentences</h2>
+            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 25px; border-radius: 15px; margin-top: 20px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;">What Are Equivalent Sentences?</h3>
+                <p style="color: var(--text-dark); font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px;">
+                    Equivalent sentences, also known as paraphrases, are sentences that convey the <strong>exact same meaning</strong> using different words and sentence structures. When creating equivalent sentences with matching word counts, every word must be carefully chosen to maintain both meaning and the precise number of words.
+                </p>
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                    <h4 style="color: var(--secondary-color); margin-bottom: 10px;">Key Characteristics:</h4>
+                    <ul style="color: var(--text-dark); line-height: 2; padding-left: 20px;">
+                        <li><strong>Semantic Equivalence:</strong> Both sentences express identical information and meaning</li>
+                        <li><strong>Word Count Match:</strong> Both sentences contain exactly the same number of words</li>
+                        <li><strong>Structural Variation:</strong> Different word order, synonyms, and phrasing are used</li>
+                        <li><strong>Context Preservation:</strong> All important details and nuances are maintained</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step-by-Step Guide -->
+        <div class="card">
+            <h2>Step-by-Step Guide to Creating Equivalent Sentences</h2>
+            <div style="display: grid; gap: 20px; margin-top: 20px;">
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--warning);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--warning); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Count the Words</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Start by counting every word in the original sentence. Include articles (a, an, the), prepositions, and all other words. This is your target number.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--primary-color);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--primary-color); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Identify Key Concepts</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Break down the sentence into its core components: subject, verb, object, and key phrases. Understand what information must be preserved.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--secondary-color);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--secondary-color); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Find Synonyms</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Replace words with synonyms that maintain the same meaning. Be careful: synonyms must have the same word count (e.g., "said" = 1 word, "announced" = 1 word).</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-color);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--accent-color); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Restructure the Sentence</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Rearrange clauses, move phrases, and change word order. For example, move time phrases ("yesterday") to different positions in the sentence.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--success);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--success); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">5</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Verify Word Count</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Count the words in your paraphrase. If it doesn't match exactly, adjust by adding or removing words while maintaining meaning. Use single-word synonyms or adjust phrases.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); padding: 20px; border-radius: 12px; border-left: 5px solid var(--error);">
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <span style="background: var(--error); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">6</span>
+                        <div>
+                            <h3 style="color: var(--text-dark); margin-bottom: 8px;">Check Meaning</h3>
+                            <p style="color: var(--text-dark); line-height: 1.7;">Finally, verify that your paraphrase conveys the exact same meaning as the original. All facts, details, and nuances must be preserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Word Substitutions -->
+        <div class="card">
+            <h2>Common Word Substitutions</h2>
+            <p style="margin-bottom: 20px; color: var(--text-light);">Here are useful synonym pairs that maintain the same word count (1 word = 1 word):</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div style="background: white; padding: 18px; border-radius: 10px; border: 2px solid #e5e7eb;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 12px; font-size: 1rem;">Verbs</h4>
+                    <div style="color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                        <div><strong>said</strong> → stated, announced, declared</div>
+                        <div><strong>must</strong> → should, need to (counts as 2)</div>
+                        <div><strong>win</strong> → obtain, get, secure, receive</div>
+                        <div><strong>granting</strong> → awarding, providing, giving</div>
+                        <div><strong>trading</strong> → operating, working, functioning</div>
+                    </div>
+                </div>
+                <div style="background: white; padding: 18px; border-radius: 10px; border: 2px solid #e5e7eb;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 12px; font-size: 1rem;">Nouns</h4>
+                    <div style="color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                        <div><strong>companies</strong> → firms, corporations, businesses</div>
+                        <div><strong>markets</strong> → exchanges, platforms</div>
+                        <div><strong>approval</strong> → consent, authorization, permission</div>
+                        <div><strong>executives</strong> → officers, leaders, managers</div>
+                        <div><strong>shareholder</strong> → investor, stockholder</div>
+                    </div>
+                </div>
+                <div style="background: white; padding: 18px; border-radius: 10px; border: 2px solid #e5e7eb;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 12px; font-size: 1rem;">Adjectives & Phrases</h4>
+                    <div style="color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                        <div><strong>biggest</strong> → largest, greatest</div>
+                        <div><strong>U.S.</strong> → American, United States (2 words)</div>
+                        <div><strong>stock-based</strong> → equity-based, equity (1 word)</div>
+                        <div><strong>compensation</strong> → remuneration, payment</div>
+                        <div><strong>before</strong> → prior to (2 words)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications & Use Cases -->
+        <div class="card">
+            <h2>Applications & Use Cases</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 12px; font-size: 1.2rem;">📚 Academic Writing</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Avoiding plagiarism while maintaining precise word counts in essays, research papers, and academic assignments.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--success); margin-bottom: 12px; font-size: 1.2rem;">📰 Journalism</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Rewriting news articles and press releases while maintaining exact word counts for publication requirements.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--warning); margin-bottom: 12px; font-size: 1.2rem;">📝 Legal Documents</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Creating alternative phrasings for contracts and legal texts while preserving exact meaning and word count.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--accent-color); margin-bottom: 12px; font-size: 1.2rem;">🌐 Translation</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Maintaining equivalent meaning and word count when translating between languages or adapting content.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 12px; font-size: 1.2rem;">✍️ Content Creation</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Creating variations of marketing copy, social media posts, or articles while maintaining specific word limits.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); padding: 20px; border-radius: 12px;">
+                    <h3 style="color: var(--error); margin-bottom: 12px; font-size: 1.2rem;">🎓 Language Learning</h3>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Practicing vocabulary and sentence structure while understanding how to express the same idea differently.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div class="card">
+            <h2>Common Mistakes to Avoid</h2>
+            <div style="display: grid; gap: 15px; margin-top: 20px;">
+                <div style="background: #fef2f2; padding: 18px; border-radius: 10px; border-left: 4px solid var(--error);">
+                    <h4 style="color: var(--error); margin-bottom: 8px;">❌ Changing Meaning</h4>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Don't sacrifice accuracy for word count. Every detail must be preserved, including specific terms, numbers, and nuances.</p>
+                </div>
+                <div style="background: #fef2f2; padding: 18px; border-radius: 10px; border-left: 4px solid var(--error);">
+                    <h4 style="color: var(--error); margin-bottom: 8px;">❌ Ignoring Word Count</h4>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Always verify the exact word count. Even one word difference makes it not equivalent. Count carefully, including articles and prepositions.</p>
+                </div>
+                <div style="background: #fef2f2; padding: 18px; border-radius: 10px; border-left: 4px solid var(--error);">
+                    <h4 style="color: var(--error); margin-bottom: 8px;">❌ Using Multi-Word Synonyms Incorrectly</h4>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Be careful with synonyms that have different word counts. "Must" (1 word) ≠ "need to" (2 words). Adjust elsewhere if you use a multi-word synonym.</p>
+                </div>
+                <div style="background: #fef2f2; padding: 18px; border-radius: 10px; border-left: 4px solid var(--error);">
+                    <h4 style="color: var(--error); margin-bottom: 8px;">❌ Forgetting Punctuation</h4>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Punctuation doesn't count as words, but contractions do (e.g., "don't" = 1 word, "do not" = 2 words). Be consistent.</p>
+                </div>
+                <div style="background: #fef2f2; padding: 18px; border-radius: 10px; border-left: 4px solid var(--error);">
+                    <h4 style="color: var(--error); margin-bottom: 8px;">❌ Over-Complicating</h4>
+                    <p style="color: var(--text-dark); line-height: 1.7;">Simple, clear paraphrases are better than complex ones. Don't use unnecessarily complicated words just to match word count.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Word Comparison -->
+        <div class="card">
+            <h2>Interactive Word Comparison Tool</h2>
+            <p style="margin-bottom: 25px; color: var(--text-light); text-align: center; font-size: 1.05rem;">Compare word-by-word differences between the original and paraphrases to understand how equivalent sentences are created</p>
+            
+            <div class="comparison-container">
+                <div class="comparison-select-wrapper">
+                    <label class="comparison-label">
+                        <span class="label-icon">📋</span>
+                        Select a paraphrase to compare:
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="compare-select" class="comparison-select" onchange="compareWords()">
+                            <option value="">-- Select a paraphrase --</option>
+                            <option value="given">Given Paraphrase (2nd sentence)</option>
+                            <option value="3">Paraphrase 3</option>
+                            <option value="4">Paraphrase 4</option>
+                            <option value="5">Paraphrase 5</option>
+                            <option value="6">Paraphrase 6</option>
+                        </select>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                </div>
+
+                <div id="word-comparison" class="word-comparison-wrapper">
+                    <div class="comparison-header-section">
+                        <div class="comparison-title-box original-title">
+                            <span class="title-icon">📝</span>
+                            <h3>Original Sentence</h3>
+                            <span class="word-count-badge-small" id="original-compare-count">30 words</span>
+                        </div>
+                        <div class="comparison-title-box paraphrase-title">
+                            <span class="title-icon">✨</span>
+                            <h3>Selected Paraphrase</h3>
+                            <span class="word-count-badge-small" id="paraphrase-compare-count">30 words</span>
+                        </div>
+                    </div>
+
+                    <div class="comparison-words-grid">
+                        <div class="words-container original-words-container">
+                            <div id="original-words" class="words-display"></div>
+                        </div>
+                        <div class="comparison-divider">
+                            <div class="divider-line"></div>
+                            <span class="divider-text">VS</span>
+                            <div class="divider-line"></div>
+                        </div>
+                        <div class="words-container paraphrase-words-container">
+                            <div id="paraphrase-words" class="words-display"></div>
+                        </div>
+                    </div>
+
+                    <div class="key-changes-section">
+                        <div class="changes-header">
+                            <span class="changes-icon">🔑</span>
+                            <h3>Key Changes</h3>
+                        </div>
+                        <div id="key-changes" class="changes-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Word counting function
+        function countWords(text) {
+            if (!text || text.trim() === '') return 0;
+            return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+        }
+
+        // Initialize word counts
+        function initializeWordCounts() {
+            const original = document.getElementById('original-sentence').textContent;
+            const givenParaphrase = document.querySelector('.paraphrase-box .paraphrase-text').textContent;
+            
+            document.getElementById('original-count').textContent = countWords(original) + ' words';
+            document.getElementById('given-count').textContent = countWords(givenParaphrase) + ' words';
+
+            // Verify all paraphrases
+            const paraphraseBoxes = document.querySelectorAll('.paraphrase-box');
+            paraphraseBoxes.forEach(box => {
+                const text = box.querySelector('.paraphrase-text').textContent;
+                const count = box.querySelector('.paraphrase-count');
+                if (count) {
+                    const wordCount = countWords(text);
+                    count.textContent = wordCount + ' words';
+                    
+                    // Highlight if count matches
+                    if (wordCount === countWords(original)) {
+                        count.style.background = 'var(--success)';
+                    } else {
+                        count.style.background = 'var(--error)';
+                    }
+                }
+            });
+        }
+
+        // Reveal hidden paraphrases
+        function revealParaphrases() {
+            const hiddenParaphrases = document.querySelectorAll('.hidden-paraphrase');
+            const button = document.querySelector('.reveal-btn');
+            
+            hiddenParaphrases.forEach((paraphrase, index) => {
+                setTimeout(() => {
+                    paraphrase.classList.add('revealed');
+                }, index * 200);
+            });
+
+            // Hide button after revealing
+            setTimeout(() => {
+                button.style.display = 'none';
+            }, hiddenParaphrases.length * 200 + 300);
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            initializeWordCounts();
+            
+            // Set stats
+            document.getElementById('stat-original').textContent = countWords(document.getElementById('original-sentence').textContent);
+            document.getElementById('stat-paraphrases').textContent = '6';
+        });
+
+        // Compare words between original and selected paraphrase
+        function compareWords() {
+            const select = document.getElementById('compare-select');
+            const comparisonDiv = document.getElementById('word-comparison');
+            const originalWordsDiv = document.getElementById('original-words');
+            const paraphraseWordsDiv = document.getElementById('paraphrase-words');
+            const keyChangesDiv = document.getElementById('key-changes');
+            const originalCountBadge = document.getElementById('original-compare-count');
+            const paraphraseCountBadge = document.getElementById('paraphrase-compare-count');
+            
+            if (!select.value) {
+                comparisonDiv.classList.remove('active');
+                return;
+            }
+            
+            const original = document.getElementById('original-sentence').textContent.trim();
+            let paraphrase = '';
+            
+            if (select.value === 'given') {
+                paraphrase = document.querySelector('.paraphrase-box .paraphrase-text').textContent.trim();
+            } else {
+                const paraphraseBox = document.getElementById('paraphrase-' + select.value);
+                if (paraphraseBox) {
+                    paraphrase = paraphraseBox.querySelector('.paraphrase-text').textContent.trim();
+                }
+            }
+            
+            if (!paraphrase) {
+                comparisonDiv.classList.remove('active');
+                return;
+            }
+            
+            // Show comparison
+            comparisonDiv.classList.add('active');
+            
+            const originalWords = original.split(/\s+/);
+            const paraphraseWords = paraphrase.split(/\s+/);
+            
+            // Update word count badges
+            if (originalCountBadge) {
+                originalCountBadge.textContent = originalWords.length + ' words';
+            }
+            if (paraphraseCountBadge) {
+                paraphraseCountBadge.textContent = paraphraseWords.length + ' words';
+            }
+            
+            // Display words with highlighting
+            originalWordsDiv.innerHTML = originalWords.map((word, index) => {
+                const isChanged = index < paraphraseWords.length && word.toLowerCase() !== paraphraseWords[index].toLowerCase();
+                return `<span class="word-chip ${isChanged ? 'changed' : 'same'}" title="Word ${index + 1}: ${word}">${word}</span>`;
+            }).join('');
+            
+            paraphraseWordsDiv.innerHTML = paraphraseWords.map((word, index) => {
+                const isChanged = index < originalWords.length && word.toLowerCase() !== originalWords[index].toLowerCase();
+                return `<span class="word-chip ${isChanged ? 'changed' : 'same'}" title="Word ${index + 1}: ${word}">${word}</span>`;
+            }).join('');
+            
+            // Identify key changes
+            const changes = [];
+            const maxLength = Math.max(originalWords.length, paraphraseWords.length);
+            
+            for (let i = 0; i < maxLength; i++) {
+                const origWord = originalWords[i] || '';
+                const paraWord = paraphraseWords[i] || '';
+                
+                if (origWord.toLowerCase() !== paraWord.toLowerCase()) {
+                    if (origWord && paraWord) {
+                        changes.push(`<div class="change-item"><strong>"${origWord}"</strong> <span style="color: var(--primary-color); font-weight: bold;">→</span> <strong>"${paraWord}"</strong> <span style="color: var(--text-light); font-size: 0.9em;">(position ${i + 1})</span></div>`);
+                    }
+                }
+            }
+            
+            // Find structural changes
+            if (original.indexOf('yesterday') !== paraphrase.indexOf('yesterday')) {
+                changes.push('<div class="change-item"><strong>Time phrase "yesterday" moved</strong> to different position in the sentence</div>');
+            }
+            
+            if (original.indexOf('Securities and Exchange Commission') !== paraphrase.indexOf('Securities and Exchange Commission')) {
+                changes.push('<div class="change-item"><strong>SEC reference moved</strong> to different position in the sentence</div>');
+            }
+            
+            keyChangesDiv.innerHTML = changes.length > 0 
+                ? changes.join('')
+                : '<div class="change-item" style="color: var(--text-light); font-style: italic;">No significant word changes detected (structural changes may still exist)</div>';
+        }
+    </script>
+</body>
+</html>

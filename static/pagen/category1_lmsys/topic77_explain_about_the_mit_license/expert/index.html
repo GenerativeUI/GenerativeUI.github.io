@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIT License Explained - Interactive Guide</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1>MIT License Explained</h1>
+            <p class="hero-subtitle">An interactive guide to understanding one of the most popular open source licenses</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section 1: License Overview -->
+        <section class="overview-section">
+            <h2>License Overview</h2>
+            <div class="cards-grid">
+                <div class="overview-card" data-feature="permissions">
+                    <div class="card-icon">✅</div>
+                    <h3>Permissions</h3>
+                    <p>Commercial use, modification, distribution, private use</p>
+                    <div class="card-details">
+                        <p>The MIT license allows you to use the software for any purpose, including commercial applications. You can modify the code, distribute it, and use it privately without restrictions.</p>
+                    </div>
+                </div>
+                
+                <div class="overview-card" data-feature="conditions">
+                    <div class="card-icon">📜</div>
+                    <h3>Conditions</h3>
+                    <p>License and copyright notice must be included</p>
+                    <div class="card-details">
+                        <p>The only requirement is that you include the original license and copyright notice when you distribute the software. This ensures proper attribution to the original authors.</p>
+                    </div>
+                </div>
+                
+                <div class="overview-card" data-feature="limitations">
+                    <div class="card-icon">⚠️</div>
+                    <h3>Limitations</h3>
+                    <p>No warranty or liability</p>
+                    <div class="card-details">
+                        <p>The software is provided "as is" without warranty of any kind. The authors are not liable for any damages that may arise from using the software.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: MIT License Text -->
+        <section class="license-text-section">
+            <h2>MIT License Text</h2>
+            <div class="license-container">
+                <div class="license-header">
+                    <h3>The MIT License</h3>
+                    <button class="copy-btn" id="copyLicense">
+                        <i class="fas fa-copy"></i> Copy License
+                    </button>
+                </div>
+                <div class="license-accordion">
+                    <button class="accordion-header" id="licenseToggle">
+                        <span>View Full License Text</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="accordion-content" id="licenseContent">
+                        <pre id="licenseText">MIT License
+
+Copyright (c) [year] [fullname]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+                        <div class="license-note">
+                            <p><strong>💡 Usage Note:</strong> Make sure to replace <code>[year]</code> with the year you're releasing the software and <code>[fullname]</code> with your name or organization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: License Comparison -->
+        <section class="comparison-section">
+            <h2>MIT vs Other Licenses</h2>
+            <div class="comparison-container">
+                <div class="license-filters">
+                    <button class="filter-btn active" data-license="all">All Licenses</button>
+                    <button class="filter-btn" data-license="mit">MIT</button>
+                    <button class="filter-btn" data-license="gpl">GPL</button>
+                    <button class="filter-btn" data-license="apache">Apache</button>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th class="license-col" data-license="mit">MIT</th>
+                                <th class="license-col" data-license="gpl">GPL v3</th>
+                                <th class="license-col" data-license="apache">Apache 2.0</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Commercial Use</td>
+                                <td class="license-col" data-license="mit">✅</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Modification</td>
+                                <td class="license-col" data-license="mit">✅</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Distribution</td>
+                                <td class="license-col" data-license="mit">✅</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Patent Use <span class="tooltip-trigger" data-tooltip="Patent protection means the license explicitly grants users rights to any patents held by the licensor, protecting them from patent lawsuits.">ℹ️</span></td>
+                                <td class="license-col" data-license="mit">❌</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Private Use</td>
+                                <td class="license-col" data-license="mit">✅</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>Copyleft <span class="tooltip-trigger" data-tooltip="Copyleft requires that any derivative works must be distributed under the same license terms, ensuring the code remains open source.">ℹ️</span></td>
+                                <td class="license-col" data-license="mit">❌</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">❌</td>
+                            </tr>
+                            <tr>
+                                <td>Attribution Required</td>
+                                <td class="license-col" data-license="mit">✅</td>
+                                <td class="license-col" data-license="gpl">✅</td>
+                                <td class="license-col" data-license="apache">✅</td>
+                            </tr>
+                            <tr>
+                                <td>License Compatibility <span class="tooltip-trigger" data-tooltip="License compatibility determines whether you can combine code under different licenses in the same project.">ℹ️</span></td>
+                                <td class="license-col" data-license="mit">✅ Can combine with almost anything</td>
+                                <td class="license-col" data-license="gpl">❌ Only with GPL-compatible</td>
+                                <td class="license-col" data-license="apache">✅ Compatible with many (not GPL v2)</td>
+                            </tr>
+                            <tr>
+                                <td>Warranty Disclaimer</td>
+                                <td class="license-col" data-license="mit">✅ AS IS, no warranty</td>
+                                <td class="license-col" data-license="gpl">✅ AS IS, no warranty</td>
+                                <td class="license-col" data-license="apache">✅ AS IS, no warranty</td>
+                            </tr>
+                            <tr>
+                                <td>Sublicensing <span class="tooltip-trigger" data-tooltip="Sublicensing allows you to grant others additional rights beyond what the original license provides.">ℹ️</span></td>
+                                <td class="license-col" data-license="mit">✅ Allowed</td>
+                                <td class="license-col" data-license="gpl">❌ Derivatives must stay GPL</td>
+                                <td class="license-col" data-license="apache">✅ Allowed</td>
+                            </tr>
+                            <tr>
+                                <td>Length & Complexity</td>
+                                <td class="license-col" data-license="mit">📄 Very short (~200 words)</td>
+                                <td class="license-col" data-license="gpl">📄 Long & detailed (~5k words)</td>
+                                <td class="license-col" data-license="apache">📄 Medium (~3k words)</td>
+                            </tr>
+                            <tr>
+                                <td>Who Commonly Uses It</td>
+                                <td class="license-col" data-license="mit">React, Node.js, jQuery</td>
+                                <td class="license-col" data-license="gpl">Linux kernel, WordPress</td>
+                                <td class="license-col" data-license="apache">Apache server, Android</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Mobile Comparison Cards -->
+                <div class="mobile-comparison">
+                    <div class="license-card mit" data-license="mit">
+                        <div class="license-header">
+                            <div class="license-icon mit">M</div>
+                            <div>
+                                <h3 class="license-title">MIT License</h3>
+                                <p class="license-subtitle">Permissive & Simple</p>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-name">Commercial Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Modification</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Distribution</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Patent Use</span>
+                                <span class="feature-value no">❌ No</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Private Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Copyleft</span>
+                                <span class="feature-value no">❌ No</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Attribution Required</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">License Compatibility</span>
+                                <span class="feature-value text">Can combine with almost anything</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Warranty Disclaimer</span>
+                                <span class="feature-value text">AS IS, no warranty</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Sublicensing</span>
+                                <span class="feature-value yes">✅ Allowed</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Length & Complexity</span>
+                                <span class="feature-value text">Very short (~200 words)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Who Commonly Uses It</span>
+                                <span class="feature-value text">React, Node.js, jQuery</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="license-card gpl" data-license="gpl">
+                        <div class="license-header">
+                            <div class="license-icon gpl">G</div>
+                            <div>
+                                <h3 class="license-title">GPL v3 License</h3>
+                                <p class="license-subtitle">Copyleft & Strong</p>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-name">Commercial Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Modification</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Distribution</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Patent Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Private Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Copyleft</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Attribution Required</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">License Compatibility</span>
+                                <span class="feature-value text">Only with GPL-compatible</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Warranty Disclaimer</span>
+                                <span class="feature-value text">AS IS, no warranty</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Sublicensing</span>
+                                <span class="feature-value no">❌ Derivatives must stay GPL</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Length & Complexity</span>
+                                <span class="feature-value text">Long & detailed (~5k words)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Who Commonly Uses It</span>
+                                <span class="feature-value text">Linux kernel, WordPress</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="license-card apache" data-license="apache">
+                        <div class="license-header">
+                            <div class="license-icon apache">A</div>
+                            <div>
+                                <h3 class="license-title">Apache 2.0 License</h3>
+                                <p class="license-subtitle">Permissive with Patents</p>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-name">Commercial Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Modification</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Distribution</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Patent Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Private Use</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Copyleft</span>
+                                <span class="feature-value no">❌ No</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Attribution Required</span>
+                                <span class="feature-value yes">✅ Yes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">License Compatibility</span>
+                                <span class="feature-value text">Compatible with many (not GPL v2)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Warranty Disclaimer</span>
+                                <span class="feature-value text">AS IS, no warranty</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Sublicensing</span>
+                                <span class="feature-value yes">✅ Allowed</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Length & Complexity</span>
+                                <span class="feature-value text">Medium (~3k words)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-name">Who Commonly Uses It</span>
+                                <span class="feature-value text">Apache server, Android</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Real-World Examples -->
+        <section class="examples-section">
+            <h2>Popular Projects Using MIT License</h2>
+            <div class="examples-grid">
+                <div class="example-card" data-project="react">
+                    <div class="project-logo">⚛️</div>
+                    <h3>React</h3>
+                    <p>Facebook's JavaScript library for building user interfaces</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="example-card" data-project="jquery">
+                    <div class="project-logo">🔧</div>
+                    <h3>jQuery</h3>
+                    <p>Fast, small, and feature-rich JavaScript library</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="example-card" data-project="nodejs">
+                    <div class="project-logo">🟢</div>
+                    <h3>Node.js</h3>
+                    <p>JavaScript runtime built on Chrome's V8 engine</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="example-card" data-project="rails">
+                    <div class="project-logo">💎</div>
+                    <h3>Ruby on Rails</h3>
+                    <p>Web application framework written in Ruby</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="example-card" data-project="bootstrap">
+                    <div class="project-logo">🎨</div>
+                    <h3>Bootstrap</h3>
+                    <p>CSS framework for developing responsive web projects</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="example-card" data-project="lodash">
+                    <div class="project-logo">📚</div>
+                    <h3>Lodash</h3>
+                    <p>Modern JavaScript utility library</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Decision Helper -->
+        <section class="decision-helper-section">
+            <h2>Is MIT License Right for Your Project?</h2>
+            <div class="decision-widget">
+                <div class="question-container">
+                    <div class="question active" data-question="1">
+                        <h3>Do you want to allow commercial use of your code?</h3>
+                        <div class="answer-buttons">
+                            <button class="answer-btn" data-answer="yes">Yes</button>
+                            <button class="answer-btn" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question" data-question="2">
+                        <h3>Do you want to require derivative works to use the same license?</h3>
+                        <div class="answer-buttons">
+                            <button class="answer-btn" data-answer="yes">Yes (Copyleft)</button>
+                            <button class="answer-btn" data-answer="no">No (Permissive)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question" data-question="3">
+                        <h3>Do you want to provide patent protection to users?</h3>
+                        <div class="answer-buttons">
+                            <button class="answer-btn" data-answer="yes">Yes</button>
+                            <button class="answer-btn" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question" data-question="4">
+                        <h3>Do you prefer the simplest license with minimal legal text?</h3>
+                        <div class="answer-buttons">
+                            <button class="answer-btn" data-answer="yes">Yes, keep it simple</button>
+                            <button class="answer-btn" data-answer="no">No, detailed is fine</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-container" id="decisionResult">
+                    <div class="result-content">
+                        <h3>Your Recommended License</h3>
+                        <div class="license-recommendation">
+                            <div class="recommended-license">
+                                <h4 id="recommendedLicenseName">MIT License</h4>
+                                <p id="recommendedLicenseDesc">Perfect for your needs! MIT is permissive, allows commercial use, and requires minimal attribution.</p>
+                            </div>
+                        </div>
+                        <div class="disclaimer">
+                            <p><strong>⚠️ Disclaimer:</strong> This is a simplified helper. Always review with a legal professional if your project has specific needs.</p>
+                        </div>
+                        <button class="restart-btn" id="restartDecision">Start Over</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Project Details -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

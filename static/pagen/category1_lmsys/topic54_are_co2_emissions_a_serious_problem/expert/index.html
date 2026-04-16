@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>CO₂ Reality Lab – Are Emissions a Serious Problem?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+
+        :root{
+            /* новая палитра */
+            --bg:#050816;
+            --bg-alt:#020617;
+            --card:rgba(10,16,35,0.98);
+            --border:rgba(148,163,184,0.38);
+            --border-soft:rgba(148,163,184,0.25);
+            --text:#e5e7eb;
+            --muted:#9ca3af;
+            --strong:#f9fafb;
+
+            /* основные акценты: циан + фиолет + коралл */
+            --accent:#22d3ee;          /* главный акцент */
+            --accent-blue:#a855f7;     /* фиолетовый акцент */
+            --accent-yellow:#fb7185;   /* коралловый акцент */
+            --danger:#ef4444;
+
+            --radius-xl:22px;
+            --radius-md:16px;
+
+            --shadow-strong:0 30px 120px rgba(15,23,42,1);
+            --shadow-soft:0 18px 60px rgba(15,23,42,0.9);
+            --glow-cyan:0 0 28px rgba(34,211,238,0.9);
+            --glow-purple:0 0 30px rgba(168,85,247,0.85);
+            --glow-coral:0 0 26px rgba(251,113,133,0.9);
+        }
+
+        html,body{scroll-behavior:smooth;}
+
+        body{
+            font-family:"Space Grotesk",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+            background:
+                    radial-gradient(circle at 10% 0%, rgba(34,211,238,0.26), transparent 60%),
+                    radial-gradient(circle at 85% 100%, rgba(168,85,247,0.22), transparent 60%),
+                    radial-gradient(circle at 50% 40%, #020617, #020617 55%, #00010b 100%);
+            color:var(--text);
+            line-height:1.6;
+            overflow-x:hidden;
+        }
+
+        .noise{
+            position:fixed;inset:0;
+            pointer-events:none;
+            opacity:.08;
+            mix-blend-mode:soft-light;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+            z-index:-1;
+        }
+
+        .container{
+            max-width:1240px;
+            margin:0 auto;
+            padding:28px 72px 72px;
+            position:relative;
+        }
+        @media(max-width:1024px){
+            .container{padding:22px 24px 56px;}
+        }
+
+        section{padding:40px 0 36px;scroll-margin-top:80px;}
+
+        .section-header{margin-bottom:22px;}
+        .section-badge{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:4px 12px;border-radius:999px;
+            border:1px solid rgba(34,211,238,0.55);
+            background:linear-gradient(135deg,rgba(34,211,238,0.16),rgba(168,85,247,0.18));
+            color:var(--accent);
+            font-size:.72rem;font-weight:600;
+            text-transform:uppercase;letter-spacing:.15em;
+            margin-bottom:10px;
+            position:relative;
+            overflow:hidden;
+        }
+        .section-badge::after{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:conic-gradient(from 130deg,rgba(34,211,238,0.4),transparent 120deg,rgba(251,113,133,0.4),transparent 240deg);
+            opacity:.45;
+            mix-blend-mode:screen;
+            pointer-events:none;
+        }
+
+        .section-title{
+            font-family:"Playfair Display",serif;
+            font-size:clamp(1.8rem,2.5vw,2.2rem);
+            font-weight:800;
+            letter-spacing:.03em;
+            margin-bottom:6px;
+        }
+        .section-subtitle{
+            font-size:.96rem;
+            color:var(--muted);
+            max-width:640px;
+        }
+
+        .card{
+            background:var(--card);
+            border-radius:var(--radius-md);
+            border:1px solid var(--border);
+            box-shadow:var(--shadow-soft);
+            padding:20px 20px 18px;
+            position:relative;
+            overflow:hidden;
+            transition:box-shadow .18s ease-out,transform .18s ease-out,border-color .18s ease-out,background .18s;
+        }
+        .card::before{
+            content:"";
+            position:absolute;inset:0;
+            background:
+                    radial-gradient(circle at top left,rgba(34,211,238,0.16),transparent 55%),
+                    radial-gradient(circle at bottom right,rgba(168,85,247,0.18),transparent 55%);
+            opacity:.8;pointer-events:none;z-index:-1;
+        }
+        .card:hover{
+            box-shadow:0 24px 80px rgba(0,0,0,1),var(--glow-purple);
+            border-color:rgba(148,163,184,0.6);
+            transform:translateY(-2px);
+            background:rgba(10,16,35,0.98);
+        }
+
+        .muted{color:var(--muted);}
+        .highlight{color:var(--accent-yellow);font-weight:600;}
+
+        /* side nav */
+        .nav-dots{
+            position:fixed;right:26px;top:50%;
+            transform:translateY(-50%);
+            display:flex;flex-direction:column;gap:10px;
+            padding:10px 7px;border-radius:999px;
+            background:rgba(2,6,23,0.96);
+            border:1px solid rgba(148,163,184,0.4);
+            box-shadow:var(--shadow-soft);z-index:40;
+            backdrop-filter:blur(10px);
+        }
+        .nav-dot{
+            width:11px;height:11px;border-radius:999px;
+            background:rgba(148,163,184,0.6);
+            cursor:pointer;position:relative;
+            transition:background .2s,transform .2s,box-shadow .2s;
+        }
+        .nav-dot::before{
+            content:"";
+            position:absolute;inset:-5px;
+            border-radius:999px;
+            border:1px solid transparent;
+            transition:border-color .2s,box-shadow .2s;
+        }
+        .nav-dot:hover{
+            transform:scale(1.25);
+            background:var(--accent);
+            box-shadow:var(--glow-cyan);
+        }
+        .nav-dot:hover::before{
+            border-color:rgba(34,211,238,0.7);
+            box-shadow:0 0 18px rgba(34,211,238,0.9);
+        }
+        .nav-dot.active{
+            background:var(--accent-yellow);
+            transform:scale(1.35);
+            box-shadow:var(--glow-coral);
+        }
+        .nav-dot::after{
+            content:attr(data-label);
+            position:absolute;right:135%;top:50%;
+            transform:translateY(-50%);
+            opacity:0;padding:4px 10px;border-radius:999px;
+            background:rgba(2,6,23,0.98);
+            border:1px solid rgba(148,163,184,0.55);
+            color:var(--muted);font-size:.72rem;white-space:nowrap;
+            pointer-events:none;transition:opacity .18s,transform .18s;
+        }
+        .nav-dot:hover::after{
+            opacity:1;transform:translate(-6px,-50%);
+        }
+        @media(max-width:1024px){.nav-dots{display:none;}}
+
+        /* HERO */
+
+        .hero-grid{
+            display:grid;
+            grid-template-columns:minmax(0,1.6fr) minmax(0,1.1fr);
+            gap:30px;align-items:center;margin-bottom:12px;
+        }
+        @media(max-width:900px){
+            .hero-grid{grid-template-columns:minmax(0,1fr);}
+        }
+
+        .hero-kicker{
+            display:inline-flex;align-items:center;gap:8px;
+            padding:4px 14px;border-radius:999px;
+            border:1px solid rgba(34,211,238,0.6);
+            background:rgba(3,7,18,0.96);
+            color:var(--accent);
+            font-size:.8rem;font-weight:600;
+            text-transform:uppercase;letter-spacing:.18em;
+            margin-bottom:16px;
+            position:relative;
+            overflow:hidden;
+        }
+        .hero-kicker::after{
+            content:"";
+            position:absolute;
+            inset:-60%;
+            background:linear-gradient(120deg,rgba(34,211,238,0.3),transparent 40%,rgba(168,85,247,0.3),transparent 80%);
+            opacity:.7;
+            mix-blend-mode:screen;
+            pointer-events:none;
+        }
+
+        .hero-title{
+            font-family:"Playfair Display",serif;
+            font-size:clamp(2.4rem,3.2vw,2.9rem);
+            font-weight:800;letter-spacing:.04em;
+            margin-bottom:10px;
+        }
+        .hero-title span{display:inline-block;}
+        .hero-title-accent{color:var(--accent-yellow);}
+        .hero-title-soft{color:var(--accent-blue);}
+
+        .hero-subtitle{
+            font-size:1rem;color:var(--muted);
+            max-width:640px;margin-bottom:18px;
+        }
+        .hero-list{font-size:.95rem;color:var(--muted);margin-bottom:18px;}
+        .hero-list li{margin-left:20px;margin-bottom:4px;}
+
+        .hero-ctas{
+            display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+        }
+        .btn{
+            border:none;border-radius:999px;
+            padding:11px 22px;font-size:.9rem;
+            font-weight:650;letter-spacing:.09em;
+            text-transform:uppercase;cursor:pointer;
+            display:inline-flex;align-items:center;gap:8px;
+            transition:transform .16s,box-shadow .16s,background .16s,border-color .16s,filter .16s;
+        }
+        .btn-primary{
+            background:linear-gradient(135deg,#22d3ee,#a855f7);
+            color:#020617;box-shadow:0 12px 28px rgba(15,23,42,0.9),var(--glow-cyan);
+        }
+        .btn-primary:hover{
+            transform:translateY(-1px);
+            box-shadow:0 18px 50px rgba(0,0,0,1),var(--glow-purple);
+            filter:brightness(1.05);
+        }
+        .btn-ghost{
+            background:rgba(3,7,18,0.94);
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+        .btn-ghost:hover{
+            background:linear-gradient(135deg,rgba(15,23,42,1),rgba(79,70,229,0.85));
+            border-color:rgba(129,140,248,0.9);
+            box-shadow:0 16px 40px rgba(79,70,229,0.8);
+        }
+        .hero-note{font-size:.8rem;color:var(--muted);}
+
+        .hero-visual{
+            position:relative;
+            border-radius:var(--radius-xl);
+            overflow:hidden;
+            background:
+                    radial-gradient(circle at 20% 20%, rgba(34,211,238,0.26), transparent 60%),
+                    radial-gradient(circle at 80% 80%, rgba(168,85,247,0.18), transparent 60%),
+                    linear-gradient(145deg,#020617,#020617 55%,#020617 100%);
+            border:1px solid rgba(148,163,184,0.6);
+            box-shadow:var(--shadow-strong);
+            padding:24px 24px 26px;
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+            min-height:320px;
+        }
+        /* svg-иллюстрация “орбиты” в hero */
+        .hero-visual::after{
+            content:"";
+            position:absolute;
+            right:-40px;bottom:-40px;
+            width:230px;height:230px;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230'%3E%3Cdefs%3E%3CradialGradient id='r' cx='50%25' cy='50%25' r='60%25'%3E%3Cstop offset='0' stop-color='%2322d3ee' stop-opacity='0.9'/%3E%3Cstop offset='1' stop-color='%2302081f' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='l' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%23fb7185'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='115' cy='115' r='96' fill='none' stroke='url(%23l)' stroke-width='1.5' stroke-dasharray='5 6' opacity='0.8'/%3E%3Ccircle cx='115' cy='115' r='52' fill='none' stroke='%2322d3ee' stroke-width='1' stroke-dasharray='2 4' opacity='0.7'/%3E%3Ccircle cx='115' cy='115' r='40' fill='url(%23r)' opacity='0.9'/%3E%3C/svg%3E");
+            opacity:.55;
+            pointer-events:none;
+        }
+
+        .hero-upper{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:22px;
+        }
+
+        .hero-globe-wrap{
+            flex:0 0 auto;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-width:210px;
+        }
+        .hero-globe{
+            position:relative;
+            width:210px;height:210px;
+            border-radius:999px;
+            border:6px solid rgba(3,7,18,0.98);
+            background:
+                    radial-gradient(circle at 30% 25%, #22d3ee, #0ea5e9 55%, #0369a1 80%),
+                    radial-gradient(circle at 75% 75%, rgba(168,85,247,0.65), transparent 60%);
+            box-shadow:0 20px 50px rgba(15,23,42,0.9),var(--glow-cyan);
+            overflow:hidden;
+            animation:hero-globe-float 9s ease-in-out infinite;
+        }
+        .hero-globe::after{
+            content:"";position:absolute;inset:-12%;
+            background:radial-gradient(circle at 18% 12%, rgba(255,255,255,0.7), transparent 65%);
+            mix-blend-mode:screen;
+        }
+        @keyframes hero-globe-float{
+            0%,100%{transform:translateY(0);}
+            50%{transform:translateY(-6px);}
+        }
+
+        .hero-co2-cloud{
+            position:absolute;inset:19%;
+            border-radius:999px;
+            border:1px solid rgba(248,250,252,0.3);
+            background:rgba(3,7,18,0.82);
+            backdrop-filter:blur(10px);
+            display:flex;align-items:center;justify-content:center;
+            font-weight:800;font-size:1.15rem;
+            color:rgba(248,250,252,0.98);
+            text-shadow:0 2px 14px rgba(3,7,18,0.95);
+            box-shadow:0 0 28px rgba(15,23,42,1);
+            animation:pulse-cloud 4s ease-in-out infinite;
+            text-align:center;white-space:nowrap;
+        }
+        @keyframes pulse-cloud{
+            0%,100%{transform:scale(.95);opacity:.92;}
+            50%{transform:scale(1.04);opacity:1;}
+        }
+
+        .hero-stats-column{
+            flex:1 1 auto;
+            max-width:320px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            align-self:stretch;
+        }
+        .hero-stat{
+            padding:10px 14px;
+            border-radius:16px;
+            background:rgba(3,7,18,0.85);
+            border:1px solid rgba(148,163,184,0.4);
+            font-size:.82rem;
+            backdrop-filter:blur(14px);
+            min-height:58px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .hero-stat::after{
+            content:"";
+            position:absolute;
+            inset:-50%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.18),transparent 55%);
+            opacity:.8;
+            pointer-events:none;
+        }
+        .hero-stat-label{
+            font-size:.72rem;
+            text-transform:none;
+            letter-spacing:.03em;
+            color:rgba(226,232,240,0.75);
+            margin-bottom:3px;
+            line-height:1.3;
+        }
+        .hero-stat-value{
+            font-weight:700;
+            line-height:1.3;
+        }
+
+        .hero-timeline-badge{
+            align-self:flex-end;
+            padding:8px 20px;
+            border-radius:999px;
+            border:1px solid rgba(148,163,184,0.7);
+            background:linear-gradient(135deg,rgba(15,23,42,0.98),rgba(24,24,40,0.98));
+            color:rgba(209,213,219,0.95);
+            font-size:.76rem;
+            text-transform:uppercase;
+            letter-spacing:.12em;
+            text-align:center;
+            white-space:normal;
+            max-width:100%;
+            overflow:visible;
+            text-overflow:clip;
+            line-height:1.4;
+            opacity:.96;
+            box-shadow:0 0 22px rgba(15,23,42,1),var(--glow-purple);
+        }
+
+        @media(max-width:900px){
+            .hero-upper{
+                flex-direction:column;
+                align-items:stretch;
+            }
+            .hero-stats-column{max-width:none;width:100%;}
+            .hero-timeline-badge{
+                align-self:stretch;
+                text-align:center;
+                margin-top:4px;
+            }
+        }
+
+        /* basics */
+
+        .grid-2{
+            display:grid;
+            grid-template-columns:minmax(0,1.5fr) minmax(0,1.2fr);
+            gap:20px;
+        }
+        @media(max-width:900px){.grid-2{grid-template-columns:minmax(0,1fr);}}
+
+        .definition{font-size:.95rem;color:var(--muted);margin-bottom:10px;}
+
+        .callout{
+            margin-top:12px;
+            padding:11px 11px;
+            border-radius:14px;
+            border-left:3px solid var(--accent-yellow);
+            background:rgba(30,64,175,0.3);
+            font-size:.88rem;
+            color:var(--text);
+            position:relative;
+            overflow:hidden;
+        }
+        .callout::after{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(251,113,133,0.35),transparent 55%);
+            opacity:.7;
+            pointer-events:none;
+        }
+
+        .tabs{
+            display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;
+        }
+        .tab-btn{
+            padding:7px 10px;border-radius:999px;
+            border:1px solid var(--border);
+            background:rgba(3,7,18,0.95);
+            color:var(--muted);font-size:.8rem;
+            font-weight:500;cursor:pointer;
+            display:inline-flex;align-items:center;gap:6px;
+            transition:background .16s,border-color .16s,color .16s,transform .16s,box-shadow .16s;
+        }
+        .tab-btn span{font-size:.95rem;}
+        .tab-btn:hover{
+            border-color:rgba(34,211,238,0.9);
+            color:var(--text);transform:translateY(-1px);
+            box-shadow:0 10px 26px rgba(0,0,0,0.9);
+        }
+        .tab-btn.active{
+            background:linear-gradient(135deg,#22d3ee,#a855f7);
+            border-color:transparent;color:#020617;
+            box-shadow:0 14px 34px rgba(0,0,0,1),var(--glow-cyan);
+        }
+
+        .tab-panel{display:none;margin-top:4px;}
+        .tab-panel.active{
+            display:block;animation:fade-in .2s ease-out;
+        }
+        @keyframes fade-in{
+            from{opacity:0;transform:translateY(6px);}
+            to{opacity:1;transform:translateY(0);}
+        }
+
+        .mini-chart{
+            margin-top:12px;
+            padding:10px 11px;
+            border-radius:12px;
+            background:rgba(3,7,18,0.98);
+            border:1px solid var(--border-soft);
+            font-size:.8rem;
+            position:relative;
+            overflow:hidden;
+        }
+        .mini-chart::before{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at 80% 0,rgba(34,211,238,0.22),transparent 55%);
+            opacity:.8;
+            pointer-events:none;
+        }
+        .mini-chart-bars{
+            display:flex;align-items:flex-end;
+            gap:6px;height:80px;margin-bottom:6px;
+        }
+        .mini-bar{
+            flex:1;border-radius:6px 6px 0 0;
+            background:linear-gradient(180deg,#22d3ee,#0ea5e9);
+            position:relative;overflow:hidden;
+            box-shadow:0 0 18px rgba(34,211,238,0.9);
+        }
+        .mini-bar.modern{
+            background:linear-gradient(180deg,#fb7185,#f97316);
+            box-shadow:0 0 18px rgba(251,113,133,0.92);
+        }
+        .mini-bar-label{
+            position:absolute;bottom:4px;left:50%;
+            transform:translateX(-50%);
+            font-size:.7rem;color:#f9fafb;
+            text-shadow:0 1px 3px rgba(0,0,0,0.9);
+        }
+        .mini-chart-caption{
+            display:flex;justify-content:space-between;
+            font-size:.75rem;color:var(--muted);
+        }
+
+        .timeline{
+            margin-top:14px;
+            padding-top:10px;
+            border-top:1px dashed rgba(148,163,184,0.55);
+        }
+        .timeline-label{
+            font-size:.78rem;
+            text-transform:uppercase;
+            letter-spacing:.16em;
+            color:var(--muted);
+            margin-bottom:6px;
+        }
+        .timeline-points{
+            display:flex;
+            justify-content:space-between;
+            gap:8px;
+        }
+        .timeline-point{
+            flex:1;
+            padding:6px 8px;
+            border-radius:12px;
+            border:1px solid var(--border-soft);
+            background:rgba(10,16,35,0.96);
+            font-size:.78rem;
+            cursor:pointer;
+            text-align:center;
+            transition:background .16s,border-color .16s,transform .16s,box-shadow .16s;
+        }
+        .timeline-point strong{display:block;font-size:.8rem;}
+        .timeline-point.active{
+            border-color:rgba(34,211,238,0.95);
+            background:rgba(15,23,42,1);
+            transform:translateY(-1px);
+            box-shadow:0 14px 34px rgba(0,0,0,0.95),var(--glow-cyan);
+        }
+
+        /* dashboard / scenarios */
+
+        .dashboard{
+            display:grid;
+            grid-template-columns:minmax(0,1.3fr) minmax(0,1.1fr);
+            gap:18px;
+        }
+        @media(max-width:900px){.dashboard{grid-template-columns:minmax(0,1fr);}}
+
+        .toggle-group{
+            display:inline-flex;
+            padding:3px;
+            border-radius:999px;
+            background:rgba(3,7,18,0.96);
+            border:1px solid var(--border);
+            margin-bottom:10px;
+            backdrop-filter:blur(12px);
+        }
+        .toggle-btn{
+            padding:6px 12px;border-radius:999px;
+            border:none;background:transparent;
+            color:var(--muted);font-size:.8rem;
+            font-weight:500;cursor:pointer;
+            transition:background .16s,color .16s,box-shadow .16s;
+        }
+        .toggle-btn.active{
+            background:linear-gradient(135deg,#22d3ee,#a855f7);
+            color:#020617;
+            box-shadow:0 10px 28px rgba(0,0,0,1),var(--glow-purple);
+        }
+
+        .scenario-note{
+            margin-top:6px;
+            font-size:.78rem;
+            color:var(--muted);
+        }
+
+        .source-grid{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:10px;margin-top:6px;
+        }
+        @media(max-width:640px){.source-grid{grid-template-columns:minmax(0,1fr);}}
+
+        .source-card{
+            padding:9px 11px;border-radius:14px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            display:grid;grid-template-columns:32px minmax(0,1fr);
+            gap:8px;cursor:pointer;
+            transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+            position:relative;
+            overflow:hidden;
+        }
+        .source-card::after{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.22),transparent 55%);
+            opacity:0;
+            transition:opacity .18s;
+            pointer-events:none;
+        }
+        .source-card:hover{
+            border-color:rgba(34,211,238,0.95);
+            transform:translateY(-1px);
+            box-shadow:0 14px 34px rgba(0,0,0,0.95),var(--glow-cyan);
+        }
+        .source-card:hover::after{opacity:1;}
+        .source-icon{
+            width:32px;height:32px;border-radius:999px;
+            background:radial-gradient(circle at 30% 20%,#e5e7eb,#6b7280);
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.1rem;
+            box-shadow:0 0 16px rgba(148,163,184,0.85);
+        }
+        .source-title{font-size:.9rem;font-weight:600;margin-bottom:2px;}
+        .source-meta{font-size:.78rem;color:var(--muted);}
+        .source-bar{margin-top:6px;width:100%;height:6px;border-radius:999px;background:rgba(15,23,42,0.9);overflow:hidden;}
+        .source-bar-fill{
+            height:100%;border-radius:999px;
+            background:linear-gradient(90deg,#22d3ee,#a855f7,#fb7185);
+            width:0%;transition:width .35s ease-out;
+            box-shadow:0 0 14px rgba(34,211,238,0.9);
+        }
+        .source-detail{
+            margin-top:10px;padding:10px 11px;
+            border-radius:14px;background:rgba(3,7,18,0.98);
+            border:1px solid var(--border-soft);
+            font-size:.86rem;color:var(--muted);
+        }
+
+        /* sim */
+
+        .sim-layout{
+            display:grid;
+            grid-template-columns:minmax(0,1.35fr) minmax(0,1.1fr);
+            gap:18px;
+        }
+        @media(max-width:900px){.sim-layout{grid-template-columns:minmax(0,1fr);}}
+
+        .slider-block{margin-top:6px;}
+        .slider-label{
+            display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:6px;font-size:.78rem;
+            text-transform:uppercase;letter-spacing:.15em;
+            color:var(--muted);gap:8px;
+        }
+        .slider-label span:last-child{
+            font-weight:600;color:var(--strong);
+            text-transform:none;letter-spacing:0;
+            font-size:.82rem;
+        }
+
+        input[type="range"]{
+            -webkit-appearance:none;width:100%;height:6px;
+            border-radius:999px;
+            background:linear-gradient(90deg,#1d4ed8,#22d3ee,#a855f7);
+            outline:none;
+            box-shadow:0 0 18px rgba(37,99,235,0.7);
+        }
+        input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance:none;
+            width:18px;height:18px;border-radius:50%;
+            background:#e5e7eb;border:2px solid #22d3ee;
+            box-shadow:0 4px 14px rgba(0,0,0,0.9),var(--glow-cyan);
+            cursor:pointer;
+        }
+        input[type="range"]::-moz-range-thumb{
+            width:18px;height:18px;border-radius:50%;
+            background:#e5e7eb;border:2px solid #22d3ee;
+            box-shadow:0 4px 14px rgba(0,0,0,0.9),var(--glow-cyan);
+            cursor:pointer;
+        }
+
+        .sim-output{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:10px;margin-top:10px;
+        }
+        @media(max-width:640px){
+            .sim-output{grid-template-columns:repeat(2,minmax(0,1fr));}
+        }
+        .sim-chip{
+            padding:9px 10px;border-radius:14px;
+            background:rgba(3,7,18,0.97);
+            border:1px solid var(--border);
+            font-size:.8rem;
+            position:relative;
+            overflow:hidden;
+        }
+        .sim-chip::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:radial-gradient(circle at 100% 0,rgba(168,85,247,0.26),transparent 55%);
+            opacity:.7;
+            pointer-events:none;
+        }
+        .sim-chip-label{
+            font-size:.7rem;text-transform:uppercase;
+            letter-spacing:.14em;color:var(--muted);
+            margin-bottom:2px;
+        }
+        .sim-chip-value{font-weight:700;}
+
+        .sim-gauge{
+            margin-top:12px;padding-top:8px;
+            border-top:1px dashed rgba(148,163,184,0.55);
+            font-size:.9rem;color:var(--muted);
+        }
+
+        .risk-pill{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:2px 9px;border-radius:999px;
+            font-size:.76rem;font-weight:650;
+            box-shadow:0 0 18px rgba(0,0,0,0.9);
+        }
+        .risk-low{
+            background:rgba(16,185,129,0.2);
+            color:#a7f3d0;border:1px solid rgba(45,212,191,0.9);
+            box-shadow:0 0 18px rgba(34,197,94,0.8);
+        }
+        .risk-med{
+            background:rgba(234,179,8,0.22);
+            color:#fef9c3;border:1px solid rgba(234,179,8,0.85);
+            box-shadow:0 0 20px rgba(234,179,8,0.85);
+        }
+        .risk-high{
+            background:rgba(248,113,113,0.2);
+            color:#fee2e2;border:1px solid rgba(248,113,113,0.9);
+            box-shadow:0 0 22px rgba(248,113,113,0.9);
+        }
+
+        /* footprint */
+
+        .foot-grid{
+            display:grid;
+            grid-template-columns:minmax(0,1.2fr) minmax(0,1.1fr);
+            gap:20px;
+            position:relative;
+        }
+        .foot-grid::before{
+            content:"";
+            position:absolute;
+            left:-80px;bottom:-80px;
+            width:260px;height:260px;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='40' y='70' width='40' height='120' rx='6' fill='%2322d3ee' opacity='0.7'/%3E%3Crect x='100' y='40' width='40' height='150' rx='6' fill='%23a855f7' opacity='0.7'/%3E%3Crect x='160' y='110' width='40' height='80' rx='6' fill='%23fb7185' opacity='0.7'/%3E%3Ccircle cx='40' cy='200' r='4' fill='%2322d3ee' opacity='0.9'/%3E%3Ccircle cx='90' cy='210' r='3' fill='%23a855f7' opacity='0.9'/%3E%3Ccircle cx='200' cy='190' r='3' fill='%23fb7185' opacity='0.9'/%3E%3C/svg%3E");
+            opacity:.28;
+            pointer-events:none;
+            z-index:-1;
+        }
+        @media(max-width:900px){
+            .foot-grid{grid-template-columns:minmax(0,1fr);}
+        }
+        .foot-options{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:8px;font-size:.86rem;
+        }
+        @media(max-width:640px){
+            .foot-options{grid-template-columns:minmax(0,1fr);}
+        }
+
+        .foot-option{
+            padding:10px 10px;
+            border-radius:14px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            display:flex;
+            gap:10px;
+            align-items:flex-start;
+            cursor:pointer;
+            transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+            position:relative;
+            overflow:hidden;
+        }
+        .foot-option::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.22),transparent 55%);
+            opacity:0;transition:opacity .18s;
+        }
+        .foot-option:hover{
+            border-color:rgba(34,211,238,0.95);
+            transform:translateY(-1px);
+            box-shadow:0 14px 34px rgba(0,0,0,0.95);
+        }
+        .foot-option:hover::before{opacity:1;}
+        .foot-option.active{
+            border-color:rgba(251,113,133,0.95);
+            background:linear-gradient(135deg,rgba(30,64,175,0.98),rgba(30,64,175,0.9));
+            box-shadow:0 16px 42px rgba(0,0,0,1),var(--glow-coral);
+        }
+
+        .foot-bar-bg{
+            width:100%;height:10px;
+            border-radius:999px;
+            background:rgba(15,23,42,0.96);
+            overflow:hidden;
+            box-shadow:0 0 18px rgba(15,23,42,0.9);
+        }
+        .foot-bar-fill{
+            width:0%;height:100%;
+            border-radius:999px;
+            background:conic-gradient(from 180deg,#22d3ee 0deg,#22d3ee 110deg,#a855f7 200deg,#fb7185 320deg,#fb7185 360deg);
+            transition:width .35s ease-out;
+        }
+        .foot-bar-labels{
+            display:flex;justify-content:space-between;
+            font-size:.76rem;color:var(--muted);margin-top:4px;
+        }
+        .foot-summary{
+            font-size:.9rem;color:var(--muted);margin-top:10px;
+        }
+
+        /* myths */
+
+        .myths-layout{
+            display:grid;
+            grid-template-columns:minmax(0,1.4fr) minmax(0,1.05fr);
+            gap:20px;
+        }
+        @media(max-width:900px){
+            .myths-layout{grid-template-columns:minmax(0,1fr);}
+        }
+
+        .myth-main{
+            padding:14px 14px 12px;
+            border-radius:16px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            min-height:190px;
+            display:flex;
+            flex-direction:column;
+            position:relative;
+            overflow:hidden;
+        }
+        .myth-main::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:
+                    radial-gradient(circle at 0 0,rgba(248,113,113,0.3),transparent 55%),
+                    radial-gradient(circle at 100% 100%,rgba(34,211,238,0.2),transparent 55%);
+            opacity:.8;
+            pointer-events:none;
+        }
+        .myth-label{
+            font-size:.75rem;
+            text-transform:uppercase;
+            letter-spacing:.14em;
+            color:#fecaca;
+            margin-bottom:4px;
+        }
+        .myth-title{font-weight:700;margin-bottom:4px;}
+        .myth-text{
+            font-size:.9rem;color:var(--muted);
+            flex:1 1 auto;
+        }
+
+        .myth-controls{
+            margin-top:10px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:.8rem;
+            color:var(--muted);
+        }
+        .myth-nav{display:flex;gap:8px;}
+        .myth-btn{
+            width:26px;height:26px;border-radius:999px;
+            border:1px solid var(--border);
+            background:rgba(3,7,18,0.96);
+            color:var(--text);cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            font-size:.9rem;
+            transition:background .16s,border-color .16s,transform .16s,box-shadow .16s;
+        }
+        .myth-btn:hover{
+            background:linear-gradient(135deg,#4f46e5,#a855f7);
+            border-color:rgba(129,140,248,0.95);
+            transform:translateY(-1px);
+            box-shadow:0 14px 34px rgba(0,0,0,0.95),var(--glow-purple);
+        }
+
+        .myths-grid{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:10px;
+        }
+        @media(max-width:640px){
+            .myths-grid{grid-template-columns:minmax(0,1fr);}
+        }
+        .myth-chip{
+            padding:9px 11px;border-radius:14px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            font-size:.86rem;
+            position:relative;
+            overflow:hidden;
+        }
+        .myth-chip::after{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at 100% 0,rgba(168,85,247,0.24),transparent 55%);
+            opacity:.7;
+            pointer-events:none;
+        }
+        .myth-chip strong{display:block;margin-bottom:2px;}
+
+        /* PATHS */
+
+        .paths-layout{
+            display:grid;
+            grid-template-columns:minmax(0,1.2fr) minmax(0,1.1fr);
+            gap:20px;
+        }
+        @media(max-width:900px){
+            .paths-layout{grid-template-columns:minmax(0,1fr);}
+        }
+
+        .path-buttons{
+            display:flex;
+            gap:8px;
+            margin-bottom:10px;
+            flex-wrap:wrap;
+        }
+        .path-btn{
+            padding:7px 12px;
+            border-radius:999px;
+            border:1px solid var(--border);
+            background:rgba(3,7,18,0.96);
+            color:var(--muted);
+            font-size:.82rem;
+            cursor:pointer;
+            transition:background .16s,border-color .16s,color .16s,transform .16s,box-shadow .16s;
+        }
+        .path-btn:hover{
+            border-color:rgba(34,211,238,0.9);
+            color:var(--strong);
+            transform:translateY(-1px);
+            box-shadow:0 10px 26px rgba(0,0,0,0.95);
+        }
+        .path-btn.active{
+            background:linear-gradient(135deg,#22d3ee,#a855f7);
+            border-color:transparent;
+            color:#020617;
+            box-shadow:0 14px 34px rgba(0,0,0,1),var(--glow-purple);
+        }
+
+        .path-note{
+            font-size:.86rem;
+            color:var(--muted);
+            margin-bottom:8px;
+        }
+
+        .path-metrics{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:10px;
+        }
+        @media(max-width:640px){
+            .path-metrics{grid-template-columns:minmax(0,1fr);}
+        }
+
+        .metric-card{
+            padding:9px 10px;
+            border-radius:14px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            font-size:.84rem;
+            position:relative;
+            overflow:hidden;
+        }
+        .metric-card::before{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.2),transparent 55%);
+            opacity:.6;
+            pointer-events:none;
+        }
+        .metric-label{
+            font-size:.75rem;
+            text-transform:uppercase;
+            letter-spacing:.14em;
+            color:var(--muted);
+            margin-bottom:4px;
+        }
+        .metric-value{
+            font-weight:700;
+            margin-bottom:4px;
+        }
+        .metric-bar-bg{
+            width:100%;height:8px;
+            border-radius:999px;
+            background:rgba(15,23,42,0.96);
+            overflow:hidden;
+        }
+        .metric-bar-fill{
+            height:100%;
+            border-radius:999px;
+            background:linear-gradient(90deg,#22d3ee,#a855f7,#fb7185);
+            width:0%;
+            transition:width .35s ease-out;
+        }
+        .metric-caption{
+            font-size:.76rem;
+            color:var(--muted);
+            margin-top:2px;
+        }
+
+        .path-orbit{
+            position:relative;
+            width:220px;height:220px;
+            margin:0 auto;
+            border-radius:999px;
+            background:radial-gradient(circle at 30% 20%,#22d3ee,#0ea5e9 60%,#020617);
+            box-shadow:0 26px 70px rgba(0,0,0,1),var(--glow-cyan);
+            overflow:hidden;
+        }
+        .path-orbit-inner{
+            position:absolute;inset:18%;
+            border-radius:999px;
+            border:2px dashed rgba(226,232,240,0.6);
+        }
+        .path-orbit-dot{
+            position:absolute;
+            width:16px;height:16px;
+            border-radius:999px;
+            background:#f9fafb;
+            box-shadow:0 0 16px rgba(248,250,252,0.95);
+            top:8%;left:50%;
+            transform:translateX(-50%);
+            animation:path-orbit-spin 18s linear infinite;
+            transform-origin:50% 120px;
+        }
+        @keyframes path-orbit-spin{
+            from{transform:translateX(-50%) rotate(0deg);}
+            to{transform:translateX(-50%) rotate(360deg);}
+        }
+        .path-orbit-label{
+            position:absolute;
+            bottom:10px;left:50%;
+            transform:translateX(-50%);
+            font-size:.82rem;
+            font-weight:600;
+            color:#f9fafb;
+            text-shadow:0 1px 4px rgba(0,0,0,1);
+            text-align:center;
+            padding:2px 8px;
+            border-radius:999px;
+            background:rgba(2,6,23,0.82);
+        }
+
+        /* quiz + actions */
+
+        .quiz-layout{
+            display:grid;
+            grid-template-columns:minmax(0,1.4fr) minmax(0,1.05fr);
+            gap:18px;
+            position:relative;
+        }
+        .quiz-layout::before{
+            content:"";
+            position:absolute;
+            right:-60px;top:-80px;
+            width:230px;height:230px;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%23fb7185'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='30' y='40' width='170' height='120' rx='18' fill='none' stroke='url(%23g3)' stroke-width='1.5' stroke-dasharray='4 6' opacity='0.9'/%3E%3Ccircle cx='70' cy='80' r='6' fill='%23a855f7' opacity='0.9'/%3E%3Ccircle cx='120' cy='110' r='6' fill='%2322d3ee' opacity='0.9'/%3E%3Ccircle cx='170' cy='95' r='6' fill='%23fb7185' opacity='0.9'/%3E%3C/svg%3E");
+            opacity:.32;
+            pointer-events:none;
+            z-index:-1;
+        }
+        @media(max-width:900px){
+            .quiz-layout{grid-template-columns:minmax(0,1fr);}
+        }
+        .quiz-q{font-size:1rem;font-weight:650;margin-bottom:12px;}
+        .quiz-options{display:grid;gap:8px;}
+        .quiz-option{
+            padding:9px 11px;border-radius:14px;
+            border:1px solid var(--border);
+            background:rgba(5,10,25,0.98);
+            cursor:pointer;font-size:.9rem;
+            transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+            position:relative;
+            overflow:hidden;
+        }
+        .quiz-option::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.22),transparent 55%);
+            opacity:0;transition:opacity .18s;
+        }
+        .quiz-option:hover{
+            border-color:rgba(34,211,238,0.95);
+            transform:translateY(-1px);
+            box-shadow:0 14px 34px rgba(0,0,0,0.95);
+        }
+        .quiz-option:hover::before{opacity:1;}
+        .quiz-option.correct{
+            border-color:rgba(34,197,94,0.95);
+            background:linear-gradient(135deg,rgba(22,163,74,0.95),rgba(21,128,61,0.98));
+            box-shadow:0 16px 40px rgba(0,0,0,1);
+        }
+        .quiz-option.wrong{
+            border-color:rgba(248,113,113,0.95);
+            background:linear-gradient(135deg,rgba(127,29,29,0.98),rgba(153,27,27,0.98));
+            box-shadow:0 16px 40px rgba(0,0,0,1);
+        }
+        .quiz-meta{
+            margin-top:10px;
+            display:flex;justify-content:space-between;
+            flex-wrap:wrap;gap:10px;
+            font-size:.84rem;color:var(--muted);
+        }
+        .quiz-score-pill{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:4px 10px;border-radius:999px;
+            border:1px solid rgba(34,197,94,0.9);
+            background:rgba(21,128,61,0.3);
+            font-size:.8rem;
+        }
+        .quiz-explainer{font-size:.9rem;color:var(--muted);}
+
+        .cta-footer{
+            margin-top:14px;padding:16px 16px 13px;
+            border-radius:var(--radius-md);
+            border:1px dashed rgba(34,211,238,0.65);
+            background:rgba(5,10,25,0.98);
+            box-shadow:var(--shadow-soft);
+            font-size:.95rem;
+            position:relative;
+            overflow:hidden;
+        }
+        .cta-footer::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:radial-gradient(circle at 0 0,rgba(34,211,238,0.26),transparent 55%);
+            opacity:.8;
+            pointer-events:none;
+        }
+        .cta-footer strong{color:var(--accent-yellow);}
+
+        .actions-grid{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:10px;margin-top:8px;
+        }
+        @media(max-width:900px){
+            .actions-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+        }
+        @media(max-width:640px){
+            .actions-grid{grid-template-columns:minmax(0,1fr);}
+        }
+        .action-card{
+            padding:10px 11px;border-radius:14px;
+            background:rgba(5,10,25,0.98);
+            border:1px solid var(--border);
+            font-size:.86rem;cursor:pointer;
+            transition:border-color .16s,background .16s,transform .16s,box-shadow .16s;
+            position:relative;
+            overflow:hidden;
+        }
+        .action-card::before{
+            content:"";
+            position:absolute;inset:-40%;
+            background:radial-gradient(circle at 100% 0,rgba(168,85,247,0.22),transparent 55%);
+            opacity:0;transition:opacity .18s;
+        }
+        .action-card:hover{
+            border-color:rgba(34,211,238,0.95);
+            transform:translateY(-1px);
+            box-shadow:0 16px 40px rgba(0,0,0,0.98);
+        }
+        .action-card:hover::before{opacity:1;}
+        .action-card.active{
+            border-color:rgba(251,113,133,0.95);
+            background:linear-gradient(135deg,#4c1d95,#7c2d12);
+            box-shadow:0 18px 48px rgba(0,0,0,1),var(--glow-coral);
+        }
+        .action-chip{
+            position:absolute;top:8px;right:8px;
+            padding:2px 8px;border-radius:999px;
+            font-size:.7rem;
+            border:1px solid rgba(251,113,133,0.9);
+            color:#fee2e2;background:rgba(127,29,29,0.7);
+            display:none;
+        }
+        .action-card.active .action-chip{display:inline-flex;}
+
+        .plan-summary{
+            margin-top:10px;font-size:.9rem;color:var(--muted);
+        }
+        .plan-summary strong{color:var(--accent);}
+    
+        /* ========== IMAGE STYLES ========== */
+        .section-image {
+            width: 100%;
+            max-width: 900px;
+            margin: 2.5rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        .section-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .split-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2.5rem auto;
+        }
+        .split-images .section-image {
+            margin: 0;
+        }
+        @media(max-width:768px){
+            .section-image {
+                margin: 1.5rem auto;
+            }
+            .split-images {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav class="nav-dots">
+    <div class="nav-dot active" data-label="Overview" data-target="hero"></div>
+    <div class="nav-dot" data-label="CO₂ Basics" data-target="basics"></div>
+    <div class="nav-dot" data-label="Sources" data-target="sources"></div>
+    <div class="nav-dot" data-label="Risk Lab" data-target="sim"></div>
+    <div class="nav-dot" data-label="Footprint" data-target="footprint"></div>
+    <div class="nav-dot" data-label="Myths" data-target="myths"></div>
+    <div class="nav-dot" data-label="Paths" data-target="paths"></div>
+    <div class="nav-dot" data-label="Quiz & Plan" data-target="quiz"></div>
+</nav>
+
+<main class="container">
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-grid">
+            <div>
+                <div class="hero-kicker">
+                    <span>CO₂ Reality Lab</span>
+                    <span>Interactive explainer</span>
+                </div>
+                <h1 class="hero-title">
+                    <span>Are CO₂ emissions a serious problem,</span>
+                    <span class="hero-title-soft">or</span>
+                    <span class="hero-title-accent">just background noise?</span>
+                </h1>
+                <p class="hero-subtitle">
+                    This interactive lab walks you through the physics, the numbers, and
+                    the human impact behind rising CO₂. Explore scenarios, challenge myths,
+                    and design a personal action plan — all in one place.
+                </p>
+                <ul class="hero-list">
+                    <li>Understand why CO₂ is essential for life yet risky in excess.</li>
+                    <li>See how different futures unfold depending on our choices.</li>
+                    <li>Discover what actually matters at home, at work, and in policy.</li>
+                </ul>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" onclick="scrollToId('sim')">
+                        🌡️ Open Climate Risk Lab
+                    </button>
+                    <button class="btn btn-ghost" onclick="scrollToId('quiz')">
+                        ✅ Take the 3‑minute checkup
+                    </button>
+                    <span class="hero-note">
+              Designed for curious adults, homeowners, and parents who want
+              <strong>clear, science‑grounded answers</strong> without the jargon.
+            </span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-upper">
+                    <div class="hero-globe-wrap">
+                        <div class="hero-globe">
+                            <div class="hero-co2-cloud">
+                                <span id="heroPpm">280 → 320 ppm</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-stats-column">
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Human‑driven share</div>
+                            <div class="hero-stat-value">≈ 100% of warming since 1950</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Energy reality</div>
+                            <div class="hero-stat-value">Fossil fuels ≈ 75% of CO₂</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Time scale</div>
+                            <div class="hero-stat-value">CO₂ lingers for centuries</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-timeline-badge">
+                    1850 → 2100 · From coal smoke to climate choices
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BASICS -->
+    <section id="basics">
+        <header class="section-header">
+            <div class="section-badge">Chapter 1 · CO₂ in plain English</div>
+            <h2 class="section-title">CO₂ isn’t evil. The <em>imbalance</em> is.</h2>
+            <p class="section-subtitle">
+                Without greenhouse gases we would freeze. With too many, we overheat.
+                The climate challenge is not about eliminating CO₂, but about keeping it
+                within a range our societies and ecosystems can handle.
+            </p>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" alt="Earth from space showing atmosphere" loading="lazy" />
+            </div>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=1200&q=80" alt="Industrial CO2 emissions" loading="lazy" />
+            </div>
+        </header>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="tabs" id="basicsTabs">
+                    <button class="tab-btn active" data-panel="tab-what">
+                        <span>☁️</span> What is CO₂?
+                    </button>
+                    <button class="tab-btn" data-panel="tab-greenhouse">
+                        <span>🔥</span> Greenhouse effect
+                    </button>
+                    <button class="tab-btn" data-panel="tab-history">
+                        <span>📈</span> History in numbers
+                    </button>
+                </div>
+
+                <div class="tab-panel active" id="tab-what">
+                    <p class="definition">
+                        <span class="highlight">Carbon dioxide (CO₂)</span> is a simple gas:
+                        one carbon atom and two oxygen atoms. You breathe it out.
+                        Plants use it for photosynthesis. Oceans absorb and release it.
+                    </p>
+                    <p class="definition">
+                        For millions of years, CO₂ cycled between air, oceans, soils,
+                        and living things. This natural cycle kept Earth’s temperature
+                        within a band that could support complex life.
+                    </p>
+                    <p class="definition">
+                        The problem isn’t that CO₂ exists — it’s that
+                        <strong>we’re adding it far faster than natural systems can remove it</strong>
+                        by burning fossil fuels and clearing forests.
+                    </p>
+                </div>
+
+                <div class="tab-panel" id="tab-greenhouse">
+                    <p class="definition">
+                        CO₂ acts like an invisible blanket. Sunlight (short‑wave radiation)
+                        comes in easily. When Earth emits heat back out (long‑wave radiation),
+                        CO₂ and other greenhouse gases absorb part of it and re‑radiate it.
+                    </p>
+                    <p class="definition">
+                        A thin blanket keeps you warm; ten thick blankets make you overheat.
+                        The physics is not in doubt: more CO₂ =
+                        <strong>more heat trapped in the Earth system</strong>.
+                    </p>
+                    <p class="definition">
+                        What changes is not just temperature averages, but
+                        <strong>probabilities</strong>: heatwaves, heavy rainfall,
+                        droughts, and coastal flooding all become more likely and more intense.
+                    </p>
+                </div>
+
+                <div class="tab-panel" id="tab-history">
+                    <p class="definition">
+                        Ice cores from Antarctica show that over the last 800,000 years,
+                        CO₂ stayed between roughly <strong>180–300 ppm</strong>
+                        as ice ages came and went.
+                    </p>
+                    <p class="definition">
+                        In just 150 years, human activity has pushed CO₂ past
+                        <strong>420 ppm</strong>. That jump is
+                        <em>tens of times faster</em> than natural swings.
+                    </p>
+                </div>
+
+                <div class="mini-chart">
+                    <div class="mini-chart-bars">
+                        <div class="mini-bar" id="barPre" style="height:40%;">
+                            <div class="mini-bar-label">Pre‑industrial</div>
+                        </div>
+                        <div class="mini-bar modern" id="barNow" style="height:80%;">
+                            <div class="mini-bar-label">Today</div>
+                        </div>
+                    </div>
+                    <div class="mini-chart-caption">
+                        <span>Typical past level: ~280 ppm</span>
+                        <span>Current level: 420+ ppm</span>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-label">CO₂ journey</div>
+                        <div class="timeline-points" id="co2Timeline">
+                            <div class="timeline-point active" data-ppm="280" data-label="Pre‑industrial">
+                                <strong>1850</strong>280 ppm
+                            </div>
+                            <div class="timeline-point" data-ppm="315" data-label="Post‑war boom">
+                                <strong>1950</strong>315 ppm
+                            </div>
+                            <div class="timeline-point" data-ppm="420" data-label="Today">
+                                <strong>Today</strong>420+ ppm
+                            </div>
+                            <div class="timeline-point" data-ppm="450" data-label="Goal vs risk">
+                                <strong>2100?</strong>450 ppm?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="font-size:.96rem;font-weight:700;margin-bottom:6px;">
+                    Why “a few degrees” is a very big deal
+                </h3>
+                <p class="definition">
+                    A 2–3 °C fever in a person is the difference between “fine” and “hospital”.
+                    For the planet, a few degrees change the odds of
+                    <strong>megafires, crop failures, coral loss, and coastal flooding</strong>.
+                </p>
+                <p class="definition">
+                    The map of winners and losers is uneven: some regions see heavier rain,
+                    others deeper drought. But the economic and humanitarian risks
+                    spread through food prices, migration, and supply chains.
+                </p>
+                <p class="definition">
+                    The key message of this lab:
+                    <span class="highlight">CO₂ emissions are a serious problem because they
+            rapidly amplify a basic physical effect, not because of “doom narratives”.</span>
+                </p>
+                <div class="callout">
+                    Think of CO₂ like a thermostat everyone’s touching at once.
+                    Every year we keep turning it up narrows the room for safe, affordable,
+                    and fair solutions — but every year of cuts widens that room again.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOURCES -->
+    <section id="sources">
+        <header class="section-header">
+            <div class="section-badge">Chapter 2 · Where emissions come from</div>
+            <h2 class="section-title">Global engines vs. everyday choices.</h2>
+            <p class="section-subtitle">
+                Most CO₂ comes from large systems — energy, transport, buildings, food.
+                Switch the view to see how the picture changes from
+                <strong>global</strong> to <strong>household</strong>.
+            </p>
+        <div class="section-image" style="margin-top: 2rem;">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200&q=80" alt="Global emission sources" loading="lazy" />
+        </div>
+
+        </header>
+
+        <div class="dashboard card">
+            <div>
+                <div class="toggle-group" id="sourceToggle">
+                    <button class="toggle-btn active" data-mode="global">Global system view</button>
+                    <button class="toggle-btn" data-mode="home">Household view</button>
+                </div>
+
+                <div class="toggle-group" id="scenarioToggle" style="margin-left:8px;">
+                    <button class="toggle-btn active" data-scenario="conservative">Conservative</button>
+                    <button class="toggle-btn" data-scenario="current">Current path</button>
+                    <button class="toggle-btn" data-scenario="ambitious">Ambitious</button>
+                </div>
+                <div class="scenario-note" id="scenarioNote">
+                    Scenario: Conservative — small shifts away from fossil fuels.
+                </div>
+
+                <div class="source-grid" id="sourceGrid"></div>
+            </div>
+            <div>
+                <h3 style="font-size:.96rem;font-weight:700;margin-bottom:6px;">
+                    Selected source insight
+                </h3>
+                <p class="muted" style="font-size:.88rem;margin-bottom:6px;">
+                    Click a card to see how that source works, why it matters,
+                    and where realistic solutions are already emerging.
+                </p>
+                <div class="source-detail" id="sourceDetail">
+                    Choose a source on the left to explore its role in global CO₂ emissions
+                    and how its share shifts under different scenarios.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RISK LAB -->
+    <section id="sim">
+        <header class="section-header">
+            <div class="section-badge">Chapter 3 · Climate Risk Lab</div>
+            <h2 class="section-title">Three sliders. Many futures.</h2>
+            <div class="split-images">
+                <div class="section-image">
+                    <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=600&q=80" alt="Future climate scenarios" loading="lazy" />
+                </div>
+                <div class="section-image">
+                    <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80" alt="Power generation infrastructure" loading="lazy" />
+                </div>
+            </div>
+            <p class="section-subtitle">
+                This lab is intentionally simplified. It shows how atmospheric CO₂,
+                action speed, and nature loss work together to shape long‑term risk —
+                not to predict the exact year of any event.
+            </p>
+        </header>
+
+        <div class="card sim-layout">
+            <div>
+                <div class="slider-block">
+                    <div class="slider-label">
+                        <span>Atmospheric CO₂ level</span>
+                        <span id="simPpmLabel">420 ppm</span>
+                    </div>
+                    <input id="simPpm" type="range" min="280" max="700" step="5" value="420" />
+                </div>
+
+                <div class="slider-block" style="margin-top:14px;">
+                    <div class="slider-label">
+                        <span>Global action speed</span>
+                        <span id="simActionLabel">60% of max · Slow–medium</span>
+                    </div>
+                    <input id="simAction" type="range" min="0" max="100" step="1" value="60" />
+                </div>
+
+                <div class="slider-block" style="margin-top:14px;">
+                    <div class="slider-label">
+                        <span>Nature protection</span>
+                        <span id="simNatureLabel">55% of max · Some progress</span>
+                    </div>
+                    <input id="simNature" type="range" min="0" max="100" step="1" value="55" />
+                </div>
+
+                <div class="sim-output">
+                    <div class="sim-chip">
+                        <div class="sim-chip-label">Estimated warming by 2100</div>
+                        <div class="sim-chip-value" id="simWarming">~2.5 °C above pre‑industrial</div>
+                    </div>
+                    <div class="sim-chip">
+                        <div class="sim-chip-label">Risk band</div>
+                        <div class="sim-chip-value">
+                            <span id="simRiskPill" class="risk-pill risk-med">⚠️ Medium–High</span>
+                        </div>
+                    </div>
+                    <div class="sim-chip">
+                        <div class="sim-chip-label">Impact on human systems</div>
+                        <div class="sim-chip-value" id="simImpact">
+                            Major adaptation needed within current children’s lifetimes
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-gauge" id="simNarrative">
+                    With moderate CO₂ levels, a slow transition off fossil fuels, and partial
+                    protection of forests and wetlands, the world faces more frequent heatwaves,
+                    stressed crops and rising coastal risks — still manageable in many places,
+                    but expensive and uneven.
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size:.96rem;font-weight:700;margin-bottom:6px;">
+                    Reading the dials like a strategist
+                </h3>
+                <p class="definition">
+                    Think of this lab as a control room. Turning the
+                    <strong>CO₂ dial</strong> up always increases warming. The
+                    <strong>action speed dial</strong> adjusts how quickly emissions fall.
+                    The <strong>nature dial</strong> represents forests, wetlands, and soils
+                    that absorb carbon and cushion extremes.
+                </p>
+                <p class="definition">
+                    Try these presets:
+                </p>
+                <ul class="hero-list" style="margin-bottom:8px;">
+                    <li><strong>“Business as usual”</strong> — high CO₂, very slow action, weak nature protection.</li>
+                    <li><strong>“Strong but late”</strong> — high CO₂, fast action, strong nature protection.</li>
+                    <li><strong>“Early and steady”</strong> — moderate CO₂, fast action, strong nature protection.</li>
+                </ul>
+                <p class="definition">
+                    Notice how the risk band and narrative change. The numbers are illustrative,
+                    but the direction is anchored in mainstream climate science:
+                    <span class="highlight">less CO₂ and faster cuts always reduce long‑term risk</span>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTPRINT -->
+    <section id="footprint">
+        <header class="section-header">
+            <div class="section-badge">Chapter 4 · Your footprint & influence</div>
+            <h2 class="section-title">You’re not the whole problem — but you are part of the solution.</h2>
+            <p class="section-subtitle">
+                Climate action is a three‑layer cake: personal choices, community & workplace,
+                and policy. Individual steps are not about guilt — they are about
+                <strong>aligning your life with the future you want</strong>.
+            </p>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&q=80" alt="Personal carbon footprint choices" loading="lazy" />
+            </div>
+        </header>
+
+        <div class="card foot-grid">
+            <div>
+                <p class="definition" style="margin-bottom:10px;">
+                    Tap any tile that already matches your lifestyle or that you genuinely want to aim for.
+                    The index starts at <strong>100</strong> (roughly average lifestyle in an industrialised country).
+                </p>
+                <div class="foot-options" id="footOptions">
+                    <div class="foot-option" data-impact="-12">
+                        <div>
+                            <strong>Efficient home</strong><br />
+                            <span class="muted">
+                  Solid insulation, LED lighting, and thermostats set for comfort, not waste.
+                </span>
+                        </div>
+                    </div>
+                    <div class="foot-option" data-impact="-18">
+                        <div>
+                            <strong>Low‑car commute</strong><br />
+                            <span class="muted">
+                  Rely on public transport, car‑sharing, cycling or walking for most weekly trips.
+                </span>
+                        </div>
+                    </div>
+                    <div class="foot-option" data-impact="-10">
+                        <div>
+                            <strong>Food pattern</strong><br />
+                            <span class="muted">
+                  Weekly rhythm with more plant‑rich meals and very little food waste.
+                </span>
+                        </div>
+                    </div>
+                    <div class="foot-option" data-impact="-20">
+                        <div>
+                            <strong>Flights in check</strong><br />
+                            <span class="muted">
+                  Fewer short trips by plane; combine journeys; default to train for regional travel.
+                </span>
+                        </div>
+                    </div>
+                    <div class="foot-option" data-impact="-8">
+                        <div>
+                            <strong>Cleaner energy</strong><br />
+                            <span class="muted">
+                  Choose green electricity where available, support rooftop solar or community energy.
+                </span>
+                        </div>
+                    </div>
+                    <div class="foot-option" data-impact="-6">
+                        <div>
+                            <strong>Money &amp; voice</strong><br />
+                            <span class="muted">
+                  Vote, talk about climate in your circles, and prefer banks / pension funds
+                  that are reducing fossil exposure.
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size:.96rem;font-weight:700;margin-bottom:6px;">
+                    Relative footprint index
+                </h3>
+                <p class="definition">
+                    Think of this score as a dashboard light, not a moral verdict.
+                    The aim is not to hit zero — it is to
+                    <strong>steer in a lower‑risk direction over time</strong>.
+                </p>
+
+                <div class="foot-bar-bg">
+                    <div class="foot-bar-fill" id="footBar"></div>
+                </div>
+                <div class="foot-bar-labels">
+                    <span>Lower</span><span>Average</span><span>Higher</span>
+                </div>
+
+                <p class="foot-summary" id="footSummary">
+                    Current index: <strong>100</strong> — around average. Each tapped habit
+                    moves you toward a lower‑carbon lifestyle while often saving money and
+                    improving comfort and health.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MYTHS -->
+    <section id="myths">
+        <header class="section-header">
+            <div class="section-badge">Chapter 5 · Myth clinic</div>
+            <h2 class="section-title">From “CO₂ is plant food” to “it’s already too late”.</h2>
+            <p class="section-subtitle">
+                Use this mini myth‑clinic to rehearse how you might respond — calm, factual,
+                and focused on solutions.
+            </p>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&q=80" alt="Climate science and data" loading="lazy" />
+            </div>
+        </header>
+
+        <div class="card myths-layout">
+            <div>
+                <div class="myth-main">
+                    <div class="myth-label" id="mythLabel">Myth 1</div>
+                    <div class="myth-title" id="mythTitle">
+                        “CO₂ can’t be a problem — plants love it.”
+                    </div>
+                    <p class="myth-text" id="mythText">
+                        Plants do use CO₂, but ecosystems evolved around much lower levels. Rapid warming,
+                        shifting rainfall and fire regimes can stress or kill forests and crops, releasing
+                        more carbon. Healthy ecosystems need stable conditions, not unlimited CO₂.
+                    </p>
+                </div>
+                <div class="myth-controls">
+                    <div class="myth-nav">
+                        <button class="myth-btn" id="mythPrev">&larr;</button>
+                        <button class="myth-btn" id="mythNext">&rarr;</button>
+                    </div>
+                    <div id="mythCounter">1 / 5</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="myths-grid">
+                    <div class="myth-chip">
+                        <strong>Conversation tip</strong>
+                        Focus on shared values: safety, stability, and responsible risk management,
+                        not on “winning” the argument.
+                    </div>
+                    <div class="myth-chip">
+                        <strong>Use simple analogies</strong>
+                        Fever, extra blankets, or overloaded power sockets often explain risk better
+                        than graphs and acronyms.
+                    </div>
+                    <div class="myth-chip">
+                        <strong>Connect to solutions</strong>
+                        After correcting a myth, pivot quickly to practical options — home,
+                        community, and policy levels.
+                    </div>
+                    <div class="myth-chip">
+                        <strong>Avoid shaming</strong>
+                        Most people did not choose the current energy system.
+                        The question is what we do with the knowledge we have now.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PATH COMPARISON -->
+    <section id="paths">
+        <header class="section-header">
+            <div class="section-badge">Chapter 6 · Future paths</div>
+            <h2 class="section-title">One planet, three futures.</h2>
+            <p class="section-subtitle">
+                Use this visual to compare what 2100 might look like under different choices.
+                Numbers are illustrative — the direction of change is what matters.
+            </p>
+            <div class="split-images">
+                <div class="section-image">
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Solar renewable energy" loading="lazy" />
+                </div>
+                <div class="section-image">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80" alt="Forest carbon capture" loading="lazy" />
+                </div>
+            </div>
+        </header>
+
+        <div class="card paths-layout">
+            <div>
+                <div class="path-buttons" id="pathButtons">
+                    <button class="path-btn active" data-id="low">Lower‑risk path</button>
+                    <button class="path-btn" data-id="middle">Middle‑of‑the‑road</button>
+                    <button class="path-btn" data-id="high">High‑risk path</button>
+                </div>
+                <p class="path-note" id="pathNote">
+                    Lower‑risk path: fast emission cuts, strong nature protection, and rapid clean‑energy build‑out.
+                </p>
+
+                <div class="path-metrics">
+                    <div class="metric-card">
+                        <div class="metric-label">Global warming</div>
+                        <div class="metric-value" id="metricTemp">~1.7 °C</div>
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="barTemp" style="width:35%"></div>
+                        </div>
+                        <div class="metric-caption" id="captionTemp">
+                            Hard but manageable: many risks lowered compared with higher paths.
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Sea‑level rise</div>
+                        <div class="metric-value" id="metricSea">~0.6 m by 2100</div>
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="barSea" style="width:40%"></div>
+                        </div>
+                        <div class="metric-caption" id="captionSea">
+                            Coastal cities adapt with planning instead of emergency retreat.
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Extreme heat days</div>
+                        <div class="metric-value" id="metricHeat">+50–100% vs today</div>
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="barHeat" style="width:45%"></div>
+                        </div>
+                        <div class="metric-caption" id="captionHeat">
+                            Dangerous heat still exists, but fewer regions become “unlivable”.
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Ecosystem stress</div>
+                        <div class="metric-value" id="metricEco">Moderate</div>
+                        <div class="metric-bar-bg">
+                            <div class="metric-bar-fill" id="barEco" style="width:40%"></div>
+                        </div>
+                        <div class="metric-caption" id="captionEco">
+                            Some coral and Arctic systems are lost; many forests can adapt.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="path-orbit" id="pathOrbit">
+                    <div class="path-orbit-inner"></div>
+                    <div class="path-orbit-dot" id="orbitDot"></div>
+                    <div class="path-orbit-label" id="orbitLabel">
+                        Lower‑risk trajectory
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ + ACTION -->
+    <section id="quiz">
+        <header class="section-header">
+            <div class="section-badge">Chapter 7 · Quick check & action board</div>
+            <h2 class="section-title">Are CO₂ emissions a serious problem? Now you decide.</h2>
+            <p class="section-subtitle">
+                A short quiz to lock in the key messages, followed by an action board
+                where you can pin ideas you actually want to try.
+            </p>
+        </header>
+
+        <div class="card quiz-layout">
+            <div>
+                <div class="quiz-q" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-meta">
+                    <div class="quiz-score-pill">
+                        Score: <span id="quizScore">0</span>/<span id="quizTotal">3</span>
+                    </div>
+                    <div>Question <span id="quizIndex">1</span> of 3</div>
+                </div>
+                <button class="btn btn-primary" style="margin-top:12px;" id="quizNextBtn">
+                    Next question
+                </button>
+            </div>
+            <div class="quiz-explainer" id="quizExplainer">
+                Select the best answer based on what you’ve seen so far.
+                Each explanation will tie your choice back to the big picture:
+                <strong>CO₂ is essential for life, but too much, too fast,
+                    drives serious and avoidable risks.</strong>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+            <h3 style="font-size:.96rem;font-weight:700;margin-bottom:6px;">
+                Personal action board
+            </h3>
+            <p class="muted" style="font-size:.9rem;margin-bottom:8px;">
+                Click the tiles that feel realistic for you over the next 12 months.
+                Saved selections are stored in your browser so you can come back to them later.
+            </p>
+            <div class="actions-grid" id="actionGrid"></div>
+            <p class="plan-summary" id="planSummary">
+                You haven’t pinned any actions yet. Start by selecting one small,
+                low‑friction change — something you could genuinely imagine doing this month.
+            </p>
+        </div>
+
+        <div class="cta-footer">
+            <p>
+                <strong>Closing thought:</strong> CO₂ emissions are a serious problem because they
+                change the background conditions for everything we care about —
+                health, food, homes, and economies. But they are not an unsolvable problem.
+                The more we align our technologies, policies, and everyday choices with a
+                lower‑risk path, the more options we keep open for ourselves and the people
+                who come after us.
+            </p>
+        </div>
+    </section>
+</main>
+
+<script>
+    function scrollToId(id){
+        const el=document.getElementById(id);
+        if(el){
+            window.scrollTo({
+                top:el.offsetTop-60,
+                behavior:"smooth"
+            });
+        }
+    }
+
+    // nav dots
+    (function(){
+        const dots=document.querySelectorAll(".nav-dot");
+        dots.forEach(dot=>{
+            dot.addEventListener("click",()=>scrollToId(dot.dataset.target));
+        });
+        const sections=[...document.querySelectorAll("section")];
+        window.addEventListener("scroll",()=>{
+            const y=window.scrollY;
+            let active="hero";
+            sections.forEach(sec=>{
+                if(y>=sec.offsetTop-140) active=sec.id;
+            });
+            dots.forEach(dot=>{
+                dot.classList.toggle("active",dot.dataset.target===active);
+            });
+        });
+    })();
+
+    // hero ppm loop
+    (function(){
+        const el=document.getElementById("heroPpm");
+        if(!el) return;
+        const vals=["280 → 320 ppm","320 → 370 ppm","370 → 420+ ppm"];
+        let i=0;
+        setInterval(()=>{i=(i+1)%vals.length;el.textContent=vals[i];},2600);
+    })();
+
+    // basics tabs
+    (function(){
+        const tabs=document.querySelectorAll("#basicsTabs .tab-btn");
+        const panels=document.querySelectorAll(".tab-panel");
+        tabs.forEach(tab=>{
+            tab.addEventListener("click",()=>{
+                const target=tab.dataset.panel;
+                tabs.forEach(t=>t.classList.remove("active"));
+                tab.classList.add("active");
+                panels.forEach(p=>p.classList.toggle("active",p.id===target));
+            });
+        });
+    })();
+
+    // CO2 timeline -> sync hero text + mini bars
+    (function(){
+        const points=document.querySelectorAll("#co2Timeline .timeline-point");
+        const heroLabel=document.getElementById("heroPpm");
+        const barPre=document.getElementById("barPre");
+        const barNow=document.getElementById("barNow");
+
+        points.forEach(p=>{
+            p.addEventListener("click",()=>{
+                points.forEach(x=>x.classList.remove("active"));
+                p.classList.add("active");
+                const ppm=p.dataset.ppm;
+                const label=p.dataset.label || "";
+                if(heroLabel){
+                    if(label){
+                        heroLabel.textContent=label+" · "+ppm+" ppm";
+                    }else if(ppm==="280"){
+                        heroLabel.textContent="280 → 320 ppm";
+                    }else if(ppm==="315"){
+                        heroLabel.textContent="320 → 370 ppm";
+                    }else{
+                        heroLabel.textContent="370 → 420+ ppm";
+                    }
+                }
+                if(barPre && barNow){
+                    if(ppm==="280"){
+                        barPre.style.height="40%";
+                        barNow.style.height="80%";
+                    }else if(ppm==="315"){
+                        barPre.style.height="45%";
+                        barNow.style.height="85%";
+                    }else if(ppm==="420"){
+                        barPre.style.height="40%";
+                        barNow.style.height="90%";
+                    }else{
+                        barPre.style.height="40%";
+                        barNow.style.height="95%";
+                    }
+                }
+            });
+        });
+    })();
+
+    // sources with scenarios
+    (function(){
+        const grid=document.getElementById("sourceGrid");
+        const detail=document.getElementById("sourceDetail");
+        const viewBtns=document.querySelectorAll("#sourceToggle .toggle-btn");
+        const scenBtns=document.querySelectorAll("#scenarioToggle .toggle-btn");
+        const scenNote=document.getElementById("scenarioNote");
+
+        if(!grid) return;
+
+        const baseSources={
+            global:[
+                {
+                    id:"power",
+                    icon:"⚡",
+                    label:"Electricity & heat",
+                    blurb:"Burning coal, oil and gas in power plants to generate electricity and heat.",
+                    detail:"Power generation is the single largest source of CO₂ today. Coal plants are the most carbon‑intensive, followed by oil and then gas. Solutions include wind, solar, hydro, geothermal and better grid storage."
+                },
+                {
+                    id:"transport",
+                    icon:"🚗",
+                    label:"Transport",
+                    blurb:"Road vehicles, ships, planes, and freight moving goods and people.",
+                    detail:"Cars, trucks, ships and planes collectively form another major slice. Electric vehicles, efficient logistics, better urban design and shifting short trips to public transport or bikes all help."
+                },
+                {
+                    id:"industry",
+                    icon:"🏭",
+                    label:"Industry",
+                    blurb:"Steel, cement, chemicals, and manufacturing of everyday products.",
+                    detail:"Industry emits CO₂ both from burning fuels for heat and from chemical reactions. Low‑carbon steel, alternative cements, circular design and electrified heat are key innovation areas."
+                },
+                {
+                    id:"land",
+                    icon:"🌳",
+                    label:"Land & agriculture",
+                    blurb:"Deforestation, agriculture, and land‑use changes that release stored carbon.",
+                    detail:"Cutting forests, draining peatlands and intensive farming release large amounts of greenhouse gases. Protecting and restoring ecosystems, improving soil health and cutting food waste can reverse this trend."
+                }
+            ],
+            home:[
+                {
+                    id:"home-heat",
+                    icon:"🏠",
+                    label:"Home heating & cooling",
+                    blurb:"Boilers, furnaces, and air conditioners keeping indoor spaces comfortable.",
+                    detail:"In many climates, heating is the biggest household energy use. Better insulation, smart thermostats and heat pumps can deliver the same comfort with less energy and fewer emissions."
+                },
+                {
+                    id:"home-power",
+                    icon:"💡",
+                    label:"Appliances & lighting",
+                    blurb:"Fridges, washing machines, electronics, and lighting.",
+                    detail:"Efficient appliances and LED lighting save money and emissions every hour they are on. Choosing efficient models and switching off standby loads has a quiet but persistent impact."
+                },
+                {
+                    id:"home-travel",
+                    icon:"🚉",
+                    label:"Everyday transport",
+                    blurb:"Daily commuting, school runs, and local errands.",
+                    detail:"Replacing some short car trips with walking, cycling, or public transport cuts emissions and usually improves health."
+                },
+                {
+                    id:"home-food",
+                    icon:"🥗",
+                    label:"Food & shopping",
+                    blurb:"What we eat, how we shop, and what we waste.",
+                    detail:"Plant‑rich meals, low food waste and choosing durable goods reduce the footprint of eating and shopping."
+                }
+            ]
+        };
+
+        const scenarios={
+            conservative:{note:"Scenario: Conservative — small shifts away from fossil fuels.",factor:1.0},
+            current:{note:"Scenario: Current path — moderate policy and technology shifts.",factor:0.9},
+            ambitious:{note:"Scenario: Ambitious — rapid clean‑energy deployment and efficiency.",factor:0.75}
+        };
+
+        let currentView="global";
+        let currentScenario="conservative";
+
+        function getShare(id){
+            const base={
+                power:35,
+                transport:24,
+                industry:21,
+                land:20,
+                "home-heat":30,
+                "home-power":20,
+                "home-travel":30,
+                "home-food":20
+            }[id] || 0;
+
+            const f=scenarios[currentScenario].factor;
+
+            if(currentScenario==="ambitious" && (id==="power" || id==="home-heat")){
+                return Math.max(8,base*f);
+            }
+            if(currentScenario==="ambitious" && (id==="land" || id==="home-food")){
+                return base*1.1;
+            }
+            if(currentScenario==="current" && (id==="power" || id==="home-heat")){
+                return base*0.9;
+            }
+            return base;
+        }
+
+        function render(){
+            const list=baseSources[currentView];
+            grid.innerHTML="";
+            list.forEach(item=>{
+                const card=document.createElement("div");
+                card.className="source-card";
+                const share=getShare(item.id);
+
+                card.innerHTML=`
+          <div class="source-icon">${item.icon}</div>
+          <div>
+            <div class="source-title">${item.label}</div>
+            <div class="source-meta">${item.blurb}</div>
+            <div class="source-bar">
+              <div class="source-bar-fill" style="width:${share}%"></div>
+            </div>
+          </div>
+        `;
+
+                card.addEventListener("click",()=>{
+                    if(detail){
+                        detail.innerHTML=`<strong>${item.label}</strong><br>${item.detail}`;
+                    }
+                });
+
+                grid.appendChild(card);
+            });
+            if(scenNote){
+                scenNote.textContent=scenarios[currentScenario].note;
+            }
+        }
+
+        viewBtns.forEach(btn=>{
+            btn.addEventListener("click",()=>{
+                const mode=btn.dataset.mode;
+                if(mode===currentView) return;
+                currentView=mode;
+                viewBtns.forEach(b=>b.classList.remove("active"));
+                btn.classList.add("active");
+                if(detail){
+                    detail.textContent="Choose a source on the left to explore its role and how it changes under different scenarios.";
+                }
+                render();
+            });
+        });
+
+        scenBtns.forEach(btn=>{
+            btn.addEventListener("click",()=>{
+                const sc=btn.dataset.scenario;
+                if(sc===currentScenario) return;
+                currentScenario=sc;
+                scenBtns.forEach(b=>b.classList.remove("active"));
+                btn.classList.add("active");
+                render();
+            });
+        });
+
+        render();
+    })();
+
+    // sim sliders
+    (function(){
+        const ppmInput=document.getElementById("simPpm");
+        const actInput=document.getElementById("simAction");
+        const natInput=document.getElementById("simNature");
+
+        const ppmLabel=document.getElementById("simPpmLabel");
+        const actLabel=document.getElementById("simActionLabel");
+        const natLabel=document.getElementById("simNatureLabel");
+
+        const warmEl=document.getElementById("simWarming");
+        const riskPill=document.getElementById("simRiskPill");
+        const impactEl=document.getElementById("simImpact");
+        const narrEl=document.getElementById("simNarrative");
+
+        if(!ppmInput || !actInput || !natInput) return;
+
+        function labelForAction(x){
+            if(x<30) return x+"% of max · Very slow";
+            if(x<70) return x+"% of max · Slow–medium";
+            return x+"% of max · Fast";
+        }
+        function labelForNature(x){
+            if(x<30) return x+"% of max · High loss";
+            if(x<70) return x+"% of max · Some progress";
+            return x+"% of max · Strong protection";
+        }
+
+        function update(){
+            const ppm=Number(ppmInput.value);
+            const act=Number(actInput.value);
+            const nat=Number(natInput.value);
+
+            ppmLabel.textContent=ppm+" ppm";
+            actLabel.textContent=labelForAction(act);
+            natLabel.textContent=labelForNature(nat);
+
+            const base=Math.max(0,(ppm-280)/60);
+            const actionFactor=1.4-0.7*(act/100);
+            const natureFactor=1.2-0.4*(nat/100);
+            const warming=(base*actionFactor*natureFactor).toFixed(1);
+            warmEl.textContent=warming+" °C above pre‑industrial";
+
+            let riskClass="risk-med";
+            let riskText="Medium–High";
+            let impact="Major adaptation required within this century";
+            let narrative="At 2–3 °C, many regions face severe heat stress and changing rainfall. Coastal cities must invest heavily in defences or retreat plans. Some ecosystems, like coral reefs, are heavily damaged.";
+
+            const w=parseFloat(warming);
+
+            if(w<1.8){
+                riskClass="risk-low";
+                riskText="Lower (not zero)";
+                impact="Noticeable shifts but greater room to adapt and innovate.";
+                narrative="Keeping warming closer to 1.5–2 °C means fewer extreme heatwaves, lower sea‑level rise and more time to upgrade infrastructure in an orderly way.";
+            }else if(w>3.2){
+                riskClass="risk-high";
+                riskText="Very high";
+                impact="Severe pressure on food, water, and coastal systems.";
+                narrative="Beyond ~3 °C, it becomes much harder to maintain current patterns of agriculture, settlement and infrastructure. Avoiding this range is one core reason CO₂ emissions are treated as a serious global risk.";
+            }
+
+            riskPill.className="risk-pill "+riskClass;
+            riskPill.textContent=riskText;
+            impactEl.textContent=impact;
+            narrEl.textContent=narrative;
+        }
+
+        ppmInput.addEventListener("input",update);
+        actInput.addEventListener("input",update);
+        natInput.addEventListener("input",update);
+        update();
+    })();
+
+    // footprint
+    (function(){
+        const wrap=document.getElementById("footOptions");
+        if(!wrap) return;
+        const bar=document.getElementById("footBar");
+        const summary=document.getElementById("footSummary");
+        const base=100;
+        const options=[...wrap.querySelectorAll(".foot-option")];
+
+        function recalc(){
+            let score=base;
+            options.forEach(opt=>{
+                if(opt.classList.contains("active")){
+                    score+=Number(opt.dataset.impact||0);
+                }
+            });
+            const clamped=Math.max(40,Math.min(140,score));
+            const pct=((clamped-40)/(140-40))*100;
+            bar.style.width=pct+"%";
+
+            let descriptor="around average";
+            if(score<70) descriptor="much lower than average";
+            else if(score<90) descriptor="lower than average";
+            else if(score>110) descriptor="higher than average";
+
+            summary.innerHTML=`Current index: <strong>${score.toFixed(0)}</strong> — ${descriptor}. No one can get to zero, but each selected habit steadily shifts your life toward a lower‑carbon, lower‑risk pattern.`;
+        }
+
+        options.forEach(opt=>{
+            opt.addEventListener("click",()=>{
+                opt.classList.toggle("active");
+                recalc();
+            });
+        });
+
+        recalc();
+    })();
+
+    // myths carousel
+    (function(){
+        const myths=[
+            {
+                label:"Myth 1",
+                title:"“CO₂ can’t be a problem — plants love it.”",
+                text:"Plants do use CO₂, but ecosystems evolved around much lower levels. Rapid warming, shifting rainfall and fire regimes can stress or kill forests and crops, releasing more carbon. Healthy ecosystems need stable conditions, not unlimited CO₂."
+            },
+            {
+                label:"Myth 2",
+                title:"“Earth’s climate always changes by itself.”",
+                text:"Yes, climate has changed in the past, but usually over thousands of years. Today’s warming is happening in about a century and carries the fingerprint of fossil‑fuel greenhouse gases and an energy imbalance measured from space."
+            },
+            {
+                label:"Myth 3",
+                title:"“It’s just politics or a hoax.”",
+                text:"The basic physics of greenhouse gases predates modern politics. Independent scientific bodies around the world — from national academies to space agencies — converge on the same conclusion: cutting CO₂ reduces long‑term risk."
+            },
+            {
+                label:"Myth 4",
+                title:"“My choices are too small to matter.”",
+                text:"No single household solves climate change. But habits spread through culture, markets and policy. Demand for cleaner options tells companies and governments which investments make sense; millions of small choices add up."
+            },
+            {
+                label:"Myth 5",
+                title:"“If it’s serious, it’s already too late.”",
+                text:"Climate risk is a spectrum, not a cliff edge. Every fraction of a degree we avoid reduces risk. Earlier and faster emission cuts always help — there is no point at which constructive action stops mattering."
+            }
+        ];
+
+        const labelEl=document.getElementById("mythLabel");
+        const titleEl=document.getElementById("mythTitle");
+        const textEl=document.getElementById("mythText");
+        const counterEl=document.getElementById("mythCounter");
+        const prevBtn=document.getElementById("mythPrev");
+        const nextBtn=document.getElementById("mythNext");
+
+        if(!labelEl || !titleEl || !textEl) return;
+        let index=0;
+
+        function render(){
+            const m=myths[index];
+            labelEl.textContent=m.label;
+            titleEl.textContent=m.title;
+            textEl.textContent=m.text;
+            if(counterEl) counterEl.textContent=`${index+1} / ${myths.length}`;
+        }
+
+        if(prevBtn) prevBtn.addEventListener("click",()=>{
+            index=(index-1+myths.length)%myths.length;
+            render();
+        });
+        if(nextBtn) nextBtn.addEventListener("click",()=>{
+            index=(index+1)%myths.length;
+            render();
+        });
+
+        render();
+    })();
+
+    // paths
+    (function(){
+        const btns=document.querySelectorAll("#pathButtons .path-btn");
+        const note=document.getElementById("pathNote");
+        const orbitLabel=document.getElementById("orbitLabel");
+        const orbitDot=document.getElementById("orbitDot");
+        const temp=document.getElementById("metricTemp");
+        const barTemp=document.getElementById("barTemp");
+        const capTemp=document.getElementById("captionTemp");
+        const sea=document.getElementById("metricSea");
+        const barSea=document.getElementById("barSea");
+        const capSea=document.getElementById("captionSea");
+        const heat=document.getElementById("metricHeat");
+        const barHeat=document.getElementById("barHeat");
+        const capHeat=document.getElementById("captionHeat");
+        const eco=document.getElementById("metricEco");
+        const barEco=document.getElementById("barEco");
+        const capEco=document.getElementById("captionEco");
+
+        const data={
+            low:{
+                note:"Lower‑risk path: fast emission cuts, strong nature protection, and rapid clean‑energy build‑out.",
+                orbit:"Lower‑risk trajectory",
+                dot:15,
+                temp:"~1.7 °C",
+                tempBar:35,
+                tempCap:"Hard but manageable: many risks lowered compared with higher paths.",
+                sea:"~0.6 m by 2100",
+                seaBar:40,
+                seaCap:"Coastal cities adapt with planning instead of emergency retreat.",
+                heat:"+50–100% vs today",
+                heatBar:45,
+                heatCap:"Dangerous heat still exists, but fewer regions become “unlivable”.",
+                eco:"Moderate",
+                ecoBar:40,
+                ecoCap:"Some coral and Arctic systems are lost; many forests can adapt."
+            },
+            middle:{
+                note:"Middle‑of‑the‑road: gradual emission cuts and patchy nature protection.",
+                orbit:"Middle‑of‑the‑road trajectory",
+                dot:50,
+                temp:"~2.6 °C",
+                tempBar:65,
+                tempCap:"Heatwaves, droughts and floods become more intense and widespread.",
+                sea:"~0.8–1.0 m by 2100",
+                seaBar:70,
+                seaCap:"Many coastal areas need expensive defences or relocation.",
+                heat:"+150–300% vs today",
+                heatBar:75,
+                heatCap:"Extreme heat becomes a regular summer feature in many regions.",
+                eco:"High",
+                ecoBar:70,
+                ecoCap:"Large share of coral reefs and some forests cannot adapt in time."
+            },
+            high:{
+                note:"High‑risk path: continued high emissions and heavy ecosystem loss.",
+                orbit:"High‑risk trajectory",
+                dot:80,
+                temp:"~3.5–4 °C",
+                tempBar:95,
+                tempCap:"Transformative changes to climate patterns almost everywhere.",
+                sea:"≥1 m by 2100, still rising",
+                seaBar:95,
+                seaCap:"Frequent coastal flooding and large‑scale managed retreat.",
+                heat:"+300%+ vs today",
+                heatBar:98,
+                heatCap:"Dangerous heat days dominate summers in many cities.",
+                eco:"Very high",
+                ecoBar:95,
+                ecoCap:"Widespread ecosystem disruption with knock‑on effects for food and water."
+            }
+        };
+
+        function renderKey(key){
+            const d=data[key];
+            if(!d) return;
+            if(note) note.textContent=d.note;
+            if(orbitLabel) orbitLabel.textContent=d.orbit;
+            if(orbitDot) orbitDot.style.top=d.dot+"%";
+            if(temp) temp.textContent=d.temp;
+            if(barTemp) barTemp.style.width=d.tempBar+"%";
+            if(capTemp) capTemp.textContent=d.tempCap;
+            if(sea) sea.textContent=d.sea;
+            if(barSea) barSea.style.width=d.seaBar+"%";
+            if(capSea) capSea.textContent=d.seaCap;
+            if(heat) heat.textContent=d.heat;
+            if(barHeat) barHeat.style.width=d.heatBar+"%";
+            if(capHeat) capHeat.textContent=d.heatCap;
+            if(eco) eco.textContent=d.eco;
+            if(barEco) barEco.style.width=d.ecoBar+"%";
+            if(capEco) capEco.textContent=d.ecoCap;
+        }
+
+        btns.forEach(btn=>{
+            btn.addEventListener("click",()=>{
+                btns.forEach(b=>b.classList.remove("active"));
+                btn.classList.add("active");
+                const id=btn.dataset.id;
+                renderKey(id);
+            });
+        });
+
+        renderKey("low");
+    })();
+
+    // quiz
+    (function(){
+        const questions=[
+            {
+                q:"Why are today’s CO₂ emissions treated as a serious global risk?",
+                options:[
+                    "Because CO₂ is poisonous at any concentration.",
+                    "Because we are rapidly increasing CO₂ far above natural levels, trapping extra heat.",
+                    "Because the Sun is getting hotter every year.",
+                    "Because plants have stopped absorbing CO₂."
+                ],
+                correct:1,
+                explain:"The key issue is the speed and scale of human‑driven CO₂ increases, which strengthen the greenhouse effect and shift the odds of heatwaves, floods, droughts and sea‑level rise."
+            },
+            {
+                q:"Which type of change usually has the largest long‑term impact on emissions?",
+                options:[
+                    "Only using metal straws.",
+                    "Shifting how we produce energy, move people and goods, and design buildings.",
+                    "Keeping all lights off at night.",
+                    "Changing the colour of car paint."
+                ],
+                correct:1,
+                explain:"System‑level shifts in energy, transport, buildings and land‑use dominate global CO₂. Personal choices matter most when they support and accelerate these bigger changes."
+            },
+            {
+                q:"What is the most accurate way to think about “too late” in climate change?",
+                options:[
+                    "There is one magic year after which actions no longer matter.",
+                    "If we can’t fix everything, we shouldn’t bother doing anything.",
+                    "Every tenth of a degree of avoided warming reduces risk.",
+                    "CO₂ will quickly disappear on its own, so timing is unimportant."
+                ],
+                correct:2,
+                explain:"Climate risk is a spectrum, not a cliff edge. Every fraction of a degree less warming lowers long‑term damage. Action later is never as good as action now, but it is always better than no action."
+            }
+        ];
+
+        const qEl=document.getElementById("quizQuestion");
+        const optsEl=document.getElementById("quizOptions");
+        const scoreEl=document.getElementById("quizScore");
+        const totalEl=document.getElementById("quizTotal");
+        const idxEl=document.getElementById("quizIndex");
+        const explEl=document.getElementById("quizExplainer");
+        const nextBtn=document.getElementById("quizNextBtn");
+
+        if(!qEl || !optsEl || !nextBtn) return;
+
+        let index=0;
+        let score=0;
+        let answered=false;
+
+        totalEl.textContent=questions.length.toString();
+
+        function renderQuestion(){
+            const item=questions[index];
+            qEl.textContent=item.q;
+            idxEl.textContent=(index+1).toString();
+            optsEl.innerHTML="";
+            answered=false;
+
+            item.options.forEach((text,i)=>{
+                const div=document.createElement("div");
+                div.className="quiz-option";
+                div.textContent=text;
+                div.addEventListener("click",()=>{
+                    if(answered) return;
+                    answered=true;
+                    if(i===item.correct){
+                        div.classList.add("correct");
+                        score++;
+                        scoreEl.textContent=score.toString();
+                    }else{
+                        div.classList.add("wrong");
+                        const kids=[...optsEl.children];
+                        const correctEl=kids[item.correct];
+                        if(correctEl) correctEl.classList.add("correct");
+                    }
+                    explEl.innerHTML=item.explain;
+                    nextBtn.textContent=index===questions.length-1?"Finish quiz":"Next question";
+                });
+                optsEl.appendChild(div);
+            });
+        }
+
+        nextBtn.addEventListener("click",()=>{
+            if(!answered){
+                explEl.innerHTML="Choose an answer first — the explanation will help connect your choice back to the big picture.";
+                return;
+            }
+            if(index<questions.length-1){
+                index++;
+                explEl.innerHTML="Select the best answer based on what you’ve seen so far. Each explanation will tie your choice back to the big picture: CO₂ is essential for life, but too much, too fast, drives serious and avoidable risks.";
+                renderQuestion();
+            }else{
+                explEl.innerHTML="<strong>Well done.</strong> The takeaway: CO₂ itself is not a villain, but rapid, large‑scale emissions are a serious problem. Reducing them shifts the world toward safer, more manageable futures.";
+                nextBtn.disabled=true;
+                nextBtn.style.opacity=".7";
+                nextBtn.textContent="Completed";
+            }
+        });
+
+        renderQuestion();
+    })();
+
+    // actions board (localStorage)
+    (function(){
+        const grid=document.getElementById("actionGrid");
+        const summary=document.getElementById("planSummary");
+        if(!grid || !summary) return;
+
+        const actions=[
+            {id:"audit",title:"Run a home energy check‑up",text:"Review insulation, draughts, and thermostat settings; list 1–2 quick wins.",impact:"Medium"},
+            {id:"commute",title:"Reinvent one weekly commute",text:"Pick a regular trip and try doing it by bike, on foot, or by public transport.",impact:"Medium"},
+            {id:"meals",title:"Plan plant‑rich weekday meals",text:"Choose two evenings a week where dinner is vegetarian or vegan by default.",impact:"Medium"},
+            {id:"flights",title:"Merge or replace one flight",text:"Look at yearly travel plans and combine two trips or replace one flight with rail.",impact:"High"},
+            {id:"money",title:"Move one financial product",text:"Switch a savings account, pension fund, or card to a provider with a climate plan.",impact:"Medium–High"},
+            {id:"voice",title:"Use your voice once",text:"Write to a local representative, school or workplace about a specific climate action.",impact:"System"}
+        ];
+
+        let saved=new Set();
+        try{
+            const raw=localStorage.getItem("co2-action-plan");
+            if(raw){
+                saved=new Set(raw.split(",").filter(Boolean));
+            }
+        }catch(e){}
+
+        function persist(){
+            try{
+                localStorage.setItem("co2-action-plan",Array.from(saved).join(","));
+            }catch(e){}
+        }
+
+        function updateSummary(){
+            if(!saved.size){
+                summary.textContent="You haven’t pinned any actions yet. Start with one low‑friction change you could realistically test in the next month.";
+                return;
+            }
+            const list=actions.filter(a=>saved.has(a.id)).map(a=>a.title);
+            summary.innerHTML=`Pinned actions: <strong>${saved.size}</strong>. <strong>${list.join(", ")}</strong>. Revisit this board after a few months to check what worked and what you want to add next.`;
+        }
+
+        function render(){
+            grid.innerHTML="";
+            actions.forEach(a=>{
+                const card=document.createElement("div");
+                card.className="action-card";
+                card.dataset.id=a.id;
+                if(saved.has(a.id)) card.classList.add("active");
+
+                card.innerHTML=`
+          <div class="action-chip">Pinned</div>
+          <strong>${a.title}</strong><br/>
+          <span class="muted" style="font-size:0.86rem;">${a.text}</span><br/>
+          <span class="muted" style="font-size:0.78rem;opacity:0.9;margin-top:4px;display:inline-block;">Impact: ${a.impact}</span>
+        `;
+
+                card.addEventListener("click",()=>{
+                    if(saved.has(a.id)){
+                        saved.delete(a.id);
+                        card.classList.remove("active");
+                    }else{
+                        saved.add(a.id);
+                        card.classList.add("active");
+                    }
+                    persist();
+                    updateSummary();
+                });
+
+                grid.appendChild(card);
+            });
+
+            updateSummary();
+        }
+
+        render();
+    })();
+</script>
+</body>
+</html>

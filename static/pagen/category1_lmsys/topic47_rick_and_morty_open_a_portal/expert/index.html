@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interdimensional beings have opened a portal to reality to deliver a message about writing quality across all media—television, film, books, games, and digital content.">
+    <meta name="keywords" content="Rick and Morty, writing quality, storytelling, character development, plot consistency, creative writing">
+    <meta name="author" content="Portal Event Documentation">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rick & Morty Open Portal to Reality - Documentation">
+    <meta property="og:description" content="Interdimensional beings have opened a portal to reality to deliver a message about writing quality across all media.">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rick & Morty Open Portal to Reality - Documentation">
+    <meta name="twitter:description" content="Interdimensional beings have opened a portal to reality to deliver a message about writing quality across all media.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>">
+    <title>Rick & Morty Open Portal to Reality - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --portal-green: #00ff88;
+            --portal-blue: #00d4ff;
+            --rick-blue: #42a5f5;
+            --morty-yellow: #ffd54f;
+            --dark-bg: #0a0e27;
+            --card-bg: #1a1f3a;
+            --text-light: #e0e0e0;
+            --accent-purple: #9c27b0;
+            --news-red: #ff4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--portal-green), var(--portal-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: var(--portal-green);
+            outline: 2px solid var(--portal-green);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* Hamburger Menu Button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+            transition: transform 0.3s;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--portal-green);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .hamburger:hover span,
+        .hamburger:focus span {
+            background: var(--portal-blue);
+        }
+
+        .hamburger:focus {
+            outline: 2px solid var(--portal-green);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* Hero Section - News Style */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--news-red), var(--portal-green), var(--portal-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--portal-green);
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--portal-green), var(--portal-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--portal-green), var(--portal-blue));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 45%;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--portal-green);
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 55%;
+        }
+
+        .timeline-time {
+            color: var(--portal-green);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            color: var(--portal-green);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content {
+            color: var(--text-light);
+            opacity: 0.9;
+        }
+
+        /* Evidence Cards */
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .evidence-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .evidence-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--portal-green), var(--portal-blue));
+        }
+
+        .evidence-card:hover,
+        .evidence-card:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            border-color: var(--portal-green);
+        }
+
+        .evidence-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .evidence-title {
+            font-size: 1.5rem;
+            color: var(--portal-green);
+            margin-bottom: 1rem;
+        }
+
+        .evidence-text {
+            color: var(--text-light);
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Demands List */
+        .demands-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .demand-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid var(--portal-green);
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .demand-item:hover,
+        .demand-item:focus-within {
+            transform: translateX(10px);
+        }
+
+        .demand-number {
+            background: var(--portal-green);
+            color: var(--dark-bg);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .demand-content h3 {
+            color: var(--portal-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .demand-content p {
+            color: var(--text-light);
+            opacity: 0.9;
+        }
+
+        /* Impact Section */
+        .impact-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .impact-card {
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            border-left: 4px solid var(--portal-blue);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .impact-card:hover,
+        .impact-card:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            border-left-color: var(--portal-green);
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-title {
+            font-size: 1.3rem;
+            color: var(--portal-blue);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .impact-text {
+            color: var(--text-light);
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .impact-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .quote-box {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 15px;
+            border: 2px solid var(--portal-green);
+            text-align: center;
+        }
+
+        .quote-box p:first-child {
+            font-size: 1.2rem;
+            color: var(--portal-green);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .quote-box p:last-child {
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Portal Messages Section */
+        .live-feed {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feed-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid var(--portal-green);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+
+        .feed-author {
+            color: var(--portal-blue);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .feed-text {
+            color: var(--text-light);
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1199px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(10, 14, 39, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 0;
+                padding: 5rem 2rem 2rem;
+                box-shadow: -5px 0 20px rgba(0, 255, 136, 0.2);
+                transition: right 0.3s ease;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 0;
+                width: 100%;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* Tablet styles */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .demands-container,
+            .impact-container,
+            .live-feed {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding-top: 8rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Reduce heading sizes by 30% on mobile (15% + 15%) */
+            .hero h1 {
+                font-size: 2.53rem; /* 2.975rem * 0.85 */
+            }
+
+            .hero-subtitle {
+                font-size: 1.08rem; /* 1.275rem * 0.85 */
+            }
+
+            /* Reduce section padding on mobile */
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.81rem; /* 2.125rem * 0.85 */
+            }
+
+            .timeline-title {
+                font-size: 1.08rem; /* 1.275rem * 0.85 */
+            }
+
+            .evidence-title {
+                font-size: 1.08rem; /* 1.275rem * 0.85 */
+            }
+
+            .impact-title {
+                font-size: 0.94rem; /* 1.105rem * 0.85 */
+            }
+
+            .demand-content h3 {
+                font-size: 0.85rem; /* 0.995rem * 0.85 */
+            }
+
+            /* Reduce nested container padding on mobile */
+            .demands-container,
+            .impact-container,
+            .live-feed {
+                padding: 2rem 1rem;
+            }
+
+            /* Reduce card padding on mobile */
+            .evidence-card,
+            .impact-card {
+                padding: 1.5rem;
+            }
+
+            .demand-item {
+                padding: 1rem;
+            }
+
+            .feed-item {
+                padding: 1rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+                padding: 1.5rem;
+            }
+
+            .evidence-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .impact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .impact-intro {
+                font-size: 1rem;
+                padding: 0;
+            }
+
+            /* Reduce padding on quote box */
+            .quote-box {
+                padding: 1.5rem 1rem;
+                margin-top: 2rem;
+            }
+
+            .quote-box p:first-child {
+                font-size: 1rem;
+            }
+        }
+
+        /* Skip to main content link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--portal-green);
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 10000;
+            border-radius: 0 0 10px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: opacity, transform;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header>
+        <nav role="navigation" aria-label="Main navigation">
+            <div class="logo">Portal Event Documentation</div>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#hero" aria-label="Go to event overview section">Event Overview</a></li>
+                <li><a href="#problems" aria-label="Go to the problems section">The Problems</a></li>
+                <li><a href="#impact" aria-label="Go to why it matters section">Why It Matters</a></li>
+                <li><a href="#demands" aria-label="Go to their demands section">Their Demands</a></li>
+                <li><a href="#messages" aria-label="Go to portal messages section">Portal Messages</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="main-content">
+
+    <section id="hero" class="hero" aria-label="Hero section">
+        <h1>Portal to Reality: A Message About Writing</h1>
+        <p class="hero-subtitle" role="doc-subtitle">They're Here. They Want Better Writing Everywhere.</p>
+        <p>
+            In an unprecedented event, Rick and Morty have successfully opened a portal from their dimension and entered our reality. After traveling across infinite dimensions and observing the state of writing across all media—television, film, books, games, and more—they've appeared with one clear message: <strong>"Writers everywhere, try harder."</strong>
+        </p>
+        <p>
+            Having seen countless realities and dimensions, Rick and Morty have identified universal problems that plague storytelling everywhere. They've opened this portal to our world specifically to deliver their comprehensive analysis of what's wrong with modern writing and what needs to change. What follows is their direct message to writers across all forms of media.
+        </p>
+    </section>
+
+    <section id="problems" class="fade-in">
+        <h2 class="section-title">The Problems They've Seen</h2>
+        <div class="evidence-grid">
+            <div class="evidence-card">
+                <div class="evidence-icon">📺</div>
+                <div class="evidence-title">Television & Streaming</div>
+                <div class="evidence-text">
+                    Endless reboots, formulaic plots, and character resets. Shows that start strong but lose their way. Finales that disappoint. The same patterns repeat across infinite dimensions.
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">🎬</div>
+                <div class="evidence-title">Film Industry</div>
+                <div class="evidence-text">
+                    Sequels that exist only to make money. Remakes that add nothing new. Original ideas getting buried. Plot holes that break immersion. Stories that are just going through the motions without any real purpose or passion.
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📚</div>
+                <div class="evidence-title">Books & Literature</div>
+                <div class="evidence-text">
+                    Stories that talk down to readers. Characters that never grow. Endings that feel rushed or unsatisfying. Even in the worst dimensions, some books manage to respect their audience—why can't more do the same?
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">🎮</div>
+                <div class="evidence-title">Video Games</div>
+                <div class="evidence-text">
+                    Stories that feel like afterthoughts. Dialogue that's just exposition. Characters that are walking plot devices. Games that could be amazing but settle for "good enough." In some dimensions, games are treated as a primary art form with storytelling that rivals any medium.
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">📱</div>
+                <div class="evidence-title">Digital Content</div>
+                <div class="evidence-text">
+                    Content created for algorithms, not audiences. Clickbait narratives. Stories designed to go viral rather than to matter. Quantity over quality. In infinite realities, the best content still comes from caring about the story, not the metrics.
+                </div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-icon">🌐</div>
+                <div class="evidence-title">Universal Issues</div>
+                <div class="evidence-text">
+                    Across all dimensions and all media, the same problems persist: lack of originality, fear of taking risks, prioritizing profit over art, and treating audiences like they're stupid. These aren't dimension-specific—they're writer-specific.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="impact" class="fade-in">
+        <h2 class="section-title">Why Writing Quality Matters</h2>
+        <div class="impact-container">
+            <p class="impact-intro">
+                Poor writing doesn't just disappoint audiences—it has real consequences. Across dimensions, the impact of bad writing affects everything from individual experiences to entire industries. Here's why this matters:
+            </p>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-icon">😔</div>
+                    <div class="impact-title">Audience Disappointment</div>
+                    <div class="impact-text">
+                        When stories fail, audiences feel it. They invest time, emotion, and money into content that lets them down. Poor writing creates cynicism, distrust, and eventually, disengagement. People stop caring because they've been burned too many times.
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">💼</div>
+                    <div class="impact-title">Industry Decline</div>
+                    <div class="impact-text">
+                        When quality drops, audiences leave. Streaming services lose subscribers. Movie theaters empty. Book sales decline. The industry suffers when writers prioritize profit over craft. Short-term gains lead to long-term losses.
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🎨</div>
+                    <div class="impact-title">Creative Stagnation</div>
+                    <div class="impact-text">
+                        Formulaic writing kills innovation. When everyone follows the same patterns, creativity dies. New voices get silenced. Original ideas get buried. The art form stops evolving, and we're left with endless remakes and reboots.
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🧠</div>
+                    <div class="impact-title">Cultural Impact</div>
+                    <div class="impact-text">
+                        Stories shape culture. They influence how we think, what we value, and who we become. When writing is lazy, it reflects and reinforces lazy thinking. Good writing challenges us, makes us grow, and helps us understand the world better.
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">👥</div>
+                    <div class="impact-title">Wasted Potential</div>
+                    <div class="impact-text">
+                        So many stories have incredible potential but fail because of poor execution. Great concepts get ruined by bad dialogue. Interesting characters get wasted on weak plots. The talent is there—the execution isn't.
+                    </div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🌍</div>
+                    <div class="impact-title">Lost Opportunities</div>
+                    <div class="impact-text">
+                        In dimensions where writers actually try, stories change lives. They inspire people. They create movements. They become part of cultural history. Here? Too many stories are forgotten the moment they end because they never mattered in the first place.
+                    </div>
+                </div>
+            </div>
+            <div class="quote-box">
+                <p>"The difference between good writing and bad writing isn't talent—it's effort."</p>
+                <p>- Rick</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demands" class="fade-in">
+        <h2 class="section-title">What Writers Everywhere Need to Do</h2>
+        <div class="demands-container">
+            <div class="demand-item">
+                <div class="demand-number">1</div>
+                <div class="demand-content">
+                    <h3>Character Development That Actually Matters</h3>
+                    <p>"Stop resetting character growth. If a character learns something, let them keep that knowledge. Character arcs should build, not reset. I've seen countless dimensions, and even the worst ones have better continuity than most shows, movies, and books here." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">2</div>
+                <div class="demand-content">
+                    <h3>Plot Consistency and Logic</h3>
+                    <p>"I can accept interdimensional travel, magic, or whatever your world has. But I can't accept plot holes that make no sense even in that context. If you establish rules, follow them. If you break them, explain why. Consistency matters across all genres." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">3</div>
+                <div class="demand-content">
+                    <h3>Meaningful Dialogue</h3>
+                    <p>"Stop using dialogue just to move the plot forward. Give characters actual voices, actual personalities. Dialogue should reveal character, create conflict, and feel real—not like exposition dumps or catchphrase factories." - Morty</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">4</div>
+                <div class="demand-content">
+                    <h3>Creative Storytelling & Originality</h3>
+                    <p>"Stop remaking the same stories. Stop following formulas. Try something new. Experiment. Take risks. That's what I do in every dimension, and it works. Originality isn't dead—lazy writing killed it." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">5</div>
+                <div class="demand-content">
+                    <h3>Respect the Audience's Intelligence</h3>
+                    <p>"Stop dumbing things down. Your audience is smart. They can handle complex themes, philosophical questions, moral ambiguity, and emotional depth. Write like you respect them. Treat them like adults, even if your content is for kids." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">6</div>
+                <div class="demand-content">
+                    <h3>Show, Don't Tell</h3>
+                    <p>"Instead of having characters explain everything, let actions and situations speak. Visual storytelling. Subtext. Layers. Trust your audience to figure things out. You know, actual writing craft instead of lazy exposition." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">7</div>
+                <div class="demand-content">
+                    <h3>Emotional Depth and Character Relationships</h3>
+                    <p>"Characters aren't just plot devices. Give them real relationships, real emotions, real consequences. Even in infinite dimensions, relationships matter. Write like you care about the characters as people, not just tools to move the story forward." - Morty</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">8</div>
+                <div class="demand-content">
+                    <h3>Proper Pacing and Structure</h3>
+                    <p>"Stop rushing to the end. Stop dragging out the middle. Find the right pace for your story. Some stories need time to breathe. Others need to move fast. But all of them need structure that serves the story, not the runtime or page count." - Rick</p>
+                </div>
+            </div>
+            <div class="demand-item">
+                <div class="demand-number">9</div>
+                <div class="demand-content">
+                    <h3>Meaningful Endings</h3>
+                    <p>"Stop writing endings that feel rushed, unsatisfying, or like you gave up. Endings matter. They're what people remember. Whether it's happy, sad, or ambiguous, make it feel earned. Make it feel like it matters." - Morty</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="messages" class="fade-in">
+        <h2 class="section-title">Messages from the Portal</h2>
+        <div class="live-feed">
+            <p style="margin-bottom: 2rem; opacity: 0.8; text-align: center;">Messages transmitted through the portal:</p>
+            <div id="feedContainer">
+                <div class="feed-item">
+                    <div class="feed-author">Rick</div>
+                    <div class="feed-text">"I've seen infinite realities, and the writing quality here exists in the worst of them. This isn't about any specific show, movie, or book—it's about a pattern. Step it up, writers everywhere."</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Morty</div>
+                    <div class="feed-text">"Can we get some character growth that actually sticks? Not just in shows, but in movies, books, games—everywhere? Please?"</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Rick</div>
+                    <div class="feed-text">"I've calculated the probability of writers actually improving. It's not great, but we're giving you a chance. Use it."</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Morty</div>
+                    <div class="feed-text">"Maybe if we show them what good writing looks like, they'll understand? Like, actually show them across all media, not just tell them?"</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Rick</div>
+                    <div class="feed-text">"The portal stays open. We'll be watching. And if you don't improve? Well, let's just say there are worse dimensions than this one. But you could be better."</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Morty</div>
+                    <div class="feed-text">"I really hope writers listen this time. Not just for one project, but for everything. Stories matter. Writing matters. Try harder."</div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-author">Rick</div>
+                    <div class="feed-text">"Stop making excuses. Stop blaming audiences. Stop following formulas. Start caring. Start creating. Start trying. That's all we're asking."</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            
+            // Prevent body scroll when menu is open
+            if (!isExpanded) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Function to close menu
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        // Close menu when clicking on a link
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const isClickInsideNav = nav.contains(event.target);
+            const isMenuOpen = navLinks.classList.contains('active');
+            
+            if (!isClickInsideNav && isMenuOpen) {
+                closeMenu();
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offset = 120;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error scrolling to target:', error);
+                    // Fallback: allow default behavior
+                    window.location.href = href;
+                }
+            });
+        });
+
+
+
+        // Scroll Animations
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        } else {
+            // Fallback for browsers without IntersectionObserver support
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }
+    </script>
+</body>
+</html>
