@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Robot vs Robot Boxing Arena</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        heading: ["Orbitron", "sans-serif"],
+        body: ["Inter", "sans-serif"]
+      },
+      colors: {
+        cyberBg: "#05060b",
+        neonRed: "#ff2d55",
+        neonBlue: "#00eaff",
+        neonPurple: "#8b5cf6",
+        steel: "#9ca3af"
+      }
+    }
+  }
+}
+</script>
+
+<style>
+html { scroll-behavior: smooth; }
+.glow-red { box-shadow: 0 0 80px rgba(255,45,85,.45); }
+.glow-blue { box-shadow: 0 0 80px rgba(0,234,255,.45); }
+.glow-purple { box-shadow: 0 0 80px rgba(139,92,246,.45); }
+ .mode-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.65);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-tab:hover {
+  color: #fff;
+}
+
+.mode-tab::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: #ff2d55;
+  transition: height 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mode-tab .tab-icon {
+  font-size: 22px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.active-tab {
+  color: #fff;
+}
+
+.active-tab::before {
+  height: 28px;
+  box-shadow: 0 0 20px rgba(255,45,85,0.9);
+}
+
+.active-tab .tab-icon {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 10px rgba(255,45,85,0.9));
+}
+
+</style>
+</head>
+
+<body class="font-body bg-cyberBg text-white">
+
+<!-- ================= HERO (VIDEO) ================= -->
+<section class="relative min-h-screen flex items-center overflow-hidden">
+
+  <video
+    class="absolute inset-0 w-full h-full object-cover"
+    autoplay muted loop playsinline
+  >
+    <source src="assets/hero_vid.mp4" type="video/mp4">
+  </video>
+
+  <div class="absolute inset-0 bg-gradient-to-br from-black via-red-900/60 to-blue-900/40"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 py-32 z-10">
+    <p class="text-center uppercase tracking-[0.4em] text-sm text-neonBlue mb-6">
+      Arena Combat Simulator
+    </p>
+
+    <h1 class="font-heading text-center  text-6xl md:text-7xl leading-tight max-w-4xl">
+      Robot vs Robot<br>
+      <span class="text-neonRed">Boxing Arena</span>
+    </h1>
+
+    <p class="text-center mt-8 text-xl text-white/80 max-w-2xl">
+      Build your combat robot. Enter the ring.
+      Smash steel with precision, power, and tactical movement.
+    </p>
+	<div class="mt-10 flex flex-wrap gap-6 justify-center">
+  <!-- Primary CTA -->
+  <a href="#features"
+     class="group relative px-8 py-4 rounded-xl
+            bg-neonRed text-white font-semibold
+            transition-all duration-300 ease-out
+            hover:-translate-y-1 hover:scale-105
+            hover:shadow-[0_0_35px_rgba(255,45,85,0.9)]
+            active:scale-95">
+
+    <span class="relative z-10">Explore the Game</span>
+
+    <!-- shine effect -->
+    <span class="absolute inset-0 rounded-xl overflow-hidden">
+      <span class="absolute -left-full top-0 h-full w-full
+                   bg-gradient-to-r from-transparent via-white/30 to-transparent
+                   group-hover:left-full transition-all duration-700"></span>
+    </span>
+  </a>
+
+  <!-- Secondary CTA -->
+  <a href="#robots"
+     class="px-8 py-4 rounded-xl bg-white
+            border border-white/30 text-neonRed font-semibold
+            transition-all duration-300 ease-out
+            hover:-translate-y-1 hover:scale-105
+            hover:border-neonRed hover:text-neonRed
+            hover:shadow-[0_0_25px_rgba(255,45,85,0.6)]
+            active:scale-95">
+        Meet the Robots
+  </a>
+  </div>
+  </div>
+</section>
+<!-- ================= GAME CONCEPT ================= -->
+<section class="py-32">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-20 items-stretch">
+
+      <!-- TEXT CONTAINER -->
+      <div class="flex flex-col justify-center text-center lg:text-left">
+        <h2 class="font-heading text-5xl mb-6">
+          Mechanical combat. <span class="text-neonRed">No mercy.</span>
+        </h2>
+
+        <p class="text-lg text-white/80 leading-relaxed mb-6">
+          Step into the arena where steel fists collide and every decision matters.
+          This is not arcade button-mashing it’s a brutal, physics-driven
+          robot-vs-robot boxing experience built around skill, strategy, and precision.
+        </p>
+
+        <p class="text-lg text-white/70 leading-relaxed mb-6">
+          Every punch consumes energy. Every hit tears through armor.
+          Poor positioning leaves your core exposed, while smart movement and
+          calculated strikes can dismantle even the toughest machines.
+        </p>
+
+        <p class="text-lg text-white/70 leading-relaxed">
+          Customize your robot’s build, balance power and defense, and adapt your
+          fighting style on the fly. Victory isn’t about who hits first
+          it’s about who outthinks, outmaneuvers, and outlasts their opponent.
+        </p>
+      </div>
+
+      <!-- IMAGE CONTAINER -->
+      <div class="relative rounded-3xl overflow-hidden glow-purple">
+        <img
+          src="assets/1275.jpg"
+          alt="Robot boxing combat arena"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= CORE MECHANICS ================= -->
+<section id="features" class="py-32 bg-black">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="font-heading text-center text-5xl mb-20">
+      Core combat <span class="text-neonRed">systems</span>
+    </h2>
+
+    <div class="grid lg:grid-cols-4 gap-10">
+      
+      <!-- Physics Punching -->
+      <div class="group bg-black/60 p-8 rounded-3xl border border-white/50 text-center
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-2 hover:scale-[1.02]
+                  hover:border-neonRed hover:shadow-[0_0_40px_rgba(255,0,0,0.35)]">
+        
+        <div class="text-6xl mb-4 transition-transform duration-300
+                    group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]">
+          ⚡
+        </div>
+
+        <h3 class="font-heading text-2xl leading-tight max-w-[10rem] mx-auto">
+          Physics<br />Punching
+        </h3>
+        <p class="mt-4 text-white/70 leading-relaxed">
+          Punches are driven by real physics momentum, weight, and swing angles.
+          A well-timed heavy strike can stagger opponents, while sloppy hits leave
+          you wide open for counters.
+        </p>
+      </div>
+
+      <!-- Armor Damage -->
+      <div class="group bg-black/60 p-8 rounded-3xl border border-white/50 text-center
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-2 hover:scale-[1.02]
+                  hover:border-neonRed hover:shadow-[0_0_40px_rgba(255,0,0,0.35)]">
+        
+        <div class="text-6xl mb-4 transition-transform duration-300
+                    group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]">
+          🛡️
+        </div>
+
+        <h3 class="font-heading text-2xl leading-tight max-w-[10rem] mx-auto">
+          Armor<br />Damage
+        </h3>
+        <p class="mt-4 text-white/70 leading-relaxed">
+          Robots don’t just lose health they lose parts.
+          Break armor plates to expose vulnerable systems, disable limbs,
+          and turn the tide of battle piece by piece.
+        </p>
+      </div>
+
+      <!-- Energy System -->
+      <div class="group bg-black/60 p-8 rounded-3xl border border-white/50 text-center
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-2 hover:scale-[1.02]
+                  hover:border-neonRed hover:shadow-[0_0_40px_rgba(255,0,0,0.35)]">
+        
+        <div class="text-6xl mb-4 transition-transform duration-300
+                    group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]">
+          🔋
+        </div>
+
+        <h3 class="font-heading text-2xl leading-tight max-w-[10rem] mx-auto">
+          Energy<br />System
+        </h3>
+        <p class="mt-4 text-white/70 leading-relaxed">
+          Every action drains power punches, dodges, blocks.
+          Push too hard and your reactor overheats, slowing movement
+          and leaving you helpless at the worst moment.
+        </p>
+      </div>
+
+      <!-- Adaptive AI -->
+      <div class="group bg-black/60 p-8 rounded-3xl border border-white/50 text-center
+                  transition-all duration-300 ease-out
+                  hover:-translate-y-2 hover:scale-[1.02]
+                  hover:border-neonRed hover:shadow-[0_0_40px_rgba(255,0,0,0.35)]">
+        
+        <div class="text-6xl mb-4 transition-transform duration-300
+                    group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(255,0,0,0.6)]">
+          🧠
+        </div>
+
+        <h3 class="font-heading text-2xl leading-tight max-w-[10rem] mx-auto">
+          Adaptive<br />AI
+        </h3>
+        <p class="mt-4 text-white/70 leading-relaxed">
+          Enemy robots analyze your habits and respond.
+          Rely on the same combos too often, and opponents will learn,
+          counter, and punish predictable playstyles.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= ROBOT CLASSES (IMAGES) ================= -->
+<section id="robots" class="py-40">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="font-heading text-center text-5xl mb-20">
+      Choose your <span class="text-neonRed">robot class</span>
+    </h2>
+
+    <div class="grid lg:grid-cols-3 gap-12">
+
+      <!-- Brawler -->
+      <div class="group relative rounded-3xl overflow-hidden bg-black border border-white/10 glow-red
+                  transition-all duration-500">
+        
+        <!-- Image -->
+        <img src="assets/3544.jpg"
+             class="h-72 w-full object-cover transition-transform duration-700
+                    group-hover:scale-110 group-hover:rotate-1">
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/40 opacity-0
+                    transition-opacity duration-500
+                    group-hover:opacity-100"></div>
+
+        <div class="relative p-8">
+          <h3 class="font-heading text-center text-3xl text-neonRed
+                     transition-all duration-300
+                     group-hover:drop-shadow-[0_0_20px_rgba(255,0,0,0.8)]">
+            Brawler
+          </h3>
+         <p class="text-center mt-4 text-white/75">
+          Heavy armor and crushing punches.
+          Built to overwhelm opponents head-on.
+          <span class="block mt-2 text-white/60">
+            Excels at close-range brawls and absorbing massive damage.
+          </span>
+        </p>
+        </div>
+      </div>
+
+      <!-- Striker -->
+      <div class="group relative rounded-3xl overflow-hidden bg-black border border-white/10 glow-blue
+                  transition-all duration-500">
+        
+        <img src="assets/2151999284.jpg"
+             class="h-72 w-full object-cover transition-transform duration-700
+                    group-hover:scale-110 group-hover:-rotate-1">
+
+        <div class="absolute inset-0 bg-black/40 opacity-0
+                    transition-opacity duration-500
+                    group-hover:opacity-100"></div>
+
+        <div class="relative p-8">
+          <h3 class="font-heading text-center text-3xl text-neonBlue
+                     transition-all duration-300
+                     group-hover:drop-shadow-[0_0_20px_rgba(0,170,255,0.8)]">
+            Striker
+          </h3>
+          <p class="text-center mt-4 text-white/75">
+            Speed, combos, and evasive movement.
+            Win with precision.
+            <span class="block mt-2 text-white/60">
+              Perfect for players who rely on timing, dodges, and fast chains.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Defender -->
+      <div class="group relative rounded-3xl overflow-hidden bg-black border border-white/10 glow-purple
+                  transition-all duration-500">
+        
+        <img src="assets/2152000910.jpg"
+             class="h-72 w-full object-cover transition-transform duration-700
+                    group-hover:scale-110 group-hover:rotate-1">
+
+        <div class="absolute inset-0 bg-black/40 opacity-0
+                    transition-opacity duration-500
+                    group-hover:opacity-100"></div>
+
+        <div class="relative p-8">
+          <h3 class="font-heading text-center text-3xl text-neonPurple
+                     transition-all duration-300
+                     group-hover:drop-shadow-[0_0_20px_rgba(180,100,255,0.8)]">
+            Defender
+          </h3>
+         <p class="text-center mt-4 text-white/75">
+          Tactical defense and counter attacks.
+          Break enemies slowly.
+          <span class="block mt-2 text-white/60">
+            Outlast opponents by punishing mistakes and controlling the pace.
+          </span>
+        </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARENA MODES (VIDEO STRIP) ================= -->
+<section class="py-32 bg-black">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-20 items-stretch">
+
+      <!-- VIDEO COLUMN -->
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+        <video
+          class="w-full h-full object-cover"
+          autoplay
+          muted
+          loop
+          playsinline
+        >
+          <source src="assets/229512_tiny.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- TEXT COLUMN -->
+      <div class="flex flex-col justify-center text-center lg:text-left">
+        <h2 class="font-heading text-5xl mb-6">
+          Fight across <span class="text-neonRed">brutal arenas</span>
+        </h2>
+
+        <p class="text-lg text-white/80 leading-relaxed mb-6">
+          Step into deadly combat zones built for mechanical destruction.
+          From underground factories filled with sparks and steel debris
+          to neon-lit cyber rings and massive championship domes
+          every arena is designed to test your robot’s limits.
+        </p>
+
+        <p class="text-lg text-white/70 leading-relaxed mb-6">
+          Arena layouts directly affect movement, visibility, and combat flow.
+          Tight spaces reward heavy brawlers, open rings favor fast strikers,
+          and hazard-filled zones punish careless positioning.
+        </p>
+
+        <p class="text-lg text-white/70 leading-relaxed">
+          Environmental dangers like collapsing floors, energy surges,
+          electrified walls, and rotating platforms force fighters to adapt.
+          Master the arena, control the space, and turn the battlefield
+          itself into a weapon.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= GAME MODES (INTERACTIVE TABS) ================= -->
+<section class="py-32">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <h2 class="font-heading text-center text-5xl mb-20">
+      Multiple ways <span class="text-neonRed">to fight</span>
+    </h2>
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+ <!-- LEFT CONTENT -->
+<div id="mode-content"
+     class="bg-black/60 border border-white/50 rounded-3xl p-14
+            shadow-[0_0_60px_rgba(0,0,0,0.8)]">
+
+  <div id="mode-icon" class="text-7xl mb-6 text-center">🥊</div>
+
+  <h3 id="mode-title"
+      class="font-heading text-3xl mb-4 text-center">
+    Arcade Battles
+  </h3>
+
+  <!-- Main description -->
+  <p id="mode-description"
+     class="text-white/80 text-lg leading-relaxed mb-6 text-center">
+    Jump straight into fast-paced combat with classic arcade-style matches.
+    Designed for pure action and instant fun.
+  </p>
+
+  <!-- Secondary description -->
+  <p id="mode-subdescription"
+     class="text-white/65 text-base leading-relaxed mb-8 text-center">
+    Perfect for learning core mechanics, testing robot builds,
+    and enjoying short, intense boxing matches without long progression.
+  </p>
+
+  <!-- Feature highlights -->
+  <ul id="mode-features"
+      class="flex flex-wrap justify-center gap-4 text-sm text-white/70">
+    <li class="px-4 py-2 rounded-full border border-white/20">
+      Fast Matches
+    </li>
+    <li class="px-4 py-2 rounded-full border border-white/20">
+      No Progression Pressure
+    </li>
+    <li class="px-4 py-2 rounded-full border border-white/20">
+      Pure Combat Focus
+    </li>
+  </ul>
+
+</div>
+
+
+  <!-- RIGHT TABS -->
+<div class="relative flex flex-col gap-6 pl-8">
+
+  <!-- vertical rail -->
+  <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-white/10"></div>
+
+  <button class="mode-tab active-tab"
+  data-icon="🥊"
+  data-title="Arcade Battles"
+  data-description="Jump straight into fast-paced combat with classic arcade-style matches. Designed for pure action and instant fun."
+  data-subdescription="Perfect for learning core mechanics, testing robot builds, and enjoying short, intense boxing matches without long progression."
+  data-features="Fast Matches,No Progression Pressure,Pure Combat Focus">
+    <span class="tab-icon">🥊</span>
+    <span>Arcade Battles</span>
+  </button>
+
+  <button class="mode-tab"
+  data-icon="🏆"
+  data-title="Tournament Mode"
+  data-description="Compete in structured tournament brackets where every fight matters and every mistake carries weight."
+  data-subdescription="Damage carries between rounds, opponents grow stronger, and only the most strategic robot reaches the championship."
+  data-features="Bracket Progression,High Stakes,Championship Finals">
+    <span class="tab-icon">🏆</span>
+    <span>Tournament Mode</span>
+  </button>
+
+  <button class="mode-tab"
+  data-icon="🤖"
+  data-title="AI Challenge"
+  data-description="Battle advanced AI robots that study your movement, timing, and attack patterns in real time."
+  data-subdescription="As the AI adapts, you must change strategies, refine combos, and master every system to stay ahead."
+  data-features="Adaptive AI,Skill Training,Advanced Mechanics">
+    <span class="tab-icon">🤖</span>
+    <span>AI Challenge</span>
+  </button>
+
+ <button class="mode-tab"
+  data-icon="👥"
+  data-title="Local Robot vs Robot"
+  data-description="Face off against a friend in intense local robot boxing matches filled with rivalry and mind games."
+  data-subdescription="Perfect for couch competition, training sessions, and proving who truly dominates the arena."
+  data-features="Local PvP,Couch Battles,Bragging Rights">
+    <span class="tab-icon">👥</span>
+    <span>Local Robot vs Robot</span>
+  </button>
+
+</div>
+</div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="py-40 text-center bg-black">
+  <h2 class="font-heading text-center  text-5xl mb-6">
+    Enter the ring.
+    <span class="text-neonRed">Only steel survives.</span>
+  </h2>
+  <p class="text-center text-xl text-white/80 max-w-2xl mx-auto">
+    Every dent tells a story.
+    Every knockout proves dominance.
+  </p>
+</section>
+
+<footer class="py-12 border-t border-white/10 text-center text-white/50">
+  Robot vs Robot Boxing Game • Interactive landing page • No ecommerce
+</footer>
+<script>
+  const tabs = document.querySelectorAll(".mode-tab");
+
+  const icon = document.getElementById("mode-icon");
+  const title = document.getElementById("mode-title");
+  const description = document.getElementById("mode-description");
+  const subdescription = document.getElementById("mode-subdescription");
+  const features = document.getElementById("mode-features");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+
+      tabs.forEach(t => t.classList.remove("active-tab"));
+      tab.classList.add("active-tab");
+
+      icon.textContent = tab.dataset.icon;
+      title.textContent = tab.dataset.title;
+      description.textContent = tab.dataset.description;
+      subdescription.textContent = tab.dataset.subdescription;
+
+      // Update feature tags
+      features.innerHTML = "";
+      tab.dataset.features.split(",").forEach(feature => {
+        const li = document.createElement("li");
+        li.className = "px-4 py-2 rounded-full border border-white/20";
+        li.textContent = feature;
+        features.appendChild(li);
+      });
+    });
+  });
+</script>
+</body>
+</html>

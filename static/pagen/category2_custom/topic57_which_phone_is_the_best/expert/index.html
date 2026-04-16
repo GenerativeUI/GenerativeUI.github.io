@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Which Phone Is the Best?</title>
+
+  <!-- Fonts (as requested earlier style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ["'Playfair Display'", "serif"],
+            body: ["'Quicksand'", "sans-serif"]
+          },
+          colors: {
+            ink: "#0b1220",
+            slateX: "#334155",
+            mist: "#f6f8fb",
+            card: "#ffffff",
+            cobalt: "#1249ff",
+            cyanX: "#12d6df",
+            limeX: "#22c55e",
+            amberX: "#f59e0b"
+          },
+          boxShadow: {
+            soft: "0 18px 50px rgba(2, 8, 23, 0.10)",
+            glow: "0 18px 60px rgba(18, 73, 255, 0.20)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(2,8,23,0.08);
+    }
+    .hero-bg {
+	
+      background:
+        radial-gradient(900px 450px at 15% 10%, rgba(18,214,223,.18), transparent 60%),
+        radial-gradient(900px 450px at 85% 20%, rgba(18,73,255,.18), transparent 60%),
+        radial-gradient(700px 450px at 50% 95%, rgba(34,197,94,.12), transparent 60%),
+        linear-gradient(180deg, #0b1220 0%, #0b1220 45%, #f6f8fb 46%, #f6f8fb 100%),
+      url("assets/hero.jpg") center/cover no-repeat;
+	  background: url("assets/hero.jpg") center/cover no-repeat;
+    }
+    .noise {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+    }
+    .btn {
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .chip { transition: all .2s ease; }
+    .chip.active {
+      background: #1249ff;
+      color: white;
+      border-color: #1249ff;
+      box-shadow: 0 14px 40px rgba(18,73,255,.25);
+    }
+    .chip.active .text-sm {
+      color: white;
+    }
+    .os-tab { transition: all .2s ease; }
+    .os-tab.active {
+      background: rgba(18,73,255,0.10);
+      border-color: rgba(18,73,255,0.30);
+      box-shadow: 0 18px 50px rgba(2, 8, 23, 0.08);
+    }
+    .cardHover { transition: transform .25s ease, box-shadow .25s ease; }
+    .cardHover:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,8,23,.12); }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
+    .accordion-item.open .accordion-content { max-height: 300px; }
+    .progress {
+      height: 10px; border-radius: 9999px;
+      background: linear-gradient(90deg, rgba(18,73,255,.22), rgba(18,214,223,.22));
+      overflow: hidden;
+    }
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1249ff, #12d6df);
+      border-radius: 9999px;
+      transition: width .35s ease;
+    }
+  </style>
+</head>
+
+<body class="font-body bg-mist text-slateX">
+
+<!-- ================= NAV ================= -->
+<header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/75 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-cobalt to-cyanX shadow-glow flex items-center justify-center text-white font-semibold">
+        P
+      </div>
+      <div>
+        <div class="font-heading text-lg leading-none text-ink">Phone Compass</div>
+        <div class="text-xs text-slate-500 -mt-0.5">Best phone = best fit</div>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
+      <a class="hover:text-ink" href="#choose">How to choose</a>
+      <a class="hover:text-ink" href="#os">OS guide</a>
+      <a class="hover:text-ink" href="#advisor">Advisor</a>
+      <a class="hover:text-ink" href="#matrix">Matrix</a>
+      <a class="hover:text-ink" href="#faq">Myths</a>
+    </nav>
+
+    <a href="#advisor" class="btn px-4 py-2 rounded-xl bg-ink text-white text-sm shadow-soft">
+      Find my best phone
+    </a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero-bg relative overflow-hidden">
+  <div class="noise absolute inset-0 pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 pt-16 pb-16 md:pt-20 md:pb-20 relative">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-white">
+        <p class="text-xs uppercase tracking-[0.22em] text-white mb-4 font-semibold">
+          A modern decision guide
+        </p>
+        <h1 class="font-heading text-5xl md:text-6xl leading-tight">
+          Which phone is the best?
+        </h1>
+        <p class="mt-5 text-lg text-white/85 max-w-xl">
+          “Best” isn’t one model — it’s the phone that fits your daily life:
+          camera style, battery needs, budget, ecosystem, and updates.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#advisor" class="btn px-5 py-3 rounded-2xl bg-white text-ink font-medium shadow-soft">
+            Start the advisor
+          </a>
+          <a href="#os" class="btn px-5 py-3 rounded-2xl bg-white/10 text-white border border-white/20">
+            Android vs iOS vs Windows
+          </a>
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-3 gap-4">
+          <div class="bg-white/20 rounded-2xl p-4">
+            <div class="text-xs text-white">Updates</div>
+            <div class="text-white font-semibold">Longevity matters</div>
+          </div>
+          <div class="bg-white/20 rounded-2xl p-4">
+            <div class="text-xs text-white">Camera</div>
+            <div class="text-white font-semibold">Photo vs video</div>
+          </div>
+          <div class="bg-white/20 rounded-2xl p-4">
+            <div class="text-xs text-white">Value</div>
+            <div class="text-white font-semibold">Fit > hype</div>
+          </div>
+        </div>
+      </div>
+		<div class="relative">
+		  <img
+			src="assets/phone-lifestyle.jpg"
+			alt="Using smartphone in daily life"
+			class="rounded-[2.5rem] mt-8 shadow-glow w-full max-w-md mx-auto
+				   border border-white/20"
+		  >
+
+		  <!-- soft overlay -->
+		  <div class="absolute inset-0 rounded-[2.5rem]
+					  bg-gradient-to-br from-cobalt/20 to-cyanX/20">
+		  </div>
+
+		  <p class="text-center text-xs text-white mt-4 mb-3">
+			Real-life use matters more than specs
+		  </p>
+		</div>
+
+      <!-- <div class="relative">
+        <div class="mx-auto max-w-md">
+          <div class="rounded-[2.2rem] bg-gradient-to-b from-white/20 to-white/5 border border-white/25 p-4 shadow-glow">
+            <div class="rounded-[1.8rem] bg-white/10 border border-white/15 overflow-hidden">
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="h-3 w-24 rounded-full bg-white/30"></div>
+                  <div class="h-3 w-10 rounded-full bg-white/25"></div>
+                </div>
+                <div class="space-y-3">
+                  <div class="h-12 rounded-2xl bg-white/15"></div>
+                  <div class="h-12 rounded-2xl bg-white/10"></div>
+                  <div class="h-12 rounded-2xl bg-white/15"></div>
+                </div>
+                <div class="mt-8 grid grid-cols-2 gap-3">
+                  <div class="h-24 rounded-2xl bg-gradient-to-br from-cobalt/40 to-cyanX/40"></div>
+                  <div class="h-24 rounded-2xl bg-gradient-to-br from-limeX/30 to-amberX/30"></div>
+                </div>
+                <div class="mt-8 text-white/85">
+                  <div class="text-xs uppercase tracking-widest">Your priorities</div>
+                  <div class="mt-2 font-heading text-2xl">Decide with clarity.</div>
+                </div>
+              </div>
+              <div class="h-10 bg-white/10 border-t border-white/10"></div>
+            </div>
+          </div>
+          <p class="text-center text-xs text-slate-500 mt-4">
+            Interactive guide • no sponsored picks • built for decision-making
+          </p>
+        </div>
+		
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW TO CHOOSE (STEPPER) ================= -->
+<section id="choose" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">How to choose</p>
+        <h2 class="font-heading text-5xl text-ink leading-tight">
+          A simple framework to find your best phone
+        </h2>
+        <p class="mt-5 text-lg text-slate-600 max-w-xl">
+          Don’t start with specs. Start with your real behavior. Use this 4-step framework,
+          then verify the phone matches your top priorities.
+        </p>
+
+        <div class="mt-10 glass rounded-3xl p-6 shadow-soft">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-slate-600">Progress</div>
+            <div class="text-sm font-medium text-ink"><span id="stepNum">1</span>/4</div>
+          </div>
+          <div class="progress mt-3"><div id="stepBar"></div></div>
+
+          <div class="mt-6">
+            <div class="text-xs uppercase tracking-widest text-slate-500">Current step</div>
+            <div id="stepTitle" class="font-heading text-2xl text-ink mt-2">Pick your “must-haves”</div>
+            <p id="stepDesc" class="text-slate-600 mt-2">
+              Decide what you refuse to compromise on: camera style, battery life, size, budget, or OS.
+            </p>
+          </div>
+
+          <div class="mt-6 flex gap-3">
+            <button id="prevStep" class="btn px-4 py-2 rounded-xl border border-slate-200 bg-white">Back</button>
+            <button id="nextStep" class="btn px-4 py-2 rounded-xl bg-ink text-white">Next</button>
+          </div>
+        </div>
+      </div>
+	 <div class="mb-8">
+  <img
+    id="stepImage"
+    src="assets/phone-camera.jpg"
+    alt="Phone decision step"
+    class="rounded-3xl shadow-soft w-full transition-opacity duration-300"
+  >
+</div>
+    </div>
+
+  <div class="grid sm:grid-cols-4 gap-6 pt-12  ">
+	<div class="cardHover bg-white rounded-3xl p-6 shadow-soft">
+	  <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Rule #1</div>
+	  <div class="font-heading text-2xl mt-2 text-ink">Updates & reliability</div>
+	  <p class="text-slate-600 mt-2">A great phone stays great with long software support.</p>
+	</div>
+	<div class="cardHover bg-white rounded-3xl p-6 shadow-soft">
+	  <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Rule #2</div>
+	  <div class="font-heading text-2xl mt-2 text-ink">Camera consistency</div>
+	  <p class="text-slate-600 mt-2">Look for results you like in your typical lighting.</p>
+	</div>
+	<div class="cardHover bg-white rounded-3xl p-6 shadow-soft">
+	  <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Rule #3</div>
+	  <div class="font-heading text-2xl mt-2 text-ink">Battery + charging</div>
+	  <p class="text-slate-600 mt-2">Endurance and charging speed both shape daily comfort.</p>
+	</div>
+	<div class="cardHover bg-white rounded-3xl p-6 shadow-soft">
+	  <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Rule #4</div>
+	  <div class="font-heading text-2xl mt-2 text-ink">Ecosystem fit</div>
+	  <p class="text-slate-600 mt-2">Your laptop, watch, earbuds, and apps should sync seamlessly.</p>
+	</div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= OS GUIDE (TABS) ================= -->
+<section id="os" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-3xl mx-auto">
+      <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">Platform guide</p>
+      <h2 class="font-heading text-5xl text-ink">Android vs iOS vs Windows</h2>
+      <p class="mt-4 text-lg text-slate-600">
+        Android and iOS dominate modern phones. Windows Phone is a legacy platform (no longer active),
+        but knowing its tradeoffs explains why ecosystems matter.
+      </p>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-3 gap-6">
+      <button class="os-tab active text-left bg-mist rounded-3xl p-6 border border-slate-200" data-os="android">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Best for</div>
+        <div class="font-heading text-3xl text-ink mt-1">Android</div>
+        <div class="text-slate-600 mt-2">Variety, customization, hardware innovation.</div>
+      </button>
+      <button class="os-tab text-left bg-mist rounded-3xl p-6 border border-slate-200" data-os="ios">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Best for</div>
+        <div class="font-heading text-3xl text-ink mt-1">iOS</div>
+        <div class="text-slate-600 mt-2">Consistency, long support, polished integration.</div>
+      </button>
+      <button class="os-tab text-left bg-mist rounded-3xl p-6 border border-slate-200" data-os="windows">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Legacy</div>
+        <div class="font-heading text-3xl text-ink mt-1">Windows Phone</div>
+        <div class="text-slate-600 mt-2">Great UI ideas, but limited apps & discontinued.</div>
+      </button>
+    </div>
+
+    <div class="mt-10 glass rounded-3xl p-8 shadow-soft">
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div>
+          <h3 id="osTitle" class="font-heading text-4xl text-ink">Android</h3>
+          <p id="osDesc" class="text-slate-600 mt-3 text-lg">
+            Android gives you the widest range of phones, from budget to flagship, with strong customization and innovation.
+          </p>
+
+          <div class="mt-6 grid sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-cobalt">
+              <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Strength</div>
+              <div id="osStrength" class="font-medium text-ink mt-1">Choices & customization</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-cobalt">
+              <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Watch for</div>
+              <div id="osWatch" class="font-medium text-ink mt-1">Update policy varies by brand</div>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Best if you…</div>
+            <ul id="osBullets" class="mt-2 space-y-2 text-slate-600">
+              <li>• Want options across price ranges</li>
+              <li>• Prefer customization and new features</li>
+              <li>• Care about fast charging and display tech</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-cobalt/10 to-cyanX/10 rounded-3xl p-6 border border-slate-200">
+          <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Quick takeaway</div>
+          <div id="osTakeaway" class="font-heading text-3xl text-ink mt-2">
+            Pick Android for flexibility.
+          </div>
+          <p id="osTakeawayDesc" class="text-slate-600 mt-3">
+            Your best Android phone depends heavily on the brand’s update commitment and your feature priorities.
+          </p>
+
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="bg-white rounded-2xl p-4 text-center border border-slate-100">
+              <div class="text-xs text-cobalt">Camera</div>
+              <div id="scoreCam" class="font-semibold text-ink mt-1">High</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center border border-slate-100">
+              <div class="text-xs text-cobalt">Battery</div>
+              <div id="scoreBat" class="font-semibold text-ink mt-1">High</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center border border-slate-100">
+              <div class="text-xs text-cobalt">Ecosystem</div>
+              <div id="scoreEco" class="font-semibold text-ink mt-1">Medium</div>
+            </div>
+          </div>
+		  <div class="mt-8">
+			  <img
+				src="assets/phone-ecosystem.jpg"
+				alt="Phone ecosystem devices"
+				class="rounded-2xl border border-slate-200 shadow-soft"
+			  >
+			  <p class="mt-2 text-xs text-slate-500">
+				Ecosystem fit often decides the “best” phone
+			  </p>
+			</div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= ADVISOR (INTERACTIVE) ================= -->
+<section id="advisor" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-3xl mx-auto">
+      <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">Interactive advisor</p>
+      <h2 class="font-heading text-5xl text-ink">Find your best phone fit</h2>
+      <p class="mt-4 text-lg text-slate-600">
+        Choose a profile and priorities. We’ll recommend the direction (platform + must-have features).
+        This avoids outdated “one model to rule them all” lists.
+      </p>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-3 gap-10 items-start">
+      <!-- Left: Profile -->
+      <div class="bg-white rounded-3xl p-6 shadow-soft">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Step 1</div>
+        <div class="font-heading text-2xl mt-2 text-ink">Pick your profile</div>
+
+        <div class="mt-5 space-y-3">
+          <button class="chip active w-full text-left px-4 py-3 rounded-2xl border border-slate-200" data-profile="creator">
+            <div class="font-medium">Creator</div>
+            <div class="text-sm text-slate-500">Photo/video, social, editing</div>
+          </button>
+          <button class="chip w-full text-left px-4 py-3 rounded-2xl border border-slate-200" data-profile="power">
+            <div class="font-medium">Power user</div>
+            <div class="text-sm text-slate-500">Multitasking, productivity</div>
+          </button>
+          <button class="chip w-full text-left px-4 py-3 rounded-2xl border border-slate-200" data-profile="simple">
+            <div class="font-medium">Simple & reliable</div>
+            <div class="text-sm text-slate-500">Calls, chat, basics, longevity</div>
+          </button>
+          <button class="chip w-full text-left px-4 py-3 rounded-2xl border border-slate-200" data-profile="value">
+            <div class="font-medium">Best value</div>
+            <div class="text-sm text-slate-500">Balance + price sensitivity</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Middle: Priorities -->
+      <div class="bg-white rounded-3xl p-6 shadow-soft">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Step 2</div>
+        <div class="font-heading text-2xl mt-2 text-ink">Choose top priorities</div>
+        <p class="text-slate-600 mt-2">Select up to <span class="font-semibold">3</span>. (Tap again to remove.)</p>
+
+        <div class="mt-5 flex flex-wrap gap-3" id="priorityWrap">
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="camera">Camera</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="battery">Battery</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="updates">Long updates</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="gaming">Gaming</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="compact">Compact size</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="charging">Fast charging</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="custom">Customization</button>
+          <button class="px-4 py-2 rounded-full border border-slate-200 bg-mist" data-priority="budget">Budget</button>
+        </div>
+
+        <div class="mt-6 bg-mist rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs uppercase tracking-widest text-black font-bold">Selected</div>
+          <div id="selectedPriorities" class="mt-2 text-slate-700">Camera</div>
+        </div>
+      </div>
+
+      <!-- Right: Result -->
+      <div class="bg-gradient-to-br from-white to-cobalt/5 rounded-3xl p-6 shadow-soft border border-slate-200">
+        <div class="text-xs uppercase tracking-widest text-cobalt font-semibold">Recommendation</div>
+        <div id="resultTitle" class="font-heading text-3xl mt-2 text-ink">Go flagship iPhone or Pixel-style camera</div>
+        <p id="resultDesc" class="text-slate-600 mt-3">
+          Prioritize consistent camera processing and strong video. Choose long software support and reliable performance.
+        </p>
+
+        <div class="mt-6 grid gap-3">
+          <div class="bg-white rounded-2xl p-4 border border-slate-100">
+            <div class="text-xs uppercase tracking-widest text-slate-500 font-bold">Best platform direction</div>
+            <div id="resultOS" class="font-semibold text-ink mt-1">iOS or top-tier Android</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-100">
+            <div class="text-xs uppercase tracking-widest text-slate-500 font-bold">Must-have features</div>
+            <div id="resultMust" class="text-slate-700 mt-1">Great low-light + strong stabilization + long updates</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-100">
+            <div class="text-xs uppercase tracking-widest text-slate-500 font-bold">Avoid</div>
+            <div id="resultAvoid" class="text-slate-700 mt-1">Short update policies, weak video, slow storage</div>
+          </div>
+        </div>
+
+        <a href="#matrix" class="btn mt-6 inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-ink text-white w-full">
+          Compare priorities in the matrix
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MATRIX ================= -->
+<section id="matrix" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-3xl mx-auto">
+      <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">Decision matrix</p>
+      <h2 class="font-heading text-5xl text-ink">What actually makes a phone “best”</h2>
+      <p class="mt-4 text-lg text-slate-600">
+        These categories matter more than raw specs. Use this matrix to sanity-check your shortlist.
+      </p>
+    </div>
+
+    <div class="mt-12 overflow-x-auto rounded-3xl border border-slate-200 shadow-soft">
+      <table class="min-w-[900px] w-full text-left bg-white">
+        <thead class="bg-mist">
+          <tr class="text-slate-600 text-sm">
+            <th class="p-5 font-semibold">Category</th>
+            <th class="p-5 font-semibold">What to look for</th>
+            <th class="p-5 font-semibold">Why it matters</th>
+            <th class="p-5 font-semibold">Pro tip</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <tr>
+            <td class="p-5 font-semibold text-ink">Camera</td>
+            <td class="p-5">Consistency, low-light, stabilization</td>
+            <td class="p-5">Most-used feature for many people</td>
+            <td class="p-5">Compare samples in your lighting</td>
+          </tr>
+          <tr>
+            <td class="p-5 font-semibold text-ink">Battery</td>
+            <td class="p-5">Endurance + charging speed</td>
+            <td class="p-5">Daily comfort & reliability</td>
+            <td class="p-5">Bigger isn’t always better; efficiency matters</td>
+          </tr>
+          <tr>
+            <td class="p-5 font-semibold text-ink">Updates</td>
+            <td class="p-5">Years of OS + security updates</td>
+            <td class="p-5">Longevity, security, resale value</td>
+            <td class="p-5">Check the brand’s update policy</td>
+          </tr>
+          <tr>
+            <td class="p-5 font-semibold text-ink">Performance</td>
+            <td class="p-5">Smoothness, thermal control</td>
+            <td class="p-5">Gaming, camera processing, multitasking</td>
+            <td class="p-5">Sustained performance beats peak benchmarks</td>
+          </tr>
+          <tr>
+            <td class="p-5 font-semibold text-ink">Ecosystem</td>
+            <td class="p-5">Laptop/watch/earbuds integration</td>
+            <td class="p-5">Convenience and workflow speed</td>
+            <td class="p-5">Your “best” OS may be decided here</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MYTHS (ACCORDION) ================= -->
+<section id="faq" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-3xl mx-auto">
+      <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">Myth busters</p>
+      <h2 class="font-heading text-5xl text-ink">Common phone myths</h2>
+      <p class="mt-4 text-lg text-slate-600">
+        These myths cause bad purchases. Tap to expand.
+      </p>
+    </div>
+
+    <div class="mt-12 max-w-4xl mx-auto space-y-4">
+      <div class="accordion-item bg-white rounded-3xl p-6 shadow-soft border border-slate-200">
+        <button class="w-full flex items-center justify-between text-left" data-acc>
+          <div class="font-heading text-2xl text-ink">“More megapixels means a better camera.”</div>
+          <div class="text-slate-400 text-xl">+</div>
+        </button>
+        <div class="accordion-content mt-3 text-slate-600">
+          Sensor size, lens quality, stabilization, and processing matter more. A well-tuned camera system often beats a high-megapixel spec.
+        </div>
+      </div>
+
+      <div class="accordion-item bg-white rounded-3xl p-6 shadow-soft border border-slate-200">
+        <button class="w-full flex items-center justify-between text-left" data-acc>
+          <div class="font-heading text-2xl text-ink">“The fastest chip always feels fastest.”</div>
+          <div class="text-slate-400 text-xl">+</div>
+        </button>
+        <div class="accordion-content mt-3 text-slate-600">
+          Sustained performance (heat control) and software optimization decide day-to-day smoothness more than peak benchmarks.
+        </div>
+      </div>
+
+      <div class="accordion-item bg-white rounded-3xl p-6 shadow-soft border border-slate-200">
+        <button class="w-full flex items-center justify-between text-left" data-acc>
+          <div class="font-heading text-2xl text-ink">“Best phone = most expensive.”</div>
+          <div class="text-slate-400 text-xl">+</div>
+        </button>
+        <div class="accordion-content mt-3 text-slate-600">
+          Value phones can be “best” if your priorities are battery, reliability, and decent cameras—without premium extras you won’t use.
+        </div>
+      </div>
+
+      <div class="accordion-item bg-white rounded-3xl p-6 shadow-soft border border-slate-200">
+        <button class="w-full flex items-center justify-between text-left" data-acc>
+          <div class="font-heading text-2xl text-ink">“Windows Phone is a competitor today.”</div>
+          <div class="text-slate-400 text-xl">+</div>
+        </button>
+        <div class="accordion-content mt-3 text-slate-600">
+          Windows Phone is discontinued and not part of current mainstream smartphone choices. It’s useful as a lesson in why app ecosystems and long-term support matter.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CHECKLIST ================= -->
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-14 items-start">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-cobalt font-semibold mb-3">Final checklist</p>
+        <h2 class="font-heading text-5xl text-ink">Before you buy</h2>
+        <p class="mt-4 text-lg text-slate-600">
+          Use this checklist to avoid regret purchases. If a phone clears these items, it’s likely a strong “best for you.”
+        </p>
+
+        <div class="mt-8 space-y-4">
+          <label class="flex items-start gap-3 bg-mist rounded-2xl p-4 border border-slate-200">
+            <input type="checkbox" class="mt-1 accent-cobalt">
+            <span><span class="font-semibold text-ink">Update policy</span> matches how long you keep phones.</span>
+          </label>
+          <label class="flex items-start gap-3 bg-mist rounded-2xl p-4 border border-slate-200">
+            <input type="checkbox" class="mt-1 accent-cobalt">
+            <span><span class="font-semibold text-ink">Camera style</span> matches your taste (skin tones, low-light, video).</span>
+          </label>
+          <label class="flex items-start gap-3 bg-mist rounded-2xl p-4 border border-slate-200">
+            <input type="checkbox" class="mt-1 accent-cobalt">
+            <span><span class="font-semibold text-ink">Battery + charging</span> fit your daily routine.</span>
+          </label>
+          <label class="flex items-start gap-3 bg-mist rounded-2xl p-4 border border-slate-200">
+            <input type="checkbox" class="mt-1 accent-cobalt">
+            <span><span class="font-semibold text-ink">Ecosystem</span> (watch/earbuds/laptop) feels effortless.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-cobalt/10 to-cyanX/10 rounded-3xl p-8 border border-slate-200 shadow-soft">
+        <div class="text-xs uppercase tracking-widest text-slate-500 font-bold">Ready to decide?</div>
+        <div class="font-heading text-4xl text-ink mt-2">Your “best phone” is the best fit.</div>
+        <p class="text-slate-600 mt-3">
+          Use the advisor + matrix to shortlist 2–3 phones, then pick based on real-world comfort:
+          size in hand, display readability, and camera results you love.
+        </p>
+
+        <a href="#advisor" class="btn mt-6 inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-ink text-white w-full shadow-soft">
+          Re-run the advisor
+        </a>
+
+        <div class="mt-6 text-xs text-slate-500">
+          Note: “Windows Phone” is included as a legacy comparison only.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 border-t border-slate-200 bg-mist">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+    <div class="text-sm text-slate-600">Phone Compass • Single-page mini-app • Informational</div>
+    <div class="text-sm text-slate-500">No ads • No ecommerce • No sponsored rankings</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let currentStep = 0;
+
+  const steps = [
+    {
+      title: 'Pick your “must-haves”',
+      desc: 'Decide what you refuse to compromise on: camera style, battery life, size, budget, or OS.',
+      image: 'assets/phone-camera.jpg',
+      nextText: 'Next'
+    },
+    {
+      title: 'Eliminate bad fits',
+      desc: 'Rule out phones that miss your must-haves, even if they are popular or well-reviewed.',
+      image: 'assets/phone-choices.jpg',
+      nextText: 'Next'
+    },
+    {
+      title: 'Compare real-world experience',
+      desc: 'Look beyond specs. Focus on usability, comfort, battery endurance, and camera results.',
+      image: 'assets/phone-usage.jpg',
+      nextText: 'Next'
+    },
+    {
+      title: 'Choose with confidence',
+      desc: 'At this point, the best phone is the one that fits your life—not the spec sheet.',
+      image: 'assets/phone-decision.jpg',
+      nextText: 'Find my best phone'
+    }
+  ];
+
+  const stepNum   = document.getElementById("stepNum");
+  const stepBar   = document.getElementById("stepBar");
+  const stepTitle = document.getElementById("stepTitle");
+  const stepDesc  = document.getElementById("stepDesc");
+  const stepImage = document.getElementById("stepImage");
+  const prevBtn   = document.getElementById("prevStep");
+  const nextBtn   = document.getElementById("nextStep");
+
+  function updateStep() {
+    const step = steps[currentStep];
+
+    stepNum.textContent = currentStep + 1;
+    stepTitle.textContent = step.title;
+    stepDesc.textContent = step.desc;
+    nextBtn.textContent = step.nextText;
+
+    // Progress bar (25% per step)
+    stepBar.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+
+    // Image fade swap
+    stepImage.style.opacity = 0;
+    setTimeout(() => {
+      stepImage.src = step.image;
+      stepImage.style.opacity = 1;
+    }, 200);
+
+    // Back button visibility
+    if (currentStep === steps.length - 1) {
+      prevBtn.style.display = "none";
+    } else {
+      prevBtn.style.display = "inline-flex";
+    }
+  }
+
+  nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    updateStep();
+  } else {
+    // Last step → go to advisor
+    document.querySelector("#advisor").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+});
+
+  prevBtn.addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep--;
+      updateStep();
+    }
+  });
+
+  updateStep();
+});
+  // ---- OS Tabs ----
+  const osData = {
+    android: {
+      title: "Android",
+      desc: "Android gives you the widest range of phones—from budget to flagship—with customization and rapid hardware innovation.",
+      strength: "Choices & customization",
+      watch: "Update policy varies by brand",
+      bullets: [
+        "Want options across price ranges",
+        "Prefer customization and new features",
+        "Care about fast charging and display tech"
+      ],
+      takeaway: "Pick Android for flexibility.",
+      takeawayDesc: "Your best Android phone depends on brand support and what features you value most.",
+      scores: { cam: "High", bat: "High", eco: "Medium" }
+    },
+    ios: {
+      title: "iOS",
+      desc: "iOS emphasizes stability, polished apps, strong privacy controls, and long-term update support with seamless ecosystem integration.",
+      strength: "Consistency & long support",
+      watch: "Less customization than Android",
+      bullets: [
+        "Use a Mac, iPad, Apple Watch, or AirPods",
+        "Want reliable performance year after year",
+        "Care about smooth video and app optimization"
+      ],
+      takeaway: "Pick iOS for consistency.",
+      takeawayDesc: "If you value seamless integration and long support, iOS often feels effortless.",
+      scores: { cam: "High", bat: "High", eco: "High" }
+    },
+    windows: {
+      title: "Windows Phone (Legacy)",
+      desc: "Windows Phone introduced great UI ideas, but it’s discontinued and not a practical choice today due to limited apps and support.",
+      strength: "UI innovation (historically)",
+      watch: "Discontinued, limited ecosystem",
+      bullets: [
+        "Useful for learning why app ecosystems matter",
+        "Not recommended for modern daily use",
+        "Choose Android/iOS instead for current support"
+      ],
+      takeaway: "Legacy only (not current).",
+      takeawayDesc: "Included as a comparison point: long-term platform support is critical when buying phones.",
+      scores: { cam: "Low", bat: "Low", eco: "Low" }
+    }
+  };
+
+  const osTabs = document.querySelectorAll(".os-tab");
+  const osTitle = document.getElementById("osTitle");
+  const osDesc = document.getElementById("osDesc");
+  const osStrength = document.getElementById("osStrength");
+  const osWatch = document.getElementById("osWatch");
+  const osBullets = document.getElementById("osBullets");
+  const osTakeaway = document.getElementById("osTakeaway");
+  const osTakeawayDesc = document.getElementById("osTakeawayDesc");
+  const scoreCam = document.getElementById("scoreCam");
+  const scoreBat = document.getElementById("scoreBat");
+  const scoreEco = document.getElementById("scoreEco");
+
+  osTabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      osTabs.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const key = btn.dataset.os;
+      const d = osData[key];
+
+      osTitle.textContent = d.title;
+      osDesc.textContent = d.desc;
+      osStrength.textContent = d.strength;
+      osWatch.textContent = d.watch;
+
+      osBullets.innerHTML = d.bullets.map(x => `<li>• ${x}</li>`).join("");
+      osTakeaway.textContent = d.takeaway;
+      osTakeawayDesc.textContent = d.takeawayDesc;
+
+      scoreCam.textContent = d.scores.cam;
+      scoreBat.textContent = d.scores.bat;
+      scoreEco.textContent = d.scores.eco;
+    });
+  });
+
+  // ---- Advisor ----
+  const profileButtons = document.querySelectorAll("[data-profile]");
+  let currentProfile = "creator";
+
+  const priorityButtons = document.querySelectorAll("[data-priority]");
+  let selected = ["camera"]; // default
+
+  const selectedPriorities = document.getElementById("selectedPriorities");
+  const resultTitle = document.getElementById("resultTitle");
+  const resultDesc = document.getElementById("resultDesc");
+  const resultOS = document.getElementById("resultOS");
+  const resultMust = document.getElementById("resultMust");
+  const resultAvoid = document.getElementById("resultAvoid");
+
+  function setSelectedText() {
+    selectedPriorities.textContent = selected.length ? selected.map(s => s[0].toUpperCase()+s.slice(1)).join(", ") : "None";
+  }
+
+  function recompute() {
+    // Simple, deterministic logic (client-safe)
+    const has = (p) => selected.includes(p);
+
+    // profile weight
+    let os = "iOS or top-tier Android";
+    let must = [];
+    let avoid = [];
+
+    if (currentProfile === "creator") {
+      must.push("Strong photo processing", "Reliable video stabilization");
+      avoid.push("Weak video", "Aggressive beauty filters");
+      os = has("custom") ? "Android flagship" : "iOS or Pixel-style Android";
+    } else if (currentProfile === "power") {
+      must.push("Sustained performance", "Fast storage", "Good multitasking");
+      avoid.push("Thermal throttling", "Slow storage");
+      os = has("custom") ? "Android flagship" : "iOS or premium Android";
+    } else if (currentProfile === "simple") {
+      must.push("Long updates", "Great battery", "Reliable calls & apps");
+      avoid.push("Short update policies", "Overcomplicated software");
+      os = has("updates") ? "iOS or top update-policy Android" : "iOS or trusted Android brand";
+    } else if (currentProfile === "value") {
+      must.push("Balanced camera", "Good battery", "Solid updates for price");
+      avoid.push("Unknown update policy", "Poor battery");
+      os = has("budget") ? "Midrange Android with strong updates" : "Best-value iOS/Android option";
+    }
+
+    // priority influence
+    if (has("camera")) must.push("Great low-light");
+    if (has("battery")) must.push("All-day battery endurance");
+    if (has("updates")) must.push("3–7 years of security/OS updates (policy matters)");
+    if (has("gaming")) must.push("High refresh display + cooling");
+    if (has("compact")) must.push("Comfortable one-hand size");
+    if (has("charging")) must.push("Fast charging + safe heat management");
+    if (has("custom")) must.push("Deep customization");
+    if (has("budget")) must.push("Strong value under your budget");
+
+    // title logic
+    let title = "Pick based on your priorities (best-fit approach)";
+    if (has("camera") && has("updates")) title = "Camera + longevity wins (creator-friendly)";
+    else if (has("battery") && has("charging")) title = "All-day battery + fast top-ups (travel-friendly)";
+    else if (has("gaming") && has("performance")) title = "Performance-focused (gaming-ready)";
+    else if (has("budget") && has("updates")) title = "Smart value with long support";
+    else if (has("ecosystem")) title = "Ecosystem-first decision";
+
+    // Description
+    let desc = "Shortlist phones that satisfy your must-haves first, then choose the one that feels best daily.";
+    if (has("camera")) desc = "Prioritize camera consistency in your typical lighting (indoors + night), then validate battery and updates.";
+    if (has("battery")) desc = "Pick efficiency and endurance first; charging and heat control decide day-to-day comfort.";
+
+    resultTitle.textContent = title;
+    resultDesc.textContent = desc;
+    resultOS.textContent = os;
+    resultMust.textContent = [...new Set(must)].slice(0, 6).join(" • ");
+    resultAvoid.textContent = [...new Set(avoid)].slice(0, 4).join(" • ");
+
+    setSelectedText();
+  }
+
+  profileButtons.forEach(b => {
+    b.addEventListener("click", () => {
+      profileButtons.forEach(x => x.classList.remove("active"));
+      b.classList.add("active");
+      currentProfile = b.dataset.profile;
+      recompute();
+    });
+  });
+
+  // priorities: max 3
+  priorityButtons.forEach(b => {
+    b.addEventListener("click", () => {
+      const p = b.dataset.priority;
+      const idx = selected.indexOf(p);
+
+      if (idx >= 0) {
+        selected.splice(idx, 1);
+        b.classList.remove("bg-cobalt", "text-white", "border-cobalt");
+        b.classList.add("bg-mist", "border-slate-200");
+      } else {
+        if (selected.length >= 3) return; // hard cap
+        selected.push(p);
+        b.classList.remove("bg-mist", "border-slate-200");
+        b.classList.add("bg-cobalt", "text-white", "border-cobalt");
+      }
+      recompute();
+    });
+  });
+
+  recompute();
+
+  // ---- Accordion ----
+  document.querySelectorAll("[data-acc]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".accordion-item");
+      const open = item.classList.contains("open");
+      document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
+      if (!open) item.classList.add("open");
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Games - Interactive Guide to Learning History Through Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a1a2e;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .history-font {
+            font-family: 'Cinzel', serif;
+        }
+        
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quiz-option {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: var(--secondary);
+        }
+        
+        .selected {
+            background: rgba(52, 152, 219, 0.3);
+            border-color: var(--secondary);
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+        }
+        
+        .game-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 15px;
+        }
+        
+        .era-card {
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .era-card.active {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        
+        .era-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .era-card:hover .era-image {
+            transform: scale(1.1);
+        }
+        
+        .era-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px;
+            color: white;
+        }
+        
+        .era-games {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .era-games.show {
+            max-height: 500px;
+        }
+        
+        @media (max-width: 768px) {
+            .section-container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .game-image {
+                height: 150px;
+            }
+            .era-image {
+                height: 160px;
+            }
+        }
+        .imm{
+            width: 100%;
+            height: 392px;
+        }
+        .imm img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-black/70 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-gamepad text-2xl text-amber-400 mr-3"></i>
+                <h1 class="text-2xl font-bold history-font">History<span class="text-blue-400">Games</span></h1>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#explorer" class="hover:text-blue-300 transition">Game Explorer</a>
+                <a href="#eras" class="hover:text-blue-300 transition">Historical Eras</a>
+                <a href="#comparison" class="hover:text-blue-300 transition">Compare Games</a>
+                <a href="#quiz" class="hover:text-blue-300 transition">Find Your Game</a>
+            </div>
+            <button class="md:hidden text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="py-16 px-6 text-center relative overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div class="absolute inset-0" style="background: linear-gradient(45deg, #0c2461 0%, #1e3799 100%)"></div>
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" 
+                 alt="Gaming Controller" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 history-font">Learn History Through <span class="text-amber-400">Video Games</span></h1>
+            <p class="text-xl mb-10 text-gray-300">Discover how immersive gaming experiences can teach you about historical events, cultures, and civilizations in engaging ways.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#explorer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition">Explore Games</a>
+                <a href="#quiz" class="bg-transparent border-2 border-blue-500 hover:bg-blue-500/20 text-white font-semibold py-3 px-8 rounded-lg transition">Take the Quiz</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-20">
+        <!-- Section 1: Interactive Game Explorer -->
+        <section id="explorer" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 history-font">Interactive <span class="text-green-400">Game Explorer</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">Browse historical games by time period, accuracy, and educational value. Click on games for detailed information.</p>
+            </div>
+            
+            <!-- Game Grid (Filter Controls Removed) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gameGrid">
+                <!-- Games will be dynamically loaded here -->
+            </div>
+        </section>
+
+       
+
+      <!-- Section 2: Learning Through Time - Timeline -->
+     
+        <!-- Section 3: Gaming Features That Enhance Learning -->
+        <section class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 history-font">What Makes <span class="text-amber-400">Historical Games</span> Special</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">Modern historical games combine cutting-edge technology with meticulous research to create authentic learning experiences.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="game-card rounded-xl overflow-hidden">
+                    <div class="imm">
+                        <img src="./images/notredame-828x435-1.jpg" alt="">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-eye text-blue-400 mr-3"></i>
+                            Photorealistic Environments
+                        </h3>
+                        <p class="text-gray-300 mb-4">Advanced graphics engines recreate historical locations with incredible detail—from the cobblestone streets of medieval Prague to the trenches of WWI.</p>
+                        <div class="bg-gray-800/50 rounded-lg p-4">
+                            <p class="text-sm text-gray-400"><i class="fas fa-quote-left mr-2"></i>Games like Assassin's Creed use laser scans of real buildings and historical consultants to ensure architectural accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card rounded-xl overflow-hidden">
+                    <div class="imm">
+                        <img src="./images/image.png" alt="">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-graduation-cap text-green-400 mr-3"></i>
+                            In-Game Historical Databases
+                        </h3>
+                        <p class="text-gray-300 mb-4">Many games include comprehensive encyclopedias with historical facts, biographies, and cultural context accessible during gameplay.</p>
+                        <div class="bg-gray-800/50 rounded-lg p-4">
+                            <p class="text-sm text-gray-400"><i class="fas fa-quote-left mr-2"></i>Civilization's 'Civilopedia' contains thousands of entries about real historical figures, technologies, and wonders.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card rounded-xl overflow-hidden">
+                    <div class="imm">
+                        <img src="./images/Kingdom-Come-Deliverance.jpg.webp" alt="">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-comments text-amber-400 mr-3"></i>
+                            Authentic Historical Dialogue
+                        </h3>
+                        <p class="text-gray-300 mb-4">Voice acting and writing based on historical documents help players understand how people communicated and thought in different eras.</p>
+                        <div class="bg-gray-800/50 rounded-lg p-4">
+                            <p class="text-sm text-gray-400"><i class="fas fa-quote-left mr-2"></i>Kingdom Come: Deliverance uses period-appropriate language and idioms researched from 15th-century texts.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card rounded-xl overflow-hidden">
+                    <div class="imm">
+                        <img src="./images/unnamed.webp" alt="">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-puzzle-piece text-red-400 mr-3"></i>
+                            Consequence-Based Learning
+                        </h3>
+                        <p class="text-gray-300 mb-4">Make historical decisions and see their outcomes, understanding the complex cause-and-effect relationships that shaped history.</p>
+                        <div class="bg-gray-800/50 rounded-lg p-4">
+                            <p class="text-sm text-gray-400"><i class="fas fa-quote-left mr-2"></i>Strategy games show how economic, military, and diplomatic decisions interact—just as they did in real history.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Student & Teacher Resources -->
+        <section class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 history-font">Resources for <span class="text-green-400">Educators & Students</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">Practical guides and tips for integrating historical gaming into educational contexts.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- For Teachers -->
+                <div class="game-card rounded-xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-green-600 rounded-full p-4 mr-4">
+                            <i class="fas fa-chalkboard-teacher text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">For Teachers</h3>
+                            <p class="text-gray-400">Classroom integration strategies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold mb-2 text-green-400">Lesson Planning</h4>
+                            <p class="text-gray-300 text-sm">Use gameplay footage or streaming sessions as discussion starters. Assign specific in-game missions that align with curriculum topics.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold mb-2 text-green-400">Critical Analysis</h4>
+                            <p class="text-gray-300 text-sm">Have students research historical accuracy by comparing game content with primary sources. Discuss what creative liberties were taken and why.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold mb-2 text-green-400">Assessment Ideas</h4>
+                            <p class="text-gray-300 text-sm">Ask students to create presentations on historical topics using in-game screenshots. Design quizzes based on in-game encyclopedia entries.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold mb-2 text-green-400">Discussion Prompts</h4>
+                            <p class="text-gray-300 text-sm">"How did the game represent social hierarchies?" "What historical perspectives are missing?" "How do gameplay mechanics reflect historical constraints?"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- For Students -->
+                <div class="game-card rounded-xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-blue-600 rounded-full p-4 mr-4">
+                            <i class="fas fa-user-graduate text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">For Students</h3>
+                            <p class="text-gray-400">Maximize your learning experience</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold mb-2 text-blue-400">Active Learning Tips</h4>
+                            <p class="text-gray-300 text-sm">Keep a gaming journal noting historical details you notice. Pause to read in-game historical databases and codex entries.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold mb-2 text-blue-400">Fact-Checking</h4>
+                            <p class="text-gray-300 text-sm">Cross-reference game events with Wikipedia or history textbooks. Identify what's accurate versus what's dramatized for entertainment.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold mb-2 text-blue-400">Deeper Exploration</h4>
+                            <p class="text-gray-300 text-sm">After playing, watch documentaries or read books about the same period. Visit museum websites to see artifacts from the era.</p>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold mb-2 text-blue-400">Study Techniques</h4>
+                            <p class="text-gray-300 text-sm">Use game maps to memorize historical geography. Create flashcards from in-game historical figures and events.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+                <div class="game-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold text-green-400 mb-2">78%</div>
+                    <p class="text-gray-300 text-sm">of educators report increased student engagement with game-based learning</p>
+                </div>
+                <div class="game-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold text-blue-400 mb-2">3x</div>
+                    <p class="text-gray-300 text-sm">better retention of historical facts compared to traditional methods</p>
+                </div>
+                <div class="game-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold text-purple-400 mb-2">90%</div>
+                    <p class="text-gray-300 text-sm">of students say games make history more interesting and relatable</p>
+                </div>
+                <div class="game-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold text-amber-400 mb-2">65%</div>
+                    <p class="text-gray-300 text-sm">improved critical thinking about historical sources and bias</p>
+                </div>
+            </div>
+        </section>
+
+        
+
+        
+
+        <!-- Section 5: Educational Benefits -->
+        <section class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 history-font">Why <span class="text-blue-400">Games Teach History</span> Effectively</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="game-card rounded-xl p-6 text-center card-hover">
+                    <div class="text-4xl text-amber-400 mb-4">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Immersive Context</h3>
+                    <p class="text-gray-300">Games place you directly in historical settings, providing context that textbooks can't match.</p>
+                </div>
+                
+                <div class="game-card rounded-xl p-6 text-center card-hover">
+                    <div class="text-4xl text-green-400 mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Decision Making</h3>
+                    <p class="text-gray-300">Players make historical decisions, understanding constraints and consequences leaders faced.</p>
+                </div>
+                
+                <div class="game-card rounded-xl p-6 text-center card-hover">
+                    <div class="text-4xl text-blue-400 mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Visual Learning</h3>
+                    <p class="text-gray-300">Seeing historically accurate clothing, architecture, and landscapes reinforces learning.</p>
+                </div>
+                
+                <div class="game-card rounded-xl p-6 text-center card-hover">
+                    <div class="text-4xl text-purple-400 mb-4">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Engagement & Motivation</h3>
+                    <p class="text-gray-300">Game mechanics keep players engaged longer than traditional learning methods.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-gray-800 py-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad text-2xl text-amber-400 mr-3"></i>
+                        <h2 class="text-2xl font-bold history-font">History<span class="text-blue-400">Games</span></h2>
+                    </div>
+                    <p class="text-gray-400 mt-2">Learning history through interactive experiences</p>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-400">© 2025 HistoryGames</p>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Game Detail Modal -->
+    <div id="gameModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+        <div class="game-card rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+                    <button id="closeModal" class="text-2xl hover:text-gray-300">&times;</button>
+                </div>
+                
+                <div id="modalImage" class="mb-6">
+                    <!-- Game image will be dynamically inserted here -->
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Historical Period:</h4>
+                            <p id="modalPeriod" class="text-gray-300"></p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Educational Focus:</h4>
+                            <p id="modalFocus" class="text-gray-300"></p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Game Type:</h4>
+                            <p id="modalType" class="text-gray-300"></p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Historical Accuracy:</h4>
+                            <div class="flex items-center">
+                                <div class="flex text-amber-400">
+                                    <!-- Stars will be added dynamically -->
+                                </div>
+                                <span id="modalAccuracy" class="ml-2"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Educational Value:</h4>
+                            <div class="flex items-center">
+                                <div class="flex text-green-400">
+                                    <!-- Stars will be added dynamically -->
+                                </div>
+                                <span id="modalEducation" class="ml-2"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Best For Learning About:</h4>
+                            <p id="modalBestFor" class="text-gray-300"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-bold mb-2">Historical Context & Learning Insights:</h4>
+                    <p id="modalDescription" class="text-gray-300"></p>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-bold mb-2">Key Historical Lessons:</h4>
+                    <ul id="modalLessons" class="list-disc pl-5 text-gray-300 space-y-1">
+                        <!-- Lessons will be added dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game data with image URLs
+        const games = [
+            {
+                id: 1,
+                title: "Assassin's Creed: Odyssey",
+                period: "ancient",
+                era: "Ancient Greece",
+                accuracy: 4,
+                education: 3,
+                type: "Action RPG",
+                description: "Explore ancient Greece during the Peloponnesian War. While taking liberties with historical accuracy for gameplay, it recreates ancient Greek cities, mythology, and culture with impressive detail.",
+                focus: "Ancient Greek culture, mythology, geography",
+                bestFor: "Visualizing ancient Greek world, understanding mythology's role in society",
+                lessons: ["Ancient Greek city-states and their conflicts", "Greek mythology and religious practices", "Social structure of ancient Greece"],
+                image: "./images/apps.53783.71972716530068101.ccdcadf1-1d2a-49f2-9c37-0b0a27e5a53c.6d60329c-2f2a-4ac9-9dd3-2f132d5c3b6c.jpeg"
+            },
+            {
+                id: 2,
+                title: "Valiant Hearts: The Great War",
+                period: "ww1",
+                era: "World War I",
+                accuracy: 5,
+                education: 5,
+                type: "Puzzle Adventure",
+                description: "Follow four interconnected stories during World War I. Praised for historical accuracy and emotional storytelling about the human experience of war.",
+                focus: "World War I, human stories, historical documents",
+                bestFor: "Understanding WWI's human impact and historical context",
+                lessons: ["Trench warfare conditions", "Civilian experiences during WWI", "Technological innovations of WWI"],
+                image: "./images/H2x1_NSwitch_ValiantHeartsTheGreatWar_enGB.jpg"
+            },
+            {
+                id: 3,
+                title: "Civilization VI",
+                period: "ancient",
+                era: "Ancient Civilizations",
+                accuracy: 3,
+                education: 4,
+                type: "Turn-based Strategy",
+                description: "Build an empire from the Stone Age to the Information Age. Features historical leaders, technologies, and wonders with educational 'Civilopedia' entries.",
+                focus: "Historical civilizations, technological progress, cultural development",
+                bestFor: "Understanding historical progression and cultural achievements",
+                lessons: ["Technological advancement through history", "Cultural and scientific achievements", "Diplomatic relations between civilizations"],
+                image: "./images/H2x1_NSwitch_SidMeiersCivilizationVI_image1600w.jpg"
+            },
+            {
+                id: 4,
+                title: "Kingdom Come: Deliverance",
+                period: "medieval",
+                era: "Medieval Europe",
+                accuracy: 5,
+                education: 4,
+                type: "Action RPG",
+                description: "A meticulously researched recreation of 15th century Bohemia. Praised for historical accuracy in combat, clothing, architecture, and social dynamics.",
+                focus: "Medieval life, social structure, historical authenticity",
+                bestFor: "Experiencing daily life in medieval Europe",
+                lessons: ["Social hierarchy in medieval society", "Medieval combat and warfare", "Daily life in 15th century Europe"],
+                image: "./images/kingdom-come-deliverance-ii-pc-steam-cover.jpg"
+            },
+            {
+                id: 5,
+                title: "Hearts of Iron IV",
+                period: "ww2",
+                era: "World War II",
+                accuracy: 4,
+                education: 4,
+                type: "Grand Strategy",
+                description: "Control any nation during WWII with detailed military, industrial, and diplomatic systems. Teaches about the complex global dynamics of the war.",
+                focus: "World War II strategy, technology, politics",
+                bestFor: "Understanding WWII military and political dynamics",
+                lessons: ["Global scale of WWII", "Military technology and strategy", "Diplomatic alliances and politics"],
+                image: "./images/header.jpg"
+            },
+            {
+                id: 6,
+                title: "Europa Universalis IV",
+                period: "renaissance",
+                era: "Renaissance & Exploration",
+                accuracy: 4,
+                education: 5,
+                type: "Grand Strategy",
+                description: "Guide a nation from the late Middle Ages through the early Industrial Revolution. Exceptionally detailed historical events and mechanics.",
+                focus: "Early modern history, colonization, diplomacy",
+                bestFor: "Understanding early modern geopolitics and colonization",
+                lessons: ["Age of Exploration and colonization", "Religious conflicts (Reformation)", "Development of nation-states"],
+                image: "./images/EGS_EuropaUniversalisIV_ParadoxDevelopmentStudioParadoxTinto_S1_2560x1440-c531c49ba988ee1cb1fcc10f98579146.jpeg"
+            }
+        ];
+
+        // Historical Eras Data
+        const historicalEras = [
+            {
+                id: 1,
+                name: "Ancient Civilizations",
+                period: "3000 BC - 500 AD",
+                description: "Explore the dawn of human civilization, from the Egyptian pyramids and Mesopotamian city-states to the glory of Rome and classical Greece. This era covers the development of writing, law, government, and monumental architecture.",
+                themes: ["Rise of city-states and empires", "Development of writing systems", "Religious and philosophical foundations", "Engineering and architectural marvels"],
+                games: [1, 3],
+                image: "./images/1*GxuzQjKVDPg7G6Yx2cxIRw.jpg",
+                tips: "Strategy games work well for understanding empire management, while RPGs help visualize daily life in ancient societies."
+            },
+            {
+                id: 2,
+                name: "Medieval Europe",
+                period: "500 - 1500 AD",
+                description: "Experience the Middle Ages with knights, castles, and feudal societies. This era includes the Viking age, Crusades, Black Death, and the transition from the Dark Ages to the Renaissance.",
+                themes: ["Feudal system and social hierarchy", "Religion's central role in society", "Castles and medieval warfare", "Trade routes and cultural exchange"],
+                games: [4],
+                image: "https://images.unsplash.com/photo-1506905925340-14faa3c85743?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tips: "First-person RPGs provide immersive experiences of medieval life, while strategy games illustrate feudal politics."
+            },
+            {
+                id: 3,
+                name: "Renaissance & Exploration",
+                period: "1400 - 1700 AD",
+                description: "Witness the rebirth of art, science, and exploration. This transformative period includes the Age of Discovery, Protestant Reformation, and scientific revolution that reshaped Europe's understanding of the world.",
+                themes: ["Scientific and artistic revolution", "Age of Exploration and colonization", "Religious reformations", "Emergence of nation-states"],
+                games: [6],
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tips: "Grand strategy games excel at illustrating the complex geopolitics of colonization and emerging global trade networks."
+            },
+            {
+                id: 4,
+                name: "World Wars",
+                period: "1914 - 1945",
+                description: "Understand the devastating conflicts that shaped the modern world. Covering both World War I and II, this era examines technological warfare, political ideologies, and the human cost of global conflict.",
+                themes: ["Technological advancements in warfare", "Political ideologies and propaganda", "Global scale of conflict", "Human impact and social changes"],
+                games: [2, 5],
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                tips: "Strategy games teach military and political dynamics, while narrative games provide emotional understanding of soldiers' experiences."
+            }
+        ];
+
+        // Quiz data
+        const quizQuestions = [
+            {
+                question: "Which historical period interests you most?",
+                options: [
+                    {text: "Ancient Civilizations (Egypt, Greece, Rome)", value: "ancient"},
+                    {text: "Medieval Times (Knights, Castles)", value: "medieval"},
+                    {text: "World Wars (WWI & WWII)", value: "ww"},
+                    {text: "Age of Exploration & Colonization", value: "exploration"}
+                ]
+            },
+            {
+                question: "What type of gameplay do you prefer?",
+                options: [
+                    {text: "Strategy & Planning", value: "strategy"},
+                    {text: "Story-driven Exploration", value: "story"},
+                    {text: "Action & Combat", value: "action"},
+                    {text: "Puzzle Solving", value: "puzzle"}
+                ]
+            },
+            {
+                question: "How important is historical accuracy to you?",
+                options: [
+                    {text: "Extremely - I want a realistic simulation", value: "high"},
+                    {text: "Important, but some creative license is okay", value: "medium"},
+                    {text: "Not too important - fun comes first", value: "low"}
+                ]
+            },
+            {
+                question: "What's your primary learning goal?",
+                options: [
+                    {text: "Understanding daily life in historical periods", value: "daily"},
+                    {text: "Learning about major historical events", value: "events"},
+                    {text: "Understanding cultural/technological development", value: "development"},
+                    {text: "Exploring historical geography and places", value: "geography"}
+                ]
+            },
+            {
+                question: "How much time do you want to invest in learning?",
+                options: [
+                    {text: "Quick, focused historical insights", value: "short"},
+                    {text: "Moderate depth over several hours", value: "medium"},
+                    {text: "Deep, comprehensive historical understanding", value: "long"}
+                ]
+            }
+        ];
+
+        // DOM elements
+        const gameGrid = document.getElementById('gameGrid');
+        const erasGrid = document.getElementById('erasGrid');
+        const comparisonList = document.getElementById('comparisonList');
+        const quizContainer = document.getElementById('quizContainer');
+        const getRecommendationsBtn = document.getElementById('getRecommendations');
+        const quizResults = document.getElementById('quizResults');
+        const recommendedGames = document.getElementById('recommendedGames');
+        const gameModal = document.getElementById('gameModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        // State variables
+        let selectedGames = [];
+        let quizAnswers = [];
+        let currentQuestion = 0;
+        let activeEra = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGames();
+            renderHistoricalEras();
+            setupComparison();
+            initializeQuiz();
+            setupModal();
+        });
+
+        // Render games to the grid
+        function renderGames(filteredGames = null) {
+            const gamesToRender = filteredGames || games;
+            gameGrid.innerHTML = '';
+            
+            gamesToRender.forEach(game => {
+                const starsAccuracy = '★'.repeat(game.accuracy) + '☆'.repeat(5-game.accuracy);
+                const starsEducation = '★'.repeat(game.education) + '☆'.repeat(5-game.education);
+                
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card rounded-xl overflow-hidden card-hover cursor-pointer';
+                gameCard.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}" class="game-image">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold">${game.title}</h3>
+                            <span class="bg-blue-900/50 px-3 py-1 rounded-full text-sm">${game.type}</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Historical Accuracy:</span>
+                                <span class="text-amber-400">${starsAccuracy}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Educational Value:</span>
+                                <span class="text-green-400">${starsEducation}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-4 line-clamp-3">${game.description}</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-300 text-sm">${game.era}</span>
+                            <button class="text-blue-400 hover:text-blue-300" onclick="openGameModal(${game.id})">
+                                Learn More <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                gameCard.addEventListener('click', () => openGameModal(game.id));
+                gameGrid.appendChild(gameCard);
+            });
+        }
+
+        // Render historical eras
+        function renderHistoricalEras() {
+            erasGrid.innerHTML = '';
+            
+            historicalEras.forEach(era => {
+                const eraCard = document.createElement('div');
+                eraCard.className = 'era-card game-card rounded-xl overflow-hidden';
+                eraCard.innerHTML = `
+                    <div class="relative">
+                        <img src="${era.image}" alt="${era.name}" class="era-image">
+                        <div class="era-overlay">
+                            <h3 class="text-xl font-bold mb-1">${era.name}</h3>
+                            <p class="text-sm text-gray-300">${era.period}</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-amber-400">${era.games.length} Games</span>
+                            <button class="text-blue-400 hover:text-blue-300 era-select-btn" data-era="${era.id}">
+                                <i class="fas fa-search mr-1"></i> Explore
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                eraCard.addEventListener('click', () => selectEra(era.id));
+                erasGrid.appendChild(eraCard);
+            });
+        }
+
+        // Select an era to explore
+        function selectEra(eraId) {
+            // Remove active class from all era cards
+            document.querySelectorAll('.era-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected era card
+            const eraCard = document.querySelector(`.era-card:nth-child(${eraId})`);
+            eraCard.classList.add('active');
+            
+            // Find the era data
+            const era = historicalEras.find(e => e.id === eraId);
+            activeEra = era;
+            
+            // Update era details section
+            document.getElementById('selectedEraTitle').textContent = era.name;
+            document.getElementById('eraDescription').textContent = era.description;
+            
+            // Update themes
+            const themesList = document.getElementById('eraThemes');
+            themesList.innerHTML = '';
+            era.themes.forEach(theme => {
+                const li = document.createElement('li');
+                li.textContent = theme;
+                themesList.appendChild(li);
+            });
+            
+            // Update games list
+            const gamesList = document.getElementById('eraGamesList');
+            gamesList.innerHTML = '';
+            
+            if (era.games.length > 0) {
+                era.games.forEach(gameId => {
+                    const game = games.find(g => g.id === gameId);
+                    if (game) {
+                        const gameItem = document.createElement('div');
+                        gameItem.className = 'flex items-center justify-between p-3 bg-gray-800/30 rounded-lg';
+                        gameItem.innerHTML = `
+                            <div>
+                                <h5 class="font-bold">${game.title}</h5>
+                                <p class="text-sm text-gray-400">${game.type} • ${'★'.repeat(game.education)}</p>
+                            </div>
+                            <button onclick="openGameModal(${game.id})" class="text-blue-400 hover:text-blue-300 text-sm">
+                                Details <i class="fas fa-external-link-alt ml-1"></i>
+                            </button>
+                        `;
+                        gamesList.appendChild(gameItem);
+                    }
+                });
+            } else {
+                gamesList.innerHTML = '<p class="text-gray-400 italic">No games available for this era yet. Check back soon!</p>';
+            }
+            
+            // Update tips
+            document.getElementById('eraTips').textContent = era.tips;
+            
+            // Scroll to details section
+            document.getElementById('eraDetails').scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+
+        // Set up comparison functionality
+        function setupComparison() {
+            games.forEach(game => {
+                const comparisonItem = document.createElement('div');
+                comparisonItem.className = 'flex items-center';
+                comparisonItem.innerHTML = `
+                    <input type="checkbox" id="compare-${game.id}" value="${game.id}" class="mr-3 h-5 w-5">
+                    <label for="compare-${game.id}" class="cursor-pointer">${game.title}</label>
+                `;
+                
+                comparisonItem.querySelector('input').addEventListener('change', function() {
+                    if (this.checked) {
+                        if (selectedGames.length >= 2) {
+                            // If already 2 selected, uncheck the first one
+                            const firstCheckbox = document.getElementById(`compare-${selectedGames[0]}`);
+                            firstCheckbox.checked = false;
+                            selectedGames.shift();
+                        }
+                        selectedGames.push(game.id);
+                    } else {
+                        selectedGames = selectedGames.filter(id => id !== game.id);
+                    }
+                    
+                    updateComparison();
+                });
+                
+                comparisonList.appendChild(comparisonItem);
+            });
+        }
+
+        // Update comparison display
+        function updateComparison() {
+            if (selectedGames.length === 2) {
+                const game1 = games.find(g => g.id === selectedGames[0]);
+                const game2 = games.find(g => g.id === selectedGames[1]);
+                
+                // Calculate average scores
+                const avgAccuracy = ((game1.accuracy + game2.accuracy) / 2).toFixed(1);
+                const avgDepth = ((game1.education + game2.education) / 2).toFixed(1);
+                const avgEngagement = 4.0; // Simplified calculation
+                
+                // Update bars
+                document.getElementById('accuracyScore').textContent = `${avgAccuracy}/5`;
+                document.getElementById('accuracyBar').style.width = `${(avgAccuracy / 5) * 100}%`;
+                
+                document.getElementById('depthScore').textContent = `${avgDepth}/5`;
+                document.getElementById('depthBar').style.width = `${(avgDepth / 5) * 100}%`;
+                
+                document.getElementById('engagementScore').textContent = `${avgEngagement}/5`;
+                document.getElementById('engagementBar').style.width = `${(avgEngagement / 5) * 100}%`;
+                
+                // Update details
+                document.getElementById('comparisonDetails').innerHTML = `
+                    <p><strong>${game1.title}</strong> excels at: ${game1.bestFor}</p>
+                    <p class="mt-2"><strong>${game2.title}</strong> excels at: ${game2.bestFor}</p>
+                    <p class="mt-4">${game1.accuracy > game2.accuracy ? game1.title : game2.title} has better historical accuracy, while ${game1.education > game2.education ? game1.title : game2.title} offers deeper educational content.</p>
+                `;
+            } else {
+                // Reset comparison
+                document.getElementById('accuracyScore').textContent = '--';
+                document.getElementById('accuracyBar').style.width = '0%';
+                document.getElementById('depthScore').textContent = '--';
+                document.getElementById('depthBar').style.width = '0%';
+                document.getElementById('engagementScore').textContent = '--';
+                document.getElementById('engagementBar').style.width = '0%';
+                document.getElementById('comparisonDetails').innerHTML = '<p>Select two games to compare their educational values.</p>';
+            }
+        }
+
+        // Initialize quiz
+        function initializeQuiz() {
+            renderQuestion();
+        }
+
+        // Render current quiz question
+        function renderQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                quizContainer.innerHTML = '<p class="text-center text-xl">Quiz completed! Click "Get Recommendations" to see your results.</p>';
+                getRecommendationsBtn.disabled = false;
+                return;
+            }
+            
+            const question = quizQuestions[currentQuestion];
+            let optionsHTML = '';
+            
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="quiz-option border-2 border-gray-700 rounded-lg p-4 mb-3" data-index="${index}">
+                        <div class="flex items-center">
+                            <div class="h-6 w-6 rounded-full border-2 border-gray-500 mr-3 flex items-center justify-center">
+                                <div class="h-3 w-3 rounded-full bg-blue-500 hidden"></div>
+                            </div>
+                            <span>${option.text}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            quizContainer.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <h3 class="text-xl font-bold">Question ${currentQuestion + 1} of ${quizQuestions.length}</h3>
+                        <span class="text-gray-400">${Math.round((currentQuestion / quizQuestions.length) * 100)}% Complete</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${(currentQuestion / quizQuestions.length) * 100}%"></div>
+                    </div>
+                </div>
+                
+                <h4 class="text-xl mb-6">${question.question}</h4>
+                
+                <div id="quizOptions">
+                    ${optionsHTML}
+                </div>
+                
+                <div class="flex justify-between mt-10">
+                    ${currentQuestion > 0 ? '<button id="prevQuestion" class="text-blue-400 hover:text-blue-300"><i class="fas fa-arrow-left mr-2"></i> Previous</button>' : '<div></div>'}
+                    <button id="nextQuestion" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition">Next Question <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+            `;
+            
+            // Add event listeners to options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selection from all options
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.querySelector('.h-3.w-3').classList.add('hidden');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                    this.querySelector('.h-3.w-3').classList.remove('hidden');
+                    
+                    // Store answer
+                    const optionIndex = parseInt(this.getAttribute('data-index'));
+                    quizAnswers[currentQuestion] = quizQuestions[currentQuestion].options[optionIndex].value;
+                });
+            });
+            
+            // Add event listeners to buttons
+            if (currentQuestion > 0) {
+                document.getElementById('prevQuestion').addEventListener('click', () => {
+                    currentQuestion--;
+                    renderQuestion();
+                });
+            }
+            
+            document.getElementById('nextQuestion').addEventListener('click', () => {
+                if (quizAnswers[currentQuestion] === undefined) {
+                    alert('Please select an answer before continuing.');
+                    return;
+                }
+                
+                currentQuestion++;
+                renderQuestion();
+            });
+        }
+
+        // Get quiz recommendations
+        getRecommendationsBtn.addEventListener('click', function() {
+            // Simple recommendation algorithm based on quiz answers
+            let recommended = [];
+            
+            // Period preference
+            const periodPref = quizAnswers[0];
+            
+            // Game type preference
+            const typePref = quizAnswers[1];
+            
+            // Accuracy preference
+            const accuracyPref = quizAnswers[2];
+            
+            // Filter games based on preferences
+            games.forEach(game => {
+                let score = 0;
+                
+                // Period match
+                if (periodPref === 'ancient' && game.period === 'ancient') score += 3;
+                if (periodPref === 'medieval' && game.period === 'medieval') score += 3;
+                if (periodPref === 'ww' && (game.period === 'ww1' || game.period === 'ww2')) score += 3;
+                if (periodPref === 'exploration' && game.period === 'renaissance') score += 3;
+                
+                // Type match (simplified)
+                if (typePref === 'strategy' && (game.type.includes('Strategy') || game.type.includes('Grand'))) score += 2;
+                if (typePref === 'story' && game.type.includes('RPG')) score += 2;
+                if (typePref === 'action' && game.type.includes('Action')) score += 2;
+                if (typePref === 'puzzle' && game.type.includes('Puzzle')) score += 2;
+                
+                // Accuracy match
+                if (accuracyPref === 'high' && game.accuracy >= 4) score += 2;
+                if (accuracyPref === 'medium' && game.accuracy >= 3) score += 1;
+                
+                if (score > 0) {
+                    recommended.push({game, score});
+                }
+            });
+            
+            // Sort by score and get top 4
+            recommended.sort((a, b) => b.score - a.score);
+            recommended = recommended.slice(0, 4);
+            
+            // Display recommendations
+            recommendedGames.innerHTML = '';
+            
+            if (recommended.length === 0) {
+                recommendedGames.innerHTML = '<p class="col-span-2 text-center">No perfect matches found based on your preferences. Try exploring all games above!</p>';
+            } else {
+                recommended.forEach(item => {
+                    const game = item.game;
+                    const starsEducation = '★'.repeat(game.education) + '☆'.repeat(5-game.education);
+                    
+                    const recCard = document.createElement('div');
+                    recCard.className = 'game-card rounded-xl overflow-hidden';
+                    recCard.innerHTML = `
+                        <img src="${game.image}" alt="${game.title}" class="game-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3">${game.title}</h3>
+                            <div class="flex justify-between mb-4">
+                                <span class="text-blue-300 text-sm">${game.era}</span>
+                                <span class="text-green-400">${starsEducation}</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">${game.description.substring(0, 120)}...</p>
+                            <div class="text-center">
+                                <button onclick="openGameModal(${game.id})" class="text-blue-400 hover:text-blue-300">
+                                    View Details <i class="fas fa-external-link-alt ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    recommendedGames.appendChild(recCard);
+                });
+            }
+            
+            // Show results
+            quizResults.classList.remove('hidden');
+            
+            // Scroll to results
+            quizResults.scrollIntoView({behavior: 'smooth'});
+        });
+
+        // Set up game modal
+        function setupModal() {
+            closeModal.addEventListener('click', () => {
+                gameModal.classList.add('hidden');
+            });
+            
+            gameModal.addEventListener('click', (e) => {
+                if (e.target === gameModal) {
+                    gameModal.classList.add('hidden');
+                }
+            });
+            
+            // Close with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !gameModal.classList.contains('hidden')) {
+                    gameModal.classList.add('hidden');
+                }
+            });
+        }
+
+        // Open game modal with details
+        function openGameModal(gameId) {
+            const game = games.find(g => g.id === gameId);
+            if (!game) return;
+            
+            // Populate modal
+            document.getElementById('modalTitle').textContent = game.title;
+            document.getElementById('modalPeriod').textContent = game.era;
+            document.getElementById('modalFocus').textContent = game.focus;
+            document.getElementById('modalType').textContent = game.type;
+            document.getElementById('modalAccuracy').textContent = `${game.accuracy}/5`;
+            document.getElementById('modalEducation').textContent = `${game.education}/5`;
+            document.getElementById('modalBestFor').textContent = game.bestFor;
+            document.getElementById('modalDescription').textContent = game.description;
+            
+            // Add game image
+            document.getElementById('modalImage').innerHTML = `
+                <img src="${game.image}" alt="${game.title}" class="w-full h-48 object-cover rounded-lg">
+            `;
+            
+            // Add stars for accuracy
+            const accuracyStars = document.querySelector('#modalAccuracy').previousElementSibling;
+            accuracyStars.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('i');
+                star.className = `fas fa-star ${i < game.accuracy ? 'text-amber-400' : 'text-gray-600'}`;
+                accuracyStars.appendChild(star);
+            }
+            
+            // Add stars for education
+            const educationStars = document.querySelector('#modalEducation').previousElementSibling;
+            educationStars.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('i');
+                star.className = `fas fa-star ${i < game.education ? 'text-green-400' : 'text-gray-600'}`;
+                educationStars.appendChild(star);
+            }
+            
+            // Add lessons
+            const lessonsList = document.getElementById('modalLessons');
+            lessonsList.innerHTML = '';
+            game.lessons.forEach(lesson => {
+                const li = document.createElement('li');
+                li.textContent = lesson;
+                lessonsList.appendChild(li);
+            });
+            
+            // Show modal
+            gameModal.classList.remove('hidden');
+        }
+
+        // Helper function to get period name
+        function getPeriodName(periodCode) {
+            const periods = {
+                'ancient': 'Ancient History',
+                'medieval': 'Medieval Period',
+                'renaissance': 'Renaissance & Exploration',
+                'modern': 'Modern History',
+                'ww1': 'World War I',
+                'ww2': 'World War II'
+            };
+            
+            return periods[periodCode] || periodCode;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle (simplified)
+        document.querySelector('button.md\\:hidden').addEventListener('click', function() {
+            const nav = document.querySelector('nav .hidden.md\\:flex');
+            if (nav.classList.contains('hidden')) {
+                nav.classList.remove('hidden');
+                nav.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-black/90', 'p-6', 'space-y-4');
+            } else {
+                nav.classList.add('hidden');
+                nav.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-black/90', 'p-6', 'space-y-4');
+            }
+        });
+
+        // Auto-select first era on page load
+        setTimeout(() => {
+            if (historicalEras.length > 0) {
+                selectEra(1);
+            }
+        }, 500);
+    </script>
+</body>
+</html>

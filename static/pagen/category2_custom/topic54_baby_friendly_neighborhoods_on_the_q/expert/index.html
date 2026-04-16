@@ -1,0 +1,658 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <title>Baby-Friendly Neighborhoods on the Q Line | NYC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+   <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  defer
+></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#FFFDF6; }
+    .tab-btn {
+      @apply px-5 py-2 rounded-full border border-slate-300 text-sm font-medium
+            text-slate-600 bg-white transition
+            hover:bg-pink-50 hover:text-pink-600;
+    }
+
+    .tab-btn.active {
+      @apply bg-pink-500 text-white border-pink-500 shadow;
+    }
+  </style>
+  </head>
+
+  <body class="text-slate-800">
+
+  <!-- ================= HERO ================= -->
+  <section id="hero" class="relative min-h-[90vh] flex items-center overflow-hidden">
+
+    <!-- Background Image -->
+    <img
+      src="assets/baby_neighbourhood_banner.png"
+      alt="Parents walking with stroller in a quiet NYC neighborhood"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center text-white">
+      <span class="inline-block mb-4 px-4 py-1 rounded-full bg-pink-400/90 text-sm font-medium">
+        NYC Family Living Guide
+      </span>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
+        Baby-Friendly Neighborhoods<br />
+        Along the Q Line
+      </h1>
+
+      <p class="mt-6 max-w-3xl mx-auto text-lg text-white/90">
+        A calm, parent-focused guide to living near the Q subway line
+        exploring parks, stroller access, healthcare, and everyday comfort.
+      </p>
+
+      <div class="mt-10 flex justify-center gap-4 flex-wrap">
+        <a href="#explorer" class="px-7 py-3 rounded-lg bg-pink-400 text-white font-medium hover:bg-pink-500 transition">
+          Explore Neighborhoods
+        </a>
+        <a href="#why" class="px-7 py-3 rounded-lg bg-blue-400 text-white font-medium hover:bg-blue-500 transition">
+          Why It Matters
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- ================= WHAT IS THE Q LINE ================= -->
+  <section id="about" class="py-24 bg-pink-100">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-stretch">
+
+      <!-- LEFT CONTENT -->
+      <div>
+        <span class="inline-block mb-3 px-3 py-1 text-xs font-medium rounded-full bg-pink-400/90 text-white">
+          NYC Subway Guide
+        </span>
+
+        <h2 class="text-3xl font-semibold mb-5">
+          What is the Q Line?
+        </h2>
+
+        <p class="text-slate-600 leading-relaxed mb-6">
+          The <strong>Q Line</strong> is a major New York City subway route that
+          connects the Upper East Side of Manhattan with central Brooklyn.
+          Unlike many high-speed commuter lines, the Q passes through
+          <strong>residential, neighborhood-focused areas</strong> making it especially
+          appealing for families raising young children in the city.
+        </p>
+
+        <p class="text-slate-600 leading-relaxed mb-8">
+          Along the route, you’ll find a mix of tree-lined streets, local playgrounds,
+          grocery stores, pediatric clinics, and calmer daily rhythms.
+          For parents, this balance between accessibility and livability
+          can make everyday life noticeably easier.
+        </p>
+
+        <!-- HIGHLIGHT CARDS -->
+        <div class="grid grid-cols-2 gap-4 text-sm mb-8">
+          <div class="bg-[#FFFDF6] border p-4 rounded-lg">
+            <div class="font-medium">Boroughs Covered</div>
+            <p class="text-slate-600 mt-1">Manhattan & Brooklyn</p>
+          </div>
+
+          <div class="bg-[#FFFDF6] border p-4 rounded-lg">
+            <div class="font-medium">Neighborhood Feel</div>
+            <p class="text-slate-600 mt-1">Residential, walkable, local</p>
+          </div>
+
+          <div class="bg-[#FFFDF6] border p-4 rounded-lg">
+            <div class="font-medium">Ideal For</div>
+            <p class="text-slate-600 mt-1">Families, caregivers, strollers</p>
+          </div>
+
+          <div class="bg-[#FFFDF6] border p-4 rounded-lg">
+            <div class="font-medium">Daily Use</div>
+            <p class="text-slate-600 mt-1">Commutes, school runs, errands</p>
+          </div>
+        </div>
+
+        <!-- WHY IT WORKS -->
+        <div class="border-l-4 border-pink-400 pl-4">
+          <p class="text-sm text-slate-600">
+            <strong>Why families choose the Q Line:</strong><br />
+            predictable service, access to parks, calmer stations,
+            and neighborhoods designed for everyday life not just commuting.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="relative h-full overflow-hidden rounded-3xl shadow-xl">
+    <img
+      src="assets/babies_in_the_park.png"
+      alt="NYC skyline and bridge near Q Line neighborhoods"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+  </div>
+    </div>
+  </section>
+<!-- ================= NYC Q LINE MAP ================= -->
+<section id="qline-map" class="py-28 bg-white border-t border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="inline-block mb-3 px-4 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium">
+        Interactive Map
+      </span>
+
+      <h2 class="text-4xl font-semibold mb-4">
+        Baby-Friendly Neighborhoods Along the Q Line
+      </h2>
+
+      <p class="text-slate-600 leading-relaxed">
+        This map shows how the Q subway line connects calmer,
+        residential neighborhoods across Manhattan and Brooklyn —
+        areas that naturally support life with a baby.
+      </p>
+    </div>
+
+    <!-- Map Card -->
+    <div class="bg-white rounded-3xl border shadow-lg overflow-hidden">
+      <div class="grid lg:grid-cols-2">
+
+        <!-- MAP -->
+        <div class="relative min-h-[460px]">
+          <div id="qLineMap" class="absolute inset-0"></div>
+
+          <!-- Overlay label -->
+          <div class="absolute top-6 left-6 bg-white/95 backdrop-blur px-4 py-2 rounded-lg shadow text-sm font-medium text-slate-700">
+            NYC · Q Line Route
+          </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="p-10 flex flex-col justify-center">
+          <h3 class="text-2xl font-semibold mb-4">
+            Why the Q Line Works for Families
+          </h3>
+
+          <p class="text-slate-600 leading-relaxed mb-6">
+            Unlike nightlife-heavy subway routes, the Q Line passes through
+            neighborhoods designed around daily living — parks, schools,
+            clinics, and walkable streets.
+          </p>
+
+          <ul class="space-y-3 text-sm text-slate-600">
+            <li>• Direct access to Central Park & Prospect Park</li>
+            <li>• Residential stops with calmer foot traffic</li>
+            <li>• Reliable north–south connection</li>
+            <li>• Easier stroller-friendly routines</li>
+          </ul>
+
+          <p class="mt-6 text-sm text-slate-600">
+            <strong>Tip:</strong> Zoom in to see how closely each stop
+            aligns with parks and residential blocks.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Create map (NYC only)
+    const map = L.map("qLineMap", {
+      zoomControl: true,
+      scrollWheelZoom: false
+    }).setView([40.72, -73.98], 11);
+
+    // Base tiles
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
+
+    // Approximate Q Line route (clean UX version)
+    const qLineRoute = [
+      [40.7681, -73.9637], // Upper East Side
+      [40.7429, -73.9928], // Midtown East
+      [40.6835, -73.9777], // Prospect Heights
+      [40.5774, -73.9616], // Sheepshead Bay
+      [40.5770, -73.9590]  // Brighton Beach
+    ];
+
+    // Draw route
+    L.polyline(qLineRoute, {
+      color: "#2563eb",
+      weight: 4,
+      opacity: 0.9
+    }).addTo(map);
+
+    // Stops
+    const stops = [
+      { name: "Upper East Side", coords: [40.7681, -73.9637] },
+      { name: "Midtown East", coords: [40.7429, -73.9928] },
+      { name: "Prospect Heights", coords: [40.6835, -73.9777] },
+      { name: "Sheepshead Bay", coords: [40.5774, -73.9616] },
+      { name: "Brighton Beach", coords: [40.5770, -73.9590] }
+    ];
+
+    stops.forEach(stop => {
+      L.circleMarker(stop.coords, {
+        radius: 6,
+        color: "#1e40af",
+        fillColor: "#3b82f6",
+        fillOpacity: 1
+      })
+      .addTo(map)
+      .bindPopup(`<strong>${stop.name}</strong><br/>Q Line stop`);
+    });
+  });
+</script>
+
+  <!-- ================= WHY IT MATTERS ================= -->
+  <section id="why" class="py-24 bg-blue-100 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block mb-3 px-4 py-1 rounded-full bg-blue-400 text-white text-sm font-medium">
+          Why It Matters
+        </span>
+
+        <h2 class="text-3xl sm:text-4xl font-semibold mb-4">
+          Choosing the Right Neighborhood Changes Everyday Life
+        </h2>
+
+        <p class="text-slate-600 leading-relaxed">
+          When you’re raising a baby in New York City, small details matter.
+          Access to parks, elevators, clinics, and calmer streets can turn
+          daily routines from stressful into manageable.
+        </p>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md transition">
+          <div class="text-2xl mb-3">🛝</div>
+          <h4 class="font-semibold mb-2">Room to Breathe</h4>
+          <p class="text-sm text-slate-600">
+            Parks, playgrounds, and open sidewalks give parents and children
+            space to slow down and reset.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md transition">
+          <div class="text-2xl mb-3">🚼</div>
+          <h4 class="font-semibold mb-2">Stroller-Friendly Transit</h4>
+          <p class="text-sm text-slate-600">
+            Elevator access and wider platforms reduce daily friction
+            when navigating the city with a baby.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md transition">
+          <div class="text-2xl mb-3">🏥</div>
+          <h4 class="font-semibold mb-2">Support Close to Home</h4>
+          <p class="text-sm text-slate-600">
+            Nearby pediatric care, pharmacies, and essentials bring peace
+            of mind when routines change quickly.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+<!-- ================= DAILY RHYTHMS ================= -->
+<section id="daily-life" class="py-24 bg-blue-500 text-white">
+  <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
+
+    <!-- LEFT: IMAGE -->
+    <div class="relative mx-auto w-full max-w-md lg:max-w-none
+            h-[520px] sm:h-[580px] lg:h-[640px]
+            overflow-hidden rounded-3xl shadow-xl group">
+  <img
+    src="assets/daily_life.png"
+    alt="Parent walking with stroller on a quiet neighborhood street"
+    class="absolute inset-0 w-full h-full object-cover
+           transform transition duration-700
+           group-hover:scale-105"
+  />
+</div>
+
+    <!-- RIGHT: CONTENT -->
+    <div>
+      <span class="inline-flex items-center gap-2 mb-4 text-sm font-medium text-emerald-300">
+        🌙 Everyday Living
+      </span>
+
+      <h2 class="text-3xl sm:text-4xl font-semibold mb-6 leading-tight">
+        The Daily Rhythm Matters More Than the Address
+      </h2>
+
+      <p class="text-white/85 leading-relaxed mb-6">
+        Life with a baby is shaped less by landmarks and more by
+        <strong>small, repeated moments</strong> morning stroller walks,
+        quiet grocery runs, nearby benches, and predictable routines.
+      </p>
+
+      <p class="text-white/85 leading-relaxed mb-8">
+        Neighborhoods along the Q Line tend to support these rhythms naturally.
+        Streets feel calmer, parks are woven into daily life, and errands don’t
+        require constant planning. Over time, this consistency becomes one of
+        the most valuable comforts for new parents.
+      </p>
+
+      <!-- HIGHLIGHTS -->
+      <div class="grid sm:grid-cols-2 gap-4 text-sm">
+        <div class="bg-white/10 rounded-lg p-4">
+          <div class="font-medium mb-1">Predictable Mornings</div>
+          <p class="text-white/80">
+            Walkable blocks and nearby essentials reduce daily decision fatigue.
+          </p>
+        </div>
+
+        <div class="bg-white/10 rounded-lg p-4">
+          <div class="font-medium mb-1">Gentler Evenings</div>
+          <p class="text-white/80">
+            Quieter streets and residential pacing help families wind down.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- ================= WHY BABY FRIENDLY ================= -->
+  <section id="explorer" class="py-28 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="inline-block mb-3 px-4 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium">
+          Explore Neighborhoods
+        </p>
+        <h2 class="text-4xl font-semibold mb-4">
+          Baby-Friendly Stops on the Q Line
+        </h2>
+        <p class="text-slate-600">
+          Each neighborhood along the Q Line offers a unique rhythm of city life.
+          Use the tabs to explore which areas feel most comfortable for families
+          with young children.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <button class="neighborhood-tab active px-6 py-2 rounded-full border text-sm font-medium transition
+        bg-blue-500 text-white border-blue-500 shadow"
+          data-tab="ues">
+          Upper East Side
+        </button>
+
+        <button class="neighborhood-tab px-6 py-2 rounded-full border border-slate-300 text-slate-600
+          hover:bg-blue-50 hover:text-blue-600 transition"
+          data-tab="prospect">
+          Prospect Heights
+        </button>
+
+        <button class="neighborhood-tab px-6 py-2 rounded-full border border-slate-300 text-slate-600
+          hover:bg-blue-50 hover:text-blue-600 transition"
+          data-tab="sheepshead">
+          Sheepshead Bay
+        </button>
+
+        <button class="neighborhood-tab px-6 py-2 rounded-full border border-slate-300 text-slate-600
+          hover:bg-blue-50 hover:text-blue-600 transition"
+          data-tab="midtown">
+          Midtown East
+        </button>
+
+        <button class="neighborhood-tab px-6 py-2 rounded-full border border-slate-300 text-slate-600
+          hover:bg-blue-50 hover:text-blue-600 transition"
+          data-tab="brighton">
+          Brighton Beach
+        </button>
+      </div>
+
+      <!-- Content Card -->
+      <div class="bg-white rounded-3xl border shadow-lg overflow-hidden">
+        <div class="grid lg:grid-cols-2">
+
+          <!-- LEFT: CONTENT -->
+          <div class="p-10">
+
+            <div class="neighborhood-panel" data-panel="ues">
+              <span class="inline-block mb-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+                Most Central
+              </span>
+              <h3 class="text-2xl font-semibold mb-3">Upper East Side</h3>
+              <p class="text-slate-600 mb-4">
+    The Upper East Side combines classic residential streets with some of the
+    most family-oriented infrastructure in the city. Wide sidewalks, reliable
+    transit access, and proximity to Central Park make daily routines smoother
+    for parents navigating life with a baby.
+  </p>
+
+  <ul class="mt-4 space-y-2 text-sm text-slate-600">
+    <li>• Elevator-equipped Q Line stations reduce stroller stress</li>
+    <li>• Multiple pediatric clinics and pharmacies within walking distance</li>
+    <li>• Central Park playgrounds and shaded walking paths nearby</li>
+  </ul>
+
+  <p class="mt-4 text-sm text-slate-600">
+    <strong>Daily life feel:</strong> Predictable, walkable, and well-supported 
+    ideal for first-time parents adjusting to city routines.
+  </p>
+            </div>
+
+            <div class="neighborhood-panel hidden" data-panel="prospect">
+              <span class="inline-block mb-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+                Park Focused
+              </span>
+              <h3 class="text-2xl font-semibold mb-3">Prospect Heights</h3>
+              <p class="text-slate-600 mb-4">
+    Prospect Heights offers a slower, community-centered pace while still
+    providing excellent subway access. The neighborhood’s layout encourages
+    outdoor time, social interaction, and relaxed family schedules.
+  </p>
+
+  <ul class="mt-4 space-y-2 text-sm text-slate-600">
+    <li>• Direct access to Prospect Park’s playgrounds and lawns</li>
+    <li>• Wide sidewalks and quieter side streets</li>
+    <li>• Family-friendly cafés and libraries nearby</li>
+  </ul>
+
+  <p class="mt-4 text-sm text-slate-600">
+    <strong>Daily life feel:</strong> Open, green, and neighborly 
+    especially appealing for parents who prioritize outdoor play.
+  </p>
+            </div>
+
+            <div class="neighborhood-panel hidden" data-panel="sheepshead">
+              <span class="inline-block mb-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+                Quiet & Spacious
+              </span>
+              <h3 class="text-2xl font-semibold mb-3">Sheepshead Bay</h3>
+              <p class="text-slate-600 mb-4">
+    Sheepshead Bay feels distinctly calmer than many parts of the city.
+    With wider streets, lower building density, and fewer crowds, it supports
+    longer stroller walks and quieter daily rhythms.
+  </p>
+
+  <ul class="mt-4 space-y-2 text-sm text-slate-600">
+    <li>• Less foot traffic and lower noise levels</li>
+    <li>• Spacious sidewalks and residential blocks</li>
+    <li>• Local grocery stores and everyday services close by</li>
+  </ul>
+
+  <p class="mt-4 text-sm text-slate-600">
+    <strong>Daily life feel:</strong> Calm and spacious 
+    well suited for newborns and parents seeking mental breathing room.
+  </p>
+            </div>
+
+            <div class="neighborhood-panel hidden" data-panel="midtown">
+              <span class="inline-block mb-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+                Transit Hub
+              </span>
+              <h3 class="text-2xl font-semibold mb-3">Midtown East</h3>
+            <p class="text-slate-600 mb-4">
+    Midtown East prioritizes efficiency and connectivity. While busier than
+    other stops, it excels at convenience  making it a practical option
+    for parents balancing childcare with demanding work schedules.
+  </p>
+
+  <ul class="mt-4 space-y-2 text-sm text-slate-600">
+    <li>• Exceptional subway connectivity for commuting parents</li>
+    <li>• Close proximity to childcare centers and services</li>
+    <li>• Easy access to essentials without long travel</li>
+  </ul>
+
+  <p class="mt-4 text-sm text-slate-600">
+    <strong>Daily life feel:</strong> Fast-paced but efficient 
+    best for families where time predictability matters most.
+  </p>
+            </div>
+
+            <div class="neighborhood-panel hidden" data-panel="brighton">
+              <span class="inline-block mb-3 px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700">
+                Coastal Calm
+              </span>
+              <h3 class="text-2xl font-semibold mb-3">Brighton Beach</h3>
+              <p class="text-slate-600 mb-4">
+    Brighton Beach offers a rare combination of city access and open coastal
+    space. Ocean air, boardwalk walks, and a strong community presence
+    create a slower, more grounded lifestyle for families.
+  </p>
+
+  <ul class="mt-4 space-y-2 text-sm text-slate-600">
+    <li>• Open beach and boardwalk areas for toddlers</li>
+    <li>• Less congestion compared to central neighborhoods</li>
+    <li>• Strong local community and family presence</li>
+  </ul>
+
+  <p class="mt-4 text-sm text-slate-600">
+    <strong>Daily life feel:</strong> Spacious and relaxed 
+    ideal for parents who value outdoor time and slower routines.
+  </p>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: IMAGE -->
+          <div class="relative min-h-[420px]">
+            <img
+              id="neighborhoodImage"
+              src="assets/upper_east_side.png"
+              class="absolute inset-0 w-full h-full object-cover transition duration-500"
+              alt="Neighborhood along the Q Line"
+            />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- ================= CTA ================= -->
+<section
+  id="cta"
+  class="relative py-28 bg-pink-400 text-white text-center overflow-hidden"
+>
+  <!-- Top-right animated Back to Top arrow -->
+  <a
+    href="#hero"
+    class="absolute top-6 right-6
+           w-10 h-10 rounded-full
+           bg-white/90 text-slate-900
+           flex flex-col items-center justify-center
+           shadow-lg
+           hover:bg-white hover:scale-105
+           transition
+           animate-bounce"
+    aria-label="Back to top"
+    title="Back to top"
+  >
+    <!-- Double arrow (up) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 15l7-7 7 7"
+      />
+    </svg>
+  </a>
+
+  <!-- Content -->
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl sm:text-4xl font-semibold mb-4">
+      A Calmer Way to Experience NYC With Your Baby
+    </h2>
+
+    <p class="text-white/90 leading-relaxed">
+      Explore neighborhoods designed for family life —
+      without giving up city convenience.
+    </p>
+  </div>
+</section>
+
+
+  <script>
+    const images = {
+      ues: "assets/upper_east_side.png",
+      prospect: "assets/babies_in_the_park.png",
+      sheepshead: "assets/speedshed_bay.png",
+      midtown: "assets/photo-1486304873000-235643847519.jpg",
+      brighton: "assets/photo-1507525428034-b723cf961d3e.jpg"
+    };
+
+    const tabs = document.querySelectorAll(".neighborhood-tab");
+    const panels = document.querySelectorAll(".neighborhood-panel");
+    const image = document.getElementById("neighborhoodImage");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        // Update tab styles
+        tabs.forEach(t => {
+          t.classList.remove("bg-blue-500", "text-white", "border-blue-500", "shadow");
+          t.classList.add("border-slate-300", "text-slate-600");
+        });
+
+        tab.classList.add("bg-blue-500", "text-white", "border-blue-500", "shadow");
+
+        // Switch panels
+        panels.forEach(p => p.classList.add("hidden"));
+        document.querySelector(`[data-panel="${tab.dataset.tab}"]`)
+          .classList.remove("hidden");
+
+        // Update image
+        image.src = images[tab.dataset.tab];
+      });
+    });
+  </script>
+
+
+  </body>
+  </html>

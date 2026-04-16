@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Samurai Sword - History & Cultural Significance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        p{
+            font-size: 1.3rem;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            background: 
+                linear-gradient(135deg, rgba(26,26,26,0.7) 0%, rgba(74,0,0,0.8) 100%),
+                url('./images/pngtree-dramatic-samurai-sword-with-intricate-designs-on-ground-image_16756741.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139,0,0,0.3) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            padding: 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section:nth-child(even) {
+            background: linear-gradient(to bottom, #f8f5f0 0%, #ffffff 100%);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #4a0000;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(to right, #8b0000, #dc143c);
+            transition: width 0.5s ease;
+        }
+
+        .section h2:hover::after {
+            width: 100%;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+        .content-grid2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139,0,0,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(139,0,0,0.3);
+        }
+
+        .card h3 {
+            color: #8b0000;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .timeline-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            opacity: 0;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #8b0000, #dc143c);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(139,0,0,0.3);
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, #8b0000, #dc143c);
+            color: white;
+            padding: 1.5rem;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #dc143c;
+        }
+
+        .timeline-content {
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content h3 {
+            color: #8b0000;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .timeline-content p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .image-section {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            padding: 5rem 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .image-box {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .image-box:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4a0000, #8b0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255,255,255,0.3);
+            transition: all 0.4s ease;
+        }
+
+        .image-box:hover .image-placeholder {
+            background: linear-gradient(135deg, #8b0000, #dc143c);
+        }
+
+        .craftsmanship {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            gap: 2rem;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(139,0,0,0.2);
+            border-radius: 10px;
+            transition: all 0.4s ease;
+        }
+
+        .step:hover {
+            background: rgba(139,0,0,0.4);
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #8b0000;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: rotate(360deg);
+            background: #dc143c;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, #f8f5f0 0%, #e8e0d5 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .quote {
+            font-size: 2rem;
+            font-style: italic;
+            color: #4a0000;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .quote::before,
+        .quote::after {
+            content: '"';
+            font-size: 4rem;
+            color: #8b0000;
+            opacity: 0.3;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: rotate(45deg) translateY(0);
+            }
+            40% {
+                transform: rotate(45deg) translateY(10px);
+            }
+            60% {
+                transform: rotate(45deg) translateY(5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .timeline-item {
+                flex-direction: column;
+            }
+            .timeline-content {
+                padding-left: 1rem;
+                margin-top: 0.5rem;
+            }
+        }
+        .mm{
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .mm img{
+            width: 100%;
+            height: 100%;
+        }
+        .mm::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
+        }
+        
+        .timeline-content img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .timeline-item:hover .timeline-content img {
+            transform: scale(1.1);
+        }
+        .sw img{
+            width: 100%;
+        }
+        .craftsmanship img{
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        .im{
+            width: 100%;
+            height: 350px;
+        }
+        .im img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Samurai Sword</h1>
+            <p>Soul of the Warrior, Legacy of Honor</p>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Origins & Evolution</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 1rem;">The samurai sword, known as the katana, represents more than a weapon it embodies the spirit, honor, and artistry of feudal Japan. Its evolution spans centuries of refinement, from battlefield necessity to philosophical symbol.</p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">700-800 CE</div>
+                <div class="mm">
+                    <img src="./images/il_340x270.4259434315_e6fz.jpg.avif" alt="Early Straight Swords">
+                </div>
+                <div class="timeline-content">
+                    <h3>Early Straight Swords</h3>
+                    <p>Japanese swords began as straight, double-edged blades influenced by Chinese and Korean designs. These early weapons served mounted warriors but lacked the distinctive curve of later designs.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">1000-1200 CE</div>
+                <div class="mm">
+                    <img src="./images/GettyImages-531013353-770x572.jpg" alt="Curved Blade">
+                </div>
+                <div class="timeline-content">
+                    <h3>The Curved Blade Emerges</h3>
+                    <p>During the Heian period, smiths discovered that curved blades performed better in combat. The tachi, worn edge-down from the belt, became the preferred weapon of mounted samurai.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">1400-1600 CE</div>
+                <div class="mm">
+                    <img src="./images/images.jpeg" alt="Golden Age Katana">
+                </div>
+                <div class="timeline-content">
+                    <h3>Golden Age of the Katana</h3>
+                    <p>The katana emerged as the definitive samurai sword. Worn edge-up through the belt, it allowed for faster drawing techniques. Master swordsmiths achieved legendary status during this period.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section craftsmanship">
+        <h2 style="color: #dc143c;">The Art of Craftsmanship</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem;">Creating a katana is a sacred ritual that can take months. Master swordsmiths blend metallurgy, spirituality, and artistic vision to forge blades that cut with extraordinary precision.</p>
+        <img src="./images/0131_0208-scaled.jpg" alt="">
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Smelting</h3>
+                <p>Iron sand is smelted in a traditional tatara furnace for three days, producing tamahagane steel of exceptional purity.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Folding</h3>
+                <p>The steel is heated, hammered, and folded up to 16 times, creating thousands of layers that strengthen the blade.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Shaping</h3>
+                <p>Hard and soft steels are combined—hard for the edge, soft for the spine—creating a blade that holds sharpness yet resists breaking.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Quenching</h3>
+                <p>Clay is applied in varying thicknesses, then the blade is heated and quenched. This creates the distinctive hamon (temper line).</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Cultural & Spiritual Significance</h2>
+        <div class="content-grid">
+            <div class="card">
+                <h3>Soul of the Samurai</h3>
+                <p>The katana was called the "soul of the samurai." Warriors believed their honor resided in their blade. Losing one's sword was tantamount to losing one's identity and social standing.</p>
+            </div>
+            <div class="card">
+                <h3>Bushido Philosophy</h3>
+                <p>The sword embodied bushido—the way of the warrior. Its creation and use required discipline, respect, and mastery. Every aspect, from maintenance to technique, was a spiritual practice.</p>
+            </div>
+            <div class="card">
+                <h3>Symbol of Authority</h3>
+                <p>Only samurai could wear the daisho—a matched pair of katana and wakizashi. This privilege distinguished the warrior class and represented their duty to protect society.</p>
+            </div>
+            <div class="card">
+                <h3>Artistic Masterpiece</h3>
+                <p>Each component—from the blade's curve to the tsuba (guard) and tsuka (handle)—was crafted by specialized artisans. Swords became treasured works of art, passed through generations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Modern Legacy</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem;">Though the age of the samurai ended in the 19th century, the katana's influence endures. Today, it remains a powerful cultural symbol and an art form preserved by dedicated craftsmen.</p>
+        <div class="content-grid2">
+            <div class="card">
+                <h3>Living Tradition</h3>
+                <p>Modern swordsmiths continue traditional methods, training for decades under master craftsmen. Japan recognizes exceptional smiths as Living National Treasures.</p>
+            </div>
+            <div class="card">
+                <h3>Martial Arts</h3>
+                <p>Kendo, iaido, and other martial arts preserve sword techniques. Practitioners study not just physical skill but the philosophical principles behind the blade.</p>
+            </div>
+            <div class="card">
+                <h3>Global Impact</h3>
+                <p>The katana has influenced global culture, from cinema to literature. Its elegant design and rich symbolism resonate across cultures, representing discipline and excellence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Famous Swords & Legendary Smiths</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem;">Throughout history, certain blades and their creators achieved legendary status, their names spoken with reverence across generations.</p>
+        <div class="content-grid sw">
+            <div class="card ">
+                <div class="im">
+                    <img src="./images/unnamed.jpg" alt="">
+                </div>
+                <h3>Masamune</h3>
+                <p>Considered the greatest swordsmith in history, Goro Nyudo Masamune worked in the 13th-14th centuries. His blades were said to be so perfectly balanced and sharp that they embodied spiritual purity. Legend claims his swords would not cut innocent people.</p>
+            </div>
+            
+            <div class="card">
+                <div class="im">
+                    <img src="./images/Masamune.webp" alt="">
+                </div>
+                <h3>Honjo Masamune</h3>
+                <p>This legendary blade, crafted by Masamune himself, was passed down through the Tokugawa shoguns. Designated a national treasure, it mysteriously disappeared after World War II and has never been recovered.</p>
+            </div>
+            <div class="card">
+                <div class="im">
+                    <img src="./images/Kusanagi-no-tsurugi-sword.jpg" alt="">
+                </div>
+                <h3>Kusanagi-no-Tsurugi</h3>
+                <p>One of Japan's Three Imperial Regalia, this mythical sword was supposedly discovered in the body of an eight-headed serpent. It represents valor and has been held by the Imperial family for over a millennium.</p>
+            </div>
+            <div class="card">
+                <div class="im">
+                    <img src="./images/muramasa2_580a2b3f-0db3-486a-b937-892de42b4a73_700x700.jpg.webp" alt="">
+                </div>
+                <h3>Muramasa</h3>
+                <p>The rival of Masamune, Muramasa crafted blades of exceptional sharpness. His swords gained a dark reputation as "bloodthirsty," allegedly driving their wielders to violence. The Tokugawa shogunate banned them after several family tragedies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%); color: white;">
+        <h2 style="color: #dc143c;">The Way of the Sword: Combat Techniques</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem;">The katana's design enabled devastating techniques that combined speed, precision, and power. Samurai spent lifetimes perfecting these arts.</p>
+        <div class="content-grid">
+            <div class="card" style="background: rgba(139,0,0,0.2); color: white;">
+                <h3 style="color: #dc143c;">Iaijutsu</h3>
+                <p>The art of drawing and cutting in a single motion. A master could unsheathe, strike, and return the blade to its scabbard in one fluid movement, ending a duel in seconds.</p>
+            </div>
+            <div class="card" style="background: rgba(139,0,0,0.2); color: white;">
+                <h3 style="color: #dc143c;">Kenjutsu</h3>
+                <p>Classical swordsmanship focused on practical battlefield techniques. Students learned precise cuts, blocks, and footwork that could mean life or death in combat.</p>
+            </div>
+            <div class="card" style="background: rgba(139,0,0,0.2); color: white;">
+                <h3 style="color: #dc143c;">The Eight Basic Cuts</h3>
+                <p>Traditional training emphasized eight fundamental cutting angles. Mastering these basic forms took years, as each required perfect posture, breathing, and mental focus.</p>
+            </div>
+            <div class="card" style="background: rgba(139,0,0,0.2); color: white;">
+                <h3 style="color: #dc143c;">Tameshigiri</h3>
+                <p>The practice of test cutting, originally performed on bamboo, straw mats, or bodies. This brutal training method ensured warriors could strike with lethal effectiveness in actual combat.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="quote">
+            The sword is the soul. Study the soul to know the sword. Evil mind, evil sword.
+        </div>
+        <p style="margin-top: 1rem; color: #666;">— Traditional Samurai Wisdom</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 The Samurai Sword Heritage. A tribute to centuries of craftsmanship and honor.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / 600);
+            }
+        });
+    </script>
+</body>
+</html>

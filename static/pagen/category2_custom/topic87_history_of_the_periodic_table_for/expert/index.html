@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History of Periodic Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+    <h1>Periodic Table</h1>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav id="navMenu">
+        <a href="#early">Early</a>
+        <a href="#mendeleev">Mendeleev</a>
+        <a href="#modern">Modern</a>
+        <a href="#importance">Importance</a>
+        <a href="#interactive-learning">Timeline</a>
+    </nav>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h2>History of the Periodic Table</h2>
+        <p>
+            The periodic table is a systematic arrangement of elements developed
+            through centuries of scientific discovery.
+        </p>
+
+        <!-- WORKING BUTTON -->
+        <button class="hero-btn" onclick="scrollToHistory()">
+            Explore History
+        </button>
+    </div>
+</section>
+
+
+
+<section id="early" class="section-light">
+
+    <h3>Early Classification of Elements</h3>
+    <p class="subtitle">The first scientific attempt to organize elements</p>
+
+    <div class="grid">
+
+        <!-- Content Card -->
+        <div class="card interactive-card">
+
+            <ul class="points">
+                <li><strong>1829:</strong> Johann Döbereiner proposed the <b>Law of Triads</b></li>
+                <li>Elements were grouped in <b>sets of three</b> with similar properties</li>
+                <li>The atomic mass of the middle element was nearly the average of the other two</li>
+                <li>Example triad: <b>Lithium – Sodium – Potassium</b></li>
+            </ul>
+
+            <p class="highlight">
+                🔎 This was the first step toward discovering periodic trends in elements.
+            </p>
+
+            <div class="fact-box">
+                <strong>Did You Know?</strong><br>
+                Although Döbereiner identified only a few triads, his idea inspired later scientists like Mendeleev.
+            </div>
+
+            <p class="limitation">
+                ⚠ Limitation: The Law of Triads could not classify all known elements.
+            </p>
+
+            <button class="learn-btn" onclick="toggleTriad()">
+                View Triad Example
+            </button>
+
+            <!-- Interactive Triad -->
+            <div class="triad-box" id="triadBox">
+                <div class="element">Li<br><small>Lithium</small></div>
+                <div class="element">Na<br><small>Sodium</small></div>
+                <div class="element">K<br><small>Potassium</small></div>
+            </div>
+
+        </div>
+
+        <!-- Images -->
+        <div class="image-box">
+          
+
+            <img src="images/001.jpg"
+                 alt="Law of Triads example showing Lithium Sodium Potassium"
+                 loading="lazy">
+        </div>
+
+    </div>
+</section>
+
+
+
+
+<!-- MENDELEEV -->
+<section id="mendeleev" class="section-soft">
+
+    <h3>Mendeleev’s Periodic Table</h3>
+    <p class="subtitle">Foundation of the modern periodic table</p>
+
+    <div class="grid">
+
+  
+        <div class="image-box">
+            <img src="images/Dmitri-Mendeleev.jpg"
+                 alt="Dmitri Mendeleev and his periodic table"
+                 loading="lazy">
+        </div>
+
+        <!-- Content Card -->
+        <div class="card interactive-card">
+
+            <ul class="points">
+                <li><strong>1869:</strong> Dmitri Mendeleev arranged elements by atomic mass</li>
+                <li>Elements with similar properties were placed in the same columns</li>
+                <li>He observed a repeating pattern called the <b>Periodic Law</b></li>
+                <li>Gaps were left for undiscovered elements</li>
+            </ul>
+
+            <p class="highlight">
+                🔎 Mendeleev correctly predicted the properties of future elements.
+            </p>
+
+            <p class="limitation">
+                ⚠ Limitation: Some elements did not fit perfectly due to atomic mass order.
+            </p>
+
+            <button class="learn-btn" onclick="togglePrediction()">
+                View Predicted Elements
+            </button>
+
+            <!-- Small Interactive Box -->
+            <div class="prediction-box" id="predictionBox">
+                <div class="element">Ga<br><small>Gallium</small></div>
+                <div class="element">Ge<br><small>Germanium</small></div>
+                <div class="element">Sc<br><small>Scandium</small></div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- MODERN -->
+<section id="modern" class="section-light">
+
+    <h3>Modern Periodic Table</h3>
+    <p class="subtitle">Arranged by atomic number for precise classification</p>
+
+    <div class="grid">
+
+        <!-- Content Card -->
+        <div class="card interactive-card">
+
+            <ul class="points">
+                <li>Henry Moseley showed that <b>atomic number</b> is the fundamental property</li>
+                <li>The modern table is based on atomic number and electronic configuration</li>
+                <li>Properties of elements repeat periodically according to atomic number (<b>Periodic Law</b>)</li>
+                <li>7 periods and 18 groups classify metals, non-metals, metalloids, and noble gases</li>
+            </ul>
+
+            <p class="highlight">
+                🔎 The modern periodic table allows prediction of chemical behavior and systematic study of elements.
+            </p>
+
+            <button class="learn-btn" onclick="toggleModernDetails()">
+                Show Key Groups
+            </button>
+
+            <!-- Interactive Mini Box for Groups -->
+            <div class="groups-box" id="groupsBox">
+                <div class="group">Alkali Metals</div>
+                <div class="group">Alkaline Earth</div>
+                <div class="group">Transition Metals</div>
+                <div class="group">Noble Gases</div>
+            </div>
+
+        </div>
+
+        <!-- Single Image -->
+        <div class="image-box">
+            <img src="images/learn-periodic-table.avif" 
+                 alt="Modern Periodic Table" 
+                 loading="lazy">
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<!-- interactive-learning -->
+
+<section id="interactive-learning">
+    <h3>Interactive Timeline: History of Periodic Table</h3>
+    <p class="subtitle">Click any stage to learn step by step</p>
+
+    <div class="timeline-box">
+
+        <svg viewBox="0 0 1000 200">
+            <line x1="80" y1="100" x2="920" y2="100" class="line"/>
+
+            <g class="point" onclick="showInfo(0)">
+                <circle cx="80" cy="100" r="12"/>
+                <text x="80" y="145">Ancient</text>
+            </g>
+
+            <g class="point" onclick="showInfo(1)">
+                <circle cx="260" cy="100" r="12"/>
+                <text x="260" y="145">Greek</text>
+            </g>
+
+            <g class="point" onclick="showInfo(2)">
+                <circle cx="440" cy="100" r="12"/>
+                <text x="440" y="145">Alchemy</text>
+            </g>
+
+            <g class="point" onclick="showInfo(3)">
+                <circle cx="620" cy="100" r="12"/>
+                <text x="620" y="145">Lavoisier</text>
+            </g>
+
+            <g class="point" onclick="showInfo(4)">
+                <circle cx="800" cy="100" r="12"/>
+                <text x="800" y="145">Modern</text>
+            </g>
+        </svg>
+
+     <div class="info-panel" id="infoPanel">
+    <h4>History Overview</h4>
+
+    <p data-stage="0">
+        The development of the periodic table took place over many
+        centuries. Scientists from different time periods contributed
+        ideas that helped in understanding and classifying elements.
+		
+    </p>
+
+    <p data-stage="1">
+        In the ancient period, substances were identified based on
+        everyday observations. Greek philosophers later introduced
+        early theories about matter.
+    </p>
+
+    <p data-stage="2">
+        During the age of alchemy, experiments focused on transforming
+        substances, which improved laboratory techniques and knowledge
+        of elements.
+    </p>
+
+    <p data-stage="3">
+        Antoine Lavoisier provided the first scientific list of elements,
+        clearly distinguishing between metals and non-metals.
+    </p>
+
+    <p data-stage="4">
+        Finally, modern scientists like Mendeleev and Moseley developed
+        the periodic table we use today, based on atomic mass and
+        atomic number.
+    </p>
+
+    <p>Click any point on the timeline above to explore each stage in more detail.</p>
+</div>
+
+    </div>
+</section>
+
+
+<!-- concept-map -->
+
+<section id="concept-map">
+    <h3>Concept Map: Understanding the Periodic Table</h3>
+    <p class="subtitle">A visual summary for quick revision</p>
+
+    <div class="map-box">
+<div class="svg-container">
+        <svg viewBox="0 0 1000 400">
+
+            <!-- Boxes -->
+            <rect x="400" y="30" width="200" height="60" rx="12" onclick="showConcept(0)"/>
+            <text x="500" y="68">Need of Classification</text>
+
+            <rect x="100" y="170" width="220" height="60" rx="12" onclick="showConcept(1)"/>
+            <text x="210" y="208">Atomic Mass Based</text>
+
+            <rect x="390" y="170" width="220" height="60" rx="12" onclick="showConcept(2)"/>
+            <text x="500" y="208">Atomic Number Based</text>
+
+            <rect x="680" y="170" width="220" height="60" rx="12" onclick="showConcept(3)"/>
+            <text x="790" y="208">Periodic Trends</text>
+
+            <rect x="400" y="300" width="200" height="60" rx="12" onclick="showConcept(4)"/>
+            <text x="500" y="338">Modern Use</text>
+
+            <!-- Lines -->
+            <line x1="500" y1="90" x2="210" y2="170"/>
+            <line x1="500" y1="90" x2="500" y2="170"/>
+            <line x1="500" y1="90" x2="790" y2="170"/>
+            <line x1="500" y1="230" x2="500" y2="300"/>
+
+        </svg>
+</div>
+        <!-- Explanation -->
+        <div class="concept-info" id="conceptInfo">
+            <h4>How to Use</h4>
+            <p>Click any box in the concept map to understand its role in the development of the periodic table.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- IMPORTANCE -->
+<section id="importance" class="section-soft">
+
+    <h3>Scientific Importance</h3>
+    <div class="grid">
+        <div class="card">
+            <p>
+                The periodic table helps scientists understand trends such as
+                atomic size, electronegativity, ionization energy, and reactivity.
+                These trends allow prediction of chemical behavior, formation of compounds,
+                and identification of elements with similar properties.
+            </p>
+        </div>
+        <div class="card">
+            <p>
+                It connects atomic structure with chemical properties and
+                plays a key role in chemistry, physics, biology, and material science.
+                The periodic table also serves as a foundation for education and modern applications,
+                guiding research in pharmaceuticals, nanotechnology, and energy.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+<footer>
+    © 2025 History of Periodic Table
+</footer>
+
+
+
+
+
+
+
+<script>
+function toggleMenu(){
+    document.getElementById("navMenu").classList.toggle("active");
+}
+</script>
+
+<script>
+function scrollToHistory(){
+    document.getElementById("early").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+</script>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function showSlide(i){
+    slides.forEach(slide => slide.classList.remove("active"));
+    slides[i].classList.add("active");
+}
+
+function nextSlide(){
+    index = (index + 1) % slides.length;
+    showSlide(index);
+}
+
+function prevSlide(){
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+}
+
+</script>
+
+<script>
+const historySteps = [
+    {
+        title: "Ancient Elements",
+        text: "Early humans used naturally available elements like gold, copper and iron for daily life."
+    },
+    {
+        title: "Greek Classification",
+        text: "Greek philosophers believed all matter was formed from earth, water, air and fire."
+    },
+    {
+        title: "Alchemy Period",
+        text: "Alchemists developed experimental methods while searching for transformation of metals."
+    },
+    {
+        title: "Lavoisier (1789)",
+        text: "He defined elements scientifically and laid the foundation of modern chemistry."
+    },
+    {
+        title: "Modern Periodic Table",
+        text: "Elements are arranged by atomic number with clear periodic trends."
+    }
+];
+
+let autoIndex = 0;
+
+function showInfo(index){
+    document.getElementById("infoPanel").innerHTML = `
+        <h4>${historySteps[index].title}</h4>
+        <p>${historySteps[index].text}</p>
+    `;
+}
+
+// Auto-play learning (silent & smooth)
+//setInterval(()=>{
+   // showInfo(autoIndex);
+   // autoIndex = (autoIndex + 1) % historySteps.length;
+}, 5000);
+</script>
+
+
+<script>
+const concepts = [
+    {
+        title:"Need of Classification",
+        text:"As the number of elements increased, scientists needed a systematic way to study and compare them."
+    },
+    {
+        title:"Atomic Mass Based Table",
+        text:"Early periodic tables arranged elements by increasing atomic mass, which showed repeating properties."
+    },
+    {
+        title:"Atomic Number Based Table",
+        text:"Moseley proved that atomic number is the correct basis for periodic classification."
+    },
+    {
+        title:"Periodic Trends",
+        text:"Properties like atomic size and reactivity change periodically across periods and groups."
+    },
+    {
+        title:"Modern Use of Periodic Table",
+        text:"The periodic table is used in education, research, medicine and material science."
+    }
+];
+
+function showConcept(index){
+    document.getElementById("conceptInfo").innerHTML = `
+        <h4>${concepts[index].title}</h4>
+        <p>${concepts[index].text}</p>
+    `;
+}
+</script>
+
+
+
+
+<script>
+    const paragraphs = document.querySelectorAll('#infoPanel p[data-stage]');
+
+    function showInfo(index) {
+        paragraphs.forEach(p => p.classList.remove('active')); // sab hide
+        const paraToShow = document.querySelector(`#infoPanel p[data-stage="${index}"]`);
+        if (paraToShow) paraToShow.classList.add('active'); // selected show
+    }
+
+ 
+    showInfo(0);
+</script>
+
+
+<script>
+function toggleTriad() {
+    document.getElementById("triadBox").classList.toggle("show");
+}
+</script>
+<script>
+function togglePrediction() {
+    document.getElementById("predictionBox").classList.toggle("show");
+}
+</script>
+<script>
+function toggleModernDetails() {
+    document.getElementById("groupsBox").classList.toggle("show");
+}
+</script>
+
+-
+<script src="script.js" defer></script>
+
+
+</body>
+</html>

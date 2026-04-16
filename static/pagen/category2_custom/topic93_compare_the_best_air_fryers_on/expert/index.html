@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Fryer Comparison Tool | Find Your Perfect Air Fryer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0f9ff 0%, #fefce8 100%);
+        }
+        .airfryer-card {
+            transition: all 0.3s ease;
+            border-top: 4px solid;
+        }
+        .airfryer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .comparison-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .comparison-table th {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+        }
+        .filter-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close-modal {
+            color: #6b7280;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover {
+            color: #374151;
+        }
+        .star-rating {
+            color: #fbbf24;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .comparison-highlight {
+            background-color: #dbeafe;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-red-500 rounded-lg p-2">
+                    <i class="fas fa-utensils text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900">AirFryerFinder</h1>
+            </div>
+            <div class="text-sm text-gray-600">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Updated: March 2025</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="gradient-bg py-16 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Find Your Perfect Air Fryer</h1>
+                <p class="text-xl text-gray-600 mb-10">Compare the top 10 air fryers side-by-side. Filter by your needs, compare features, and find the best value for your kitchen.</p>
+                
+                <div class="inline-flex flex-col md:flex-row gap-4 mb-12">
+                    <div class="bg-white rounded-xl p-4 shadow-md">
+                        <div class="text-3xl font-bold text-blue-600">10</div>
+                        <div class="text-sm text-gray-600">Top Models Compared</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md">
+                        <div class="text-3xl font-bold text-green-600">50+</div>
+                        <div class="text-sm text-gray-600">Features Analyzed</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md">
+                        <div class="text-3xl font-bold text-purple-600">2,500+</div>
+                        <div class="text-sm text-gray-600">User Reviews Analyzed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Filter Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-10">Find Your Match</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold mb-6">What's Important to You?</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <button class="filter-btn px-4 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-left" data-filter="capacity">
+                        <i class="fas fa-weight text-blue-500 mr-2"></i>
+                        <span>Large Capacity</span>
+                    </button>
+                    <button class="filter-btn px-4 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-left" data-filter="budget">
+                        <i class="fas fa-dollar-sign text-green-500 mr-2"></i>
+                        <span>Budget Friendly</span>
+                    </button>
+                    <button class="filter-btn px-4 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-left" data-filter="smart">
+                        <i class="fas fa-mobile-alt text-purple-500 mr-2"></i>
+                        <span>Smart Features</span>
+                    </button>
+                    <button class="filter-btn px-4 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-left" data-filter="family">
+                        <i class="fas fa-users text-red-500 mr-2"></i>
+                        <span>Family Size</span>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h4 class="font-bold mb-2">Budget Range:</h4>
+                        <div class="flex items-center space-x-4">
+                            <span id="price-min">$50</span>
+                            <input type="range" id="price-range" min="50" max="400" value="200" class="w-48 md:w-64">
+                            <span id="price-max">$400</span>
+                        </div>
+                    </div>
+                    
+                    <button id="apply-filters" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-filter mr-2"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+            
+            <div id="filter-results" class="text-center mb-6">
+                <p class="text-gray-600">Showing <span id="results-count">10</span> air fryers matching your criteria</p>
+            </div>
+        </section>
+
+        <!-- Top Picks Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Top Air Fryer Picks of 2025</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="airfryer-container">
+                <!-- Air fryer cards will be generated by JavaScript -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <button id="compare-selected" class="px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition text-lg">
+                    <i class="fas fa-balance-scale mr-2"></i>Compare Selected Models (0)
+                </button>
+            </div>
+        </section>
+
+        <!-- Interactive Comparison Tool -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-center mb-10">Side-by-Side Comparison</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="comparison-table w-full border border-gray-200 rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="p-4 text-left w-1/4">Features</th>
+                                <th id="compare-header-1" class="p-4 text-center w-1/4">Select Model 1</th>
+                                <th id="compare-header-2" class="p-4 text-center w-1/4">Select Model 2</th>
+                                <th id="compare-header-3" class="p-4 text-center w-1/4">Select Model 3</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-tbody">
+                            <!-- Comparison rows will be generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 mb-4">Select up to 3 models from the cards above to compare features side-by-side</p>
+                    <button id="clear-comparison" class="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition">
+                        Clear Comparison
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buying Guide Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Air Fryer Buying Guide</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6">What to Look For</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="feature-icon bg-blue-100 text-blue-600 mr-4">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Capacity</h4>
+                                <p class="text-gray-600">For singles/couples: 2-4 quarts. For families: 5-8 quarts. Larger baskets can cook more food at once.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="feature-icon bg-green-100 text-green-600 mr-4">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Wattage & Power</h4>
+                                <p class="text-gray-600">Higher wattage (1500W+) cooks faster and more evenly. Most models range from 1200W to 1800W.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="feature-icon bg-purple-100 text-purple-600 mr-4">
+                                <i class="fas fa-sliders-h"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Temperature Range</h4>
+                                <p class="text-gray-600">Look for 175°F to 400°F range. Some models go up to 450°F for better searing.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="feature-icon bg-red-100 text-red-600 mr-4">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-2">Preset Programs</h4>
+                                <p class="text-gray-600">One-touch presets for fries, chicken, fish, etc. save time and guesswork.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                   <img src="./images/Air-Fryer-Buying-Guide-1.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Comparison Deep Dive -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Feature Comparison Deep Dive</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                    <div class="text-center">
+                        <div class="text-4xl text-blue-600 mb-4">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Heating Technology</h3>
+                        <p class="text-gray-600">Most air fryers use rapid air technology with a heating element and fan. Some premium models add additional heating elements for more even cooking.</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-4xl text-green-600 mb-4">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Air Circulation</h3>
+                        <p class="text-gray-600">Higher-end models feature multiple fans or specially designed airflow systems for crispier results with less oil.</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-4xl text-purple-600 mb-4">
+                            <i class="fas fa-brush"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Ease of Cleaning</h3>
+                        <p class="text-gray-600">Non-stick baskets are standard. Dishwasher-safe components save time. Some premium models have ceramic coatings that are more durable.</p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </section>
+
+        <!-- Pros & Cons Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Air Fryer Pros vs Cons</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-green-50 rounded-2xl p-8 border border-green-200">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-green-100 text-green-700 rounded-full p-3 mr-4">
+                            <i class="fas fa-thumbs-up text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-800">Advantages</h3>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span><strong>Healthier Cooking:</strong> Uses 70-80% less oil than deep frying</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span><strong>Energy Efficient:</strong> Cooks faster using less electricity than ovens</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span><strong>Versatile:</strong> Can fry, bake, roast, grill, and reheat</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span><strong>Safety:</strong> No hot oil splatter, automatic shut-off features</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span><strong>Compact:</strong> Takes less counter space than toaster ovens</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-red-50 rounded-2xl p-8 border border-red-200">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-red-100 text-red-700 rounded-full p-3 mr-4">
+                            <i class="fas fa-thumbs-down text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-red-800">Limitations</h3>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <span><strong>Capacity:</strong> Can't cook large quantities like a full oven</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <span><strong>Learning Curve:</strong> Recipes may need adjustment from traditional methods</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <span><strong>Noise:</strong> Fan can be louder than expected during operation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <span><strong>Smoke:</strong> Can produce smoke if food is too oily or overfilled</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mr-3 mt-1"></i>
+                            <span><strong>Price:</strong> Good models start at $80, premium ones exceed $300</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decision Helper -->
+        
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="bg-red-500 rounded-lg p-2">
+                            <i class="fas fa-utensils text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">AirFryerFinder</h3>
+                    </div>
+                    <p class="text-gray-400">Independent comparison tool. We analyze real user reviews, expert testing, and technical specifications to help you make the best choice.</p>
+                </div>
+                
+                
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Note</h4>
+                    <p class="text-gray-400 text-sm mt-4">Last updated: March 2025</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeProductModal()">&times;</span>
+            <div id="product-modal-content">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Air Fryer Data
+        const airFryers = [
+            {
+                id: 1,
+                name: "Ninja Foodi 8-in-1",
+                brand: "Ninja",
+                price: 169.99,
+                capacity: 5.5,
+                wattage: 1750,
+                rating: 4.8,
+                reviewCount: 3240,
+                features: ["Digital Controls", "8 Presets", "Dishwasher Safe", "Non-Stick Basket"],
+                bestFor: ["Families", "Versatility", "Ease of Use"],
+                color: "#ef4444",
+                image: "./images/61JbSwOn3IL.jpg",
+                description: "Top-rated for its versatility with 8 cooking functions including air fry, roast, bake, reheat, and dehydrate.",
+                noiseLevel: "Medium",
+                warranty: "1 Year",
+                dimensions: "12.8 x 14.2 x 11.9 in"
+            },
+            {
+                id: 2,
+                name: "Instant Vortex Plus",
+                brand: "Instant Pot",
+                price: 119.99,
+                capacity: 6,
+                wattage: 1700,
+                rating: 4.7,
+                reviewCount: 2875,
+                features: ["EvenCrisp Technology", "ClearCook Window", "One-Touch Programs", "Odor Erase"],
+                bestFor: ["Even Cooking", "First-time Users", "Value"],
+                color: "#3b82f6",
+                image: "./images/810hkJ0gU2L.jpg",
+                description: "Features ClearCook window to monitor food and EvenCrisp technology for perfect results every time.",
+                noiseLevel: "Low",
+                warranty: "1 Year",
+                dimensions: "13.4 x 15.4 x 12.4 in"
+            },
+            {
+                id: 3,
+                name: "Cosori Pro II",
+                brand: "Cosori",
+                price: 129.99,
+                capacity: 5.8,
+                wattage: 1700,
+                rating: 4.8,
+                reviewCount: 4250,
+                features: ["13 Presets", "Smartphone App", "100+ Recipes", "Shake Reminder"],
+                bestFor: ["Tech Enthusiasts", "Recipe Variety", "Precision"],
+                color: "#10b981",
+                image: "./images/m30409017068_1.jpg.avif",
+                description: "Smart air fryer with app connectivity, 13 presets, and access to hundreds of recipes in the app.",
+                noiseLevel: "Medium",
+                warranty: "2 Years",
+                dimensions: "12.5 x 13.2 x 11.8 in"
+            },
+            {
+                id: 4,
+                name: "Phillips Premium",
+                brand: "Phillips",
+                price: 299.99,
+                capacity: 6.2,
+                wattage: 1800,
+                rating: 4.6,
+                reviewCount: 1560,
+                features: ["Fat Removal Tech", "Digital Display", "7 Presets", "Keep Warm Function"],
+                bestFor: ["Health Conscious", "Crispiest Results", "Premium Build"],
+                color: "#8b5cf6",
+                image: "./images/51BqQO4gyKL._AC_UF1000,1000_QL80_.jpg",
+                description: "Original rapid air technology with fat removal feature for healthier fried foods.",
+                noiseLevel: "Low",
+                warranty: "2 Years",
+                dimensions: "15.7 x 14.2 x 12.6 in"
+            },
+            {
+                id: 5,
+                name: "Dash Compact",
+                brand: "Dash",
+                price: 69.99,
+                capacity: 2.6,
+                wattage: 1000,
+                rating: 4.4,
+                reviewCount: 8920,
+                features: ["Compact Design", "Simple Controls", "Non-Stick Basket", "Auto Shut-off"],
+                bestFor: ["Singles/Couples", "Small Kitchens", "Budget"],
+                color: "#f59e0b",
+                image: "./images/715xv7PPZ2L.jpg",
+                description: "Compact and affordable option perfect for small households or as a secondary appliance.",
+                noiseLevel: "High",
+                warranty: "1 Year",
+                dimensions: "9.8 x 9.8 x 11.0 in"
+            },
+            {
+                id: 6,
+                name: "Gourmia 7-qt Digital",
+                brand: "Gourmia",
+                price: 89.99,
+                capacity: 7,
+                wattage: 1700,
+                rating: 4.5,
+                reviewCount: 2150,
+                features: ["Large Capacity", "Digital Touchscreen", "9 Presets", "Dual Fans"],
+                bestFor: ["Large Families", "Big Batches", "Entertaining"],
+                color: "#ec4899",
+                image: "./images/71YTnwI-SyL.jpg",
+                description: "Extra large capacity with dual fans for even cooking of family-sized portions.",
+                noiseLevel: "Medium-High",
+                warranty: "1 Year",
+                dimensions: "14.0 x 15.5 x 13.2 in"
+            },
+            {
+                id: 7,
+                name: "Cuisinart TOA-60",
+                brand: "Cuisinart",
+                price: 199.99,
+                capacity: 4,
+                wattage: 1800,
+                rating: 4.7,
+                reviewCount: 1320,
+                features: ["Convection Oven Combo", "Bake/Broil Functions", "Non-Stick Interior", "60-Minute Timer"],
+                bestFor: ["Multi-Function", "Small Families", "Oven Replacement"],
+                color: "#dc2626",
+                image: "./images/71a0ZFLTi+L._AC_UF1000,1000_QL80_.jpg",
+                description: "Combination toaster oven and air fryer that saves counter space by replacing multiple appliances.",
+                noiseLevel: "Medium",
+                warranty: "3 Years",
+                dimensions: "16.0 x 14.0 x 10.0 in"
+            },
+            {
+                id: 8,
+                name: "Bella Pro Series",
+                brand: "Bella",
+                price: 79.99,
+                capacity: 8.5,
+                wattage: 1700,
+                rating: 4.3,
+                reviewCount: 1875,
+                features: ["XL Capacity", "Digital Display", "8 Presets", "Dishwasher Safe"],
+                bestFor: ["Large Quantities", "Budget XL Option", "Batch Cooking"],
+                color: "#06b6d4",
+                image: "./images/617bCqbqHnL._AC_UF1000,1000_QL80_.jpg",
+                description: "Extra large capacity at an affordable price point with digital controls and presets.",
+                noiseLevel: "High",
+                warranty: "1 Year",
+                dimensions: "15.7 x 14.8 x 13.0 in"
+            },
+            {
+                id: 9,
+                name: "PowerXL Vortex Pro",
+                brand: "PowerXL",
+                price: 149.99,
+                capacity: 7,
+                wattage: 1700,
+                rating: 4.6,
+                reviewCount: 2450,
+                features: ["TurboFan Technology", "Digital Touch", "Dual Cooking Racks", "See-Through Window"],
+                bestFor: ["Even Cooking", "Multiple Racks", "Visual Monitoring"],
+                color: "#84cc16",
+                image: "./images/51trfUXvdAL._AC_UF1000,1000_QL80_.jpg",
+                description: "Features TurboFan technology for faster cooking and dual racks for cooking two foods at once.",
+                noiseLevel: "Medium",
+                warranty: "2 Years",
+                dimensions: "14.8 x 15.3 x 13.0 in"
+            },
+            {
+                id: 10,
+                name: "Breville Smart Oven Air",
+                brand: "Breville",
+                price: 399.99,
+                capacity: 5,
+                wattage: 1800,
+                rating: 4.9,
+                reviewCount: 890,
+                features: ["Element IQ", "13 Functions", "LCD Display", "Super Convection"],
+                bestFor: ["Serious Cooks", "Premium Build", "Precision Cooking"],
+                color: "#7c3aed",
+                image: "./images/Breville-Smart-Oven-Air-Fryer-Pro-Review_TOHA23_HolidayEssentials_KS_08_23_009_FT.jpg",
+                description: "Premium smart oven with air fry function, featuring intelligent heating elements for perfect results.",
+                noiseLevel: "Low",
+                warranty: "1 Year",
+                dimensions: "18.5 x 15.8 x 11.2 in"
+            }
+        ];
+
+        // State management
+        let selectedAirFryers = [];
+        let currentFilters = {
+            capacity: false,
+            budget: false,
+            smart: false,
+            family: false,
+            minPrice: 50,
+            maxPrice: 400
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAirFryerCards();
+            setupEventListeners();
+            updateComparisonTable();
+            generatePerformanceChart();
+        });
+
+        // Render air fryer cards
+        function renderAirFryerCards() {
+            const container = document.getElementById('airfryer-container');
+            container.innerHTML = '';
+            
+            const filteredAirFryers = filterAirFryers();
+            
+            filteredAirFryers.forEach(fryer => {
+                const isSelected = selectedAirFryers.includes(fryer.id);
+                
+                const card = document.createElement('div');
+                card.className = `airfryer-card bg-white rounded-xl shadow-lg p-6 border-t-4 relative`;
+                card.style.borderTopColor = fryer.color;
+                
+                card.innerHTML = `
+                    <!-- Image positioned at the TOP -->
+                    <div class="flex justify-center mb-4">
+                        <img src="${fryer.image}" alt="${fryer.name}" class="w-48 h-48 object-contain rounded-lg">
+                    </div>
+                    
+                    <!-- Product info below the image -->
+                    <div class="text-center mb-4">
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold mb-2">${fryer.brand}</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">${fryer.name}</h3>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-center justify-center mb-2">
+                            <div class="star-rating">
+                                ${generateStars(fryer.rating)}
+                            </div>
+                            <span class="ml-2 text-gray-600">${fryer.rating} (${fryer.reviewCount.toLocaleString()} reviews)</span>
+                        </div>
+                        
+                        <div class="text-3xl font-bold text-center mb-2" style="color: ${fryer.color}">$${fryer.price}</div>
+                        
+                        <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-weight text-gray-400 mr-2"></i>
+                                <span>${fryer.capacity} qt</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-bolt text-gray-400 mr-2"></i>
+                                <span>${fryer.wattage}W</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-semibold mb-2 text-center">Best For:</h4>
+                            <div class="flex flex-wrap gap-1 justify-center">
+                                ${fryer.bestFor.map(item => `<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs">${item}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button class="select-btn flex-1 py-3 bg-gray-100 text-gray-800 font-semibold rounded-lg hover:bg-gray-200 transition ${isSelected ? 'bg-blue-100 text-blue-800' : ''}" data-id="${fryer.id}">
+                            <i class="fas fa-balance-scale mr-2"></i>${isSelected ? 'Selected' : 'Compare'}
+                        </button>
+                        <button class="detail-btn px-4 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition" data-id="${fryer.id}">
+                            <i class="fas fa-info"></i>
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Update results count
+            document.getElementById('results-count').textContent = filteredAirFryers.length;
+            updateCompareButton();
+        }
+
+        // Filter air fryers based on current filters
+        function filterAirFryers() {
+            return airFryers.filter(fryer => {
+                // Price filter
+                if (fryer.price < currentFilters.minPrice || fryer.price > currentFilters.maxPrice) {
+                    return false;
+                }
+                
+                // Feature filters
+                if (currentFilters.capacity && fryer.capacity < 5) return false;
+                if (currentFilters.budget && fryer.price > 100) return false;
+                if (currentFilters.smart && !fryer.features.some(f => f.includes("App") || f.includes("Smart"))) return false;
+                if (currentFilters.family && fryer.capacity < 5) return false;
+                
+                return true;
+            });
+        }
+
+        // Generate star rating HTML
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    currentFilters[filter] = !currentFilters[filter];
+                    
+                    this.classList.toggle('active');
+                    this.classList.toggle('bg-gray-100');
+                    
+                    if (currentFilters[filter]) {
+                        this.classList.add('bg-blue-600', 'text-white');
+                        this.classList.remove('bg-gray-100', 'text-gray-800');
+                    } else {
+                        this.classList.remove('bg-blue-600', 'text-white');
+                        this.classList.add('bg-gray-100', 'text-gray-800');
+                    }
+                });
+            });
+            
+            // Price range
+            const priceRange = document.getElementById('price-range');
+            const priceMin = document.getElementById('price-min');
+            const priceMax = document.getElementById('price-max');
+            
+            priceRange.addEventListener('input', function() {
+                currentFilters.maxPrice = parseInt(this.value);
+                priceMax.textContent = `$${this.value}`;
+            });
+            
+            // Apply filters button
+            document.getElementById('apply-filters').addEventListener('click', function() {
+                renderAirFryerCards();
+                updateComparisonTable();
+            });
+            
+            // Compare selected button
+            document.getElementById('compare-selected').addEventListener('click', function() {
+                if (selectedAirFryers.length > 0) {
+                    // Scroll to comparison table
+                    document.querySelector('.comparison-table').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Please select at least one air fryer to compare.');
+                }
+            });
+            
+            // Clear comparison button
+            document.getElementById('clear-comparison').addEventListener('click', function() {
+                selectedAirFryers = [];
+                renderAirFryerCards();
+                updateComparisonTable();
+            });
+            
+            // Decision helper buttons
+            document.querySelectorAll('.decision-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from siblings in same question group
+                    const question = this.getAttribute('data-question');
+                    document.querySelectorAll(`[data-question="${question}"]`).forEach(b => {
+                        b.classList.remove('bg-white', 'text-blue-600');
+                        b.classList.add('bg-white/30', 'text-white');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('bg-white/30', 'text-white');
+                    this.classList.add('bg-white', 'text-blue-600');
+                });
+            });
+            
+            // Get recommendation button
+            document.getElementById('get-recommendation').addEventListener('click', getRecommendation);
+            
+            // Initialize price range display
+            priceMax.textContent = `$${priceRange.value}`;
+        }
+
+        // Handle clicks on air fryer cards
+        document.addEventListener('click', function(e) {
+            // Select button
+            if (e.target.closest('.select-btn')) {
+                const btn = e.target.closest('.select-btn');
+                const id = parseInt(btn.getAttribute('data-id'));
+                
+                if (selectedAirFryers.includes(id)) {
+                    selectedAirFryers = selectedAirFryers.filter(item => item !== id);
+                } else {
+                    if (selectedAirFryers.length < 3) {
+                        selectedAirFryers.push(id);
+                    } else {
+                        alert('You can compare up to 3 models at a time. Please deselect one first.');
+                        return;
+                    }
+                }
+                
+                renderAirFryerCards();
+                updateComparisonTable();
+            }
+            
+            // Detail button
+            if (e.target.closest('.detail-btn')) {
+                const btn = e.target.closest('.detail-btn');
+                const id = parseInt(btn.getAttribute('data-id'));
+                showProductDetail(id);
+            }
+        });
+
+        // Update compare button text
+        function updateCompareButton() {
+            const btn = document.getElementById('compare-selected');
+            btn.innerHTML = `<i class="fas fa-balance-scale mr-2"></i>Compare Selected Models (${selectedAirFryers.length})`;
+        }
+
+        // Update comparison table
+        function updateComparisonTable() {
+            const tbody = document.getElementById('comparison-tbody');
+            const headers = ['compare-header-1', 'compare-header-2', 'compare-header-3'];
+            
+            // Clear table
+            tbody.innerHTML = '';
+            
+            // Update headers
+            headers.forEach((headerId, index) => {
+                const header = document.getElementById(headerId);
+                if (index < selectedAirFryers.length) {
+                    const fryer = airFryers.find(f => f.id === selectedAirFryers[index]);
+                    header.innerHTML = `
+                        <div class="font-bold">${fryer.brand}</div>
+                        <div class="text-sm text-gray-600">${fryer.name}</div>
+                        <div class="text-lg font-bold mt-2" style="color: ${fryer.color}">$${fryer.price}</div>
+                    `;
+                } else {
+                    header.innerHTML = `
+                        <div class="text-gray-500">Select Model ${index + 1}</div>
+                        <button class="mt-2 px-4 py-2 bg-gray-100 text-gray-800 rounded-lg text-sm hover:bg-gray-200 transition" onclick="scrollToCards()">
+                            Choose
+                        </button>
+                    `;
+                }
+            });
+            
+            // If no models selected, show empty state
+            if (selectedAirFryers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="p-8 text-center text-gray-500">
+                            <i class="fas fa-balance-scale text-4xl mb-4 block"></i>
+                            <p class="text-lg">Select up to 3 air fryers to compare features side-by-side</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Get selected air fryers
+            const selectedFryers = selectedAirFryers.map(id => airFryers.find(f => f.id === id));
+            
+            // Define comparison rows
+            const comparisonRows = [
+                { label: 'Price', getValue: f => `$${f.price}`, type: 'price' },
+                { label: 'Capacity', getValue: f => `${f.capacity} quarts`, type: 'capacity' },
+                { label: 'Wattage', getValue: f => `${f.wattage}W`, type: 'wattage' },
+                { label: 'Customer Rating', getValue: f => `${f.rating}/5 (${f.reviewCount.toLocaleString()} reviews)`, type: 'rating' },
+                { label: 'Key Features', getValue: f => f.features.join(', '), type: 'text' },
+                { label: 'Best For', getValue: f => f.bestFor.join(', '), type: 'text' },
+                { label: 'Noise Level', getValue: f => f.noiseLevel, type: 'text' },
+                { label: 'Warranty', getValue: f => f.warranty, type: 'text' },
+                { label: 'Dimensions', getValue: f => f.dimensions, type: 'text' }
+            ];
+            
+            // Add rows to table
+            comparisonRows.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-t border-gray-200 hover:bg-gray-50';
+                
+                let cells = `<td class="p-4 font-semibold bg-gray-50">${row.label}</td>`;
+                
+                selectedFryers.forEach((fryer, index) => {
+                    const value = row.getValue(fryer);
+                    cells += `<td class="p-4 text-center">${value}</td>`;
+                });
+                
+                // Fill empty cells if less than 3 selected
+                for (let i = selectedFryers.length; i < 3; i++) {
+                    cells += `<td class="p-4 text-center text-gray-400">—</td>`;
+                }
+                
+                tr.innerHTML = cells;
+                tbody.appendChild(tr);
+                
+                // Add highlight for best values in numeric comparisons
+                if (row.type === 'price') {
+                    highlightBestValue(tr, selectedFryers, 'price', true); // lower is better
+                } else if (row.type === 'capacity' || row.type === 'wattage' || row.type === 'rating') {
+                    highlightBestValue(tr, selectedFryers, row.type, false); // higher is better
+                }
+            });
+        }
+
+        // Highlight best value in a row
+        function highlightBestValue(row, fryers, property, lowerIsBetter) {
+            const cells = row.querySelectorAll('td');
+            
+            // Get values for comparison
+            let values = [];
+            fryers.forEach((fryer, index) => {
+                let value;
+                if (property === 'price') value = fryer.price;
+                else if (property === 'capacity') value = fryer.capacity;
+                else if (property === 'wattage') value = fryer.wattage;
+                else if (property === 'rating') value = fryer.rating;
+                
+                if (value !== undefined) {
+                    values.push({ index: index + 1, value: value }); // +1 because first cell is label
+                }
+            });
+            
+            if (values.length === 0) return;
+            
+            // Find best value
+            let bestIndex;
+            if (lowerIsBetter) {
+                const minValue = Math.min(...values.map(v => v.value));
+                bestIndex = values.find(v => v.value === minValue).index;
+            } else {
+                const maxValue = Math.max(...values.map(v => v.value));
+                bestIndex = values.find(v => v.value === maxValue).index;
+            }
+            
+            // Highlight best cell
+            if (cells[bestIndex]) {
+                cells[bestIndex].classList.add('comparison-highlight');
+            }
+        }
+
+        // Show product detail modal
+        function showProductDetail(id) {
+            const fryer = airFryers.find(f => f.id === id);
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('product-modal-content');
+            
+            let html = `
+                <div class="mb-8">
+                    <div class="flex flex-col md:flex-row items-center mb-6">
+                        <img src="${fryer.image}" alt="${fryer.name}" class="w-48 h-48 object-contain mr-6 mb-4 md:mb-0 rounded-lg">
+                        <div>
+                            <span class="inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold mb-2">${fryer.brand}</span>
+                            <h2 class="text-3xl font-bold">${fryer.name}</h2>
+                            <div class="text-2xl font-bold mt-2" style="color: ${fryer.color}">$${fryer.price}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Overview</h3>
+                            <p class="text-gray-600 mb-6">${fryer.description}</p>
+                            
+                            <h3 class="text-xl font-bold mb-4">Key Features</h3>
+                            <ul class="space-y-2 mb-6">
+                                ${fryer.features.map(feature => `<li class="flex items-start"><i class="fas fa-check text-green-500 mr-2 mt-1"></i> ${feature}</li>`).join('')}
+                            </ul>
+                            
+                            <h3 class="text-xl font-bold mb-4">Best For</h3>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                ${fryer.bestFor.map(item => `<span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full">${item}</span>`).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Specifications</h3>
+                            <div class="bg-gray-50 rounded-xl p-6">
+                                <div class="space-y-4">
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">Capacity:</span>
+                                        <span>${fryer.capacity} quarts</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">Wattage:</span>
+                                        <span>${fryer.wattage}W</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">Noise Level:</span>
+                                        <span>${fryer.noiseLevel}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">Warranty:</span>
+                                        <span>${fryer.warranty}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="font-semibold">Dimensions:</span>
+                                        <span>${fryer.dimensions}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h3 class="text-xl font-bold mb-4">Customer Rating</h3>
+                                <div class="flex items-center mb-2">
+                                    <div class="star-rating text-2xl">
+                                        ${generateStars(fryer.rating)}
+                                    </div>
+                                    <span class="ml-3 text-2xl font-bold">${fryer.rating}/5</span>
+                                </div>
+                                <p class="text-gray-600">Based on ${fryer.reviewCount.toLocaleString()} verified reviews</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-center space-x-4">
+                        <button onclick="addToComparison(${fryer.id})" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition">
+                            <i class="fas fa-balance-scale mr-2"></i>Add to Comparison
+                        </button>
+                        <button onclick="closeProductModal()" class="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+            modal.style.display = 'block';
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        function addToComparison(id) {
+            if (!selectedAirFryers.includes(id)) {
+                if (selectedAirFryers.length < 3) {
+                    selectedAirFryers.push(id);
+                    renderAirFryerCards();
+                    updateComparisonTable();
+                    closeProductModal();
+                } else {
+                    alert('You can compare up to 3 models at a time. Please deselect one first.');
+                }
+            } else {
+                closeProductModal();
+            }
+        }
+
+        // Scroll to cards function for comparison table
+        function scrollToCards() {
+            document.getElementById('airfryer-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Generate performance chart
+        function generatePerformanceChart() {
+            const chart = document.getElementById('performance-chart');
+            chart.innerHTML = '';
+            
+            // Use first 5 air fryers for the chart
+            const chartFryers = airFryers.slice(0, 5);
+            
+            chartFryers.forEach(fryer => {
+                const bar = document.createElement('div');
+                bar.className = 'flex flex-col items-center flex-1';
+                
+                // Calculate bar height based on rating (4-5 scale to 40-100%)
+                const barHeight = 40 + (fryer.rating - 4) * 120; // 4.0 = 40%, 5.0 = 100%
+                
+                bar.innerHTML = `
+                    <div class="w-12 md:w-16 bg-gradient-to-t from-blue-400 to-blue-600 rounded-t-lg mb-2" style="height: ${barHeight}%"></div>
+                    <div class="text-center">
+                        <div class="font-semibold text-sm">${fryer.brand}</div>
+                        <div class="text-xs text-gray-600">${fryer.rating}/5</div>
+                    </div>
+                `;
+                
+                chart.appendChild(bar);
+            });
+        }
+
+        // Calculate savings
+        function calculateSavings() {
+            const mealsPerWeek = parseInt(document.getElementById('meals-range').value);
+            const ovenCostPerHour = parseFloat(document.getElementById('oven-cost').value);
+            
+            // Assumptions:
+            // Average air fryer uses 70% less energy than oven
+            // Average cooking time per meal: 20 minutes for air fryer vs 40 minutes for oven
+            // 52 weeks per year
+            
+            const ovenHoursPerYear = (mealsPerWeek * 40/60) * 52; // Convert minutes to hours
+            const airfryerHoursPerYear = (mealsPerWeek * 20/60) * 52;
+            
+            const ovenCostPerYear = ovenHoursPerYear * ovenCostPerHour;
+            const airfryerCostPerYear = airfryerHoursPerYear * ovenCostPerHour * 0.3; // 70% less energy
+            
+            const savings = ovenCostPerYear - airfryerCostPerYear;
+            
+            document.getElementById('savings-result').textContent = `$${savings.toFixed(0)}/year`;
+            
+            // Update meals value display
+            document.getElementById('meals-value').textContent = `${mealsPerWeek} meals`;
+        }
+
+        // Get personalized recommendation
+        function getRecommendation() {
+            const size = document.querySelector('[data-question="size"].bg-white')?.getAttribute('data-value');
+            const budget = document.querySelector('[data-question="budget"].bg-white')?.getAttribute('data-value');
+            const priority = document.querySelector('[data-question="priority"].bg-white')?.getAttribute('data-value');
+            
+            if (!size || !budget || !priority) {
+                alert('Please answer all 3 questions to get a recommendation.');
+                return;
+            }
+            
+            // Filter air fryers based on answers
+            let recommendations = airFryers.filter(fryer => {
+                // Size filter
+                if (size === '1-2' && fryer.capacity > 4) return false;
+                if (size === '3-4' && (fryer.capacity < 3 || fryer.capacity > 6)) return false;
+                if (size === '5+' && fryer.capacity < 5) return false;
+                
+                // Budget filter
+                if (budget === 'under100' && fryer.price >= 100) return false;
+                if (budget === '100-200' && (fryer.price < 100 || fryer.price > 200)) return false;
+                if (budget === '200+' && fryer.price < 200) return false;
+                
+                return true;
+            });
+            
+            // Sort by priority
+            if (priority === 'ease') {
+                recommendations.sort((a, b) => {
+                    // Prioritize dishwasher safe, simple controls
+                    const aScore = (a.features.some(f => f.includes("Dishwasher")) ? 2 : 0) + 
+                                  (a.features.some(f => f.includes("Simple")) ? 1 : 0);
+                    const bScore = (b.features.some(f => f.includes("Dishwasher")) ? 2 : 0) + 
+                                  (b.features.some(f => f.includes("Simple")) ? 1 : 0);
+                    return bScore - aScore;
+                });
+            } else if (priority === 'features') {
+                recommendations.sort((a, b) => b.features.length - a.features.length);
+            } else if (priority === 'value') {
+                // Value = rating divided by price
+                recommendations.sort((a, b) => (b.rating / b.price) - (a.rating / a.price));
+            }
+            
+            const resultDiv = document.getElementById('recommendation-result');
+            
+            if (recommendations.length > 0) {
+                const topPick = recommendations[0];
+                
+                resultDiv.innerHTML = `
+                    <h3 class="text-2xl font-bold mb-6">Our Recommendation For You:</h3>
+                    
+                    <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                        <div class="flex flex-col md:flex-row items-center mb-6">
+                            <img src="${topPick.image}" alt="${topPick.name}" class="w-48 h-48 object-contain mr-6 mb-4 md:mb-0 rounded-lg">
+                            <div>
+                                <h4 class="text-xl font-bold">${topPick.brand} ${topPick.name}</h4>
+                                <div class="text-2xl font-bold mt-2" style="color: ${topPick.color}">$${topPick.price}</div>
+                                <div class="flex items-center mt-2">
+                                    <div class="star-rating">
+                                        ${generateStars(topPick.rating)}
+                                    </div>
+                                    <span class="ml-2">${topPick.rating}/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <div class="font-semibold">Capacity:</div>
+                                <div>${topPick.capacity} quarts</div>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Best For:</div>
+                                <div>${topPick.bestFor.join(', ')}</div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600">${topPick.description}</p>
+                    </div>
+                    
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="addToComparison(${topPick.id})" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition">
+                            <i class="fas fa-balance-scale mr-2"></i>Add to Comparison
+                        </button>
+                        <button onclick="showProductDetail(${topPick.id})" class="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-900 transition">
+                            View Details
+                        </button>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="text-center p-6">
+                        <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">No Perfect Match Found</h4>
+                        <p class="text-gray-600">Try adjusting your criteria or browse all air fryers above.</p>
+                    </div>
+                `;
+            }
+            
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = ['product-modal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize savings calculator
+        document.getElementById('meals-range').addEventListener('input', function() {
+            document.getElementById('meals-value').textContent = `${this.value} meals`;
+        });
+
+        // Initial calculations
+        calculateSavings();
+    </script>
+</body>
+</html>

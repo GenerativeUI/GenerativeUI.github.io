@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolutionary History of the Domestic Cat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        p{
+            font-size: 19px;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(102,126,234,0.85) 0%, rgba(118,75,162,0.85) 100%), 
+                        url('./images/catt.jpeg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0%, 100% { top: 10px; opacity: 1; }
+            50% { top: 25px; opacity: 0.5; }
+        }
+
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #667eea;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        h2:hover::after {
+            width: 100%;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102,126,234,0.3);
+            border-color: #667eea;
+        }
+
+        .timeline-item h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline-item .year {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .image-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 300px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .image-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea88, #764ba288);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .image-card:hover::before {
+            opacity: 1;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            color: white;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
+        .image-card:hover .image-caption {
+            transform: translateY(0);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover .feature-icon {
+            transform: rotate(360deg);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .cta-section h2 {
+            color: white;
+        }
+
+        .cta-section h2::after {
+            background: white;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+
+        footer {
+            background: #2c2c2c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea22, #764ba222);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            transition: color 0.3s ease;
+        }
+
+        .stat-box:hover .stat-number {
+            color: white;
+        }
+
+        .adaptation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .adaptation-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+
+        .adaptation-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(102,126,234,0.3);
+        }
+
+        .adaptation-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .adaptation-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .adaptation-content {
+            padding: 2rem;
+        }
+
+        .adaptation-content h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .culture-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .culture-card {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .culture-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .culture-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .culture-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(102,126,234,0.95), rgba(118,75,162,0.85));
+            color: white;
+            padding: 2rem;
+            transform: translateY(calc(100% - 80px));
+            transition: transform 0.4s ease;
+        }
+
+        .culture-card:hover .culture-overlay {
+            transform: translateY(0);
+        }
+
+        .culture-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .culture-overlay p {
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .culture-card:hover .culture-overlay p {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+        .mm{
+            height: 184px;
+            width: 100%;
+        }
+        .mm img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>The Domestic Cat</h1>
+            <p>A Journey Through 10,000 Years of Evolution</p>
+        </div>
+        <div class="scroll-indicator" onclick="document.querySelector('#origins').scrollIntoView({behavior: 'smooth'})"></div>
+    </div>
+
+    <section id="origins">
+        <h2>Ancient Origins</h2>
+        <p>The domestic cat's evolutionary story begins in the Fertile Crescent approximately 10,000 years ago. Unlike dogs, which were actively domesticated by humans, cats essentially domesticated themselves. As humans transitioned from nomadic hunting to settled agriculture, grain stores attracted rodents, which in turn attracted wild cats. These early felines, primarily descended from the African wildcat (Felis silvestris lybica), found a mutually beneficial relationship with human settlements.</p>
+        
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-number">10,000</div>
+                <div>Years of Domestication</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">600M+</div>
+                <div>Domestic Cats Worldwide</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">95.6%</div>
+                <div>DNA Match with Wildcats</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <h2>Evolutionary Timeline</h2>
+        <p>The remarkable journey from wild predator to beloved companion spans millennia of gradual adaptation and selective pressures.</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="mm">
+                    <img src="./images/proailurus.jpg" alt="">
+                </div>
+                <div class="year">10,000 BCE</div>
+                <h3>First Contact</h3>
+                <p>Wild cats begin associating with human agricultural settlements in the Near East, drawn by abundant rodent populations around grain stores.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="mm">
+                    <img src="./images/1*qIFWb-c9cUN3EDCJ_mSZNg.jpg" alt="">
+                </div>
+                <div class="year">7,500 BCE</div>
+                <h3>Early Domestication</h3>
+                <p>Archaeological evidence from Cyprus shows cats were being transported by humans, indicating early stages of domestication and human-cat bonds.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="mm">
+                    <img src="./images/mythology-cat-bastet.jpg.avif" alt="">
+                </div>
+                <div class="year">3,000 BCE</div>
+                <h3>Egyptian Reverence</h3>
+                <p>Cats achieve sacred status in Ancient Egypt, where they're worshipped as manifestations of the goddess Bastet and mummified alongside pharaohs.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="mm">
+                    <img src="./images/Laperm-chocolate-silver-tortie-tabby-on-black-background_Linn-Currie-Shutterstock-scaled.jpg.webp" alt="">
+                </div>
+                <div class="year">500 CE</div>
+                <h3>Global Expansion</h3>
+                <p>Cats spread throughout Europe, Asia, and Africa via trade routes and ships, controlling rodent populations and adapting to diverse climates.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Genetic Legacy</h2>
+        <p>Modern genetic studies reveal that all domestic cats share a common ancestor with the African wildcat. Despite thousands of years of living alongside humans, domestic cats retain remarkable genetic similarity to their wild cousins, maintaining many of their ancestral behaviors and instincts.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-box">
+                <div class="feature-icon">🧬</div>
+                <h3>DNA Conservation</h3>
+                <p>Domestic cats share over 95% of their DNA with African wildcats, preserving their predatory instincts and independent nature.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🦁</div>
+                <h3>Felidae Family</h3>
+                <p>Part of the Felidae family for 25 million years, cats evolved specialized features like retractable claws and exceptional night vision.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🎨</div>
+                <h3>Coat Variations</h3>
+                <p>Natural mutations and selective breeding produced diverse coat patterns, colors, and textures seen in modern cat breeds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <h2>Behavioral Evolution</h2>
+        <p>While retaining their predatory nature, domestic cats have evolved specific behaviors that facilitate their relationship with humans. Their ability to vocalize through meowing—a trait rarely used in adult wildcats—demonstrates adaptation to human communication styles.</p>
+        
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="./images/image-13.jpeg.webp" alt="">
+                <div class="image-caption">
+                    <strong>Communication Adaptation</strong><br>
+                    Cats developed unique vocalizations to interact with humans
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="./images/young-woman-holding-her-siberian-cat_evrymmnt_Shutterstock.jpg" alt="">
+                <div class="image-caption">
+                    <strong>Social Flexibility</strong><br>
+                    Adapted to coexist with humans while maintaining independence
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="./images/shutterstock_158598329-800x550.jpg" alt="">
+                <div class="image-caption">
+                    <strong>Hunting Instincts</strong><br>
+                    Retained predatory behaviors despite domestication
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Modern Breeds & Diversity</h2>
+        <p>The past 150 years have seen explosive diversification in cat breeds through selective breeding. From the hairless Sphynx to the massive Maine Coon, human intervention has created remarkable variety while the underlying genetic foundation remains remarkably consistent with ancient wildcats.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-box">
+                <div class="feature-icon">🏆</div>
+                <h3>73 Recognized Breeds</h3>
+                <p>International cat registries recognize over 73 distinct breeds, each with unique characteristics and temperaments.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🌍</div>
+                <h3>Global Adaptation</h3>
+                <p>Cats have successfully colonized every continent except Antarctica, adapting to diverse climates and ecosystems.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🔬</div>
+                <h3>Ongoing Evolution</h3>
+                <p>Genetic studies continue to reveal new insights about cat evolution, health, and behavior patterns.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-alt">
+        <h2>Physical Adaptations</h2>
+        <p>Through evolutionary pressures, cats developed extraordinary physical traits that make them one of nature's most efficient predators. These adaptations have been preserved through domestication, allowing house cats to retain the capabilities of their wild ancestors.</p>
+        
+        <div class="adaptation-grid">
+            <div class="adaptation-card">
+                <img src="./images/Cats-Eye-Glow-in-Dark-777x583.jpg.webp" alt="Cat eyes reflecting light">
+                <div class="adaptation-content">
+                    <h3>Superior Night Vision</h3>
+                    <p>Cats possess a reflective layer called the tapetum lucidum behind their retinas, allowing them to see in light levels six times lower than humans require. Their elliptical pupils can dilate widely to capture maximum light.</p>
+                </div>
+            </div>
+            <div class="adaptation-card">
+                <img src="./images/Why-Do-Cats-Have-Retractable-Claws-Petset.jpg" alt="Cat showing claws">
+                <div class="adaptation-content">
+                    <h3>Retractable Claws</h3>
+                    <p>Unlike most carnivores, cats can retract their claws into protective sheaths, keeping them razor-sharp for hunting while allowing silent stalking. This adaptation appeared around 20 million years ago.</p>
+                </div>
+            </div>
+            <div class="adaptation-card">
+                <img src="./images/cat-spine_1bc58c8c-6ffe-4ef9-885d-a21da91d225b.jpg.webp" alt="Cat showing flexibility">
+                <div class="adaptation-content">
+                    <h3>Flexible Spine</h3>
+                    <p>Cats have 53 loosely connected vertebrae (humans have 34), providing exceptional flexibility. This allows them to twist mid-air, always landing on their feet—a reflex developed over millions of years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Evolutionary History of Domestic Cats</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.8s ease-out';
+                observer.observe(section);
+            });
+
+            document.querySelectorAll('.timeline-item').forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

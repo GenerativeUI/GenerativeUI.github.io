@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Clive, Iowa | Distinct by Nature</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #1e293b;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        p { font-family: 'Lora', serif; }
+
+        /* SCROLL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* CUSTOM UTILITIES */
+        .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Range Slider */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
+            background: #059669; border: 4px solid white; cursor: pointer; margin-top: -10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; cursor: pointer; background: #cbd5e1; border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="bg-emerald-900 text-emerald-50 text-center py-3 text-sm font-bold tracking-[0.3em] uppercase sticky top-0 z-50 shadow-md">
+        Distinct by Nature
+    </div>
+
+    <header class="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+        <img src="images/hero.png" 
+             class="absolute inset-0 w-full h-full object-cover"
+             alt="Clive Greenbelt Nature"
+             onerror="this.style.backgroundColor='#224433'">
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"></div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl reveal active">
+            <span class="inline-block py-1 px-4 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                Est. 1882
+            </span>
+            <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tight text-shadow leading-none">
+                CLIVE,<br>IOWA
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 font-medium mb-10 max-w-2xl mx-auto drop-shadow-md">
+                A peaceful green suburb just 10 miles west of Downtown Des Moines.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#greenbelt" class="px-8 py-4 bg-emerald-600 text-white font-bold rounded-full hover:bg-emerald-500 transition shadow-lg w-48 text-center">
+                    Explore Trails
+                </a>
+                <a href="#history" class="px-8 py-4 bg-white/10 backdrop-blur-md border border-white text-white font-bold rounded-full hover:bg-white hover:text-emerald-900 transition w-48 text-center">
+                    Our History
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
+        </div>
+    </header>
+
+    <section id="history" class="py-24 px-4 bg-white">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-2 block">A Rich Heritage</span>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">From Coal & Rails to Green Living</h2>
+                <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                    Founded in 1882, Clive began as a coal mining town and a vital railroad shipping point between St. Louis and Des Moines. While it officially became a city in 1956, its history is preserved at the <strong>Swanson House</strong> and the restored 1882 Depot.
+                </p>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    Today, it is a thriving suburb of ~18,700 residents spanning Polk and Dallas counties, known for its high quality of life and the motto <em>"Distinct by Nature"</em>.
+                </p>
+                
+                <div class="flex gap-4">
+                    <div class="text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <span class="block font-black text-2xl text-slate-800">1882</span>
+                        <span class="text-xs text-slate-400 uppercase font-bold">Founded</span>
+                    </div>
+                    <div class="text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <span class="block font-black text-2xl text-slate-800">18.7k</span>
+                        <span class="text-xs text-slate-400 uppercase font-bold">Population</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative h-[450px] rounded-3xl overflow-hidden shadow-2xl group reveal">
+                <img src="images/history.png" 
+                     class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+                     alt="Historic Bridge"
+                     onerror="this.style.backgroundColor='#EEE'">
+                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-lg text-sm font-bold shadow-sm">
+                    🏛️ Home of the Historical Society
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="greenbelt" class="py-24 px-4 bg-slate-50 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <div class="reveal order-2 lg:order-1">
+                    <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-xl border border-slate-100">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-900">
+                            <i class="fas fa-map-signs text-emerald-500"></i> Greenbelt Planner
+                        </h3>
+
+                        <div class="space-y-8">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Time Available</label>
+                                    <span id="timeDisplay" class="text-emerald-600 font-bold">60 min</span>
+                                </div>
+                                <input type="range" id="timeRange" min="30" max="180" step="30" value="60" oninput="updatePlanner()">
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-3">Activity Mode</label>
+                                <div class="flex gap-4">
+                                    <button onclick="setMode('walk')" id="btn-walk" class="flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold transition shadow-md">Walk</button>
+                                    <button onclick="setMode('bike')" id="btn-bike" class="flex-1 py-3 bg-slate-100 text-slate-500 rounded-xl font-bold transition hover:bg-slate-200">Bike</button>
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-slate-100">
+                                <div class="flex justify-between items-end mb-4">
+                                    <div>
+                                        <span class="text-sm text-slate-500 block">Distance (Roundtrip)</span>
+                                        <span id="res-dist" class="text-3xl font-black text-slate-800">3.0 mi</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-sm text-slate-500 block">Est. Burn</span>
+                                        <span id="res-cal" class="text-3xl font-black text-emerald-600">250 kcal</span>
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-xs text-slate-400 italic bg-slate-50 p-3 rounded-lg" id="res-suggestion">Perfect for the Aquatic Center loop.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal order-1 lg:order-2">
+                    <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-2 block">11.3 Miles of Nature</span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Clive Greenbelt Trail</h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        This famous paved trail runs along the winding <strong>Walnut Creek</strong>, connecting the entire city. It connects to the larger Central Iowa trail network, making it a hub for cyclists and runners.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500"></i>
+                            <span class="text-slate-700">Connects to Des Moines & Waukee</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500"></i>
+                            <span class="text-slate-700">Scenic bridges & wildlife viewing</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500"></i>
+                            <span class="text-slate-700">"Art Along the Trail" exhibits</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-emerald-600 font-bold uppercase tracking-widest text-sm">Life & Leisure</span>
+                <h2 class="text-4xl font-bold text-slate-900 mt-2">Explore the Community</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <a href="https://www.google.com/maps/search/parks+in+clive+iowa" target="_blank" class="block bg-white rounded-2xl overflow-hidden shadow-sm card-hover group cursor-pointer reveal border border-slate-100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/parks.png" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" 
+                             alt="Parks"
+                             onerror="this.style.backgroundColor='#EEE'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Parks & Rec</h3>
+                        <p class="text-sm text-slate-500 mb-4">Campbell Park, Linnan Park, and the Aquatic Center offer fun for all ages.</p>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider group-hover:underline">View Map →</span>
+                    </div>
+                </a>
+
+                <a href="https://www.google.com/search?q=clive, iowa+Festival" target="_blank" class="block bg-white rounded-2xl overflow-hidden shadow-sm card-hover group cursor-pointer reveal transition-delay-100 border border-slate-100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/festival.png" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" 
+                             alt="Clive Festival Fireworks"
+                             onerror="this.style.backgroundColor='#EEE'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Clive Festival</h3>
+                        <p class="text-sm text-slate-500 mb-4">The biggest summer event! Live music, food, and the famous 'Thunder Over Clive' fireworks.</p>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider group-hover:underline">Event Details →</span>
+                    </div>
+                </a>
+
+                <a href="https://www.google.com/search?q=restaurants+in+clive+iowa" target="_blank" class="block bg-white rounded-2xl overflow-hidden shadow-sm card-hover group cursor-pointer reveal transition-delay-200 border border-slate-100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/dining.png" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" 
+                             alt="Dining"
+                             onerror="this.style.backgroundColor='#EEE'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Shop & Dine</h3>
+                        <p class="text-sm text-slate-500 mb-4">Visit the commercial zones along <strong>86th St, Hickman Rd, and University Ave</strong>.</p>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider group-hover:underline">Find Food →</span>
+                    </div>
+                </a>
+
+                <a href="https://www.google.com/search?q=Clive+Iowa+Public+Art+Greenbelt+Trail" target="_blank" class="block bg-white rounded-2xl overflow-hidden shadow-sm card-hover group cursor-pointer reveal transition-delay-300 border border-slate-100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/art.png" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-110" 
+                             alt="Art"
+                             onerror="this.style.backgroundColor='#EEE'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Art Along Trail</h3>
+                        <p class="text-sm text-slate-500 mb-4">Discover curated sculptures and murals integrated directly into the Greenbelt.</p>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider group-hover:underline">See Collection →</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-0 bg-slate-900 text-white">
+        <div class="grid lg:grid-cols-2 min-h-[500px]">
+            <div class="relative bg-slate-800 min-h-[300px] lg:min-h-full overflow-hidden group">
+                <img src="images/map-bg.png" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-500 grayscale"
+                     alt="Map view representation"
+                     onerror="this.style.backgroundColor='#333'">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <a href="https://www.google.com/maps/place/Clive,+IA" target="_blank" class="px-8 py-4 bg-white text-slate-900 font-bold rounded-full hover:scale-110 transition shadow-2xl z-10 flex items-center gap-2 cursor-pointer">
+                        <i class="fas fa-location-arrow text-emerald-600"></i> Get Directions
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-12 lg:p-24 flex flex-col justify-center">
+                <span class="text-emerald-400 font-bold uppercase tracking-widest text-sm mb-4">Location & Accessibility</span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Minutes from Des Moines</h2>
+                <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                    Clive is perfectly positioned at the crossroads of I-35 and I-80. Whether you are commuting to downtown Des Moines or heading out for a road trip, you are connected to everything.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-emerald-400"><i class="fas fa-clock"></i></span>
+                        <span class="font-medium">15 Minutes to Downtown Des Moines</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-emerald-400"><i class="fas fa-road"></i></span>
+                        <span class="font-medium">Direct Access to I-80 & I-35</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-emerald-400"><i class="fas fa-shopping-bag"></i></span>
+                        <span class="font-medium">Close to Jordan Creek Town Center</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-12 border-t border-slate-100">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <p class="text-slate-500">City of Clive Tourism. Distinct by Nature.</p>
+            <a href="https://www.google.com/search?q=hotels+in+Clive+Iowa" target="_blank" class="px-6 py-2 bg-emerald-100 text-emerald-700 font-bold rounded-full hover:bg-emerald-200 transition">
+                Where to Stay
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // 1. SCROLL ANIMATION OBSERVER
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 2. MINI-APP LOGIC (Trail Planner)
+        let mode = 'walk';
+
+        function setMode(newMode) {
+            mode = newMode;
+            const btnWalk = document.getElementById('btn-walk');
+            const btnBike = document.getElementById('btn-bike');
+
+            if (mode === 'walk') {
+                btnWalk.className = "flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold transition shadow-md";
+                btnBike.className = "flex-1 py-3 bg-slate-100 text-slate-500 rounded-xl font-bold transition hover:bg-slate-200";
+            } else {
+                btnBike.className = "flex-1 py-3 bg-emerald-600 text-white rounded-xl font-bold transition shadow-md";
+                btnWalk.className = "flex-1 py-3 bg-slate-100 text-slate-500 rounded-xl font-bold transition hover:bg-slate-200";
+            }
+            updatePlanner();
+        }
+
+        function updatePlanner() {
+            const time = parseInt(document.getElementById('timeRange').value);
+            document.getElementById('timeDisplay').innerText = time + " min";
+
+            // Calculation Logic
+            // Walk: 3mph, Bike: 10mph
+            const speed = mode === 'walk' ? 3 : 10;
+            const distance = (speed * (time / 60)).toFixed(1);
+            
+            // Calories: Walk 250/hr, Bike 500/hr
+            const calRate = mode === 'walk' ? 250 : 500;
+            const calories = Math.floor(calRate * (time / 60));
+
+            document.getElementById('res-dist').innerText = distance + " mi";
+            
+            const calEl = document.getElementById('res-cal');
+            if(calEl) calEl.innerText = calories + " kcal";
+
+            const suggestionEl = document.getElementById('res-suggestion');
+            if (time <= 30) {
+                suggestionEl.innerText = mode === 'walk' ? "Try a quick loop near the Aquatic Center." : "A quick spin to 86th St bridge.";
+            } else if (time <= 60) {
+                suggestionEl.innerText = "Perfect for the scenic route to Campbell Park.";
+            } else {
+                suggestionEl.innerText = "You can reach the Des Moines border and back!";
+            }
+        }
+
+        // Init
+        setMode('walk');
+    </script>
+</body>
+</html>

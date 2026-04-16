@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan: Spirits, Steam & Street Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Comfortaa:wght@300;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #fdfcf6;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-title { font-family: 'Comfortaa', cursive; }
+
+        /* HERO ANIMATION */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-slow { animation: float 6s ease-in-out infinite; }
+
+        /* ANIMATIONS */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.active { opacity: 1; transform: translateY(0); }
+
+        .hover-levitate:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            border-color: #48bb78;
+        }
+
+        /* CAROUSEL STYLES */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 100vw;
+            overflow: hidden;
+        }
+        
+        .carousel-container {
+            display: flex;
+            gap: 24px;
+            overflow-x: scroll;
+            scroll-behavior: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding: 40px 20px;
+            width: 100%;
+        }
+        .carousel-container::-webkit-scrollbar { display: none; }
+
+        .story-card {
+            min-width: 320px;
+            max-width: 320px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            border-radius: 1.5rem;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            user-select: none;
+            text-decoration: none;
+        }
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 30;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+        }
+        .nav-btn:hover { background: #2f855a; color: white; scale: 1.1; }
+        .nav-btn:active { scale: 0.95; }
+        .nav-btn.prev { left: 20px; }
+        .nav-btn.next { right: 20px; }
+
+        /* TICKET STYLES */
+        .ticket-stub {
+            background-image: radial-gradient(circle at 0 50%, transparent 12px, white 13px),
+                              radial-gradient(circle at 100% 50%, transparent 12px, white 13px);
+            background-position: 0 0, 0 0;
+            background-size: 50% 100%;
+            background-repeat: no-repeat;
+        }
+        
+        .choice-btn {
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .choice-btn:hover { border-color: #cbd5e0; }
+
+        /* --- NAVIGATOR STYLES --- */
+        .route-line {
+            position: absolute;
+            top: 2rem;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1); /* Subtle line for dark bg */
+            z-index: 0;
+        }
+        
+        .city-node {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .city-node.active .node-circle {
+            background-color: white !important;
+            border-color: #10b981 !important; /* emerald-500 */
+            color: #064e3b !important; /* emerald-900 */
+            transform: scale(1.15);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3);
+        }
+        
+        .city-node.active .node-label {
+            color: #6ee7b7; /* emerald-300 */
+            font-weight: 800;
+        }
+
+        .schedule-item {
+            animation: slideIn 0.4s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="selection:bg-green-200 selection:text-green-900">
+
+    <header class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="images/hero.jpg" 
+                 class="w-full h-full object-cover opacity-90 scale-105" 
+                 style="filter: contrast(1.1) saturate(1.2);"
+                 alt="Yakushima Forest">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-[#fdfcf6] z-10"></div>
+        
+        <div class="relative z-20 text-center px-4 max-w-5xl">
+            <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full mb-6 shadow-sm border border-green-100">
+                <i class="fas fa-torii-gate text-green-600"></i>
+                <span class="text-green-800 font-bold tracking-widest text-xs uppercase">Ichi-go Ichi-e • Once in a Lifetime</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-8xl font-black text-slate-800 mb-6 drop-shadow-sm float-slow leading-tight">
+                Spirits, Steam <br><span class="text-green-600">& Street Food</span>
+            </h1>
+            
+            <p class="text-xl text-slate-700 font-medium bg-white/60 p-6 rounded-2xl shadow-sm backdrop-blur-md max-w-3xl mx-auto leading-relaxed">
+                A cinematic journey through Japan's most magical landscapes and flavors. <br>
+                <span class="text-sm opacity-90 mt-2 block font-bold text-slate-600">From the mossy forests of Yakushima to the neon kitchens of Osaka.</span>
+            </p>
+            
+            <div class="mt-8 flex justify-center gap-4">
+                <button onclick="document.getElementById('navigator').scrollIntoView({behavior: 'smooth'})" class="bg-slate-800 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-700 transition shadow-lg flex items-center gap-2">
+                    <i class="fas fa-compass"></i> Start Planning
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section id="essentials" class="py-20 px-6 max-w-6xl mx-auto relative z-20 bg-[#fdfcf6]">
+        <h2 class="text-3xl font-bold text-slate-800 mb-10 text-center font-title fade-up">Pre-Trip Essentials</h2>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-levitate group fade-up delay-100">
+                <i class="fas fa-passport text-3xl text-blue-600 mb-4 group-hover:scale-110 transition"></i>
+                <h3 class="font-bold text-lg mb-2">Visit Japan Web</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Mandatory for entry. Register online to generate your Immigration & Customs QR codes before you board the plane.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-levitate group fade-up delay-200">
+                <i class="fas fa-yen-sign text-3xl text-yellow-500 mb-4 group-hover:scale-110 transition"></i>
+                <h3 class="font-bold text-lg mb-2">Cash is King</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Japan is still cash-heavy. Many ticket machines and street stalls (Osaka) only take yen. 7-Eleven ATMs are your best friend.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-levitate group fade-up delay-300">
+                <i class="fas fa-wifi text-3xl text-green-600 mb-4 group-hover:scale-110 transition"></i>
+                <h3 class="font-bold text-lg mb-2">eSim Connectivity</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Reliable data is crucial for Google Maps. Pre-buying an eSim (Ubigi or Airalo) is often cheaper than Pocket Wifi rental.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-levitate group fade-up delay-400">
+                <i class="fas fa-subway text-3xl text-purple-600 mb-4 group-hover:scale-110 transition"></i>
+                <h3 class="font-bold text-lg mb-2">Suica / Pasmo</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    The JR Pass has increased in price. For this route, an IC Card (Welcome Suica) on your phone is the smartest way to pay.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="navigator" class="py-24 bg-emerald-950 text-white border-t border-emerald-900">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12 fade-up">
+                <span class="bg-emerald-700/50 text-emerald-100 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-600">The Golden Route</span>
+                <h2 class="text-4xl font-bold mt-4 font-title text-white">The Spirit Route</h2>
+                <p class="text-emerald-200/70 mt-2">Click a city on the map to see your specific Ghibli, Onsen, and Food schedule.</p>
+            </div>
+
+            <div class="relative mb-12 px-4 md:px-12 py-8 bg-emerald-900/30 rounded-3xl border border-white/5">
+                <div class="hidden md:block route-line"></div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 relative z-10">
+                    
+                    <div onclick="selectStop('tokyo')" id="node-tokyo" class="city-node active flex flex-col items-center group">
+                        <div class="node-circle w-16 h-16 rounded-full bg-emerald-900 text-white flex items-center justify-center text-2xl border-4 border-emerald-700 mb-4 transition-all duration-300 group-hover:border-emerald-400">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3 class="node-label text-lg font-bold text-emerald-200/60 transition-colors">Tokyo</h3>
+                        <p class="text-xs text-emerald-400/50">Day 1: Arrival</p>
+                    </div>
+
+                    <div onclick="selectStop('nagoya')" id="node-nagoya" class="city-node flex flex-col items-center group">
+                        <div class="node-circle w-16 h-16 rounded-full bg-emerald-900 text-white flex items-center justify-center text-2xl border-4 border-emerald-700 mb-4 transition-all duration-300 group-hover:border-emerald-400">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3 class="node-label text-lg font-bold text-emerald-200/60 transition-colors">Nagoya</h3>
+                        <p class="text-xs text-emerald-400/50">Day 2: Ghibli</p>
+                    </div>
+
+                    <div onclick="selectStop('kyoto')" id="node-kyoto" class="city-node flex flex-col items-center group">
+                        <div class="node-circle w-16 h-16 rounded-full bg-emerald-900 text-white flex items-center justify-center text-2xl border-4 border-emerald-700 mb-4 transition-all duration-300 group-hover:border-emerald-400">
+                            <i class="fas fa-torii-gate"></i>
+                        </div>
+                        <h3 class="node-label text-lg font-bold text-emerald-200/60 transition-colors">Kyoto</h3>
+                        <p class="text-xs text-emerald-400/50">Day 3: Culture</p>
+                    </div>
+
+                    <div onclick="selectStop('osaka')" id="node-osaka" class="city-node flex flex-col items-center group">
+                        <div class="node-circle w-16 h-16 rounded-full bg-emerald-900 text-white flex items-center justify-center text-2xl border-4 border-emerald-700 mb-4 transition-all duration-300 group-hover:border-emerald-400">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3 class="node-label text-lg font-bold text-emerald-200/60 transition-colors">Osaka</h3>
+                        <p class="text-xs text-emerald-400/50">Day 4: Feast</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-8 bg-white text-slate-800 rounded-3xl p-8 shadow-2xl">
+                <div class="md:col-span-4 border-b md:border-b-0 md:border-r border-slate-100 pr-0 md:pr-8 pb-8 md:pb-0">
+                    <h3 id="panel-city" class="text-3xl font-bold font-sans tracking-tight text-green-700 mb-2">TOKYO START</h3>
+                    <p id="panel-desc" class="text-slate-500 leading-relaxed mb-6">The starting point. Mix of modern chaos and Ghibli magic in the suburbs.</p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 text-sm font-bold text-slate-600">
+                            <i class="fas fa-bed text-blue-500 w-6"></i> <span id="panel-stay">Stay: Shinjuku Hotel</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm font-bold text-slate-600">
+                            <i class="fas fa-train text-orange-500 w-6"></i> <span id="panel-travel">Travel: Narita Express</span>
+                        </div>
+                    </div>
+
+                    <a href="#" id="panel-map-link" target="_blank" class="mt-8 inline-block bg-slate-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-700 transition">
+                        <i class="fas fa-map-marked-alt mr-2"></i> Open in Maps
+                    </a>
+                </div>
+
+                <div class="md:col-span-8">
+                    <div id="panel-timeline" class="space-y-6">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-24 bg-white relative z-10 border-t border-slate-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-slate-800 font-title fade-up">Choosing Your Season</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="bg-gradient-to-br from-white to-pink-50 border border-pink-100 rounded-3xl p-8 hover-levitate relative overflow-hidden group fade-up">
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Most Popular</span>
+                            <i class="fas fa-sun text-pink-300 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-slate-800">Spring & Autumn</h3>
+                        <p class="text-sm font-bold text-slate-500 mb-6 font-mono">March-May | Oct-Nov</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Ghibli Park:</strong> Gardens in full bloom.</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Weather:</strong> Perfect for Kyoto walking.</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-exclamation-circle text-orange-400 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Note:</strong> Book Ryokans 5 months ahead.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fas fa-fan absolute -bottom-6 -right-6 text-[10rem] text-pink-100 opacity-60 group-hover:rotate-12 transition duration-500"></i>
+                </div>
+
+                <div class="bg-gradient-to-br from-white to-blue-50 border border-blue-100 rounded-3xl p-8 hover-levitate relative overflow-hidden group fade-up delay-100">
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">Best for Relaxing</span>
+                            <i class="fas fa-snowflake text-blue-300 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2 text-slate-800">Winter Season</h3>
+                        <p class="text-sm font-bold text-slate-500 mb-6 font-mono">Dec-Feb</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Onsen:</strong> Magical outdoor snow baths.</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Crowds:</strong> Fewer tourists (except New Year).</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                                <span class="text-sm text-slate-600"><strong>Food:</strong> Hot pot (Nabe) & Ramen season.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fas fa-mountain absolute -bottom-6 -right-6 text-[10rem] text-blue-100 opacity-60 group-hover:rotate-12 transition duration-500"></i>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#fdfcf6] relative">
+        <div class="text-center mb-6 px-4 max-w-3xl mx-auto fade-up">
+            <h2 class="text-3xl font-bold text-slate-800 font-title">The Inspiration</h2>
+            <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                Explore the actual forests, ancient bathhouses, and vibrant streets that inspired Miyazaki's masterpieces. 
+            </p>
+        </div>
+
+        <div class="carousel-wrapper" id="carouselWrapper">
+            <button class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="carousel-container" id="scrollContainer">
+                </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-200 py-12 text-center relative z-20">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="text-slate-800 font-bold mb-2">Safe Travels</p>
+            <p class="text-xs text-slate-400 mb-6">Remember: Be quiet on trains and don't tip!</p>
+            <p class="text-xs text-slate-300 font-mono">Spirit Planner.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- ANIMATIONS ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(el => observer.observe(el));
+        });
+
+        // --- CAROUSEL DATA ---
+        const locations = [
+            { title: "Shiro-Hige Puffs", desc: "Setagaya. Official Totoro cream puffs.", img: "images/puffs.png", link: "https://www.google.com/maps/search/?api=1&query=Shiro-Hige+Cream+Puff+Factory", tag: "BAKERY", color: "text-orange-600" },
+            { title: "Dogo Onsen", desc: "Matsuyama. Spirited Away bathhouse.", img: "images/dogo.png", link: "https://www.google.com/maps/search/?api=1&query=Dogo+Onsen", tag: "BATHHOUSE", color: "text-red-700" },
+            { title: "Ginzan Onsen", desc: "Yamagata. Winter snowy magic.", img: "images/ginzan.png", link: "https://www.google.com/maps/search/?api=1&query=Ginzan+Onsen", tag: "ONSEN TOWN", color: "text-blue-500" },
+            { title: "Yakushima", desc: "Ancient mossy Mononoke forest.", img: "images/yakushima.png", link: "https://www.google.com/maps/search/?api=1&query=Yakushima", tag: "FOREST", color: "text-green-700" },
+            { title: "Dotonbori", desc: "Osaka. The nation's kitchen.", img: "images/dotonbori.png", link: "https://www.google.com/maps/search/?api=1&query=Dotonbori", tag: "STREET FOOD", color: "text-blue-700" },
+            { title: "Ghibli Park", desc: "Nagoya. Satsuki & Mei's house.", img: "images/ghiblipark.png", link: "https://www.google.com/maps/search/?api=1&query=Ghibli+Park", tag: "THEME PARK", color: "text-green-600" },
+            { title: "Fushimi Inari", desc: "Kyoto. The spirit path of gates.", img: "images/fushimi.png", link: "https://www.google.com/maps/search/?api=1&query=Fushimi+Inari", tag: "SHRINE", color: "text-red-600" },
+            { title: "Kusatsu Onsen", desc: "Gunma. Iconic Yubatake field.", img: "images/kusatsu.png", link: "https://www.google.com/maps/search/?api=1&query=Kusatsu+Onsen", tag: "HOT SPRING", color: "text-teal-600" },
+            { title: "Nara Park", desc: "Nara. Sacred bowing deer.", img: "images/nara.png", link: "https://www.google.com/maps/search/?api=1&query=Nara+Park", tag: "NATURE PARK", color: "text-orange-500" },
+            { title: "Hakone Shrine", desc: "Kanagawa. Floating Torii on the lake.", img: "images/hakone.png", link: "https://www.google.com/maps/search/?api=1&query=Hakone+Shrine", tag: "LAKE SHRINE", color: "text-red-700" }
+        ];
+
+        const scrollContainer = document.getElementById('scrollContainer');
+        const nextBtn = document.querySelector('.nav-btn.next');
+        const prevBtn = document.querySelector('.nav-btn.prev');
+        
+        const renderCard = (item) => `
+            <a href="${item.link}" target="_blank" class="story-card overflow-hidden group block h-full">
+                <div class="h-60 overflow-hidden relative">
+                    <span class="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-lg font-bold text-xs shadow ${item.color}">${item.tag}</span>
+                    <img src="${item.img}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-1">${item.title}</h3>
+                    <p class="text-slate-500 text-sm">${item.desc}</p>
+                    <span class="mt-3 inline-block text-xs font-bold text-green-600 uppercase tracking-wide">View Map →</span>
+                </div>
+            </a>
+        `;
+        const contentHTML = locations.map(renderCard).join('');
+        scrollContainer.innerHTML = contentHTML + contentHTML + contentHTML + contentHTML;
+
+        let scrollSpeed = 1; 
+        let isHovered = false;
+        let animationId;
+
+        setTimeout(() => {
+            const singleSetWidth = scrollContainer.scrollWidth / 4;
+            scrollContainer.scrollLeft = singleSetWidth;
+        }, 100);
+
+        function animateScroll() {
+            if (!isHovered) {
+                scrollContainer.scrollLeft += scrollSpeed;
+                const maxScroll = scrollContainer.scrollWidth / 2;
+                if (scrollContainer.scrollLeft >= maxScroll) {
+                    scrollContainer.scrollLeft = 0; 
+                } else if (scrollContainer.scrollLeft <= 0) {
+                    scrollContainer.scrollLeft = maxScroll;
+                }
+            }
+            animationId = requestAnimationFrame(animateScroll);
+        }
+
+        document.getElementById('carouselWrapper').addEventListener('mouseenter', () => isHovered = true);
+        document.getElementById('carouselWrapper').addEventListener('mouseleave', () => {
+            isHovered = false;
+            cancelAnimationFrame(animationId);
+            animateScroll();
+        });
+
+        nextBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: 340, behavior: 'smooth' }));
+        prevBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: -340, behavior: 'smooth' }));
+
+        animateScroll();
+
+        // --- UPDATED TRIP DATA (FACT-CHECKED & FIXED LINKS) ---
+        const tripData = {
+            'tokyo': {
+                title: "TOKYO START",
+                desc: "Arrival and Ghibli Origins. Stay in Shinjuku for easy train access.",
+                stay: "Shinjuku Granbell Hotel",
+                travel: "Narita Express (N'EX)",
+                map: "https://www.google.com/maps/search/?api=1&query=Ghibli+Museum+Mitaka",
+                timeline: [
+                    { time: "10:00 AM", title: "Ghibli Museum (Mitaka)", desc: "The original museum. Watch the exclusive short film. *Requires booking 1 month ahead.*", icon: "tree", color: "text-green-600" },
+                    { time: "13:00 PM", title: "Shiro-Hige's Cream Puffs", desc: "Train to Setagaya. The only bakery licensed to make Totoro-shaped puffs.", icon: "utensils", color: "text-orange-500" },
+                    { time: "18:00 PM", title: "Omoide Yokocho", desc: "Dinner in 'Memory Lane'. Small Yakitori stalls perfect for atmospheric dining.", icon: "fire", color: "text-red-500" }
+                ]
+            },
+            'nagoya': {
+                title: "NAGOYA (GHIBLI PARK)",
+                desc: "The main event. A full day immersed in the world of Ghibli.",
+                stay: "Nikko Style Nagoya",
+                travel: "Tokaido Shinkansen (1.5 hrs)",
+                map: "https://www.google.com/maps/search/?api=1&query=Ghibli+Park+Nagoya",
+                timeline: [
+                    { time: "09:00 AM", title: "Arrival at Ghibli Park", desc: "Located in Expo Park. No big rides, just immersion. Start at the Grand Warehouse.", icon: "star", color: "text-yellow-500" },
+                    { time: "12:00 PM", title: "Satsuki & Mei's House", desc: "Walk through the Dondoko Forest to see the house from Totoro.", icon: "home", color: "text-green-700" },
+                    { time: "16:00 PM", title: "Valley of Witches", desc: "See Howl's Moving Castle (Real scale!) and grab a snack.", icon: "magic", color: "text-purple-600" }
+                ]
+            },
+            'kyoto': {
+                title: "KYOTO (ONSEN & SPIRITS)",
+                desc: "Traditional Japan. Temples, spirits, and hot springs.",
+                stay: "Ryokan Izuyasu",
+                travel: "Shinkansen (35 mins)",
+                map: "https://www.google.com/maps/search/?api=1&query=Tenzan-no-yu+Onsen+Kyoto",
+                timeline: [
+                    { time: "07:00 AM", title: "Fushimi Inari Shrine", desc: "Hike the 10,000 gates early to avoid crowds. Feels like the spirit world.", icon: "torii-gate", color: "text-red-600" },
+                    { time: "14:00 PM", title: "Tenzan-no-yu Onsen", desc: "Visit Arashiyama Bamboo Grove, then soak in this authentic hot spring nearby.", icon: "water", color: "text-blue-500" },
+                    { time: "19:00 PM", title: "Pontocho Alley", desc: "Dinner by the river. Look for Geisha on the way to your meal.", icon: "utensils", color: "text-orange-500" }
+                ]
+            },
+            'osaka': {
+                title: "OSAKA (THE KITCHEN)",
+                desc: "Eat 'til you drop (Kuidaore). Neon lights and street food.",
+                stay: "Cross Hotel Osaka",
+                travel: "Rapid Train (15 mins)",
+                map: "https://www.google.com/maps/search/?api=1&query=Dotonbori+Osaka",
+                timeline: [
+                    { time: "11:00 AM", title: "Kuromon Market", desc: "Fresh Tuna, Scallops, and Wagyu beef skewers cooked right in front of you.", icon: "fish", color: "text-blue-600" },
+                    { time: "15:00 PM", title: "Amerikamura", desc: "Vintage shopping and quirky vibes. Grab a 'Long Soft Serve' ice cream.", icon: "shirt", color: "text-pink-500" },
+                    { time: "19:00 PM", title: "Dotonbori Crawl", desc: "Takoyaki (Octopus balls) and Okonomiyaki under the Glico Man sign.", icon: "utensils", color: "text-orange-600" }
+                ]
+            }
+        };
+
+        function selectStop(city) {
+            // 1. Highlight Node
+            document.querySelectorAll('.city-node').forEach(n => n.classList.remove('active'));
+            document.getElementById('node-' + city).classList.add('active');
+
+            // 2. Update Info Panel
+            const data = tripData[city];
+            document.getElementById('panel-city').innerText = data.title;
+            document.getElementById('panel-desc').innerText = data.desc;
+            document.getElementById('panel-stay').innerText = "Stay: " + data.stay;
+            document.getElementById('panel-travel').innerText = "Travel: " + data.travel;
+            document.getElementById('panel-map-link').href = data.map;
+
+            // 3. Render Timeline
+            const timeline = document.getElementById('panel-timeline');
+            timeline.innerHTML = '';
+            
+            data.timeline.forEach((item, index) => {
+                const html = `
+                    <div class="schedule-item flex gap-4" style="animation-delay: ${index * 100}ms">
+                        <div class="flex-shrink-0 w-12 text-right pt-1">
+                            <span class="text-xs font-bold text-slate-400 block">${item.time.split(' ')[0]}</span>
+                            <span class="text-[10px] text-slate-300 uppercase">${item.time.split(' ')[1]}</span>
+                        </div>
+                        <div class="relative pl-6 border-l-2 border-slate-100 pb-2">
+                            <div class="absolute -left-[9px] top-1 w-4 h-4 bg-white border-2 border-slate-200 rounded-full"></div>
+                            <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fas fa-${item.icon} ${item.color}"></i> ${item.title}
+                            </h4>
+                            <p class="text-sm text-slate-500 mt-1 leading-snug">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+                timeline.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Init
+        window.onload = function() {
+            selectStop('tokyo'); // Default to first stop
+        }
+    </script>
+</body>
+</html>

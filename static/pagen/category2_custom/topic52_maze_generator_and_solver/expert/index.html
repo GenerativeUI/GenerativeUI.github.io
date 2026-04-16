@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maze Generator & Solver</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    canvas { touch-action: none; }
+     .concept-tab {
+    @apply px-5 py-2 rounded-full text-sm font-medium border border-slate-200 text-slate-600
+           hover:bg-slate-100 transition;
+  }
+
+  .concept-tab.active {
+    @apply bg-blue-600 text-white border-blue-600 shadow;
+  }
+
+  .concept-panel {
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .concept-tab {
+    padding: 0.6rem 1.4rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    height: 44px;
+   color: #334155;
+  }
+
+  .concept-tab:hover {
+    background: #f1f5f9; /* slate-100 */
+  }
+
+  .concept-tab.active {
+    background: #2563eb; /* blue-600 */
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
+
+  <!-- Header -->
+<header class="p-4 border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-xl sm:text-2xl font-semibold tracking-tight">
+        Maze Generator & Solver
+      </h1>
+    </div>
+</header>
+<section class="bg-white py-24 border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+
+    <!-- Heading -->
+    <h1 class="text-4xl font-bold mb-4">
+      Maze Algorithms Visualized
+    </h1>
+
+    <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
+      Learn how classic pathfinding algorithms work by watching them solve
+      randomly generated mazes step by step.
+    </p>
+
+    <!-- Tabs -->
+   <div class="mt-10 flex justify-center">
+  <div class="flex w-full max-w-xl rounded-full border border-slate-200 bg-white/90 backdrop-blur p-1 shadow-md mb-10">
+    <button
+      class="concept-tab flex-1 active"
+      data-tab="interactive"
+    >
+      Interactive
+    </button>
+
+    <button
+      class="concept-tab flex-1"
+      data-tab="educational"
+    >
+      Educational
+    </button>
+
+    <button
+      class="concept-tab flex-1 whitespace-nowrap"
+      data-tab="algorithmic"
+    >
+      Algorithmic Thinking
+    </button>
+  </div>
+</div>
+
+    <!-- Content Card -->
+    <div class="max-w-4xl mx-auto">
+      <div class="relative bg-slate-50 rounded-3xl p-10 shadow-sm border border-slate-200 text-left">
+
+        <!-- Interactive -->
+        <div class="concept-panel active" id="interactive">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-600">
+            Interactive Exploration
+          </h3>
+         <p class="text-slate-700 leading-relaxed">
+        Take full control of the maze and the algorithms that solve it. Adjust the maze size,
+        switch between different solving strategies, and watch each step happen in real time.
+        You can generate fresh mazes instantly, reset the visualization at any moment, and
+        directly observe how different algorithms explore the same problem in unique ways.
+      </p>
+      <p class="text-slate-700 leading-relaxed mt-4">
+        This hands-on interaction turns abstract logic into something tangible, making it easy
+        to experiment, compare behaviors, and build intuition through exploration.
+      </p>
+        </div>
+
+        <!-- Educational -->
+        <div class="concept-panel hidden" id="educational">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-600">
+            Learn by Watching
+          </h3>
+          <p class="text-slate-700 leading-relaxed">
+        Instead of starting with dense theory, this visualization lets you learn visually.
+        Each algorithm is broken down into clear, observable steps — showing how cells are
+        visited, how paths are explored, and how solutions emerge over time.
+      </p>
+      <p class="text-slate-700 leading-relaxed mt-4">
+        By watching the process unfold, concepts like backtracking, visited states, and
+        shortest paths become intuitive. This makes the tool especially useful for students,
+        beginners, and anyone learning algorithms for the first time.
+      </p>
+        </div>
+
+        <!-- Algorithmic -->
+        <div class="concept-panel hidden" id="algorithmic">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-600">
+            Algorithmic Thinking
+          </h3>
+           <p class="text-slate-700 leading-relaxed">
+        Go beyond visual appeal and focus on how algorithms think. See how choices such as
+        using a queue or a stack directly influence exploration order, memory usage, and
+        final outcomes.
+      </p>
+      <p class="text-slate-700 leading-relaxed mt-4">
+        This perspective helps build strong problem-solving instincts — the same mindset used
+        in real-world software development, competitive programming, and technical interviews.
+        Understanding these patterns prepares you to design efficient solutions beyond mazes.
+      </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <section class="bg-slate-50 py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-10">
+  <p class="text-xs uppercase tracking-widest text-blue-500 font-semibold mb-3">
+    Interactive Playground
+  </p>
+
+  <h2 class="text-4xl font-bold text-slate-900 mb-2">
+    Maze Generator & Solver
+  </h2>
+  </div>
+    <!-- ================= CONTROLS (TOP CENTER) ================= -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <select
+        id="size"
+        class="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700"
+      >
+        <option value="15">15 × 15</option>
+        <option value="20" selected>20 × 20</option>
+        <option value="30">30 × 30</option>
+      </select>
+
+      <select
+        id="solver"
+        class="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700"
+      >
+        <option value="bfs">Breadth First Search</option>
+        <option value="dfs">Depth First Search</option>
+      </select>
+
+      <button
+        id="generate"
+        class="px-5 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500"
+      >
+        Generate
+      </button>
+
+      <button
+        id="solve"
+        class="px-5 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500"
+      >
+        Solve
+      </button>
+
+      <button
+        id="reset"
+        class="px-5 py-2 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300"
+      >
+        Reset
+      </button>
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+      <!-- LEFT: CANVAS -->
+      <div class="flex justify-center">
+        <div class="rounded-2xl bg-white shadow-xl p-6">
+          <canvas
+            id="maze"
+            width="420"
+            height="420"
+            class="bg-white rounded-lg"
+          ></canvas>
+        </div>
+      </div>
+
+      <!-- RIGHT: DESCRIPTION -->
+      <div>
+        <p class="text-xs uppercase tracking-widest text-blue-500 font-semibold mb-3">
+          Algorithm logic
+        </p>
+
+        <h3 class="text-3xl font-semibold mb-8 text-slate-900">
+          How the Solver Thinks
+        </h3>
+
+        <div class="space-y-6">
+
+          <div class="flex gap-4">
+            <div class="h-8 w-8 shrink-0 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-medium">
+              1
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900">Explore neighbors</h4>
+              <p class="text-slate-600 text-sm mt-1">
+                The algorithm checks which neighboring cells can be visited
+                based on open walls and valid movement directions.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="h-8 w-8 shrink-0 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-medium">
+              2
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900">Track visited cells</h4>
+              <p class="text-slate-600 text-sm mt-1">
+                Each visited cell is marked to avoid infinite loops and
+                redundant exploration paths.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="h-8 w-8 shrink-0 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-medium">
+              3
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900">Reconstruct path</h4>
+              <p class="text-slate-600 text-sm mt-1">
+                Once the goal is reached, the solver traces back using
+                parent pointers to reveal the final path.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- Algorithm Insight -->
+<section class="bg-white py-16 border-t border-slate-200">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <h2 class="text-3xl font-bold mb-10 text-center">
+      How the Algorithm Works
+    </h2>
+
+    <div class="grid lg:grid-cols-2 gap-10 items-start">
+
+      <!-- LEFT: Explanation -->
+<div class="space-y-10">
+
+  <!-- TOP: Summary card (KEEP background) -->
+  <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+
+    <h3 id="algoTitle" class="text-xl font-semibold mb-3 text-slate-900">
+      Breadth First Search (BFS)
+    </h3>
+
+    <p id="algoDesc" class="text-slate-700 leading-relaxed mb-6">
+      BFS explores the maze layer by layer. It guarantees the shortest path
+      by visiting all nearby cells before moving deeper.
+    </p>
+
+    <div class="grid grid-cols-3 gap-4 text-sm">
+      <div class="bg-white border rounded-lg p-4 text-center">
+        <div class="font-semibold text-slate-700">Time</div>
+        <div class="text-blue-600 mt-1">O(V + E)</div>
+      </div>
+      <div class="bg-white border rounded-lg p-4 text-center">
+        <div class="font-semibold text-slate-700">Space</div>
+        <div class="text-blue-600 mt-1">O(V)</div>
+      </div>
+      <div class="bg-white border rounded-lg p-4 text-center">
+        <div class="font-semibold text-slate-700">Optimal</div>
+        <div class="text-emerald-600 mt-1">Yes</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM: Deep explanation (NO background) -->
+  <div>
+  <h4
+    id="algoExplainTitle"
+    class="text-lg font-semibold text-slate-900 mb-3"
+  >
+    Understanding the logic behind the solution
+  </h4>
+
+  <p
+    id="algoExplainPrimary"
+    class="text-slate-600 leading-relaxed"
+  >
+    This section explains how each algorithm approaches the maze step by step.
+  </p>
+
+  <p
+    id="algoExplainSecondary"
+    class="text-slate-600 leading-relaxed mt-4"
+  >
+    Use this explanation to compare algorithms and build intuition around time
+    and space complexity.
+  </p>
+</div>
+</div>
+
+      <!-- RIGHT: Code Display -->
+      <div class="bg-slate-900 text-slate-100 rounded-xl overflow-hidden shadow-lg">
+        <div class="flex items-center justify-between px-4 py-3 bg-slate-800 text-xs">
+          <span>solver.js</span>
+          <span id="algoBadge" class="px-2 py-1 rounded bg-blue-600 text-white">
+            BFS
+          </span>
+        </div>
+
+        <pre class="p-5 text-sm overflow-x-auto leading-relaxed">
+<code id="algoCode">
+function BFS(start, end) {
+  const queue = [start];
+  const visited = new Set([start]);
+
+  while (queue.length) {
+    const cell = queue.shift();
+    if (cell === end) break;
+
+    neighbors(cell).forEach(n => {
+      if (!visited.has(n)) {
+        visited.add(n);
+        n.parent = cell;
+        queue.push(n);
+      }
+    });
+  }
+}
+</code>
+        </pre>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="bg-slate-50 py-24">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <h2 class="text-4xl font-bold tracking-tight">
+        BFS vs DFS
+      </h2>
+      <p class="mt-4 text-slate-600">
+        Both algorithms explore mazes differently. Understanding their trade-offs
+        helps explain why one finds the shortest path while the other explores faster.
+      </p>
+    </div>
+
+    <!-- Comparison Card -->
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-slate-200">
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="p-5 text-left font-semibold">Property</th>
+              <th class="p-5 text-left font-semibold text-blue-600">BFS</th>
+              <th class="p-5 text-left font-semibold text-indigo-600">DFS</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-slate-200">
+            <tr>
+              <td class="p-5 font-medium">Path optimality</td>
+              <td class="p-5 text-emerald-600 font-medium">Always shortest</td>
+              <td class="p-5 text-slate-600">Not guaranteed</td>
+            </tr>
+
+            <tr>
+              <td class="p-5 font-medium">Exploration pattern</td>
+              <td class="p-5">Layer by layer</td>
+              <td class="p-5">Depth first, then backtrack</td>
+            </tr>
+
+            <tr>
+              <td class="p-5 font-medium">Memory usage</td>
+              <td class="p-5">Higher (stores frontier)</td>
+              <td class="p-5">Lower (stack based)</td>
+            </tr>
+
+            <tr>
+              <td class="p-5 font-medium">Speed in large mazes</td>
+              <td class="p-5">Slower</td>
+              <td class="p-5 text-blue-600 font-medium">Often faster</td>
+            </tr>
+
+            <tr>
+              <td class="p-5 font-medium">Completeness</td>
+              <td class="p-5 text-emerald-600 font-medium">
+                Guaranteed to find solution
+              </td>
+              <td class="p-5">
+                Yes (if no infinite paths)
+              </td>
+            </tr>
+
+            <tr>
+              <td class="p-5 font-medium">Best use case</td>
+              <td class="p-5">
+                When shortest path matters
+              </td>
+              <td class="p-5">
+                When exploration speed matters
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer note -->
+      <div class="bg-slate-50 px-6 py-4 text-xs text-slate-500">
+        <span class="font-semibold text-slate-700">Disclaimer:</span>
+        In this visualizer, BFS guarantees the shortest route,
+        while DFS demonstrates deep exploration behavior.
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="bg-slate-900 text-slate-100 py-20">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+
+    <h2 class="text-3xl font-bold mb-6">
+      What You’ve Learned
+    </h2>
+
+    <p class="text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+      By visualizing maze-solving algorithms step by step, you’ve seen how
+      abstract ideas like data structures, traversal strategies, and decision-making
+      translate into real behavior.
+      <br class="hidden sm:block" /><br class="hidden sm:block" />
+      This experience highlights a core principle of computer science:
+      <span class="text-slate-100 font-medium">
+        small local choices can shape large global outcomes.
+      </span>
+    </p>
+
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-slate-500 p-3 border-t border-slate-700">
+    Interactive mini-app • Pure HTML, CSS & JavaScript
+  </footer>
+
+<script>
+const canvas = document.getElementById('maze');
+const ctx = canvas.getContext('2d');
+let grid = [], stack = [], solutionPath = [];
+let cols, rows, size, cellSize;
+
+class Cell {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.walls = [true, true, true, true]; // top right bottom left
+    this.visited = false;
+    this.parent = null;
+  }
+
+  draw() {
+    const x = this.x * cellSize;
+    const y = this.y * cellSize;
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    if (this.walls[0]) line(x,y,x+cellSize,y);
+    if (this.walls[1]) line(x+cellSize,y,x+cellSize,y+cellSize);
+    if (this.walls[2]) line(x+cellSize,y+cellSize,x,y+cellSize);
+    if (this.walls[3]) line(x,y+cellSize,x,y);
+  }
+
+  highlight(color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(this.x*cellSize+2, this.y*cellSize+2, cellSize-4, cellSize-4);
+  }
+}
+
+function line(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+
+function index(x,y){ return x<0||y<0||x>=cols||y>=rows ? -1 : x + y*cols; }
+
+function setup() {
+  size = parseInt(document.getElementById('size').value);
+  cols = rows = size;
+  cellSize = canvas.width / cols;
+  grid = [];
+  for (let y=0;y<rows;y++) for (let x=0;x<cols;x++) grid.push(new Cell(x,y));
+  stack = [];
+  generateMaze();
+}
+
+function generateMaze() {
+  grid.forEach(c=>c.visited=false);
+  let current = grid[0];
+  current.visited = true;
+  stack.push(current);
+
+  while (stack.length) {
+    let next = checkNeighbors(current);
+    if (next) {
+      next.visited = true;
+      stack.push(current);
+      removeWalls(current,next);
+      current = next;
+    } else {
+      current = stack.pop();
+    }
+  }
+  drawGrid();
+}
+
+function checkNeighbors(cell) {
+  const neighbors = [];
+  const {x,y} = cell;
+  const top = grid[index(x,y-1)];
+  const right = grid[index(x+1,y)];
+  const bottom = grid[index(x,y+1)];
+  const left = grid[index(x-1,y)];
+  [top,right,bottom,left].forEach(n=> n && !n.visited && neighbors.push(n));
+  return neighbors.length ? neighbors[Math.floor(Math.random()*neighbors.length)] : null;
+}
+
+function removeWalls(a,b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  if (dx===1){a.walls[3]=false;b.walls[1]=false;}
+  if (dx===-1){a.walls[1]=false;b.walls[3]=false;}
+  if (dy===1){a.walls[0]=false;b.walls[2]=false;}
+  if (dy===-1){a.walls[2]=false;b.walls[0]=false;}
+}
+
+function drawGrid() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  grid.forEach(c=>c.draw());
+  grid[0].highlight('#a7f3d0');
+  grid[grid.length-1].highlight('#fecaca');
+}
+
+function solve() {
+  const algo = document.getElementById('solver').value;
+  grid.forEach(c=>c.parent=null);
+  const start = grid[0];
+  const end = grid[grid.length-1];
+  const queue = [start];
+  const visited = new Set([start]);
+
+  while (queue.length) {
+    const current = algo==='dfs' ? queue.pop() : queue.shift();
+    if (current === end) break;
+    neighborsOpen(current).forEach(n=>{
+      if (!visited.has(n)){
+        visited.add(n);
+        n.parent = current;
+        queue.push(n);
+      }
+    });
+  }
+
+  solutionPath = [];
+  let temp = end;
+  while (temp) { solutionPath.push(temp); temp = temp.parent; }
+  animateSolution();
+}
+
+function neighborsOpen(cell){
+  const res=[];
+  const {x,y,walls}=cell;
+  if(!walls[0]) res.push(grid[index(x,y-1)]);
+  if(!walls[1]) res.push(grid[index(x+1,y)]);
+  if(!walls[2]) res.push(grid[index(x,y+1)]);
+  if(!walls[3]) res.push(grid[index(x-1,y)]);
+  return res.filter(Boolean);
+}
+
+function animateSolution(){
+  let i=solutionPath.length-1;
+  const interval=setInterval(()=>{
+    if(i<0){clearInterval(interval);return;}
+    solutionPath[i].highlight('#60a5fa');
+    i--;
+  },40);
+}
+
+// Events
+document.getElementById('generate').onclick = setup;
+document.getElementById('solve').onclick = solve;
+document.getElementById('reset').onclick = drawGrid;
+
+setup();
+</script>
+<script>
+const algoData = {
+  bfs: {
+    title: "Breadth First Search (BFS)",
+    desc:
+      "BFS explores the maze layer by layer. It guarantees the shortest path by visiting all nearby cells before moving deeper.",
+    badge: "BFS",
+    code: `function BFS(start, end) {
+  const queue = [start];
+  const visited = new Set([start]);
+
+  while (queue.length) {
+    const cell = queue.shift();
+    if (cell === end) break;
+
+    neighbors(cell).forEach(n => {
+      if (!visited.has(n)) {
+        visited.add(n);
+        n.parent = cell;
+        queue.push(n);
+      }
+    });
+  }
+}`,
+    explainTitle: "Understanding BFS traversal",
+    explainPrimary:
+      "Breadth First Search expands outward from the start position, exploring all nearby cells before moving deeper into the maze.",
+    explainSecondary:
+      "Because BFS examines paths in increasing order of length, it always finds the shortest route. This makes it ideal for navigation problems, but it uses more memory to track explored layers."
+  },
+
+  dfs: {
+    title: "Depth First Search (DFS)",
+    desc:
+      "DFS explores as far as possible along one path before backtracking. It is faster but does not guarantee the shortest path.",
+    badge: "DFS",
+    code: `function DFS(start, end) {
+  const stack = [start];
+  const visited = new Set([start]);
+
+  while (stack.length) {
+    const cell = stack.pop();
+    if (cell === end) break;
+
+    neighbors(cell).forEach(n => {
+      if (!visited.has(n)) {
+        visited.add(n);
+        n.parent = cell;
+        stack.push(n);
+      }
+    });
+  }
+}`,
+    explainTitle: "Understanding DFS traversal",
+    explainPrimary:
+      "Depth First Search follows a single path as deep as possible before stepping back and trying alternative routes.",
+    explainSecondary:
+      "DFS is memory efficient and often faster, but because it commits to deep paths early, it may miss shorter solutions. This behavior makes it useful for exploration and decision trees."
+  }
+};
+
+const solverSelect = document.getElementById("solver");
+
+function updateAlgoPanel() {
+  const algo = algoData[solverSelect.value];
+
+  document.getElementById("algoTitle").textContent = algo.title;
+  document.getElementById("algoDesc").textContent = algo.desc;
+  document.getElementById("algoBadge").textContent = algo.badge;
+  document.getElementById("algoCode").textContent = algo.code;
+
+  // NEW: update lower explanation
+  document.getElementById("algoExplainTitle").textContent = algo.explainTitle;
+  document.getElementById("algoExplainPrimary").textContent = algo.explainPrimary;
+  document.getElementById("algoExplainSecondary").textContent = algo.explainSecondary;
+}
+
+solverSelect.addEventListener("change", updateAlgoPanel);
+updateAlgoPanel();
+</script>
+<script>
+  document.querySelectorAll(".concept-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      // Tabs
+      document.querySelectorAll(".concept-tab")
+        .forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      // Panels
+      document.querySelectorAll(".concept-panel")
+        .forEach(p => p.classList.add("hidden"));
+      document.getElementById(tab.dataset.tab)
+        .classList.remove("hidden");
+    });
+  });
+</script> 
+</body>
+</html>

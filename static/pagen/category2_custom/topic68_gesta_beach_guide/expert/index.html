@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ågesta: The Nature Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2C4A52; /* Deep Nordic Teal */
+            --accent: #D4A373; /* Driftwood */
+            --sand: #F7F7F2;   /* Light Sand */
+            --stone: #E5E5E0;  
+        }
+
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--sand); 
+            color: #1a202c; 
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; }
+
+        html { scroll-behavior: smooth; }
+
+        /* --- HERO STYLES --- */
+        .hero-wrapper {
+            position: relative;
+            height: 95vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            background-color: var(--sand);
+        }
+
+        .hero-left {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: var(--sand);
+            z-index: 10;
+        }
+
+        .hero-right {
+            position: relative;
+            height: 100%;
+        }
+
+        /* Desktop Gradient Overlay */
+        .hero-right::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--sand) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-right-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 5; 
+        }
+
+        /* --- MOBILE & TABLET OPTIMIZATION --- */
+        @media (max-width: 1024px) {
+            .hero-wrapper { 
+                grid-template-columns: 1fr; 
+                height: auto; 
+                display: flex;
+                flex-direction: column;
+            }
+            
+            /* Text First */
+            .hero-left { 
+                padding: 3rem 1.5rem; 
+                padding-bottom: 2rem;
+                order: 1; 
+                min-height: auto;
+            }
+            
+            /* Image Second */
+            .hero-right { 
+                height: 40vh; 
+                order: 2; 
+                width: 100%;
+            }
+            
+            /* Mobile Gradient (Top to Bottom) */
+            .hero-right::after {
+                background: linear-gradient(to bottom, var(--sand) 10%, transparent 100%);
+            }
+
+            .giant-text {
+                font-size: 3.5rem !important;
+            }
+        }
+
+        .giant-text {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 0.95;
+            color: var(--primary);
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+
+        .live-pill {
+            border: 1px solid rgba(44, 74, 82, 0.1);
+            background: rgba(255,255,255,0.5);
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* --- TIMELINE SLIDER STYLES --- */
+        .timeline-track {
+            position: relative;
+            height: 4px;
+            background-color: #cbd5e1;
+            border-radius: 99px;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 99px;
+        }
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background-color: #cbd5e1;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+        .timeline-marker.active {
+            background-color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+        .timeline-label {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            white-space: nowrap;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        /* Mobile Label Fixes */
+        #mark-0 .timeline-label { left: 0; transform: translateX(0); }
+        #mark-3 .timeline-label { left: auto; right: 0; transform: translateX(0); }
+        
+        .timeline-marker.active .timeline-label { 
+            color: var(--primary); 
+            opacity: 1; 
+        }
+        
+        #mark-0.active .timeline-label { transform: translateX(0) translateY(-2px); }
+        #mark-3.active .timeline-label { transform: translateX(0) translateY(-2px); }
+        .timeline-marker:not(#mark-0):not(#mark-3).active .timeline-label { transform: translateX(-50%) translateY(-2px); }
+
+        #custom-handle {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            pointer-events: none;
+            transition: left 0.1s ease-out;
+        }
+
+        /* --- BAG PACKER STYLES --- */
+        .pack-item-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        @media (min-width: 768px) { .pack-item-btn { padding: 1.5rem; } }
+
+        .pack-item-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 74, 82, 0.1);
+        }
+        .pack-item-btn i { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--primary); }
+        
+        .backpack-slot {
+            aspect-ratio: 1;
+            background: rgba(44, 74, 82, 0.05);
+            border: 2px dashed rgba(44, 74, 82, 0.2);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        .packed-item-anim { animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .shake-anim { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* --- UTILS --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        .slide-content { transition: opacity 0.4s ease, transform 0.4s ease; }
+        .slide-content.fade-out { opacity: 0; transform: translateY(10px); }
+
+        /* --- LANGUAGE SWITCHER FIX --- */
+        .lang-float {
+            position: fixed;
+            right: 2rem;
+            z-index: 50;
+            /* Default for Mobile: Bottom Right (Fixes overlap with top text) */
+            bottom: 2rem; 
+            top: auto;
+        }
+
+        /* Desktop: Top Right */
+        @media (min-width: 1024px) {
+            .lang-float {
+                top: 2rem;
+                bottom: auto;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-teal-200 selection:text-teal-900">
+
+    <div class="lang-float glass-card rounded-full p-2 flex gap-1 shadow-xl">
+        <button onclick="setLang('en')" id="lang-en" class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs bg-slate-800 text-white shadow-md transition-all">EN</button>
+        <button onclick="setLang('sv')" id="lang-sv" class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 hover:bg-slate-100 transition-all">SV</button>
+    </div>
+
+    <header class="hero-wrapper">
+        <div class="hero-left">
+            <div class="mb-8 reveal-up">
+                <div class="inline-flex items-center gap-3 text-slate-500 font-mono text-xs tracking-[0.2em] uppercase border-l-2 border-slate-300 pl-4">
+                    <span>59°13' N, 18°05' E</span>
+                    <span>•</span>
+                    <span>Est. 1989</span>
+                </div>
+            </div>
+
+            <h1 class="giant-text serif reveal-up" style="animation-delay: 0.1s;">
+                Ågesta<br>Beach Guide
+            </h1>
+
+            <p class="text-lg text-slate-600 mb-10 max-w-md leading-relaxed reveal-up" style="animation-delay: 0.2s;" data-i18n="subtitle">
+                Disconnect from the noise. Stockholm's official naturist beach on Lake Magelungen.
+            </p>
+
+            <div class="flex flex-wrap gap-4 mb-10 reveal-up" style="animation-delay: 0.3s;">
+                <div class="live-pill">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <div>
+                        <div class="text-[10px] uppercase opacity-60 font-bold">Air Temp</div>
+                        <div class="font-bold leading-none" id="live-air">Loading...</div>
+                    </div>
+                </div>
+                
+                <div class="live-pill">
+                    <i class="fas fa-water text-blue-500"></i>
+                    <div>
+                        <div class="text-[10px] uppercase opacity-60 font-bold">Water</div>
+                        <div class="font-bold leading-none" id="live-water">Checking...</div>
+                    </div>
+                </div>
+
+                <div class="live-pill">
+                    <i class="fas fa-hot-tub text-orange-500"></i>
+                    <div>
+                        <div class="text-[10px] uppercase opacity-60 font-bold">Sauna</div>
+                        <div class="font-bold leading-none" id="live-sauna">Schedule</div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('explore').scrollIntoView()" class="w-fit bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition flex items-center justify-center gap-2 shadow-lg reveal-up" style="animation-delay: 0.4s;">
+                <span data-i18n="btn_explore">Begin Guide</span> <i class="fas fa-arrow-down"></i>
+            </button>
+        </div>
+
+        <div class="hero-right">
+            <img src="images/hero.png" alt="Ågesta Lake" class="hero-img">
+            
+            <div class="hero-right-content bg-slate-900/10 backdrop-blur-md text-white/80 text-xs font-mono py-4 px-6 flex justify-between items-center border-t border-white/20">
+                <span>LIVE: <span id="live-cond">Clear Sky</span></span>
+                <span class="float-right hidden md:inline">RESPECT PRIVACY • TOWEL MANDATORY</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="explore" class="py-24 px-4 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal-up">
+            <span class="text-teal-600 font-bold tracking-widest text-xs uppercase mb-3 block">The Trail</span>
+            <h2 class="text-4xl md:text-5xl serif text-slate-800 mb-4" data-i18n="zone_title">A Walk to the Water</h2>
+            <p class="text-slate-500 max-w-xl mx-auto" data-i18n="zone_sub">Drag the slider to travel from the deep forest to the open shore.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto reveal-up delay-100 relative h-20 flex items-center px-6 md:px-0">
+            <input type="range" min="0" max="3" step="0.01" value="0" id="zone-slider" 
+                   class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer"
+                   oninput="updateSlider(this.value)"
+                   onchange="snapSlider(this.value)">
+
+            <div class="timeline-track w-full">
+                <div id="timeline-fill" class="timeline-progress" style="width: 0%;"></div>
+                
+                <div class="timeline-marker active" style="left: 0%;" id="mark-0"><div class="timeline-label">01. Forest</div></div>
+                <div class="timeline-marker" style="left: 33%;" id="mark-1"><div class="timeline-label">02. Beach</div></div>
+                <div class="timeline-marker" style="left: 66%;" id="mark-2"><div class="timeline-label">03. Sauna</div></div>
+                <div class="timeline-marker" style="left: 100%;" id="mark-3"><div class="timeline-label">04. Lawn</div></div>
+
+                <div id="custom-handle" style="left: 0%;"></div>
+            </div>
+        </div>
+
+        <div id="timeline-content" class="slide-content reveal-up delay-200 mt-8 bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-white/50">
+            <div class="grid md:grid-cols-2">
+                <div class="relative h-64 md:h-[500px] overflow-hidden">
+                    <img id="vis-img" src="images/morning.png" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                </div>
+                <div class="p-6 md:p-16 flex flex-col justify-center bg-white/80 backdrop-blur-sm">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span id="vis-tag" class="px-4 py-1.5 rounded-full bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-widest border border-teal-100">Logistics</span>
+                    </div>
+                    <h3 id="vis-title" class="text-4xl md:text-5xl serif text-slate-800 mb-6 leading-tight">The Forest Path</h3>
+                    <p id="vis-desc" class="text-lg text-slate-500 leading-relaxed mb-8">
+                        A scenic 600m walk from the parking lot. The transition from the busy city to nature begins here. Follow the wide gravel path.
+                    </p>
+                    <div class="mt-auto pt-8 border-t border-slate-100 flex justify-between items-center text-sm font-bold text-slate-400">
+                        <span id="vis-step">STEP 01</span>
+                        <span>—</span>
+                        <span>ÅGESTA GUIDE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="packer" class="py-24 px-4 md:px-6 bg-[#EAEAE5] relative overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-16 reveal-up">
+                <span class="text-teal-600 font-bold tracking-widest text-xs uppercase mb-3 block">Interactive Checklist</span>
+                <h2 class="text-4xl md:text-5xl serif text-slate-800 mb-4">The Naturist's Backpack</h2>
+                <p class="text-slate-500 max-w-xl mx-auto">Click items to pack your bag. Learn what to bring and what is strictly forbidden.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="glass-card p-6 md:p-8 rounded-[2.5rem] reveal-up">
+                    <h3 class="text-2xl font-bold serif text-slate-800 mb-6 flex items-center gap-3">
+                        <i class="fas fa-backpack text-teal-700"></i> Your Bag
+                    </h3>
+                    
+                    <div id="backpack-slots" class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="backpack-slot"></div>
+                        <div class="backpack-slot"></div>
+                        <div class="backpack-slot"></div>
+                        <div class="backpack-slot"></div>
+                        <div class="backpack-slot"></div>
+                        <div class="backpack-slot"></div>
+                    </div>
+
+                    <div id="packer-status" class="text-center font-bold text-slate-500 flex items-center justify-center gap-2 py-2 bg-slate-100/50 rounded-xl">
+                        <span>Empty bag. Start packing!</span>
+                    </div>
+                </div>
+
+                <div class="reveal-up delay-100">
+                    <h3 class="text-xl font-bold serif text-slate-800 mb-6">Essentials & Forbidden Items</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <button class="pack-item-btn" onclick="packItem('towel')">
+                            <i class="fas fa-rug"></i>
+                            <div class="text-sm font-bold">Towel</div>
+                        </button>
+                        <button class="pack-item-btn" onclick="packItem('water')">
+                            <i class="fas fa-bottle-water"></i>
+                            <div class="text-sm font-bold">Water</div>
+                        </button>
+                        <button class="pack-item-btn" onclick="packItem('sunscreen')">
+                            <i class="fas fa-sun"></i>
+                            <div class="text-sm font-bold">SPF</div>
+                        </button>
+                        <button class="pack-item-btn" onclick="packItem('money')">
+                            <i class="fas fa-credit-card"></i>
+                            <div class="text-sm font-bold">Card/Cash</div>
+                        </button>
+                        <button class="pack-item-btn opacity-70 hover:opacity-100 hover:border-red-300 hover:text-red-700 group" onclick="packItem('camera')">
+                            <i class="fas fa-camera text-slate-400 group-hover:text-red-500"></i>
+                            <div class="text-sm font-bold">Camera</div>
+                        </button>
+                        <button class="pack-item-btn" onclick="packItem('swimsuit')">
+                            <i class="fas fa-vest-patches"></i>
+                            <div class="text-sm font-bold">Swimsuit</div>
+                        </button>
+                    </div>
+
+                    <div id="packer-alert" class="hidden mt-8 p-6 rounded-2xl bg-red-50 text-red-900 border border-red-100 items-start gap-4">
+                        <i class="fas fa-triangle-exclamation text-2xl text-red-500"></i>
+                        <div>
+                            <div id="alert-title" class="font-bold text-lg mb-1">Forbidden Item!</div>
+                            <div id="alert-desc" class="text-sm opacity-80">Explanation here.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <i class="fas fa-leaf absolute -bottom-20 -right-20 text-[20rem] text-teal-900/5 z-0"></i>
+    </section>
+
+    <section class="py-24 px-4 md:px-6 bg-white relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal-up">
+                <span class="text-teal-600 font-bold uppercase tracking-widest text-xs">Etiquette</span>
+                <h2 class="text-4xl md:text-5xl serif text-slate-800 mt-2" data-i18n="rules_title">The "Golden Rules"</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 md:p-10 rounded-[2.5rem] bg-slate-50 hover:bg-teal-50 transition duration-300 border border-slate-100 reveal-up shadow-sm">
+                    <div class="flex items-center gap-4 mb-6 text-teal-700">
+                        <i class="fas fa-check-circle text-3xl"></i>
+                        <h3 class="text-2xl font-bold serif" data-i18n="do_title">Do's</h3>
+                    </div>
+                    <ul class="space-y-4 text-slate-600 text-lg">
+                        <li class="flex gap-4 items-start"><span class="font-bold text-teal-600">1.</span> <span data-i18n="do_1">Sit on a towel. Hygiene is mandatory on benches/sauna.</span></li>
+                        <li class="flex gap-4 items-start"><span class="font-bold text-teal-600">2.</span> <span data-i18n="do_2">Bring cash/card. The sauna & cafe (weather permitting) take payments.</span></li>
+                        <li class="flex gap-4 items-start"><span class="font-bold text-teal-600">3.</span> <span data-i18n="do_3">Respect distance. The lawn is huge, don't crowd others.</span></li>
+                    </ul>
+                </div>
+                <div class="p-8 md:p-10 rounded-[2.5rem] bg-slate-50 hover:bg-red-50 transition duration-300 border border-slate-100 reveal-up shadow-sm">
+                    <div class="flex items-center gap-4 mb-6 text-red-700">
+                        <i class="fas fa-times-circle text-3xl"></i>
+                        <h3 class="text-2xl font-bold serif" data-i18n="dont_title">Strictly Forbidden</h3>
+                    </div>
+                    <ul class="space-y-4 text-slate-600 text-lg">
+                        <li class="flex gap-4 items-start"><span class="font-bold text-red-500">1.</span> <span data-i18n="dont_1">NO CAMERAS. Protect privacy at all costs.</span></li>
+                        <li class="flex gap-4 items-start"><span class="font-bold text-red-500">2.</span> <span data-i18n="dont_2">Avoid wooded areas. Stay in the open main areas for safety.</span></li>
+                        <li class="flex gap-4 items-start"><span class="font-bold text-red-500">3.</span> <span data-i18n="dont_3">No glass bottles. Bare feet need protection.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-6 relative overflow-hidden bg-[#F0F0E8]">
+        <div class="max-w-4xl mx-auto glass-card rounded-[3rem] p-6 md:p-16 text-center reveal-up">
+            <h2 class="text-3xl md:text-4xl serif text-slate-800 mb-8" data-i18n="logistics_title">Getting There</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8 justify-center items-center mb-8">
+                <div class="flex items-center gap-4 text-left p-4 bg-white/50 rounded-2xl w-full md:w-auto">
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-2xl shadow-md text-teal-700"><i class="fas fa-bus"></i></div>
+                    <div>
+                        <div class="font-bold text-lg" data-i18n="bus_strong">Bus 742 / 833</div>
+                        <div class="text-slate-500 text-sm" data-i18n="bus_detail">Stop: Rödmossevägen</div>
+                    </div>
+                </div>
+                <div class="hidden md:block w-px h-12 bg-slate-300"></div>
+                <div class="flex items-center gap-4 text-left p-4 bg-white/50 rounded-2xl w-full md:w-auto">
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-2xl shadow-md text-teal-700"><i class="fas fa-car"></i></div>
+                    <div>
+                        <div class="font-bold text-lg" data-i18n="car_strong">Driving</div>
+                        <div class="text-slate-500 text-sm" data-i18n="car_detail">Free Parking at Entrance</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full h-80 rounded-3xl overflow-hidden shadow-inner border border-slate-200 relative">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2040.854617343265!2d18.09456231606364!3d59.22744408162234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f799975000001%3A0x66f773663733076!2s%C3%85gesta%20Nudistbad!5e0!3m2!1sen!2sse!4v1700000000000!5m2!1sen!2sse" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="absolute bottom-2 right-2 bg-white/80 px-2 py-1 text-xs rounded text-slate-500 font-bold backdrop-blur">Ågesta Naturistbad</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-white/50 py-12 text-center text-sm" style="background-color: #2C4A52;">
+        <p class="font-serif italic text-xl text-white mb-4" data-i18n="footer_quote">"Stockholm's hidden gem."</p>
+        <p>Ågesta Guide.</p>
+    </footer>
+
+    <script>
+        // --- REAL-TIME WEATHER FETCH ---
+        async function fetchWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=59.23&longitude=18.10&current=temperature_2m,weather_code');
+                const data = await res.json();
+                
+                const temp = Math.round(data.current.temperature_2m);
+                const code = data.current.weather_code;
+                
+                document.getElementById('live-air').innerText = `${temp}°C`;
+                
+                const month = new Date().getMonth() + 1;
+                const isWinter = (month >= 10 || month <= 4);
+                
+                const waterLabel = document.getElementById('live-water');
+                const saunaLabel = document.getElementById('live-sauna');
+                const condLabel = document.getElementById('live-cond');
+
+                if (isWinter) {
+                    waterLabel.innerText = "Cold Dip";
+                    saunaLabel.innerText = "Check Sched."; 
+                    saunaLabel.classList.remove('text-green-600');
+                    saunaLabel.classList.add('text-orange-500');
+                } else {
+                    waterLabel.innerText = "~18-20°C"; 
+                    saunaLabel.innerText = "Open";
+                    saunaLabel.classList.add('text-green-600');
+                }
+
+                let weatherDesc = "Clear Sky";
+                if(code > 3) weatherDesc = "Cloudy";
+                if(code > 50) weatherDesc = "Rainy";
+                if(code > 70) weatherDesc = "Snowy";
+                
+                condLabel.innerText = weatherDesc.toUpperCase();
+
+            } catch (e) {
+                console.log("Weather fetch failed", e);
+            }
+        }
+
+        // --- BACKPACK INTERACTIVITY ---
+        const packableItems = {
+            towel: { icon: '<i class="fas fa-rug"></i>', type: 'essential', msg: "Essential for hygiene!" },
+            water: { icon: '<i class="fas fa-bottle-water"></i>', type: 'essential', msg: "Smart. No shops nearby." },
+            sunscreen: { icon: '<i class="fas fa-sun"></i>', type: 'essential', msg: "Sun hat on!" },
+            money: { icon: '<i class="fas fa-credit-card"></i>', type: 'essential', msg: "For sauna or cafe." },
+            camera: { icon: '<i class="fas fa-camera"></i>', type: 'forbidden', title: "STRICTLY FORBIDDEN", msg: "Privacy is rule #1. No cameras allowed." },
+            swimsuit: { icon: '<i class="fas fa-vest-patches"></i>', type: 'joke', title: "Leave it at home!", msg: "You won't need this here. 😉" }
+        };
+        
+        let packedCount = 0;
+        const maxSlots = 6;
+
+        function packItem(itemName) {
+            const item = packableItems[itemName];
+            const alertBox = document.getElementById('packer-alert');
+            const slots = document.querySelectorAll('.backpack-slot');
+            const status = document.getElementById('packer-status');
+
+            alertBox.classList.add('hidden');
+            alertBox.classList.remove('shake-anim', 'flex');
+
+            if(item.type === 'forbidden' || item.type === 'joke') {
+                document.getElementById('alert-title').innerText = item.title;
+                document.getElementById('alert-desc').innerText = item.msg;
+                alertBox.classList.remove('hidden');
+                alertBox.classList.add('flex', 'shake-anim');
+                if(item.type === 'joke') {
+                    alertBox.classList.replace('bg-red-50', 'bg-teal-50');
+                    alertBox.classList.replace('text-red-900', 'text-teal-900');
+                    alertBox.classList.replace('border-red-100', 'border-teal-100');
+                    alertBox.querySelector('i').classList.replace('fa-triangle-exclamation', 'fa-face-smile-wink');
+                    alertBox.querySelector('i').classList.replace('text-red-500', 'text-teal-500');
+                } else {
+                     alertBox.classList.replace('bg-teal-50', 'bg-red-50');
+                     alertBox.classList.replace('text-teal-900', 'text-red-900');
+                     alertBox.classList.replace('border-teal-100', 'border-red-100');
+                     alertBox.querySelector('i').classList.replace('fa-face-smile-wink', 'fa-triangle-exclamation');
+                     alertBox.querySelector('i').classList.replace('text-teal-500', 'text-red-500');
+                }
+                return;
+            }
+
+            if(packedCount < maxSlots) {
+                let alreadyPacked = false;
+                slots.forEach(slot => { if(slot.innerHTML.includes(item.icon)) alreadyPacked = true; });
+                
+                if(!alreadyPacked) {
+                    slots[packedCount].innerHTML = `<div class="packed-item-anim">${item.icon}</div>`;
+                    packedCount++;
+                    
+                    if(packedCount === 1) status.innerText = "Good start.";
+                    else if(packedCount === 4) status.innerHTML = '<span class="text-teal-700"><i class="fas fa-check"></i> Ready to go!</span>';
+                    else status.innerText = "Packing...";
+                }
+            }
+        }
+
+        // --- TIMELINE DATA & LOGIC ---
+        const zones = [
+            { img: "images/morning.png", title: { en: "The Forest Path", sv: "Skogsvägen" }, desc: { en: "A scenic 600m walk from the parking lot. The transition from the busy city to nature begins here. Follow the wide gravel path.", sv: "En vacker 600m promenad från parkeringen. Övergången från stad till natur börjar här. Följ grusvägen." }, tag: { en: "Logistics", sv: "Logistik" }, step: "01" },
+            { img: "images/beach.png", title: { en: "Sandy Shore & Pier", sv: "Sandstrand & Brygga" }, desc: { en: "The heart of Ågesta. Soft sand for wading and a sturdy wooden pier (brygga) for jumping into the fresh lake water.", sv: "Hjärtat av Ågesta. Mjuk sand och en rejäl träbrygga för att hoppa i det friska sjövattnet." }, tag: { en: "Swimming", sv: "Bad" }, step: "02" },
+            { img: "images/kiosk.png", title: { en: "Sauna & Cafe", sv: "Bastu & Café" }, desc: { en: "<strong>NEW:</strong> Public sauna (50 SEK). Pop-up outdoor café sells hot dogs & coffee in summer. Payment via Swish/Card.", sv: "<strong>NYTT:</strong> Offentlig bastu (50 kr). Utomhus-café säljer korv & kaffe på sommaren. Betalning med Swish/Kort." }, tag: { en: "Facilities", sv: "Faciliteter" }, step: "03" },
+            { img: "images/lawn.png", title: { en: "The Social Lawn", sv: "Gräsmattan" }, desc: { en: "A massive sloping lawn perfect for sunbathing. Move higher up the hill for more privacy, or stay low to socialize.", sv: "En enorm sluttande gräsmatta. Gå högre upp för avskildhet, eller stanna nere för att umgås." }, tag: { en: "Relax", sv: "Avkoppling" }, step: "04" }
+        ];
+
+        const translations = {
+            sv: {
+                location: "59°13'36, 18° 05'49",
+                title: "Ågesta Naturistbad",
+                subtitle: "Stockholms fristad för natur & frihet.<br>Officiellt Naturistbad • Sjön Magelungen",
+                btn_explore: "Utforska Området",
+                zone_title: "En Vandring genom Ågesta",
+                zone_sub: "Dra reglaget för att resa från skogskanten till det öppna vattnet.",
+                rules_title: "Gyllene Regler",
+                do_title: "Gör detta",
+                do_1: "Sitt på handduk. Hygien är obligatoriskt på bänkar/bastu.",
+                do_2: "Ta med kort/kontant. Bastun & caféet tar betalt.",
+                do_3: "Håll avstånd. Gräsmattan är stor, trängs inte.",
+                dont_title: "Förbjudet",
+                dont_1: "INGA KAMEROR. Skydda integriteten till varje pris.",
+                dont_2: "Undvik skogsområdena. Håll dig till öppna ytor för trygghet.",
+                dont_3: "Inga glasflaskor. Skydda bara fötter.",
+                logistics_title: "Hitta Hit",
+                bus_strong: "Buss 742 / 833",
+                bus_detail: "Hållplats: Rödmossevägen. Följ skyltar 600m.",
+                car_strong: "Bil",
+                car_detail: "Gratis parkering vid entrén. Kom tidigt!",
+                map_btn: "Öppna Google Maps",
+                footer_quote: "\"Stockholms dolda pärla.\""
+            }
+        };
+
+        let currentLang = 'en';
+        let currentIndex = 0;
+
+        function updateSlider(val) {
+            const floatVal = parseFloat(val);
+            const maxVal = 3;
+            const percent = (floatVal / maxVal) * 100;
+            document.getElementById('timeline-fill').style.width = percent + '%';
+            document.getElementById('custom-handle').style.left = percent + '%';
+
+            const nearestIndex = Math.round(floatVal);
+            document.querySelectorAll('.timeline-marker').forEach((el, i) => {
+                if (i <= nearestIndex) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
+            if (currentIndex !== nearestIndex) {
+                currentIndex = nearestIndex;
+                const data = zones[currentIndex];
+                const content = document.getElementById('timeline-content');
+                content.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    document.getElementById('vis-img').src = data.img;
+                    document.getElementById('vis-title').innerText = data.title[currentLang] || data.title.en;
+                    document.getElementById('vis-desc').innerHTML = data.desc[currentLang] || data.desc.en;
+                    document.getElementById('vis-tag').innerText = data.tag[currentLang] || data.tag.en;
+                    document.getElementById('vis-step').innerText = "STEP " + data.step;
+                    content.classList.remove('fade-out');
+                }, 200);
+            }
+        }
+
+        function snapSlider(val) {
+            const nearest = Math.round(val);
+            document.getElementById('zone-slider').value = nearest;
+            updateSlider(nearest);
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            
+            if(lang === 'sv') {
+                document.getElementById('lang-sv').className = "w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs bg-teal-800 text-white shadow-md transition-all";
+                document.getElementById('lang-en').className = "w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 hover:bg-slate-100 transition-all";
+            } else {
+                document.getElementById('lang-en').className = "w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs bg-teal-800 text-white shadow-md transition-all";
+                document.getElementById('lang-sv').className = "w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 hover:bg-slate-100 transition-all";
+            }
+
+            if(lang === 'en') return window.location.reload(); 
+
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(t[key]) el.innerHTML = t[key];
+            });
+
+            const data = zones[currentIndex];
+            document.getElementById('vis-title').innerText = data.title[currentLang];
+            document.getElementById('vis-desc').innerHTML = data.desc[currentLang];
+            document.getElementById('vis-tag').innerText = data.tag[currentLang];
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+        window.onload = fetchWeather;
+
+    </script>
+</body>
+</html>

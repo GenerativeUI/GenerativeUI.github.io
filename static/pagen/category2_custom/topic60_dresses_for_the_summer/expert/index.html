@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dresses for the Summer</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          heading: ["'Playfair Display', serif"],
+          body: ["'Quicksand', sans-serif"]
+        },
+        colors: {
+          sand: "#f6efe8",
+          coral: "#ff6f61",
+          sage: "#7c9a92",
+          sky: "#cde7f0"
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  :root {
+    --sand: #f6efe8;
+    --coral: #ff6f61;
+    --sage: #7c9a92;
+    --sky: #cde7f0;
+  }
+  .hero {
+    background:
+      linear-gradient(120deg, rgba(246,239,232,.85), rgba(255,255,255,.6)),
+      url("assets/hero.jpg") center/cover no-repeat;
+	  background: url("assets/hero.jpg") center/cover no-repeat;
+  }
+  .glass {
+    background: rgba(255,255,255,.65);
+    backdrop-filter: blur(14px);
+  }
+  .card {
+    transition: all .35s ease;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 35px 70px rgba(0,0,0,.15);
+  }
+  .toggle.active {
+        background: #000;
+    border-color: #000;
+    color: #fff;
+  }
+  .divider {
+    height: 140px;
+    background: linear-gradient(to bottom, white, theme("colors.sand"));
+  }
+</style>
+
+</head>
+
+<body class="font-body bg-white text-neutral-900">
+
+<!-- ================= HERO ================= -->
+<section class="hero relative min-h-screen flex items-center text-center overflow-hidden">
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/30"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="bg-white/50 backdrop-blur-[2px] p-12 max-w-2xl mx-auto">
+      <p class="uppercase tracking-widest text-sm text-black-600 mb-4 font-body">
+        Summer Editorial
+      </p>
+      <h1 class="text-5xl font-heading font-bold mb-6">
+        Dresses for the Summer
+      </h1>
+      <p class="text-lg text-black-700 font-body">
+        A visual guide to fabrics, silhouettes, climates, and moments —
+        styled for comfort and beauty all summer long.
+      </p>
+    </div>
+  </div>
+</section>
+<!-- <div class="divider"></div> -->
+
+<section class="py-28 bg-[#efe0db]" x-data="{
+    active: 'breathable',
+    content: {
+      breathable: {
+        title: 'Lightweight & Breathable',
+        text1: 'Crafted from airy fabrics like cotton, linen, and soft blends, summer dresses promote airflow and help regulate body temperature even on the hottest days.',
+        text2: 'Ideal for long sunny afternoons, travel, and outdoor gatherings where comfort is essential.'
+      },
+      silhouette: {
+        title: 'Effortless Silhouettes',
+        text1: 'Flowy cuts, relaxed fits, and wrap styles move naturally with your body, offering freedom and elegance throughout the day.',
+        text2: 'Designed to flatter without restriction, making them perfect for both casual and refined looks.'
+      },
+      style: {
+        title: 'Season-Ready Style',
+        text1: 'From soft neutrals to vibrant florals, summer dresses embrace colors and prints that reflect light and enhance the seasonal mood.',
+        text2: 'Easy to style up or down depending on your plans, from daytime strolls to evening events.'
+      }
+    }
+  }">
+  <div class="max-w-6xl mx-auto px-6">
+
+
+<!-- Header -->
+<div class="text-center mb-20">
+<span class="uppercase tracking-widest text-sm text-black">Summer Essentials</span>
+<h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">
+What Makes a Dress Perfect for Summer?
+</h2>
+<p class="text-black leading-relaxed max-w-3xl mx-auto font-body text-lg">
+A true summer dress combines comfort, elegance, and versatility — designed to move with you through warm days and breezy nights.
+</p>
+</div>
+<!-- Interactive Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-stretch">
+<!-- Left Interactive List -->
+<div class="space-y-10 h-full flex flex-col justify-center">
+<button @mouseenter="active='breathable'" class="group relative pl-12 text-left w-full">
+<span :class="active==='breathable' ? 'bg-[#8F6F63] scale-125' : 'bg-[#C9B8AF]'" class="absolute left-0 top-1 h-6 w-6 rounded-full transition"></span>
+<h3 class="text-2xl font-semibold mb-2 group-hover:text-[#8F6F63]">Lightweight & Breathable</h3>
+<p class="text-[#6B625A] leading-relaxed">
+Airy fabrics that keep you cool and comfortable, even during peak summer heat. Designed to allow constant airflow while preventing heaviness or cling, making them ideal for long outdoor wear.
+</p>
+</button>
+<button @mouseenter="active='silhouette'" class="group relative pl-12 text-left w-full">
+<span :class="active==='silhouette' ? 'bg-[#8F6F63] scale-125' : 'bg-[#C9B8AF]'" class="absolute left-0 top-1 h-6 w-6 rounded-full transition"></span>
+<h3 class="text-2xl font-semibold mb-2 group-hover:text-[#8F6F63]">Effortless Silhouettes</h3>
+<p class="text-[#6B625A] leading-relaxed">
+Relaxed shapes that flow naturally with movement, offering ease without looking oversized. These silhouettes enhance comfort while maintaining a polished, flattering appearance.
+</p>
+</button>
+<button @mouseenter="active='style'" class="group relative pl-12 text-left w-full">
+<span :class="active==='style' ? 'bg-[#8F6F63] scale-125' : 'bg-[#C9B8AF]'" class="absolute left-0 top-1 h-6 w-6 rounded-full transition"></span>
+<h3 class="text-2xl font-semibold mb-2 group-hover:text-[#8F6F63]">Season-Ready Style</h3>
+<p class="text-[#6B625A] leading-relaxed">
+Colors and prints inspired by summer living, from soft neutrals to bold florals. Carefully chosen tones reflect sunlight and elevate your seasonal wardrobe effortlessly.
+</p>
+</button>
+</div>
+<!-- Right Dynamic Panel -->
+<div class="bg-white text-[#2B2622] p-14 shadow-xl transition-all duration-500 h-full flex flex-col justify-center">
+<h3 class="text-3xl font-heading font-bold mb-6" x-text="content[active].title"></h3>
+<p class="text-[#3A332E] leading-relaxed mb-6" x-text="content[active].text1"></p>
+<p class="text-[#4A423C] leading-relaxed" x-text="content[active].text2"></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Alpine.js required -->
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<!-- ================= FABRIC GUIDE ================= -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-heading font-bold mb-4">
+        Fabrics That Breathe
+      </h2>
+      <p class="text-neutral-600 max-w-3xl mx-auto font-body">
+        Choosing the right fabric can transform how a summer dress looks, feels, and performs throughout the day.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-12">
+      
+      <!-- Cotton -->
+      <div class="card bg-white p-6">
+        <img src="assets/cotton.jpg" class="h-64 w-full object-cover mb-6">
+        <h3 class="text-xl font-heading font-semibold mb-3">Cotton</h3>
+        <p class="text-neutral-600 font-body mb-3">
+          A summer essential known for its softness, breathability, and skin-friendly feel.
+        </p>
+        <p class="text-neutral-600 font-body">
+          Cotton dresses absorb moisture, allow airflow, and stay comfortable during long, sun-filled days — making them ideal for casual outings, travel, and everyday wear.
+        </p>
+      </div>
+
+      <!-- Linen -->
+      <div class="card bg-white p-6">
+        <img src="assets/linen.jpg" class="h-64 w-full object-cover mb-6">
+        <h3 class="text-xl font-heading font-semibold mb-3">Linen</h3>
+        <p class="text-neutral-600 font-body mb-3">
+          Naturally airy and textured, linen is designed for high heat and humidity.
+        </p>
+        <p class="text-neutral-600 font-body">
+          Linen dresses dry quickly, feel cool against the skin, and develop a relaxed elegance over time — perfect for beach days, resort wear, and warm-weather styling.
+        </p>
+      </div>
+
+      <!-- Viscose & Blends -->
+      <div class="card bg-white p-6">
+        <img src="assets/maxi.jpg" class="h-64 w-full object-cover mb-6">
+        <h3 class="text-xl font-heading font-semibold mb-3">Viscose & Blends</h3>
+        <p class="text-neutral-600 font-body mb-3">
+          Smooth, lightweight fabrics with a fluid drape that enhances movement.
+        </p>
+        <p class="text-neutral-600 font-body">
+          Ideal for maxi dresses and evening styles, viscose blends offer breathability with a polished finish — transitioning effortlessly from daytime comfort to evening elegance.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= CLIMATE BASED ================= -->
+<section class="py-24 bg-[#c4a7ad]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <h2 class="text-4xl font-heading font-bold mb-4 text-white">
+        Dress by Climate
+      </h2>
+      <p class="text-white max-w-3xl mx-auto font-body">
+        Summer heat feels different depending on humidity. Discover dress styles
+        and fabrics designed to keep you comfortable in every climate.
+      </p>
+    </div>
+
+    <div class="flex justify-center gap-4 mb-12">
+      <button class="toggle active px-8 py-3 border font-heading text-white" data-climate="humid">
+        Humid Summers
+      </button>
+      <button class="toggle px-8 py-3 border font-heading text-white" data-climate="dry">
+        Dry Summers
+      </button>
+    </div>
+
+    <!-- HUMID -->
+    <div id="humid" class="grid md:grid-cols-3 gap-10 climate">
+      
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/humid-summer-best-fabric.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Best Fabrics</h3>
+          <p class="text-neutral-600 font-body">
+            Breathable materials like cotton, linen, and bamboo blends absorb
+            moisture and allow airflow, keeping summer dresses light and fresh
+            in high humidity.
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/humid-summer-best-fits.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Best Fits</h3>
+          <p class="text-neutral-600 font-body">
+            Loose silhouettes, A-line shapes, and relaxed midi or maxi dresses
+            prevent cling and allow heat to escape throughout the day.
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/humid-avoid.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Avoid</h3>
+          <p class="text-neutral-600 font-body">
+            Tight-fitting styles and heavy synthetics trap humidity and reduce
+            comfort, making dresses feel heavier in warm conditions.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DRY -->
+    <div id="dry" class="grid md:grid-cols-3 gap-10 climate hidden">
+      
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/dry-fabric.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Best Fabrics</h3>
+          <p class="text-neutral-600 font-body">
+            Linen, viscose, and lightweight cotton blends help regulate heat
+            while remaining breathable and gentle on dry summer skin.
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/dry-fit.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Best Fits</h3>
+          <p class="text-neutral-600 font-body">
+            Wrap dresses, flowing maxis, and relaxed silhouettes provide sun
+            coverage while maintaining airflow and effortless elegance.
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-white overflow-hidden">
+        <img src="assets/dry-avoid.jpg" class="h-50 w-full object-cover">
+        <div class="p-6">
+          <h3 class="font-heading font-semibold text-lg mb-3">Avoid</h3>
+          <p class="text-neutral-600 font-body">
+            Dark colors and dense layering absorb heat quickly, making dresses
+            feel warmer and less breathable in dry climates.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= STYLE STATEMENT ================= -->
+<section class="py-28 bg-[#f6efe8] overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+      <!-- Single Image -->
+      <div class="flex justify-center lg:justify-start items-center h-[620px]">
+        <img
+          src="assets/editorial-denim.jpg"
+          alt="Relaxed summer dress styling"
+          class="w-full max-w-[520px] h-[520px] object-cover shadow-xl rounded-lg"
+        >
+      </div>
+
+      <!-- Text Content -->
+      <div class="lg:pl-10 flex flex-col justify-center">
+        <span class="uppercase tracking-widest text-sm text-black-600 font-body">
+          Style Perspective
+        </span>
+
+        <h2 class="text-4xl md:text-5xl font-heading font-bold mt-6 mb-8 leading-tight">
+          Effortless Summer Style,<br>
+          Defined by Comfort
+        </h2>
+
+        <p class="text-neutral-700 font-body text-lg leading-relaxed mb-6">
+          Summer style is less about trends and more about how a dress makes you
+          feel throughout the day. The most memorable summer looks are rooted in
+          ease — silhouettes that breathe, fabrics that move, and designs that
+          never feel restrictive.
+        </p>
+
+        <p class="text-neutral-700 font-body text-lg leading-relaxed mb-6">
+          From relaxed daytime moments to softly styled evenings, a well-chosen
+          summer dress adapts naturally. It doesn’t demand attention — it earns
+          it through balance, proportion, and thoughtful simplicity.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= DAY vs EVENING ================= -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <h2 class="text-4xl font-heading font-bold mb-4">
+        From Day to Evening
+      </h2>
+      <p class="text-neutral-600 max-w-3xl mx-auto font-body">
+        Summer dressing often moves from bright midday heat to cool evening breezes.
+        The right dress adapts effortlessly from day plans to evening moments.
+      </p>
+    </div>
+
+    <div class="flex justify-center gap-4 mb-16">
+      <button class="toggle active px-8 py-3 border font-heading" data-time="day">
+        Daytime
+      </button>
+      <button class="toggle px-8 py-3 border font-heading" data-time="evening">
+        Evening
+      </button>
+    </div>
+
+    <!-- DAY -->
+    <div id="day" class="grid lg:grid-cols-2 gap-16 time items-center">
+      <img src="assets/sundress.jpg" class="h-[520px] w-full object-cover">
+      <div>
+        <h3 class="text-3xl font-heading font-semibold mb-4">Day Dresses</h3>
+        <p class="text-neutral-600 font-body leading-relaxed mb-4">
+          Day dresses are designed for comfort, breathability, and ease of movement.
+          Lightweight fabrics like cotton, linen, and soft blends help regulate heat
+          while keeping you fresh during long summer days.
+        </p>
+        <p class="text-neutral-600 font-body leading-relaxed">
+          Ideal for casual outings, travel, shopping, or brunch, daytime dresses
+          often feature relaxed silhouettes, sleeveless designs, and lighter colors
+          that reflect sunlight and enhance all-day wearability.
+        </p>
+      </div>
+    </div>
+
+    <!-- EVENING -->
+    <div id="evening" class="grid lg:grid-cols-2 gap-16 time items-center hidden">
+      <div>
+        <h3 class="text-3xl font-heading font-semibold mb-4">Evening Dresses</h3>
+        <p class="text-neutral-600 font-body leading-relaxed mb-4">
+          Evening dresses introduce subtle structure and refined details while
+          remaining lightweight and breathable for warm nights.
+        </p>
+        <p class="text-neutral-600 font-body leading-relaxed">
+          Flowing maxis, wrap dresses, and elevated midis transition beautifully
+          from day to night — simply add statement accessories or a light layer
+          for sunset dinners, events, or evening strolls.
+        </p>
+      </div>
+      <img src="assets/evening.jpg" class="h-[520px] w-full object-cover">
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="text-center text-xs text-white font-bold py-8 border-t font-body bg-[#c4a7ad]">
+  Summer Dress Editorial • Informational Guide
+</footer>
+
+<script>
+  document.querySelectorAll("[data-climate]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("[data-climate]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".climate").forEach(c => c.classList.add("hidden"));
+      document.getElementById(btn.dataset.climate).classList.remove("hidden");
+    };
+  });
+
+  document.querySelectorAll("[data-time]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("[data-time]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".time").forEach(t => t.classList.add("hidden"));
+      document.getElementById(btn.dataset.time).classList.remove("hidden");
+    };
+  });
+</script>
+
+</body>
+</html>

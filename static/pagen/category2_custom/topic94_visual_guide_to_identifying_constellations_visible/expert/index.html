@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>London Night Sky Guide | Visible Constellations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --space-dark: #0B0D21;
+            --space-blue: #1A1F3C;
+            --star-yellow: #FFD700;
+            --star-white: #F5F5F5;
+            --accent-purple: #8A2BE2;
+            --accent-teal: #20B2AA;
+            --text-light: #E6E6FA;
+            --text-muted: #B0B0D0;
+            --card-bg: rgba(26, 31, 60, 0.8);
+            --border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--space-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(32, 178, 170, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(11, 13, 33, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--star-yellow);
+            background: linear-gradient(45deg, var(--star-yellow), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, var(--text-light), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 400;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover {
+            color: var(--star-yellow);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-teal));
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h2 {
+            font-size: 52px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--text-light), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text h2 span {
+            font-weight: 600;
+            color: var(--star-yellow);
+            -webkit-text-fill-color: var(--star-yellow);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature i {
+            font-size: 22px;
+            color: var(--accent-teal);
+            background-color: rgba(32, 178, 170, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-text h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .feature-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .hero-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            height: 500px;
+            border: 1px solid var(--border-color);
+        }
+        p{
+            font-size: 18px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(11, 13, 33, 0.9), transparent);
+            padding: 30px;
+            color: white;
+        }
+
+        /* Section Common Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h3 {
+            font-size: 42px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent-teal), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        /* London Sky Section */
+        .london-sky {
+            background-color: rgba(26, 31, 60, 0.3);
+            position: relative;
+        }
+
+        .sky-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .sky-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .sky-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .sky-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--accent-teal);
+        }
+
+        .sky-card i {
+            font-size: 32px;
+            color: var(--star-yellow);
+            margin-bottom: 20px;
+        }
+
+        .sky-card h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .sky-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Constellations Section */
+        .constellations {
+            position: relative;
+        }
+
+        .constellations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .constellation-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .constellation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: var(--accent-purple);
+        }
+
+        .card-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .constellation-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-content h4 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .card-subtitle {
+            color: var(--accent-teal);
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .card-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .detail-item i {
+            color: var(--star-yellow);
+        }
+
+        .card-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Season Guide Section */
+        .season-guide {
+            background-color: rgba(26, 31, 60, 0.3);
+        }
+
+        .seasons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .season-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .season-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .season-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--star-yellow);
+        }
+
+        .season-card h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .season-list {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .season-list li {
+            padding: 8px 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .season-list li i {
+            color: var(--accent-teal);
+            font-size: 12px;
+        }
+
+        /* Observation Tips Section */
+        .observation-tips {
+            position: relative;
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .tip-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .tip-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 25px;
+        }
+
+        .tip-card h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .tip-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Interactive Section */
+        .interactive {
+            background-color: rgba(26, 31, 60, 0.3);
+        }
+
+        .star-map {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .map-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(11, 13, 33, 0.9));
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+        }
+
+        .map-content {
+            color: white;
+        }
+
+        .map-content h4 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .star-selector {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .star-selector h4 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .constellation-select {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .constellation-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .constellation-btn:hover {
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal));
+            transform: translateY(-3px);
+        }
+
+        .constellation-btn.active {
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal));
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .constellation-info {
+            background: rgba(11, 13, 33, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .constellation-info.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(11, 13, 33, 0.95);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+            font-weight: 500;
+        }
+
+        .footer-section p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .footer-links i {
+            font-size: 12px;
+            color: var(--star-yellow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .image-credit {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-text h2 {
+                font-size: 42px;
+            }
+
+            .hero-features {
+                justify-content: center;
+            }
+
+            .hero-image {
+                height: 400px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .section-title h3 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(11, 13, 33, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
+                backdrop-filter: blur(10px);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            .hero-text h2 {
+                font-size: 36px;
+            }
+
+            .hero-features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h3 {
+                font-size: 32px;
+            }
+
+            .constellation-select {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .constellation-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h2 {
+                font-size: 32px;
+            }
+
+            .section-title h3 {
+                font-size: 28px;
+            }
+
+            .card-details {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .sky-card, .constellation-card, .season-card, .tip-card {
+                padding: 20px;
+            }
+        }
+
+        /* Starry background effect */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starry Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-star-and-crescent"></i>
+                    <h1>London <span>Star Guide</span></h1>
+                </div>
+                <button class="mobile-menu" id="mobileMenu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#london-sky">London Sky</a></li>
+                        <li><a href="#constellations">Constellations</a></li>
+                        <li><a href="#seasons">Season Guide</a></li>
+                        <li><a href="#tips">Observation Tips</a></li>
+                        <li><a href="#interactive">Star Map</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Visual Guide to <span>Constellations</span> Visible from London</h2>
+                    <p>Discover the wonders of the night sky above London. This comprehensive guide helps you identify constellations, planets, and celestial objects visible from the UK's capital throughout the year.</p>
+                    
+                    <div class="hero-features">
+                        <div class="feature">
+                            <i class="fas fa-binoculars"></i>
+                            <div class="feature-text">
+                                <h4>20+ Constellations</h4>
+                                <p>Detailed guides for identification</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div class="feature-text">
+                                <h4>Seasonal Guide</h4>
+                                <p>What to see each season</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <div class="feature-text">
+                                <h4>London-Specific</h4>
+                                <p>Tailored to London's latitude</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-lightbulb"></i>
+                            <div class="feature-text">
+                                <h4>Practical Tips</h4>
+                                <p>Best viewing locations & times</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80" alt="Starry night sky over London">
+                    <div class="image-overlay">
+                        <h3>London's Night Sky</h3>
+                        <p>51.5°N latitude offers unique celestial views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- London Sky Section -->
+    <section class="london-sky" id="london-sky">
+        <div class="container">
+            <div class="section-title">
+                <h3>The London Night Sky</h3>
+                <p>Understanding celestial viewing from the UK's capital</p>
+            </div>
+            
+            <div class="sky-intro">
+                <p>London's position at 51.5°N latitude offers a distinctive view of the northern celestial hemisphere. While light pollution presents challenges, many bright constellations and planets remain visible throughout the year. The city's sky reveals different celestial wonders each season, from the Summer Triangle to Orion's winter glory.</p>
+            </div>
+            
+            <div class="sky-features">
+                <div class="sky-card">
+                    <i class="fas fa-city"></i>
+                    <h4>Light Pollution</h4>
+                    <p>London's urban glow affects visibility, but bright constellations like Ursa Major, Orion, and Cassiopeia remain easily identifiable. For best viewing, seek out parks and darker areas on the city's outskirts.</p>
+                </div>
+                <div class="sky-card">
+                    <i class="fas fa-globe-europe"></i>
+                    <h4>Northern Hemisphere View</h4>
+                    <p>At 51.5°N, London never sees constellations near the south celestial pole, but has excellent views of circumpolar constellations that never set, like Ursa Minor and Cassiopeia.</p>
+                </div>
+                <div class="sky-card">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h4>Weather Considerations</h4>
+                    <p>London's often cloudy skies require patience. The clearest nights typically occur during high-pressure systems in winter. Summer offers shorter nights but often clearer skies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Constellations Section -->
+    <section class="constellations" id="constellations">
+        <div class="container">
+            <div class="section-title">
+                <h3>Key Constellations Visible</h3>
+                <p>Major constellations easily identifiable from London</p>
+            </div>
+            
+            <div class="constellations-grid">
+                <div class="constellation-card">
+                    <div class="card-image">
+                        <img src="./images/ursa-major-constellation-at-night-vector-24719455.jpg.avif" alt="Ursa Major constellation">
+                        <div class="card-badge">Circumpolar</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Ursa Major</h4>
+                        <div class="card-subtitle">The Great Bear</div>
+                        <div class="card-details">
+                            <div class="detail-item">
+                                <i class="fas fa-star"></i>
+                                <span>Brightest: Alioth</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Visible: All Year</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Best: Spring</span>
+                            </div>
+                        </div>
+                        <p>Contains the famous Big Dipper asterism. The pointer stars (Dubhe and Merak) point directly to Polaris, the North Star. This constellation never sets from London's latitude.</p>
+                    </div>
+                </div>
+                
+                <div class="constellation-card">
+                    <div class="card-image">
+                        <img src="./images/1140x641.jpg" alt="Orion constellation">
+                        <div class="card-badge">Winter</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Orion</h4>
+                        <div class="card-subtitle">The Hunter</div>
+                        <div class="card-details">
+                            <div class="detail-item">
+                                <i class="fas fa-star"></i>
+                                <span>Brightest: Rigel</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Visible: Winter</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Best: January</span>
+                            </div>
+                        </div>
+                        <p>One of the most recognizable constellations. Look for three bright stars in a straight line forming Orion's Belt. The Orion Nebula (M42) is visible with binoculars below the belt.</p>
+                    </div>
+                </div>
+                
+                <div class="constellation-card">
+                    <div class="card-image">
+                        <img src="./images/istockphoto-1186728772-612x612.jpg" alt="Cassiopeia constellation">
+                        <div class="card-badge">Circumpolar</div>
+                    </div>
+                    <div class="card-content">
+                        <h4>Cassiopeia</h4>
+                        <div class="card-subtitle">The Queen</div>
+                        <div class="card-details">
+                            <div class="detail-item">
+                                <i class="fas fa-star"></i>
+                                <span>Brightest: Schedar</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-eye"></i>
+                                <span>Visible: All Year</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Best: Autumn</span>
+                            </div>
+                        </div>
+                        <p>Distinctive W or M shape of five bright stars. Located opposite Ursa Major relative to Polaris. Contains several open star clusters visible with binoculars.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Season Guide Section -->
+    <section class="season-guide" id="seasons">
+        <div class="container">
+            <div class="section-title">
+                <h3>Seasonal Viewing Guide</h3>
+                <p>What to look for in London's sky throughout the year</p>
+            </div>
+            
+            <div class="seasons-container">
+                <div class="season-card">
+                    <div class="season-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h4>Winter</h4>
+                    <p>December - February</p>
+                    <ul class="season-list">
+                        <li><i class="fas fa-check"></i> Orion dominates the sky</li>
+                        <li><i class="fas fa-check"></i> Taurus & Pleiades cluster</li>
+                        <li><i class="fas fa-check"></i> Gemini's bright twins</li>
+                        <li><i class="fas fa-check"></i> Canis Major with Sirius</li>
+                        <li><i class="fas fa-check"></i> Long, dark nights</li>
+                    </ul>
+                </div>
+                
+                <div class="season-card">
+                    <div class="season-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h4>Spring</h4>
+                    <p>March - May</p>
+                    <ul class="season-list">
+                        <li><i class="fas fa-check"></i> Leo with Regulus</li>
+                        <li><i class="fas fa-check"></i> Ursa Major overhead</li>
+                        <li><i class="fas fa-check"></i> Bootes & Arcturus</li>
+                        <li><i class="fas fa-check"></i> Virgo appearing</li>
+                        <li><i class="fas fa-check"></i> Galaxy season begins</li>
+                    </ul>
+                </div>
+                
+                <div class="season-card">
+                    <div class="season-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h4>Summer</h4>
+                    <p>June - August</p>
+                    <ul class="season-list">
+                        <li><i class="fas fa-check"></i> Summer Triangle</li>
+                        <li><i class="fas fa-check"></i> Cygnus the Swan</li>
+                        <li><i class="fas fa-check"></i> Lyra with Vega</li>
+                        <li><i class="fas fa-check"></i> Aquila the Eagle</li>
+                        <li><i class="fas fa-check"></i> Milky Way visible</li>
+                    </ul>
+                </div>
+                
+                <div class="season-card">
+                    <div class="season-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>Autumn</h4>
+                    <p>September - November</p>
+                    <ul class="season-list">
+                        <li><i class="fas fa-check"></i> Pegasus Square</li>
+                        <li><i class="fas fa-check"></i> Andromeda Galaxy</li>
+                        <li><i class="fas fa-check"></i> Perseus constellation</li>
+                        <li><i class="fas fa-check"></i> Cassiopeia overhead</li>
+                        <li><i class="fas fa-check"></i> Orion rising late</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Observation Tips Section -->
+    <section class="observation-tips" id="tips">
+        <div class="container">
+            <div class="section-title">
+                <h3>Observation Tips for London</h3>
+                <p>Maximize your stargazing success in the city</p>
+            </div>
+            
+            <div class="tips-container">
+                <div class="tip-card">
+                    <div class="tip-number">1</div>
+                    <h4>Choose Dark Locations</h4>
+                    <p>Visit London's Royal Parks after closing or head to outskirts like Richmond Park or Hampstead Heath. Even moving away from direct streetlights improves visibility significantly.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-number">2</div>
+                    <h4>Timing is Everything</h4>
+                    <p>Observe during moonless nights (check lunar phases). Winter nights are longer but colder. Allow 20 minutes for your eyes to fully adapt to darkness - avoid white light during this time.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-number">3</div>
+                    <h4>Use Proper Tools</h4>
+                    <p>Start with naked-eye observing, then use binoculars (7x50 or 10x50 are ideal). Star chart apps like Star Walk or Stellarium help identify constellations. A red flashlight preserves night vision.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-number">4</div>
+                    <h4>Understand Light Pollution</h4>
+                    <p>Look directly overhead where light pollution is least. Bright planets and major constellations remain visible despite London's glow. Atmospheric clarity is often best after rain.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Section -->
+    <section class="interactive" id="interactive">
+        <div class="container">
+            <div class="section-title">
+                <h3>Interactive Star Map</h3>
+                <p>Explore constellations visible from London tonight</p>
+            </div>
+            
+            <div class="star-map">
+                <div class="map-image">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Star map of London night sky">
+                    <div class="map-overlay">
+                        <div class="map-content">
+                            <h4>London Night Sky Map</h4>
+                            <p>Facing South at 10 PM local time</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="star-selector">
+                    <h4>Select a Constellation to Learn More</h4>
+                    <div class="constellation-select">
+                        <button class="constellation-btn" data-target="ursa-major">Ursa Major</button>
+                        <button class="constellation-btn" data-target="orion">Orion</button>
+                        <button class="constellation-btn" data-target="cassiopeia">Cassiopeia</button>
+                        <button class="constellation-btn" data-target="leo">Leo</button>
+                        <button class="constellation-btn" data-target="cygnus">Cygnus</button>
+                    </div>
+                    
+                    <div class="constellation-info" id="ursa-major">
+                        <h4>Ursa Major - The Great Bear</h4>
+                        <p><strong>Visibility:</strong> Circumpolar - always visible from London</p>
+                        <p><strong>Best Time:</strong> Spring evenings, overhead</p>
+                        <p><strong>Key Feature:</strong> Contains the Big Dipper asterism. The two end stars of the Dipper's bowl point to Polaris, the North Star.</p>
+                    </div>
+                    
+                    <div class="constellation-info" id="orion">
+                        <h4>Orion - The Hunter</h4>
+                        <p><strong>Visibility:</strong> Winter months, December to March</p>
+                        <p><strong>Best Time:</strong> January, due South around 9 PM</p>
+                        <p><strong>Key Feature:</strong> Three bright stars form Orion's Belt. Below the belt is the Orion Nebula, visible with binoculars.</p>
+                    </div>
+                    
+                    <div class="constellation-info" id="cassiopeia">
+                        <h4>Cassiopeia - The Queen</h4>
+                        <p><strong>Visibility:</strong> Circumpolar - always visible</p>
+                        <p><strong>Best Time:</strong> Autumn, high in the sky</p>
+                        <p><strong>Key Feature:</strong> Distinctive W or M shape of five bright stars. Opposite Ursa Major relative to Polaris.</p>
+                    </div>
+                    
+                    <div class="constellation-info" id="leo">
+                        <h4>Leo - The Lion</h4>
+                        <p><strong>Visibility:</strong> Spring months</p>
+                        <p><strong>Best Time:</strong> April, high in the southern sky</p>
+                        <p><strong>Key Feature:</strong> The Sickle asterism forms the lion's head and mane. Bright star Regulus marks the lion's heart.</p>
+                    </div>
+                    
+                    <div class="constellation-info" id="cygnus">
+                        <h4>Cygnus - The Swan</h4>
+                        <p><strong>Visibility:</strong> Summer months</p>
+                        <p><strong>Best Time:</strong> August, overhead at midnight</p>
+                        <p><strong>Key Feature:</strong> Forms the Northern Cross asterism. Bright star Deneb marks the swan's tail. Lies in the Milky Way.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="image-credit">Star map based on London's latitude (51.5°N) and typical light pollution conditions</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>London Star Guide</h4>
+                    <p>A comprehensive visual guide to constellations visible from London, UK. Created to help amateur astronomers navigate the night sky above the capital.</p>
+                    <p>All content based on astronomical data for London's latitude (51.5°N).</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#london-sky"><i class="fas fa-chevron-right"></i> London Sky Conditions</a></li>
+                        <li><a href="#constellations"><i class="fas fa-chevron-right"></i> Major Constellations</a></li>
+                        <li><a href="#seasons"><i class="fas fa-chevron-right"></i> Seasonal Guide</a></li>
+                        <li><a href="#tips"><i class="fas fa-chevron-right"></i> Observation Tips</a></li>
+                        <li><a href="#interactive"><i class="fas fa-chevron-right"></i> Interactive Star Map</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 London Star Guide. All astronomical information verified for accuracy at London's latitude.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create starry background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                
+                // Random twinkle delay
+                const delay = Math.random() * 5;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenu.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a, .footer-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // Only process internal links
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = href;
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Interactive constellation selector
+        const constellationBtns = document.querySelectorAll('.constellation-btn');
+        const constellationInfos = document.querySelectorAll('.constellation-info');
+
+        constellationBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons and infos
+                constellationBtns.forEach(b => b.classList.remove('active'));
+                constellationInfos.forEach(info => info.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding info
+                const targetId = this.getAttribute('data-target');
+                const targetInfo = document.getElementById(targetId);
+                if (targetInfo) {
+                    targetInfo.classList.add('active');
+                }
+            });
+        });
+
+        // Activate first constellation by default
+        if (constellationBtns.length > 0) {
+            constellationBtns[0].classList.add('active');
+            constellationInfos[0].classList.add('active');
+        }
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '15px 0';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Fade in elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for fade-in effect
+        document.querySelectorAll('.sky-card, .constellation-card, .season-card, .tip-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Initialize starry background
+        window.addEventListener('DOMContentLoaded', createStars);
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J-Town Parent Hub | SF Family Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #FF6B6B; --secondary: #4ECDC4; --dark: #2D3436; }
+        body { font-family: 'Quicksand', sans-serif; background-color: #F8FAFC; color: var(--dark); }
+        h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; }
+
+        .hero-banner {
+            height: 50vh; min-height: 450px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.png');
+            background-position: center center; 
+            background-size: cover;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .tab-active { border-bottom: 4px solid var(--primary); color: var(--primary); }
+        .age-badge { @apply text-[10px] font-bold px-2 py-0.5 rounded-full border; }
+        .badge-5yo { @apply border-orange-400 text-orange-600 bg-orange-50; }
+        .badge-7mo { @apply border-blue-400 text-blue-600 bg-blue-50; }
+    </style>
+</head>
+<body class="pb-12">
+
+    <header class="hero-banner">
+        <div class="text-center text-white px-4">
+            <div class="mb-4 flex items-center justify-center gap-3">
+                <span class="bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-sm font-bold border border-white/30">
+                    <i class="fas fa-calendar-alt mr-2"></i> <span id="trip-dates">Loading dates...</span>
+                </span>
+                <span class="bg-blue-500/40 backdrop-blur-md px-4 py-1 rounded-full text-sm font-bold border border-white/30">
+                    <i class="fas fa-cloud-sun mr-2"></i> 54°F | San Francisco
+                </span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 drop-shadow-xl">JapanTown Family Weekend</h1>
+            <p class="text-xl md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
+                Optimized for a 5-year-old explorer & 7-month-old in a stroller.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 -mt-16 relative z-10">
+        
+        <section class="glass-card rounded-3xl shadow-2xl p-6 md:p-10 mb-8 border border-white">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-gray-100 pb-4 gap-4">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-800">Dynamic Itinerary</h2>
+                    <p class="text-slate-500 text-sm">Tomorrow through Saturday Departure</p>
+                </div>
+                <div class="flex gap-6">
+                    <button onclick="setDay(1)" id="btn-day1" class="tab-active pb-2 font-bold text-lg transition">Sat (Arrival)</button>
+                    <button onclick="setDay(2)" id="btn-day2" class="pb-2 font-bold text-lg text-slate-400 hover:text-slate-600 transition">Sun (Departure)</button>
+                </div>
+            </div>
+
+            <div id="itinerary-content" class="grid md:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <section class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="md:col-span-2 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="px-3 py-1 bg-white/20 rounded-lg text-xs font-bold tracking-widest uppercase">The Fog Strategy</span>
+                        <h3 class="text-2xl font-black italic uppercase">SF Parent Hack: The "Fog Layer" Strategy</h3>
+                    </div>
+                    <p class="text-blue-50 text-lg leading-relaxed mb-6">
+                        San Francisco weather is a collection of microclimates. It might be 72°F in JapanTown, but drop to 55°F at the Golden Gate Bridge within minutes. 
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="bg-black/10 p-4 rounded-xl border border-white/10">
+                            <span class="font-bold block mb-1">The Hack:</span>
+                            Always keep a "Go-Bag" in the stroller with a windbreaker for both kids. Precisely at 4 PM, the fog creates "wind tunnels" between buildings.
+                        </div>
+                        <div class="bg-black/10 p-4 rounded-xl border border-white/10">
+                            <span class="font-bold block mb-1">Pro-Move:</span>
+                            Don't trust general apps. Use 'Mr. Chilly' for neighborhood-specific temps. January air is damp, so fleece layers are essential.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-3xl p-6 shadow-xl border border-slate-100">
+                <h4 class="font-black text-slate-800 mb-4 uppercase text-sm tracking-widest">Stroller Readiness</h4>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Rain/Wind Shield</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Portable White Noise</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Clip-on stroller light</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check-circle text-secondary"></i> Insulated bottle bag</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-slate-100 mb-8">
+            <h3 class="text-3xl font-black text-slate-800 mb-8 flex items-center gap-3 uppercase tracking-tight">
+                Parent's Knowledge Base 📚
+            </h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-5 bg-slate-50 rounded-2xl border-l-4 border-red-400">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-ambulance text-red-400"></i> Emergency</h4>
+                    <p class="text-xs text-slate-600"><strong>UCSF Pediatrics:</strong> 5 mins away at Mount Zion. <br><strong>Walgreens (24h):</strong> 1301 Franklin St.</p>
+                </div>
+                <div class="p-5 bg-slate-50 rounded-2xl border-l-4 border-blue-400">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-bus text-blue-400"></i> Transport</h4>
+                    <p class="text-xs text-slate-600"><strong>38-Geary Bus:</strong> Low-floor, stroller friendly. Runs every 6-8 mins straight to J-Town.</p>
+                </div>
+                <div class="p-5 bg-slate-50 rounded-2xl border-l-4 border-green-400">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-baby text-green-400"></i> Nursing</h4>
+                    <p class="text-xs text-slate-600"><strong>Japan Center East:</strong> Clean nursing room behind Kinokuniya. Quietest spot in the mall.</p>
+                </div>
+                <div class="p-5 bg-slate-50 rounded-2xl border-l-4 border-orange-400">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-elevator text-orange-400"></i> Elevators</h4>
+                    <p class="text-xs text-slate-600">Use the Kinokuniya building elevator to access the Peace Plaza from Post St safely.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-slate-900 rounded-[3rem] p-8 md:p-12 text-center text-white shadow-2xl overflow-hidden relative">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-black mb-4">Mealtime Crisis Solver</h2>
+                <p class="text-slate-400 mb-8">Match your family's current energy level to the perfect spot.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-10">
+                    <button onclick="matchFood('sleeping')" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-bold transition border border-white/10">Baby Sleeping (Quiet Mode)</button>
+                    <button onclick="matchFood('awake')" class="px-6 py-3 bg-red-500 hover:bg-red-600 rounded-xl font-bold transition shadow-lg shadow-red-500/30">Toddler Awake (Chaos Mode!)</button>
+                </div>
+                <div id="food-result" class="min-h-[150px] bg-white/5 rounded-3xl p-8 flex flex-col items-center justify-center italic text-slate-300 border border-white/5">
+                    Select a status for a targeted recommendation...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const itineraryData = {
+            1: [
+                { 
+                    time: "10:00 AM", title: "Arrival & Daiso", 
+                    desc: "Drop bags at Hotel Kabuki. Head to **Daiso** (East Mall). Buy 'peace tokens' (stickers/origami).",
+                    badges: ["5yo", "7mo"], nap: false, pro: "Daiso is sensory-friendly in the morning."
+                },
+                { 
+                    time: "01:30 PM", title: "Nap Zone: Lafayette Park", 
+                    desc: "5 min walk to the park. Water feature and sand pit for the 5yo, while 7mo can nap in the quiet shade of the oaks.",
+                    badges: ["5yo", "7mo"], nap: true, pro: "Best views of SF while kids rest."
+                },
+                { 
+                    time: "04:30 PM", title: "Kinokuniya Manga", 
+                    desc: "Escape the 4 PM fog indoors. Browse the huge kids' manga section. 2nd floor is very stroller accessible via the internal lift.",
+                    badges: ["5yo"], nap: false, pro: "Check out the Studio Ghibli plushies!"
+                }
+            ],
+            2: [
+                { 
+                    time: "09:30 AM", title: "Crepe Breakfast", 
+                    desc: "Beat the rush at **Sophie's Crepes**. Early morning is best before the lines grow too long for a 5yo to handle.",
+                    badges: ["5yo"], nap: false, pro: "The Nutella/Strawberry is a classic winner."
+                },
+                { 
+                    time: "12:00 PM", title: "Departure Prep & Bento", 
+                    desc: "Quick lunch at **Nijiya Market**. Grab pre-made bento boxes for the trip back. Easy to eat without the stress of a restaurant.",
+                    badges: ["5yo", "7mo"], nap: false, pro: "Try the Salmon Onigiri—kids love it."
+                },
+                { 
+                    time: "02:00 PM", title: "Last Minute Souvenirs", 
+                    desc: "Stop by **Paper Tree** for origami paper or the toy shop in the West Mall before heading out. Saturday departure avoids heavy traffic.",
+                    badges: ["5yo"], nap: false, pro: "Easy access to Post St for Uber/Lyft pickup."
+                }
+            ]
+        };
+
+        function setDay(day) {
+            const content = document.getElementById('itinerary-content');
+            const btn1 = document.getElementById('btn-day1');
+            const btn2 = document.getElementById('btn-day2');
+            
+            btn1.className = day === 1 ? "tab-active pb-2 font-bold text-lg" : "pb-2 font-bold text-lg text-slate-400";
+            btn2.className = day === 2 ? "tab-active pb-2 font-bold text-lg" : "pb-2 font-bold text-lg text-slate-400";
+
+            content.innerHTML = itineraryData[day].map(item => `
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col relative overflow-hidden">
+                    ${item.nap ? '<div class="absolute top-0 right-0 bg-secondary/20 text-secondary text-[10px] font-bold px-3 py-1 rounded-bl-xl">NAP FRIENDLY</div>' : ''}
+                    <span class="text-xs font-black uppercase text-red-500 mb-2 block">${item.time}</span>
+                    <h4 class="text-xl font-bold text-slate-900 mb-1">${item.title}</h4>
+                    <div class="flex gap-2 mb-3">
+                        ${item.badges.map(b => `<span class="age-badge badge-${b}">${b}</span>`).join('')}
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">${item.desc}</p>
+                    <p class="text-xs italic text-slate-500 border-t border-slate-200 pt-3 mt-auto"><strong>💡 Pro:</strong> ${item.pro}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- MEALTIME LOGIC WITH LINKS ---
+        function matchFood(status) {
+            const res = document.getElementById('food-result');
+            const data = {
+                sleeping: { 
+                    n: "Marufuku Ramen", 
+                    url: "https://www.marufukuramen.com/location-sf",
+                    noise: "Moderate (White Noise)", 
+                    menu: "Plain Udon / Soft Noodles",
+                    d: "The Yelp Waitlist is your friend. The shop's constant hum is perfect for keeping an infant asleep while you enjoy a bowl." 
+                },
+                awake: { 
+                    n: "Hinodeya Ramen Bar", 
+                    url: "https://hinodeyaramen.com/",
+                    noise: "Vibrant / Family-Friendly", 
+                    menu: "Tamago (Egg) / Kid's Combo",
+                    d: "Spacious booths that fit strollers and a high-energy vibe where a vocal toddler won't stand out." 
+                }
+            }[status];
+
+            res.innerHTML = `
+                <h4 class="text-2xl font-black text-white mb-1 uppercase tracking-wider">
+                    <a href="${data.url}" target="_blank" class="hover:text-secondary underline decoration-dotted transition">
+                        ${data.n} <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </h4>
+                <div class="flex gap-4 mb-4 text-[10px] uppercase font-bold tracking-widest text-secondary">
+                    <span><i class="fas fa-volume-up mr-1"></i> ${data.noise}</span>
+                    <span><i class="fas fa-utils mr-1"></i> ${data.menu}</span>
+                </div>
+                <p class="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">${data.d}</p>
+            `;
+        }
+
+        // --- DYNAMIC DATES LOGIC ---
+        function updateTripDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + 2);
+
+            const options = { month: 'short', day: 'numeric' };
+            const dateRange = `${tomorrow.toLocaleDateString('en-US', options)} – ${nextDay.toLocaleDateString('en-US', options)}`;
+            
+            const dateEl = document.getElementById('trip-dates');
+            if(dateEl) dateEl.innerText = dateRange;
+        }
+
+        // Init
+        window.onload = function() {
+            setDay(1);
+            updateTripDates();
+        };
+    </script>
+</body>
+</html>

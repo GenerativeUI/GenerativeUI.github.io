@@ -1,0 +1,893 @@
+:root {
+    --primary: #0f172a;
+    --secondary: #1e293b;
+    --accent: #38bdf8;
+    --light: #f8fafc;
+    --card: #ffffff;
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* BODY */
+body {
+    background: linear-gradient(180deg, #f8fafc, #e2e8f0, #f1f5f9);
+    color: var(--primary);
+}
+
+/* NAVBAR */
+header {
+    position: fixed;
+    width: 100%;
+    padding: 18px 60px;
+    background: rgba(15, 23, 42, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    color: #fff
+}
+
+nav a {
+    color: #fff;
+    margin-left: 25px;
+    position: relative;
+    text-decoration: none;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    bottom: -6px;
+    left: 0;
+    transition: 0.4s;
+}
+
+nav a:hover::after {
+    width: 100%
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),
+        url("images/banner.png") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero h2 {
+    font-size: 56px;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+.hero p {
+    max-width: 100%;
+    margin: 0 auto;
+    line-height: normal;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.hero-btn {
+    margin-top: 25px;
+    padding: 14px 34px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+
+@media(max-width:768px) {
+    section {
+        padding: 60px;
+    }
+}
+
+section {
+    width: 100%;
+    padding: 60px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    max-width: none;
+}
+
+
+
+
+h3 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    border-radius: 18px;
+    transition: 0.4s;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* CARD */
+.card {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* SLIDER */
+.slider-section {
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: #fff;
+}
+
+.slider-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.slide {
+    display: none;
+    text-align: center;
+}
+
+.slide.active {
+    display: block;
+    animation: fade 0.6s ease;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(20px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.slider-btns {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.slider-btns button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+footer {
+    background: #020617;
+    color: #cbd5f5;
+    text-align: center;
+    padding: 40px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+    header {
+        padding: 15px 30px
+    }
+
+    section {
+        padding: 80px 30px
+    }
+
+    .hero h2 {
+        font-size: 22px
+    }
+
+    section {
+        padding: 20px 20px !important;
+        max-width: 1400px;
+        margin: auto;
+    }
+}
+
+
+
+
+#interactive-learning {
+    background: #020617;
+    color: #f8fafc;
+    text-align: center;
+}
+
+.subtitle {
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+.timeline-box {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.line {
+    stroke: #38bdf8;
+    stroke-width: 4;
+}
+
+.point circle {
+    fill: #22c55e;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.point:hover circle {
+    fill: #38bdf8;
+    r: 16;
+}
+
+.point text {
+    fill: white;
+    font-size: 14px;
+    text-anchor: middle;
+}
+
+.info-panel {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 22px;
+    border-radius: 12px;
+    min-height: 120px;
+    animation: fadeUp 0.6s ease;
+}
+
+
+
+
+
+
+
+#concept-map {
+    background: #f1f5f9;
+    text-align: center;
+}
+
+.map-box {
+    max-width: 1000px;
+    margin: auto;
+}
+
+#concept-map rect {
+    fill: #020617;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#concept-map rect:hover {
+    fill: #38bdf8;
+}
+
+#concept-map text {
+    fill: white;
+    font-size: 14px;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+#concept-map line {
+    stroke: #64748b;
+    stroke-width: 2;
+}
+
+.concept-info {
+    margin-top: 30px;
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    min-height: 120px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+/* ==============================
+   SECTION BACKGROUND THEMES
+================================ */
+
+.section-light {
+    background: linear-gradient(180deg, #ffffff, #f1f5f9);
+}
+
+.section-soft {
+    background: linear-gradient(180deg, #e0f2fe, #f8fafc);
+}
+
+.section-muted {
+    background: linear-gradient(180deg, #e2e8f0, #f8fafc);
+}
+
+.section-dark {
+    background: linear-gradient(180deg, #020617, #0f172a);
+    color: #f8fafc;
+}
+
+
+
+/* ===== MENU TOGGLE ===== */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 28px;
+    height: 3px;
+    background: #fff;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+/* ===== MOBILE NAV ===== */
+@media(max-width:900px) {
+
+    nav {
+        position: absolute;
+        top: 70px;
+        right: 30px;
+        background: #020617;
+        flex-direction: column;
+        width: 220px;
+        padding: 20px;
+        border-radius: 14px;
+        display: none;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    nav a {
+        margin: 15px 0;
+        display: block;
+    }
+
+    nav.active {
+        display: flex;
+        animation: slideDown 0.4s ease;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+}
+
+/* ===== ANIMATION ===== */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+#infoPanel p[data-stage] {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#infoPanel p[data-stage].active {
+    display: block;
+    opacity: 1;
+}
+
+
+
+
+@media (max-width:749px) {
+    header h1 {
+        font-size: 22px;
+    }
+
+    header {
+        padding: 15px 15px;
+    }
+    h3 {
+    font-size: 22px;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+.card {
+    padding: 10px 10px;
+}
+.card p{
+    font-size: 14px;
+}
+.grid {
+    gap: 20px;
+}
+section {
+    padding: 40px 20px !important;
+}
+.timeline-box svg {
+    display: none;
+}
+.info-panel p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.section-soft .card {
+    padding: 18px 16px;
+}
+
+svg text {
+  font-size: 16px;
+  fill: #000;
+  pointer-events: none; /* allows rect click */
+}
+svg rect {
+  fill: #f8f9fa;
+  stroke: #333;
+  stroke-width: 2;
+  cursor: pointer;
+}
+#concept-map text {
+    font-size: 16px;
+}
+svg line {
+  stroke: #333;
+  stroke-width: 2;
+}
+.svg-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+}
+@media (max-width: 768px) {
+  svg {
+    min-width: 600px;
+  }
+}
+
+
+
+
+#early .points {
+    padding-left: 18px;
+}
+
+#early .points li {
+    margin-bottom: 8px;
+}
+
+#early .highlight {
+    margin-top: 10px;
+    font-style: italic;
+    color: #2e7d32;
+}
+
+#early h3{
+	margin-bottom:10px;
+}
+
+#early .subtitle {
+    opacity: 0.8;
+    margin-bottom: 25px;
+    text-align: center;
+}
+#early .fact-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: #f1f8e9;
+    border-left: 4px solid #8bc34a;
+    border-radius: 6px;
+}
+
+#early .limitation {
+    margin-top: 8px;
+    color: #c62828;
+    font-size: 0.95rem;
+}
+
+#early .learn-btn {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#early .triad-box {
+    display: none;
+    margin-top: 15px;
+    gap: 12px;
+}
+
+#early .triad-box.show {
+    display: flex;
+}
+
+#early .element {
+    width: 70px;
+    height: 70px;
+    background: #e3f2fd;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#early .element:hover {
+    transform: scale(1.1);
+    background: #bbdefb;
+}
+
+#early .image-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#early .image-box img {
+    width: 100%;
+
+    border-radius: 10px;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+    #early .image-box img {
+      
+    }
+}
+
+
+
+
+/* ========================
+   MENDELEEV SECTION CSS
+   ======================== */
+
+/* Grid Layout */
+#mendeleev .grid {
+ 
+    gap: 30px;
+   
+}
+#mendeleev .subtitle {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #555;
+    text-align: center;
+}
+
+#mendeleev h3{
+	margin-bottom:10px
+}
+
+#mendeleev .image-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mendeleev .image-box img {
+    width: 100%;
+   
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Content Card */
+#mendeleev .card {
+  
+    background: #fefefe;
+    padding: 18px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Bullets / Points */
+#mendeleev .points {
+    padding-left: 18px;
+    margin-bottom: 12px;
+}
+
+#mendeleev .points li {
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Highlight Text */
+#mendeleev .highlight {
+    margin-top: 10px;
+    font-style: italic;
+    color: #2e7d32;
+    font-size: 0.95rem;
+}
+
+/* Limitation Text */
+#mendeleev .limitation {
+    margin-top: 8px;
+    color: #c62828;
+    font-size: 0.9rem;
+}
+
+/* Button */
+#mendeleev .learn-btn {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+#mendeleev .learn-btn:hover {
+    background: #43a047;
+}
+
+
+#mendeleev .prediction-box {
+    display: none;
+    margin-top: 15px;
+    gap: 12px;
+}
+
+#mendeleev .prediction-box.show {
+    display: flex;
+}
+
+
+#mendeleev .prediction-box .element {
+    width: 70px;
+    height: 70px;
+    background: #e3f2fd;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+#mendeleev .prediction-box .element small {
+    font-weight: normal;
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
+
+#mendeleev .prediction-box .element:hover {
+    transform: scale(1.1);
+    background: #bbdefb;
+}
+
+#mendeleev .subtitle {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #mendeleev .grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #mendeleev .card {
+        width: 100%;
+    }
+
+    #mendeleev .image-box img {
+     
+    }
+
+    #mendeleev .prediction-box {
+        justify-content: center;
+    }
+}
+
+
+
+/* ========================
+   MODERN SECTION CSS
+   ======================== */
+
+/* Grid Layout */
+#modern .grid {
+ 
+    gap: 30px;
+ 
+}
+
+#modern .subtitle {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #555;
+    text-align: center;
+}
+
+#modern h3{
+	margin-bottom:10px;
+}
+
+#modern .image-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modern .image-box img {
+    width: 100%;
+   
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+#modern .card {
+    flex: 2;
+    background: #fefefe;
+    padding: 18px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+#modern .points {
+    padding-left: 18px;
+    margin-bottom: 12px;
+}
+
+#modern .points li {
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Highlight Text */
+#modern .highlight {
+    margin-top: 10px;
+    font-style: italic;
+    color: #2e7d32;
+    font-size: 0.95rem;
+}
+
+/* Button */
+#modern .learn-btn {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+#modern .learn-btn:hover {
+    background: #43a047;
+}
+
+/* Groups Box (Interactive) */
+#modern .groups-box {
+    display: none;
+    margin-top: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#modern .groups-box.show {
+    display: flex;
+}
+
+#modern .groups-box .group {
+    padding: 8px 12px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+#modern .groups-box .group:hover {
+    transform: scale(1.05);
+    background: #bbdefb;
+}
+
+/* Subtitle */
+#modern .subtitle {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #modern .grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #modern .card {
+        width: 100%;
+    }
+
+    #modern .image-box img {
+  
+    }
+
+    #modern .groups-box {
+        justify-content: center;
+    }
+}
+

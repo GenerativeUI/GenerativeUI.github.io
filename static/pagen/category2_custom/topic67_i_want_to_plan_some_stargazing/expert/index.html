@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicago Star Party Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Righteous&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Transitions */
+        body { transition: background-color 0.5s, color 0.5s; }
+        
+        /* THEME 1: URBAN LUXE */
+        body.theme-urban { background-color: #1e1b4b; font-family: 'Work Sans', sans-serif; }
+        .theme-urban .accent-text { color: #c084fc; }
+        .theme-urban .accent-bg { background-color: #c084fc; }
+        .theme-urban .card-style { background: rgba(255,255,255,0.05); border: 1px solid rgba(192,132,252,0.3); }
+        .theme-urban h1 { font-family: 'Righteous', cursive; }
+        /* Gradient for Urban Card */
+        .grad-urban { background: linear-gradient(135deg, #2e1065 0%, #4c1d95 50%, #0f172a 100%); }
+
+        /* THEME 2: LAKESIDE ZEN */
+        body.theme-lake { background-color: #0c4a6e; font-family: 'Work Sans', sans-serif; }
+        .theme-lake .accent-text { color: #7dd3fc; }
+        .theme-lake .accent-bg { background-color: #7dd3fc; }
+        .theme-lake .card-style { background: rgba(255,255,255,0.1); border-radius: 2rem; border: none; }
+        .theme-lake h1 { font-family: 'Work Sans', sans-serif; letter-spacing: -2px; }
+        /* Gradient for Lake Card */
+        .grad-lake { background: linear-gradient(135deg, #075985 0%, #0284c7 50%, #082f49 100%); }
+
+        /* THEME 3: RETRO DRIVE-IN */
+        body.theme-retro { background-color: #271a10; font-family: 'Courier New', monospace; }
+        .theme-retro .accent-text { color: #fbbf24; }
+        .theme-retro .accent-bg { background-color: #fbbf24; }
+        .theme-retro .card-style { background: #000; border: 2px solid #fbbf24; box-shadow: 4px 4px 0 #fbbf24; border-radius: 0; }
+        .theme-retro h1 { font-family: 'Monoton', cursive; font-weight: 400; }
+        /* Gradient for Retro Card */
+        .grad-retro { background: linear-gradient(135deg, #451a03 0%, #b45309 50%, #78350f 100%); }
+
+        /* Animation */
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .ticket-anim { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        /* CSS Barcode Generation */
+        .css-barcode {
+            height: 40px;
+            width: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                #000 0px,
+                #000 2px,
+                transparent 2px,
+                transparent 4px,
+                #000 4px,
+                #000 5px,
+                transparent 5px,
+                transparent 8px
+            );
+            opacity: 0.5;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white !important; color: black !important; }
+            body * { visibility: hidden; }
+            #ticket-body, #ticket-body * { visibility: visible; }
+            #ticket-body {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                max-width: 600px;
+                border: 4px solid black !important;
+                box-shadow: none !important;
+                background: white !important;
+                color: black !important;
+            }
+            /* Hide non-printable elements inside ticket */
+            #action-buttons, #copy-btn, #copy-msg { display: none !important; }
+            .text-gray-400 { color: #666 !important; }
+            .accent-text { color: black !important; }
+        }
+    </style>
+</head>
+<body class="theme-urban text-white min-h-screen pb-32">
+
+    <header class="pt-16 pb-10 px-6 max-w-7xl mx-auto">
+        <p class="text-center text-xs font-bold tracking-[0.3em] opacity-50 mb-4 uppercase">Chicago Stargazing Architect</p>
+        <h1 class="text-5xl md:text-8xl text-center mb-12 accent-text transition-all duration-500">Design Your Night</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <button id="btn-urban" onclick="setTheme('urban')" class="theme-btn relative h-64 rounded-2xl overflow-hidden group border-4 border-white/10 hover:border-purple-400 transition-all duration-300 focus:outline-none ring-offset-2 focus:ring-2 shadow-2xl hover:shadow-purple-500/50">
+                <div class="absolute inset-0 grad-urban transition-transform duration-700 group-hover:scale-110"></div>
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all"></div>
+                
+                <div class="absolute bottom-0 left-0 w-full p-6 text-left bg-gradient-to-t from-black/80 to-transparent">
+                    <h3 class="text-3xl font-bold font-sans text-white mb-1 group-hover:translate-x-2 transition-transform">LH21 Rooftop</h3>
+                    <p class="text-sm text-purple-200 opacity-80">Urban Luxe Theme</p>
+                </div>
+                <div class="absolute top-6 right-6 text-2xl text-white/20 group-hover:text-white transition"><i class="fas fa-building"></i></div>
+            </button>
+
+            <button id="btn-lake" onclick="setTheme('lake')" class="theme-btn relative h-64 rounded-2xl overflow-hidden group border-4 border-white/10 hover:border-sky-300 transition-all duration-300 focus:outline-none ring-offset-2 focus:ring-2 shadow-2xl hover:shadow-sky-500/50">
+                <div class="absolute inset-0 grad-lake transition-transform duration-700 group-hover:scale-110"></div>
+                <div class="absolute bottom-0 w-full h-1/2 bg-white/5 skew-y-6 transform origin-bottom-left group-hover:skew-y-3 transition-all"></div>
+
+                <div class="absolute bottom-0 left-0 w-full p-6 text-left bg-gradient-to-t from-black/80 to-transparent">
+                    <h3 class="text-3xl font-bold font-sans text-white mb-1 group-hover:translate-x-2 transition-transform">Lakeside Zen</h3>
+                    <p class="text-sm text-sky-200 opacity-80">Waterfront Theme</p>
+                </div>
+                <div class="absolute top-6 right-6 text-2xl text-white/20 group-hover:text-white transition"><i class="fas fa-water"></i></div>
+            </button>
+
+            <button id="btn-retro" onclick="setTheme('retro')" class="theme-btn relative h-64 rounded-2xl overflow-hidden group border-4 border-white/10 hover:border-amber-400 transition-all duration-300 focus:outline-none ring-offset-2 focus:ring-2 shadow-2xl hover:shadow-amber-500/50">
+                <div class="absolute inset-0 grad-retro transition-transform duration-700 group-hover:scale-110"></div>
+                <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px);"></div>
+
+                <div class="absolute bottom-0 left-0 w-full p-6 text-left bg-gradient-to-t from-black/80 to-transparent">
+                    <h3 class="text-3xl font-bold font-mono text-white mb-1 group-hover:translate-x-2 transition-transform">Retro Tailgate</h3>
+                    <p class="text-sm text-amber-200 opacity-80">Drive-in Theme</p>
+                </div>
+                <div class="absolute top-6 right-6 text-2xl text-white/20 group-hover:text-white transition"><i class="fas fa-car-side"></i></div>
+            </button>
+        </div>
+    </header>
+
+    <section class="px-6 py-12 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            
+            <div>
+                <h2 class="text-3xl font-bold mb-8 accent-text">The Blueprint</h2>
+                
+                <div class="space-y-6">
+                    <div class="card-style p-6 transition-all duration-500">
+                        <div class="flex items-start gap-4">
+                            <i class="fas fa-map-marker-alt text-2xl accent-text"></i>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Best Location</h4>
+                                <p id="plan-loc" class="text-sm opacity-80 leading-relaxed">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-style p-6 transition-all duration-500">
+                        <div class="flex items-start gap-4">
+                            <i class="fas fa-star text-2xl accent-text"></i>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Viewing Strategy</h4>
+                                <p id="plan-view" class="text-sm opacity-80 leading-relaxed">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-style p-6 transition-all duration-500">
+                        <div class="flex items-start gap-4">
+                            <i class="fas fa-glass-cheers text-2xl accent-text"></i>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">The Vibe & Menu</h4>
+                                <p id="plan-vibe" class="text-sm opacity-80 leading-relaxed">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky top-10">
+                <div class="bg-white text-black p-8 rounded-xl shadow-2xl relative overflow-hidden ticket-anim" id="ticket-body">
+                    <div class="border-b-2 border-dashed border-gray-300 pb-6 mb-6 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Event Invite</span>
+                            <h2 class="text-3xl font-black uppercase" id="ticket-title">...</h2>
+                        </div>
+                        <div class="text-4xl accent-text"><i class="fas fa-ticket-alt"></i></div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 block">WHERE</span>
+                            <span class="font-bold text-lg" id="ticket-loc">...</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 block">DRESS CODE</span>
+                            <span class="font-bold text-lg" id="ticket-bring">...</span>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 block">HIGHLIGHT</span>
+                            <span class="font-bold text-lg" id="ticket-star">...</span>
+                        </div>
+                    </div>
+
+                    <div id="action-buttons" class="mb-4">
+                        <button onclick="printTicket()" class="w-full py-3 border-2 border-gray-200 hover:border-black rounded-lg font-bold transition flex justify-center items-center gap-2 text-sm uppercase tracking-wide">
+                            <i class="fas fa-print"></i> Print Invitation
+                        </button>
+                    </div>
+
+                    <button id="copy-btn" onclick="copyInvite()" class="w-full py-4 accent-bg text-black font-bold uppercase tracking-wider hover:brightness-110 transition flex justify-center items-center gap-2 group">
+                        <i class="far fa-copy group-hover:scale-110 transition"></i> Copy Text Invite
+                    </button>
+                    <p id="copy-msg" class="text-center text-xs text-green-600 mt-2 opacity-0 transition">Copied to clipboard!</p>
+                    
+                    <div class="mt-6 css-barcode"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6 max-w-5xl mx-auto text-center">
+        <h3 class="text-sm font-bold tracking-widest opacity-50 mb-6 uppercase">Local Reality Check</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="card-style p-4 text-center">
+                <div class="text-2xl mb-2 accent-text"><i class="fas fa-wind"></i></div>
+                <div class="text-xs font-bold">The "Hawk" Wind</div>
+                <div class="text-xs opacity-60">Rooftops are windy. Bring layers.</div>
+            </div>
+            <div class="card-style p-4 text-center">
+                <div class="text-2xl mb-2 accent-text"><i class="fas fa-lightbulb"></i></div>
+                <div class="text-xs font-bold">Bortle 9</div>
+                <div class="text-xs opacity-60">Downtown is bright. Focus on planets.</div>
+            </div>
+            <div class="card-style p-4 text-center">
+                <div class="text-2xl mb-2 accent-text"><i class="fas fa-cloud"></i></div>
+                <div class="text-xs font-bold">Cloud Cover</div>
+                <div class="text-xs opacity-60">Check weather. Chicago is cloudy 50% of time.</div>
+            </div>
+            <div class="card-style p-4 text-center">
+                <div class="text-2xl mb-2 accent-text"><i class="fas fa-wine-glass"></i></div>
+                <div class="text-xs font-bold">Resos Required</div>
+                <div class="text-xs opacity-60">LH21 & Cindy's book up weeks in advance.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center opacity-40 text-xs py-8 font-mono">
+        Inspired by real Chicago 2025 events (LondonHouse Star Party).
+    </footer>
+
+    <script>
+        // --- DATA OBJECTS ---
+        const data = {
+            'urban': {
+                themeName: "Urban Luxe",
+                locName: "LondonHouse Rooftop (LH21)",
+                locDesc: "The ultimate 'Star Party' venue. 21 floors up, overlooking the river. You don't need darkness when you have class.",
+                planView: "Telescopes & Experts. Don't worry about bringing gear. LH usually partners with Chicago astronomers for their events.",
+                foodName: "Galactic Cocktails",
+                foodDesc: "Order the 'Cosmic Cloud' cocktail. Vibe is upscale jazz & astronomy. Dress to impress, but bring a coat.",
+                ticketTitle: "LH21 STAR GALA",
+                ticketLoc: "LondonHouse Rooftop",
+                ticketBring: "Cocktail Attire + Coat",
+                ticketStar: "Jupiter & The Skyline"
+            },
+            'lake': {
+                themeName: "Lakeside Zen",
+                locName: "Montrose Harbor (The Magic Hedge)",
+                locDesc: "The darkest spot within city limits. The sound of waves masks the city noise. Face East towards the dark lake.",
+                planView: "Binoculars. Perfect for watching the Moon rise over the water. The horizon is clear.",
+                foodName: "Hot Tea & Garrett Popcorn",
+                foodDesc: "The 'Chicago Mix' (Cheese/Caramel). The saltiness keeps you awake, the warmth fights the lake breeze.",
+                ticketTitle: "LAKESIDE CHILL",
+                ticketLoc: "Montrose Harbor",
+                ticketBring: "Blankets & Red Light",
+                ticketStar: "Moonrise over Lake"
+            },
+            'retro': {
+                themeName: "Retro Drive-In",
+                locName: "Palos Preserves (30 min drive)",
+                locDesc: "The closest official 'Urban Night Sky Place'. Park your car, pop the trunk, sit on the tailgate.",
+                planView: "Deep Sky. This is where you bring the big telescope. You can actually see star clusters here.",
+                foodName: "Portillo's Cake Shake",
+                foodDesc: "Grab a Chocolate Cake Shake on the drive out. A sugar bomb to fuel late-night observation.",
+                ticketTitle: "TAILGATE PARTY",
+                ticketLoc: "Palos Preserves",
+                ticketBring: "Hoodies & Chairs",
+                ticketStar: "The Pleiades"
+            }
+        };
+
+        let currentTheme = 'urban';
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            const body = document.body;
+            body.className = `theme-${theme} text-white min-h-screen pb-32 transition-colors duration-500`;
+            
+            // 1. Update Content
+            document.getElementById('plan-loc').innerHTML = data[theme].locName + "<br><span class='opacity-50'>" + data[theme].locDesc + "</span>";
+            document.getElementById('plan-view').innerHTML = data[theme].planView;
+            document.getElementById('plan-vibe').innerHTML = `<strong class="block mb-1">${data[theme].foodName}</strong>` + data[theme].foodDesc;
+
+            // 2. Update Ticket
+            const ticket = document.getElementById('ticket-body');
+            ticket.classList.remove('ticket-anim');
+            void ticket.offsetWidth; 
+            ticket.classList.add('ticket-anim');
+
+            document.getElementById('ticket-title').innerText = data[theme].ticketTitle;
+            document.getElementById('ticket-loc').innerText = data[theme].ticketLoc;
+            document.getElementById('ticket-bring').innerText = data[theme].ticketBring;
+            document.getElementById('ticket-star').innerText = data[theme].ticketStar;
+
+            // 3. Highlight Active Card (NEW LOGIC)
+            // Reset all buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('ring-4', 'scale-105', 'shadow-2xl');
+                // Remove specific border colors
+                btn.classList.remove('border-purple-400', 'border-sky-300', 'border-amber-400', 'shadow-purple-500/50', 'shadow-sky-500/50', 'shadow-amber-500/50');
+                // Add back default border
+                btn.classList.add('border-white/10');
+            });
+
+            // Set Active Button
+            const activeBtn = document.getElementById(`btn-${theme}`);
+            activeBtn.classList.remove('border-white/10');
+            activeBtn.classList.add('ring-2', 'scale-105', 'shadow-2xl');
+            
+            if(theme === 'urban') activeBtn.classList.add('border-purple-400', 'shadow-purple-500/50');
+            if(theme === 'lake') activeBtn.classList.add('border-sky-300', 'shadow-sky-500/50');
+            if(theme === 'retro') activeBtn.classList.add('border-amber-400', 'shadow-amber-500/50');
+        }
+
+        // --- IMPROVED INVITE LOGIC ---
+        function showToast(message) {
+            const msg = document.getElementById('copy-msg');
+            msg.innerText = message;
+            msg.style.opacity = '1';
+            setTimeout(() => msg.style.opacity = '0', 2000);
+        }
+
+        function copyInvite() {
+            const info = data[currentTheme];
+            const text = `✨ You're invited to a ${info.themeName} Night! ✨\n\n📍 Location: ${info.ticketLoc}\n🧥 Wear: ${info.ticketBring}\n👀 Viewing: ${info.ticketStar}\n\nSee you under the stars! 🔭`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Invite Text Copied!");
+            });
+        }
+
+        function printTicket() {
+            window.print();
+        }
+
+        window.onload = function() {
+            setTheme('urban');
+        }
+    </script>
+</body>
+</html>

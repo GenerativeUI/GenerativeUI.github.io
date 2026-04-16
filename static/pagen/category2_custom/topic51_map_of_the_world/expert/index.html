@@ -1,0 +1,1640 @@
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Map of the World Interactive Explorer</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <style>
+      html, body { height: 100%; }
+      #map { height: 100%; }
+
+      .glass {
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(10px);
+      }
+      #infoImage {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+      }
+      #infoImage {
+      transition: opacity 0.25s ease;
+    }
+    /* .hero-section:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: url(assets/9d5b46ec-d590-4454-b626-514f3fdbf6be.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    } */
+      .feature-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+
+      /* Always-visible blue border */
+      border: 2px solid rgba(56, 189, 248, 0.45);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    /* Hover glow — EXACTLY as you requested */
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, .6);
+      box-shadow:
+        0 0 0 0px rgba(56, 189, 248, .35),
+        0 0 15px rgba(56, 189, 248, .35),
+        0 0 15px rgba(16, 185, 129, .15);
+    }
+
+    /* Icon container */
+    .icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: rgb(56, 189, 248);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Typography */
+    .feature-card h4 {
+      font-weight: 600;
+      font-size: 1.125rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+      .tool-active {
+        background: rgba(255,255,255,0.18) !important;
+        box-shadow: 0 0 0 2px rgba(34,197,94,.7);
+      }
+      .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      background: #94a3b8;
+      border-radius: 999px;
+      z-index: 10;
+    }
+
+    .timeline-content {
+      max-width: 320px;
+      padding: 18px 22px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .timeline-content h4 {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .timeline-content p {
+      font-size: 0.875rem;
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+
+    .timeline-content:hover {
+      background: rgba(56,189,248,0.12);
+      border-color: rgba(56,189,248,0.4);
+    }
+
+    .timeline-content.left {
+      justify-self: end;
+      text-align: right;
+    }
+
+    .timeline-content.right {
+      justify-self: start;
+      text-align: left;
+    }
+    .info-tab {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      font-size: 0.875rem;
+      transition: all 0.25s ease;
+    }
+
+    .info-tab:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .info-tab.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .timeline-item {
+        grid-template-columns: 40px 1fr;
+      }
+
+      .timeline-content {
+        max-width: 100%;
+        text-align: left !important;
+        justify-self: start !important;
+      }
+
+      .timeline-item .timeline-content.left {
+        grid-column: 2;
+      }
+
+      .timeline-item .timeline-content.right {
+        grid-column: 2;
+      }
+
+      .timeline-dot {
+        grid-column: 1;
+      }
+
+      .timeline-item {
+        margin-bottom: 48px;
+      }
+    }
+    </style>
+  </head>
+
+  <body class="bg-slate-950 text-slate-100">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/90 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <h1 class="text-xl sm:text-2xl font-semibold tracking-tight">
+        🌍 Map of the World
+      </h1>
+    </div>
+  </header>
+  <!-- ================= HERO ================= -->
+  <!-- ================= HERO ================= -->
+<section class="relative overflow-hidden border-b border-white/10 min-h-[85vh] flex items-center hero-section">
+
+  <!-- 🔹 Background video -->
+  <video
+    class="absolute inset-0 w-full h-full object-cover opacity-30 -z-20 object-center"
+    src="assets/136959-765457947_medium.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+
+  <!-- Optional dark overlay for readability -->
+  <div class="absolute inset-0 bg-slate-950/40 -z-10"></div>
+
+  <!-- Background glow -->
+  <div class="absolute inset-0 -z-10 pointer-events-none">
+    <div class="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-sky-500/20 blur-3xl"></div>
+    <div class="absolute top-1/2 -right-32 w-[500px] h-[500px] rounded-full bg-emerald-500/15 blur-3xl"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 py-32 lg:py-40 relative z-10">
+    <div class="flex algin-center gap-4 items-center">
+
+      <!-- LEFT: TEXT -->
+      <div>
+        <span class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-sky-400 tracking-wide mb-6">
+          🌍 Interactive world explorer
+        </span>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-8xl font-light tracking-tight leading-tight">
+          Explore the world<br class="hidden sm:block" />
+          <span class="text-sky-400">interactively</span>
+        </h1>
+
+        <p class="mt-6 text-lg text-slate-300 max-w-xl leading-relaxed">
+          Search countries, drop personal pins, and measure real-world distances
+          all inside a single, privacy-first HTML map that runs entirely in your browser.
+        </p>
+      </div>
+
+      <!-- RIGHT: VISUAL -->
+      <div class="relative w-4/5">
+        <div class="flex items-center justify-center text-7xl mb-6">
+          <img
+            src="assets/world-map.png"
+            alt="Earth globe visualization"
+            loading="lazy"
+            class="w-full mx-auto drop-shadow-2xl"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="relative py-28">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <!-- Section header -->
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <h3 class="text-4xl font-semibold tracking-tight">
+          What you can do
+        </h3>
+        <p class="mt-4 text-slate-400">
+          Powerful yet simple tools designed for exploration, learning,
+          and planning   all inside a single interactive map.
+        </p>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+
+        <!-- Card -->
+        <div class="feature-card border-t-4">
+          <div class="icon-wrap bg-blue-500/15 text-blue-400">🔍</div>
+
+          <h4 class="title">Search countries</h4>
+          <div class="metric text-blue-400">Instant lookup</div>
+
+          <p class="desc">
+            Quickly locate any country and zoom directly to its position on the map.
+          </p>
+        </div>
+
+        <!-- Card -->
+        <div class="feature-card border-t-4">
+          <div class="icon-wrap bg-blue-500/15 text-blue-400">📍</div>
+
+          <h4 class="title">Drop pins</h4>
+          <div class="metric text-blue-400">Saved locations</div>
+
+          <p class="desc">
+            Mark meaningful places with notes perfect for research and travel planning.
+          </p>
+        </div>
+
+        <!-- Card -->
+        <div class="feature-card border-t-4">
+          <div class="icon-wrap bg-blue-500/15 text-blue-400">📏</div>
+
+          <h4 class="title">Measure distance</h4>
+          <div class="metric text-blue-400">Accurate results</div>
+
+          <p class="desc">
+            Measure real-world distances using precise geodesic calculations.
+          </p>
+        </div>
+
+        <!-- Card -->
+        <div class="feature-card border-t-4  ">
+          <div class="icon-wrap bg-blue-500/15 text-blue-400">🔐</div>
+
+          <h4 class="title">Privacy-first</h4>
+          <div class="metric text-blue-400">No tracking</div>
+
+          <p class="desc">
+            Everything runs locally in your browser no accounts or analytics.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORLD INFOGRAPHIC ================= -->
+  <section class="relative py-28 bg-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <p class="text-xs uppercase tracking-widest text-blue-400 mb-3">
+          Global insights
+        </p>
+        <h3 class="text-4xl font-semibold tracking-tight">
+          Understand the world at a glance
+        </h3>
+        <p class="text-slate-300 mt-4">
+          Maps tell more than locations they reveal how people live, trade, and adapt.
+          Switch between perspectives below to see how population, economy, and environment
+          shape our world.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-4 mb-14">
+        <button  type="button" class="info-tab active" data-tab="population">● Population</button>
+        <button  type="button" class="info-tab" data-tab="economy">● Economy</button>
+        <button  type="button" class="info-tab" data-tab="environment">● Environment</button>
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-3xl border border-white/10 bg-white overflow-hidden shadow-xl">
+        <div class="grid lg:grid-cols-2 gap-0">
+
+          <!-- LEFT: CONTENT -->
+          <div class="p-10 sm:p-14 text-slate-900">
+
+            <!-- Population -->
+            <div class="info-panel active" id="population">
+              <span class="inline-block px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700 font-medium mb-4">
+                HUMAN DISTRIBUTION
+              </span>
+              <h4 class="text-3xl font-semibold mb-4">Where people live</h4>
+              <p class="text-slate-700 leading-relaxed mb-8">
+                 Humanity is not spread evenly across the planet. People cluster in regions with
+                 access to water, fertile land, stable climates, and economic opportunity leaving
+                 vast areas sparsely populated.
+              </p>
+              <div class="space-y-5">
+                <div>
+                  <h5 class="font-medium">Key insight</h5>
+                  <p class="text-sm text-slate-600">
+                    More than half of the world’s population lives on a small fraction of Earth’s
+                    land, primarily near coastlines and river systems.
+                  </p>
+                </div>
+                <div>
+                  <h5 class="font-medium">Why it matters</h5>
+                  <p class="text-sm text-slate-600">
+                    Population density influences housing, transportation, healthcare access,
+                    and how cities grow over time.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Economy -->
+            <div class="info-panel hidden" id="economy">
+              <span class="inline-block px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700 font-medium mb-4">
+                GLOBAL ECONOMY
+              </span>
+              <h4 class="text-3xl font-semibold mb-4">How trade connects regions</h4>
+              <p class="text-slate-700 leading-relaxed mb-8">
+                Economic activity is shaped by geography. Ports, natural resources, transportation
+                corridors, and political stability determine where industries grow and trade
+                 networks emerge.
+              </p>
+              <div class="space-y-5">
+                <div>
+                  <h5 class="font-medium">Key insight</h5>
+                  <p class="text-sm text-slate-600">
+                    Coastal regions and major trade routes concentrate economic power due to
+                    easier access to global markets.
+                  </p>
+                </div>
+                <div>
+                  <h5 class="font-medium">Why it matters</h5>
+                  <p class="text-sm text-slate-600">
+                    Understanding economic geography helps explain global inequality,
+                    supply chains, and regional development.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Environment -->
+            <div class="info-panel hidden" id="environment">
+              <span class="inline-block px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700 font-medium mb-4">
+                NATURAL SYSTEMS
+              </span>
+              <h4 class="text-3xl font-semibold mb-4">Climate and ecosystems</h4>
+              <p class="text-slate-700 leading-relaxed mb-8">
+                 Climate zones, terrain, and ecosystems shape how humans settle, farm,
+                  and build societies. From deserts to rainforests, nature sets both
+                  opportunities and limits.
+              </p>
+              <div class="space-y-5">
+                <div>
+                  <h5 class="font-medium">Key insight</h5>
+                  <p class="text-sm text-slate-600">
+                    Climate strongly influences agriculture, water availability,
+                    and long-term habitability.
+                  </p>
+                </div>
+                <div>
+                  <h5 class="font-medium">Why it matters</h5>
+                  <p class="text-sm text-slate-600">
+                    Environmental awareness is essential for sustainability,
+                    disaster planning, and adapting to climate change.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: VISUAL -->
+      <div class="relative">
+      <img
+        id="infoImage"
+        src="assets/population.jpg"
+        alt="World population density map"
+        loading="lazy"
+        style="
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 1;
+          visibility: visible;
+        "
+      />
+    </div>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= WORLD HISTORY ================= -->
+  <section class="relative py-28 bg-slate-950 border-y border-white/10">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h3 class="text-4xl font-semibold tracking-tight">
+        A timeline of the world
+      </h3>
+      <p class="text-slate-300 mt-4">
+        Drag the slider to travel through time and explore key moments
+        that shaped human civilization and global geography.
+      </p>
+    </div>
+
+    <!-- Timeline scale -->
+    <div class="relative max-w-5xl mx-auto mb-16">
+      <div class="flex justify-between text-xs text-slate-400 mb-4">
+        <span>10,000 BCE</span>
+        <span>3000 BCE</span>
+        <span>500 CE</span>
+        <span>1500</span>
+        <span>Today</span>
+      </div>
+
+      <input
+        id="timelineSlider"
+        type="range"
+        min="0"
+        max="4"
+        step="1"
+        value="0"
+        class="w-full accent-blue-500 cursor-pointer"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+
+      <!-- VISUAL -->
+      <div class="rounded-3xl overflow-hidden border border-white/10 bg-slate-900">
+        <div
+          id="timelineImage"
+          class="relative h-[320px] overflow-hidden"
+        >
+          <img
+            id="timelineImg"
+            src="assets/Early_human.png"
+            alt="Prehistory"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+          />
+
+          <!-- Gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-slate-900/60 to-emerald-500/20"></div>
+
+          <!-- Era label -->
+          <div class="relative z-10 p-6">
+            <div class="text-xs text-slate-300 tracking-widest uppercase">
+              <span id="timelineLabel">Prehistory</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXT -->
+      <div>
+        <h4 id="timelineTitle" class="text-3xl font-semibold mb-4">
+          Early human migration
+        </h4>
+
+        <p id="timelineText" class="text-slate-300 leading-relaxed">
+          Humans migrated across continents following food sources,
+          climate patterns, and land bridges. Geography shaped survival
+          and settlement long before written history.
+        </p>
+
+        <div
+          id="timelineQuote"
+          class="mt-6 pl-4 border-l-4 border-blue-500 text-slate-400 italic text-sm"
+        >
+          “The earliest maps were mental shaped by memory and movement.”
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- ================= HOW THE MAP WORKS ================= -->
+  <section class="relative py-24 bg-white/5 border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="mb-14 text-center">
+       <h3 class="text-3xl font-semibold tracking-tight">
+          How the map works
+        </h3>
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">
+          Interact with the world map through simple, intuitive modes.
+          Each mode is designed to help you explore, measure, and save
+          geographic information with confidence.
+        </p>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid gap-8 md:grid-cols-3">
+
+        <!-- Explore mode -->
+        <div class="group rounded-3xl overflow-hidden border border-white/10 bg-slate-950/80 backdrop-blur
+                    transition hover:-translate-y-1 hover:shadow-xl">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img
+              src="assets/photo-1521295121783-8a321d551ad2.jpg?q=80&w=1200&auto=format&fit=crop"
+              alt="Exploring locations on a map"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg text-blue-400 font-semibold mb-2">Explore mode</h4>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Click anywhere on the map to instantly view coordinates, inspect locations,
+              or drop personal pins with notes. This mode lets you freely explore
+              countries, cities, and regions at your own pace.
+            </p>
+            <p class="mt-3 text-xs text-slate-400">
+              Perfect for learning geography, researching places, or bookmarking
+              meaningful locations.
+            </p>
+          </div>
+        </div>
+
+        <!-- Measure mode -->
+        <div class="group rounded-3xl overflow-hidden border border-white/10 bg-slate-950/80 backdrop-blur
+                    transition hover:-translate-y-1 hover:shadow-xl">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img
+              src="assets/photo-1502920514313-52581002a659.jpg?q=80&w=1200&auto=format&fit=crop"
+              alt="Measuring distance between places"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg text-blue-400 font-semibold mb-2">Measure mode</h4>
+              <p class="text-sm text-slate-300 leading-relaxed">
+                Measure real-world distances by clicking multiple points on the map.
+                The tool calculates accurate geodesic distances that account for
+                the Earth’s curvature.
+              </p>
+              <p class="mt-3 text-xs text-slate-400">
+                Useful for travel planning, route comparison, logistics, and
+                understanding spatial scale.
+              </p>
+          </div>
+        </div>
+
+        <!-- Local storage -->
+        <div class="group rounded-3xl overflow-hidden border border-white/10 bg-slate-950/80 backdrop-blur
+                    transition hover:-translate-y-1 hover:shadow-xl">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img
+              src="assets/photo-1519681393784-d120267933ba.jpg?q=80&w=1200&auto=format&fit=crop"
+              alt="Local data storage concept"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6">
+            <h4 class="text-lg text-blue-400 font-semibold mb-2">Local persistence</h4>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                  All saved pins and notes are stored directly in your browser using
+                  local storage. Your data never leaves your device.
+                </p>
+                <p class="mt-3 text-xs text-slate-400">
+                  No accounts required, no servers involved, and no tracking of any kind.
+                </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAP APP ================= -->
+  <section class="relative py-20">
+    <div class="mx-auto max-w-[1600px] px-6">
+      <div class="min-h-[85vh] grid grid-cols-1 lg:grid-cols-[420px_1fr] rounded-3xl overflow-hidden border border-white/10 bg-slate-950/60 backdrop-blur">
+      <!-- Sidebar -->
+      <aside class="relative overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
+        <div class="absolute inset-0 opacity-30 pointer-events-none"
+            style="background: radial-gradient(800px 400px at 20% 0%, rgba(59,130,246,.35), transparent 55%),
+                            radial-gradient(800px 400px at 80% 20%, rgba(16,185,129,.22), transparent 55%);"></div>
+
+        <div class="relative p-5 sm:p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Map of the World</h1>
+              <p class="text-sm text-slate-300 mt-1">
+                Search countries, drop pins with notes, and measure distances everything runs in this one HTML file.
+              </p>
+            </div>
+            <div class="shrink-0 rounded-2xl px-3 py-2 bg-white/10 border border-white/10">
+              <div class="text-xs text-slate-300">Mode</div>
+              <div id="modeBadge" class="text-sm font-medium">Explore</div>
+            </div>
+          </div>
+
+          <!-- Search -->
+          <div class="mt-5">
+            <label class="text-xs text-slate-300">Find a country</label>
+            <div class="mt-2 flex gap-2">
+              <input
+                id="countryInput"
+                class="w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 text-slate-100 placeholder:text-slate-400 focus-ring"
+                placeholder="Type a country name (e.g., Japan, Brazil, Kenya)…"
+                autocomplete="off"
+              />
+              <button
+                id="searchBtn"
+                class="rounded-xl px-4 py-2 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition font-medium"
+                title="Search"
+              >
+                Search
+              </button>
+            </div>
+            <p id="searchHint" class="text-xs text-slate-400 mt-2">
+              Tip: You can also press <span class="text-slate-200">Enter</span>.
+            </p>
+
+            <div id="countryResult" class="mt-3 hidden rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span id="countryFlag" class="text-xl"></span>
+                    <h2 id="countryName" class="text-lg font-semibold"></h2>
+                  </div>
+                  <p id="countryMeta" class="text-sm text-slate-300 mt-1"></p>
+                </div>
+                <button id="zoomCountryBtn"
+                  class="shrink-0 rounded-xl px-3 py-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 transition text-sm font-medium"
+                  title="Zoom to country">
+                  Zoom
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 mt-4 text-sm">
+                <div class="rounded-xl bg-white/5 border border-white/10 p-3">
+                  <div class="text-xs text-slate-400">Population</div>
+                  <div id="countryPop" class="font-medium mt-1"></div>
+                </div>
+                <div class="rounded-xl bg-white/5 border border-white/10 p-3">
+                  <div class="text-xs text-slate-400">Area</div>
+                  <div id="countryArea" class="font-medium mt-1"></div>
+                </div>
+                <div class="rounded-xl bg-white/5 border border-white/10 p-3">
+                  <div class="text-xs text-slate-400">Capital</div>
+                  <div id="countryCapital" class="font-medium mt-1"></div>
+                </div>
+                <div class="rounded-xl bg-white/5 border border-white/10 p-3">
+                  <div class="text-xs text-slate-400">Currency</div>
+                  <div id="countryCurrency" class="font-medium mt-1"></div>
+                </div>
+              </div>
+
+              <div class="mt-4 flex flex-wrap gap-2">
+                <button id="addCountryPinBtn"
+                  class="rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/10 transition text-sm font-medium"
+                  title="Add a pin at the country center">
+                  Pin country center
+                </button>
+                <button id="copyCountryBtn"
+                  class="rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/10 transition text-sm font-medium"
+                  title="Copy summary to clipboard">
+                  Copy summary
+                </button>
+              </div>
+            </div>
+
+            <div id="searchError" class="mt-3 hidden rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100"></div>
+          </div>
+
+          <!-- Tools -->
+          <div class="mt-6">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-200">Tools</h3>
+              <button id="resetViewBtn"
+                class="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 transition">
+                Reset view
+              </button>
+            </div>
+
+            <div class="mt-3 grid grid-cols-2 gap-3">
+              <button id="exploreModeBtn"
+                class="toolBtn rounded-2xl p-4 text-left bg-white/10 hover:bg-white/15 border border-white/10 transition">
+                <div class="text-sm font-semibold">Explore</div>
+                <div class="text-xs text-slate-300 mt-1">Click to inspect coordinates and place pins.</div>
+              </button>
+
+              <button id="measureModeBtn"
+                class="toolBtn rounded-2xl p-4 text-left bg-white/5 hover:bg-white/15 border border-white/10 transition">
+                <div class="text-sm font-semibold">Measure</div>
+                <div class="text-xs text-slate-300 mt-1">Click multiple points to measure distance.</div>
+              </button>
+
+              <button id="clearMeasureBtn"
+                class="rounded-2xl p-4 text-left bg-white/5 hover:bg-white/15 border border-white/10 transition">
+                <div class="text-sm font-semibold">Clear measure</div>
+                <div class="text-xs text-slate-300 mt-1">Remove the measurement line and points.</div>
+              </button>
+
+              <button id="clearPinsBtn"
+                class="rounded-2xl p-4 text-left bg-white/5 hover:bg-white/15 border border-white/10 transition">
+                <div class="text-sm font-semibold">Clear all pins</div>
+                <div class="text-xs text-slate-300 mt-1">Deletes saved pins from this browser.</div>
+              </button>
+            </div>
+
+            <div class="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-xs text-slate-400">Live info</div>
+                  <div id="liveInfo" class="text-sm font-medium mt-1">Ready.</div>
+                </div>
+                <button id="copyLiveBtn"
+                  class="rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/10 transition text-sm font-medium"
+                  title="Copy live info">
+                  Copy
+                </button>
+              </div>
+              <div class="mt-3 text-xs text-slate-400 leading-relaxed">
+                Map tiles © OpenStreetMap contributors. Country data via REST Countries.
+                Pins are stored locally (in your browser) only.
+              </div>
+            </div>
+          </div>
+
+          <!-- Pins -->
+          <div class="mt-6">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-200">Saved pins</h3>
+              <span id="pinCount" class="text-xs text-slate-400">0</span>
+            </div>
+
+            <div id="pinsList" class="mt-3 space-y-2">
+              <!-- populated by JS -->
+            </div>
+
+            <div id="noPins" class="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+              No pins yet. In <span class="text-slate-100 font-medium">Explore</span> mode, click the map to add one.
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Map -->
+      <main class="relative min-h-[60vh] lg:min-h-screen">
+        <div id="map" class="absolute inset-0"></div>
+
+        <!-- Floating help -->
+        <div class="absolute top-4 right-4 left-4 sm:left-auto sm:w-[420px] pointer-events-none">
+          <div class="glass pointer-events-auto rounded-2xl border border-white/20 shadow-2xl p-4 text-slate-900">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-sm font-semibold">Quick help</div>
+                <div id="helpText" class="text-sm text-slate-700 mt-1">
+                  Explore mode: click to view coordinates and add pins with notes.
+                </div>
+              </div>
+              <button id="closeHelpBtn"
+                class="rounded-xl px-3 py-2 bg-black/5 hover:bg-black/10 transition text-sm font-medium"
+                title="Hide this panel">
+                Hide
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Pin modal -->
+    <div id="pinModal" class="fixed inset-0 hidden items-center justify-center p-4 bg-black/60 z-[9999]">
+      <div class="w-full max-w-lg rounded-2xl border border-white/10 bg-slate-950 text-slate-100 shadow-2xl overflow-hidden">
+        <div class="p-5 border-b border-white/10">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="text-lg font-semibold">Add a pin</h4>
+              <p id="pinCoords" class="text-sm text-slate-300 mt-1"></p>
+            </div>
+            <button id="closePinModal" class="rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/10 transition text-sm">
+              Close
+            </button>
+          </div>
+        </div>
+        <div class="p-5 space-y-4">
+          <div>
+            <label class="text-xs text-slate-300">Title</label>
+            <input id="pinTitle" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 focus-ring"
+                  placeholder="e.g., Favorite city view, Dream hike start, Research spot…" maxlength="60" />
+          </div>
+          <div>
+            <label class="text-xs text-slate-300">Note</label>
+            <textarea id="pinNote" class="mt-2 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 focus-ring"
+                      rows="4" placeholder="Add context: why this place matters, what to do here, or what to remember." maxlength="400"></textarea>
+          </div>
+          <div class="flex flex-wrap gap-2 justify-end">
+            <button id="savePinBtn" class="rounded-xl px-4 py-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 transition font-medium">
+              Save pin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </section>
+  <script>
+  (() => {
+    // ---------- Utilities ----------
+    const $ = (id) => document.getElementById(id);
+
+    const fmtNumber = (n) => {
+      if (typeof n !== "number") return "—";
+      return new Intl.NumberFormat(undefined).format(n);
+    };
+
+    const fmtKm = (meters) => {
+      const km = meters / 1000;
+      if (km < 1) return `${Math.round(meters)} m`;
+      if (km < 100) return `${km.toFixed(2)} km`;
+      return `${km.toFixed(0)} km`;
+    };
+
+    const safeText = (s) => (s ?? "").toString().trim();
+
+    const haversineMeters = (a, b) => {
+      const R = 6371000;
+      const toRad = (x) => x * Math.PI / 180;
+      const dLat = toRad(b.lat - a.lat);
+      const dLng = toRad(b.lng - a.lng);
+      const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
+      const sinDLat = Math.sin(dLat/2), sinDLng = Math.sin(dLng/2);
+      const h = sinDLat*sinDLat + Math.cos(lat1)*Math.cos(lat2)*sinDLng*sinDLng;
+      return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+    };
+
+    const copyToClipboard = async (text) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("Copied to clipboard.");
+      } catch {
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("Copied to clipboard.");
+      }
+    };
+
+    // ---------- Toast ----------
+    let toastEl;
+    function toast(msg) {
+      if (!toastEl) {
+        toastEl = document.createElement("div");
+        toastEl.className = "fixed bottom-4 left-1/2 -translate-x-1/2 z-[99999] px-4 py-2 rounded-full bg-slate-900 text-slate-100 border border-white/10 shadow-xl text-sm opacity-0 transition";
+        document.body.appendChild(toastEl);
+      }
+      toastEl.textContent = msg;
+      toastEl.style.opacity = "1";
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.style.opacity = "0", 1600);
+    }
+
+    // ---------- State ----------
+    const STORAGE_KEY = "worldMapPins_v1";
+    let mode = "explore"; // explore | measure
+    let pins = [];
+    let lastClickedLatLng = null;
+
+    // Measurement state
+    let measurePoints = [];
+    let measureLine = null;
+    let measureMarkers = [];
+    let measureTotalMeters = 0;
+
+    // Country search state
+    let lastCountry = null;
+    let countryMarker = null;
+    let countryBBox = null;
+
+    // ---------- Map ----------
+    const map = L.map("map", {
+      worldCopyJump: true,
+      zoomControl: true,
+      minZoom: 2
+    }).setView([20, 0], 2);
+
+    const tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Nice subtle graticule-like effect using a pane overlay (no external assets)
+    map.createPane("overlayGrid");
+    map.getPane("overlayGrid").style.zIndex = 250;
+    const gridCanvas = L.canvas({ pane: "overlayGrid" });
+
+    // ---------- Load/save pins ----------
+    function loadPins() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        pins = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(pins)) pins = [];
+      } catch {
+        pins = [];
+      }
+    }
+
+    function savePins() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(pins));
+      renderPinsList();
+    }
+
+    // ---------- Pin markers layer ----------
+    const pinLayer = L.layerGroup().addTo(map);
+
+    function renderPinMarkers() {
+      pinLayer.clearLayers();
+      pins.forEach((p) => {
+        const marker = L.marker([p.lat, p.lng], { keyboard: true })
+          .addTo(pinLayer)
+          .bindPopup(`
+            <div class="min-w-[220px]">
+              <div class="font-semibold text-slate-900">${escapeHtml(p.title || "Pinned place")}</div>
+              ${p.note ? `<div class="text-sm text-slate-700 mt-1 whitespace-pre-wrap">${escapeHtml(p.note)}</div>` : ""}
+              <div class="text-xs text-slate-600 mt-2">(${p.lat.toFixed(5)}, ${p.lng.toFixed(5)})</div>
+              <div class="mt-2 flex gap-2">
+                <button data-action="zoom" data-id="${p.id}" class="px-2 py-1 rounded bg-slate-900 text-white text-xs">Zoom</button>
+                <button data-action="copy" data-id="${p.id}" class="px-2 py-1 rounded bg-slate-200 text-slate-900 text-xs">Copy</button>
+                <button data-action="delete" data-id="${p.id}" class="px-2 py-1 rounded bg-red-600 text-white text-xs">Delete</button>
+              </div>
+            </div>
+          `);
+
+        marker.on("popupopen", (e) => {
+          const node = e.popup.getElement();
+          if (!node) return;
+          node.addEventListener("click", (evt) => {
+            const btn = evt.target.closest("button[data-action]");
+            if (!btn) return;
+            const action = btn.dataset.action;
+            const id = btn.dataset.id;
+            const pin = pins.find(x => x.id === id);
+            if (!pin) return;
+
+            if (action === "zoom") {
+              map.setView([pin.lat, pin.lng], 8, { animate: true });
+            } else if (action === "copy") {
+              const text = `${pin.title || "Pinned place"} — ${pin.lat.toFixed(5)}, ${pin.lng.toFixed(5)}${pin.note ? `\n${pin.note}` : ""}`;
+              copyToClipboard(text);
+            } else if (action === "delete") {
+              pins = pins.filter(x => x.id !== id);
+              savePins();
+              renderPinMarkers();
+              toast("Pin deleted.");
+            }
+          }, { once: true });
+        });
+      });
+    }
+
+    function renderPinsList() {
+      const list = $("pinsList");
+      const count = $("pinCount");
+      const noPins = $("noPins");
+
+      count.textContent = `${pins.length}`;
+      list.innerHTML = "";
+
+      if (pins.length === 0) {
+        noPins.classList.remove("hidden");
+        return;
+      }
+      noPins.classList.add("hidden");
+
+      // newest first
+      const sorted = [...pins].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+      sorted.forEach((p) => {
+        const item = document.createElement("div");
+        item.className = "rounded-2xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition";
+        item.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="text-sm font-semibold truncate">${escapeHtml(p.title || "Pinned place")}</div>
+              <div class="text-xs text-slate-400 mt-1">(${p.lat.toFixed(5)}, ${p.lng.toFixed(5)})</div>
+              ${p.note ? `<div class="text-xs text-slate-300 mt-2 line-clamp-2">${escapeHtml(p.note)}</div>` : `<div class="text-xs text-slate-400 mt-2">No note.</div>`}
+            </div>
+            <div class="shrink-0 flex flex-col gap-2">
+              <button class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-medium"
+                      data-zoom="${p.id}">Zoom</button>
+              <button class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-medium"
+                      data-copy="${p.id}">Copy</button>
+              <button class="px-3 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 border border-red-500/30 text-xs font-medium"
+                      data-del="${p.id}">Delete</button>
+            </div>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+
+      list.querySelectorAll("button[data-zoom]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.zoom;
+          const pin = pins.find(x => x.id === id);
+          if (!pin) return;
+          map.setView([pin.lat, pin.lng], 8, { animate: true });
+        });
+      });
+
+      list.querySelectorAll("button[data-copy]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.copy;
+          const pin = pins.find(x => x.id === id);
+          if (!pin) return;
+          const text = `${pin.title || "Pinned place"} — ${pin.lat.toFixed(5)}, ${pin.lng.toFixed(5)}${pin.note ? `\n${pin.note}` : ""}`;
+          copyToClipboard(text);
+        });
+      });
+
+      list.querySelectorAll("button[data-del]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.del;
+          pins = pins.filter(x => x.id !== id);
+          savePins();
+          renderPinMarkers();
+          toast("Pin deleted.");
+        });
+      });
+    }
+
+    // ---------- Mode UI ----------
+    function setMode(nextMode) {
+      mode = nextMode;
+      $("modeBadge").textContent = mode === "measure" ? "Measure" : "Explore";
+      $("helpText").textContent = mode === "measure"
+        ? "Measure mode: click points to create a route. Total distance updates as you add points."
+        : "Explore mode: click to view coordinates and add pins with notes.";
+
+      // button styling
+      const exploreBtn = $("exploreModeBtn");
+      const measureBtn = $("measureModeBtn");
+
+      if (mode === "explore") {
+        exploreBtn.classList.remove("bg-white/5");
+        exploreBtn.classList.add("bg-white/10");
+        measureBtn.classList.remove("bg-white/10");
+        measureBtn.classList.add("bg-white/5");
+      } else {
+        measureBtn.classList.remove("bg-white/5");
+        measureBtn.classList.add("bg-white/10");
+        exploreBtn.classList.remove("bg-white/10");
+        exploreBtn.classList.add("bg-white/5");
+      }
+    }
+
+    // ---------- Measurement ----------
+    function clearMeasurement() {
+      measurePoints = [];
+      measureTotalMeters = 0;
+      if (measureLine) {
+        map.removeLayer(measureLine);
+        measureLine = null;
+      }
+      measureMarkers.forEach(m => map.removeLayer(m));
+      measureMarkers = [];
+      updateLiveInfo("Measurement cleared.");
+    }
+
+    function addMeasurePoint(latlng) {
+      measurePoints.push(latlng);
+
+      const marker = L.circleMarker(latlng, {
+        radius: 6,
+        weight: 2,
+        color: "#111827",
+        fillColor: "#22c55e",
+        fillOpacity: 0.9
+      }).addTo(map);
+      measureMarkers.push(marker);
+
+      if (measurePoints.length >= 2) {
+        const a = measurePoints[measurePoints.length - 2];
+        const b = measurePoints[measurePoints.length - 1];
+        measureTotalMeters += haversineMeters(a, b);
+      }
+
+      if (measureLine) map.removeLayer(measureLine);
+      measureLine = L.polyline(measurePoints, { weight: 4, opacity: 0.9 }).addTo(map);
+
+      const msg = `Measuring: ${measurePoints.length} point(s) • Total: ${fmtKm(measureTotalMeters)}`;
+      updateLiveInfo(msg);
+    }
+
+    // ---------- Live info ----------
+    function updateLiveInfo(text) {
+      $("liveInfo").textContent = text;
+    }
+
+    // ---------- Country search ----------
+    async function searchCountry(query) {
+      $("searchError").classList.add("hidden");
+      $("countryResult").classList.add("hidden");
+      lastCountry = null;
+      countryBBox = null;
+
+      const q = safeText(query);
+      if (!q) {
+        showError("Please type a country name.");
+        return;
+      }
+
+      $("searchBtn").disabled = true;
+      $("searchBtn").classList.add("opacity-70", "cursor-not-allowed");
+      updateLiveInfo(`Searching for "${q}"…`);
+
+      try {
+        // REST Countries v3.1
+        const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(q)}?fullText=false`;
+        const res = await fetch(url, { headers: { "Accept": "application/json" } });
+        if (!res.ok) throw new Error("Country search failed.");
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) throw new Error("No results.");
+
+        // Choose best match: prioritize exact common name match (case-insensitive), else first
+        const lower = q.toLowerCase();
+        let chosen = data.find(c => (c?.name?.common || "").toLowerCase() === lower) || data[0];
+        lastCountry = chosen;
+
+        const name = chosen?.name?.common || "Unknown";
+        const official = chosen?.name?.official || "";
+        const capital = (chosen?.capital && chosen.capital[0]) ? chosen.capital[0] : "—";
+        const pop = chosen?.population;
+        const area = chosen?.area;
+        const region = chosen?.region || "—";
+        const subregion = chosen?.subregion || "";
+        const flag = chosen?.flag || "🏳️";
+        const latlng = Array.isArray(chosen?.capitalInfo?.latlng) ? chosen.capitalInfo.latlng : chosen?.latlng;
+        const center = Array.isArray(latlng) ? { lat: latlng[0], lng: latlng[1] } : { lat: chosen.latlng[0], lng: chosen.latlng[1] };
+
+        // Currencies
+        let currencyText = "—";
+        const currencies = chosen?.currencies || {};
+        const currencyKeys = Object.keys(currencies);
+        if (currencyKeys.length) {
+          currencyText = currencyKeys.map(k => {
+            const cur = currencies[k];
+            const nm = cur?.name ? ` — ${cur.name}` : "";
+            const sym = cur?.symbol ? ` (${cur.symbol})` : "";
+            return `${k}${sym}${nm}`;
+          }).slice(0,2).join(", ");
+        }
+
+        // Compute a bbox from latlng + approximate span using area (fallback)
+        // (This is only for nicer zoom; accurate borders are not required.)
+        const span = guessSpanDegrees(area);
+        countryBBox = [
+          [center.lat - span.lat, center.lng - span.lng],
+          [center.lat + span.lat, center.lng + span.lng]
+        ];
+
+        $("countryFlag").textContent = flag;
+        $("countryName").textContent = name;
+        $("countryMeta").textContent = official
+          ? `${region}${subregion ? " • " + subregion : ""} • Official: ${official}`
+          : `${region}${subregion ? " • " + subregion : ""}`;
+
+        $("countryPop").textContent = pop ? fmtNumber(pop) : "—";
+        $("countryArea").textContent = area ? `${fmtNumber(area)} km²` : "—";
+        $("countryCapital").textContent = capital;
+        $("countryCurrency").textContent = currencyText;
+
+        $("countryResult").classList.remove("hidden");
+
+        // Marker on map
+        if (countryMarker) map.removeLayer(countryMarker);
+        countryMarker = L.marker([center.lat, center.lng]).addTo(map)
+          .bindPopup(`<b>${escapeHtml(name)}</b><br/>Center: ${center.lat.toFixed(3)}, ${center.lng.toFixed(3)}`);
+
+        updateLiveInfo(`Found: ${name}. Use Zoom to focus the map.`);
+      } catch (err) {
+        showError("No matching country found. Try a different spelling or a shorter name (e.g., “Congo”, “Korea”).");
+        updateLiveInfo("Search failed.");
+      } finally {
+        $("searchBtn").disabled = false;
+        $("searchBtn").classList.remove("opacity-70", "cursor-not-allowed");
+      }
+    }
+
+    function guessSpanDegrees(areaKm2) {
+      // Rough heuristic: bigger countries get bigger span.
+      // Keeps zoom pleasant without needing full border polygons.
+      if (!areaKm2 || typeof areaKm2 !== "number") return { lat: 6, lng: 8 };
+      if (areaKm2 > 8000000) return { lat: 20, lng: 30 };
+      if (areaKm2 > 3000000) return { lat: 14, lng: 20 };
+      if (areaKm2 > 1000000) return { lat: 10, lng: 14 };
+      if (areaKm2 > 300000) return { lat: 7, lng: 10 };
+      if (areaKm2 > 80000) return { lat: 5, lng: 6 };
+      return { lat: 3.5, lng: 4.5 };
+    }
+
+    function showError(msg) {
+      const el = $("searchError");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    // ---------- HTML escaping (for safe popups/list rendering) ----------
+    function escapeHtml(str) {
+      return (str ?? "").toString()
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // ---------- Pin modal ----------
+    function openPinModal(latlng) {
+      lastClickedLatLng = latlng;
+      $("pinCoords").textContent = `Coordinates: ${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`;
+      $("pinTitle").value = "";
+      $("pinNote").value = "";
+      $("pinModal").classList.remove("hidden");
+      $("pinModal").classList.add("flex");
+      setTimeout(() => $("pinTitle").focus(), 50);
+    }
+
+    function closePinModal() {
+      $("pinModal").classList.add("hidden");
+      $("pinModal").classList.remove("flex");
+    }
+
+    function addPin(latlng, title, note) {
+      const pin = {
+        id: cryptoRandomId(),
+        lat: latlng.lat,
+        lng: latlng.lng,
+        title: safeText(title) || "Pinned place",
+        note: safeText(note),
+        createdAt: Date.now()
+      };
+      pins.push(pin);
+      savePins();
+      renderPinMarkers();
+      toast("Pin saved.");
+      updateLiveInfo(`Pinned: ${pin.title} (${pin.lat.toFixed(3)}, ${pin.lng.toFixed(3)})`);
+    }
+
+    function cryptoRandomId() {
+      // Works in modern browsers; fallback if needed
+      if (window.crypto && crypto.getRandomValues) {
+        const arr = new Uint8Array(12);
+        crypto.getRandomValues(arr);
+        return Array.from(arr).map(b => b.toString(16).padStart(2,"0")).join("");
+      }
+      return Math.random().toString(16).slice(2) + Date.now().toString(16);
+    }
+
+    // ---------- Map click handling ----------
+    map.on("click", (e) => {
+      if (mode === "measure") {
+        addMeasurePoint(e.latlng);
+        return;
+      }
+
+      // Explore: show coords and allow pin
+      const { lat, lng } = e.latlng;
+      updateLiveInfo(`Clicked: ${lat.toFixed(5)}, ${lng.toFixed(5)} • Click again to add a pin.`);
+
+      // Small UX: if user clicks twice within 2 seconds nearby, open modal
+      const now = Date.now();
+      if (!map._lastClick) map._lastClick = { t: 0, latlng: null };
+      const prev = map._lastClick;
+
+      const closeInSpace = prev.latlng && (haversineMeters(prev.latlng, e.latlng) < 25000); // 25km
+      const closeInTime = (now - prev.t) < 2000;
+
+      map._lastClick = { t: now, latlng: e.latlng };
+
+      if (closeInSpace && closeInTime) {
+        openPinModal(e.latlng);
+      }
+    });
+
+    map.on("mousemove", (e) => {
+      // Light, helpful hover info only
+      if (mode !== "measure") return;
+      if (measurePoints.length === 0) return;
+
+      const last = measurePoints[measurePoints.length - 1];
+      const hoverMeters = haversineMeters(last, e.latlng);
+      $("liveInfo").textContent = `Measuring: ${measurePoints.length} point(s) • Total: ${fmtKm(measureTotalMeters)} • Next segment: ${fmtKm(hoverMeters)}`;
+    });
+
+    // ---------- Controls ----------
+    $("exploreModeBtn").addEventListener("click", () => setMode("explore"));
+    $("measureModeBtn").addEventListener("click", () => setMode("measure"));
+
+    $("clearMeasureBtn").addEventListener("click", () => {
+      clearMeasurement();
+      toast("Measurement cleared.");
+    });
+
+    $("clearPinsBtn").addEventListener("click", () => {
+      if (pins.length === 0) return toast("No pins to clear.");
+      const ok = confirm("Delete ALL saved pins on this browser?");
+      if (!ok) return;
+      pins = [];
+      savePins();
+      renderPinMarkers();
+      toast("All pins cleared.");
+      updateLiveInfo("All pins cleared.");
+    });
+
+    $("resetViewBtn").addEventListener("click", () => {
+      map.setView([20, 0], 2, { animate: true });
+      toast("View reset.");
+    });
+
+    $("closeHelpBtn").addEventListener("click", () => {
+      const panel = $("closeHelpBtn").closest(".glass");
+      panel.style.display = "none";
+    });
+
+    $("copyLiveBtn").addEventListener("click", () => copyToClipboard($("liveInfo").textContent));
+
+    // ---------- Search bindings ----------
+    $("searchBtn").addEventListener("click", () => searchCountry($("countryInput").value));
+    $("countryInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") searchCountry($("countryInput").value);
+    });
+
+    $("zoomCountryBtn").addEventListener("click", () => {
+      if (!countryBBox) return toast("Search for a country first.");
+      map.fitBounds(countryBBox, { padding: [30, 30], animate: true });
+    });
+
+    $("copyCountryBtn").addEventListener("click", () => {
+      if (!lastCountry) return toast("Search for a country first.");
+      const name = lastCountry?.name?.common || "Unknown";
+      const capital = (lastCountry?.capital && lastCountry.capital[0]) ? lastCountry.capital[0] : "—";
+      const region = lastCountry?.region || "—";
+      const pop = lastCountry?.population ? fmtNumber(lastCountry.population) : "—";
+      const area = lastCountry?.area ? `${fmtNumber(lastCountry.area)} km²` : "—";
+      const text = `Country: ${name}\nRegion: ${region}\nCapital: ${capital}\nPopulation: ${pop}\nArea: ${area}`;
+      copyToClipboard(text);
+    });
+
+    $("addCountryPinBtn").addEventListener("click", () => {
+      if (!lastCountry) return toast("Search for a country first.");
+      const latlng = Array.isArray(lastCountry?.latlng) ? { lat: lastCountry.latlng[0], lng: lastCountry.latlng[1] } : null;
+      if (!latlng) return toast("Could not determine country center.");
+      const title = `Country: ${lastCountry?.name?.common || "Pinned place"}`;
+      const note = `Region: ${lastCountry?.region || "—"}\nCapital: ${(lastCountry?.capital && lastCountry.capital[0]) ? lastCountry.capital[0] : "—"}`;
+      addPin(latlng, title, note);
+    });
+
+    // ---------- Pin modal buttons ----------
+    $("closePinModal").addEventListener("click", closePinModal);
+    $("pinModal").addEventListener("click", (e) => {
+      if (e.target === $("pinModal")) closePinModal();
+    });
+
+    $("savePinBtn").addEventListener("click", () => {
+      if (!lastClickedLatLng) return;
+      const title = $("pinTitle").value;
+      const note = $("pinNote").value;
+      addPin(lastClickedLatLng, title, note);
+      closePinModal();
+    });
+
+    // ESC closes modal
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closePinModal();
+    });
+
+    // ---------- Init ----------
+    loadPins();
+    renderPinsList();
+    renderPinMarkers();
+    setMode("explore");
+    updateLiveInfo("Ready. Search a country or click the map.");
+
+  })();
+  </script>
+  
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-white/10 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-6 py-10 text-sm text-slate-400">
+      <div class="flex justify-between">
+        <div>
+          <div class="font-medium text-slate-200">Map of the World</div>
+          <div class="mt-1">Interactive geography exploration tool</div>
+        </div>
+        <div>© OpenStreetMap contributors</div>
+      </div>
+    </div>
+  </footer>
+ <script>
+/* ================= TIMELINE ================= */
+
+const timelineData = [
+   {
+    label: "Prehistory",
+    title: "Early human migration",
+    text:
+      "Long before cities or borders, humans migrated across continents in search of food, water, and stable climates. Natural land bridges and coastlines guided early movement, shaping where people settled and survived.",
+    quote:
+      "“The earliest maps were mental shaped by memory, landmarks, and movement.”",
+    image:
+      "assets/Early_human.png"
+  },
+  {
+    label: "Ancient era",
+    title: "Rivers and the rise of civilizations",
+    text:
+      "The first civilizations emerged around fertile river systems such as the Nile, Indus, and Tigris–Euphrates. Geography enabled agriculture, trade, and permanent settlements, giving rise to early cities and governance.",
+    quote:
+      "“Where rivers flowed, civilizations followed.”",
+    image:
+      "assets/Rivers_and _the_rise.png"
+  },
+  {
+    label: "Classical world",
+    title: "Empires and global trade routes",
+    text:
+      "Large empires expanded across continents, connected by roads and trade networks like the Silk Road. Geography determined power, access to resources, and cultural exchange between distant regions.",
+    quote:
+      "“Trade transformed geography into opportunity.”",
+    image:
+      "assets/Empires_and_global.png"
+  },
+  {
+    label: "Early modern",
+    title: "Exploration reshapes world maps",
+    text:
+      "Advances in navigation and shipbuilding enabled explorers to chart oceans and continents. World maps expanded rapidly, redefining global awareness, borders, and trade connections.",
+    quote:
+      "“The world became larger and smaller at the same time.”",
+    image:
+      "assets/Exploration_reshapes.png"
+  },
+  {
+    label: "Modern era",
+    title: "Digital mapping and satellites",
+    text:
+      "Satellite imagery, GPS, and digital cartography transformed how humanity understands Earth. Today, maps update in real time, powering navigation, climate science, and global connectivity.",
+    quote:
+      "“The Earth is now mapped continuously, from space to street level.”",
+    image:
+      "assets/Digital _mapping.png"
+  }
+];
+
+const slider = document.getElementById("timelineSlider");
+const timelineLabel = document.getElementById("timelineLabel");
+const timelineTitle = document.getElementById("timelineTitle");
+const timelineText = document.getElementById("timelineText");
+const timelineQuote = document.getElementById("timelineQuote");
+const timelineImg = document.getElementById("timelineImg");
+
+if (slider) {
+  slider.addEventListener("input", () => {
+    const d = timelineData[slider.value];
+    if (!d) return;
+
+    timelineLabel.textContent = d.label;
+    timelineTitle.textContent = d.title;
+    timelineText.textContent = d.text;
+    timelineQuote.textContent = d.quote;
+
+    if (timelineImg) {
+      timelineImg.style.opacity = "0";
+      setTimeout(() => {
+        timelineImg.src = d.image;
+        timelineImg.alt = d.label;
+        timelineImg.style.opacity = "1";
+      }, 200);
+    }
+  });
+}
+</script>
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const infoImages = {
+    population: {
+      src: "assets/population.jpg",
+      alt: "World population density map"
+    },
+    economy: {
+      src: "assets/global_ map.jpeg",
+      alt: "Global trade routes and economic hubs"
+    },
+    environment: {
+      src: "assets/Climate_classification.jpg",
+      alt: "Global climate zones map"
+    }
+  };
+
+  const infoImage = document.getElementById("infoImage");
+
+  document.querySelectorAll(".info-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+
+      // Tabs
+      document.querySelectorAll(".info-tab")
+        .forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      // Panels
+      document.querySelectorAll(".info-panel")
+        .forEach(p => p.classList.add("hidden"));
+      document
+        .getElementById(tab.dataset.tab)
+        .classList.remove("hidden");
+
+      // Image swap
+      const data = infoImages[tab.dataset.tab];
+      if (!infoImage || !data) return;
+
+      infoImage.style.opacity = "0";
+
+      requestAnimationFrame(() => {
+        infoImage.src = data.src;
+        infoImage.alt = data.alt;
+
+        infoImage.onload = () => {
+          infoImage.style.opacity = "1";
+        };
+      });
+
+    }); 
+  });   
+
+});     
+</script>
+
+  </body>
+  </html>

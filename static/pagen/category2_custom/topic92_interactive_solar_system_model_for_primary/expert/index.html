@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Solar System Model for Primary School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #0f0f1e;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(rgba(26, 26, 26, 0.5), rgba(24, 37, 55, 0.2)) center center / cover, url("./images/photo-1543722530-d2c3201371e7.avif");
+            color: white;
+             background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: stars 60s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes stars {
+            from { transform: rotate(0deg) translateX(0); }
+            to { transform: rotate(360deg) translateX(100px); }
+        }
+
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 40px rgba(255,255,255,0.8); }
+        }
+
+        header p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        section {
+            padding: 40px 0;
+            background: linear-gradient(to bottom, #0f0f1e, #1a1a2e);
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            font-weight: 800;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin: 20px 0 15px;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #c5c5d8;
+            line-height: 1.8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #1e2139 0%, #2a2d4a 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.8);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.6em;
+        }
+
+        .card p {
+            color: #b8b8cc;
+        }
+
+        .planet-showcase {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #1e2139 0%, #2a2d4a 100%);
+            border-radius: 30px;
+            padding: 40px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .planet-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .planet-image img {
+            width: 100%;
+            height: 476px;
+            object-fit: cover;
+            transition: all 0.6s ease;
+        }
+
+        .planet-image:hover img {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .planet-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 18px 20px;
+            margin: 10px 0;
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+            border-radius: 10px;
+            font-size: 1.05em;
+            color: #c5c5d8;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(10px);
+            border-left-width: 6px;
+        }
+
+        .feature-list li:before {
+            content: "🌟 ";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 45px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 48px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stat-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.5);
+        }
+
+        .stat-box h3 {
+            font-size: 2em;
+            color: white;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .stat-box p {
+            font-size: 1.2em;
+            color: white;
+            margin-top: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1e2139 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            border-top: 3px solid rgba(102, 126, 234, 0.5);
+        }
+
+        footer p {
+            color: white !important;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 40px 0;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(135deg, #1e2139 0%, #2a2d4a 100%);
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+            color: #c5c5d8;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        td:hover {
+            color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #1e2139 0%, #2a2d4a 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            border-color: rgba(102, 126, 234, 0.8);
+        }
+
+        .resource-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .resource-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .resource-content {
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            
+            h2 {
+                font-size: 2.2em;
+            }
+            
+            .planet-showcase {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            header p {
+                font-size: 1.2em;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f0f1e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Interactive Solar System Model</h1>
+            <p>An Educational Resource for Primary School Students</p>
+            <a href="#introduction" class="btn">Explore Now</a>
+        </div>
+    </header>
+
+    <section id="introduction">
+        <div class="container">
+            <h2>Welcome to Our Solar System</h2>
+            <p>The solar system is our cosmic neighborhood, consisting of the Sun and everything that orbits around it. This includes eight planets, their moons, dwarf planets, asteroids, comets, and countless smaller objects. Our solar system formed about 4.6 billion years ago from a giant cloud of gas and dust.</p>
+            
+            <div class="planet-image" style="margin: 40px auto; max-width: 800px;">
+                <img src="./images/photo-1506703719100-a0f3a48c0f86.avif" alt="Solar System">
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>8</h3>
+                    <p>Planets</p>
+                </div>
+                <div class="stat-box">
+                    <h3>200+</h3>
+                    <p>Moons</p>
+                </div>
+                <div class="stat-box">
+                    <h3>1</h3>
+                    <p>Star (The Sun)</p>
+                </div>
+                <div class="stat-box">
+                    <h3>4.6B</h3>
+                    <p>Years Old</p>
+                </div>
+            </div>
+
+            <p>The Sun sits at the center of our solar system and contains 99.8% of all the mass in the solar system. Its gravity keeps all the planets in orbit. The planets closer to the Sun are rocky and smaller, while the outer planets are mostly made of gas and are much larger.</p>
+        </div>
+    </section>
+<section id="planets">
+        <div class="container">
+            <h2>The Eight Planets</h2>
+            <p>Our solar system has eight planets that orbit the Sun. They are divided into two groups: the inner rocky planets (Mercury, Venus, Earth, Mars) and the outer gas giants (Jupiter, Saturn, Uranus, Neptune).</p>
+            
+           
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Planet</th>
+                            <th>Distance from Sun</th>
+                            <th>Diameter</th>
+                            <th>Moons</th>
+                            <th>Orbit Period</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mercury</td>
+                            <td>58 million km</td>
+                            <td>4,879 km</td>
+                            <td>0</td>
+                            <td>88 days</td>
+                        </tr>
+                        <tr>
+                            <td>Venus</td>
+                            <td>108 million km</td>
+                            <td>12,104 km</td>
+                            <td>0</td>
+                            <td>225 days</td>
+                        </tr>
+                        <tr>
+                            <td>Earth</td>
+                            <td>150 million km</td>
+                            <td>12,742 km</td>
+                            <td>1</td>
+                            <td>365 days</td>
+                        </tr>
+                        <tr>
+                            <td>Mars</td>
+                            <td>228 million km</td>
+                            <td>6,779 km</td>
+                            <td>2</td>
+                            <td>687 days</td>
+                        </tr>
+                        <tr>
+                            <td>Jupiter</td>
+                            <td>778 million km</td>
+                            <td>139,820 km</td>
+                            <td>95</td>
+                            <td>12 years</td>
+                        </tr>
+                        <tr>
+                            <td>Saturn</td>
+                            <td>1.4 billion km</td>
+                            <td>116,460 km</td>
+                            <td>146</td>
+                            <td>29 years</td>
+                        </tr>
+                        <tr>
+                            <td>Uranus</td>
+                            <td>2.9 billion km</td>
+                            <td>50,724 km</td>
+                            <td>28</td>
+                            <td>84 years</td>
+                        </tr>
+                        <tr>
+                            <td>Neptune</td>
+                            <td>4.5 billion km</td>
+                            <td>49,244 km</td>
+                            <td>16</td>
+                            <td>165 years</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+             <!-- <div class="planet-grid">
+                <div class="planet-item">
+                    <img src="./images/fjbeeRiPRQjQNhizwy7cWX-1024-80.jpg.webp" alt="Mercury">
+                    <div class="planet-item-content">
+                        <h3>Mercury</h3>
+                        <p>Closest planet to the Sun, smallest in our solar system.</p>
+                    </div>
+                </div>
+                
+                <div class="planet-item">
+                    <img src="./images/RifjtkFLBEFgzkZqWEh69P-1200-80.jpg.webp" alt="Venus">
+                    <div class="planet-item-content">
+                        <h3>Venus</h3>
+                        <p>Earth's sister planet with a thick, toxic atmosphere.</p>
+                    </div>
+                </div>
+                
+                <div class="planet-item">
+                    <img src="./images/FaWKMJQnr2PFcYCmEyfiTm-1200-80.jpg.webp" alt="Earth">
+                    <div class="planet-item-content">
+                        <h3>Earth</h3>
+                        <p>Our home planet, the only known world with life.</p>
+                    </div>
+                </div>
+                
+                <div class="planet-item">
+                    <img src="./images/photo-1614728894747-a83421e2b9c9.avif" alt="Mars">
+                    <div class="planet-item-content">
+                        <h3>Mars</h3>
+                        <p>The Red Planet, home to the largest volcano.</p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+     <section id="inner-planets">
+        <div class="container">
+            <h2>Inner Rocky Planets</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <img src="./images/fjbeeRiPRQjQNhizwy7cWX-1024-80.jpg.webp" alt="Mercury" class="card-image">
+                    <div class="card-content">
+                        <h3>Mercury</h3>
+                        <p>The smallest and fastest planet, Mercury has no atmosphere and experiences extreme temperature changes. During the day, it can reach 430°C, but at night it drops to -180°C. Its surface is covered with craters from asteroid impacts.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/RifjtkFLBEFgzkZqWEh69P-1200-80.jpg.webp" alt="Venus" class="card-image">
+                    <div class="card-content">
+                        <h3>Venus</h3>
+                        <p>Often called Earth's twin due to similar size, Venus has a thick, toxic atmosphere that traps heat. It's the hottest planet with surface temperatures around 465°C. Venus rotates backwards compared to most planets.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/FaWKMJQnr2PFcYCmEyfiTm-1200-80.jpg.webp" alt="Earth" class="card-image">
+                    <div class="card-content">
+                        <h3>Earth</h3>
+                        <p>Our home planet is the only known world with liquid water on its surface and life. Earth has one moon and a protective atmosphere that shields us from harmful space radiation. About 71% of Earth's surface is covered by water.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/photo-1614728894747-a83421e2b9c9.avif" alt="Mars" class="card-image">
+                    <div class="card-content">
+                        <h3>Mars</h3>
+                        <p>The Red Planet gets its color from iron oxide (rust) in its soil. Mars has the largest volcano in the solar system, Olympus Mons, and ice caps at its poles. Scientists are studying Mars for signs of ancient life.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="./images/photo-1630839437035-dac17da580d0.avif" alt="Jupiter" class="card-image">
+                    <div class="card-content">
+                        <h3>Jupiter</h3>
+                        <p>The largest planet in our solar system, Jupiter is so big that all other planets could fit inside it. It has a famous storm called the Great Red Spot that has lasted for hundreds of years. Jupiter has at least 95 moons.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/photo-1614732414444-096e5f1122d5.avif" alt="Saturn" class="card-image">
+                    <div class="card-content">
+                        <h3>Saturn</h3>
+                        <p>Known for its spectacular ring system made of ice and rock particles, Saturn is the second-largest planet. It's less dense than water, which means it would float if you could find a bathtub big enough! Saturn has 146 confirmed moons.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/photo-1614732484003-ef9881555dc3.avif" alt="Uranus" class="card-image">
+                    <div class="card-content">
+                        <h3>Uranus</h3>
+                        <p>This ice giant rotates on its side, making it unique among planets. Uranus has a blue-green color due to methane in its atmosphere. It's very cold, with temperatures dropping to -224°C. Uranus has 28 known moons.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Neptune" class="card-image">
+                    <div class="card-content">
+                        <h3>Neptune</h3>
+                        <p>The most distant planet from the Sun, Neptune has the strongest winds in the solar system, reaching speeds of 2,100 km/h. It's dark, cold, and whipped by supersonic winds. Neptune has 16 known moons, with Triton being the largest.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <section id="sun">
+        <div class="container">
+            <h2>The Sun - Our Star</h2>
+            
+            <div class="planet-showcase">
+                <div class="planet-image">
+                    <img src="./images/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA's_Solar_Dynamics_Observatory_-_20100819.jpg" alt="The Sun">
+                </div>
+                <div class="planet-info">
+                    <h3>Facts About the Sun</h3>
+                    <p>The Sun is a massive ball of hot, glowing gases at the center of our solar system. It is classified as a yellow dwarf star and provides the light and heat necessary for life on Earth.</p>
+                    <ul class="feature-list">
+                        <li>Diameter: 1.4 million kilometers (109 times Earth's diameter)</li>
+                        <li>Surface temperature: About 5,500°C</li>
+                        <li>Core temperature: About 15 million°C</li>
+                        <li>Age: Approximately 4.6 billion years old</li>
+                        <li>Composition: 73% hydrogen, 25% helium, 2% other elements</li>
+                        <li>Light takes 8 minutes 20 seconds to reach Earth</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+   
+
+    <!-- <section id="learning-activities">
+        <div class="container">
+            <h2>Interactive Learning Activities</h2>
+            <p>Make learning about the solar system fun and engaging with these educational activities designed for primary school students.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <img src="./images/photo-1484480974693-6ca0a78fb36b.avif" alt="Build a Model" class="card-image">
+                    <div class="card-content">
+                        <h3>Build a Model</h3>
+                        <p>Create a scale model of the solar system using balls of different sizes. Use a basketball for the Sun, a golf ball for Jupiter, and smaller objects for the other planets. This helps students understand the relative sizes.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Planet Journal" class="card-image">
+                    <div class="card-content">
+                        <h3>Planet Journal</h3>
+                        <p>Have students keep a journal where they write facts about one planet each week. They can draw pictures, list interesting features, and compare it to Earth. This encourages research skills and creativity.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/photo-1669028991857-d53d63e7eaf1.avif" alt="Space Quiz" class="card-image">
+                    <div class="card-content">
+                        <h3>Space Quiz</h3>
+                        <p>Test knowledge with fun quizzes about planetary facts, moon names, and solar system trivia. Make it competitive with team challenges to keep students engaged and motivated to learn more.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="./images/photo-1758521540926-8f68e51c1db5.avif" alt="Virtual Tours" class="card-image">
+                    <div class="card-content">
+                        <h3>Virtual Tours</h3>
+                        <p>Use online resources and videos from space agencies like NASA to take virtual tours of planets and moons. Watch real footage from space missions and learn about current space exploration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- <section id="interesting-facts">
+        <div class="container">
+            <h2>Amazing Solar System Facts</h2>
+            
+            <div class="planet-info">
+                <div class="planet-image" style="margin-bottom: 40px;">
+                    <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2113&q=80" alt="Night Sky">
+                    <div class="overlay-text">The Universe is Full of Wonders!</div>
+                </div>
+                
+                <h3>Did You Know?</h3>
+                <ul class="feature-list">
+                    <li>A year on Mercury lasts just 88 Earth days, but a single day on Mercury lasts 59 Earth days</li>
+                    <li>Venus spins so slowly that its day is longer than its year</li>
+                    <li>Jupiter's Great Red Spot is a storm larger than Earth that has been raging for over 300 years</li>
+                    <li>Saturn's rings are mostly made of ice chunks ranging from dust-sized to house-sized</li>
+                    <li>One million Earths could fit inside the Sun</li>
+                    <li>Neptune takes 165 Earth years to orbit the Sun just once</li>
+                    <li>Mars has the tallest mountain in the solar system - Olympus Mons is 25 km high</li>
+                    <li>Light from the Sun takes 8 minutes and 20 seconds to reach Earth</li>
+                    <li>The solar system is about 4.6 billion years old</li>
+                    <li>There are more than 200 moons in our solar system</li>
+                </ul>
+            </div>
+        </div>
+    </section> -->
+
+    <section id="resources">
+        <div class="container">
+            <h2>Educational Resources</h2>
+            <p>Enhance your understanding of the solar system with these trusted educational resources and materials.</p>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <img src="./images/unnamed.jpg" alt="NASA Space Place">
+                    <div class="resource-content">
+                        <h3>NASA Space Place</h3>
+                        <p>NASA's official website for kids offers games, activities, and articles about space exploration. It features age-appropriate content with stunning images and interactive tools for learning about planets, stars, and space missions.</p>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=2028&q=80" alt="Books and Videos">
+                    <div class="resource-content">
+                        <h3>Books and Videos</h3>
+                        <p>Explore educational books and documentaries about space. Look for materials that explain complex concepts in simple terms with colorful illustrations. Videos from planetariums and science museums are excellent resources.</p>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <img src="./images/14th-School-Visit-Science-Oxford-0040-820x483.jpg" alt="Planetarium">
+                    <div class="resource-content">
+                        <h3>Planetarium Visits</h3>
+                        <p>Visit local planetariums for immersive experiences of the night sky. Many offer special shows for school groups that demonstrate planetary motion, constellations, and the scale of the universe in an engaging dome theater.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Interactive Solar System Model.</p>
+            <p>Explore, Learn, and Discover the Wonders of Space</p>
+        </div>
+    </footer>
+</body>
+</html>

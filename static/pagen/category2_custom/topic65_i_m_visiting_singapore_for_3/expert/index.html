@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singapore Sprint: Conference Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f1f5f9; }
+        h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; }
+        
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(15,23,42,0) 0%, #0f172a 100%);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sg-green': '#10b981',
+                        'sg-dark': '#0f172a',
+                        'card-dark': '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-sg-green selection:text-sg-dark">
+
+    <header class="relative h-[80vh] min-h-[600px] flex items-center">
+        <div class="absolute inset-0 z-0">
+            <img src="images/hero.jpg" alt="Singapore Skyline" class="w-full h-full object-cover brightness-[0.4]">
+        </div>
+        <div class="absolute inset-0 hero-gradient z-10"></div>
+        
+        <div class="relative z-20 container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <span class="text-sg-green font-bold tracking-widest uppercase text-sm mb-2 block">The Business Traveler's Guide</span>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
+                    3 Days in the<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-sg-green to-emerald-400">Garden City.</span>
+                </h1>
+                <p class="text-lg text-gray-300 mb-8 max-w-lg leading-relaxed">
+                    Visiting for a conference? Here is how to navigate the heat, the F1 crowds, and the hawker centers without wasting a single minute.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#guide" class="bg-white text-sg-dark px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                        Read the Guide
+                    </a>
+                    <a href="#itinerary" class="glass text-white px-6 py-3 rounded-lg font-bold hover:bg-white/10 transition flex items-center gap-2">
+                        <i class="fas fa-search"></i> Find Free Time Spots
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="guide" class="py-20 bg-sg-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold brand-font text-white mb-2">September Survival Intel</h2>
+                    <p class="text-gray-400 max-w-xl">Singapore is efficient, but September brings specific challenges you need to prepare for.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-card-dark p-8 rounded-xl border border-gray-700 hover:border-sg-green/50 transition duration-300">
+                    <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center text-orange-500 mb-6">
+                        <i class="fas fa-flag-checkered text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">The F1 Factor</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        September is Grand Prix season. The Marina Bay street circuit causes <strong>major road closures</strong> around Suntec and MBS.
+                    </p>
+                    <div class="bg-orange-500/10 p-3 rounded text-xs text-orange-200 border border-orange-500/20">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Avoid taxis in the CBD. Use the MRT (Subway) to get to your conference on time.
+                    </div>
+                </div>
+
+                <div class="bg-card-dark p-8 rounded-xl border border-gray-700 hover:border-sg-green/50 transition duration-300">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center text-blue-500 mb-6">
+                        <i class="fas fa-cloud-showers-heavy text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Heat & Haze</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Expect 31°C (88°F) with 85% humidity. You will sweat instantly outside. September can also bring "Sumatra Squalls" (sudden storms).
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li><i class="fas fa-check text-sg-green mr-2"></i>Pack a foldable umbrella.</li>
+                        <li><i class="fas fa-check text-sg-green mr-2"></i>Wear breathable fabrics (linen/cotton).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-card-dark p-8 rounded-xl border border-gray-700 hover:border-sg-green/50 transition duration-300">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center text-purple-500 mb-6">
+                        <i class="fas fa-user-friends text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Local Etiquette</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        <strong>"Choping"</strong>: If you see a packet of tissue on a table at a food court, that seat is taken. Do not sit there.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="text-xs bg-gray-700 px-2 py-1 rounded text-white">Stand Left</span>
+                        <span class="text-xs bg-gray-700 px-2 py-1 rounded text-white">Walk Right</span>
+                        <span class="text-xs bg-gray-700 px-2 py-1 rounded text-white">No Gum</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="itinerary" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-4">
+                    <h2 class="text-3xl font-bold brand-font text-white mb-6">Fill Your Free Time</h2>
+                    <p class="text-gray-400 text-sm mb-8">
+                        Most conferences at MBS or Suntec have 2-hour breaks. Here is what is feasible without missing your next session.
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Select your window:</label>
+                        <button onclick="showItinerary('short')" class="itinerary-btn w-full text-left p-4 rounded-xl bg-card-dark border border-gray-700 hover:border-sg-green transition group active-btn" id="btn-short">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">2 Hours (Lunch Break)</span>
+                                <i class="fas fa-hourglass-half text-gray-500 group-hover:text-sg-green"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Stay close to the AC.</p>
+                        </button>
+
+                        <button onclick="showItinerary('medium')" class="itinerary-btn w-full text-left p-4 rounded-xl bg-card-dark border border-gray-700 hover:border-sg-green transition group" id="btn-medium">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">4 Hours (Half Day)</span>
+                                <i class="fas fa-walking text-gray-500 group-hover:text-sg-green"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Explore heritage districts.</p>
+                        </button>
+
+                        <button onclick="showItinerary('night')" class="itinerary-btn w-full text-left p-4 rounded-xl bg-card-dark border border-gray-700 hover:border-sg-green transition group" id="btn-night">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white">The Evening (After 6PM)</span>
+                                <i class="fas fa-moon text-gray-500 group-hover:text-sg-green"></i>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Cooler air and city lights.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8">
+                    <div id="content-display" class="h-full bg-card-dark rounded-2xl border border-gray-700 overflow-hidden relative">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="food" class="py-20 bg-sg-dark">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold brand-font text-white mb-12 text-center">The Culinary Briefing</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <img src="images/laksa.png" class="w-24 h-24 rounded-lg object-cover flex-shrink-0">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">1. Laksa</h3>
+                            <p class="text-gray-400 text-sm mt-1">Spicy coconut noodle soup. A flavor explosion.</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Sungei+Road+Laksa" target="_blank" class="text-xs text-sg-green mt-2 font-bold hover:underline hover:text-emerald-300 flex items-center transition">
+                                <i class="fas fa-map-marker-alt mr-1"></i> Sungei Road Laksa
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <img src="images/rice.png" class="w-24 h-24 rounded-lg object-cover flex-shrink-0">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">2. Hainanese Chicken Rice</h3>
+                            <p class="text-gray-400 text-sm mt-1">Poached chicken with oily rice. The national obsession.</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Maxwell+Food+Centre" target="_blank" class="text-xs text-sg-green mt-2 font-bold hover:underline hover:text-emerald-300 flex items-center transition">
+                                <i class="fas fa-map-marker-alt mr-1"></i> Maxwell Food Centre
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <img src="images/murtabak.png" class="w-24 h-24 rounded-lg object-cover flex-shrink-0">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">3. Murtabak</h3>
+                            <p class="text-gray-400 text-sm mt-1">Stuffed pan-fried bread with meat. Historic favorite since 1908.</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Zam+Zam+Restaurant+Singapore" target="_blank" class="text-xs text-sg-green mt-2 font-bold hover:underline hover:text-emerald-300 flex items-center transition">
+                                <i class="fas fa-map-marker-alt mr-1"></i> Zam Zam Restaurant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card-dark p-8 rounded-2xl border border-gray-700 text-center relative overflow-hidden flex flex-col justify-center">
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold text-white mb-2">Can't Decide?</h3>
+                        <p class="text-gray-400 text-sm mb-8">Let the algorithm pick your dinner.</p>
+                        
+                        <div class="h-32 mb-6 flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-xl bg-gray-800/50 p-4 transition-all duration-300" id="spinner-container">
+                            <i id="spinner-icon" class="fas fa-utensils text-5xl text-gray-600 mb-2"></i>
+                            <h4 id="spinner-title" class="text-2xl font-bold text-white">???</h4>
+                            <p id="spinner-desc" class="text-xs text-gray-500 mt-1">Waiting for input...</p>
+                        </div>
+
+                        <button id="spin-btn" onclick="spinFood()" class="bg-white text-sg-dark px-8 py-3 rounded-full font-bold hover:bg-sg-green hover:text-white transition w-full shadow-lg transform hover:scale-105">
+                            Spin the Wheel
+                        </button>
+                    </div>
+                    
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-sg-green/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-white font-bold mb-4">Transport</h4>
+                    <p class="text-gray-500 text-sm mb-2"><strong>MRT (Subway):</strong> Use your contactless Visa/Mastercard. No ticket needed.</p>
+                    <p class="text-gray-500 text-sm"><strong>Grab:</strong> Download the app. Uber does not exist here.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Payments</h4>
+                    <p class="text-gray-500 text-sm mb-2">Cash is king at old Hawker Centers. Cards work everywhere else (Malls, Taxis).</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Safety</h4>
+                    <p class="text-gray-500 text-sm mb-2">Singapore is extremely safe. You can walk alone at 3 AM anywhere.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Connectivity</h4>
+                    <p class="text-gray-500 text-sm mb-2">Buy an eSIM (Airalo/Singtel) before arrival. Airport WiFi requires a kiosk scan.</p>
+                </div>
+            </div>
+            <div class="text-center border-t border-gray-800 pt-8">
+                <p class="text-gray-600 text-xs">Navigating the Lion City, one meeting and one Laksa at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- CONTENT DATA ---
+        const itineraryContent = {
+            'short': {
+                title: "The Air-Conditioned Route (2 Hours)",
+                image: "images/gardens.png",
+                description: "Perfect for a lunch break escape. Stay cool, see the icons, get back in time.",
+                steps: [
+                    { time: "00:00", text: "Walk from MBS/Suntec via the Helix Bridge." },
+                    { time: "00:20", text: "Enter 'Cloud Forest' (Ticket required). It is 23°C inside. Pure bliss." },
+                    { time: "01:15", text: "Grab a coffee at Arabica (nearby) and head back." }
+                ],
+                tag: "Low Effort"
+            },
+            'medium': {
+                title: "Heritage Walk: Arab St to Haji Lane (4 Hours)",
+                image: "images/heritage.png",
+                description: "Experience the culture and history. Best done in the morning or late afternoon.",
+                steps: [
+                    { time: "00:00", text: "Take MRT (Downtown Line) to Bugis Station." },
+                    { time: "00:15", text: "Walk to Sultan Mosque on Arab Street." },
+                    { time: "01:30", text: "Shop for unique souvenirs in Haji Lane shophouses." },
+                    { time: "02:30", text: "Eat legendary Murtabak at Zam Zam Restaurant (est 1908)." }
+                ],
+                tag: "Cultural"
+            },
+            'night': {
+                title: "Satay by the Bay (Evening)",
+                image: "images/satay.png",
+                description: "The classic post-conference vibe. Good food, cold beer, and less crowded than Lau Pa Sat.",
+                steps: [
+                    { time: "19:00", text: "Walk through Gardens by the Bay towards the water." },
+                    { time: "19:30", text: "Find 'Satay by the Bay' food court. Order Set A (Chicken/Beef)." },
+                    { time: "20:45", text: "Walk back to catch the Garden Rhapsody light show at the Supertrees." }
+                ],
+                tag: "Social"
+            }
+        };
+
+        const foodOptions = [
+            { name: "Char Kway Teow", desc: "Stir-fried noodles with dark soy sauce & cockles." },
+            { name: "Bak Kut Teh", desc: "Peppery pork rib soup. Great for stamina." },
+            { name: "Roti Prata", desc: "Crispy flatbread with curry dip." },
+            { name: "Satay", desc: "Grilled meat skewers with peanut sauce." },
+            { name: "Hokkien Mee", desc: "Fried noodles with prawn stock and squid." }
+        ];
+
+        // --- FUNCTIONS ---
+
+        function showItinerary(type) {
+            // UI Toggle
+            document.querySelectorAll('.itinerary-btn').forEach(btn => {
+                btn.classList.remove('border-sg-green', 'bg-gray-800');
+                btn.classList.add('bg-card-dark', 'border-gray-700');
+            });
+            document.getElementById('btn-' + type).classList.remove('bg-card-dark', 'border-gray-700');
+            document.getElementById('btn-' + type).classList.add('border-sg-green', 'bg-gray-800');
+
+            // Content Injection
+            const data = itineraryContent[type];
+            const container = document.getElementById('content-display');
+            
+            // Fade Out
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="relative h-64 w-full">
+                        <img src="${data.image}" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-sg-green text-sg-dark text-xs font-bold px-3 py-1 rounded-full uppercase">
+                            ${data.tag}
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-gray-900 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">${data.title}</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-300 mb-6 border-l-2 border-sg-green pl-4 italic">
+                            "${data.description}"
+                        </p>
+                        <div class="space-y-6">
+                            ${data.steps.map((step, index) => `
+                                <div class="flex gap-4 items-start">
+                                    <div class="flex-shrink-0 w-12 text-sm font-bold text-sg-green pt-1">${step.time}</div>
+                                    <div class="relative pb-4 border-l border-gray-700 pl-6 last:border-0">
+                                        <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-500"></div>
+                                        <p class="text-white text-sm">${step.text}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                // Fade In
+                container.style.opacity = '1';
+            }, 200);
+        }
+
+        // --- NEW SPINNER LOGIC ---
+        let shuffleInterval;
+        
+        function spinFood() {
+            const btn = document.getElementById('spin-btn');
+            const icon = document.getElementById('spinner-icon');
+            const title = document.getElementById('spinner-title');
+            const desc = document.getElementById('spinner-desc');
+            const box = document.getElementById('spinner-container');
+
+            // State: Running
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Finding Best Dish...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            box.classList.remove('border-sg-green');
+            box.classList.add('border-dashed');
+            
+            icon.className = "fas fa-random text-5xl text-sg-green mb-2 animate-pulse";
+
+            let counter = 0;
+            // Rapidly cycle through options (Digital Shuffle Effect)
+            shuffleInterval = setInterval(() => {
+                const random = foodOptions[counter % foodOptions.length];
+                title.textContent = random.name;
+                desc.textContent = "Scanning local favorites...";
+                counter++;
+            }, 80); // Fast shuffle
+
+            // Stop after 1.5 seconds
+            setTimeout(() => {
+                clearInterval(shuffleInterval);
+                const finalChoice = foodOptions[Math.floor(Math.random() * foodOptions.length)];
+
+                // State: Result
+                title.textContent = finalChoice.name;
+                desc.textContent = finalChoice.desc;
+                
+                icon.className = "fas fa-check-circle text-5xl text-sg-green mb-2 transform scale-110 transition";
+                box.classList.remove('border-dashed', 'border-gray-600');
+                box.classList.add('border-solid', 'border-sg-green', 'bg-sg-green/10');
+
+                btn.disabled = false;
+                btn.innerHTML = 'Spin Again';
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }, 1500);
+        }
+
+        // Init Default
+        window.onload = function() {
+            showItinerary('short');
+        }
+    </script>
+</body>
+</html>

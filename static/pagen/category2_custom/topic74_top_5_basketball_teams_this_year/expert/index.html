@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 5 Basketball Teams | NBA Power Rankings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .team-card.selected {
+            border: 3px solid #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .stat-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .comparison-table {
+            overflow-x: auto;
+        }
+        
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+        }
+        
+        .hero-bg {
+            background: url('images/hero/hero-background.png') center/cover;
+            position: relative;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.75) 0%, rgba(118, 75, 162, 0.75) 100%);
+            z-index: 1;
+        }
+        
+        .hero-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .highlight-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+        
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: #f9fafb;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .prediction-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .prediction-high {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .prediction-medium {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .prediction-low {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .team-logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            /* Typography - Reduced for mobile */
+            h1 {
+                font-size: 1.75rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            h3 {
+                font-size: 1.125rem !important;
+            }
+            
+            h4 {
+                font-size: 1rem !important;
+            }
+            
+            /* Hero Section */
+            .hero-bg {
+                padding: 2.5rem 1rem !important;
+            }
+            
+            .hero-bg p {
+                font-size: 1rem !important;
+            }
+            
+            .hero-bg .text-sm {
+                font-size: 0.75rem !important;
+            }
+            
+            /* Team Cards */
+            .team-card {
+                padding: 0.875rem !important;
+            }
+            
+            .team-card .text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .team-card .text-lg {
+                font-size: 0.9375rem !important;
+            }
+            
+            .team-card .text-sm {
+                font-size: 0.8125rem !important;
+            }
+            
+            .team-card .text-xs {
+                font-size: 0.6875rem !important;
+            }
+            
+            .stat-bar {
+                height: 2px !important;
+            }
+            
+            .grid.grid-cols-2 {
+                gap: 0.5rem !important;
+            }
+            
+            .grid.grid-cols-2 .p-3 {
+                padding: 0.625rem !important;
+            }
+            
+            .team-header-gradient {
+                height: 120px !important;
+            }
+            
+            .team-header-gradient .text-6xl {
+                font-size: 2.5rem !important;
+            }
+            
+            .team-header-gradient .text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            /* Comparison Section */
+            .comparison-table {
+                font-size: 0.75rem !important;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem 0.375rem !important;
+            }
+            
+            /* Analytics Section */
+            .bg-white.rounded-lg.shadow-lg.p-6 h3 {
+                font-size: 1rem !important;
+            }
+            
+            .bg-white.rounded-lg.shadow-lg.p-6 p {
+                font-size: 0.75rem !important;
+            }
+            
+            /* Highlights & Gallery */
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+                gap: 0.5rem !important;
+            }
+            
+            .gallery-item img {
+                height: 120px !important;
+            }
+            
+            .highlight-image {
+                height: 140px !important;
+            }
+            
+            /* FAQ Section */
+            .faq-question {
+                padding: 1rem !important;
+                font-size: 0.9375rem !important;
+            }
+            
+            .faq-answer {
+                font-size: 0.875rem !important;
+                line-height: 1.5 !important;
+            }
+            
+            .prediction-badge {
+                font-size: 0.625rem !important;
+                padding: 0.125rem 0.5rem !important;
+            }
+            
+            /* Predictions Section */
+            .bg-white.rounded-lg.p-8 h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-6 h4 {
+                font-size: 0.9375rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-6 p {
+                font-size: 0.8125rem !important;
+            }
+            
+            /* General text sizes */
+            .text-xl {
+                font-size: 1rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-5xl {
+                font-size: 1.75rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Extra small screens - Further reduced */
+            h1 {
+                font-size: 1.5rem !important;
+            }
+            
+            h2 {
+                font-size: 1.25rem !important;
+            }
+            
+            h3 {
+                font-size: 1rem !important;
+            }
+            
+            h4 {
+                font-size: 0.9375rem !important;
+            }
+            
+            .hero-bg {
+                padding: 2rem 0.75rem !important;
+            }
+            
+            .hero-bg p {
+                font-size: 0.9375rem !important;
+            }
+            
+            .hero-bg .text-sm {
+                font-size: 0.6875rem !important;
+            }
+            
+            .team-card {
+                padding: 0.75rem !important;
+            }
+            
+            .team-card .text-2xl {
+                font-size: 1rem !important;
+            }
+            
+            .team-card .text-lg {
+                font-size: 0.875rem !important;
+            }
+            
+            .team-card .text-sm {
+                font-size: 0.75rem !important;
+            }
+            
+            .team-card .text-xs {
+                font-size: 0.625rem !important;
+            }
+            
+            .grid.grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .text-xl {
+                font-size: 0.9375rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-5xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .team-header-gradient {
+                height: 100px !important;
+            }
+            
+            .team-header-gradient .text-6xl {
+                font-size: 2rem !important;
+            }
+            
+            .team-header-gradient .text-2xl {
+                font-size: 0.9375rem !important;
+            }
+            
+            .team-header-gradient .text-sm {
+                font-size: 0.6875rem !important;
+            }
+            
+            .comparison-table {
+                font-size: 0.6875rem !important;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.375rem 0.25rem !important;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 0.375rem !important;
+            }
+            
+            .gallery-item img {
+                height: 100px !important;
+            }
+            
+            .highlight-image {
+                height: 120px !important;
+            }
+            
+            .faq-question {
+                padding: 0.875rem !important;
+                font-size: 0.875rem !important;
+            }
+            
+            .faq-answer {
+                font-size: 0.8125rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-8 {
+                padding: 1.5rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-8 h3 {
+                font-size: 1.125rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-6 h4 {
+                font-size: 0.875rem !important;
+            }
+            
+            .bg-white.rounded-lg.p-6 p {
+                font-size: 0.75rem !important;
+            }
+            
+            .bg-white.rounded-lg.shadow-lg.p-6 {
+                padding: 1rem !important;
+            }
+            
+            .bg-white.rounded-lg.shadow-lg.p-6 h3 {
+                font-size: 0.9375rem !important;
+            }
+            
+            .bg-white.rounded-lg.shadow-lg.p-6 p {
+                font-size: 0.6875rem !important;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced interactivity */
+        .team-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .team-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Loading animation for charts */
+        .chart-container {
+            position: relative;
+        }
+        
+        /* Enhanced button interactions */
+        button, .team-selector {
+            transition: all 0.3s ease;
+        }
+        
+        button:hover, .team-selector:hover {
+            transform: scale(1.05);
+        }
+        
+        button:active, .team-selector:active {
+            transform: scale(0.95);
+        }
+        
+        /* Improved accessibility */
+        .team-card:focus,
+        button:focus,
+        .faq-question:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        /* Better mobile touch targets */
+        @media (max-width: 768px) {
+            .team-card,
+            button,
+            .faq-question {
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20 px-4 relative">
+        <div class="hero-overlay"></div>
+        <div class="max-w-7xl mx-auto text-center fade-in relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <i class="fas fa-basketball-ball mr-4"></i>
+                Top 5 Basketball Teams
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">NBA Power Rankings</p>
+            <div class="flex justify-center items-center space-x-4 text-sm md:text-base">
+                <span><i class="fas fa-trophy text-yellow-400"></i> Top Rankings</span>
+                <span>|</span>
+                <span><i class="fas fa-chart-line"></i> Performance Analytics</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top 5 Teams Grid -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
+                <i class="fas fa-trophy text-yellow-500 mr-3"></i>
+                Elite Teams
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="teamsGrid">
+                <!-- Teams will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Comparison Tool -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-balance-scale mr-3 text-blue-500"></i>
+                Team Comparison Tool
+            </h2>
+            <p class="text-center text-gray-600 mb-8">Click on two teams below to compare their stats</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8" id="comparisonSelector">
+                <!-- Comparison buttons will be inserted here -->
+            </div>
+            <div id="comparisonResults" class="hidden fade-in">
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 comparison-table shadow-lg">
+                    <div class="mb-4 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Head-to-Head Comparison</h3>
+                        <p class="text-sm text-gray-600">Green highlights indicate the better statistic</p>
+                    </div>
+                    <table class="w-full text-center">
+                        <thead>
+                            <tr class="border-b-2 border-gray-300">
+                                <th class="p-4 font-semibold text-gray-700">Stat</th>
+                                <th id="team1Name" class="p-4 font-semibold text-gray-700"></th>
+                                <th id="team2Name" class="p-4 font-semibold text-gray-700"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody">
+                            <!-- Comparison data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Analytics -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-chart-line mr-3 text-green-500"></i>
+                Performance Analytics
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Comprehensive statistical analysis of team performance</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-chart-bar mr-2 text-blue-500"></i>Overall Team Strength
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Comprehensive rating based on all key factors</p>
+                    <canvas id="winChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-balance-scale mr-2 text-green-500"></i>Offense vs Defense
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Comparing offensive and defensive capabilities</p>
+                    <canvas id="pointsChart"></canvas>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-users mr-2 text-purple-500"></i>Roster Depth
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Quality and depth of team roster</p>
+                    <canvas id="reboundsChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-trophy mr-2 text-yellow-500"></i>Experience & Coaching
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Team experience and coaching quality</p>
+                    <canvas id="assistsChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-bullseye mr-2 text-red-500"></i>Shooting Rating
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">Overall shooting and scoring efficiency</p>
+                    <canvas id="fgChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights & Gallery -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-star mr-3 text-red-500"></i>
+                Key Highlights & Action Gallery
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Iconic moments and highlights showcasing elite basketball excellence</p>
+            
+            <!-- Highlights Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="highlightsGrid">
+                <!-- Highlights will be inserted here -->
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <span class="close-modal">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="Enlarged view">
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="py-16 px-4 bg-gradient-to-br from-gray-50 to-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-question-circle mr-3 text-blue-500"></i>
+                Frequently Asked Questions & Insights
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Explore timeless insights and answers about what makes these teams elite</p>
+            
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden" id="faqContainer">
+                <!-- FAQ items will be dynamically inserted here -->
+            </div>
+            
+            <!-- Prediction Section -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-3xl font-bold mb-6 text-gray-800 text-center">
+                    <i class="fas fa-lightbulb mr-3 text-purple-500"></i>
+                    Team Insights & Key Strengths
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="predictionsContainer">
+                    <!-- Predictions will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Team Data - Evergreen content that stays relevant
+        const teams = [
+            {
+                id: 1,
+                name: "Boston Celtics",
+                rank: 1,
+                logo: "images/logos/celtics-logo.png",
+                color: "#007A33",
+                conference: "Eastern",
+                starPlayer: "Jayson Tatum",
+                description: "One of the most storied franchises in NBA history with 17 championships.",
+                // Relative strengths (0-100 scale, evergreen)
+                strengths: {
+                    offense: 92,
+                    defense: 88,
+                    depth: 95,
+                    coaching: 90,
+                    experience: 93,
+                    shooting: 89
+                },
+                playingStyle: "Fast-paced, three-point heavy offense with versatile defense",
+                keyStrengths: ["Elite roster depth", "Championship pedigree", "Versatile scoring", "Strong team culture"],
+                championships: 17,
+                founded: 1946,
+                arena: "TD Garden"
+            },
+            {
+                id: 2,
+                name: "Denver Nuggets",
+                rank: 2,
+                logo: "images/logos/nuggets-logo.png",
+                color: "#0E2240",
+                conference: "Western",
+                starPlayer: "Nikola Jokić",
+                description: "Championship-winning team built around elite playmaking and team chemistry.",
+                strengths: {
+                    offense: 94,
+                    defense: 85,
+                    depth: 87,
+                    coaching: 92,
+                    experience: 91,
+                    shooting: 88
+                },
+                playingStyle: "Motion offense with exceptional ball movement and inside-out game",
+                keyStrengths: ["Elite playmaking", "Championship experience", "Team chemistry", "Versatile big men"],
+                championships: 1,
+                founded: 1967,
+                arena: "Ball Arena"
+            },
+            {
+                id: 3,
+                name: "Oklahoma City Thunder",
+                rank: 3,
+                logo: "images/logos/thunder-logo.png",
+                color: "#007AC1",
+                conference: "Western",
+                starPlayer: "Shai Gilgeous-Alexander",
+                description: "Dynamic young team with explosive athleticism and high-octane offense.",
+                strengths: {
+                    offense: 96,
+                    defense: 82,
+                    depth: 85,
+                    coaching: 88,
+                    experience: 75,
+                    shooting: 91
+                },
+                playingStyle: "High-tempo, transition-heavy offense with aggressive defense",
+                keyStrengths: ["Explosive scoring", "Young talent", "Fast-paced play", "Athleticism"],
+                championships: 0,
+                founded: 1967,
+                arena: "Paycom Center"
+            },
+            {
+                id: 4,
+                name: "Minnesota Timberwolves",
+                rank: 4,
+                logo: "images/logos/timberwolves-logo.png",
+                color: "#0C2340",
+                conference: "Western",
+                starPlayer: "Anthony Edwards",
+                description: "Elite defensive unit with rising stars and championship aspirations.",
+                strengths: {
+                    offense: 86,
+                    defense: 94,
+                    depth: 83,
+                    coaching: 89,
+                    experience: 78,
+                    shooting: 84
+                },
+                playingStyle: "Defense-first approach with strong rim protection and transition offense",
+                keyStrengths: ["Elite defense", "Rising stars", "Rim protection", "Length and athleticism"],
+                championships: 0,
+                founded: 1989,
+                arena: "Target Center"
+            },
+            {
+                id: 5,
+                name: "Milwaukee Bucks",
+                rank: 5,
+                logo: "images/logos/bucks-logo.png",
+                color: "#00471B",
+                conference: "Eastern",
+                starPlayer: "Giannis Antetokounmpo",
+                description: "Championship-winning franchise with one of the most dominant players in the game.",
+                strengths: {
+                    offense: 90,
+                    defense: 89,
+                    depth: 86,
+                    coaching: 87,
+                    experience: 90,
+                    shooting: 85
+                },
+                playingStyle: "Physical, paint-dominant offense with versatile defensive schemes",
+                keyStrengths: ["Superstar talent", "Championship experience", "Physical play", "Versatile defense"],
+                championships: 2,
+                founded: 1968,
+                arena: "Fiserv Forum"
+            }
+        ];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTeams();
+            renderComparisonSelector();
+            renderHighlights();
+            renderGallery();
+            renderFAQ();
+            renderPredictions();
+            initializeCharts();
+        });
+
+        // Render team cards
+        function renderTeams() {
+            const grid = document.getElementById('teamsGrid');
+            grid.innerHTML = ''; // Clear existing
+            teams.forEach(team => {
+                const card = document.createElement('div');
+                card.className = 'team-card bg-white rounded-lg shadow-lg p-6 fade-in';
+                card.style.borderTop = `4px solid ${team.color}`;
+                card.onclick = () => selectTeam(team.id);
+                card.dataset.teamId = team.id;
+                
+                // Calculate overall strength
+                const overallStrength = Math.round(
+                    (team.strengths.offense + team.strengths.defense + team.strengths.depth + 
+                     team.strengths.coaching + team.strengths.experience + team.strengths.shooting) / 6
+                );
+                
+                card.innerHTML = `
+                    <div class="mb-4 relative rounded-lg overflow-hidden" style="background: linear-gradient(135deg, ${team.color} 0%, ${team.color}dd 50%, ${team.color}aa 100%); height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);"></div>
+                        <div class="absolute top-4 left-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-2xl font-bold z-10">
+                            #${team.rank}
+                        </div>
+                        ${team.championships > 0 ? `
+                        <div class="absolute top-4 right-4 bg-yellow-500 bg-opacity-90 text-white px-3 py-1 rounded-full text-sm font-bold z-10">
+                            <i class="fas fa-trophy mr-1"></i>${team.championships}x Champs
+                        </div>
+                        ` : ''}
+                        <div class="relative z-10 text-center">
+                            <i class="fas fa-basketball-ball text-white text-6xl opacity-30"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="${team.logo}" alt="${team.name} Logo" class="team-logo" loading="lazy">
+                        </div>
+                        <div class="text-right flex-1">
+                            <div class="text-2xl font-bold" style="color: ${team.color}">${team.name}</div>
+                            <div class="text-sm text-gray-500">${team.conference} Conference</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4 italic">${team.description}</p>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600 font-semibold">Overall Strength</span>
+                            <span class="font-bold text-lg" style="color: ${team.color}">${overallStrength}/100</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="stat-bar h-3 rounded-full" style="width: ${overallStrength}%; background: ${team.color}"></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <div class="text-xs text-gray-600 mb-1">Offense</div>
+                            <div class="flex items-center">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: ${team.strengths.offense}%"></div>
+                                </div>
+                                <span class="text-sm font-bold">${team.strengths.offense}</span>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <div class="text-xs text-gray-600 mb-1">Defense</div>
+                            <div class="flex items-center">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: ${team.strengths.defense}%"></div>
+                                </div>
+                                <span class="text-sm font-bold">${team.strengths.defense}</span>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 p-3 rounded-lg">
+                            <div class="text-xs text-gray-600 mb-1">Depth</div>
+                            <div class="flex items-center">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: ${team.strengths.depth}%"></div>
+                                </div>
+                                <span class="text-sm font-bold">${team.strengths.depth}</span>
+                            </div>
+                        </div>
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <div class="text-xs text-gray-600 mb-1">Experience</div>
+                            <div class="flex items-center">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: ${team.strengths.experience}%"></div>
+                                </div>
+                                <span class="text-sm font-bold">${team.strengths.experience}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="mb-3">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <div class="text-sm text-gray-500">Star Player</div>
+                            </div>
+                            <div class="font-semibold text-lg" style="color: ${team.color}">${team.starPlayer}</div>
+                        </div>
+                        <div class="text-xs text-gray-600 mb-2">
+                            <i class="fas fa-basketball-ball mr-1"></i><strong>Style:</strong> ${team.playingStyle}
+                        </div>
+                        <div class="flex flex-wrap gap-1">
+                            ${team.keyStrengths.map(strength => `
+                                <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">${strength}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Team selection for comparison
+        let selectedTeams = [];
+        
+        function selectTeam(teamId) {
+            const team = teams.find(t => t.id === teamId);
+            const card = event.currentTarget;
+            
+            if (selectedTeams.includes(teamId)) {
+                selectedTeams = selectedTeams.filter(id => id !== teamId);
+                card.classList.remove('selected');
+            } else if (selectedTeams.length < 2) {
+                selectedTeams.push(teamId);
+                card.classList.add('selected');
+            } else {
+                // Replace first selection
+                const oldCard = document.querySelector(`[data-team-id="${selectedTeams[0]}"]`);
+                if (oldCard) oldCard.classList.remove('selected');
+                selectedTeams[0] = teamId;
+                card.classList.add('selected');
+            }
+            
+            // Update comparison selector buttons
+            document.querySelectorAll('.team-selector').forEach(btn => {
+                const btnTeamId = parseInt(btn.dataset.teamId);
+                if (selectedTeams.includes(btnTeamId)) {
+                    btn.classList.add('ring-4', 'ring-blue-500', 'bg-blue-50');
+                } else {
+                    btn.classList.remove('ring-4', 'ring-blue-500', 'bg-blue-50');
+                }
+            });
+            
+            if (selectedTeams.length === 2) {
+                showComparison(selectedTeams[0], selectedTeams[1]);
+            } else {
+                document.getElementById('comparisonResults').classList.add('hidden');
+            }
+        }
+
+        // Render comparison selector
+        function renderComparisonSelector() {
+            const selector = document.getElementById('comparisonSelector');
+            selector.innerHTML = ''; // Clear existing content
+            teams.forEach(team => {
+                const btn = document.createElement('button');
+                btn.className = 'p-4 rounded-lg border-2 border-gray-300 hover:border-blue-500 transition team-selector bg-white hover:shadow-lg';
+                btn.style.borderColor = team.color;
+                btn.dataset.teamId = team.id;
+                btn.setAttribute('aria-label', `Select ${team.name} for comparison`);
+                btn.innerHTML = `
+                    <img src="${team.logo}" alt="${team.name}" class="w-12 h-12 mx-auto mb-2" loading="lazy">
+                    <div class="text-sm font-semibold">${team.name}</div>
+                `;
+                btn.onclick = () => {
+                    const isSelected = selectedTeams.includes(team.id);
+                    
+                    if (isSelected) {
+                        // Deselect if already selected
+                        selectedTeams = selectedTeams.filter(id => id !== team.id);
+                        btn.classList.remove('ring-4', 'ring-blue-500', 'bg-blue-50');
+                        document.getElementById('comparisonResults').classList.add('hidden');
+                    } else {
+                        if (selectedTeams.length >= 2) {
+                            // Replace first selection
+                            const firstBtn = document.querySelector(`[data-team-id="${selectedTeams[0]}"]`);
+                            if (firstBtn) {
+                                firstBtn.classList.remove('ring-4', 'ring-blue-500', 'bg-blue-50');
+                            }
+                            selectedTeams = [selectedTeams[1], team.id];
+                        } else {
+                            selectedTeams.push(team.id);
+                        }
+                        btn.classList.add('ring-4', 'ring-blue-500', 'bg-blue-50');
+                        
+                        if (selectedTeams.length === 2) {
+                            showComparison(selectedTeams[0], selectedTeams[1]);
+                        }
+                    }
+                };
+                selector.appendChild(btn);
+            });
+        }
+
+        // Show comparison
+        function showComparison(team1Id, team2Id) {
+            const team1 = teams.find(t => t.id === team1Id);
+            const team2 = teams.find(t => t.id === team2Id);
+            
+            document.getElementById('team1Name').innerHTML = `<span style="color: ${team1.color}">${team1.name}</span>`;
+            document.getElementById('team2Name').innerHTML = `<span style="color: ${team2.color}">${team2.name}</span>`;
+            
+            const stats = [
+                { label: 'Offense Rating', team1: team1.strengths.offense, team2: team2.strengths.offense, higherIsBetter: true },
+                { label: 'Defense Rating', team1: team1.strengths.defense, team2: team2.strengths.defense, higherIsBetter: true },
+                { label: 'Roster Depth', team1: team1.strengths.depth, team2: team2.strengths.depth, higherIsBetter: true },
+                { label: 'Coaching', team1: team1.strengths.coaching, team2: team2.strengths.coaching, higherIsBetter: true },
+                { label: 'Experience', team1: team1.strengths.experience, team2: team2.strengths.experience, higherIsBetter: true },
+                { label: 'Shooting', team1: team1.strengths.shooting, team2: team2.strengths.shooting, higherIsBetter: true },
+                { label: 'Championships', team1: team1.championships, team2: team2.championships, higherIsBetter: true },
+                { label: 'Star Player', team1: team1.starPlayer, team2: team2.starPlayer, higherIsBetter: null },
+                { label: 'Conference', team1: team1.conference, team2: team2.conference, higherIsBetter: null },
+                { label: 'Playing Style', team1: team1.playingStyle, team2: team2.playingStyle, higherIsBetter: null }
+            ];
+            
+            const tbody = document.getElementById('comparisonTableBody');
+            tbody.innerHTML = '';
+            
+            stats.forEach(stat => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-50 transition';
+                
+                let winner1 = '';
+                let winner2 = '';
+                let display1 = stat.team1;
+                let display2 = stat.team2;
+                
+                if (stat.higherIsBetter !== null && typeof stat.team1 === 'number' && typeof stat.team2 === 'number') {
+                    if (stat.higherIsBetter) {
+                        winner1 = stat.team1 > stat.team2 ? 'text-green-600 font-bold' : '';
+                        winner2 = stat.team2 > stat.team1 ? 'text-green-600 font-bold' : '';
+                    } else {
+                        winner1 = stat.team1 < stat.team2 ? 'text-green-600 font-bold' : '';
+                        winner2 = stat.team2 < stat.team1 ? 'text-green-600 font-bold' : '';
+                    }
+                    display1 = stat.team1 + '/100';
+                    display2 = stat.team2 + '/100';
+                }
+                
+                row.innerHTML = `
+                    <td class="p-4 font-semibold text-left">${stat.label}</td>
+                    <td class="p-4 ${winner1}">${display1}</td>
+                    <td class="p-4 ${winner2}">${display2}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            const resultsDiv = document.getElementById('comparisonResults');
+            resultsDiv.classList.remove('hidden');
+            // Scroll to comparison results smoothly
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+
+        // Render highlights - Dynamic content that doesn't age
+        function renderHighlights() {
+            // Shuffle highlights randomly for variety on each visit
+            const allHighlights = [
+                { team: "Boston Celtics", title: "Elite Offensive Performance", type: "achievement", image: "images/highlights/highlight-1.png", description: "Consistent high-scoring games" },
+                { team: "Denver Nuggets", title: "Triple-Double Excellence", type: "performance", image: "images/highlights/highlight-2.png", description: "Outstanding all-around play" },
+                { team: "Oklahoma City Thunder", title: "High-Scoring Offense", type: "performance", image: "images/highlights/highlight-3.png", description: "Explosive offensive capabilities" },
+                { team: "Minnesota Timberwolves", title: "Defensive Dominance", type: "game", image: "images/highlights/highlight-4.png", description: "Elite defensive strategies" },
+                { team: "Milwaukee Bucks", title: "Paint Dominance", type: "performance", image: "images/highlights/highlight-5.png", description: "Strong inside presence" },
+                { team: "Boston Celtics", title: "Championship Contender", type: "achievement", image: "images/highlights/highlight-6.png", description: "Top-tier team performance" }
+            ];
+            
+            // Display all 6 highlights
+            const highlights = allHighlights;
+            
+            const grid = document.getElementById('highlightsGrid');
+            highlights.forEach(highlight => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition';
+                const team = teams.find(t => t.name === highlight.team);
+                card.style.borderLeft = `4px solid ${team ? team.color : '#666'}`;
+                
+                const icon = highlight.type === 'achievement' ? 'fa-trophy' : 
+                            highlight.type === 'performance' ? 'fa-star' : 'fa-basketball-ball';
+                
+                card.innerHTML = `
+                    <div class="mb-4">
+                        <img src="${highlight.image}" alt="${highlight.title}" class="highlight-image" onclick="openImageModal('${highlight.image}', '${highlight.title}')" loading="lazy">
+                    </div>
+                    <div class="flex items-start justify-between mb-3">
+                        <i class="fas ${icon} text-2xl" style="color: ${team ? team.color : '#666'}"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">${highlight.title}</h3>
+                    <p class="text-gray-600 text-sm mb-1">${highlight.team}</p>
+                    <p class="text-gray-500 text-xs">${highlight.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize charts with evergreen data
+        function initializeCharts() {
+            // Overall Strength Chart
+            const winCtx = document.getElementById('winChart').getContext('2d');
+            const overallStrengths = teams.map(t => 
+                Math.round((t.strengths.offense + t.strengths.defense + t.strengths.depth + 
+                           t.strengths.coaching + t.strengths.experience + t.strengths.shooting) / 6)
+            );
+            new Chart(winCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Overall Strength',
+                        data: overallStrengths,
+                        backgroundColor: teams.map(t => t.color),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '/100';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Offense vs Defense Chart
+            const pointsCtx = document.getElementById('pointsChart').getContext('2d');
+            new Chart(pointsCtx, {
+                type: 'line',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Offense Rating',
+                        data: teams.map(t => t.strengths.offense),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Defense Rating',
+                        data: teams.map(t => t.strengths.defense),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Key Strengths Chart
+            const reboundsCtx = document.getElementById('reboundsChart').getContext('2d');
+            new Chart(reboundsCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Roster Depth',
+                        data: teams.map(t => t.strengths.depth),
+                        backgroundColor: teams.map(t => t.color + '80'),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Experience & Coaching Chart
+            const assistsCtx = document.getElementById('assistsChart').getContext('2d');
+            new Chart(assistsCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Experience',
+                        data: teams.map(t => t.strengths.experience),
+                        backgroundColor: teams.map(t => t.color + '60'),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }, {
+                        label: 'Coaching',
+                        data: teams.map(t => t.strengths.coaching),
+                        backgroundColor: teams.map(t => t.color + 'A0'),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Shooting & Championships Chart
+            const fgCtx = document.getElementById('fgChart').getContext('2d');
+            new Chart(fgCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Shooting Rating',
+                        data: teams.map(t => t.strengths.shooting),
+                        backgroundColor: teams.map(t => t.color),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // Render gallery
+        function renderGallery() {
+            const gallery = document.getElementById('galleryGrid');
+            const galleryImages = [
+                { src: "images/gallery/gallery-1.png", title: "Game Action" },
+                { src: "images/gallery/gallery-2.png", title: "Team Celebration" },
+                { src: "images/gallery/gallery-3.png", title: "Dunk Moment" },
+                { src: "images/gallery/gallery-4.png", title: "Three Pointer" },
+                { src: "images/gallery/gallery-5.png", title: "Defensive Play" },
+                { src: "images/gallery/gallery-6.png", title: "Arena Atmosphere" },
+                { src: "images/gallery/gallery-7.png", title: "Championship Moment" },
+                { src: "images/gallery/gallery-8.png", title: "Team Huddle" },
+                { src: "images/gallery/gallery-9.png", title: "Fast Break" }
+            ];
+            
+            galleryImages.forEach((item, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => openImageModal(item.src, item.title);
+                galleryItem.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <p class="text-sm font-semibold">${item.title}</p>
+                    </div>
+                `;
+                gallery.appendChild(galleryItem);
+            });
+        }
+
+        // Image modal functions
+        function openImageModal(imageSrc, imageTitle) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modalImg.alt = imageTitle;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Render FAQ Section - Evergreen content
+        function renderFAQ() {
+            const faqContainer = document.getElementById('faqContainer');
+            const faqs = [
+                {
+                    question: "What makes these teams elite and championship contenders?",
+                    answer: `These teams excel in multiple areas: ${teams[0].name} (${teams[0].championships} championships, elite depth, ${teams[0].strengths.offense}/100 offense), ${teams[1].name} (${teams[1].championships} championship, exceptional playmaking, ${teams[1].strengths.coaching}/100 coaching), ${teams[2].name} (${teams[2].strengths.offense}/100 offense, explosive scoring, young talent), ${teams[3].name} (${teams[3].strengths.defense}/100 defense, elite rim protection), and ${teams[4].name} (${teams[4].championships} championships, superstar talent, ${teams[4].strengths.experience}/100 experience). Their balanced strengths, star power, and championship pedigree set them apart.`,
+                    category: "Analysis"
+                },
+                {
+                    question: "Which team has the best offensive capabilities?",
+                    answer: `The ${teams[2].name} lead with a ${teams[2].strengths.offense}/100 offensive rating, known for their ${teams[2].playingStyle}. ${teams[0].name} follow closely with ${teams[0].strengths.offense}/100, excelling in ${teams[0].playingStyle}. ${teams[1].name} also rank highly at ${teams[1].strengths.offense}/100 with their ${teams[1].playingStyle}. All three teams feature elite scoring and efficient offensive systems.`,
+                    category: "Offense"
+                },
+                {
+                    question: "Which team has the strongest defensive system?",
+                    answer: `The ${teams[3].name} showcase elite defensive capabilities with a ${teams[3].strengths.defense}/100 defensive rating. Their ${teams[3].playingStyle} makes them a formidable defensive unit. ${teams[0].name} also excel defensively at ${teams[0].strengths.defense}/100, while ${teams[4].name} combine strong defense (${teams[4].strengths.defense}/100) with physical play. Defense wins championships, and these teams have it.`,
+                    category: "Defense"
+                },
+                {
+                    question: "How do these teams compare in terms of roster depth and experience?",
+                    answer: `${teams[0].name} lead in roster depth with ${teams[0].strengths.depth}/100, featuring exceptional bench strength. In terms of experience, ${teams[0].name} (${teams[0].strengths.experience}/100) and ${teams[1].name} (${teams[1].strengths.experience}/100) have the most playoff and championship experience. ${teams[2].name} have less experience (${teams[2].strengths.experience}/100) but make up for it with young, explosive talent.`,
+                    category: "Team Play"
+                },
+                {
+                    question: "What are the key factors that make these teams championship contenders?",
+                    answer: `Several timeless factors: (1) Roster depth - ${teams[0].name} excel here (${teams[0].strengths.depth}/100), (2) Championship experience - ${teams[0].name} (${teams[0].championships} titles) and ${teams[1].name} (${teams[1].championships} title) have proven pedigree, (3) Star player impact - ${teams[4].name}'s ${teams[4].starPlayer} and ${teams[0].name}'s ${teams[0].starPlayer} are game-changers, (4) Coaching quality - all teams rank ${teams[0].strengths.coaching}+/100, and (5) Balanced strengths across offense and defense.`,
+                    category: "Championship"
+                },
+                {
+                    question: "Which team has the best shooting and scoring efficiency?",
+                    answer: `${teams[2].name} lead in shooting rating at ${teams[2].strengths.shooting}/100, combining efficient scoring with their high-tempo style. ${teams[0].name} follow at ${teams[0].strengths.shooting}/100, excelling in three-point shooting. ${teams[1].name} (${teams[1].strengths.shooting}/100) and ${teams[4].name} (${teams[4].strengths.shooting}/100) also maintain strong shooting efficiency. All teams feature capable shooters and efficient offensive systems.`,
+                    category: "Shooting"
+                },
+                {
+                    question: "How do the Eastern and Western Conferences compare?",
+                    answer: `The top 5 features ${teams.filter(t => t.conference === 'Eastern').length} Eastern Conference teams (${teams.filter(t => t.conference === 'Eastern').map(t => t.name).join(', ')}) and ${teams.filter(t => t.conference === 'Western').length} Western Conference teams (${teams.filter(t => t.conference === 'Western').map(t => t.name).join(', ')}). The East features ${teams[0].name} with ${teams[0].championships} championships and ${teams[4].name} with ${teams[4].championships} titles, while the West includes ${teams[1].name} with ${teams[1].championships} championship and other strong contenders.`,
+                    category: "Conference"
+                },
+                {
+                    question: "What role do star players play in these teams' success?",
+                    answer: `Star players are crucial: ${teams[0].name}'s ${teams[0].starPlayer} provides scoring and leadership, ${teams[1].name}'s ${teams[1].starPlayer} offers unique playmaking and versatility, ${teams[2].name}'s ${teams[2].starPlayer} brings explosive scoring, ${teams[3].name}'s ${teams[3].starPlayer} adds dynamic two-way play, and ${teams[4].name}'s ${teams[4].starPlayer} dominates with physicality and skill. Each star elevates their team's performance significantly and serves as the foundation for their team's identity.`,
+                    category: "Players"
+                },
+                {
+                    question: "What makes each team's playing style unique?",
+                    answer: `Each team has a distinct identity: ${teams[0].name} - ${teams[0].playingStyle}; ${teams[1].name} - ${teams[1].playingStyle}; ${teams[2].name} - ${teams[2].playingStyle}; ${teams[3].name} - ${teams[3].playingStyle}; ${teams[4].name} - ${teams[4].playingStyle}. These styles reflect their roster composition, coaching philosophy, and team culture, making each team uniquely challenging to face.`,
+                    category: "Style"
+                },
+                {
+                    question: "Which teams have the most championship experience?",
+                    answer: `${teams[0].name} lead with ${teams[0].championships} NBA championships, the most of any team in this group. ${teams[4].name} have ${teams[4].championships} championships, while ${teams[1].name} has ${teams[1].championships} championship. ${teams[2].name} and ${teams[3].name} are building toward their first championship. Championship experience provides invaluable knowledge in high-pressure situations and playoff basketball.`,
+                    category: "Legacy"
+                }
+            ];
+            
+            faqs.forEach((faq, index) => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                faqItem.innerHTML = `
+                    <div class="faq-question" onclick="toggleFAQ(${index})">
+                        <div class="flex items-center">
+                            <span class="font-semibold text-lg text-gray-800">${faq.question}</span>
+                            <span class="prediction-badge prediction-${index % 3 === 0 ? 'high' : index % 3 === 1 ? 'medium' : 'low'} ml-3">${faq.category}</span>
+                        </div>
+                        <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600 leading-relaxed">${faq.answer}</p>
+                    </div>
+                `;
+                faqContainer.appendChild(faqItem);
+            });
+        }
+
+        // Toggle FAQ item
+        function toggleFAQ(index) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            const clickedItem = faqItems[index];
+            const isActive = clickedItem.classList.contains('active');
+            
+            // Close all FAQ items
+            faqItems.forEach(item => item.classList.remove('active'));
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                clickedItem.classList.add('active');
+            }
+        }
+
+        // Make toggleFAQ globally accessible
+        window.toggleFAQ = toggleFAQ;
+
+        // Render Predictions - Evergreen insights
+        function renderPredictions() {
+            const predictionsContainer = document.getElementById('predictionsContainer');
+            const overallStrength0 = Math.round((teams[0].strengths.offense + teams[0].strengths.defense + teams[0].strengths.depth + teams[0].strengths.coaching + teams[0].strengths.experience + teams[0].strengths.shooting) / 6);
+            const overallStrength2 = Math.round((teams[2].strengths.offense + teams[2].strengths.defense + teams[2].strengths.depth + teams[2].strengths.coaching + teams[2].strengths.experience + teams[2].strengths.shooting) / 6);
+            const overallStrength1 = Math.round((teams[1].strengths.offense + teams[1].strengths.defense + teams[1].strengths.depth + teams[1].strengths.coaching + teams[1].strengths.experience + teams[1].strengths.shooting) / 6);
+            
+            const predictions = [
+                {
+                    title: "Championship Pedigree",
+                    team: teams[0].name,
+                    confidence: "High",
+                    icon: "fa-trophy",
+                    color: "text-yellow-500",
+                    bgColor: "bg-yellow-50",
+                    prediction: `${teams[0].name} are perennial contenders with ${teams[0].championships} championships and an overall strength rating of ${overallStrength0}/100. Their elite depth (${teams[0].strengths.depth}/100) and balanced offense (${teams[0].strengths.offense}/100) and defense (${teams[0].strengths.defense}/100) make them a consistent championship threat.`,
+                    keyFactors: [`${teams[0].championships} Championships`, `${overallStrength0}/100 Overall`, "Elite depth"]
+                },
+                {
+                    title: "Rising Powerhouse",
+                    team: teams[2].name,
+                    confidence: "Medium-High",
+                    icon: "fa-bolt",
+                    color: "text-blue-500",
+                    bgColor: "bg-blue-50",
+                    prediction: `${teams[2].name} represent the future with explosive offense (${teams[2].strengths.offense}/100) and elite shooting (${teams[2].strengths.shooting}/100). Their ${teams[2].playingStyle} makes them dangerous. With overall strength of ${overallStrength2}/100, they're building toward championship contention.`,
+                    keyFactors: [`${teams[2].strengths.offense}/100 Offense`, `${teams[2].strengths.shooting}/100 Shooting`, "Young talent"]
+                },
+                {
+                    title: "Defensive Excellence",
+                    team: teams[3].name,
+                    confidence: "High",
+                    icon: "fa-shield-alt",
+                    color: "text-green-500",
+                    bgColor: "bg-green-50",
+                    prediction: `${teams[3].name} lead defensively with a ${teams[3].strengths.defense}/100 defensive rating. Their ${teams[3].playingStyle} creates a formidable defensive unit. Defense wins championships, and they have elite-level defense combined with rising offensive stars.`,
+                    keyFactors: [`${teams[3].strengths.defense}/100 Defense`, "Elite rim protection", "Defense-first"]
+                },
+                {
+                    title: "Most Balanced Team",
+                    team: teams[1].name,
+                    confidence: "High",
+                    icon: "fa-balance-scale",
+                    color: "text-purple-500",
+                    bgColor: "bg-purple-50",
+                    prediction: `${teams[1].name} offer exceptional balance with ${teams[1].championships} championship, strong coaching (${teams[1].strengths.coaching}/100), and overall strength of ${overallStrength1}/100. Their ${teams[1].playingStyle} creates a complete, well-rounded team capable of winning in multiple ways.`,
+                    keyFactors: [`${teams[1].championships} Championship`, `${overallStrength1}/100 Overall`, "Balanced play"]
+                },
+                {
+                    title: "Superstar Impact",
+                    team: teams[4].name,
+                    confidence: "High",
+                    icon: "fa-star",
+                    color: "text-red-500",
+                    bgColor: "bg-red-50",
+                    prediction: `${teams[4].name}'s ${teams[4].starPlayer} is one of the most dominant players in the league. With ${teams[4].championships} championships and strong experience (${teams[4].strengths.experience}/100), ${teams[4].starPlayer} can single-handedly change games. Their ${teams[4].playingStyle} maximizes their superstar's impact.`,
+                    keyFactors: [`${teams[4].starPlayer}`, `${teams[4].championships} Championships`, "MVP-level talent"]
+                },
+                {
+                    title: "Elite Shooting",
+                    team: teams[2].name,
+                    confidence: "High",
+                    icon: "fa-bullseye",
+                    color: "text-indigo-500",
+                    bgColor: "bg-indigo-50",
+                    prediction: `${teams[2].name} excel in shooting with a ${teams[2].strengths.shooting}/100 rating. Combined with their ${teams[2].strengths.offense}/100 offensive rating, they create one of the most efficient and explosive offensive systems. Their ${teams[2].playingStyle} maximizes their shooting strengths.`,
+                    keyFactors: [`${teams[2].strengths.shooting}/100 Shooting`, `${teams[2].strengths.offense}/100 Offense`, "Efficient offense"]
+                }
+            ];
+            
+            predictions.forEach(pred => {
+                const card = document.createElement('div');
+                card.className = `${pred.bgColor} rounded-lg p-6 border-2 border-gray-200 hover:shadow-lg transition`;
+                card.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <i class="fas ${pred.icon} ${pred.color} text-3xl mr-3"></i>
+                        <div>
+                            <h4 class="font-bold text-xl text-gray-800">${pred.title}</h4>
+                            <p class="text-sm text-gray-600">${pred.team}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">${pred.prediction}</p>
+                    <div class="border-t pt-4">
+                        <p class="text-sm font-semibold text-gray-600 mb-2">Key Factors:</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${pred.keyFactors.map(factor => `<span class="px-3 py-1 bg-white rounded-full text-xs font-semibold text-gray-700">${factor}</span>`).join('')}
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-xs font-semibold text-gray-500">Confidence: </span>
+                            <span class="text-xs font-bold ${pred.confidence.includes('High') ? 'text-green-600' : 'text-yellow-600'}">${pred.confidence}</span>
+                        </div>
+                    </div>
+                `;
+                predictionsContainer.appendChild(card);
+            });
+        }
+
+        // Add data attributes to team cards for selection
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.team-card');
+                teams.forEach((team, index) => {
+                    if (cards[index]) {
+                        cards[index].dataset.teamId = team.id;
+                    }
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+

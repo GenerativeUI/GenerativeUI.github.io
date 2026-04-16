@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive comparison of Detroit Red Wings and New York Islanders - Stanley Cups, Hall of Famers, historic achievements, and team legacies">
+    <meta name="keywords" content="Detroit Red Wings, New York Islanders, NHL, Stanley Cup, hockey comparison, NHL history">
+    <meta name="author" content="NHL Historical Comparison">
+    <title>Red Wings vs Islanders - The Ultimate Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-red {
+            background: linear-gradient(135deg, #C8102E 0%, #A00D25 50%, #8B0000 100%);
+            box-shadow: 0 10px 30px rgba(200, 16, 46, 0.3);
+        }
+        
+        .gradient-blue {
+            background: linear-gradient(135deg, #00539B 0%, #004080 50%, #003366 100%);
+            box-shadow: 0 10px 30px rgba(0, 83, 155, 0.3);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 250, 252, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-logo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-logo-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #C8102E;
+            z-index: 2;
+        }
+        
+        .timeline-item.islanders::before {
+            border-color: #00539B;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            bottom: -12px;
+            width: 2px;
+            background: linear-gradient(to bottom, #C8102E, #00539B);
+        }
+        
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #C8102E, #00539B, transparent);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #C8102E 0%, #00539B 100%);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.3);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        @media (max-width: 768px) {
+            /* Hero and main headings - reduced 30% more */
+            .text-6xl {
+                font-size: 1.4rem;
+            }
+            .text-8xl {
+                font-size: 1.75rem;
+            }
+            .text-5xl {
+                font-size: 1.2rem;
+            }
+            .text-4xl {
+                font-size: 1rem;
+            }
+            .text-3xl {
+                font-size: 0.875rem;
+            }
+            .text-2xl {
+                font-size: 0.8rem;
+            }
+            .text-xl {
+                font-size: 0.7rem;
+            }
+            .text-lg {
+                font-size: 0.65rem;
+            }
+            .text-base {
+                font-size: 0.6rem;
+            }
+            .text-sm {
+                font-size: 0.57rem;
+            }
+            
+            /* Body text adjustments */
+            body {
+                font-size: 10px;
+            }
+            
+            /* Paragraph spacing */
+            p {
+                line-height: 1.5;
+            }
+            
+            /* Card padding reduction */
+            .stat-card {
+                padding: 1rem;
+            }
+            
+            /* Section padding reduction */
+            section {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .text-6xl {
+                font-size: 1.2rem;
+            }
+            .text-8xl {
+                font-size: 1.4rem;
+            }
+            .text-5xl {
+                font-size: 1rem;
+            }
+            .text-4xl {
+                font-size: 0.875rem;
+            }
+            .text-3xl {
+                font-size: 0.8rem;
+            }
+            .text-2xl {
+                font-size: 0.7rem;
+            }
+            body {
+                font-size: 9px;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Modern glassmorphism effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* Enhanced focus states for accessibility */
+        a:focus, button:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        
+        /* Improved image loading */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Modern gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #C8102E 0%, #00539B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+        <div class="absolute inset-0 opacity-40" aria-hidden="true">
+            <img src="images/hero-hockey-rink-background.png" alt="Professional ice hockey rink with dramatic lighting" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/80 to-slate-950/80"></div>
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-3xl opacity-40"></div>
+            <div class="absolute bottom-20 right-10 w-72 h-72 bg-blue-600 rounded-full blur-3xl opacity-40"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-20"></div>
+        </div>
+        
+        <div class="relative z-10 container mx-auto px-4 py-20 text-center">
+            <h1 class="text-6xl md:text-8xl max-md:text-5xl font-black mb-8 bg-gradient-to-r from-red-500 via-red-400 to-blue-500 bg-clip-text text-transparent drop-shadow-2xl">
+                THE ULTIMATE SHOWDOWN
+            </h1>
+            <p class="text-2xl md:text-3xl mb-12 text-slate-200 font-medium">Detroit Red Wings vs New York Islanders</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+                <!-- Red Wings Logo -->
+                <div class="team-logo-container gradient-red rounded-3xl p-8 w-64 h-64 flex items-center justify-center shadow-2xl">
+                    <img src="images/drw-logo.png" alt="Detroit Red Wings Logo" class="w-full h-full object-contain">
+                </div>
+                
+                <div class="text-4xl font-bold text-amber-400 drop-shadow-lg">VS</div>
+                
+                <!-- Islanders Logo -->
+                <div class="team-logo-container gradient-blue rounded-3xl p-8 w-64 h-64 flex items-center justify-center shadow-2xl">
+                    <img src="images/nyl-logo.png" alt="New York Islanders Logo" class="w-full h-full object-contain">
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-xl">
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Founded:</span>
+                    <span class="font-bold text-red-600 ml-2">1926</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">1972</span>
+                </div>
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Stanley Cups:</span>
+                    <span class="font-bold text-red-600 ml-2">11</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">4</span>
+                </div>
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Conference:</span>
+                    <span class="font-bold text-red-600 ml-2">Atlantic</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">Metropolitan</span>
+                </div>
+            </div>
+        </div>
+        
+        <a href="#quick-stats" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer" aria-label="Scroll to statistics section">
+            <i class="fas fa-chevron-down text-3xl text-slate-400 hover:text-white transition" aria-hidden="true"></i>
+        </a>
+    </section>
+
+    <!-- Quick Stats Comparison -->
+    <section id="quick-stats" class="py-20 bg-gradient-to-b from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Quick Stats Comparison</h2>
+            <p class="text-center text-slate-400 mb-16 text-sm max-w-2xl mx-auto">Verified statistics from official NHL records and historical archives</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-red-500 shadow-xl">
+                    <div class="text-4xl font-bold text-red-600 mb-2">11</div>
+                    <div class="text-slate-700 font-semibold mb-4">Stanley Cups</div>
+                    <div class="text-sm text-slate-500">Detroit Red Wings</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-blue-500 shadow-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">4</div>
+                    <div class="text-slate-700 font-semibold mb-4">Stanley Cups</div>
+                    <div class="text-sm text-slate-500">New York Islanders</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-amber-500 shadow-xl">
+                    <div class="text-4xl font-bold text-amber-600 mb-2">64-57</div>
+                    <div class="text-slate-700 font-semibold mb-4">Head-to-Head</div>
+                    <div class="text-sm text-slate-500">Islanders Lead (64-57-6-5)</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-purple-500 shadow-xl">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">70+</div>
+                    <div class="text-slate-700 font-semibold mb-4">Hall of Famers</div>
+                    <div class="text-sm text-slate-500">Combined Legacy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Achievements Timeline -->
+    <section class="py-20 bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Historic Achievements Timeline</h2>
+            <p class="text-center text-slate-400 mb-16 text-sm max-w-2xl mx-auto">Key milestones in both teams' storied histories, verified through NHL official records</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="space-y-8">
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">1926</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Detroit Red Wings Founded</h4>
+                                <p class="text-slate-600">Originally named Detroit Cougars, the team was established as one of the Original Six NHL teams. The Red Wings are one of the most storied franchises in professional hockey history.</p>
+                                <img src="images/1926-red-wings-founding.png" alt="1926 Red Wings Founding" class="mt-4 rounded-lg w-full shadow-md">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item islanders">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-600 font-bold text-lg">1972</span>
+                                    <span class="text-sm text-slate-500 font-medium">Islanders</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">New York Islanders Founded</h4>
+                                <p class="text-slate-600">The Islanders joined the NHL as an expansion team in 1972, quickly establishing themselves as a dominant force and achieving one of the greatest dynasties in professional sports history.</p>
+                                <img src="images/1972-islanders-founding.png" alt="1972 Islanders Founding" class="mt-4 rounded-lg w-full shadow-md">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item islanders">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-600 font-bold text-lg">1980-1983</span>
+                                    <span class="text-sm text-slate-500 font-medium">Islanders</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Four Consecutive Stanley Cups</h4>
+                                <p class="text-slate-600">The Islanders achieved an incredible dynasty, winning four straight championships from 1980 to 1983.</p>
+                                <img src="images/1980-1983-islanders-dynasty.png" alt="1980-1983 Islanders Dynasty" class="mt-4 rounded-lg w-full shadow-md">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">1997-2008</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Red Wings Modern Dynasty</h4>
+                                <p class="text-slate-600">Detroit won four Stanley Cups from 1997-2008, including back-to-back championships in 1997 and 1998, establishing one of the most successful eras in franchise history.</p>
+                                <img src="images/1997-2008-red-wings-dynasty.png" alt="1997-2008 Red Wings Dynasty" class="mt-4 rounded-lg w-full shadow-md">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">2008</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">11th Stanley Cup</h4>
+                                <p class="text-slate-600">Detroit's most recent championship, solidifying their status as one of the most successful franchises in NHL history.</p>
+                                <img src="images/2008-red-wings-championship.png" alt="2008 Red Wings Championship" class="mt-4 rounded-lg w-full shadow-md">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legendary Players & Hall of Famers -->
+    <section class="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Legendary Players & Hall of Famers</h2>
+            <p class="text-center text-slate-400 mb-16 text-sm max-w-2xl mx-auto">Iconic players and Hockey Hall of Fame inductees from both franchises</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl border-l-4 border-red-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-red-600">Red Wings Legends</h3>
+                        <img src="images/drw-logo.png" alt="Red Wings" class="w-20 h-20 rounded-full shadow-lg object-contain bg-white p-1">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Hall of Famers</span>
+                            <span class="font-bold text-slate-800">50+ Inductees</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Retired Numbers</span>
+                            <span class="font-bold text-slate-800">8 Numbers</span>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <div class="text-slate-800 font-semibold">Iconic Players:</div>
+                            <div class="text-sm text-slate-600 space-y-1">
+                                <div>• Gordie Howe - "Mr. Hockey"</div>
+                                <div>• Steve Yzerman - Captain for 20 seasons</div>
+                                <div>• Nicklas Lidström - 7 Norris Trophies, 4 Cups</div>
+                                <div>• Sergei Fedorov - Hart Trophy Winner (1994), 3 Cups</div>
+                                <div>• Dominik Hašek - Hall of Fame Goalie, 2-time Stanley Cup Champion with Red Wings</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="images/red-wings-legends.png" alt="Red Wings Legends" class="mt-6 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-blue-600">Islanders Legends</h3>
+                        <img src="images/nyl-logo.png" alt="Islanders" class="w-20 h-20 rounded-full shadow-lg object-contain bg-white p-1">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Hall of Famers</span>
+                            <span class="font-bold text-slate-800">15+ Inductees</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Retired Numbers</span>
+                            <span class="font-bold text-slate-800">6 Numbers</span>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <div class="text-slate-800 font-semibold">Iconic Players:</div>
+                            <div class="text-sm text-slate-600 space-y-1">
+                                <div>• Mike Bossy - 4 Stanley Cups, 573 Career Goals</div>
+                                <div>• Denis Potvin - Captain of Dynasty Teams, 4 Cups</div>
+                                <div>• Bryan Trottier - 4 Cups, Conn Smythe Trophy Winner (1980)</div>
+                                <div>• Billy Smith - Hall of Fame Goalie, 4 Cups</div>
+                                <div>• Clark Gillies - Hall of Fame Power Forward, 4 Cups</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="images/islanders-legends.png" alt="Islanders Legends" class="mt-6 rounded-lg w-full shadow-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Legacy & Culture -->
+    <section class="py-20 bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Team Legacy & Culture</h2>
+            <p class="text-center text-slate-400 mb-16 text-sm max-w-2xl mx-auto">The rich traditions, nicknames, and cultural impact of both franchises</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl">
+                    <h3 class="text-2xl font-bold mb-6 text-red-600 flex items-center gap-3">
+                        <i class="fas fa-trophy"></i>
+                        Detroit Red Wings Legacy
+                    </h3>
+                    <div class="space-y-4 text-slate-700">
+                        <p class="leading-relaxed">The Red Wings are one of the "Original Six" NHL teams, founded in 1926. Known as "Hockeytown," Detroit has one of the most passionate fan bases in professional sports.</p>
+                        <div class="grid grid-cols-2 gap-4 mt-6">
+                            <div class="text-center p-4 bg-red-50 rounded-lg">
+                                <div class="text-3xl font-bold text-red-600">98</div>
+                                <div class="text-sm text-slate-600 mt-1">Years in NHL</div>
+                            </div>
+                            <div class="text-center p-4 bg-red-50 rounded-lg">
+                                <div class="text-3xl font-bold text-red-600">25</div>
+                                <div class="text-sm text-slate-600 mt-1">Consecutive Playoff Years</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-bold text-slate-800 mb-2">Notable Achievements:</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>Longest playoff streak in NHL history (25 consecutive seasons, 1991-2016)</li>
+                                <li>11 Stanley Cup Championships (most by any U.S.-based NHL team)</li>
+                                <li>Home to "The Production Line" - legendary forward line of the 1950s</li>
+                                <li>Joe Louis Arena - "The Joe" - historic home from 1979-2017</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-4">
+                        <img src="images/red-wings-legacy.png" alt="Red Wings Legacy" class="rounded-lg w-full shadow-md">
+                        <img src="images/little-caesars-arena.png" alt="Little Caesars Arena" class="rounded-lg w-full shadow-md">
+                    </div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600 flex items-center gap-3">
+                        <i class="fas fa-trophy"></i>
+                        New York Islanders Legacy
+                    </h3>
+                    <div class="space-y-4 text-slate-700">
+                        <p class="leading-relaxed">The Islanders joined the NHL in 1972 and quickly established a dynasty, winning four consecutive Stanley Cups from 1980-1983 - one of the greatest achievements in sports history.</p>
+                        <div class="grid grid-cols-2 gap-4 mt-6">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-3xl font-bold text-blue-600">52</div>
+                                <div class="text-sm text-slate-600 mt-1">Years in NHL</div>
+                            </div>
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-3xl font-bold text-blue-600">19</div>
+                                <div class="text-sm text-slate-600 mt-1">Consecutive Series Wins</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-bold text-slate-800 mb-2">Notable Achievements:</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>4 consecutive Stanley Cups (1980-1983) - one of sports' greatest dynasties</li>
+                                <li>19 consecutive playoff series wins (1980-1984) - NHL record</li>
+                                <li>Nassau Coliseum - "Fort Neverlose" - historic home from 1972-2015</li>
+                                <li>Strong defensive tradition and goaltending excellence throughout franchise history</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-4">
+                        <img src="images/islanders-legacy.png" alt="Islanders Legacy" class="rounded-lg w-full shadow-md">
+                        <img src="images/ubs-arena.png" alt="UBS Arena" class="rounded-lg w-full shadow-md">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Iconic Moments & Achievements -->
+    <section class="py-20 pb-32 bg-gradient-to-b from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-4 text-white">Iconic Moments & Achievements</h2>
+            <p class="text-center text-slate-400 mb-16 text-sm max-w-2xl mx-auto">Historical achievements and records verified through NHL official statistics and archives</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-red-500">
+                    <div class="text-red-600 text-4xl mb-4"><i class="fas fa-star"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">The Production Line</h4>
+                    <p class="text-slate-600 text-sm">Gordie Howe, Sid Abel, and Ted Lindsay formed "The Production Line" - one of hockey's most legendary forward lines in the 1950s.</p>
+                    <img src="images/production-line-red-wings.png" alt="Production Line" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-blue-500">
+                    <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-crown"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">The Dynasty</h4>
+                    <p class="text-slate-600 text-sm">Islanders' four consecutive Stanley Cups remain one of the most dominant runs in professional sports history.</p>
+                    <img src="images/islanders-dynasty-moment.png" alt="Islanders Dynasty" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-red-500">
+                    <div class="text-red-600 text-4xl mb-4"><i class="fas fa-fire"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">25-Year Playoff Streak</h4>
+                    <p class="text-slate-600 text-sm">Red Wings made the playoffs every year from 1991-2016, an unmatched consistency in modern NHL history.</p>
+                    <img src="images/red-wings-playoff-streak.png" alt="Playoff Streak" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-blue-500">
+                    <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-shield-alt"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">19 Series Wins</h4>
+                    <p class="text-slate-600 text-sm">Islanders won 19 consecutive playoff series from 1980-1984, an NHL record that stands today.</p>
+                    <img src="images/islanders-series-wins.png" alt="Series Wins" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-red-500">
+                    <div class="text-red-600 text-4xl mb-4"><i class="fas fa-users"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Hockeytown</h4>
+                    <p class="text-slate-600 text-sm">Detroit earned the nickname "Hockeytown" for its passionate fan base and rich hockey tradition.</p>
+                    <img src="images/hockeytown-detroit.png" alt="Hockeytown" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-blue-500">
+                    <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-home"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Fort Neverlose</h4>
+                    <p class="text-slate-600 text-sm">Nassau Coliseum was known as "Fort Neverlose" during the Islanders' dynasty years, where they were nearly unbeatable.</p>
+                    <img src="images/fort-neverlose-nassau.png" alt="Fort Neverlose" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-amber-500">
+                    <div class="text-amber-600 text-4xl mb-4"><i class="fas fa-trophy"></i></div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">The Stanley Cup</h4>
+                    <p class="text-slate-600 text-sm">The ultimate prize in hockey - both teams have lifted this iconic trophy, creating unforgettable championship moments.</p>
+                    <img src="images/stanley-cup-trophy.png" alt="Stanley Cup Trophy" class="mt-4 rounded-lg w-full shadow-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+            
+            // Add fade-in animation to cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.stat-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+        
+        // Add interactive hover effects to charts
+        // Add loading optimization
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lazy load images for better performance
+            const images = document.querySelectorAll('img[src^="images/"]');
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.style.opacity = '0';
+                            img.style.transition = 'opacity 0.3s';
+                            setTimeout(() => {
+                                img.style.opacity = '1';
+                            }, 100);
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+                images.forEach(img => imageObserver.observe(img));
+            }
+        });
+    </script>
+</body>
+</html>
+

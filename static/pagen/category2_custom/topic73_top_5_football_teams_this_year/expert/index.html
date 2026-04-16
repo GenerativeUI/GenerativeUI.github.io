@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover the world's most legendary football clubs: Real Madrid, Manchester City, Bayern Munich, Liverpool, and Arsenal. Explore their rich histories, iconic achievements, and timeless legacies.">
+    <title>Top 5 Football Teams | Elite Football Rankings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+        
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .rank-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A8A8A8); }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+        .rank-4 { background: linear-gradient(135deg, #4A90E2, #357ABD); }
+        .rank-5 { background: linear-gradient(135deg, #50C878, #3FAF6C); }
+        
+        .stat-bar {
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 1s ease;
+        }
+        
+        .section {
+            scroll-margin-top: 80px;
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .team-logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .comparison-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        .achievement-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .achievement-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-image:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+            width: 30px;
+            border-radius: 6px;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav.prev {
+            left: 15px;
+        }
+        
+        .carousel-nav.next {
+            right: 15px;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+        
+        .team-logo-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 10px;
+        }
+        
+        .stadium-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .stadium-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .player-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .player-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            border: 3px solid #667eea;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+        }
+        
+        /* Mobile Responsive Font Sizes */
+        @media (max-width: 768px) {
+            .team-card {
+                margin-bottom: 30px;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .gallery-image {
+                height: 100px;
+            }
+            .carousel-container {
+                height: 200px;
+            }
+            
+            /* Hero Section */
+            h2.text-5xl {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            /* Section Headings */
+            h2.text-4xl,
+            h2.text-5xl {
+                font-size: 1.75rem !important;
+            }
+            
+            /* Team Names */
+            h3.text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            /* Paragraphs */
+            p.text-xl,
+            p.text-lg {
+                font-size: 0.9rem !important;
+            }
+            
+            p.text-sm {
+                font-size: 0.8rem !important;
+            }
+            
+            p.text-xs {
+                font-size: 0.7rem !important;
+            }
+            
+            /* Buttons */
+            button.text-lg {
+                font-size: 0.875rem !important;
+                padding: 0.75rem 1.5rem !important;
+            }
+            
+            /* Modal Content */
+            #modalTeamName {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Achievement Badges */
+            .achievement-badge {
+                font-size: 0.7rem !important;
+                padding: 6px 12px !important;
+            }
+            
+            /* Comparison Cards */
+            .comparison-card h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            .comparison-card p {
+                font-size: 0.85rem !important;
+            }
+            
+            /* Navigation */
+            h1.text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            /* Rank Badge */
+            .rank-badge {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 1.25rem !important;
+            }
+            
+            /* Legacy Section Cards */
+            .bg-gradient-to-br h3 {
+                font-size: 1.125rem !important;
+            }
+            
+            .bg-gradient-to-br p {
+                font-size: 0.875rem !important;
+            }
+            
+            /* Legacy Section Info Cards */
+            .border-l-4 h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            .border-l-4 p {
+                font-size: 0.875rem !important;
+            }
+            
+            /* Gallery Section */
+            .search-box input {
+                font-size: 0.875rem !important;
+                padding: 12px 45px 12px 15px !important;
+            }
+            
+            /* Filter Buttons */
+            .filter-btn {
+                font-size: 0.8rem !important;
+                padding: 6px 16px !important;
+            }
+            
+            /* Modal Content */
+            .bg-gray-50 p.text-base {
+                font-size: 0.875rem !important;
+            }
+            
+            .bg-gray-50 p.text-sm {
+                font-size: 0.75rem !important;
+            }
+            
+            .bg-gray-50 p.text-xs {
+                font-size: 0.7rem !important;
+            }
+            
+            /* Comparison Result */
+            #comparisonResult h3 {
+                font-size: 1.5rem !important;
+            }
+            
+            #comparisonResult h4 {
+                font-size: 1rem !important;
+            }
+            
+            #comparisonResult h5 {
+                font-size: 1rem !important;
+            }
+            
+            #comparisonResult p {
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                    <i class="fas fa-futbol mr-2"></i>Top 5 Football Teams
+                </h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#teams" class="nav-link text-gray-700 hover:text-purple-600 font-semibold">Teams</a>
+                    <a href="#stats" class="nav-link text-gray-700 hover:text-purple-600 font-semibold">Legacy</a>
+                    <a href="#compare" class="nav-link text-gray-700 hover:text-purple-600 font-semibold">Compare</a>
+                    <a href="#gallery" class="nav-link text-gray-700 hover:text-purple-600 font-semibold">Gallery</a>
+                    <a href="#achievements" class="nav-link text-gray-700 hover:text-purple-600 font-semibold">Achievements</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="#teams" class="block text-gray-700 hover:text-purple-600 font-semibold">Teams</a>
+                <a href="#stats" class="block text-gray-700 hover:text-purple-600 font-semibold">Legacy</a>
+                <a href="#compare" class="block text-gray-700 hover:text-purple-600 font-semibold">Compare</a>
+                <a href="#gallery" class="block text-gray-700 hover:text-purple-600 font-semibold">Gallery</a>
+                <a href="#achievements" class="block text-gray-700 hover:text-purple-600 font-semibold">Achievements</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-28 pb-20 px-4 text-center text-white">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 fade-in leading-tight">
+                The Elite Five
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 opacity-90 fade-in max-w-2xl mx-auto">
+                Explore the world's most legendary football clubs, their rich histories, iconic achievements, and the timeless legacies that define greatness in the beautiful game.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+                <button onclick="document.getElementById('teams').scrollIntoView({behavior: 'smooth'})" 
+                        class="bg-white text-purple-600 px-10 py-4 rounded-full font-semibold hover:bg-purple-50 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl text-lg">
+                    <i class="fas fa-trophy mr-2"></i>Explore Teams
+                </button>
+                <button onclick="document.getElementById('compare').scrollIntoView({behavior: 'smooth'})" 
+                        class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition-all transform hover:scale-105 text-lg">
+                    <i class="fas fa-balance-scale mr-2"></i>Compare Teams
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Section -->
+    <section id="teams" class="section py-20 px-4 bg-gray-50">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-trophy mr-3 text-yellow-500"></i>Top 5 Teams
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    The world's most prestigious and successful football clubs, celebrated for their rich history, legendary achievements, and enduring legacy in the beautiful game.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Team 1: Real Madrid -->
+                <div class="team-card rounded-2xl p-6 shadow-xl relative">
+                    <div class="rank-badge rank-1">1</div>
+                    <div class="mt-8">
+                        <div class="mb-4">
+                            <img src="images/logos/real-madrid-logo.png" 
+                                 alt="Real Madrid Logo" 
+                                 class="team-logo-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="team-logo-placeholder mb-4" style="display: none;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Real Madrid</h3>
+                        <p class="text-center text-gray-600 mb-4">Spain • La Liga</p>
+                        <div class="space-y-3">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-crown text-yellow-500 mr-2"></i>Most Successful European Club</p>
+                                <p class="text-xs text-gray-500">Record Champions League winners with a legacy of excellence spanning over a century</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-star text-yellow-500 mr-2"></i>Galácticos Philosophy</p>
+                                <p class="text-xs text-gray-500">Known for attracting world-class talent and playing attacking, entertaining football</p>
+                            </div>
+                        </div>
+                        <button onclick="showTeamDetails(0)" class="w-full mt-6 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-info-circle mr-2"></i>View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team 2: Manchester City -->
+                <div class="team-card rounded-2xl p-6 shadow-xl relative">
+                    <div class="rank-badge rank-2">2</div>
+                    <div class="mt-8">
+                        <div class="mb-4">
+                            <img src="images/logos/manchester-city-logo.png" 
+                                 alt="Manchester City Logo" 
+                                 class="team-logo-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="team-logo-placeholder mb-4" style="display: none;">
+                                <i class="fas fa-city"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Manchester City</h3>
+                        <p class="text-center text-gray-600 mb-4">England • Premier League</p>
+                        <div class="space-y-3">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-tactical-board text-blue-500 mr-2"></i>Tactical Excellence</p>
+                                <p class="text-xs text-gray-500">Pioneers of possession-based football with innovative tactical approaches</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-trophy text-yellow-500 mr-2"></i>Modern Dynasty</p>
+                                <p class="text-xs text-gray-500">Multiple Premier League champions with a focus on beautiful, attacking play</p>
+                            </div>
+                        </div>
+                        <button onclick="showTeamDetails(1)" class="w-full mt-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team 3: Bayern Munich -->
+                <div class="team-card rounded-2xl p-6 shadow-xl relative">
+                    <div class="rank-badge rank-3">3</div>
+                    <div class="mt-8">
+                        <div class="mb-4">
+                            <img src="images/logos/bayern-munich-logo.png" 
+                                 alt="Bayern Munich Logo" 
+                                 class="team-logo-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="team-logo-placeholder mb-4" style="display: none;">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Bayern Munich</h3>
+                        <p class="text-center text-gray-600 mb-4">Germany • Bundesliga</p>
+                        <div class="space-y-3">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-mountain text-red-500 mr-2"></i>German Dominance</p>
+                                <p class="text-xs text-gray-500">Record Bundesliga champions with a tradition of excellence and youth development</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-fire text-orange-500 mr-2"></i>Attacking Prowess</p>
+                                <p class="text-xs text-gray-500">Known for high-intensity, fast-paced attacking football and clinical finishing</p>
+                            </div>
+                        </div>
+                        <button onclick="showTeamDetails(2)" class="w-full mt-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team 4: Liverpool -->
+                <div class="team-card rounded-2xl p-6 shadow-xl relative">
+                    <div class="rank-badge rank-4">4</div>
+                    <div class="mt-8">
+                        <div class="mb-4">
+                            <img src="images/logos/liverpool-logo.png" 
+                                 alt="Liverpool Logo" 
+                                 class="team-logo-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="team-logo-placeholder mb-4" style="display: none;">
+                                <i class="fas fa-anchor"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Liverpool</h3>
+                        <p class="text-center text-gray-600 mb-4">England • Premier League</p>
+                        <div class="space-y-3">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-heart text-red-500 mr-2"></i>You'll Never Walk Alone</p>
+                                <p class="text-xs text-gray-500">Iconic club with passionate fanbase and rich European history</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-bolt text-yellow-500 mr-2"></i>High-Intensity Football</p>
+                                <p class="text-xs text-gray-500">Famous for pressing, fast transitions, and electrifying Anfield atmosphere</p>
+                            </div>
+                        </div>
+                        <button onclick="showTeamDetails(3)" class="w-full mt-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Team 5: Arsenal -->
+                <div class="team-card rounded-2xl p-6 shadow-xl relative lg:col-start-2">
+                    <div class="rank-badge rank-5">5</div>
+                    <div class="mt-8">
+                        <div class="mb-4">
+                            <img src="images/logos/arsenal-logo.png" 
+                                 alt="Arsenal Logo" 
+                                 class="team-logo-img"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="team-logo-placeholder mb-4" style="display: none;">
+                                <i class="fas fa-cannons"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2 text-gray-800">Arsenal</h3>
+                        <p class="text-center text-gray-600 mb-4">England • Premier League</p>
+                        <div class="space-y-3">
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-paint-brush text-red-500 mr-2"></i>Beautiful Football</p>
+                                <p class="text-xs text-gray-500">Tradition of playing attractive, possession-based football with technical excellence</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-seedling text-green-500 mr-2"></i>Youth Development</p>
+                                <p class="text-xs text-gray-500">Renowned for developing young talent and playing an exciting, progressive style</p>
+                            </div>
+                        </div>
+                        <button onclick="showTeamDetails(4)" class="w-full mt-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy & History Section -->
+    <section id="stats" class="section py-20 px-4 bg-white">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-landmark mr-3 text-purple-600"></i>Legacy & History
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Discover the rich heritage, iconic moments, and legendary achievements that have shaped these footballing institutions.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl p-6 text-white text-center shadow-xl transform hover:scale-105 transition-all">
+                    <i class="fas fa-trophy text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">European Excellence</h3>
+                    <p class="text-lg opacity-90">Multiple Champions League titles and continental dominance</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-6 text-white text-center shadow-xl transform hover:scale-105 transition-all">
+                    <i class="fas fa-star text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">World-Class Talent</h3>
+                    <p class="text-lg opacity-90">Home to legendary players and Ballon d'Or winners</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white text-center shadow-xl transform hover:scale-105 transition-all">
+                    <i class="fas fa-fire text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Iconic Moments</h3>
+                    <p class="text-lg opacity-90">Historic victories and unforgettable matches</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-xl border-l-4 border-purple-600">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">
+                        <i class="fas fa-history mr-2 text-purple-600"></i>Rich Heritage
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        These clubs represent over 500 years of combined footballing history. From their founding days to modern dominance, 
+                        each team has crafted a unique identity through decades of triumphs, challenges, and evolution. Their legacies 
+                        extend beyond trophies, encompassing cultural impact, fan traditions, and contributions to the beautiful game.
+                    </p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-xl border-l-4 border-blue-600">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">
+                        <i class="fas fa-globe mr-2 text-blue-600"></i>Global Influence
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        With millions of fans worldwide, these clubs transcend borders and cultures. Their influence extends to youth 
+                        development, tactical innovation, and setting standards for excellence. Each club has contributed uniquely to 
+                        football's evolution, from playing styles to commercial success, shaping the modern game we know today.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare Section -->
+    <section id="compare" class="section py-20 px-4 bg-gray-50">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-balance-scale mr-3 text-purple-600"></i>Compare Teams
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Analyze and compare the heritage, philosophy, and legacy of any two elite football clubs side-by-side.
+                </p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-xl mb-8 border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            <i class="fas fa-shield-alt text-purple-600 mr-2"></i>First Team
+                        </label>
+                        <select id="team1Select" class="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-purple-600 focus:ring-2 focus:ring-purple-200 focus:outline-none transition-all text-gray-800 font-medium">
+                            <option value="0">Real Madrid</option>
+                            <option value="1">Manchester City</option>
+                            <option value="2">Bayern Munich</option>
+                            <option value="3">Liverpool</option>
+                            <option value="4">Arsenal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            <i class="fas fa-shield-alt text-blue-600 mr-2"></i>Second Team
+                        </label>
+                        <select id="team2Select" class="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all text-gray-800 font-medium">
+                            <option value="1">Manchester City</option>
+                            <option value="0">Real Madrid</option>
+                            <option value="2">Bayern Munich</option>
+                            <option value="3">Liverpool</option>
+                            <option value="4">Arsenal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button onclick="compareTeams()" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-10 py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Compare Teams</span>
+                    </button>
+                </div>
+            </div>
+            <div id="comparisonResult"></div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section py-20 px-4 bg-white">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-images mr-3 text-purple-600"></i>Team Gallery
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Explore stunning images of the iconic stadiums that serve as the legendary homes of the world's top football clubs.
+                </p>
+            </div>
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <button class="filter-btn active" onclick="filterGallery('all')">All Teams</button>
+                    <button class="filter-btn" onclick="filterGallery('real-madrid')">Real Madrid</button>
+                    <button class="filter-btn" onclick="filterGallery('man-city')">Man City</button>
+                    <button class="filter-btn" onclick="filterGallery('bayern')">Bayern</button>
+                    <button class="filter-btn" onclick="filterGallery('liverpool')">Liverpool</button>
+                    <button class="filter-btn" onclick="filterGallery('arsenal')">Arsenal</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="gallerySearch" placeholder="Search images..." onkeyup="searchGallery()">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="image-gallery" id="imageGallery">
+                <!-- Real Madrid Stadium -->
+                <div class="gallery-item" data-team="real-madrid">
+                    <img src="images/gallery/real-madrid-stadium.png" 
+                         alt="Real Madrid Stadium" 
+                         class="gallery-image" 
+                         onclick="openLightbox(this.src, 'Real Madrid Stadium')">
+                </div>
+                <!-- Manchester City Stadium -->
+                <div class="gallery-item" data-team="man-city">
+                    <img src="images/gallery/manchester-city-stadium.png" 
+                         alt="Manchester City Stadium" 
+                         class="gallery-image" 
+                         onclick="openLightbox(this.src, 'Manchester City Stadium')">
+                </div>
+                <!-- Bayern Munich Stadium -->
+                <div class="gallery-item" data-team="bayern">
+                    <img src="images/gallery/bayern-munich-stadium.png" 
+                         alt="Bayern Munich Stadium" 
+                         class="gallery-image" 
+                         onclick="openLightbox(this.src, 'Bayern Munich Stadium')">
+                </div>
+                <!-- Liverpool Stadium -->
+                <div class="gallery-item" data-team="liverpool">
+                    <img src="images/gallery/liverpool-stadium.png" 
+                         alt="Liverpool Stadium" 
+                         class="gallery-image" 
+                         onclick="openLightbox(this.src, 'Liverpool Stadium')">
+                </div>
+                <!-- Arsenal Stadium -->
+                <div class="gallery-item" data-team="arsenal">
+                    <img src="images/gallery/arsenal-stadium.png" 
+                         alt="Arsenal Stadium" 
+                         class="gallery-image" 
+                         onclick="openLightbox(this.src, 'Arsenal Stadium')">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section py-20 px-4 bg-gray-50">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-medal mr-3 text-yellow-500"></i>Iconic Achievements
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Celebrating the legendary accomplishments, historic milestones, and timeless achievements that define these footballing institutions.
+                </p>
+            </div>
+            <div class="space-y-6">
+                <div class="comparison-card">
+                    <div class="flex items-start">
+                        <div class="rank-badge rank-1 mr-4 relative" style="position: relative; top: 0; left: 0;">1</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Real Madrid</h3>
+                            <p class="text-gray-600 mb-3">The most successful club in European football history, with an unparalleled legacy of excellence spanning over a century.</p>
+                            <div class="flex flex-wrap">
+                                <span class="achievement-badge">🏆 14 Champions League Titles</span>
+                                <span class="achievement-badge">🥇 35 La Liga Championships</span>
+                                <span class="achievement-badge">⭐ Galácticos Philosophy</span>
+                                <span class="achievement-badge">👑 Founded 1902</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="flex items-start">
+                        <div class="rank-badge rank-2 mr-4 relative" style="position: relative; top: 0; left: 0;">2</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Manchester City</h3>
+                            <p class="text-gray-600 mb-3">Modern footballing powerhouse known for tactical innovation, possession-based excellence, and Premier League dominance.</p>
+                            <div class="flex flex-wrap">
+                                <span class="achievement-badge">🏆 9 Premier League Titles</span>
+                                <span class="achievement-badge">🥈 2023 Champions League Winners</span>
+                                <span class="achievement-badge">⭐ Founded 1880</span>
+                                <span class="achievement-badge">🎯 Pep Guardiola Era</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="flex items-start">
+                        <div class="rank-badge rank-3 mr-4 relative" style="position: relative; top: 0; left: 0;">3</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Bayern Munich</h3>
+                            <p class="text-gray-600 mb-3">German footballing giants with a tradition of dominance, youth development, and attacking excellence.</p>
+                            <div class="flex flex-wrap">
+                                <span class="achievement-badge">🏆 33 Bundesliga Titles</span>
+                                <span class="achievement-badge">🥉 6 Champions League Titles</span>
+                                <span class="achievement-badge">⭐ Founded 1900</span>
+                                <span class="achievement-badge">🔥 Allianz Arena</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="flex items-start">
+                        <div class="rank-badge rank-4 mr-4 relative" style="position: relative; top: 0; left: 0;">4</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Liverpool</h3>
+                            <p class="text-gray-600 mb-3">Iconic club with passionate fanbase, rich European history, and a tradition of high-intensity, entertaining football.</p>
+                            <div class="flex flex-wrap">
+                                <span class="achievement-badge">🏆 6 Champions League Titles</span>
+                                <span class="achievement-badge">🥈 19 Premier League Titles</span>
+                                <span class="achievement-badge">⭐ Founded 1892</span>
+                                <span class="achievement-badge">❤️ Anfield Legacy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <div class="flex items-start">
+                        <div class="rank-badge rank-5 mr-4 relative" style="position: relative; top: 0; left: 0;">5</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Arsenal</h3>
+                            <p class="text-gray-600 mb-3">The Invincibles legacy, beautiful football philosophy, and a tradition of developing world-class talent.</p>
+                            <div class="flex flex-wrap">
+                                <span class="achievement-badge">🏆 2003-04 Invincibles</span>
+                                <span class="achievement-badge">🥉 13 Premier League Titles</span>
+                                <span class="achievement-badge">⭐ Founded 1886</span>
+                                <span class="achievement-badge">🌱 Emirates Stadium</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Details Modal -->
+    <div id="teamModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-8 max-w-4xl w-full max-h-[75vh] overflow-y-auto shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+                <h3 id="modalTeamName" class="text-3xl font-bold text-gray-800"></h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-3xl transition-transform hover:rotate-90 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100">
+                    &times;
+                </button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImage" src="" alt="">
+            <p id="lightboxCaption" class="text-white text-center mt-4 text-xl"></p>
+        </div>
+    </div>
+
+    <script>
+        // Team data
+        const teams = [
+            {
+                name: "Real Madrid",
+                league: "La Liga",
+                country: "Spain",
+                stadium: "Santiago Bernabéu",
+                founded: "1902",
+                philosophy: "Galácticos - Attracting world-class talent and playing attacking, entertaining football",
+                legacy: "Most successful club in European football history with record Champions League titles",
+                style: "Attacking, possession-based, technical excellence"
+            },
+            {
+                name: "Manchester City",
+                league: "Premier League",
+                country: "England",
+                stadium: "Etihad Stadium",
+                founded: "1880",
+                philosophy: "Tactical innovation and possession-based football with beautiful, attacking play",
+                legacy: "Modern Premier League dynasty with multiple titles and Champions League success",
+                style: "Possession, pressing, tactical flexibility, beautiful football"
+            },
+            {
+                name: "Bayern Munich",
+                league: "Bundesliga",
+                country: "Germany",
+                stadium: "Allianz Arena",
+                founded: "1900",
+                philosophy: "German efficiency, youth development, and attacking prowess",
+                legacy: "Record Bundesliga champions with rich European history and tradition",
+                style: "High-intensity, fast-paced attacking football, clinical finishing"
+            },
+            {
+                name: "Liverpool",
+                league: "Premier League",
+                country: "England",
+                stadium: "Anfield",
+                founded: "1892",
+                philosophy: "High-intensity pressing, fast transitions, and passionate fan connection",
+                legacy: "Iconic European club with passionate fanbase and rich trophy history",
+                style: "Gegenpressing, fast transitions, high energy, electrifying atmosphere"
+            },
+            {
+                name: "Arsenal",
+                league: "Premier League",
+                country: "England",
+                stadium: "Emirates Stadium",
+                founded: "1886",
+                philosophy: "Beautiful football, youth development, and technical excellence",
+                legacy: "The Invincibles, tradition of attractive football and developing world-class talent",
+                style: "Possession-based, technical, progressive, exciting attacking play"
+            }
+        ];
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+
+        // Show team details
+        function showTeamDetails(index) {
+            const team = teams[index];
+            // Map team names to image file names
+            const stadiumImageMap = {
+                'Real Madrid': 'images/gallery/real-madrid-stadium.png',
+                'Manchester City': 'images/gallery/manchester-city-stadium.png',
+                'Bayern Munich': 'images/gallery/bayern-munich-stadium.png',
+                'Liverpool': 'images/gallery/liverpool-stadium.png',
+                'Arsenal': 'images/gallery/arsenal-stadium.png'
+            };
+            const stadiumImage = stadiumImageMap[team.name] || 'images/gallery/real-madrid-stadium.png';
+            
+            document.getElementById('modalTeamName').textContent = team.name;
+            
+            // Reset scroll position to top
+            const modalContent = document.getElementById('modalContent');
+            if (modalContent) {
+                modalContent.scrollTop = 0;
+            }
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="space-y-5">
+                    <!-- Stadium Image -->
+                    <div class="w-full rounded-2xl overflow-hidden shadow-xl">
+                        <img src="${stadiumImage}" 
+                             alt="${team.name} Stadium" 
+                             class="w-full h-auto max-h-[400px] object-cover object-center cursor-pointer hover:opacity-90 transition-opacity"
+                             onclick="openLightbox('${stadiumImage}', '${team.name} Stadium')">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600 mb-1">League</p>
+                            <p class="text-base font-bold text-gray-800">${team.league}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600 mb-1">Country</p>
+                            <p class="text-base font-bold text-gray-800">${team.country}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600 mb-1">Stadium</p>
+                            <p class="text-base font-bold text-gray-800">${team.stadium}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600 mb-1">Founded</p>
+                            <p class="text-base font-bold text-gray-800">${team.founded}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Club Philosophy
+                        </h4>
+                        <p class="text-sm text-gray-700 leading-relaxed bg-purple-50 p-3 rounded-lg border-l-4 border-purple-600">
+                            ${team.philosophy}
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">
+                            <i class="fas fa-trophy text-yellow-500 mr-2"></i>Legacy
+                        </h4>
+                        <p class="text-sm text-gray-700 leading-relaxed bg-blue-50 p-3 rounded-lg border-l-4 border-blue-600">
+                            ${team.legacy}
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">
+                            <i class="fas fa-futbol text-green-500 mr-2"></i>Playing Style
+                        </h4>
+                        <p class="text-sm text-gray-700 leading-relaxed bg-green-50 p-3 rounded-lg border-l-4 border-green-600">
+                            ${team.style}
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal and reset scroll to top
+            const modal = document.getElementById('teamModal');
+            const modalInner = modal.querySelector('.bg-white');
+            modal.classList.remove('hidden');
+            
+            // Reset scroll position after a brief moment to ensure content is rendered
+            setTimeout(() => {
+                if (modalInner) {
+                    modalInner.scrollTop = 0;
+                }
+            }, 10);
+        }
+        
+        // Lightbox functions
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImage').src = src;
+            document.getElementById('lightboxCaption').textContent = caption;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox(event) {
+            if (!event || event.target.id === 'lightbox' || event.target.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Gallery filter function
+        function filterGallery(team) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            items.forEach(item => {
+                if (team === 'all' || item.dataset.team === team) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+        
+        // Search gallery
+        function searchGallery() {
+            const searchTerm = document.getElementById('gallerySearch').value.toLowerCase();
+            const items = document.querySelectorAll('.gallery-item');
+            
+            items.forEach(item => {
+                const img = item.querySelector('img');
+                const alt = img.alt.toLowerCase();
+                if (alt.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('teamModal');
+            const modalInner = modal.querySelector('.bg-white');
+            modal.classList.add('hidden');
+            
+            // Reset scroll position when closing
+            if (modalInner) {
+                modalInner.scrollTop = 0;
+            }
+        }
+
+        // Compare teams
+        function compareTeams() {
+            const team1Index = parseInt(document.getElementById('team1Select').value);
+            const team2Index = parseInt(document.getElementById('team2Select').value);
+            
+            if (team1Index === team2Index) {
+                alert('Please select two different teams to compare!');
+                return;
+            }
+            
+            const team1 = teams[team1Index];
+            const team2 = teams[team2Index];
+            
+            document.getElementById('comparisonResult').innerHTML = `
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6">
+                        <div class="flex items-center justify-center gap-4 mb-2">
+                            <h3 class="text-3xl font-bold">${team1.name}</h3>
+                            <span class="text-2xl font-light text-white/80">vs</span>
+                            <h3 class="text-3xl font-bold">${team2.name}</h3>
+                        </div>
+                        <p class="text-center text-white/90 text-sm">Comprehensive Club Comparison</p>
+                    </div>
+                    
+                    <!-- Comparison Content -->
+                    <div class="p-8">
+                        <!-- Basic Information -->
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-info-circle text-purple-600 mr-2"></i>Basic Information
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border-l-4 border-purple-600">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
+                                            ${team1.name.charAt(0)}
+                                        </div>
+                                        <h5 class="text-xl font-bold text-gray-800">${team1.name}</h5>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start">
+                                            <i class="fas fa-trophy text-purple-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">League</p>
+                                                <p class="text-sm font-medium text-gray-800">${team1.league}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-calendar text-purple-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Founded</p>
+                                                <p class="text-sm font-medium text-gray-800">${team1.founded}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-building text-purple-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Stadium</p>
+                                                <p class="text-sm font-medium text-gray-800">${team1.stadium}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-futbol text-purple-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Playing Style</p>
+                                                <p class="text-sm font-medium text-gray-800">${team1.style}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-blue-600">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
+                                            ${team2.name.charAt(0)}
+                                        </div>
+                                        <h5 class="text-xl font-bold text-gray-800">${team2.name}</h5>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start">
+                                            <i class="fas fa-trophy text-blue-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">League</p>
+                                                <p class="text-sm font-medium text-gray-800">${team2.league}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-calendar text-blue-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Founded</p>
+                                                <p class="text-sm font-medium text-gray-800">${team2.founded}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-building text-blue-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Stadium</p>
+                                                <p class="text-sm font-medium text-gray-800">${team2.stadium}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <i class="fas fa-futbol text-blue-600 mr-2 mt-1"></i>
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500 uppercase">Playing Style</p>
+                                                <p class="text-sm font-medium text-gray-800">${team2.style}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Philosophy Comparison -->
+                        <div class="mb-8">
+                            <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Club Philosophy
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border-2 border-purple-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                            ${team1.name.charAt(0)}
+                                        </div>
+                                        <h5 class="font-bold text-gray-800">${team1.name}</h5>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${team1.philosophy}</p>
+                                </div>
+                                <div class="bg-white border-2 border-blue-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                            ${team2.name.charAt(0)}
+                                        </div>
+                                        <h5 class="font-bold text-gray-800">${team2.name}</h5>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${team2.philosophy}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Legacy Comparison -->
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-landmark text-indigo-500 mr-2"></i>Legacy & Heritage
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                            ${team1.name.charAt(0)}
+                                        </div>
+                                        <h5 class="font-bold text-gray-800">${team1.name}</h5>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${team1.legacy}</p>
+                                </div>
+                                <div class="bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                            ${team2.name.charAt(0)}
+                                        </div>
+                                        <h5 class="font-bold text-gray-800">${team2.name}</h5>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${team2.legacy}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Smooth scroll to comparison result
+            document.getElementById('comparisonResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('teamModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            // Page loaded successfully
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.team-card, .comparison-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

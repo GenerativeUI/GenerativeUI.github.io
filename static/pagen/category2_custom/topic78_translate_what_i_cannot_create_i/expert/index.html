@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translate Feynman's Quote to French | Interactive Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #1e1b4b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+        
+        .quote-font {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .animated-bg::before,
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+        }
+        
+        .animated-bg::after {
+            background-size: 80px 80px;
+            animation: float 30s infinite linear reverse;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Glass Morphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem !important;
+                border-radius: 16px;
+            }
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .solid-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .solid-card {
+                padding: 1.5rem !important;
+                border-radius: 16px;
+            }
+        }
+        
+        .solid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Word Cards - Elegant Modern Design */
+        .word-card {
+            position: relative;
+        }
+        
+        .word-card-inner {
+            position: relative;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        .word-card:hover .word-card-inner {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .word-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 24px;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .word-header {
+                padding: 16px 18px;
+            }
+        }
+        
+        .word-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .word-title-group {
+            flex: 1;
+        }
+        
+        .word-english {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .word-english {
+                font-size: 1.25rem;
+            }
+        }
+        
+        .word-french {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .word-french {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .word-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .word-body {
+            padding: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .word-body {
+                padding: 16px;
+            }
+        }
+        
+        .word-explanation {
+            margin-bottom: 20px;
+        }
+        
+        .word-explanation:last-child {
+            margin-bottom: 0;
+        }
+        
+        .word-explanation-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .word-explanation-title i {
+            font-size: 0.9rem;
+        }
+        
+        .word-explanation-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #4a5568;
+        }
+        
+        .word-explanation-text strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .word-number {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .word-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+        
+        .word-card:hover .word-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .word-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .word-number {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        
+        .word-translation {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 12px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .word-meaning {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.95;
+            max-width: 90%;
+        }
+        
+        .word-type {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* Enhanced word card hover effects */
+        .word-card:hover {
+            z-index: 10;
+        }
+        
+        .word-card:hover .word-card-front,
+        .word-card:hover .word-card-back {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-text-white {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .btn-primary {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* Practice Cards */
+        .practice-card {
+            border: 3px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .practice-card {
+                padding: 1rem !important;
+            }
+        }
+        
+        .practice-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .practice-card.correct {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+        
+        .practice-card.incorrect {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.2) 100%);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+        
+        /* Image Placeholders */
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .img-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: slide 3s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(45deg); }
+            100% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+        }
+        
+        /* Section Dividers */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 80px 0;
+        }
+        
+        /* Floating Elements */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Particle Effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            animation: particle-float linear infinite;
+            will-change: transform, opacity;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+                transform: translateY(95vh) translateX(0) scale(1);
+            }
+            95% {
+                opacity: 1;
+                transform: translateY(5vh) translateX(var(--drift, 0px)) scale(1);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(var(--drift, 0px)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .text-hero {
+                font-size: 2rem;
+            }
+            
+            .word-explanation-text {
+                font-size: 0.85rem;
+            }
+            
+            /* Global mobile font size reduction */
+            body {
+                font-size: 14px;
+            }
+            
+            /* Hero Section */
+            .text-xl {
+                font-size: 1rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.75rem !important;
+            }
+            
+            .text-6xl {
+                font-size: 2.5rem !important;
+            }
+            
+            /* Quote text */
+            .quote-font {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Section headings */
+            h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            h3 {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Paragraphs */
+            p {
+                font-size: 0.9rem !important;
+            }
+            
+            .text-lg {
+                font-size: 1rem !important;
+            }
+            
+            /* Word cards */
+            .word-card h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            .word-card h4 {
+                font-size: 1.1rem !important;
+            }
+            
+            /* Quiz section */
+            #questionText {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Button text */
+            .btn-primary {
+                font-size: 0.875rem !important;
+            }
+        }
+        
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Quote Box */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-left: 4px solid #667eea;
+            padding: 32px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .quote-box {
+                padding: 20px;
+            }
+            
+            .quote-box p {
+                font-size: 1.25rem !important;
+            }
+        }
+        
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 120px;
+            color: rgba(102, 126, 234, 0.2);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        @media (max-width: 768px) {
+            .quote-box::before {
+                font-size: 60px;
+                top: -10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-4 py-20 relative">
+        <div class="particles" id="particles"></div>
+        
+        <div class="max-w-7xl w-full z-10">
+            <div class="text-center mb-12 fade-in-up" style="animation-delay: 0.2s;">
+              
+                <p class="text-2xl md:text-4xl text-white/80 mb-2">
+                    Master the French Translation
+                </p>
+                <p class="text-sm md:text-base text-white/60">
+                    Explore language, meaning, and understanding
+                </p>
+            </div>
+            
+            <div class="solid-card p-8 md:p-12 fade-in-up" style="animation-delay: 0.4s;">
+                <!-- Quote Display -->
+                <div class="quote-box mb-8 slide-in-left" style="animation-delay: 0.6s;">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="img-placeholder w-24 h-24 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 96px; min-height: 96px;">
+                            <img src="images/feynman-portrait.png" alt="Richard Feynman" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-user-tie z-10" style="display: none;"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xl md:text-3xl quote-font text-gray-800 mb-4 leading-relaxed">
+                                "What I cannot create, I do not understand."
+                            </p>
+                            <p class="text-base md:text-lg text-gray-600 font-semibold">
+                                — Richard Feynman
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- French Translation (Always Visible) -->
+                <div id="frenchTranslation" class="quote-box slide-in-right" style="animation-delay: 0.8s; background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.2) 100%);">
+                    <div class="flex items-start gap-4">
+                        <div class="img-placeholder w-24 h-24 flex-shrink-0" style="min-width: 96px; min-height: 96px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <img src="images/france-flag.avif" alt="French Flag" class="w-full h-full object-cover rounded-lg z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <i class="fas fa-flag z-10" style="display: none;"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xl md:text-3xl quote-font text-gray-800 mb-2 leading-relaxed">
+                                "Ce que je ne peux pas créer, je ne le comprends pas."
+                            </p>
+                            <p class="text-sm md:text-base text-gray-600 font-medium flex items-center gap-2">
+                                <i class="fas fa-language text-purple-600"></i>
+                                French Translation
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual Divider -->
+                <div class="flex items-center justify-center gap-4 my-8">
+                    <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+                    <div class="img-placeholder w-16 h-16 rounded-full" style="min-width: 64px; min-height: 64px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-exchange-alt z-10 text-white text-xl"></i>
+                    </div>
+                    <div class="flex-1 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Word-by-Word Breakdown Section -->
+    <section class="py-24 px-4 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-2xl md:text-4xl font-bold mb-6 gradient-text-white">
+                    <i class="fas fa-book-open mr-4"></i>
+                    Word-by-Word Breakdown
+                </h2>
+                <p class="text-base md:text-lg text-white/80 max-w-3xl mx-auto">
+                    Explore each word with detailed explanations of translation, grammar, and usage
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Word 1: What -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold text-lg flex items-center justify-center mb-3">1</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">What</h3>
+                        <h4 class="text-base md:text-lg font-bold text-purple-600 mb-3">Ce que</h4>
+                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Relative Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "That which" or "what" - a relative pronoun referring to something previously mentioned.</p>
+                        <p><strong>Grammar:</strong> Combines "ce" (this/that) with "que" (which/that) to create a compound relative pronoun.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 2: I -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white font-bold text-lg flex items-center justify-center mb-3">2</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">I</h3>
+                        <h4 class="text-base md:text-lg font-bold text-blue-600 mb-3">Je</h4>
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> First person singular pronoun meaning "I" in French.</p>
+                        <p><strong>Grammar:</strong> Used as the subject. Contracts to "j'" before vowels (e.g., "j'aime").</p>
+                    </div>
+                </div>
+                
+                <!-- Word 3: cannot -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-white font-bold text-lg flex items-center justify-center mb-3">3</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">cannot</h3>
+                        <h4 class="text-base md:text-lg font-bold text-red-600 mb-3">ne peux pas</h4>
+                        <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Negation + Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Cannot" - combines negation "ne...pas" with "pouvoir" (to be able).</p>
+                        <p><strong>Grammar:</strong> French negation requires "ne" before and "pas" after the verb. "Pouvoir" is irregular.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 4: create -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 text-white font-bold text-lg flex items-center justify-center mb-3">4</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">create</h3>
+                        <h4 class="text-base md:text-lg font-bold text-green-600 mb-3">créer</h4>
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "To create" - to bring something into existence.</p>
+                        <p><strong>Grammar:</strong> Regular -er verb in infinitive form (follows "peux").</p>
+                    </div>
+                </div>
+                
+                <!-- Word 5: I (second) -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.5s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold text-lg flex items-center justify-center mb-3">5</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">I</h3>
+                        <h4 class="text-base md:text-lg font-bold text-indigo-600 mb-3">je</h4>
+                        <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "I" - repeated in the second part of the sentence.</p>
+                        <p><strong>Grammar:</strong> Maintains parallel structure with English version.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 6: le -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.6s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white font-bold text-lg flex items-center justify-center mb-3">6</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">—</h3>
+                        <h4 class="text-base md:text-lg font-bold text-pink-600 mb-3">le</h4>
+                        <span class="inline-block px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-semibold">Direct Object</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "It" - refers back to "ce que" (what/that which).</p>
+                        <p><strong>Grammar:</strong> <strong>CRUCIAL:</strong> French requires this direct object pronoun before the verb.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 7: understand -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.7s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 text-white font-bold text-lg flex items-center justify-center mb-3">7</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">understand</h3>
+                        <h4 class="text-base md:text-lg font-bold text-teal-600 mb-3">comprends</h4>
+                        <span class="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-semibold">Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Understand" - first person singular of "comprendre".</p>
+                        <p><strong>Grammar:</strong> Regular -re verb. With "le" it becomes "je ne le comprends pas".</p>
+                    </div>
+                </div>
+                
+                <!-- Word 8: do not -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.8s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 text-white font-bold text-lg flex items-center justify-center mb-3">8</div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">do not</h3>
+                        <h4 class="text-base md:text-lg font-bold text-amber-600 mb-3">ne...pas</h4>
+                        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-semibold">Negation</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-xs md:text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Not" or "do not" - standard French negation structure.</p>
+                        <p><strong>Grammar:</strong> Requires "ne" before and "pas" after the verb. With object pronouns: "ne + pronoun + verb + pas".</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grammar Insight -->
+            <div class="mt-12 scroll-reveal">
+                <div class="glass-card p-8 max-w-4xl mx-auto">
+                    <div class="flex items-start gap-6">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                                <i class="fas fa-info-circle text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-3">Key Grammar Insight</h3>
+                            <p class="text-white/90 text-sm md:text-base leading-relaxed">
+                                <strong>Important:</strong> French uses <span class="font-bold text-yellow-300">"le"</span> as a direct object pronoun referring back to <span class="font-bold text-yellow-300">"ce que"</span>. This is a fundamental grammatical structure in French that differs from English. The direct object pronoun placement is mandatory and creates the structure "je ne le comprends pas" rather than just "je ne comprends pas".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Explanation Section -->
+    <section class="py-24 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="solid-card p-8 md:p-12 scroll-reveal">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold mb-6 gradient-text">
+                        <i class="fas fa-lightbulb mr-4"></i>
+                        Understanding the Quote
+                    </h2>
+                    <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                        Dive deep into the philosophy and meaning behind Feynman's famous words
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-8 rounded-2xl scroll-reveal" style="animation-delay: 0.2s;">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="img-placeholder w-20 h-20 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 80px; min-height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <img src="images/feynman-scientist.png" alt="Feynman Scientist" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <i class="fas fa-user-graduate z-10" style="display: none;"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">About Richard Feynman</h3>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm md:text-base">
+                            Richard Feynman (1918-1988) was a Nobel Prize-winning physicist known for his groundbreaking work in quantum mechanics and quantum electrodynamics. He was also a brilliant teacher and communicator who made complex physics accessible to everyone.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                            This quote reflects his core philosophy: true understanding comes from being able to recreate or build something yourself, not just memorizing facts or accepting explanations at face value.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8 rounded-2xl scroll-reveal" style="animation-delay: 0.4s;">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="img-placeholder w-20 h-20 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 80px; min-height: 80px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <img src="images/brain-concept.png" alt="Brain Concept" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <i class="fas fa-brain z-10" style="display: none;"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">The Meaning</h3>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-4 text-sm md:text-base">
+                            Feynman believed that if you cannot recreate or build something from scratch, you don't truly understand it. This powerful principle applies to:
+                        </p>
+                        <ul class="list-none text-gray-700 space-y-3 text-sm md:text-base">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-atom text-purple-600 mt-1"></i>
+                                <div><strong>Science:</strong> Understanding concepts by deriving them yourself</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-graduation-cap text-blue-600 mt-1"></i>
+                                <div><strong>Learning:</strong> Active creation vs. passive memorization</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-puzzle-piece text-pink-600 mt-1"></i>
+                                <div><strong>Problem-solving:</strong> Building solutions from first principles</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-100 via-blue-100 to-pink-100 p-10 rounded-2xl scroll-reveal" style="animation-delay: 0.6s;">
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 text-center">Why This Translation Matters</h3>
+                    </div>
+                    <p class="text-gray-700 text-sm md:text-base leading-relaxed text-center max-w-4xl mx-auto">
+                        The French translation <strong>"Ce que je ne peux pas créer, je ne le comprends pas"</strong> beautifully captures the essence of Feynman's philosophy. The grammatical structure emphasizes the conditional relationship between creation and understanding, just as the English version does. The use of "ce que" (that which) and the direct object pronoun "le" creates a parallel structure that maintains the quote's profound meaning across languages.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Practice Section -->
+    <section class="py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="solid-card p-8 md:p-12 scroll-reveal">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-4xl font-bold mb-6 gradient-text">
+                        <i class="fas fa-question-circle mr-4"></i>
+                        Translation Quiz
+                    </h2>
+                    <p class="text-base md:text-lg text-gray-600">
+                        Test your knowledge with multiple-choice questions
+                    </p>
+                </div>
+                
+                <!-- Quiz Progress -->
+                <div id="quizProgress" class="mb-8">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-600">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">8</span></span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="quizScore">0</span>/<span id="totalQuestions2">8</span></span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full transition-all duration-300" style="width: 12.5%"></div>
+                    </div>
+                </div>
+                
+                <!-- Quiz Question Area -->
+                <div id="quizArea">
+                    <div id="questionContainer" class="mb-8">
+                        <div class="text-center mb-8">
+                            <h3 id="questionText" class="text-xl md:text-2xl font-bold text-gray-800 mb-4"></h3>
+                            <p class="text-sm md:text-base text-gray-600">Select the correct French translation:</p>
+                        </div>
+                        
+                        <div id="optionsContainer" class="space-y-4">
+                            <!-- Options will be dynamically generated -->
+                        </div>
+                    </div>
+                    
+                    <!-- Next Button (hidden initially) -->
+                    <div id="nextButtonContainer" class="text-center hidden">
+                        <button id="nextButton" onclick="nextQuestion()" class="btn-primary text-lg">
+                            Next Question <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Results Screen (hidden initially) -->
+                    <div id="resultsScreen" class="hidden text-center">
+                        <div class="mb-8">
+                            <div class="inline-block w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6">
+                                <i class="fas fa-trophy text-white text-5xl"></i>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Quiz Complete!</h3>
+                            <p class="text-xl md:text-2xl font-bold text-purple-600 mb-2">Your Score: <span id="finalScore">0</span>/<span id="finalTotal">8</span></p>
+                            <p id="scoreMessage" class="text-sm md:text-base text-gray-600"></p>
+                        </div>
+                        <button onclick="restartQuiz()" class="btn-primary text-lg">
+                            <i class="fas fa-redo mr-2"></i>
+                            Take Quiz Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Word cards now use pure CSS hover - no JavaScript needed!
+        // The tooltips appear automatically on hover for a smooth, instant experience
+        
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: "What is the French translation of 'What'?",
+                options: ["Ce que", "Qu'est-ce que", "Quoi", "Que"],
+                correct: 0
+            },
+            {
+                question: "How do you say 'I' in French?",
+                options: ["Je", "J'ai", "Moi", "Mon"],
+                correct: 0
+            },
+            {
+                question: "What is the French translation of 'cannot'?",
+                options: ["ne peux pas", "ne peut pas", "ne peux", "peux pas"],
+                correct: 0
+            },
+            {
+                question: "How do you say 'create' in French?",
+                options: ["créer", "créé", "création", "créant"],
+                correct: 0
+            },
+            {
+                question: "What does 'le' mean in the sentence 'je ne le comprends pas'?",
+                options: ["it (referring to 'ce que')", "the", "him", "this"],
+                correct: 0
+            },
+            {
+                question: "What is the French translation of 'understand'?",
+                options: ["comprends", "comprendre", "compris", "comprend"],
+                correct: 0
+            },
+            {
+                question: "What is the French negation structure for 'do not'?",
+                options: ["ne...pas", "pas...ne", "ne pas", "non"],
+                correct: 0
+            },
+            {
+                question: "What is the complete French translation of 'What I cannot create, I do not understand'?",
+                options: [
+                    "Ce que je ne peux pas créer, je ne le comprends pas",
+                    "Ce que je ne peux pas créer, je ne comprends pas",
+                    "Qu'est-ce que je ne peux pas créer, je ne le comprends pas",
+                    "Ce que je ne peux créer, je ne le comprends pas"
+                ],
+                correct: 0
+            }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        
+        // Initialize Quiz
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            document.getElementById('quizScore').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('totalQuestions').textContent = quizQuestions.length;
+            document.getElementById('totalQuestions2').textContent = quizQuestions.length;
+            document.getElementById('finalTotal').textContent = quizQuestions.length;
+            document.getElementById('questionContainer').classList.remove('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            loadQuestion();
+        }
+        
+        // Load Question
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'practice-card solid-card p-6 cursor-pointer transition-all hover:scale-105';
+                optionDiv.onclick = () => selectAnswer(index);
+                optionDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-base md:text-lg font-semibold text-gray-800">${option}</span>
+                        <i class="fas fa-circle text-gray-300 text-lg md:text-xl"></i>
+                    </div>
+                `;
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            selectedAnswer = null;
+        }
+        
+        // Select Answer
+        function selectAnswer(answerIndex) {
+            if (selectedAnswer !== null) return; // Prevent multiple selections
+            
+            selectedAnswer = answerIndex;
+            const question = quizQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('#optionsContainer .practice-card');
+            
+            options.forEach((option, index) => {
+                const icon = option.querySelector('i');
+                option.classList.remove('correct', 'incorrect');
+                option.style.pointerEvents = 'none';
+                
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                    icon.className = 'fas fa-check-circle text-green-500 text-xl';
+                } else if (index === answerIndex) {
+                    option.classList.add('incorrect');
+                    icon.className = 'fas fa-times-circle text-red-500 text-xl';
+                }
+            });
+            
+            // Update score
+            if (answerIndex === question.correct) {
+                score++;
+                document.getElementById('quizScore').textContent = score;
+                showNotification('Correct! 🎉', 'success');
+            } else {
+                showNotification('Incorrect. The correct answer is: ' + question.options[question.correct], 'error');
+            }
+            
+            // Show next button
+            setTimeout(() => {
+                document.getElementById('nextButtonContainer').classList.remove('hidden');
+            }, 1000);
+        }
+        
+        // Next Question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizQuestions.length) {
+                document.getElementById('nextButtonContainer').classList.add('hidden');
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        // Show Results
+        function showResults() {
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = score;
+            
+            const percentage = (score / quizQuestions.length) * 100;
+            let message = '';
+            if (percentage === 100) {
+                message = 'Perfect! You\'re a French translation master! 🌟';
+            } else if (percentage >= 75) {
+                message = 'Excellent work! You have a strong understanding! 👏';
+            } else if (percentage >= 50) {
+                message = 'Good job! Keep practicing to improve! 💪';
+            } else {
+                message = 'Keep learning! Review the words and try again! 📚';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        // Restart Quiz
+        function restartQuiz() {
+            initQuiz();
+        }
+        
+        // Initialize quiz on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initQuiz);
+        } else {
+            initQuiz();
+        }
+        
+        // Notification System
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-xl shadow-2xl ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white font-semibold transform transition-all duration-300`;
+            notification.textContent = message;
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100px)';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            scrollObserver.observe(el);
+        });
+        
+        // Create Particle Effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            const particleCount = 40;
+            const screenWidth = window.innerWidth;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random horizontal position
+                const leftPosition = Math.random() * 100;
+                particle.style.left = leftPosition + '%';
+                
+                // Random drift (horizontal movement)
+                const drift = (Math.random() - 0.5) * 200; // -100px to 100px
+                particle.style.setProperty('--drift', drift + 'px');
+                
+                // Random animation delay (stagger particles)
+                const delay = Math.random() * 20;
+                particle.style.animationDelay = delay + 's';
+                
+                // Random animation duration (8-15 seconds for variety)
+                const duration = 8 + Math.random() * 7;
+                particle.style.animationDuration = duration + 's';
+                
+                // Random size variation
+                const size = 4 + Math.random() * 4; // 4px to 8px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random opacity for depth
+                const opacity = 0.3 + Math.random() * 0.5;
+                particle.style.background = `rgba(255, 255, 255, ${opacity})`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles when DOM is ready
+        function initParticles() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', createParticles);
+            } else {
+                createParticles();
+            }
+        }
+        
+        // Recreate particles on window resize for better distribution
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(createParticles, 250);
+        });
+        
+        // Initialize particles
+        initParticles();
+        
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

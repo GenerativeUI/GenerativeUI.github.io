@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SF Bay Area Summer 2012 - Important Events</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Leaflet CSS and JS for Interactive Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .event-card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .event-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .weather-widget {
+            background-image: url('images/weather-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 1rem;
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .weather-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%);
+            z-index: 1;
+        }
+        
+        .weather-widget::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+        
+        .weather-widget > * {
+            position: relative;
+            z-index: 3;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .section {
+            scroll-margin-top: 100px;
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .event-card img {
+            transition: transform 0.3s ease;
+        }
+        
+        .event-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .event-card {
+            cursor: pointer;
+        }
+        
+        .stat-card {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-btn:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .filter-btn.active {
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            /* Base font size reduction for mobile */
+            body {
+                font-size: 14px;
+            }
+            
+            /* Hero Section - Mobile */
+            .hero-title {
+                font-size: 2rem !important; /* Reduced from 5xl/7xl */
+            }
+            
+            #hero p {
+                font-size: 1rem !important; /* Reduced from 2xl/3xl and lg */
+            }
+            
+            /* Section Headings - Mobile */
+            h2 {
+                font-size: 1.75rem !important; /* Reduced from 4xl/5xl */
+            }
+            
+            /* Timeline Section - Mobile */
+            .timeline-item h3 {
+                font-size: 1.25rem !important; /* Reduced from 2xl */
+            }
+            
+            .timeline-item p {
+                font-size: 0.875rem !important; /* Reduced from base */
+            }
+            
+            .timeline-item span {
+                font-size: 0.75rem !important; /* Reduced from sm */
+            }
+            
+            /* Event Cards - Mobile */
+            .event-card h3 {
+                font-size: 1rem !important; /* Reduced from xl */
+            }
+            
+            .event-card p {
+                font-size: 0.8125rem !important; /* Reduced from sm */
+            }
+            
+            /* Statistics - Mobile */
+            .stat-card .text-4xl {
+                font-size: 1.75rem !important; /* Reduced from 4xl */
+            }
+            
+            .stat-card .text-sm {
+                font-size: 0.75rem !important; /* Reduced from sm */
+            }
+            
+            /* Weather Widget - Mobile */
+            .weather-widget .text-5xl {
+                font-size: 2rem !important; /* Reduced from 5xl */
+            }
+            
+            .weather-widget .text-3xl {
+                font-size: 1.5rem !important; /* Reduced from 3xl */
+            }
+            
+            .weather-widget h3 {
+                font-size: 1.125rem !important; /* Reduced from xl */
+            }
+            
+            .weather-widget p {
+                font-size: 0.875rem !important; /* Reduced from base */
+            }
+            
+            /* Navigation - Mobile */
+            nav .text-2xl {
+                font-size: 1.125rem !important; /* Reduced from 2xl */
+            }
+            
+            /* Map Section - Mobile */
+            .map-container {
+                height: 400px;
+            }
+            
+            .timeline-item {
+                padding-left: 2rem;
+            }
+            
+            .stat-card {
+                animation: none;
+            }
+            
+            /* Button text - Mobile */
+            button, a.button {
+                font-size: 0.875rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            /* Filter buttons - Mobile */
+            .filter-btn {
+                font-size: 0.75rem !important;
+                padding: 0.5rem 0.75rem !important;
+            }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Loading animation */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+                    <i class="fas fa-calendar-alt mr-2"></i>SF Summer 2012
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#hero" class="nav-link text-gray-700 hover:text-purple-600 font-medium">Home</a>
+                    <a href="#timeline" class="nav-link text-gray-700 hover:text-purple-600 font-medium">Timeline</a>
+                    <a href="#events" class="nav-link text-gray-700 hover:text-purple-600 font-medium">Events</a>
+                    <a href="#map" class="nav-link text-gray-700 hover:text-purple-600 font-medium">Map</a>
+                    <a href="#weather" class="nav-link text-gray-700 hover:text-purple-600 font-medium">Weather</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+                <a href="#hero" class="block text-gray-700 hover:text-purple-600 font-medium py-2">Home</a>
+                <a href="#timeline" class="block text-gray-700 hover:text-purple-600 font-medium py-2">Timeline</a>
+                <a href="#events" class="block text-gray-700 hover:text-purple-600 font-medium py-2">Events</a>
+                <a href="#map" class="block text-gray-700 hover:text-purple-600 font-medium py-2">Map</a>
+                <a href="#weather" class="block text-gray-700 hover:text-purple-600 font-medium py-2">Weather</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="section pt-32 pb-20 px-6" style="background-image: url('images/hero-section.png'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative;">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/60 to-purple-600/80"></div>
+        <div class="container mx-auto text-center fade-in relative z-10">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold text-white mb-6">
+                Important Events in the<br>SF Bay Area
+            </h1>
+            <p class="text-2xl md:text-3xl text-white/90 mb-4">Summer 2012</p>
+            <p class="text-lg text-white/80 max-w-2xl mx-auto mb-8">
+                A journey through the vibrant cultural scene, music festivals, and memorable moments that defined the San Francisco Bay Area during the summer of 2012.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#timeline" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-50 transition-all shadow-lg hover:shadow-xl">
+                    <i class="fas fa-clock mr-2"></i>Explore Timeline
+                </a>
+                <a href="#events" class="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-purple-700 transition-all shadow-lg hover:shadow-xl">
+                    <i class="fas fa-star mr-2"></i>View Events
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="section py-16 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-white mb-2">11</div>
+                    <div class="text-white/80 text-sm">Major Events</div>
+                </div>
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-white mb-2">3</div>
+                    <div class="text-white/80 text-sm">Months</div>
+                </div>
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-white mb-2">350K+</div>
+                    <div class="text-white/80 text-sm">Total Attendees</div>
+                </div>
+                <div class="stat-card text-center">
+                    <div class="text-4xl font-bold text-white mb-2">15+</div>
+                    <div class="text-white/80 text-sm">Venues</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Timeline Section -->
+    <section id="timeline" class="section py-20 px-6 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-history mr-3 text-purple-600"></i>Interactive Timeline
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Explore the key events that shaped the summer of 2012 in chronological order
+            </p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">MAY 27, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Golden Gate Bridge 75th Anniversary</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-bridge"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            A spectacular celebration marking 75 years since the Golden Gate Bridge opened on May 27, 1937. The anniversary event featured music, dancing, arts exhibitions, classic car and boat displays, and a breathtaking fireworks display from the bridge itself.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Golden Gate Bridge, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JUNE 14-17, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">U.S. Open Golf Championship</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-golf-ball"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The prestigious U.S. Open Golf Championship was held at The Olympic Club in San Francisco, drawing golf enthusiasts and world-class players from around the globe to the Bay Area.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>The Olympic Club, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JUNE 20, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Summer Solstice Beach Celebration</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            A beach bonfire and celebration at Ocean Beach to honor the longest day of the year, bringing together the community to celebrate the turning of the seasons.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Ocean Beach, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JUNE - AUGUST 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Stern Grove Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-music"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The free performing arts series at Sigmund Stern Grove, featuring diverse musical performances every Sunday throughout the summer in the beautiful natural amphitheater setting.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Sigmund Stern Grove, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JULY 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">San Francisco Frozen Film Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-film"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            An annual celebration of independent films and music, bringing together filmmakers and musicians from around the globe. Recognized as one of the "Top 25 Coolest Film Festivals" by MovieMaker Magazine.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Various Venues, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JULY 7-8, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Fillmore Jazz Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-guitar"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            A vibrant celebration of jazz music in San Francisco's historic Fillmore District, featuring local and international jazz artists performing in the heart of the city's jazz heritage.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Fillmore District, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">AUGUST & OCTOBER 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">America's Cup World Series</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-ship"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            San Francisco hosted America's Cup World Series races in August and October 2012, drawing over 150,000 spectators to the waterfront. These exhibition races were a prelude to the main America's Cup races scheduled for 2013.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>San Francisco Bay</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">MAY - OCTOBER 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Yerba Buena Gardens Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-theater-masks"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            A free festival featuring music, dance, theater, circus, and children's programs in the South of Market area, running throughout the summer and reflecting the rich cultural diversity of the Bay Area.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Yerba Buena Gardens, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">JULY 27 - AUGUST 12, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Olympic Viewing Parties</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The San Francisco Recreation and Park Department hosted free outdoor Olympic viewing parties at Civic Center during the 2012 London Olympics (July 27 - August 12, 2012), featuring Olympic skills games, gourmet food, arts and crafts, and community activities.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Civic Center, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">AUGUST 10-12, 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Outside Lands Music & Arts Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-headphones"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The crown jewel of the summer - the fifth annual Outside Lands Music & Arts Festival in Golden Gate Park. One of the largest music festivals in the Bay Area, featuring legendary headliners and a diverse lineup of artists.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Golden Gate Park, San Francisco</span>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <p class="text-sm font-semibold text-purple-800 mb-2">Featured Headliners:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-xs">Stevie Wonder</span>
+                                <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-xs">Metallica</span>
+                                <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-xs">Neil Young</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="event-card rounded-lg p-6 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <span class="text-purple-600 font-semibold text-sm">SUMMER 2012</span>
+                                <h3 class="text-2xl font-bold text-gray-800 mt-2">Soundwave Festival</h3>
+                            </div>
+                            <div class="text-4xl text-purple-600">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            A biennial sound, art, and music festival featuring diverse local and international multimedia artists working with sound, including experimental musicians, composers, and avant-garde performers across various venues throughout San Francisco.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Various Venues, San Francisco</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Gallery Section -->
+    <section id="events" class="section py-20 px-6 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-star mr-3 text-purple-600"></i>Featured Events
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Discover the most significant cultural and entertainment events of the summer
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Event Card 1 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-golden-gate-75th.png" alt="Golden Gate Bridge 75th Anniversary" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-semibold">Anniversary</span>
+                            <span class="text-gray-500 text-sm">May 27</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Golden Gate Bridge 75th</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Spectacular celebration with fireworks, music, arts exhibitions, and classic displays marking 75 years of the iconic bridge.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-fireworks mr-2"></i>
+                            <span>Historic Event</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 2 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-outside-lands.png" alt="Outside Lands Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs font-semibold">Music Festival</span>
+                            <span class="text-gray-500 text-sm">Aug 10-12</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Outside Lands</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Three days of music, food, and art in Golden Gate Park. Featuring Stevie Wonder, Metallica, and Neil Young.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>180,000+ attendees</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 3 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-us-open-golf.png" alt="U.S. Open Golf Championship" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">Sports</span>
+                            <span class="text-gray-500 text-sm">Jun 14-17</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">U.S. Open Championship</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Prestigious golf championship at The Olympic Club, drawing world-class players and enthusiasts.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-trophy mr-2"></i>
+                            <span>Major Tournament</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 4 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-americas-cup.png" alt="America's Cup World Series" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">Sailing</span>
+                            <span class="text-gray-500 text-sm">Aug & Oct</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">America's Cup World Series</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Exhibition sailing races on San Francisco Bay drawing over 150,000 spectators to the waterfront.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>150,000+ spectators</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 5 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-fillmore-jazz.png" alt="Fillmore Jazz Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">Jazz</span>
+                            <span class="text-gray-500 text-sm">Jul 7-8</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Fillmore Jazz Festival</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Celebration of jazz heritage in the historic Fillmore District with local and international artists.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>50,000+ attendees</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 6 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-stern-grove.png" alt="Stern Grove Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">Free Event</span>
+                            <span class="text-gray-500 text-sm">Jun - Aug</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Stern Grove Festival</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Free Sunday concerts in the beautiful natural amphitheater, featuring diverse musical genres.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar mr-2"></i>
+                            <span>Every Sunday</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 7 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-frozen-film.png" alt="San Francisco Frozen Film Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">Film</span>
+                            <span class="text-gray-500 text-sm">July</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">SF Frozen Film Festival</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Independent films and music festival, recognized as one of the coolest film festivals in the country.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-trophy mr-2"></i>
+                            <span>Top 25 Festival</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 8 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-yerba-buena.png" alt="Yerba Buena Gardens Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-xs font-semibold">Arts</span>
+                            <span class="text-gray-500 text-sm">May - Oct</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Yerba Buena Gardens Festival</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Free performances featuring music, dance, theater, and children's programs in SoMa.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-music mr-2"></i>
+                            <span>Multiple genres</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 9 -->
+                <div class="event-card rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 w-full overflow-hidden">
+                        <img src="images/hero-soundwave.png" alt="Soundwave Festival" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">Experimental</span>
+                            <span class="text-gray-500 text-sm">Summer</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Soundwave Festival</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Biennial sound, art, and music festival featuring experimental and avant-garde multimedia artists.
+                        </p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-wave-square mr-2"></i>
+                            <span>Multimedia Arts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section id="map" class="section py-20 px-6 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-map-marked-alt mr-3 text-purple-600"></i>Event Locations Map
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Explore where the events took place across the San Francisco Bay Area
+            </p>
+            
+            <div class="map-container">
+                <div id="event-map" style="height: 100%; width: 100%;"></div>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="filterMap('all')" class="filter-btn bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all transform hover:scale-105">
+                    <i class="fas fa-list mr-2"></i>All Events
+                </button>
+                <button onclick="filterMap('music')" class="filter-btn bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105">
+                    <i class="fas fa-music mr-2"></i>Music
+                </button>
+                <button onclick="filterMap('arts')" class="filter-btn bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all transform hover:scale-105">
+                    <i class="fas fa-palette mr-2"></i>Arts & Culture
+                </button>
+                <button onclick="filterMap('sports')" class="filter-btn bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-all transform hover:scale-105">
+                    <i class="fas fa-trophy mr-2"></i>Sports
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Widget Section -->
+    <section id="weather" class="section py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-cloud-sun mr-3 text-purple-600"></i>Summer 2012 Weather
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Historical weather data for San Francisco during the summer of 2012
+            </p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="weather-widget">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="text-center">
+                            <div class="text-5xl mb-2">🌤️</div>
+                            <div class="text-3xl font-bold mb-2">62.4°F</div>
+                            <div class="text-white/80 text-sm">Average Temperature</div>
+                            <div class="text-white/60 text-xs mt-1">June 2012</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl mb-2">☀️</div>
+                            <div class="text-3xl font-bold mb-2">65°F</div>
+                            <div class="text-white/80 text-sm">Average High</div>
+                            <div class="text-white/60 text-xs mt-1">Summer 2012</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl mb-2">🌙</div>
+                            <div class="text-3xl font-bold mb-2">55°F</div>
+                            <div class="text-white/80 text-sm">Average Low</div>
+                            <div class="text-white/60 text-xs mt-1">Summer 2012</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/20 rounded-lg p-6 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold mb-4">
+                            <i class="fas fa-info-circle mr-2"></i>Weather Conditions
+                        </h3>
+                        <p class="text-white/90 mb-4">
+                            The summer of 2012 in San Francisco was characterized by the typical Bay Area microclimate - cool, foggy mornings giving way to sunny afternoons. The moderate temperatures (averaging around 62-65°F) created perfect conditions for outdoor festivals and events.
+                        </p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🌫️</div>
+                                <div class="text-sm">Morning Fog</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">☀️</div>
+                                <div class="text-sm">Sunny Afternoons</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🌊</div>
+                                <div class="text-sm">Ocean Breeze</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🌡️</div>
+                                <div class="text-sm">Mild Climate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Initialize Map
+        let map = L.map('event-map').setView([37.7749, -122.4194], 12);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
+        
+        // Event Locations Data
+        const eventLocations = [
+            {
+                name: 'Golden Gate Bridge 75th Anniversary',
+                lat: 37.8199,
+                lng: -122.4783,
+                date: 'May 27, 2012',
+                type: 'arts',
+                icon: '🌉',
+                description: '75th anniversary celebration with fireworks and festivities'
+            },
+            {
+                name: 'U.S. Open Golf Championship',
+                lat: 37.7914,
+                lng: -122.5000,
+                date: 'June 14-17, 2012',
+                type: 'sports',
+                icon: '⛳',
+                description: 'Prestigious golf championship at The Olympic Club'
+            },
+            {
+                name: 'Summer Solstice Beach Celebration',
+                lat: 37.7594,
+                lng: -122.5108,
+                date: 'June 20, 2012',
+                type: 'arts',
+                icon: '🔥',
+                description: 'Beach bonfire celebration at Ocean Beach'
+            },
+            {
+                name: 'Stern Grove Festival',
+                lat: 37.7514,
+                lng: -122.4708,
+                date: 'June - August 2012',
+                type: 'music',
+                icon: '🎶',
+                description: 'Free Sunday concerts in the natural amphitheater'
+            },
+            {
+                name: 'San Francisco Frozen Film Festival',
+                lat: 37.7749,
+                lng: -122.4194,
+                date: 'July 2012',
+                type: 'arts',
+                icon: '🎬',
+                description: 'Independent film and music festival'
+            },
+            {
+                name: 'Fillmore Jazz Festival',
+                lat: 37.7849,
+                lng: -122.4334,
+                date: 'July 7-8, 2012',
+                type: 'music',
+                icon: '🎷',
+                description: 'Celebration of jazz in the historic Fillmore District'
+            },
+            {
+                name: 'America\'s Cup World Series',
+                lat: 37.8024,
+                lng: -122.4058,
+                date: 'August & October 2012',
+                type: 'sports',
+                icon: '⛵',
+                description: 'Exhibition sailing races on San Francisco Bay'
+            },
+            {
+                name: 'Yerba Buena Gardens Festival',
+                lat: 37.7849,
+                lng: -122.4024,
+                date: 'May - October 2012',
+                type: 'arts',
+                icon: '🎭',
+                description: 'Free music, dance, and theater performances'
+            },
+            {
+                name: 'Olympic Viewing Parties',
+                lat: 37.7799,
+                lng: -122.4194,
+                date: 'July 27 - August 12, 2012',
+                type: 'arts',
+                icon: '📺',
+                description: 'Free outdoor 2012 London Olympics viewing at Civic Center'
+            },
+            {
+                name: 'Outside Lands Music & Arts Festival',
+                lat: 37.7694,
+                lng: -122.4862,
+                date: 'August 10-12, 2012',
+                type: 'music',
+                icon: '🎵',
+                description: 'Major music festival featuring Stevie Wonder, Metallica, and Neil Young'
+            },
+            {
+                name: 'Soundwave Festival',
+                lat: 37.7749,
+                lng: -122.4194,
+                date: 'Summer 2012',
+                type: 'arts',
+                icon: '🌊',
+                description: 'Biennial sound, art, and music festival'
+            }
+        ];
+        
+        let markers = [];
+        
+        // Add markers to map
+        eventLocations.forEach(event => {
+            const marker = L.marker([event.lat, event.lng])
+                .addTo(map)
+                .bindPopup(`
+                    <div style="min-width: 200px;">
+                        <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">${event.icon} ${event.name}</h3>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 4px;"><strong>Date:</strong> ${event.date}</p>
+                        <p style="color: #666; font-size: 12px;">${event.description}</p>
+                    </div>
+                `);
+            
+            marker.eventData = event;
+            markers.push(marker);
+        });
+        
+        // Filter Map Function
+        function filterMap(type) {
+            markers.forEach(marker => {
+                if (type === 'all' || marker.eventData.type === type) {
+                    map.addLayer(marker);
+                } else {
+                    map.removeLayer(marker);
+                }
+            });
+            
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-white', 'active');
+            });
+            event.target.classList.add('ring-4', 'ring-white', 'active');
+        }
+        
+        // Add click event to event cards for interactivity
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+        
+        // Add parallax effect to hero section (desktop only)
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const hero = document.getElementById('hero');
+                if (hero && scrolled < 500) {
+                    hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+            });
+        }
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+        
+        // Add scroll effect to navigation
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.classList.add('shadow-xl');
+            } else {
+                nav.classList.remove('shadow-xl');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>

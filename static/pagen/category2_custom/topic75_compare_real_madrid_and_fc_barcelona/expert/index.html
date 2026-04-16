@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Madrid vs FC Barcelona - The Ultimate Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Responsive Typography for Mobile */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem !important;
+            }
+            
+            h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            h3 {
+                font-size: 1.5rem !important;
+            }
+            
+            h4 {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-5xl {
+                font-size: 2rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.75rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .stat-card {
+                padding: 1.25rem !important;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            p {
+                font-size: 0.9rem;
+            }
+            
+            .text-sm {
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            h4 {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-5xl {
+                font-size: 1.75rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1rem !important;
+            }
+            
+            .stat-card {
+                padding: 1rem !important;
+            }
+            
+            .py-16 {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            
+            .py-20 {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
+            }
+            
+            .mb-12 {
+                margin-bottom: 2rem !important;
+            }
+            
+            .mb-8 {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .mb-6 {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .mb-4 {
+                margin-bottom: 1rem !important;
+            }
+            
+            button {
+                font-size: 0.875rem !important;
+                padding: 0.75rem 1.5rem !important;
+            }
+            
+            .space-y-4 > * + * {
+                margin-top: 0.75rem !important;
+            }
+            
+            .space-y-6 > * + * {
+                margin-top: 1rem !important;
+            }
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+        }
+        
+        .real-madrid-bg {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+        }
+        
+        .barcelona-bg {
+            background: linear-gradient(135deg, #a50044 0%, #004d98 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .trophy-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .team-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .vs-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(238, 90, 111, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .comparison-bar {
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-weight: 600;
+            color: white;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bar-real {
+            background: linear-gradient(90deg, #ffffff, #c0c0c0);
+            color: #000;
+        }
+        
+        .bar-barca {
+            background: linear-gradient(90deg, #a50044, #004d98);
+        }
+        
+        .bar-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s ease;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: #e0e0e0;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .player-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .stadium-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .team-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .player-card:hover .player-image {
+            transform: scale(1.1);
+        }
+        
+        .stadium-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .stadium-card:hover .stadium-image {
+            transform: scale(1.05);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        .gallery-item .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 3px dashed rgba(255,255,255,0.3);
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(90deg, #a50044, #004d98);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            50% { 
+                transform: scale(1.02); 
+                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            }
+        }
+        
+        .chart-container {
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-container:nth-child(2) {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        
+        .chart-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .chart-card:hover::before {
+            left: 100%;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+        
+        .chart-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .section-divider {
+            position: relative;
+            height: 1px;
+            margin: 4rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(102, 126, 234, 0.3) 20%,
+                rgba(102, 126, 234, 0.6) 40%,
+                rgba(118, 75, 162, 0.8) 50%,
+                rgba(102, 126, 234, 0.6) 60%,
+                rgba(102, 126, 234, 0.3) 80%,
+                transparent 100%);
+        }
+        
+        .section-divider::after {
+            content: '⚽';
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            z-index: 1;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 fade-in">
+                <i class="fas fa-trophy mr-4"></i>
+                El Clásico
+            </h1>
+            <p class="text-2xl md:text-3xl mb-12 opacity-90">The Ultimate Rivalry</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-12">
+                <!-- Real Madrid -->
+                <div class="text-center">
+                    <div class="team-logo mx-auto mb-4">
+                        <!-- Replace with: <img src="real-madrid-logo.png" alt="Real Madrid Logo"> -->
+                        <img src="images/real-madrid-logo.png" alt="Real Madrid Logo" />
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">Real Madrid</h2>
+                    <p class="text-lg opacity-80">Founded 1902</p>
+                </div>
+                
+                <!-- VS Badge -->
+                <div class="vs-badge">
+                    VS
+                </div>
+                
+                <!-- FC Barcelona -->
+                <div class="text-center">
+                    <div class="team-logo mx-auto mb-4">
+                        <!-- Replace with: <img src="barcelona-logo.png" alt="FC Barcelona Logo"> -->
+                        <img src="images/barcelona-logo.png" alt="FC Barcelona Logo" />
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">FC Barcelona</h2>
+                    <p class="text-lg opacity-80">Founded 1899</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-center gap-4 mt-8">
+                <button onclick="scrollToSection('philosophy')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all">
+                    <i class="fas fa-brain mr-2"></i>Playing Philosophy
+                </button>
+                <button onclick="scrollToSection('legacy')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all">
+                    <i class="fas fa-star mr-2"></i>Legacy & Impact
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Image Gallery Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-black">
+                <i class="fas fa-images mr-3 text-purple-600"></i>
+                El Clásico Moments
+            </h2>
+            <p class="text-center text-gray-600 mb-8">Iconic moments from the greatest rivalry</p>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-1.png" alt="El Clásico Historic Match">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Historic Match</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-2.png" alt="El Clásico Legendary Goal">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Legendary Goal</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-3.png" alt="El Clásico Stadium Atmosphere">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Stadium Atmosphere</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-4.png" alt="El Clásico Trophy Celebration">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Trophy Celebration</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-5.png" alt="El Clásico Player Rivalry">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Player Rivalry</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/el-clasico-6.png" alt="El Clásico Fans Celebration">
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Fans Celebration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Playing Philosophy & Style -->
+    <section id="philosophy" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-brain mr-3 text-purple-600"></i>
+                Playing Philosophy & Style
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Real Madrid Philosophy -->
+                <div class="stat-card real-madrid-bg">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-crown text-5xl text-gray-700 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-4">Real Madrid</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-bolt text-yellow-500 mr-2"></i>Counter-Attacking Excellence</h4>
+                            <p class="text-gray-700">Real Madrid is renowned for their devastating counter-attacking style. They excel at absorbing pressure and then launching lightning-fast attacks, often catching opponents off-guard with their pace and precision.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-star text-blue-500 mr-2"></i>Galácticos Philosophy</h4>
+                            <p class="text-gray-700">The club has a tradition of signing world-class superstars, creating teams with exceptional individual talent. This philosophy emphasizes having the best players who can change games with moments of brilliance.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-trophy text-purple-500 mr-2"></i>European Dominance</h4>
+                            <p class="text-gray-700">Real Madrid's style has been particularly effective in European competitions, where their experience, tactical flexibility, and ability to perform in high-pressure situations have made them the most successful club in Champions League history.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-fire text-red-500 mr-2"></i>Winning Mentality</h4>
+                            <p class="text-gray-700">The club embodies a relentless winning mentality, often finding ways to win even when not playing at their best. This "never give up" attitude has defined Real Madrid throughout their history.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barcelona Philosophy -->
+                <div class="stat-card real-madrid-bg">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-shield-alt text-5xl text-gray-700 mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-4">FC Barcelona</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-sync text-blue-500 mr-2"></i>Tiki-Taka & Possession</h4>
+                            <p class="text-gray-700">Barcelona revolutionized football with their tiki-taka style - a possession-based approach emphasizing short passes, movement, and maintaining control of the ball. This philosophy prioritizes technical skill and patience.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-graduation-cap text-red-500 mr-2"></i>La Masia Academy</h4>
+                            <p class="text-gray-700">The club's famous youth academy, La Masia, has produced generations of world-class players. Barcelona's philosophy emphasizes developing homegrown talent and maintaining a consistent playing style from youth to first team.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-heart text-pink-500 mr-2"></i>More Than a Club</h4>
+                            <p class="text-gray-700">Barcelona represents Catalan identity and values. The club's motto "Més que un club" (More than a club) reflects their commitment to social causes, cultural identity, and playing beautiful, attacking football.</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <h4 class="font-bold text-lg mb-2"><i class="fas fa-magic text-purple-500 mr-2"></i>Total Football</h4>
+                            <p class="text-gray-700">Inspired by Johan Cruyff's vision, Barcelona plays a fluid, attacking style where players interchange positions, creating space and opportunities through intelligent movement and technical excellence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Iconic Moments & Stories -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-black">
+                <i class="fas fa-star mr-3 text-yellow-500"></i>
+                Iconic Moments & Stories
+            </h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <!-- Messi's El Clásico Legacy -->
+                    <div class="stat-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 p-6 rounded-lg mb-6 text-white text-center">
+                            <i class="fas fa-user-circle text-6xl mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Lionel Messi</h3>
+                            <p class="text-lg opacity-90">El Clásico Legend</p>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-gray-700 leading-relaxed">
+                                Lionel Messi's impact on El Clásico is legendary. The Argentine maestro has scored some of the most memorable goals in the rivalry's history, including a stunning solo effort where he dribbled past multiple Real Madrid defenders before slotting home. His performances in these matches have often been decisive, cementing his status as one of the greatest players to ever grace this fixture.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed">
+                                Messi's ability to rise to the occasion in El Clásico matches has made him a hero to Barcelona fans and a constant threat to Real Madrid. His technical brilliance, vision, and clutch performances have defined many memorable encounters between these two giants.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Historic Matches -->
+                    <div class="stat-card">
+                        <h3 class="text-2xl font-bold mb-6 text-center">
+                            <i class="fas fa-history text-purple-500 mr-2"></i>
+                            Memorable Encounters
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-gray-100 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-gray-800">The 11-1 Match</h4>
+                                <p class="text-gray-700 text-sm">The 1943 Copa del Rey match remains one of the most talked-about games in El Clásico history. Real Madrid's overwhelming victory has been the subject of much discussion and controversy, representing one of the most lopsided results in the rivalry.</p>
+                            </div>
+                            <div class="p-4 bg-gradient-to-r from-blue-100 to-red-100 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-blue-600">The 5-0 Masterclass</h4>
+                                <p class="text-gray-700 text-sm">Barcelona's 5-0 victory in 2010 under Pep Guardiola was a tactical masterpiece. It showcased tiki-taka football at its finest, with Barcelona completely dominating possession and creating chance after chance in a display of footballing perfection.</p>
+                            </div>
+                            <div class="p-4 bg-gray-100 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-gray-800">Ronaldo's Hat-Trick</h4>
+                                <p class="text-gray-700 text-sm">Cristiano Ronaldo's performances in El Clásico were always special. His ability to score crucial goals, including memorable hat-tricks, made him a constant threat and added another layer of intensity to an already fierce rivalry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cultural Significance -->
+                <div class="stat-card">
+                    <h3 class="text-2xl font-bold mb-6 text-center">
+                        <i class="fas fa-globe text-purple-600 mr-2"></i>
+                        Cultural Significance
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+                            <h4 class="font-bold text-xl mb-3 text-gray-800"><i class="fas fa-flag text-gray-600 mr-2"></i>Beyond Football</h4>
+                            <p class="text-gray-700 leading-relaxed">
+                                El Clásico transcends sport. It represents the clash between Spain's two largest cities, Madrid and Barcelona, and often reflects broader cultural and political tensions. The match is watched by hundreds of millions worldwide, making it one of the most viewed annual sporting events.
+                            </p>
+                        </div>
+                        <div class="p-6 bg-gradient-to-br from-blue-50 to-red-50 rounded-lg">
+                            <h4 class="font-bold text-xl mb-3 text-blue-600"><i class="fas fa-users text-red-500 mr-2"></i>Global Phenomenon</h4>
+                            <p class="text-gray-700 leading-relaxed">
+                                The rivalry has produced countless iconic moments that have become part of football folklore. From legendary players to unforgettable goals, El Clásico has consistently delivered drama, skill, and passion that captivates fans across the globe, regardless of their club allegiance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+
+    <!-- Legacy & Impact -->
+    <section id="legacy" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-black">
+                <i class="fas fa-star mr-3 text-yellow-500"></i>
+                Legacy & Impact
+            </h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <!-- Real Madrid Legacy -->
+                    <div class="stat-card real-madrid-bg">
+                        <div class="text-center mb-6">
+                            <i class="fas fa-crown text-5xl text-gray-700 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-4">Real Madrid</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-globe text-blue-500 mr-2"></i>European Royalty</h4>
+                                <p class="text-gray-700">Real Madrid's dominance in European competitions has earned them the nickname "Kings of Europe." Their success in the Champions League has set the standard for excellence in continental football.</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-star text-yellow-500 mr-2"></i>World-Class Talent</h4>
+                                <p class="text-gray-700">The club has consistently attracted and developed the world's best players. From Di Stéfano to Ronaldo, Real Madrid has been home to footballing legends who have shaped the game's history.</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-trophy text-purple-500 mr-2"></i>Winning Tradition</h4>
+                                <p class="text-gray-700">Real Madrid's winning mentality and ability to perform in crucial moments have made them one of the most successful clubs in football history, with numerous domestic and international titles.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Barcelona Legacy -->
+                    <div class="stat-card real-madrid-bg">
+                        <div class="text-center mb-6">
+                            <i class="fas fa-shield-alt text-5xl text-gray-700 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-4">FC Barcelona</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-heart text-red-500 mr-2"></i>More Than a Club</h4>
+                                <p class="text-gray-700">Barcelona's identity extends beyond football. The club represents Catalan culture, values, and social causes, making it a symbol of regional pride and identity.</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-graduation-cap text-blue-500 mr-2"></i>Youth Development</h4>
+                                <p class="text-gray-700">La Masia academy has revolutionized youth development in football. The club's commitment to developing homegrown talent has produced generations of world-class players.</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2"><i class="fas fa-magic text-purple-500 mr-2"></i>Beautiful Football</h4>
+                                <p class="text-gray-700">Barcelona's commitment to playing attractive, possession-based football has influenced the game globally. Their style has been studied and emulated by coaches and teams worldwide.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Global Impact -->
+                <div class="stat-card">
+                    <h3 class="text-2xl font-bold mb-6 text-center">
+                        <i class="fas fa-globe-americas text-purple-600 mr-2"></i>
+                        Global Impact
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-gradient-to-br from-gray-50 to-purple-50 rounded-lg">
+                            <h4 class="font-bold text-xl mb-3 text-gray-800"><i class="fas fa-users text-purple-600 mr-2"></i>Worldwide Fanbase</h4>
+                            <p class="text-gray-700 leading-relaxed">
+                                Both clubs boast hundreds of millions of fans worldwide. Their matches are watched by audiences across every continent, making El Clásico one of the most viewed sporting events globally. The rivalry has transcended borders and cultures.
+                            </p>
+                        </div>
+                        <div class="p-6 bg-gradient-to-br from-blue-50 to-red-50 rounded-lg">
+                            <h4 class="font-bold text-xl mb-3 text-blue-600"><i class="fas fa-futbol text-red-500 mr-2"></i>Football Evolution</h4>
+                            <p class="text-gray-700 leading-relaxed">
+                                The tactical innovations and playing styles developed by both clubs have shaped modern football. From tiki-taka to counter-attacking excellence, their approaches have influenced how the game is played at all levels.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Historical Timeline -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-history mr-3 text-purple-600"></i>
+                Historical Milestones
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Real Madrid Timeline -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-center">Real Madrid</h3>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1902 - Foundation</h4>
+                            <p class="text-gray-600">Club founded as Madrid Football Club</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1955-1960 - European Dominance</h4>
+                            <p class="text-gray-600">Won 5 consecutive European Cups</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2000s - Galácticos Era</h4>
+                            <p class="text-gray-600">Signed world's best players (Zidane, Ronaldo, Beckham)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2014-2018 - Champions League Dynasty</h4>
+                            <p class="text-gray-600">Won 4 Champions League titles in 5 years</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Barcelona Timeline -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-center">FC Barcelona</h3>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1899 - Foundation</h4>
+                            <p class="text-gray-600">Founded by Swiss businessman Joan Gamper</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1990s - Dream Team</h4>
+                            <p class="text-gray-600">Johan Cruyff's revolutionary team</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2008-2012 - Tiki-Taka Era</h4>
+                            <p class="text-gray-600">Pep Guardiola's dominant team with Messi, Xavi, Iniesta</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2015 - Treble Winners</h4>
+                            <p class="text-gray-600">Won La Liga, Copa del Rey, and Champions League</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Legendary Players -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-star mr-3 text-yellow-500"></i>
+                Legendary Players
+            </h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-8">
+                    <label class="flex items-center justify-center gap-4">
+                        <span class="font-semibold">Real Madrid</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="playerToggle" onchange="togglePlayers()">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="font-semibold">FC Barcelona</span>
+                    </label>
+                </div>
+                
+                <!-- Real Madrid Players -->
+                <div id="realMadridPlayers" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <img src="images/di-stefano.png" alt="Alfredo Di Stéfano" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Alfredo Di Stéfano</h4>
+                                <p class="text-sm opacity-80">1953-1964</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-700 mt-2">Considered one of the greatest players of all time, Di Stéfano was instrumental in Real Madrid's early European dominance. His versatility and goal-scoring ability made him a legend of the game.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <img src="images/ronaldo.png" alt="Cristiano Ronaldo" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Cristiano Ronaldo</h4>
+                                <p class="text-sm opacity-80">2009-2018</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-700 mt-2">Ronaldo's time at Real Madrid was marked by incredible goal-scoring records and numerous individual awards. His athleticism, skill, and determination made him one of the most feared forwards in El Clásico history.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <img src="images/raul.png" alt="Raúl" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Raúl</h4>
+                                <p class="text-sm opacity-80">1994-2010</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-700 mt-2">Raúl was the embodiment of Real Madrid's fighting spirit. As captain, he led by example with his work rate, loyalty, and ability to score crucial goals in important matches, including many memorable El Clásico encounters.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barcelona Players -->
+                <div id="barcelonaPlayers" class="grid grid-cols-1 md:grid-cols-3 gap-6 hidden">
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <img src="images/messi.png" alt="Lionel Messi" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Lionel Messi</h4>
+                                <p class="text-sm opacity-80">2004-2021</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-700 mt-2">Messi's impact on El Clásico is unparalleled. His incredible dribbling, vision, and goal-scoring ability have produced some of the most memorable moments in the rivalry's history, making him the all-time top scorer in these matches.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <img src="images/xavi.png" alt="Xavi Hernández" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Xavi Hernández</h4>
+                                <p class="text-sm opacity-80">1998-2015</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Midfielder</p>
+                            <p class="text-sm text-gray-700 mt-2">Xavi was the heartbeat of Barcelona's tiki-taka style. His passing accuracy, vision, and ability to control the tempo of matches made him one of the most influential midfielders in football history.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <img src="images/iniesta.png" alt="Andrés Iniesta" class="player-image">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Andrés Iniesta</h4>
+                                <p class="text-sm opacity-80">2002-2018</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Midfielder</p>
+                            <p class="text-sm text-gray-700 mt-2">Iniesta's elegance and technical brilliance made him a key figure in Barcelona's success. His ability to create space and provide assists in crucial moments, including World Cup finals, cemented his legendary status.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Stadiums Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-building mr-3 text-purple-600"></i>
+                Iconic Stadiums
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Santiago Bernabéu -->
+                <div class="stadium-card">
+                    <div class="real-madrid-bg text-center relative overflow-hidden">
+                        <img src="images/bernabeu.png" alt="Santiago Bernabéu" class="stadium-image">
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-users mr-2 text-purple-600"></i>Capacity:</span>
+                                <span>81,044</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-calendar mr-2 text-purple-600"></i>Opened:</span>
+                                <span>1947</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-map-marker-alt mr-2 text-purple-600"></i>Location:</span>
+                                <span>Madrid, Spain</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-star mr-2 text-purple-600"></i>UEFA Rating:</span>
+                                <span>5 Stars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Camp Nou -->
+                <div class="stadium-card">
+                    <div class="barcelona-bg text-center text-white relative overflow-hidden">
+                        <img src="images/camp-nou.png" alt="Camp Nou" class="stadium-image">
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-users mr-2 text-purple-600"></i>Capacity:</span>
+                                <span>99,354</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-calendar mr-2 text-purple-600"></i>Opened:</span>
+                                <span>1957</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-map-marker-alt mr-2 text-purple-600"></i>Location:</span>
+                                <span>Barcelona, Spain</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-star mr-2 text-purple-600"></i>UEFA Rating:</span>
+                                <span>5 Stars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll function
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Toggle players function
+        function togglePlayers() {
+            const toggle = document.getElementById('playerToggle');
+            const realMadrid = document.getElementById('realMadridPlayers');
+            const barcelona = document.getElementById('barcelonaPlayers');
+            
+            if (toggle.checked) {
+                realMadrid.classList.add('hidden');
+                barcelona.classList.remove('hidden');
+            } else {
+                realMadrid.classList.remove('hidden');
+                barcelona.classList.add('hidden');
+            }
+        }
+        
+        // Initialize page animations
+        window.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animations to cards on scroll
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all stat cards and sections
+            document.querySelectorAll('.stat-card, section').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+

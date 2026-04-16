@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rubik’s Cube – Interactive History</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap"
+    rel="stylesheet">
+
+
+
+  </style>
+</head>
+
+<body>
+<div class="header-overlay"></div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Rubik’s Cube</div>
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div class="nav-links" id="navLinks">
+        <a href="#hero">Home</a>
+        <a href="#intro">About</a>
+        <a href="#history">History</a>
+        <a href="#try-cube">Try It</a>
+        <a href="#cube-visual">Cube Explorer</a>
+
+        <a href="#rubik-match-section" class="active">Color Match</a>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section id="hero">
+    <div class="overlay">
+      <h1>Explore the Rubik’s Cube</h1>
+      <p>Dive into the world’s most iconic puzzle and experience the magic of the Rubik’s Cube like never before.
+        Challenge your mind, test your skills, and discover the fascinating history behind this timeless brain-teaser.
+      </p>
+      <a href="#try-cube" class="btn">Try the Cube</a>
+    </div>
+  </section>
+
+  <!-- ================= INTRO ================= -->
+  <section id="intro">
+    <div class="container intro">
+      <div>
+        <h2>What is the Rubik’s Cube?</h2>
+        <p>The Rubik’s Cube is a three-dimensional mechanical puzzle invented in 1974 by Ernő Rubik, a Hungarian
+          architect and professor. It was originally designed as a teaching tool to help students understand
+          three-dimensional geometry and spatial relationships. The puzzle consists of a cube with independently
+          rotating layers, allowing the pieces to be rearranged into millions of possible configurations. Solving the
+          Rubik’s Cube develops logical thinking, problem-solving skills, memory retention, and spatial awareness,
+          making it widely used today in educational settings and cognitive skill development programs.</p>
+      </div>
+      <img src="images/rubik1.jpg" alt="Rubik Cube">
+    </div>
+  </section>
+
+  <!-- ================= HISTORY ================= -->
+  <section id="history">
+    <div class="container">
+      <h2>History Timeline</h2>
+      <div class="timeline">
+        <div class="timeline-item"><strong>1974:</strong> Invention by Ernő Rubik
+          <p>Hungarian architect and professor Ernő Rubik invents the Rubik’s Cube as a teaching aid to help students
+            understand three-dimensional movement and spatial relationships.</p>
+        </div>
+        <div class="timeline-item"><strong>1980:</strong> Global Popularity Begins
+          <p>After being licensed internationally, the Rubik’s Cube becomes a worldwide phenomenon, quickly gaining
+            popularity across Europe, the United States, and Asia.</p>
+        </div>
+        <div class="timeline-item"><strong>1982:</strong> First world championship
+          <p>The first official Rubik’s Cube World Championship is held in Budapest, marking the beginning of
+            competitive speedcubing.</p>
+        </div>
+        <div class="timeline-item"><strong>Today:</strong> Worldwide Educational & Competitive Use
+          <p>The Rubik’s Cube is used globally in classrooms, brain-training programs, and international competitions,
+            with millions of enthusiasts continuing to solve and innovate new methods.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRY CUBE ================= -->
+  <section id="try-cube">
+    <div class="container">
+      <div class="try-cube-section">
+        <h2>Try the Rubik’s Cube</h2>
+        <p>Interact with the cube by dragging with your mouse or finger to explore its movement, understand how each
+          layer
+          rotates, and observe how different turns change the cube’s structure.</p>
+      </div>
+      <div class="cube-wrap">
+        <div class="cube" id="cube">
+          <div class="face front">Front</div>
+          <div class="face back">Back</div>
+          <div class="face right">Right</div>
+          <div class="face left">Left</div>
+          <div class="face top">Top</div>
+          <div class="face bottom">Bottom</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="cube-visual">
+    <div class="container">
+      <h2>Inside a Rubik’s Cube</h2>
+      <p class="visual-intro">
+        A Rubik’s Cube may appear simple, but inside it contains a precise mechanical structure that allows each layer
+        to rotate smoothly while staying aligned. Each type of piece plays a unique role in the cube’s movement and
+        solving logic.
+
+        In this interactive section, select different parts to see how they function and connect. Explore the center,
+        edge, corner pieces, and the core mechanism to better understand the engineering behind this iconic puzzle.
+      </p>
+
+      <div class="visual-layout">
+
+        <!-- SVG DRAWING -->
+        <svg viewBox="0 0 300 300" class="cube-svg">
+          <!-- Core -->
+          <circle id="core" cx="150" cy="150" r="25" />
+
+          <!-- Center pieces -->
+          <rect id="center1" x="130" y="60" width="40" height="40" />
+          <rect id="center2" x="130" y="200" width="40" height="40" />
+          <rect id="center3" x="60" y="130" width="40" height="40" />
+          <rect id="center4" x="200" y="130" width="40" height="40" />
+
+          <!-- Edge pieces -->
+          <rect id="edge1" x="130" y="100" width="40" height="25" />
+          <rect id="edge2" x="130" y="175" width="40" height="25" />
+          <rect id="edge3" x="100" y="130" width="25" height="40" />
+          <rect id="edge4" x="175" y="130" width="25" height="40" />
+
+          <!-- Corner pieces -->
+          <rect id="corner1" x="90" y="90" width="25" height="25" />
+          <rect id="corner2" x="185" y="90" width="25" height="25" />
+          <rect id="corner3" x="90" y="185" width="25" height="25" />
+          <rect id="corner4" x="185" y="185" width="25" height="25" />
+        </svg>
+
+        <!-- CONTROLS -->
+        <div class="visual-controls">
+          <button data-part="center">Center Pieces</button>
+          <button data-part="edge">Edge Pieces</button>
+          <button data-part="corner">Corner Pieces</button>
+          <button data-part="core">Core Mechanism</button>
+
+          <div class="visual-info">
+            <h3 id="visual-title">Select a part</h3>
+            <p id="visual-text">
+              Select a part of the cube below. Click a button to highlight that component and learn how it functions
+              inside the cube.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAST SECTION ================= -->
+  <section id="last-section">
+    <div class="container last-section">
+      <h2>Think You Can Solve It?</h2>
+      <p>Put your problem-solving skills to the test with an interactive Rubik’s Cube. Apply what you’ve learned about
+        the cube’s structure and see how efficiently you can solve it.</p>
+      <a href="#try-cube" class="btn" id="tryCubeBtn">
+        <span class="cube-icon">🧊</span> Try the Cube Now
+      </a>
+
+      <div class="fun-fact">
+        <h3>Did You Know?</h3>
+        <p>The world record for solving a 3x3 Rubik’s Cube is less than 4 seconds!</p>
+      </div>
+
+      <!-- Mini Cube Animation -->
+      <div id="miniCubeContainer"></div>
+    </div>
+  </section>
+
+
+
+  <section id="rubik-match-section">
+    <div class="rubik-match-container">
+
+      <h2 class="rubik-match-title">Rubik Color Match</h2>
+      <p class="rubik-match-subtitle">
+        Interact with each tile by clicking to cycle through colors. Your goal is to align all tiles so they form a
+        single, uniform color, demonstrating how a solved cube face looks.
+      </p>
+
+      <div class="rubik-match-board" id="rubikMatchBoard"></div>
+
+      <div class="rubik-match-controls">
+        <button id="rubikMatchShuffle">Shuffle</button>
+        <button id="rubikMatchReset">Reset</button>
+      </div>
+
+      <p class="rubik-match-message" id="rubikMatchMessage"></p>
+
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <footer>
+    © 2025 Rubik’s Cube Interactive Page
+  </footer>
+  <script>
+
+
+
+  </script>
+
+</body>
+
+</html>

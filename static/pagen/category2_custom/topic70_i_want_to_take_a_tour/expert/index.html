@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South America Explorer | Plan Your Ultimate Journey</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Base Typography */
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, .font-heading { font-family: 'Montserrat', sans-serif; }
+        
+        /* --- Hero Section Styles --- */
+        .hero-slider-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: -1;
+        }
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%);
+            z-index: 1;
+        }
+
+        /* Text Entrance Animations */
+        .slide-in-left {
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.5s; }
+        .delay-3 { animation-delay: 0.7s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* General UI Styles */
+        .card-zoom { transition: all 0.3s ease; }
+        .card-zoom:hover { transform: translateY(-5px); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #059669; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #047857; }
+        
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <nav class="bg-white/95 backdrop-blur-sm shadow-md fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <i class="fa-solid fa-compass text-emerald-600 text-3xl mr-2"></i>
+                    <span class="font-heading font-bold text-xl tracking-tight text-slate-900">SA<span class="text-emerald-600">Explorer</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#destinations" class="text-slate-600 hover:text-emerald-600 font-medium transition">Destinations</a>
+                    <a href="#planner" class="text-slate-600 hover:text-emerald-600 font-medium transition">Trip Planner</a>
+                    <a href="#tips" class="text-slate-600 hover:text-emerald-600 font-medium transition">Travel Tips</a>
+                </div>
+                <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-full font-bold transition shadow-lg transform hover:scale-105" onclick="document.getElementById('planner').scrollIntoView({behavior: 'smooth'})">
+                    Start Planning
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="h-screen flex items-center relative overflow-hidden">
+        
+        <div class="hero-slider-container">
+            <img src="images/hero-1.png" class="hero-slide active" alt="South America Landscape 1">
+            <img src="images/hero-2.png" class="hero-slide" alt="South America Landscape 2">
+            <img src="images/hero-3.png" class="hero-slide" alt="South America Landscape 3">
+        </div>
+        <div class="hero-overlay"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative">
+            <div class="max-w-2xl text-white">
+                <p class="text-emerald-400 font-bold tracking-widest uppercase mb-4 text-sm md:text-base slide-in-left delay-1">
+                    Discover the Untamed Continent
+                </p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-8 leading-none slide-in-left delay-2">
+                    South America<br>Awaits You.
+                </h1>
+                <p class="text-lg md:text-xl mb-10 text-slate-100 font-light leading-relaxed slide-in-left delay-3 max-w-xl">
+                    From the mystic peaks of the Andes to the vibrant rhythms of Rio. Plan your perfect, personalized adventure with our interactive guide.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 slide-in-left delay-3">
+                    <a href="#destinations" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold hover:bg-emerald-700 transition duration-300 shadow-lg text-center">
+                        Explore Regions
+                    </a>
+                    <a href="#planner" class="bg-white/10 backdrop-blur-md border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-emerald-900 transition duration-300 text-center">
+                        Calculate Budget
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="destinations" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-heading font-bold text-slate-900 mb-4">Choose Your Adventure</h2>
+                <div class="w-24 h-1 bg-emerald-500 mx-auto rounded-full"></div>
+                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">Click on a country to reveal its highlights, best time to visit, and iconic experiences.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4 flex flex-col gap-3">
+                    <button onclick="updateDestination('peru')" id="btn-peru" class="dest-btn active-dest p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-emerald-600 bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-peru.png" alt="Peru Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Peru</h3>
+                            <p class="text-xs text-slate-500">Land of the Incas</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+
+                    <button onclick="updateDestination('brazil')" id="btn-brazil" class="dest-btn p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-transparent bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-brazil.png" alt="Brazil Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Brazil</h3>
+                            <p class="text-xs text-slate-500">Samba & Nature</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+
+                    <button onclick="updateDestination('argentina')" id="btn-argentina" class="dest-btn p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-transparent bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-argentina.png" alt="Argentina Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Argentina</h3>
+                            <p class="text-xs text-slate-500">Tango & Glaciers</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+
+                    <button onclick="updateDestination('colombia')" id="btn-colombia" class="dest-btn p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-transparent bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-colombia.png" alt="Colombia Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Colombia</h3>
+                            <p class="text-xs text-slate-500">Coffee & Culture</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+                    
+                    <button onclick="updateDestination('chile')" id="btn-chile" class="dest-btn p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-transparent bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-chile.png" alt="Chile Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Chile</h3>
+                            <p class="text-xs text-slate-500">Nature's Extremes</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+
+                    <button onclick="updateDestination('bolivia')" id="btn-bolivia" class="dest-btn p-4 rounded-xl text-left transition-all duration-300 hover:bg-emerald-50 border-l-4 border-transparent bg-white shadow-sm flex items-center group">
+                        <img src="images/flag-bolivia.png" alt="Bolivia Flag" class="w-10 h-auto rounded shadow-sm mr-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800 group-hover:text-emerald-700">Bolivia</h3>
+                            <p class="text-xs text-slate-500">Sky High Adventure</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right ml-auto text-slate-300 group-hover:text-emerald-500"></i>
+                    </button>
+                </div>
+
+                <div class="lg:col-span-8">
+                    <div id="dest-content" class="bg-white rounded-2xl shadow-xl overflow-hidden h-full border border-slate-100 relative fade-in">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img id="dest-image" src="images/peru.png" class="w-full h-full object-cover" alt="Destination">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-8">
+                                <div>
+                                    <h3 id="dest-title" class="text-4xl md:text-5xl font-bold text-white mb-2 leading-tight">Peru</h3>
+                                    <p id="dest-subtitle" class="text-emerald-300 font-medium text-lg">The Inca Heartland</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-8">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="bg-emerald-50 p-4 rounded-xl text-center">
+                                    <i class="fa-regular fa-calendar text-emerald-600 text-2xl mb-2"></i>
+                                    <h4 class="font-bold text-sm uppercase text-slate-500">Best Time</h4>
+                                    <p id="dest-season" class="font-bold text-slate-800">May - October</p>
+                                </div>
+                                <div class="bg-emerald-50 p-4 rounded-xl text-center">
+                                    <i class="fa-solid fa-wallet text-emerald-600 text-2xl mb-2"></i>
+                                    <h4 class="font-bold text-sm uppercase text-slate-500">Daily Budget</h4>
+                                    <p id="dest-budget" class="font-bold text-slate-800">$45 - $120</p>
+                                </div>
+                                <div class="bg-emerald-50 p-4 rounded-xl text-center">
+                                    <i class="fa-solid fa-utensils text-emerald-600 text-2xl mb-2"></i>
+                                    <h4 class="font-bold text-sm uppercase text-slate-500">Must Try</h4>
+                                    <p id="dest-food" class="font-bold text-slate-800">Ceviche</p>
+                                </div>
+                            </div>
+
+                            <h4 class="font-bold text-xl mb-4 text-slate-800">Top Attractions & Vibe</h4>
+                            <p id="dest-desc" class="text-slate-600 leading-relaxed mb-6">
+                                Home to the mysterious Machu Picchu and the vibrant city of Cusco. Peru offers a blend of colonial history, ancient archaeology, and world-renowned gastronomy. Don't miss the Sacred Valley and a flight over the Nazca Lines.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2" id="dest-tags">
+                                <span class="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-600">#MachuPicchu</span>
+                                <span class="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-600">#Cusco</span>
+                                <span class="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-600">#LlamaTrekking</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="planner" class="bg-emerald-900 py-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-emerald-800 rounded-full opacity-50 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-emerald-500 rounded-full opacity-20 blur-3xl"></div>
+
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center text-white mb-12">
+                <h2 class="text-4xl font-heading font-bold mb-4">Interactive Trip Planner</h2>
+                <p class="text-emerald-100 max-w-2xl mx-auto">Customize your inputs to generate a personalized itinerary and estimated cost breakdown.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+                <div class="p-8 md:p-12">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="fa-solid fa-sliders text-emerald-600 mr-3"></i> Preferences
+                    </h3>
+                    
+                    <form id="trip-form" onsubmit="calculateTrip(event)">
+                        <div class="mb-6">
+                            <label class="block text-slate-700 font-bold mb-2">Duration</label>
+                            <input type="range" id="duration" min="7" max="30" value="14" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600" oninput="document.getElementById('days-output').innerText = this.value + ' Days'">
+                            <div class="flex justify-between text-sm text-slate-500 mt-2">
+                                <span>7 Days</span>
+                                <span id="days-output" class="font-bold text-emerald-600">14 Days</span>
+                                <span>30 Days</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-slate-700 font-bold mb-2">Travel Style</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="style" value="budget" class="peer sr-only">
+                                    <div class="h-full flex flex-col justify-center items-center p-3 text-center border-2 border-slate-200 rounded-xl peer-checked:border-emerald-600 peer-checked:bg-emerald-50 transition">
+                                        <i class="fa-solid fa-backpack block text-xl mb-1 text-slate-400 peer-checked:text-emerald-600"></i>
+                                        <span class="text-sm font-semibold">Budget</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="style" value="comfort" class="peer sr-only" checked>
+                                    <div class="h-full flex flex-col justify-center items-center p-3 text-center border-2 border-slate-200 rounded-xl peer-checked:border-emerald-600 peer-checked:bg-emerald-50 transition">
+                                        <i class="fa-solid fa-suitcase-rolling block text-xl mb-1 text-slate-400 peer-checked:text-emerald-600"></i>
+                                        <span class="text-sm font-semibold">Comfort</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="style" value="luxury" class="peer sr-only">
+                                    <div class="h-full flex flex-col justify-center items-center p-3 text-center border-2 border-slate-200 rounded-xl peer-checked:border-emerald-600 peer-checked:bg-emerald-50 transition">
+                                        <i class="fa-solid fa-martini-glass block text-xl mb-1 text-slate-400 peer-checked:text-emerald-600"></i>
+                                        <span class="text-sm font-semibold">Luxury</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-slate-700 font-bold mb-2">Primary Interest</label>
+                            <select id="interest" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <option value="nature">Nature & Hiking (Patagonia/Amazon)</option>
+                                <option value="culture">History & Culture (Inca/Colonial)</option>
+                                <option value="mix">Balanced Mix (Highlights)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 transition shadow-lg flex justify-center items-center">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Generate My Plan
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-slate-50 p-8 md:p-12 border-l border-slate-100 flex flex-col justify-center">
+                    <div id="result-placeholder" class="text-center text-slate-400">
+                        <i class="fa-regular fa-map text-6xl mb-4 opacity-50"></i>
+                        <p>Adjust settings and click Generate to see your custom itinerary.</p>
+                    </div>
+
+                    <div id="trip-result" class="hidden fade-in">
+                        <div class="flex justify-between items-start mb-6 border-b border-slate-200 pb-6">
+                            <div>
+                                <h4 class="text-sm text-slate-500 uppercase font-bold tracking-wide">Estimated Cost</h4>
+                                <span class="text-4xl font-extrabold text-slate-900" id="res-cost">$0</span>
+                                <span class="text-sm text-slate-500 block">Excluding flights to/from home</span>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg shadow-sm">
+                                <span class="block text-xs text-center text-slate-400 font-bold uppercase">Days</span>
+                                <span class="block text-2xl font-bold text-center text-emerald-600" id="res-days">0</span>
+                            </div>
+                        </div>
+
+                        <h4 class="text-sm text-slate-500 uppercase font-bold tracking-wide mb-3">Recommended Route</h4>
+                        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 mb-6">
+                            <ul class="space-y-4 relative border-l-2 border-emerald-100 ml-2 pl-4" id="res-route">
+                            </ul>
+                        </div>
+
+                        <div class="bg-blue-50 p-4 rounded-lg flex items-start">
+                            <i class="fa-solid fa-circle-info text-blue-500 mt-1 mr-3"></i>
+                            <p class="text-sm text-blue-800" id="res-tip">Tip text goes here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tips" class="py-20 max-w-4xl mx-auto px-4">
+        <h2 class="text-3xl font-heading font-bold text-center mb-12 text-slate-800">Essential Travel Guide</h2>
+        
+        <div class="space-y-4">
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+                <button class="w-full p-5 text-left bg-white hover:bg-slate-50 flex justify-between items-center transition" onclick="toggleAccordion('acc1')">
+                    <span class="font-bold text-lg text-slate-700"><i class="fa-solid fa-passport mr-3 text-emerald-600"></i>Visas & Entry Requirements</span>
+                    <i id="icon-acc1" class="fa-solid fa-plus text-slate-400"></i>
+                </button>
+                <div id="acc1" class="hidden bg-slate-50 p-5 text-slate-600 border-t border-slate-100">
+                    Most Western citizens (US, EU, UK, Canada) do not need visas for tourism in Argentina, Peru, Chile, Colombia, or Brazil. <strong>Note:</strong> Bolivia may require a visa on arrival for US citizens ($160). Always check current regulations before travel.
+                </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+                <button class="w-full p-5 text-left bg-white hover:bg-slate-50 flex justify-between items-center transition" onclick="toggleAccordion('acc2')">
+                    <span class="font-bold text-lg text-slate-700"><i class="fa-solid fa-shield-heart mr-3 text-emerald-600"></i>Safety & Health</span>
+                    <i id="icon-acc2" class="fa-solid fa-plus text-slate-400"></i>
+                </button>
+                <div id="acc2" class="hidden bg-slate-50 p-5 text-slate-600 border-t border-slate-100">
+                    <ul class="list-disc ml-5 space-y-2">
+                        <li><strong>Altitude:</strong> Acclimatize in Cusco or La Paz for 2 days before strenuous hikes.</li>
+                        <li><strong>Water:</strong> Drink bottled or purified water only.</li>
+                        <li><strong>Vaccines:</strong> Yellow Fever is recommended for the Amazon. Routine vaccines should be up to date.</li>
+                        <li><strong>Safety:</strong> Use Uber/Cabify in cities instead of street taxis at night. Keep valuables minimal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+                <button class="w-full p-5 text-left bg-white hover:bg-slate-50 flex justify-between items-center transition" onclick="toggleAccordion('acc3')">
+                    <span class="font-bold text-lg text-slate-700"><i class="fa-solid fa-mobile-screen mr-3 text-emerald-600"></i>Connectivity & Money</span>
+                    <i id="icon-acc3" class="fa-solid fa-plus text-slate-400"></i>
+                </button>
+                <div id="acc3" class="hidden bg-slate-50 p-5 text-slate-600 border-t border-slate-100">
+                    <p class="mb-2"><strong>SIM Cards:</strong> Buy a local SIM (Claro/Movistar/Entel) or use an Airalo eSim for convenience.</p>
+                    <p><strong>Cash vs Card:</strong> Credit cards are widely accepted in major cities. Carry cash (USD) to exchange for small towns in Argentina (Blue Dollar rate) and Bolivia (Cash is king).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <i class="fa-solid fa-earth-americas text-4xl text-emerald-600 mb-4"></i>
+            <p class="mb-6">Made for intrepid travelers.</p>
+            <div class="text-sm">
+                SA Explorer. <br>
+                <span class="text-xs opacity-50">Information verified with current travel advisories.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Slider Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+
+        function nextSlide() {
+            if(slides.length === 0) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        if (slides.length > 0) {
+            setInterval(nextSlide, 5000);
+        }
+
+        // Destination Data (6 Countries)
+        const destinations = {
+            peru: {
+                title: "Peru",
+                subtitle: "The Inca Heartland",
+                season: "May - October (Dry)",
+                budget: "$45 - $120",
+                food: "Ceviche & Lomo Saltado",
+                desc: "Home to the mysterious Machu Picchu and the vibrant city of Cusco. Peru offers a blend of colonial history, ancient archaeology, and world-renowned gastronomy. Don't miss the Sacred Valley and a flight over the Nazca Lines.",
+                image: "images/peru.png",
+                tags: ["#MachuPicchu", "#Cusco", "#Gastronomy"]
+            },
+            brazil: {
+                title: "Brazil",
+                subtitle: "Rhythm of the Tropics",
+                season: "Dec - Mar (Summer)",
+                budget: "$60 - $150",
+                food: "Feijoada & Açaí",
+                desc: "From the Christ the Redeemer statue in Rio to the depths of the Amazon Rainforest. Brazil is a sensory overload of festivals, pristine beaches, and wildlife. Visit Iguazu Falls for a breathtaking natural wonder.",
+                image: "images/brazil.png",
+                tags: ["#RioDeJaneiro", "#Amazon", "#IguazuFalls"]
+            },
+            argentina: {
+                title: "Argentina",
+                subtitle: "Passion at the End of the World",
+                season: "Oct - Apr (Patagonia)",
+                budget: "$40 - $100 (Blue Rate)",
+                food: "Steak & Malbec",
+                desc: "Buenos Aires offers European flair with Latin passion. Head south to Patagonia for the Perito Moreno Glacier and Fitz Roy treks. The wine region of Mendoza offers world-class tasting experiences.",
+                image: "images/argentina.png",
+                tags: ["#Patagonia", "#BuenosAires", "#Wine"]
+            },
+            colombia: {
+                title: "Colombia",
+                subtitle: "Magical Realism",
+                season: "Dec - Mar (Dry)",
+                budget: "$40 - $100",
+                food: "Arepas & Coffee",
+                desc: "Explore the walled city of Cartagena, hike through the towering wax palms of Cocora Valley, and discover the transformation of Medellin. Colombia is colorful, welcoming, and incredibly diverse.",
+                image: "images/colombia.png",
+                tags: ["#Cartagena", "#CoffeeTriangle", "#Tayrona"]
+            },
+            chile: {
+                title: "Chile",
+                subtitle: "Land of Contrasts",
+                season: "Nov - Mar (Summer)",
+                budget: "$55 - $140",
+                food: "Seafood & Pisco",
+                desc: "From the arid Atacama Desert in the north to the icy fjords of Patagonia. Chile is a nature lover's paradise. Don't miss the granite towers of Torres del Paine or the street art in Valparaiso.",
+                image: "images/chile.png",
+                tags: ["#TorresDelPaine", "#Atacama", "#Valparaiso"]
+            },
+            bolivia: {
+                title: "Bolivia",
+                subtitle: "Sky High Adventure",
+                season: "May - Oct (Dry Season)",
+                budget: "$30 - $80",
+                food: "Salteñas",
+                desc: "The highest isolated nation in South America. Witness the mind-bending reflections of the Salar de Uyuni salt flats and the chaotic beauty of La Paz. It's rugged, affordable, and unforgettable.",
+                image: "images/bolivia.png",
+                tags: ["#SalarDeUyuni", "#LaPaz", "#Altiplano"]
+            }
+        };
+
+        // Destination Switcher Logic
+        function updateDestination(key) {
+            const data = destinations[key];
+            const contentDiv = document.getElementById('dest-content');
+            
+            // Animation reset
+            contentDiv.classList.remove('fade-in');
+            void contentDiv.offsetWidth; // trigger reflow
+            contentDiv.classList.add('fade-in');
+
+            // Update Text
+            document.getElementById('dest-title').innerText = data.title;
+            document.getElementById('dest-subtitle').innerText = data.subtitle;
+            document.getElementById('dest-season').innerText = data.season;
+            document.getElementById('dest-budget').innerText = data.budget;
+            document.getElementById('dest-food').innerText = data.food;
+            document.getElementById('dest-desc').innerText = data.desc;
+            document.getElementById('dest-image').src = data.image;
+
+            // Update Tags
+            const tagContainer = document.getElementById('dest-tags');
+            tagContainer.innerHTML = '';
+            data.tags.forEach(tag => {
+                tagContainer.innerHTML += `<span class="px-3 py-1 bg-slate-100 rounded-full text-sm text-slate-600">${tag}</span>`;
+            });
+
+            // Update Buttons State
+            document.querySelectorAll('.dest-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-600', 'bg-emerald-50');
+                btn.classList.add('border-transparent');
+                btn.querySelector('h3').classList.remove('text-emerald-700');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${key}`);
+            activeBtn.classList.remove('border-transparent');
+            activeBtn.classList.add('border-emerald-600', 'bg-emerald-50');
+            activeBtn.querySelector('h3').classList.add('text-emerald-700');
+        }
+
+        // Trip Calculator Logic
+        function calculateTrip(e) {
+            e.preventDefault();
+            
+            const days = parseInt(document.getElementById('duration').value);
+            const style = document.querySelector('input[name="style"]:checked').value;
+            const interest = document.getElementById('interest').value;
+
+            // Base costs per day (approximate)
+            const costs = {
+                budget: 55,
+                comfort: 120,
+                luxury: 300
+            };
+
+            const totalCost = days * costs[style];
+            
+            // Logic for Route
+            let route = [];
+            
+            if (days <= 9) {
+                if (interest === 'nature') route = ["Fly into Cusco (Peru)", "Sacred Valley & Machu Picchu (4 days)", "Amazon Jungle Lodge (3 days)", "Fly out"];
+                else if (interest === 'culture') route = ["Fly into Cusco", "Cusco & Sacred Valley (5 days)", "Lima Culinary Tour (2 days)", "Fly out"];
+                else route = ["Fly into Rio de Janeiro", "Rio Highlights (4 days)", "Iguazu Falls (3 days)", "Fly out"];
+            } else if (days <= 16) {
+                if (interest === 'nature') route = ["Fly into Santiago (Chile)", "Torres del Paine Trek (5 days)", "Perito Moreno Glacier (Argentina) (3 days)", "El Chalten Hiking (3 days)", "Fly out of Buenos Aires"];
+                else if (interest === 'culture') route = ["Fly into La Paz (Bolivia)", "Uyuni Salt Flats Tour (3 days)", "Cross to Chile (Atacama) (3 days)", "Fly to Cusco (Peru) (5 days)", "Fly out of Lima"];
+                else route = ["Fly into Lima", "Cusco & Machu Picchu (5 days)", "Fly to Buenos Aires (4 days)", "Ferry to Uruguay (Day trip)", "Fly to Rio de Janeiro (4 days)", "Fly out"];
+            } else {
+                route = ["Start in Lima (Peru)", "Machu Picchu & Andes (6 days)", "Uyuni Salt Flats (Bolivia) (3 days)", "Atacama Desert (Chile) (3 days)", "Santiago & Valparaiso (3 days)", "Buenos Aires (4 days)", "Iguazu Falls (2 days)", "Rio de Janeiro (4 days)", "End Trip"];
+            }
+
+            // Render
+            document.getElementById('result-placeholder').classList.add('hidden');
+            document.getElementById('trip-result').classList.remove('hidden');
+            
+            document.getElementById('res-cost').innerText = `$${totalCost.toLocaleString()}`;
+            document.getElementById('res-days').innerText = days;
+            
+            const routeList = document.getElementById('res-route');
+            routeList.innerHTML = '';
+            route.forEach(item => {
+                routeList.innerHTML += `<li class="text-slate-700"><span class="font-bold text-emerald-600">•</span> ${item}</li>`;
+            });
+
+            const tipText = style === 'budget' 
+                ? "Since you're on a budget, consider using night buses (Cama style) in Argentina, Chile, and Peru to save on accommodation."
+                : "For this travel style, domestic flights are recommended to save time between major hubs like Cusco, La Paz, and Santiago.";
+            document.getElementById('res-tip').innerText = tipText;
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            }
+        }
+    </script>
+</body>
+</html>

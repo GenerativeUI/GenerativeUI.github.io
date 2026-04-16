@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saratoga SkyWatch: Ursids 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #030712; color: #e2e8f0; overflow-x: hidden; }
+        h1, h2, h3, .tech-font { font-family: 'Orbitron', sans-serif; }
+        
+        /* --- RED LIGHT MODE (Night Vision) --- */
+        body.night-vision {
+            filter: sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8) brightness(0.8);
+            background-color: #000;
+        }
+        body.night-vision img { opacity: 0.7; }
+        body.night-vision .meteor { background: linear-gradient(to right, rgba(255, 0, 0, 1), transparent); }
+
+        /* --- CSS STARS (No external image dependency) --- */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #030712;
+            z-index: -2;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        /* --- METEOR SHOWER ANIMATION --- */
+        .meteor-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .meteor {
+            position: absolute;
+            top: 50%; left: 50%;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 1), transparent);
+            opacity: 0;
+            filter: drop-shadow(0 0 6px white);
+            transform: rotate(-45deg);
+            animation: meteor-fall 4s linear infinite;
+        }
+        .meteor:nth-child(1) { top: 10%; left: 80%; width: 150px; animation-delay: 0s; animation-duration: 3s; }
+        .meteor:nth-child(2) { top: 20%; left: 40%; width: 100px; animation-delay: 2s; animation-duration: 4s; }
+        .meteor:nth-child(3) { top: -10%; left: 60%; width: 200px; animation-delay: 1.5s; animation-duration: 3.5s; }
+        .meteor:nth-child(4) { top: 30%; left: 90%; width: 120px; animation-delay: 3s; animation-duration: 5s; }
+        .meteor:nth-child(5) { top: 5%; left: 20%; width: 180px; animation-delay: 4.5s; animation-duration: 3s; }
+
+        @keyframes meteor-fall {
+            0% { opacity: 0; transform: rotate(-45deg) translateX(0); }
+            10% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; transform: rotate(-45deg) translateX(-800px); }
+        }
+
+        /* --- RADAR PULSE --- */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); opacity: 0.5; }
+            80%, 100% { opacity: 0; }
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 100%;
+            border-radius: 50%;
+            border: 1px solid #38bdf8;
+            animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        space: '#030712',
+                        starlight: '#f8fafc',
+                        accent: '#38bdf8',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased relative min-h-screen">
+
+    <div class="stars" id="star-field"></div>
+    
+    <nav class="fixed w-full z-50 bg-space/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-meteor text-accent text-xl"></i>
+                <span class="tech-font font-bold text-lg tracking-wider">Saratoga SkyWatch</span>
+            </div>
+            
+            <button onclick="toggleNightVision()" class="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:bg-white/10 transition group bg-black/40">
+                <i class="fas fa-eye text-red-500 group-hover:text-red-400"></i>
+                <span class="text-xs font-bold uppercase tracking-wider group-hover:text-white">Red Light Mode</span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 px-4 text-center relative h-screen min-h-[600px] flex flex-col justify-center items-center">
+        <div class="meteor-container">
+            <span class="meteor"></span>
+            <span class="meteor"></span>
+            <span class="meteor"></span>
+        </div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-block bg-accent/10 text-accent border border-accent/20 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm">
+                Next Event: The Ursids
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 leading-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                Visible from<br>Saratoga, CA
+            </h1>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+                <div class="bg-black/40 backdrop-blur rounded-lg p-4 border border-white/10">
+                    <div class="text-3xl md:text-4xl font-bold tech-font" id="days">00</div>
+                    <div class="text-xs text-slate-400 uppercase">Days</div>
+                </div>
+                <div class="bg-black/40 backdrop-blur rounded-lg p-4 border border-white/10">
+                    <div class="text-3xl md:text-4xl font-bold tech-font" id="hours">00</div>
+                    <div class="text-xs text-slate-400 uppercase">Hours</div>
+                </div>
+                <div class="bg-black/40 backdrop-blur rounded-lg p-4 border border-white/10">
+                    <div class="text-3xl md:text-4xl font-bold tech-font" id="minutes">00</div>
+                    <div class="text-xs text-slate-400 uppercase">Mins</div>
+                </div>
+                <div class="bg-black/40 backdrop-blur rounded-lg p-4 border border-white/10">
+                    <div class="text-3xl md:text-4xl font-bold tech-font text-accent" id="seconds">00</div>
+                    <div class="text-xs text-slate-400 uppercase">Secs</div>
+                </div>
+            </div>
+
+            <p class="text-slate-300 max-w-xl mx-auto text-lg bg-black/30 p-4 rounded-xl backdrop-blur-sm border border-white/5">
+                Peak viewing is the night of <strong class="text-white">Dec 22-23, 2025</strong>. 
+                With a <span class="text-green-400 font-bold">New Moon</span>, conditions are excellent.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white/5 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            <div class="relative w-full aspect-square max-w-md mx-auto bg-space rounded-full border border-white/20 shadow-[0_0_50px_rgba(56,189,248,0.1)] flex items-center justify-center overflow-hidden">
+                <div class="absolute top-4 text-slate-500 font-bold tech-font">N</div>
+                <div class="absolute bottom-4 text-slate-500 font-bold tech-font">S</div>
+                <div class="absolute left-4 text-slate-500 font-bold tech-font">W</div>
+                <div class="absolute right-4 text-slate-500 font-bold tech-font">E</div>
+                
+                <div class="absolute w-full h-[1px] bg-white/10"></div>
+                <div class="absolute w-[1px] h-full bg-white/10"></div>
+                <div class="absolute w-2/3 h-2/3 border border-white/10 rounded-full"></div>
+                
+                <div class="relative z-10 w-48 h-48 transform -translate-y-8 translate-x-4 pulse-ring">
+                   <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
+                        <path d="M50,20 L65,35 L60,50 L45,55 L35,45 L45,55 L30,80" stroke="white" stroke-width="1" fill="none" opacity="0.6"/>
+                        <circle cx="50" cy="20" r="3" fill="#fff" class="animate-pulse" /> <circle cx="65" cy="35" r="2" fill="#fff" />
+                        <circle cx="60" cy="50" r="2" fill="#fff" />
+                        <circle cx="45" cy="55" r="2" fill="#fff" />
+                        <circle cx="35" cy="45" r="2" fill="#fff" /> 
+                        <circle cx="30" cy="80" r="2" fill="#fff" />
+                    </svg>
+                    <div class="absolute top-1/2 left-1/4 -translate-x-4 -translate-y-4">
+                        <div class="w-24 bg-accent/20 text-accent text-[10px] px-2 py-1 rounded backdrop-blur border border-accent/30 text-center">
+                            RADIANT POINT<br>(Ursa Minor)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-3xl mb-6 font-bold">Where to look?</h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                            <i class="fas fa-compass text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">Face North</h3>
+                            <p class="text-slate-400 text-sm">From Saratoga, look directly North towards the Santa Cruz Mountains horizon.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                            <i class="fas fa-star text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">Find the Little Dipper</h3>
+                            <p class="text-slate-400 text-sm">Locate the North Star (Polaris). The meteors will appear to radiate from the "bowl" of the Little Dipper.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl text-center mb-4 font-bold">Best Spots near Saratoga</h2>
+        <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto">Saratoga has light pollution (Bortle 5). For the best view, head to these locations.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-accent/50 transition group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="images/monte.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 hover:opacity-100" onerror="this.style.backgroundColor='#1a202c'">
+                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-xs font-bold text-green-400 border border-green-400/30">
+                        Bortle Class 3
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Monte Bello Open Space</h3>
+                    <p class="text-sm text-slate-400 mb-4">High elevation on Skyline Blvd. Above the fog layer.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-accent"><i class="fas fa-car mr-2"></i>22 min drive</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-accent/50 transition group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="images/sanborn.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 hover:opacity-100" onerror="this.style.backgroundColor='#1a202c'">
+                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-xs font-bold text-yellow-400 border border-yellow-400/30">
+                        Bortle Class 4
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Sanborn County Park</h3>
+                    <p class="text-sm text-slate-400 mb-4">Very close to Saratoga. Good tree cover blocks city lights.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-accent"><i class="fas fa-car mr-2"></i>10 min drive</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-accent/50 transition group">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="images/college.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80 hover:opacity-100" onerror="this.style.backgroundColor='#1a202c'">
+                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-xs font-bold text-orange-400 border border-orange-400/30">
+                        Bortle Class 5
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">West Valley College</h3>
+                    <p class="text-sm text-slate-400 mb-4">The Planetarium parking lot. Convenient for a quick look.</p>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-accent"><i class="fas fa-car mr-2"></i>5 min drive</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white/5 border-t border-white/5">
+        <div class="max-w-2xl mx-auto px-4">
+            <h2 class="text-3xl text-center mb-8 font-bold">Can I see them tonight?</h2>
+            
+            <div class="bg-space p-8 rounded-2xl border border-white/20 shadow-2xl">
+                <div class="space-y-6">
+                    <div>
+                        <label class="flex justify-between mb-2 text-sm font-bold text-slate-400">
+                            <span>Cloud Cover</span>
+                            <span id="cloud-val" class="text-white">0%</span>
+                        </label>
+                        <input type="range" id="cloud-input" min="0" max="100" value="0" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-accent" oninput="calculateVisibility()">
+                    </div>
+
+                    <div>
+                        <label class="flex justify-between mb-2 text-sm font-bold text-slate-400">
+                            <span>Light Pollution</span>
+                            <span id="light-val" class="text-white">Dark Park</span>
+                        </label>
+                        <input type="range" id="light-input" min="1" max="10" value="3" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-accent" oninput="calculateVisibility()">
+                        <div class="flex justify-between text-[10px] text-slate-600 mt-1 uppercase">
+                            <span>Dark Sky</span>
+                            <span>City Center</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center transition-all duration-300" id="result-box">
+                        <div class="text-xs text-slate-400 uppercase tracking-widest mb-1">Visibility Score</div>
+                        <div class="text-3xl font-bold text-green-400" id="score-text">Excellent</div>
+                        <p class="text-sm text-slate-300 mt-2" id="score-desc">Perfect conditions. Pack a blanket and hot cocoa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 text-center text-slate-600 text-sm border-t border-white/5">
+        <p class="mb-2">Saratoga SkyWatch • Data based on Ursids 2025 Astronomy Cal</p>
+        <p>Tip: Give your eyes 20 minutes to adjust to the dark.</p>
+    </footer>
+
+    <script>
+        // --- GENERATE STARS (JS to avoid image dependency) ---
+        function createStars() {
+            const container = document.getElementById('star-field');
+            for(let i=0; i<100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 2 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // --- COUNTDOWN ---
+        const targetDate = new Date('December 22, 2025 23:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- RED MODE ---
+        function toggleNightVision() {
+            document.body.classList.toggle('night-vision');
+        }
+
+        // --- VISIBILITY CALC ---
+        function calculateVisibility() {
+            const clouds = parseInt(document.getElementById('cloud-input').value);
+            const pollution = parseInt(document.getElementById('light-input').value);
+            
+            document.getElementById('cloud-val').innerText = `${clouds}%`;
+            
+            let locText = "Dark Park";
+            if(pollution > 3) locText = "Suburbs";
+            if(pollution > 7) locText = "Downtown";
+            document.getElementById('light-val').innerText = locText;
+
+            let score = 100 - clouds - (pollution * 5);
+            
+            const resultBox = document.getElementById('result-box');
+            const scoreText = document.getElementById('score-text');
+            const scoreDesc = document.getElementById('score-desc');
+
+            if (score >= 80) {
+                scoreText.innerText = "Excellent";
+                scoreText.className = "text-3xl font-bold text-green-400";
+                scoreDesc.innerText = "Perfect conditions. Go outside!";
+                resultBox.className = "mt-8 p-4 bg-green-500/10 rounded-lg border border-green-500/30 text-center";
+            } else if (score >= 50) {
+                scoreText.innerText = "Good";
+                scoreText.className = "text-3xl font-bold text-yellow-400";
+                scoreDesc.innerText = "Worth a look, but expect fewer meteors.";
+                resultBox.className = "mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30 text-center";
+            } else if (score >= 20) {
+                scoreText.innerText = "Poor";
+                scoreText.className = "text-3xl font-bold text-orange-400";
+                scoreDesc.innerText = "You might see one brighter meteor if lucky.";
+                resultBox.className = "mt-8 p-4 bg-orange-500/10 rounded-lg border border-orange-500/30 text-center";
+            } else {
+                scoreText.innerText = "Not Visible";
+                scoreText.className = "text-3xl font-bold text-red-500";
+                scoreDesc.innerText = "Too cloudy or too bright. Stay inside.";
+                resultBox.className = "mt-8 p-4 bg-red-500/10 rounded-lg border border-red-500/30 text-center";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Illustrated Guide to the Roman Colosseum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="section">
+            <div class="hero-content ">
+                <h1>Illustrated Guide to the <span>Roman Colosseum</span></h1>
+                <p>Step inside Ancient Rome’s most iconic monument — where history, architecture, and spectacle collide.
+                </p>
+                <div class="badges">
+                    <div class="badge">Built AD 80</div>
+                    <div class="badge">50,000 Spectators</div>
+                    <div class="badge">Rome, Italy</div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRO SPLIT -->
+        <section class="section intro-split-section">
+            <div class="section-title">What Is the Colosseum?</div>
+            <div class="split">
+                <div class="split-card">
+                    <p>The Colosseum is the largest amphitheater ever built by the Roman Empire and one of the most
+                        ambitious architectural projects of the ancient world. Completed in AD 80 under Emperor Titus,
+                        this monumental arena became the heart of Roman public life. Designed to impress and control
+                        massive crowds, it hosted gladiator battles, animal hunts, public executions, reenactments of
+                        famous battles, and elaborate spectacles that blended violence, politics, and entertainment.
+                        With seating for more than 50,000 spectators from all levels of Roman society, the Colosseum was
+                        not just a venue—it was a powerful symbol of imperial authority, engineering mastery, and Rome’s
+                        ability to unite its people through grand shared experiences.</p>
+                </div>
+                <div class="split-card-image">
+                <img src="roman-colosseum-images/photo-1552832230-c0197dd311b5.avif">
+                </div>
+            </div>
+            <div class="split split-card-reverse">
+                 <div class="split-card-image">
+                <img src="./roman-colosseum-images/david-xeli-88rlg1D00to-unsplash.jpg">
+                </div>
+                <div class="split-card">
+                    <p>Beyond its role as an entertainment venue, the Colosseum functioned as a powerful instrument of
+                        Roman society. Free public games were sponsored by emperors to gain public favor, celebrate
+                        military victories, and reinforce Rome’s dominance across the empire.
+
+                        Its carefully organized seating reflected strict social hierarchies, while advanced
+                        crowd-control systems allowed tens of thousands of people to enter and exit efficiently — a
+                        concept still used in modern stadium architecture today.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LIFE INSIDE ARENA -->
+        <section class="section life-inside-arena-section">
+            <div class="section-title">Life Inside the Arena</div>
+            <div class="timeline">
+                <div class="node">
+                    <img src="./roman-colosseum-images/photo-1582555172866-f73bb12a2ab3.jpg">
+                    <div class="content">
+                        <h3>Gladiators</h3>
+                        <p onclick="openArena(0)">Learn More</p>
+                    </div>
+                </div>
+                <div class="node">
+                    <img src="./roman-colosseum-images/photo-1546182990-dffeafbe841d.jpg">
+                    <div class="content">
+                        <h3>Wild Beasts</h3>
+                        <p onclick="openArena(1)">Learn More</p>
+                    </div>
+                </div>
+                <div class="node">
+                    <img
+                        src="./roman-colosseum-images/italy_colosseum_rome_monument_building_romans_places_of_interest_antiquity-1052430.jpg!d">
+                    <div class="content">
+                        <h3>Public Spectacles</h3>
+                        <p onclick="openArena(2)">Learn More</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARENA MODAL -->
+        <div class="modal" id="arenaModal">
+            <div class="modal-box">
+                <span class="close" onclick="closeArena()">×</span>
+                <img id="arenaImg">
+                <h3 id="arenaTitle"></h3>
+                <p id="arenaText"></p>
+            </div>
+        </div>
+        <!-- ARCHITECTURE -->
+        <section class="section architectural-genius-section">
+            <div class="section-title">Architectural Genius</div>
+            <div class="arch">
+                <div class="arch-item"><span>
+                        <img src="./roman-colosseum-images/ellipse.png" alt="">
+                    </span>
+                    <h4>Elliptical Design</h4>
+                    <p>The Colosseum’s oval shape ensured excellent visibility from every seat, creating an immersive
+                        experience for spectators regardless of social class or seating position.</p>
+                </div>
+                <div class="arch-item"><span>
+                        <img src="./roman-colosseum-images/down-arrow.png" alt="">
+                    </span>
+                    <h4>The Hypogeum</h4>
+                    <p>A complex underground network of tunnels, cages, lifts, and pulleys allowed animals and
+                        gladiators to appear dramatically on the arena floor, astonishing the crowd.</p>
+                </div>
+                <div class="arch-item"><span>
+                        <img src="./roman-colosseum-images/sun.png" alt="">
+                    </span>
+                    <h4>Velarium Canopy</h4>
+                    <p>A massive retractable awning, operated by sailors, shielded spectators from sun and rain — an
+                        advanced comfort feature rarely matched until modern times.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE FACTS -->
+        <section class=" interactive-facts-section" style="background:var(--sand)">
+            <div class="section">
+                <div class="section-title">Did You Know?</div>
+                <p class="interactive-facts-header-content">Tap each card to uncover surprising facts that reveal the
+                    hidden
+                    stories, engineering marvels, and social dynamics behind the Roman Colosseum.</p>
+                <div class="fact-grid">
+                    <div class="fact-card" onclick="openFact(0)">
+                        <span>
+                            <img src="./roman-colosseum-images/bank.png" alt="">
+                        </span>
+                        <h4>Built on a Lake</h4>
+                    </div>
+                    <div class="fact-card" onclick="openFact(1)">
+                        <span>
+                            <img src="./roman-colosseum-images/computer.png" alt="">
+                        </span>
+                        <h4>Travertine Stone</h4>
+                    </div>
+                    <div class="fact-card" onclick="openFact(2)">
+                        <span>
+                            <img src="./roman-colosseum-images/multiple-users-silhouette.png" alt="">
+                        </span>
+                        <h4>Social Seating</h4>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- FACT MODAL -->
+        <div class="modal" id="factModal">
+            <div class="modal-box">
+                <span class="close" onclick="closeFact()">×</span>
+                <h3 id="factTitle"></h3>
+                <p id="factText"></p>
+            </div>
+        </div>
+
+
+        <!-- FOOT STRIP -->
+        <section class="footer-strip ">
+            <p>The Colosseum remains one of humanity’s greatest engineering achievements and a lasting symbol of Ancient
+                Rome’s power and imagination.</p>
+        </section>
+
+    </div>
+
+
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>

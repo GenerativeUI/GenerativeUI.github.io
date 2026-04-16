@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cryptography Visual Learning</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="nav">
+    
+    <div class="logo">
+      <span>🔐</span>
+      <div>
+        <strong>Cryptography</strong>
+        <small>Visual Learning Platform</small>
+      </div>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <!-- Navigation -->
+    <nav id="navMenu" class="nav-links">
+	 <a href="#home">Home</a>
+      <a href="#info">About</a>
+      <a href="#use">Use Cases</a>
+      <a href="#varieties">Techniques</a>
+      <a href="#history">History</a>
+      <a href="#faq">FAQ</a>
+    
+    </nav>
+
+  </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-tag">INTERACTIVE • MODERN • EDUCATIONAL</span>
+      <h1>Understanding <span>Cryptography</span></h1>
+      <p>Explore the science behind secure communication, from ancient secrets to modern digital encryption.</p>
+      <div class="hero-actions">
+        <a href="#varieties" class="btn primary">Explore Techniques</a>
+        <a href="#info" class="btn secondary">Learn Basics</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<!-- ================= STATS ================= -->
+<section class="stats container">
+  
+    <div class="stat"><h3>3000+</h3><p>Years of History</p></div>
+    <div class="stat"><h3>99%</h3><p>Internet Security</p></div>
+    <div class="stat"><h3>∞</h3><p>Encryption Keys</p></div>
+    <div class="stat"><h3>24/7</h3><p>Digital Protection</p></div>
+ 
+</section>
+
+<!-- ================= INFO ================= -->
+<section id="info" class="info container">
+ 
+    <div>
+      <h2>What is Cryptography?</h2>
+      <p>Cryptography protects information by converting it into secure formats that
+      prevent unauthorized access. It’s the foundation of digital security, used in messaging,
+      banking, web communications, and more.</p>
+      <p>Modern cryptography combines mathematics, computer science, and information theory
+      to secure sensitive data and ensure privacy.</p>
+    </div>
+    <img src="images/digital.jpg" alt="Cryptography Illustration">
+
+</section>
+
+<!-- ================= USE CASES ================= -->
+<section id="use" class="usecases">
+  <div class="container">
+    <h2>Real World Applications</h2>
+
+    <div class="use-grid">
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Secure Messaging -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 1C7.6 1 4 4.6 4 9v3H3v11h18V12h-1V9c0-4.4-3.6-8-8-8Zm-5 8c0-2.8 2.2-5 5-5s5 2.2 5 5v3H7V9Zm12 12H5v-7h14v7Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Secure Messaging</h4>
+        <p>End-to-end encrypted communication keeps your chats private and secure.</p>
+      </div>
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Banking -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 2 7v2h20V7L12 2Zm-8 9h16v9h-2v-7H6v7H4v-9Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Banking</h4>
+        <p>Protects financial transactions and ensures secure online banking.</p>
+      </div>
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Web Security -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20Zm1 17.9V19h-2v.9A8.1 8.1 0 014.1 13H5v-2H4.1A8.1 8.1 0 0111 4.1V5h2v-.9A8.1 8.1 0 0119.9 11H19v2h.9A8.1 8.1 0 0113 19.9Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Web Security</h4>
+        <p>HTTPS & SSL certificates encrypt data between users and websites.</p>
+      </div>
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Data Storage -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 6c0-2 4-3 8-3s8 1 8 3v12c0 2-4 3-8 3s-8-1-8-3V6Zm8 1c-4.4 0-6-.8-6-1s1.6-1 6-1 6 .8 6 1-1.6 1-6 1Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Data Storage</h4>
+        <p>Encrypt files and cloud storage to protect sensitive information.</p>
+      </div>
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Payments -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M2 6h20v12H2V6Zm2 4h16V8H4v2Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Payment Systems</h4>
+        <p>Secures online payments with encryption for safe transactions.</p>
+      </div>
+
+      <div class="use">
+        <div class="use-icon">
+          <!-- Authentication -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 12a5 5 0 100-10 5 5 0 000 10Zm-8 9c0-4 4-7 8-7s8 3 8 7v1H4v-1Z"
+              fill="currentColor"/>
+          </svg>
+        </div>
+        <h4>Authentication</h4>
+        <p>Password hashing and digital signatures verify user identity.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="varieties" class="varieties">
+  <div class="container">
+    <small>KNOW THE TECHNIQUES</small>
+    <h2>Core Cryptographic Methods</h2>
+    <p>
+      Cryptography is the foundation of modern digital security. Different
+      cryptographic techniques are designed to solve specific security challenges
+      such as confidentiality, authentication, and data integrity. Understanding
+      these methods helps in choosing the right solution for real-world systems.
+    </p>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showVariety(0)">Symmetric</button>
+      <button class="tab" onclick="showVariety(1)">Asymmetric</button>
+      <button class="tab" onclick="showVariety(2)">Hashing</button>
+    </div>
+
+    <!-- ================= SYMMETRIC ================= -->
+    <div class="variety-card active">
+      <div>
+        <span class="badge">FAST</span>
+        <h3>Symmetric Encryption</h3>
+        <p>
+          Symmetric encryption uses a single shared secret key for both encryption
+          and decryption. Because the same key is used on both sides, it is highly
+          efficient and suitable for handling large volumes of data.
+        </p>
+        <p>
+          This method is commonly implemented in systems where speed and performance
+          are critical, such as real-time communications and data storage.
+        </p>
+        <p>
+          <strong>Popular Algorithms:</strong> AES, DES, Blowfish<br>
+          <strong>Common Uses:</strong> File encryption, disk security, secure databases
+        </p>
+      </div>
+      <img src="images/img01.jpg" alt="Symmetric Encryption">
+    </div>
+
+    <!-- ================= ASYMMETRIC ================= -->
+    <div class="variety-card">
+      <div>
+        <span class="badge">SECURE</span>
+        <h3>Asymmetric Encryption</h3>
+        <p>
+          Asymmetric encryption relies on a pair of mathematically related keys:
+          a public key and a private key. The public key encrypts data, while only
+          the private key can decrypt it.
+        </p>
+        <p>
+          Although slower than symmetric encryption, it provides stronger security
+          and enables secure key exchange over untrusted networks.
+        </p>
+        <p>
+          <strong>Popular Algorithms:</strong> RSA, ECC<br>
+          <strong>Common Uses:</strong> HTTPS, email encryption, digital certificates
+        </p>
+      </div>
+      <img src="images/img02.jpg" alt="Asymmetric Encryption">
+    </div>
+
+    <!-- ================= HASHING ================= -->
+    <div class="variety-card">
+      <div>
+        <span class="badge">ONE WAY</span>
+        <h3>Hash Functions</h3>
+        <p>
+          Hashing converts data into a fixed-length string that cannot be reversed.
+          Even a small change in input produces a completely different hash output.
+        </p>
+        <p>
+          Unlike encryption, hashing is not meant to recover the original data.
+          It is primarily used to verify integrity and securely store sensitive
+          information like passwords.
+        </p>
+        <p>
+          <strong>Popular Algorithms:</strong> SHA-256, SHA-3, MD5<br>
+          <strong>Common Uses:</strong> Password storage, blockchain, data verification
+        </p>
+      </div>
+      <img src="images/img03.jpg" alt="Hash Function">
+    </div>
+  </div>
+</section>
+
+<section id="history" class="info container">
+    <div>
+      <h2>History of Cryptography</h2>
+      <p>Cryptography has evolved from simple substitution ciphers in ancient Egypt to complex modern algorithms securing global communications.</p>
+      <ul>
+        <li>Ancient Times: Caesar cipher & basic transpositions</li>
+        <li>World War II: Enigma machine & codebreaking</li>
+        <li>Modern Era: AES, RSA, blockchain, and digital signatures</li>
+      </ul>
+    </div>
+    <img src="images/cryptography.jpg" alt="Cryptography History">
+</section>
+
+
+<!-- ================= BENEFITS ================= -->
+<section class="info container">
+ 
+    <img src="images/benefits.jpg" alt="Benefits of Cryptography">
+    <div>
+      <h2>Why Learn Cryptography?</h2>
+      <p>Cryptography knowledge helps you understand how digital security works, protecting personal data, communications, and systems from threats.</p>
+      <ul>
+        <li>Enhances cybersecurity awareness</li>
+        <li>Helps understand secure software and protocols</li>
+        <li>Critical skill for IT, security, and blockchain fields</li>
+      </ul>
+    </div>
+  
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" class="faq-section">
+  <div class="container">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is cryptography only for tech experts?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">
+        <p>No! Basics are understandable for anyone interested in security.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How is encryption different from hashing?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">
+        <p>Encryption is reversible with a key; hashing is one-way and irreversible.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Are my online activities safe with encryption?
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-answer">
+        <p>Strong cryptography, HTTPS, and secure protocols greatly enhance online safety.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CALL TO ACTION ================= -->
+<section class="hero-section hero-bg-new">
+  <div class="container">
+    <div class="hero-content-new">
+      <h2>Ready to Start Learning Cryptography?</h2>
+      <p>Explore interactive lessons, real-world applications, and hands-on examples.</p>
+      <div class="hero-actions-new">
+        <a href="#varieties" class="btn primary">Start Learning</a>
+        <a href="#info" class="btn secondary">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<div class="copy">© 2025 Cryptography • Educational Demo</div>
+
+</body>
+</html>

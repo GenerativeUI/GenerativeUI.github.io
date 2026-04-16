@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Which Gaming Console Is the Best?</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        heading: ["Playfair Display", "serif"],
+        body: ["Quicksand", "sans-serif"]
+      },
+      colors: {
+        darkX: "#05070d",
+        neonP: "#8b5cf6",
+        neonB: "#22d3ee",
+        lightX: "#f4f6fb"
+      }
+    }
+  }
+}
+</script>
+
+<style>
+html { scroll-behavior: smooth; }
+.glow { box-shadow: 0 0 80px rgba(139,92,246,.35); }
+.eco-tab {
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px;
+    background: rgb(99 102 241 / 50%);
+    color: rgb(255 255 255);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.eco-tab:hover {
+  color: white;
+  background: rgba(255,255,255,0.12);
+}
+
+.eco-tab.active {
+  color: white;
+  background: #6366f1;
+  box-shadow: 0 0 20px rgba(99,102,241,0.5);
+}
+</style>
+</head>
+
+<body class="font-body bg-darkX text-white">
+
+<!-- ================= HERO ================= -->
+<section class="relative min-h-screen flex items-center overflow-hidden">
+
+  <!-- Background Video -->
+  <video
+    class="absolute inset-0 w-full h-full object-cover"
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+    <source src="assets/background.mp4" type="video/mp4">
+    <!-- Fallback text -->
+    Your browser does not support the video tag.
+  </video>
+ <!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/40"></div>
+  <!-- Content -->
+  <div class="relative max-w-7xl mx-auto px-6 py-32 z-10">
+    <p class="uppercase tracking-[0.35em] text-sm text-neonB mb-6 font-bold">
+      Ultimate Console Guide
+    </p>
+
+    <h1 class="font-heading text-6xl md:text-7xl leading-tight max-w-4xl">
+      Which Gaming Console<br>
+      Is <span class="text-neonP">Actually</span> the Best?
+    </h1>
+
+    <p class="mt-8 text-xl text-white/80 max-w-2xl">
+      Not specs. Not hype.  
+      The best console is the one that fits how you play, who you play with,
+      and what you value long-term.
+    </p>
+  </div>
+
+</section>
+<!-- ================= LIGHT THINKING ================= -->
+<section class="py-28 bg-lightX text-slate-800">
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+    <!-- Text -->
+    <div class="max-w-xl">
+      <h2 class="font-heading text-5xl leading-tight">
+        The “Best” Console<br class="hidden sm:block"> depends on you
+      </h2>
+
+      <p class="mt-6 text-lg text-slate-600">
+        There’s no single gaming console that’s best for everyone.
+        The most powerful hardware doesn’t always deliver the most satisfying experience
+        especially months or years after launch.
+      </p>
+
+      <p class="mt-4 text-lg text-slate-600">
+        What matters most is how well a console fits <strong>how you play</strong>,
+        <strong>what you play</strong>, and <strong>who you play with</strong>.
+      </p>
+
+      <!-- Highlighted takeaway -->
+      <div class="mt-8 p-5 rounded-2xl bg-white shadow-md border border-slate-100">
+        <p class="text-lg font-medium text-slate-800">
+          Stop asking:
+          <span class="italic text-slate-500">“Which console is the most powerful?”</span>
+        </p>
+        <p class="mt-2 text-xl font-semibold text-indigo-600">
+          Start asking:
+          “Which console fits the way I play?”
+        </p>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <img src="assets/sec_img.jpg"
+         alt="Gamer choosing a console experience"
+         class="rounded-3xl shadow-2xl object-cover">
+  </div>
+</section>
+<!-- ================= CORE FACTORS ================= -->
+<section class="py-32 bg-white text-slate-700">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Section Intro (Centered) -->
+    <div class="max-w-3xl mx-auto text-center mb-20">
+      <h2 class="font-heading text-4xl text-slate-900">
+        How to decide which console is best for you
+      </h2>
+      <p class="mt-4 text-lg text-slate-600">
+        Instead of comparing specs, evaluate consoles using these four core factors.
+        They determine long-term value, enjoyment, and satisfaction.
+      </p>
+    </div>
+
+    <!-- Factors Grid -->
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-3xl border border-t-4 border-indigo-400 hover:transform hover:-translate-y-2 transition duration-300">
+        <div class="mb-6">
+          <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 text-2xl">
+            🎮
+          </div>
+        </div>
+        <h3 class="font-heading text-2xl text-indigo-600">Games</h3>
+        <p class="mt-3 text-slate-600">
+          Exclusive games often make the final decision.
+          If the titles you love live on one platform,
+          that console usually wins.
+        </p>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-3xl border border-t-4 border-indigo-400 hover:transform hover:-translate-y-2 transition duration-300">
+        <div class="mb-6">
+          <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-100 text-emerald-600 text-2xl">
+            👥
+          </div>
+        </div>
+        <h3 class="font-heading text-2xl text-indigo-600">Community</h3>
+        <p class="mt-3 text-slate-600">
+          Gaming is better with friends.
+          Being on the same console makes multiplayer,
+          chat, and shared progress seamless.
+        </p>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-3xl border border-t-4 border-indigo-400 hover:transform hover:-translate-y-2 transition duration-300">
+        <div class="mb-6">
+          <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-100 text-amber-600 text-2xl">
+            💸
+          </div>
+        </div>
+        <h3 class="font-heading text-2xl text-indigo-600">Cost</h3>
+        <p class="mt-3 text-slate-600">
+          The console price is only the start.
+          Subscriptions, games, and accessories
+          shape the real long-term cost.
+        </p>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-3xl border border-t-4 border-indigo-400 hover:transform hover:-translate-y-2 transition duration-300">
+        <div class="mb-6">
+          <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-100 text-sky-600 text-2xl">
+            ⏳
+          </div>
+        </div>
+        <h3 class="font-heading text-2xl text-indigo-600">Longevity</h3>
+        <p class="mt-3 text-slate-600">
+          Ongoing support keeps a console relevant.
+          Updates, new releases, and compatibility
+          matter more than launch power.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ================= GAMER TYPES ================= -->
+<section class="py-32 text-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Section Heading -->
+    <div class="max-w-4xl mx-auto text-center mb-12">
+      <h2 class="font-heading text-4xl leading-tight">
+        Different gamers. Different best consoles.
+      </h2>
+      <p class="mt-6 text-xl text-white/70">
+        The best console isn’t universal it depends on how you play.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+
+      <!-- Casual -->
+      <div class="group rounded-3xl overflow-hidden border border-white/10 bg-black/60
+                  shadow-[0_0_12px_rgba(99,102,241,0.45),_0_0_24px_rgba(99,102,241,0.25)]
+                  transition-transform duration-300 hover:-translate-y-2">
+        <img src="assets/photo-1542751371-adc38448a05e.jpg"
+             class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="p-4">
+          <h3 class="font-heading text-2xl">Casual Gamer</h3>
+          <p class="mt-2 text-white/70">
+      Relaxed, easy gaming focused on fun and convenience.  
+      Perfect for unwinding after work or exploring games at your own pace.
+    </p>
+        </div>
+      </div>
+
+      <!-- Competitive -->
+      <div class="group rounded-3xl overflow-hidden border border-white/10 bg-black/60
+                  shadow-[0_0_12px_rgba(16,185,129,0.45),_0_0_24px_rgba(16,185,129,0.25)]
+                  transition-transform duration-300 hover:-translate-y-2">
+        <img src="assets/photo-1511512578047-dfb367046420.jpg"
+             class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="p-4">
+          <h3 class="font-heading text-2xl">Competitive Gamer</h3>
+           <p class="mt-2 text-white/70">
+      Fast performance, online matches, and low-latency play.  
+      Always chasing high scores and mastering every skill to stay on top.
+    </p>
+        </div>
+      </div>
+
+      <!-- Family -->
+      <div class="group rounded-3xl overflow-hidden border border-white/10 bg-black/60
+                  shadow-[0_0_12px_rgba(245,158,11,0.45),_0_0_24px_rgba(245,158,11,0.25)]
+                  transition-transform duration-300 hover:-translate-y-2">
+        <img src="assets/family-gamer.png"
+             class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="p-4">
+          <h3 class="font-heading text-2xl">Family Gamer</h3>
+          <p class="mt-2 text-white/70">
+      Local multiplayer, simple controls, and shared fun.  
+      Games that bring everyone together, from kids to grandparents.
+    </p>
+        </div>
+      </div>
+
+      <!-- Enthusiast -->
+      <div class="group rounded-3xl overflow-hidden border border-white/10 bg-black/60
+                  shadow-[0_0_12px_rgba(56,189,248,0.45),_0_0_24px_rgba(56,189,248,0.25)]
+                  transition-transform duration-300 hover:-translate-y-2">
+        <img src="assets/Enthusiast.jpg"
+             class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="p-4">
+          <h3 class="font-heading text-2xl">Enthusiast</h3>
+             <p class="mt-2 text-white/70">
+      Maximum control, customization, and performance.  
+      Always exploring the latest gear, mods, and strategies to elevate the experience.
+    </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ECOSYSTEMS ================= -->
+<section class="py-32 bg-black relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <h2 class="font-heading text-4xl text-white">
+        Console ecosystems compared
+      </h2>
+      <p class="mt-4 text-lg text-white/60">
+        Each ecosystem offers a different gaming philosophy. Compare them to see which fits your playstyle.
+      </p>
+    </div>
+
+    <!-- Tabs + Timeline -->
+    <div class="max-w-5xl mx-auto mb-16">
+
+      <!-- Tab Buttons -->
+      <div class="flex justify-between text-sm text-white/50 mb-4 relative">
+        <button class="eco-tab active" data-index="0">Nintendo</button>
+        <button class="eco-tab" data-index="1">PlayStation</button>
+        <button class="eco-tab" data-index="2">Xbox</button>
+        <button class="eco-tab" data-index="3">PC</button>
+      </div>
+
+      <!-- Timeline Bar -->
+      <div class="relative h-2 bg-white/10 rounded-full overflow-hidden">
+        <div
+          id="ecoProgress"
+          class="absolute left-0 top-0 h-full w-1/4 bg-indigo-500 rounded-full transition-all duration-500"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="grid lg:grid-cols-2 gap-14 items-stretch max-w-5xl mx-auto">
+
+      <!-- LEFT : TEXT -->
+      <div
+        id="ecoCard"
+        class="p-10 rounded-3xl bg-gradient-to-br from-red-900/40 to-black
+               shadow-[0_0_40px_rgba(239,68,68,0.25)]
+               transition-all duration-500
+               flex flex-col justify-between min-h-[340px]"
+      >
+        <div>
+          <h3 id="ecoTitle" class="font-heading text-3xl text-white">Nintendo</h3>
+          <p id="ecoText" class="mt-4 text-white/80 leading-relaxed">
+            Nintendo focuses on creativity, accessibility, and fun-first design. Its games prioritize unique mechanics over raw technical power.
+          </p>
+
+          <ul id="ecoList" class="mt-6 space-y-2 text-white/70 text-sm">
+            <li>• Iconic exclusive franchises</li>
+            <li>• Simple controls and local multiplayer</li>
+            <li>• Portable and family-friendly experiences</li>
+          </ul>
+        </div>
+
+        <p id="ecoSubtext" class="mt-6 text-white/60 text-sm border-t border-white/10 pt-4">
+          Best for families, casual gamers, and relaxed play sessions.
+        </p>
+      </div>
+
+      <!-- RIGHT : VISUAL -->
+      <div class="relative rounded-3xl overflow-hidden border border-white/10 min-h-[340px]">
+        <img
+          id="ecoImage"
+          src="assets/nintendo.png"
+          alt="Nintendo ecosystem"
+          class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<!-- ================= DECISION MATRIX ================= -->
+<section class="py-32 bg-lightX text-slate-800">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="font-heading text-4xl mb-16 text-center">
+      Which console fits which player?
+    </h2>
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-x-auto">
+      <table class="w-full table-fixed">
+        <thead class="bg-indigo-100 text-left">
+          <tr>
+            <th class="p-6">Platform</th>
+            <th class="p-6">Best For</th>
+            <th class="p-6">Strength</th>
+            <th class="p-6">Trade-off</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr>
+            <td class="p-6">PlayStation</td>
+            <td class="p-6">Story lovers</td>
+            <td class="p-6">Exclusives</td>
+            <td class="p-6">Less flexibility</td>
+          </tr>
+          <tr>
+            <td class="p-6">Xbox</td>
+            <td class="p-6">Value gamers</td>
+            <td class="p-6">Game Pass</td>
+            <td class="p-6">Fewer exclusives</td>
+          </tr>
+          <tr>
+            <td class="p-6">Nintendo</td>
+            <td class="p-6">Families</td>
+            <td class="p-6">Creativity</td>
+            <td class="p-6">Lower power</td>
+          </tr>
+          <tr>
+            <td class="p-6">PC</td>
+            <td class="p-6">Enthusiasts</td>
+            <td class="p-6">Freedom</td>
+            <td class="p-6">Cost & setup</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- ================= FINAL ================= -->
+<section class="py-40 text-center">
+  <h2 class="font-heading text-5xl">
+    The best console<br>
+    fits <span class="text-neonP">your life</span>
+  </h2>
+  <p class="mt-8 text-xl text-white/80 max-w-2xl mx-auto">
+    There is no universal winner only the right experience.
+  </p>
+</section>
+
+<footer class="py-12 border-t border-white/10 text-center text-white/50">
+  Informational • No ads • No ecommerce
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const ecosystems = [
+    {
+      name: "Nintendo",
+      text: "Nintendo focuses on creativity, accessibility, and fun-first design. Its games prioritize unique mechanics over raw technical power.",
+      list: [
+        "Iconic exclusive franchises",
+        "Simple controls and local multiplayer",
+        "Portable and family-friendly experiences"
+      ],
+      sub: "Best for families, casual gamers, and relaxed play sessions.",
+      image: "assets/nintendo.png",
+      glow: "rgba(239,68,68,0.25)"
+    },
+    {
+      name: "PlayStation",
+      text: "PlayStation delivers cinematic, story-driven experiences with high production value and strong single-player focus.",
+      list: [
+        "Narrative-driven exclusives",
+        "Premium visuals and immersion",
+        "Strong controller and UI design"
+      ],
+      sub: "Best for players who value stories and immersive solo games.",
+      image: "assets/playstation.jpg",
+      glow: "rgba(168,85,247,0.25)"
+    },
+    {
+      name: "Xbox",
+      text: "Xbox emphasizes value, services, and ecosystem integration through subscriptions and cloud gaming.",
+      list: [
+        "Game Pass library access",
+        "Cross-platform and cloud support",
+        "Strong multiplayer infrastructure"
+      ],
+      sub: "Best for players who want variety and long-term value.",
+      image: "assets/xbox.jpg",
+      glow: "rgba(34,211,238,0.25)"
+    },
+    {
+      name: "PC",
+      text: "PC gaming offers unmatched flexibility, customization, and performance control across hardware and software.",
+      list: [
+        "Modding and customization freedom",
+        "Wide store and pricing options",
+        "Scalable performance choices"
+      ],
+      sub: "Best for enthusiasts who want maximum control and flexibility.",
+      image: "assets/pc.jpg",
+      glow: "rgba(148,163,184,0.25)"
+    }
+  ];
+
+  const tabs = document.querySelectorAll(".eco-tab");
+  const title = document.getElementById("ecoTitle");
+  const text = document.getElementById("ecoText");
+  const list = document.getElementById("ecoList");
+  const sub = document.getElementById("ecoSubtext");
+  const image = document.getElementById("ecoImage");
+  const card = document.getElementById("ecoCard");
+  const progress = document.getElementById("ecoProgress");
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+
+      // Set active tab
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      // Update content
+      const d = ecosystems[index];
+      title.textContent = d.name;
+      text.textContent = d.text;
+      sub.textContent = d.sub;
+      list.innerHTML = d.list.map(item => `<li>• ${item}</li>`).join("");
+
+      // Update image with fade
+      image.style.opacity = "0";
+      setTimeout(() => {
+        image.src = d.image;
+        image.style.opacity = "1";
+      }, 200);
+
+      // Update card glow
+      card.style.boxShadow = `0 0 40px ${d.glow}`;
+
+      // Move progress bar
+      const tabRect = tab.getBoundingClientRect();
+      const containerRect = progress.parentElement.getBoundingClientRect();
+      const tabCenter =
+      tabRect.left - containerRect.left + tabRect.width / 2;
+      const progressOffset = tabCenter - progress.offsetWidth / 2;
+      progress.style.transform = `translateX(${progressOffset}px)`;
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>

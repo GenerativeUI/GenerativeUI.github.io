@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category 2 — Custom</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a1a;
+      color: #e5e7eb;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 1rem 2rem 1.5rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-home {
+      background: #6366f1;
+      color: white;
+    }
+
+    .btn-home:hover {
+      background: #4f46e5;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d1d5db;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-github {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d1d5db;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-github:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .header-title {
+      text-align: center;
+    }
+
+    .header-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-title .subtitle {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    .header-title .subtitle a {
+      color: #c7d2fe;
+      text-decoration: underline;
+    }
+
+    .header-title .subtitle a:hover {
+      color: #fff;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .topic-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      transition: all 0.2s;
+      min-height: 3.5rem;
+    }
+
+    .topic-card:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .topic-links {
+      display: flex;
+      gap: 0.4rem;
+      margin-left: auto;
+      flex-shrink: 0;
+      align-items: center;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .link-btn.expert {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+
+    .link-btn.expert:hover {
+      background: rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+    }
+
+    .link-btn.genui {
+      background: rgba(45, 212, 191, 0.1);
+      color: #2dd4bf;
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    .link-btn.genui:hover {
+      background: rgba(45, 212, 191, 0.2);
+      color: #5eead4;
+    }
+
+    .topic-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2rem;
+      height: 2rem;
+      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .topic-name {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #d1d5db;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .topic-card:hover .topic-name {
+      color: #e5e7eb;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .topic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-top">
+      <div class="header-links">
+        <a href="../../../index.html" class="btn btn-home">
+          <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+          Project Page
+        </a>
+        <a href="../index.html" class="btn btn-back">← PAGEN</a>
+      </div>
+      <a href="https://github.com/GenerativeUI/GenerativeUI.github.io/tree/main/static/pagen/category2_custom"
+        class="btn btn-github" target="_blank">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+        GitHub
+      </a>
+    </div>
+    <div class="header-title">
+      <h1>Category 2 — Custom</h1>
+      <p class="subtitle">Expert: human-expert generated websites. GenUI: automatically generated by our system, powered
+        by Gemini 2.5. See <a href="https://arxiv.org/pdf/2604.09577" target="_blank">paper</a> for more details.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="topic-grid">
+      <div class="topic-card" title="Jeff Dean">
+        <span class="topic-num">01</span>
+        <span class="topic-name">Jeff Dean</span>
+        <span class="topic-links">
+          <a href="topic01_jeff_dean/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic01_jeff_dean/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Taylor Swift">
+        <span class="topic-num">02</span>
+        <span class="topic-name">Taylor Swift</span>
+        <span class="topic-links">
+          <a href="topic02_taylor_swift/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic02_taylor_swift/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="tell me about the many dimensions of albert einstein">
+        <span class="topic-num">03</span>
+        <span class="topic-name">tell me about the many dimensions of albert einstein</span>
+        <span class="topic-links">
+          <a href="topic03_tell_me_about_the_many_dimensions/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic03_tell_me_about_the_many_dimensions/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="van gogh gallery with life context for each piece">
+        <span class="topic-num">04</span>
+        <span class="topic-name">van gogh gallery with life context for each piece</span>
+        <span class="topic-links">
+          <a href="topic04_van_gogh_gallery_with_life_context/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic04_van_gogh_gallery_with_life_context/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Gengis Khan">
+        <span class="topic-num">05</span>
+        <span class="topic-name">Gengis Khan</span>
+        <span class="topic-links">
+          <a href="topic05_gengis_khan/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic05_gengis_khan/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Marie Curie">
+        <span class="topic-num">06</span>
+        <span class="topic-name">Marie Curie</span>
+        <span class="topic-links">
+          <a href="topic06_marie_curie/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic06_marie_curie/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Charles Darwin">
+        <span class="topic-num">07</span>
+        <span class="topic-name">Charles Darwin</span>
+        <span class="topic-links">
+          <a href="topic07_charles_darwin/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic07_charles_darwin/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="amelia earhart">
+        <span class="topic-num">08</span>
+        <span class="topic-name">amelia earhart</span>
+        <span class="topic-links">
+          <a href="topic08_amelia_earhart/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic08_amelia_earhart/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="explain quantum computing for a high schooler">
+        <span class="topic-num">09</span>
+        <span class="topic-name">explain quantum computing for a high schooler</span>
+        <span class="topic-links">
+          <a href="topic09_explain_quantum_computing_for_a_high/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic09_explain_quantum_computing_for_a_high/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="French history for kids">
+        <span class="topic-num">10</span>
+        <span class="topic-name">French history for kids</span>
+        <span class="topic-links">
+          <a href="topic10_french_history_for_kids/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic10_french_history_for_kids/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="fun home chemistry experiments for kids">
+        <span class="topic-num">11</span>
+        <span class="topic-name">fun home chemistry experiments for kids</span>
+        <span class="topic-links">
+          <a href="topic11_fun_home_chemistry_experiments_for_kids/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic11_fun_home_chemistry_experiments_for_kids/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="help me teach the relationship between slope and tangent using puppy growth">
+        <span class="topic-num">12</span>
+        <span class="topic-name">help me teach the relationship between slope and tangent using puppy growth</span>
+        <span class="topic-links">
+          <a href="topic12_help_me_teach_the_relationship_between/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic12_help_me_teach_the_relationship_between/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how to make a Baby Mobile">
+        <span class="topic-num">13</span>
+        <span class="topic-name">how to make a Baby Mobile</span>
+        <span class="topic-links">
+          <a href="topic13_how_to_make_a_baby_mobile/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic13_how_to_make_a_baby_mobile/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how to make a good homemade pizza crust with a regular oven">
+        <span class="topic-num">14</span>
+        <span class="topic-name">how to make a good homemade pizza crust with a regular oven</span>
+        <span class="topic-links">
+          <a href="topic14_how_to_make_a_good_homemade/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic14_how_to_make_a_good_homemade/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how to teach a puppy basic tricks">
+        <span class="topic-num">15</span>
+        <span class="topic-name">how to teach a puppy basic tricks</span>
+        <span class="topic-links">
+          <a href="topic15_how_to_teach_a_puppy_basic/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic15_how_to_teach_a_puppy_basic/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="i want to learn how to do a handstand">
+        <span class="topic-num">16</span>
+        <span class="topic-name">i want to learn how to do a handstand</span>
+        <span class="topic-links">
+          <a href="topic16_i_want_to_learn_how_to/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic16_i_want_to_learn_how_to/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="speculative decoding for kids">
+        <span class="topic-num">17</span>
+        <span class="topic-name">speculative decoding for kids</span>
+        <span class="topic-links">
+          <a href="topic17_speculative_decoding_for_kids/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic17_speculative_decoding_for_kids/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="tower of hanoi">
+        <span class="topic-num">18</span>
+        <span class="topic-name">tower of hanoi</span>
+        <span class="topic-links">
+          <a href="topic18_tower_of_hanoi/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic18_tower_of_hanoi/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="orange shoes">
+        <span class="topic-num">19</span>
+        <span class="topic-name">orange shoes</span>
+        <span class="topic-links">
+          <a href="topic19_orange_shoes/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic19_orange_shoes/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Met Gala outfits">
+        <span class="topic-num">20</span>
+        <span class="topic-name">Met Gala outfits</span>
+        <span class="topic-links">
+          <a href="topic20_met_gala_outfits/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic20_met_gala_outfits/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="fall fashion trends">
+        <span class="topic-num">21</span>
+        <span class="topic-name">fall fashion trends</span>
+        <span class="topic-links">
+          <a href="topic21_fall_fashion_trends/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic21_fall_fashion_trends/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Cute monster gallery">
+        <span class="topic-num">22</span>
+        <span class="topic-name">Cute monster gallery</span>
+        <span class="topic-links">
+          <a href="topic22_cute_monster_gallery/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic22_cute_monster_gallery/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="green things">
+        <span class="topic-num">23</span>
+        <span class="topic-name">green things</span>
+        <span class="topic-links">
+          <a href="topic23_green_things/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic23_green_things/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Lychee!!">
+        <span class="topic-num">24</span>
+        <span class="topic-name">Lychee!!</span>
+        <span class="topic-links">
+          <a href="topic24_lychee/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic24_lychee/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="us dollar bill">
+        <span class="topic-num">25</span>
+        <span class="topic-name">us dollar bill</span>
+        <span class="topic-links">
+          <a href="topic25_us_dollar_bill/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic25_us_dollar_bill/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="history of mulligan stew">
+        <span class="topic-num">26</span>
+        <span class="topic-name">history of mulligan stew</span>
+        <span class="topic-links">
+          <a href="topic26_history_of_mulligan_stew/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic26_history_of_mulligan_stew/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="History of tea">
+        <span class="topic-num">27</span>
+        <span class="topic-name">History of tea</span>
+        <span class="topic-links">
+          <a href="topic27_history_of_tea/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic27_history_of_tea/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="illustrated history of google">
+        <span class="topic-num">28</span>
+        <span class="topic-name">illustrated history of google</span>
+        <span class="topic-links">
+          <a href="topic28_illustrated_history_of_google/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic28_illustrated_history_of_google/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="visual history of AI">
+        <span class="topic-num">29</span>
+        <span class="topic-name">visual history of AI</span>
+        <span class="topic-links">
+          <a href="topic29_visual_history_of_ai/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic29_visual_history_of_ai/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="History of the Airplane">
+        <span class="topic-num">30</span>
+        <span class="topic-name">History of the Airplane</span>
+        <span class="topic-links">
+          <a href="topic30_history_of_the_airplane/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic30_history_of_the_airplane/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Visual history of Atomic Bombs">
+        <span class="topic-num">31</span>
+        <span class="topic-name">Visual history of Atomic Bombs</span>
+        <span class="topic-links">
+          <a href="topic31_visual_history_of_atomic_bombs/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic31_visual_history_of_atomic_bombs/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Visual history of Chemistry">
+        <span class="topic-num">32</span>
+        <span class="topic-name">Visual history of Chemistry</span>
+        <span class="topic-links">
+          <a href="topic32_visual_history_of_chemistry/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic32_visual_history_of_chemistry/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="History of France for kids">
+        <span class="topic-num">33</span>
+        <span class="topic-name">History of France for kids</span>
+        <span class="topic-links">
+          <a href="topic33_history_of_france_for_kids/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic33_history_of_france_for_kids/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="decorating with flamingos">
+        <span class="topic-num">34</span>
+        <span class="topic-name">decorating with flamingos</span>
+        <span class="topic-links">
+          <a href="topic34_decorating_with_flamingos/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic34_decorating_with_flamingos/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="emergency go bag prep">
+        <span class="topic-num">35</span>
+        <span class="topic-name">emergency go bag prep</span>
+        <span class="topic-links">
+          <a href="topic35_emergency_go_bag_prep/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic35_emergency_go_bag_prep/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="how do I prepare my home for earthquakes">
+        <span class="topic-num">36</span>
+        <span class="topic-name">how do I prepare my home for earthquakes</span>
+        <span class="topic-links">
+          <a href="topic36_how_do_i_prepare_my_home/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic36_how_do_i_prepare_my_home/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="help me plan what I need for my new-borns bedroom">
+        <span class="topic-num">37</span>
+        <span class="topic-name">help me plan what I need for my new-borns bedroom</span>
+        <span class="topic-links">
+          <a href="topic37_help_me_plan_what_i_need/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic37_help_me_plan_what_i_need/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="8 spruce street vs 56 leonard in nyc">
+        <span class="topic-num">38</span>
+        <span class="topic-name">8 spruce street vs 56 leonard in nyc</span>
+        <span class="topic-links">
+          <a href="topic38_8_spruce_street_vs_56_leonard/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic38_8_spruce_street_vs_56_leonard/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="cars with shield logos">
+        <span class="topic-num">39</span>
+        <span class="topic-name">cars with shield logos</span>
+        <span class="topic-links">
+          <a href="topic39_cars_with_shield_logos/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic39_cars_with_shield_logos/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="flags with stars">
+        <span class="topic-num">40</span>
+        <span class="topic-name">flags with stars</span>
+        <span class="topic-links">
+          <a href="topic40_flags_with_stars/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic40_flags_with_stars/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="freedom trail map">
+        <span class="topic-num">41</span>
+        <span class="topic-name">freedom trail map</span>
+        <span class="topic-links">
+          <a href="topic41_freedom_trail_map/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic41_freedom_trail_map/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="oj simpson car chase on map">
+        <span class="topic-num">42</span>
+        <span class="topic-name">oj simpson car chase on map</span>
+        <span class="topic-links">
+          <a href="topic42_oj_simpson_car_chase_on_map/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic42_oj_simpson_car_chase_on_map/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="should i wait for the switch 2">
+        <span class="topic-num">43</span>
+        <span class="topic-name">should i wait for the switch 2</span>
+        <span class="topic-links">
+          <a href="topic43_should_i_wait_for_the_switch/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic43_should_i_wait_for_the_switch/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="ukraine war timeline map">
+        <span class="topic-num">44</span>
+        <span class="topic-name">ukraine war timeline map</span>
+        <span class="topic-links">
+          <a href="topic44_ukraine_war_timeline_map/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic44_ukraine_war_timeline_map/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Ising model">
+        <span class="topic-num">45</span>
+        <span class="topic-name">Ising model</span>
+        <span class="topic-links">
+          <a href="topic45_ising_model/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic45_ising_model/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="billiard with the planets">
+        <span class="topic-num">46</span>
+        <span class="topic-name">billiard with the planets</span>
+        <span class="topic-links">
+          <a href="topic46_billiard_with_the_planets/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic46_billiard_with_the_planets/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="coloring app for 6 year olds">
+        <span class="topic-num">47</span>
+        <span class="topic-name">coloring app for 6 year olds</span>
+        <span class="topic-links">
+          <a href="topic47_coloring_app_for_6_year_olds/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic47_coloring_app_for_6_year_olds/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="drawing game for 10 years old">
+        <span class="topic-num">48</span>
+        <span class="topic-name">drawing game for 10 years old</span>
+        <span class="topic-links">
+          <a href="topic48_drawing_game_for_10_years_old/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic48_drawing_game_for_10_years_old/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="emoji modeler">
+        <span class="topic-num">49</span>
+        <span class="topic-name">emoji modeler</span>
+        <span class="topic-links">
+          <a href="topic49_emoji_modeler/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic49_emoji_modeler/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="game to learn fast typing, retro style">
+        <span class="topic-num">50</span>
+        <span class="topic-name">game to learn fast typing, retro style</span>
+        <span class="topic-links">
+          <a href="topic50_game_to_learn_fast_typing_retro/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic50_game_to_learn_fast_typing_retro/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="map of the world">
+        <span class="topic-num">51</span>
+        <span class="topic-name">map of the world</span>
+        <span class="topic-links">
+          <a href="topic51_map_of_the_world/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic51_map_of_the_world/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="maze generator and solver">
+        <span class="topic-num">52</span>
+        <span class="topic-name">maze generator and solver</span>
+        <span class="topic-links">
+          <a href="topic52_maze_generator_and_solver/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic52_maze_generator_and_solver/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="robot vs robot boxing game">
+        <span class="topic-num">53</span>
+        <span class="topic-name">robot vs robot boxing game</span>
+        <span class="topic-links">
+          <a href="topic53_robot_vs_robot_boxing_game/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic53_robot_vs_robot_boxing_game/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="baby friendly neighborhoods on the q line in nyc map">
+        <span class="topic-num">54</span>
+        <span class="topic-name">baby friendly neighborhoods on the q line in nyc map</span>
+        <span class="topic-links">
+          <a href="topic54_baby_friendly_neighborhoods_on_the_q/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic54_baby_friendly_neighborhoods_on_the_q/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="walkable neighborhoods in SF">
+        <span class="topic-num">55</span>
+        <span class="topic-name">walkable neighborhoods in SF</span>
+        <span class="topic-links">
+          <a href="topic55_walkable_neighborhoods_in_sf/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic55_walkable_neighborhoods_in_sf/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which eink tablet is the best?">
+        <span class="topic-num">56</span>
+        <span class="topic-name">Which eink tablet is the best?</span>
+        <span class="topic-links">
+          <a href="topic56_which_eink_tablet_is_the_best/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic56_which_eink_tablet_is_the_best/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which phone is the best?">
+        <span class="topic-num">57</span>
+        <span class="topic-name">Which phone is the best?</span>
+        <span class="topic-links">
+          <a href="topic57_which_phone_is_the_best/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic57_which_phone_is_the_best/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which gaming console is the best?">
+        <span class="topic-num">58</span>
+        <span class="topic-name">Which gaming console is the best?</span>
+        <span class="topic-links">
+          <a href="topic58_which_gaming_console_is_the_best/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic58_which_gaming_console_is_the_best/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Best women&#x27;s clothes for skiing">
+        <span class="topic-num">59</span>
+        <span class="topic-name">Best women&#x27;s clothes for skiing</span>
+        <span class="topic-links">
+          <a href="topic59_best_women_s_clothes_for_skiing/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic59_best_women_s_clothes_for_skiing/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Dresses for the summer">
+        <span class="topic-num">60</span>
+        <span class="topic-name">Dresses for the summer</span>
+        <span class="topic-links">
+          <a href="topic60_dresses_for_the_summer/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic60_dresses_for_the_summer/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="make a tourism page for clive, iowa">
+        <span class="topic-num">61</span>
+        <span class="topic-name">make a tourism page for clive, iowa</span>
+        <span class="topic-links">
+          <a href="topic61_make_a_tourism_page_for_clive/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic61_make_a_tourism_page_for_clive/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="make a home page for my new esports team, team Noctus">
+        <span class="topic-num">62</span>
+        <span class="topic-name">make a home page for my new esports team, team Noctus</span>
+        <span class="topic-links">
+          <a href="topic62_make_a_home_page_for_my/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic62_make_a_home_page_for_my/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="I want to plan a roadtrip off the beaten path, starting in northern California and heading east. roundtrip should be about 2 weeks. i like unusual tourist attractions. the vibe should be like the weird al song about the biggest ball of twine in minnesota.">
+        <span class="topic-num">63</span>
+        <span class="topic-name">I want to plan a roadtrip off the beaten path, starting in northern California and
+          heading east. roundtrip should be &hellip;</span>
+        <span class="topic-links">
+          <a href="topic63_i_want_to_plan_a_roadtrip/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic63_i_want_to_plan_a_roadtrip/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="i want to watch the next meteor shower visible from saratoga, ca">
+        <span class="topic-num">64</span>
+        <span class="topic-name">i want to watch the next meteor shower visible from saratoga, ca</span>
+        <span class="topic-links">
+          <a href="topic64_i_want_to_watch_the_next/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic64_i_want_to_watch_the_next/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="i&#x27;m visiting singapore for 3 days in september for a conference">
+        <span class="topic-num">65</span>
+        <span class="topic-name">i&#x27;m visiting singapore for 3 days in september for a conference</span>
+        <span class="topic-links">
+          <a href="topic65_i_m_visiting_singapore_for_3/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic65_i_m_visiting_singapore_for_3/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="plan a trip from tomorrow returning on sat in SF with a 5 yo and a 7 months old staying in japan town">
+        <span class="topic-num">66</span>
+        <span class="topic-name">plan a trip from tomorrow returning on sat in SF with a 5 yo and a 7 months old staying
+          in japan town</span>
+        <span class="topic-links">
+          <a href="topic66_plan_a_trip_from_tomorrow_returning/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic66_plan_a_trip_from_tomorrow_returning/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="i want to plan some stargazing parties from chicago">
+        <span class="topic-num">67</span>
+        <span class="topic-name">i want to plan some stargazing parties from chicago</span>
+        <span class="topic-links">
+          <a href="topic67_i_want_to_plan_some_stargazing/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic67_i_want_to_plan_some_stargazing/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Ågesta Beach guide">
+        <span class="topic-num">68</span>
+        <span class="topic-name">Ågesta Beach guide</span>
+        <span class="topic-links">
+          <a href="topic68_gesta_beach_guide/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic68_gesta_beach_guide/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="help me and my wife plan a trip to Japan, we love Studio Ghibli, hot springs and food">
+        <span class="topic-num">69</span>
+        <span class="topic-name">help me and my wife plan a trip to Japan, we love Studio Ghibli, hot springs and
+          food</span>
+        <span class="topic-links">
+          <a href="topic69_help_me_and_my_wife_plan/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic69_help_me_and_my_wife_plan/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="I want to take a tour of South America - help me plan my trip there">
+        <span class="topic-num">70</span>
+        <span class="topic-name">I want to take a tour of South America - help me plan my trip there</span>
+        <span class="topic-links">
+          <a href="topic70_i_want_to_take_a_tour/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic70_i_want_to_take_a_tour/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="compare the Chiefs and the Colts">
+        <span class="topic-num">71</span>
+        <span class="topic-name">compare the Chiefs and the Colts</span>
+        <span class="topic-links">
+          <a href="topic71_compare_the_chiefs_and_the_colts/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic71_compare_the_chiefs_and_the_colts/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="compare the Chicago Bulls and Orlando Magic">
+        <span class="topic-num">72</span>
+        <span class="topic-name">compare the Chicago Bulls and Orlando Magic</span>
+        <span class="topic-links">
+          <a href="topic72_compare_the_chicago_bulls_and_orlando/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic72_compare_the_chicago_bulls_and_orlando/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="top 5 football teams this year">
+        <span class="topic-num">73</span>
+        <span class="topic-name">top 5 football teams this year</span>
+        <span class="topic-links">
+          <a href="topic73_top_5_football_teams_this_year/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic73_top_5_football_teams_this_year/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="top 5 basketball teams this year">
+        <span class="topic-num">74</span>
+        <span class="topic-name">top 5 basketball teams this year</span>
+        <span class="topic-links">
+          <a href="topic74_top_5_basketball_teams_this_year/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic74_top_5_basketball_teams_this_year/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="compare Real Madrid and FC Barcelona">
+        <span class="topic-num">75</span>
+        <span class="topic-name">compare Real Madrid and FC Barcelona</span>
+        <span class="topic-links">
+          <a href="topic75_compare_real_madrid_and_fc_barcelona/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic75_compare_real_madrid_and_fc_barcelona/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which team is better the Detroit Red Wings or the New York Islanders">
+        <span class="topic-num">76</span>
+        <span class="topic-name">Which team is better the Detroit Red Wings or the New York Islanders</span>
+        <span class="topic-links">
+          <a href="topic76_which_team_is_better_the_detroit/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic76_which_team_is_better_the_detroit/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Which team is going to win the MLB this year?">
+        <span class="topic-num">77</span>
+        <span class="topic-name">Which team is going to win the MLB this year?</span>
+        <span class="topic-links">
+          <a href="topic77_which_team_is_going_to_win/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic77_which_team_is_going_to_win/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="Translate &quot;What I cannot create, I do not understand.&quot; to Frenc. Explain the quote and also what each word means.">
+        <span class="topic-num">78</span>
+        <span class="topic-name">Translate &quot;What I cannot create, I do not understand.&quot; to Frenc. Explain the
+          quote and also what each word means.</span>
+        <span class="topic-links">
+          <a href="topic78_translate_what_i_cannot_create_i/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic78_translate_what_i_cannot_create_i/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="important events in the sf bay area in summer of 2012">
+        <span class="topic-num">79</span>
+        <span class="topic-name">important events in the sf bay area in summer of 2012</span>
+        <span class="topic-links">
+          <a href="topic79_important_events_in_the_sf_bay/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic79_important_events_in_the_sf_bay/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="is 897 prime?">
+        <span class="topic-num">80</span>
+        <span class="topic-name">is 897 prime?</span>
+        <span class="topic-links">
+          <a href="topic80_is_897_prime/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic80_is_897_prime/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card"
+        title="plan a weekend trip to sf on the weekend of january 3rd 2027, for 3 days, staying in hotel kabuki with a 5 year old and a 1 year old. what should we do? where should we eat? etc">
+        <span class="topic-num">81</span>
+        <span class="topic-name">plan a weekend trip to sf on the weekend of january 3rd 2027, for 3 days, staying in
+          hotel kabuki with a 5 year old a&hellip;</span>
+        <span class="topic-links">
+          <a href="topic81_plan_a_weekend_trip_to_sf/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic81_plan_a_weekend_trip_to_sf/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Visual history of cryptography">
+        <span class="topic-num">82</span>
+        <span class="topic-name">Visual history of cryptography</span>
+        <span class="topic-links">
+          <a href="topic82_visual_history_of_cryptography/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic82_visual_history_of_cryptography/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Explain thermodynamics using a coffee maker">
+        <span class="topic-num">83</span>
+        <span class="topic-name">Explain thermodynamics using a coffee maker</span>
+        <span class="topic-links">
+          <a href="topic83_explain_thermodynamics_using_a_coffee_maker/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic83_explain_thermodynamics_using_a_coffee_maker/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Illustrated guide to the Roman Colosseum">
+        <span class="topic-num">84</span>
+        <span class="topic-name">Illustrated guide to the Roman Colosseum</span>
+        <span class="topic-links">
+          <a href="topic84_illustrated_guide_to_the_roman_colosseum/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic84_illustrated_guide_to_the_roman_colosseum/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="History and making of the Rubik&#x27;s Cube">
+        <span class="topic-num">85</span>
+        <span class="topic-name">History and making of the Rubik&#x27;s Cube</span>
+        <span class="topic-links">
+          <a href="topic85_history_and_making_of_the_rubik/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic85_history_and_making_of_the_rubik/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Compare the best electric scooters for commuters">
+        <span class="topic-num">86</span>
+        <span class="topic-name">Compare the best electric scooters for commuters</span>
+        <span class="topic-links">
+          <a href="topic86_compare_the_best_electric_scooters_for/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic86_compare_the_best_electric_scooters_for/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="History of the periodic table for middle schoolers">
+        <span class="topic-num">87</span>
+        <span class="topic-name">History of the periodic table for middle schoolers</span>
+        <span class="topic-links">
+          <a href="topic87_history_of_the_periodic_table_for/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic87_history_of_the_periodic_table_for/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Plan a family trip to the Grand Canyon for 4 days, including a 10-year-old">
+        <span class="topic-num">88</span>
+        <span class="topic-name">Plan a family trip to the Grand Canyon for 4 days, including a 10-year-old</span>
+        <span class="topic-links">
+          <a href="topic88_plan_a_family_trip_to_the/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic88_plan_a_family_trip_to_the/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="The life and major works of Jane Austen">
+        <span class="topic-num">89</span>
+        <span class="topic-name">The life and major works of Jane Austen</span>
+        <span class="topic-links">
+          <a href="topic89_the_life_and_major_works_of/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic89_the_life_and_major_works_of/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="How do I build a simple hydroponic garden at home?">
+        <span class="topic-num">90</span>
+        <span class="topic-name">How do I build a simple hydroponic garden at home?</span>
+        <span class="topic-links">
+          <a href="topic90_how_do_i_build_a_simple/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic90_how_do_i_build_a_simple/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="What are the top 5 cybersecurity threats for small businesses this year?">
+        <span class="topic-num">91</span>
+        <span class="topic-name">What are the top 5 cybersecurity threats for small businesses this year?</span>
+        <span class="topic-links">
+          <a href="topic91_what_are_the_top_5_cybersecurity/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic91_what_are_the_top_5_cybersecurity/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Interactive solar system model for primary school">
+        <span class="topic-num">92</span>
+        <span class="topic-name">Interactive solar system model for primary school</span>
+        <span class="topic-links">
+          <a href="topic92_interactive_solar_system_model_for_primary/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic92_interactive_solar_system_model_for_primary/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Compare the best air fryers on the market">
+        <span class="topic-num">93</span>
+        <span class="topic-name">Compare the best air fryers on the market</span>
+        <span class="topic-links">
+          <a href="topic93_compare_the_best_air_fryers_on/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic93_compare_the_best_air_fryers_on/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Visual guide to identifying constellations visible from London">
+        <span class="topic-num">94</span>
+        <span class="topic-name">Visual guide to identifying constellations visible from London</span>
+        <span class="topic-links">
+          <a href="topic94_visual_guide_to_identifying_constellations_visible/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic94_visual_guide_to_identifying_constellations_visible/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Decorating with minimalist Scandinavian design principles">
+        <span class="topic-num">95</span>
+        <span class="topic-name">Decorating with minimalist Scandinavian design principles</span>
+        <span class="topic-links">
+          <a href="topic95_decorating_with_minimalist_scandinavian_design_principles/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic95_decorating_with_minimalist_scandinavian_design_principles/genui/index.html"
+            class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="The history and cultural significance of the samurai sword">
+        <span class="topic-num">96</span>
+        <span class="topic-name">The history and cultural significance of the samurai sword</span>
+        <span class="topic-links">
+          <a href="topic96_the_history_and_cultural_significance_of/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic96_the_history_and_cultural_significance_of/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Help me plan a two-week honeymoon in the Greek Islands">
+        <span class="topic-num">97</span>
+        <span class="topic-name">Help me plan a two-week honeymoon in the Greek Islands</span>
+        <span class="topic-links">
+          <a href="topic97_help_me_plan_a_two_week/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic97_help_me_plan_a_two_week/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Best video games for learning history">
+        <span class="topic-num">98</span>
+        <span class="topic-name">Best video games for learning history</span>
+        <span class="topic-links">
+          <a href="topic98_best_video_games_for_learning_history/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic98_best_video_games_for_learning_history/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="Evolutionary history of the domestic cat">
+        <span class="topic-num">99</span>
+        <span class="topic-name">Evolutionary history of the domestic cat</span>
+        <span class="topic-links">
+          <a href="topic99_evolutionary_history_of_the_domestic_cat/expert/index.html"
+            class="link-btn expert">Expert</a>
+          <a href="topic99_evolutionary_history_of_the_domestic_cat/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+      <div class="topic-card" title="A guide to the most common herbs and their uses">
+        <span class="topic-num">100</span>
+        <span class="topic-name">A guide to the most common herbs and their uses</span>
+        <span class="topic-links">
+          <a href="topic100_a_guide_to_the_most_common/expert/index.html" class="link-btn expert">Expert</a>
+          <a href="topic100_a_guide_to_the_most_common/genui/index.html" class="link-btn genui">GenUI</a>
+        </span>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

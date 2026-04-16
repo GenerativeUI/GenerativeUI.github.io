@@ -1,0 +1,1574 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<script class="injected-ffc2e83d85">
+(function(){'use strict';
+function $$jscomp$arrayIteratorImpl$$($array$jscomp$6$$) {
+  var $index$jscomp$110$$ = 0;
+  return function() {
+    return $index$jscomp$110$$ < $array$jscomp$6$$.length ? {done:!1, value:$array$jscomp$6$$[$index$jscomp$110$$++]} : {done:!0};
+  };
+}
+function $$jscomp$makeIterator$$($iterable$jscomp$4$$) {
+  var $iteratorFunction$$ = typeof Symbol != "undefined" && Symbol.iterator && $iterable$jscomp$4$$[Symbol.iterator];
+  if ($iteratorFunction$$) {
+    return $iteratorFunction$$.call($iterable$jscomp$4$$);
+  }
+  if (typeof $iterable$jscomp$4$$.length == "number") {
+    return {next:$$jscomp$arrayIteratorImpl$$($iterable$jscomp$4$$)};
+  }
+  throw Error(String($iterable$jscomp$4$$) + " is not an iterable or ArrayLike");
+}
+var $$jscomp$defineProperty$$ = typeof Object.defineProperties == "function" ? Object.defineProperty : function($target$jscomp$92$$, $property$jscomp$13$$, $descriptor$jscomp$2$$) {
+  if ($target$jscomp$92$$ == Array.prototype || $target$jscomp$92$$ == Object.prototype) {
+    return $target$jscomp$92$$;
+  }
+  $target$jscomp$92$$[$property$jscomp$13$$] = $descriptor$jscomp$2$$.value;
+  return $target$jscomp$92$$;
+};
+function $$jscomp$getGlobal$$($passedInThis_possibleGlobals$$) {
+  $passedInThis_possibleGlobals$$ = ["object" == typeof globalThis && globalThis, $passedInThis_possibleGlobals$$, "object" == typeof window && window, "object" == typeof self && self, "object" == typeof global && global];
+  for (var $i$jscomp$3$$ = 0; $i$jscomp$3$$ < $passedInThis_possibleGlobals$$.length; ++$i$jscomp$3$$) {
+    var $maybeGlobal$$ = $passedInThis_possibleGlobals$$[$i$jscomp$3$$];
+    if ($maybeGlobal$$ && $maybeGlobal$$.Math == Math) {
+      return $maybeGlobal$$;
+    }
+  }
+  throw Error("Cannot find global object");
+}
+var $$jscomp$global$$ = $$jscomp$getGlobal$$(this);
+function $$jscomp$polyfill$$($property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$, $impl$jscomp$inline_23_polyfill$jscomp$2$$) {
+  if ($impl$jscomp$inline_23_polyfill$jscomp$2$$) {
+    a: {
+      var $obj$jscomp$inline_17$$ = $$jscomp$global$$;
+      $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.split(".");
+      for (var $i$jscomp$inline_19_orig$jscomp$inline_22$$ = 0; $i$jscomp$inline_19_orig$jscomp$inline_22$$ < $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.length - 1; $i$jscomp$inline_19_orig$jscomp$inline_22$$++) {
+        var $key$jscomp$inline_20$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$[$i$jscomp$inline_19_orig$jscomp$inline_22$$];
+        if (!($key$jscomp$inline_20$$ in $obj$jscomp$inline_17$$)) {
+          break a;
+        }
+        $obj$jscomp$inline_17$$ = $obj$jscomp$inline_17$$[$key$jscomp$inline_20$$];
+      }
+      $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$ = $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$[$property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$.length - 1];
+      $i$jscomp$inline_19_orig$jscomp$inline_22$$ = $obj$jscomp$inline_17$$[$property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$];
+      $impl$jscomp$inline_23_polyfill$jscomp$2$$ = $impl$jscomp$inline_23_polyfill$jscomp$2$$($i$jscomp$inline_19_orig$jscomp$inline_22$$);
+      $impl$jscomp$inline_23_polyfill$jscomp$2$$ != $i$jscomp$inline_19_orig$jscomp$inline_22$$ && $impl$jscomp$inline_23_polyfill$jscomp$2$$ != null && $$jscomp$defineProperty$$($obj$jscomp$inline_17$$, $property$jscomp$inline_21_split$jscomp$inline_18_target$jscomp$95$$, {configurable:!0, writable:!0, value:$impl$jscomp$inline_23_polyfill$jscomp$2$$});
+    }
+  }
+}
+function $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$1$$) {
+  if (!($result$jscomp$1$$ instanceof Object)) {
+    throw new TypeError("Iterator result " + $result$jscomp$1$$ + " is not an object");
+  }
+}
+function $$jscomp$generator$Context$$() {
+  this.$m$ = !1;
+  this.$j$ = null;
+  this.$o$ = void 0;
+  this.$g$ = 1;
+  this.$i$ = this.$l$ = 0;
+  this.$v$ = this.$h$ = null;
+}
+function $JSCompiler_StaticMethods_start_$$($JSCompiler_StaticMethods_start_$self$$) {
+  if ($JSCompiler_StaticMethods_start_$self$$.$m$) {
+    throw new TypeError("Generator is already running");
+  }
+  $JSCompiler_StaticMethods_start_$self$$.$m$ = !0;
+}
+$$jscomp$generator$Context$$.prototype.$u$ = function($value$jscomp$175$$) {
+  this.$o$ = $value$jscomp$175$$;
+};
+function $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_JSC$2497_throw_$self$$, $e$jscomp$8$$) {
+  $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$h$ = {$exception$:$e$jscomp$8$$, $isException$:!0};
+  $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$g$ = $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$l$ || $JSCompiler_StaticMethods_JSC$2497_throw_$self$$.$i$;
+}
+$$jscomp$generator$Context$$.prototype.getNextAddressJsc = function() {
+  return this.$g$;
+};
+$$jscomp$generator$Context$$.prototype.getYieldResultJsc = function() {
+  return this.$o$;
+};
+$$jscomp$generator$Context$$.prototype.return = function($value$jscomp$176$$) {
+  this.$h$ = {return:$value$jscomp$176$$};
+  this.$g$ = this.$i$;
+};
+$$jscomp$generator$Context$$.prototype["return"] = $$jscomp$generator$Context$$.prototype.return;
+$$jscomp$generator$Context$$.prototype.$I$ = function($nextAddress$$) {
+  this.$h$ = {$jumpTo$:$nextAddress$$};
+  this.$g$ = this.$i$;
+};
+$$jscomp$generator$Context$$.prototype.jumpThroughFinallyBlocks = $$jscomp$generator$Context$$.prototype.$I$;
+$$jscomp$generator$Context$$.prototype.$A$ = function($value$jscomp$177$$, $resumeAddress$$) {
+  this.$g$ = $resumeAddress$$;
+  return {value:$value$jscomp$177$$};
+};
+$$jscomp$generator$Context$$.prototype.yield = $$jscomp$generator$Context$$.prototype.$A$;
+$$jscomp$generator$Context$$.prototype.$L$ = function($iterable$jscomp$5_iterator$jscomp$6$$, $resumeAddress$jscomp$1$$) {
+  $iterable$jscomp$5_iterator$jscomp$6$$ = $$jscomp$makeIterator$$($iterable$jscomp$5_iterator$jscomp$6$$);
+  var $result$jscomp$2$$ = $iterable$jscomp$5_iterator$jscomp$6$$.next();
+  $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$2$$);
+  if ($result$jscomp$2$$.done) {
+    this.$o$ = $result$jscomp$2$$.value, this.$g$ = $resumeAddress$jscomp$1$$;
+  } else {
+    return this.$j$ = $iterable$jscomp$5_iterator$jscomp$6$$, this.$A$($result$jscomp$2$$.value, $resumeAddress$jscomp$1$$);
+  }
+};
+$$jscomp$generator$Context$$.prototype.yieldAll = $$jscomp$generator$Context$$.prototype.$L$;
+$$jscomp$generator$Context$$.prototype.$jumpTo$ = function($nextAddress$jscomp$1$$) {
+  this.$g$ = $nextAddress$jscomp$1$$;
+};
+$$jscomp$generator$Context$$.prototype.jumpTo = $$jscomp$generator$Context$$.prototype.$jumpTo$;
+$$jscomp$generator$Context$$.prototype.$C$ = function() {
+  this.$g$ = 0;
+};
+$$jscomp$generator$Context$$.prototype.jumpToEnd = $$jscomp$generator$Context$$.prototype.$C$;
+$$jscomp$generator$Context$$.prototype.$F$ = function($catchAddress$$, $finallyAddress$$) {
+  this.$l$ = $catchAddress$$;
+  $finallyAddress$$ != void 0 && (this.$i$ = $finallyAddress$$);
+};
+$$jscomp$generator$Context$$.prototype.setCatchFinallyBlocks = $$jscomp$generator$Context$$.prototype.$F$;
+$$jscomp$generator$Context$$.prototype.$K$ = function($finallyAddress$jscomp$1$$) {
+  this.$l$ = 0;
+  this.$i$ = $finallyAddress$jscomp$1$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.setFinallyBlock = $$jscomp$generator$Context$$.prototype.$K$;
+$$jscomp$generator$Context$$.prototype.$D$ = function($nextAddress$jscomp$2$$, $catchAddress$jscomp$1$$) {
+  this.$g$ = $nextAddress$jscomp$2$$;
+  this.$l$ = $catchAddress$jscomp$1$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.leaveTryBlock = $$jscomp$generator$Context$$.prototype.$D$;
+$$jscomp$generator$Context$$.prototype.$B$ = function($exception$jscomp$2_nextCatchBlockAddress$$) {
+  this.$l$ = $exception$jscomp$2_nextCatchBlockAddress$$ || 0;
+  $exception$jscomp$2_nextCatchBlockAddress$$ = this.$h$.$exception$;
+  this.$h$ = null;
+  return $exception$jscomp$2_nextCatchBlockAddress$$;
+};
+$$jscomp$generator$Context$$.prototype.enterCatchBlock = $$jscomp$generator$Context$$.prototype.$B$;
+$$jscomp$generator$Context$$.prototype.$G$ = function($nextCatchAddress$$, $nextFinallyAddress$$, $finallyDepth$$) {
+  $finallyDepth$$ ? this.$v$[$finallyDepth$$] = this.$h$ : this.$v$ = [this.$h$];
+  this.$l$ = $nextCatchAddress$$ || 0;
+  this.$i$ = $nextFinallyAddress$$ || 0;
+};
+$$jscomp$generator$Context$$.prototype.enterFinallyBlock = $$jscomp$generator$Context$$.prototype.$G$;
+$$jscomp$generator$Context$$.prototype.$J$ = function($nextAddress$jscomp$3$$, $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$) {
+  $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ = this.$v$.splice($abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ || 0)[0];
+  ($abruptCompletion_finallyDepth$jscomp$1_preservedContext$$ = this.$h$ = this.$h$ || $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$) ? $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$isException$ ? this.$g$ = this.$l$ || this.$i$ : $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$ != void 0 && this.$i$ < $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$ ? (this.$g$ = $abruptCompletion_finallyDepth$jscomp$1_preservedContext$$.$jumpTo$, 
+  this.$h$ = null) : this.$g$ = this.$i$ : this.$g$ = $nextAddress$jscomp$3$$;
+};
+$$jscomp$generator$Context$$.prototype.leaveFinallyBlock = $$jscomp$generator$Context$$.prototype.$J$;
+$$jscomp$generator$Context$$.prototype.$H$ = function($object$$) {
+  return new $$jscomp$generator$Context$PropertyIterator$$($object$$);
+};
+$$jscomp$generator$Context$$.prototype.forIn = $$jscomp$generator$Context$$.prototype.$H$;
+function $$jscomp$generator$Context$PropertyIterator$$($object$jscomp$1$$) {
+  this.$i$ = $object$jscomp$1$$;
+  this.$g$ = [];
+  for (var $property$jscomp$17$$ in $object$jscomp$1$$) {
+    this.$g$.push($property$jscomp$17$$);
+  }
+  this.$g$.reverse();
+}
+$$jscomp$generator$Context$PropertyIterator$$.prototype.$h$ = function() {
+  for (; this.$g$.length > 0;) {
+    var $property$jscomp$18$$ = this.$g$.pop();
+    if ($property$jscomp$18$$ in this.$i$) {
+      return $property$jscomp$18$$;
+    }
+  }
+  return null;
+};
+$$jscomp$generator$Context$PropertyIterator$$.prototype.getNext = $$jscomp$generator$Context$PropertyIterator$$.prototype.$h$;
+function $$jscomp$generator$Engine_$$($program$jscomp$63$$) {
+  this.$g$ = new $$jscomp$generator$Context$$();
+  this.$h$ = $program$jscomp$63$$;
+}
+function $JSCompiler_StaticMethods_return_$$($JSCompiler_StaticMethods_return_$self$$, $value$jscomp$179$$) {
+  $JSCompiler_StaticMethods_start_$$($JSCompiler_StaticMethods_return_$self$$.$g$);
+  var $yieldAllIterator$$ = $JSCompiler_StaticMethods_return_$self$$.$g$.$j$;
+  if ($yieldAllIterator$$) {
+    return $JSCompiler_StaticMethods_yieldAllStep_$$($JSCompiler_StaticMethods_return_$self$$, "return" in $yieldAllIterator$$ ? $yieldAllIterator$$["return"] : function($v$jscomp$1$$) {
+      return {value:$v$jscomp$1$$, done:!0};
+    }, $value$jscomp$179$$, $JSCompiler_StaticMethods_return_$self$$.$g$.return);
+  }
+  $JSCompiler_StaticMethods_return_$self$$.$g$.return($value$jscomp$179$$);
+  return $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_return_$self$$);
+}
+function $JSCompiler_StaticMethods_yieldAllStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$, $action$jscomp$1$$, $value$jscomp$180$$, $nextAction$$) {
+  try {
+    var $result$jscomp$3$$ = $action$jscomp$1$$.call($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$, $value$jscomp$180$$);
+    $$jscomp$generator$ensureIteratorResultIsObject_$$($result$jscomp$3$$);
+    if (!$result$jscomp$3$$.done) {
+      return $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$m$ = !1, $result$jscomp$3$$;
+    }
+    var $resultValue$$ = $result$jscomp$3$$.value;
+  } catch ($e$jscomp$9$$) {
+    return $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$ = null, $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$, $e$jscomp$9$$), $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$);
+  }
+  $JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$.$j$ = null;
+  $nextAction$$.call($JSCompiler_StaticMethods_yieldAllStep_$self$$.$g$, $resultValue$$);
+  return $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_yieldAllStep_$self$$);
+}
+function $JSCompiler_StaticMethods_nextStep_$$($JSCompiler_StaticMethods_nextStep_$self$$) {
+  for (; $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$g$;) {
+    try {
+      var $abruptCompletion$jscomp$1_yieldValue$$ = $JSCompiler_StaticMethods_nextStep_$self$$.$h$($JSCompiler_StaticMethods_nextStep_$self$$.$g$);
+      if ($abruptCompletion$jscomp$1_yieldValue$$) {
+        return $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$m$ = !1, {value:$abruptCompletion$jscomp$1_yieldValue$$.value, done:!1};
+      }
+    } catch ($e$jscomp$10$$) {
+      $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$o$ = void 0, $JSCompiler_StaticMethods_JSC$2497_throw_$$($JSCompiler_StaticMethods_nextStep_$self$$.$g$, $e$jscomp$10$$);
+    }
+  }
+  $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$m$ = !1;
+  if ($JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$) {
+    $abruptCompletion$jscomp$1_yieldValue$$ = $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$;
+    $JSCompiler_StaticMethods_nextStep_$self$$.$g$.$h$ = null;
+    if ($abruptCompletion$jscomp$1_yieldValue$$.$isException$) {
+      throw $abruptCompletion$jscomp$1_yieldValue$$.$exception$;
+    }
+    return {value:$abruptCompletion$jscomp$1_yieldValue$$.return, done:!0};
+  }
+  return {value:void 0, done:!0};
+}
+function $$jscomp$generator$Generator_$$($engine$$) {
+  this.next = function($JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$) {
+    $JSCompiler_StaticMethods_start_$$($engine$$.$g$);
+    $engine$$.$g$.$j$ ? $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$ = $JSCompiler_StaticMethods_yieldAllStep_$$($engine$$, $engine$$.$g$.$j$.next, $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$, $engine$$.$g$.$u$) : ($engine$$.$g$.$u$($JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$), $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$ = $JSCompiler_StaticMethods_nextStep_$$($engine$$));
+    return $JSCompiler_inline_result$jscomp$7_opt_value$jscomp$10$$;
+  };
+  this.throw = function($JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$) {
+    $JSCompiler_StaticMethods_start_$$($engine$$.$g$);
+    $engine$$.$g$.$j$ ? $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$ = $JSCompiler_StaticMethods_yieldAllStep_$$($engine$$, $engine$$.$g$.$j$["throw"], $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$, $engine$$.$g$.$u$) : ($JSCompiler_StaticMethods_JSC$2497_throw_$$($engine$$.$g$, $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$), $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$ = $JSCompiler_StaticMethods_nextStep_$$($engine$$));
+    return $JSCompiler_inline_result$jscomp$8_exception$jscomp$4$$;
+  };
+  this.return = function($value$jscomp$181$$) {
+    return $JSCompiler_StaticMethods_return_$$($engine$$, $value$jscomp$181$$);
+  };
+  this[Symbol.iterator] = function() {
+    return this;
+  };
+}
+function $$jscomp$asyncExecutePromiseGenerator$$($generator$jscomp$1$$) {
+  function $passValueToGenerator$$($value$jscomp$182$$) {
+    return $generator$jscomp$1$$.next($value$jscomp$182$$);
+  }
+  function $passErrorToGenerator$$($error$jscomp$4$$) {
+    return $generator$jscomp$1$$.throw($error$jscomp$4$$);
+  }
+  return new Promise(function($resolve$$, $reject$$) {
+    function $handleGeneratorRecord$$($genRec$$) {
+      $genRec$$.done ? $resolve$$($genRec$$.value) : Promise.resolve($genRec$$.value).then($passValueToGenerator$$, $passErrorToGenerator$$).then($handleGeneratorRecord$$, $reject$$);
+    }
+    $handleGeneratorRecord$$($generator$jscomp$1$$.next());
+  });
+}
+$$jscomp$polyfill$$("Symbol", function($orig$jscomp$2$$) {
+  function $symbolPolyfill$$($opt_description$jscomp$2$$) {
+    if (this instanceof $symbolPolyfill$$) {
+      throw new TypeError("Symbol is not a constructor");
+    }
+    return new $SymbolClass$$($SYMBOL_PREFIX$$ + ($opt_description$jscomp$2$$ || "") + "_" + $counter$$++, $opt_description$jscomp$2$$);
+  }
+  function $SymbolClass$$($id$jscomp$6$$, $opt_description$jscomp$1$$) {
+    this.$g$ = $id$jscomp$6$$;
+    $$jscomp$defineProperty$$(this, "description", {configurable:!0, writable:!0, value:$opt_description$jscomp$1$$});
+  }
+  if ($orig$jscomp$2$$) {
+    return $orig$jscomp$2$$;
+  }
+  $SymbolClass$$.prototype.toString = function() {
+    return this.$g$;
+  };
+  var $SYMBOL_PREFIX$$ = "jscomp_symbol_" + (Math.random() * 1E9 >>> 0) + "_", $counter$$ = 0;
+  return $symbolPolyfill$$;
+});
+$$jscomp$polyfill$$("Symbol.iterator", function($orig$jscomp$3_symbolIterator$$) {
+  if ($orig$jscomp$3_symbolIterator$$) {
+    return $orig$jscomp$3_symbolIterator$$;
+  }
+  $orig$jscomp$3_symbolIterator$$ = Symbol("Symbol.iterator");
+  $$jscomp$defineProperty$$(Array.prototype, $orig$jscomp$3_symbolIterator$$, {configurable:!0, writable:!0, value:function() {
+    return $$jscomp$iteratorPrototype$$($$jscomp$arrayIteratorImpl$$(this));
+  }});
+  return $orig$jscomp$3_symbolIterator$$;
+});
+function $$jscomp$iteratorPrototype$$($iterator$jscomp$7_next$$) {
+  $iterator$jscomp$7_next$$ = {next:$iterator$jscomp$7_next$$};
+  $iterator$jscomp$7_next$$[Symbol.iterator] = function() {
+    return this;
+  };
+  return $iterator$jscomp$7_next$$;
+}
+$$jscomp$polyfill$$("Promise", function($NativePromise$$) {
+  function $PolyfillPromise$$($executor$$) {
+    this.$h$ = 0;
+    this.$i$ = void 0;
+    this.$g$ = [];
+    this.$o$ = !1;
+    var $resolveAndReject$$ = this.$j$();
+    try {
+      $executor$$($resolveAndReject$$.resolve, $resolveAndReject$$.reject);
+    } catch ($e$jscomp$11$$) {
+      $resolveAndReject$$.reject($e$jscomp$11$$);
+    }
+  }
+  function $AsyncExecutor$$() {
+    this.$g$ = null;
+  }
+  function $resolvingPromise$$($opt_value$jscomp$11$$) {
+    return $opt_value$jscomp$11$$ instanceof $PolyfillPromise$$ ? $opt_value$jscomp$11$$ : new $PolyfillPromise$$(function($resolve$jscomp$1$$) {
+      $resolve$jscomp$1$$($opt_value$jscomp$11$$);
+    });
+  }
+  if ($NativePromise$$) {
+    return $NativePromise$$;
+  }
+  $AsyncExecutor$$.prototype.$h$ = function($f$jscomp$1$$) {
+    if (this.$g$ == null) {
+      this.$g$ = [];
+      var $self$jscomp$1$$ = this;
+      this.$i$(function() {
+        $self$jscomp$1$$.$l$();
+      });
+    }
+    this.$g$.push($f$jscomp$1$$);
+  };
+  var $nativeSetTimeout$$ = $$jscomp$global$$.setTimeout;
+  $AsyncExecutor$$.prototype.$i$ = function($f$jscomp$2$$) {
+    $nativeSetTimeout$$($f$jscomp$2$$, 0);
+  };
+  $AsyncExecutor$$.prototype.$l$ = function() {
+    for (; this.$g$ && this.$g$.length;) {
+      var $executingBatch$$ = this.$g$;
+      this.$g$ = [];
+      for (var $i$jscomp$7$$ = 0; $i$jscomp$7$$ < $executingBatch$$.length; ++$i$jscomp$7$$) {
+        var $f$jscomp$3$$ = $executingBatch$$[$i$jscomp$7$$];
+        $executingBatch$$[$i$jscomp$7$$] = null;
+        try {
+          $f$jscomp$3$$();
+        } catch ($error$jscomp$5$$) {
+          this.$j$($error$jscomp$5$$);
+        }
+      }
+    }
+    this.$g$ = null;
+  };
+  $AsyncExecutor$$.prototype.$j$ = function($exception$jscomp$5$$) {
+    this.$i$(function() {
+      throw $exception$jscomp$5$$;
+    });
+  };
+  $PolyfillPromise$$.prototype.$j$ = function() {
+    function $firstCallWins$$($method$jscomp$1$$) {
+      return function($x$jscomp$96$$) {
+        $alreadyCalled$$ || ($alreadyCalled$$ = !0, $method$jscomp$1$$.call($thisPromise$$, $x$jscomp$96$$));
+      };
+    }
+    var $thisPromise$$ = this, $alreadyCalled$$ = !1;
+    return {resolve:$firstCallWins$$(this.$C$), reject:$firstCallWins$$(this.$l$)};
+  };
+  $PolyfillPromise$$.prototype.$C$ = function($value$jscomp$184$$) {
+    if ($value$jscomp$184$$ === this) {
+      this.$l$(new TypeError("A Promise cannot resolve to itself"));
+    } else {
+      if ($value$jscomp$184$$ instanceof $PolyfillPromise$$) {
+        this.$F$($value$jscomp$184$$);
+      } else {
+        a: {
+          switch(typeof $value$jscomp$184$$) {
+            case "object":
+              var $JSCompiler_inline_result$jscomp$11$$ = $value$jscomp$184$$ != null;
+              break a;
+            case "function":
+              $JSCompiler_inline_result$jscomp$11$$ = !0;
+              break a;
+            default:
+              $JSCompiler_inline_result$jscomp$11$$ = !1;
+          }
+        }
+        $JSCompiler_inline_result$jscomp$11$$ ? this.$B$($value$jscomp$184$$) : this.$m$($value$jscomp$184$$);
+      }
+    }
+  };
+  $PolyfillPromise$$.prototype.$B$ = function($obj$jscomp$28$$) {
+    var $thenMethod$$ = void 0;
+    try {
+      $thenMethod$$ = $obj$jscomp$28$$.then;
+    } catch ($error$jscomp$6$$) {
+      this.$l$($error$jscomp$6$$);
+      return;
+    }
+    typeof $thenMethod$$ == "function" ? this.$G$($thenMethod$$, $obj$jscomp$28$$) : this.$m$($obj$jscomp$28$$);
+  };
+  $PolyfillPromise$$.prototype.$l$ = function($reason$jscomp$9$$) {
+    this.$u$(2, $reason$jscomp$9$$);
+  };
+  $PolyfillPromise$$.prototype.$m$ = function($value$jscomp$185$$) {
+    this.$u$(1, $value$jscomp$185$$);
+  };
+  $PolyfillPromise$$.prototype.$u$ = function($settledState$$, $valueOrReason$$) {
+    if (this.$h$ != 0) {
+      throw Error("Cannot settle(" + $settledState$$ + ", " + $valueOrReason$$ + "): Promise already settled in state" + this.$h$);
+    }
+    this.$h$ = $settledState$$;
+    this.$i$ = $valueOrReason$$;
+    this.$h$ === 2 && this.$D$();
+    this.$v$();
+  };
+  $PolyfillPromise$$.prototype.$D$ = function() {
+    var $self$jscomp$2$$ = this;
+    $nativeSetTimeout$$(function() {
+      if ($self$jscomp$2$$.$A$()) {
+        var $nativeConsole$$ = $$jscomp$global$$.console;
+        typeof $nativeConsole$$ !== "undefined" && $nativeConsole$$.error($self$jscomp$2$$.$i$);
+      }
+    }, 1);
+  };
+  $PolyfillPromise$$.prototype.$A$ = function() {
+    if (this.$o$) {
+      return !1;
+    }
+    var $NativeCustomEvent_event$jscomp$6$$ = $$jscomp$global$$.CustomEvent, $NativeEvent$$ = $$jscomp$global$$.Event, $nativeDispatchEvent$$ = $$jscomp$global$$.dispatchEvent;
+    if (typeof $nativeDispatchEvent$$ === "undefined") {
+      return !0;
+    }
+    typeof $NativeCustomEvent_event$jscomp$6$$ === "function" ? $NativeCustomEvent_event$jscomp$6$$ = new $NativeCustomEvent_event$jscomp$6$$("unhandledrejection", {cancelable:!0}) : typeof $NativeEvent$$ === "function" ? $NativeCustomEvent_event$jscomp$6$$ = new $NativeEvent$$("unhandledrejection", {cancelable:!0}) : ($NativeCustomEvent_event$jscomp$6$$ = $$jscomp$global$$.document.createEvent("CustomEvent"), $NativeCustomEvent_event$jscomp$6$$.initCustomEvent("unhandledrejection", !1, !0, $NativeCustomEvent_event$jscomp$6$$));
+    $NativeCustomEvent_event$jscomp$6$$.promise = this;
+    $NativeCustomEvent_event$jscomp$6$$.reason = this.$i$;
+    return $nativeDispatchEvent$$($NativeCustomEvent_event$jscomp$6$$);
+  };
+  $PolyfillPromise$$.prototype.$v$ = function() {
+    if (this.$g$ != null) {
+      for (var $i$jscomp$8$$ = 0; $i$jscomp$8$$ < this.$g$.length; ++$i$jscomp$8$$) {
+        $asyncExecutor$$.$h$(this.$g$[$i$jscomp$8$$]);
+      }
+      this.$g$ = null;
+    }
+  };
+  var $asyncExecutor$$ = new $AsyncExecutor$$();
+  $PolyfillPromise$$.prototype.$F$ = function($promise$$) {
+    var $methods$jscomp$1$$ = this.$j$();
+    $promise$$.$callWhenSettled_$($methods$jscomp$1$$.resolve, $methods$jscomp$1$$.reject);
+  };
+  $PolyfillPromise$$.prototype.$G$ = function($thenMethod$jscomp$1$$, $thenable$$) {
+    var $methods$jscomp$2$$ = this.$j$();
+    try {
+      $thenMethod$jscomp$1$$.call($thenable$$, $methods$jscomp$2$$.resolve, $methods$jscomp$2$$.reject);
+    } catch ($error$jscomp$7$$) {
+      $methods$jscomp$2$$.reject($error$jscomp$7$$);
+    }
+  };
+  $PolyfillPromise$$.prototype.then = function($onFulfilled$$, $onRejected$jscomp$1$$) {
+    function $createCallback$$($paramF$$, $defaultF$$) {
+      return typeof $paramF$$ == "function" ? function($x$jscomp$97$$) {
+        try {
+          $resolveChild$$($paramF$$($x$jscomp$97$$));
+        } catch ($error$jscomp$8$$) {
+          $rejectChild$$($error$jscomp$8$$);
+        }
+      } : $defaultF$$;
+    }
+    var $resolveChild$$, $rejectChild$$, $childPromise$$ = new $PolyfillPromise$$(function($resolve$jscomp$2$$, $reject$jscomp$2$$) {
+      $resolveChild$$ = $resolve$jscomp$2$$;
+      $rejectChild$$ = $reject$jscomp$2$$;
+    });
+    this.$callWhenSettled_$($createCallback$$($onFulfilled$$, $resolveChild$$), $createCallback$$($onRejected$jscomp$1$$, $rejectChild$$));
+    return $childPromise$$;
+  };
+  $PolyfillPromise$$.prototype.catch = function($onRejected$jscomp$2$$) {
+    return this.then(void 0, $onRejected$jscomp$2$$);
+  };
+  $PolyfillPromise$$.prototype.$callWhenSettled_$ = function($onFulfilled$jscomp$1$$, $onRejected$jscomp$3$$) {
+    function $callback$jscomp$70$$() {
+      switch($thisPromise$jscomp$1$$.$h$) {
+        case 1:
+          $onFulfilled$jscomp$1$$($thisPromise$jscomp$1$$.$i$);
+          break;
+        case 2:
+          $onRejected$jscomp$3$$($thisPromise$jscomp$1$$.$i$);
+          break;
+        default:
+          throw Error("Unexpected state: " + $thisPromise$jscomp$1$$.$h$);
+      }
+    }
+    var $thisPromise$jscomp$1$$ = this;
+    this.$g$ == null ? $asyncExecutor$$.$h$($callback$jscomp$70$$) : this.$g$.push($callback$jscomp$70$$);
+    this.$o$ = !0;
+  };
+  $PolyfillPromise$$.resolve = $resolvingPromise$$;
+  $PolyfillPromise$$.reject = function($opt_reason$jscomp$1$$) {
+    return new $PolyfillPromise$$(function($resolve$jscomp$3$$, $reject$jscomp$3$$) {
+      $reject$jscomp$3$$($opt_reason$jscomp$1$$);
+    });
+  };
+  $PolyfillPromise$$.race = function($thenablesOrValues$$) {
+    return new $PolyfillPromise$$(function($resolve$jscomp$4$$, $reject$jscomp$4$$) {
+      for (var $iterator$jscomp$8$$ = $$jscomp$makeIterator$$($thenablesOrValues$$), $iterRec$$ = $iterator$jscomp$8$$.next(); !$iterRec$$.done; $iterRec$$ = $iterator$jscomp$8$$.next()) {
+        $resolvingPromise$$($iterRec$$.value).$callWhenSettled_$($resolve$jscomp$4$$, $reject$jscomp$4$$);
+      }
+    });
+  };
+  $PolyfillPromise$$.all = function($thenablesOrValues$jscomp$1$$) {
+    var $iterator$jscomp$9$$ = $$jscomp$makeIterator$$($thenablesOrValues$jscomp$1$$), $iterRec$jscomp$1$$ = $iterator$jscomp$9$$.next();
+    return $iterRec$jscomp$1$$.done ? $resolvingPromise$$([]) : new $PolyfillPromise$$(function($resolveAll$$, $rejectAll$$) {
+      function $onFulfilled$jscomp$2$$($i$jscomp$9$$) {
+        return function($ithResult$$) {
+          $resultsArray$$[$i$jscomp$9$$] = $ithResult$$;
+          $unresolvedCount$$--;
+          $unresolvedCount$$ == 0 && $resolveAll$$($resultsArray$$);
+        };
+      }
+      var $resultsArray$$ = [], $unresolvedCount$$ = 0;
+      do {
+        $resultsArray$$.push(void 0), $unresolvedCount$$++, $resolvingPromise$$($iterRec$jscomp$1$$.value).$callWhenSettled_$($onFulfilled$jscomp$2$$($resultsArray$$.length - 1), $rejectAll$$), $iterRec$jscomp$1$$ = $iterator$jscomp$9$$.next();
+      } while (!$iterRec$jscomp$1$$.done);
+    });
+  };
+  return $PolyfillPromise$$;
+});
+function $$jscomp$owns$$($obj$jscomp$29$$, $prop$jscomp$2$$) {
+  return Object.prototype.hasOwnProperty.call($obj$jscomp$29$$, $prop$jscomp$2$$);
+}
+$$jscomp$polyfill$$("Object.is", function($orig$jscomp$13$$) {
+  return $orig$jscomp$13$$ ? $orig$jscomp$13$$ : function($left$jscomp$2$$, $right$jscomp$2$$) {
+    return $left$jscomp$2$$ === $right$jscomp$2$$ ? $left$jscomp$2$$ !== 0 || 1 / $left$jscomp$2$$ === 1 / $right$jscomp$2$$ : $left$jscomp$2$$ !== $left$jscomp$2$$ && $right$jscomp$2$$ !== $right$jscomp$2$$;
+  };
+});
+$$jscomp$polyfill$$("Array.prototype.includes", function($orig$jscomp$14$$) {
+  return $orig$jscomp$14$$ ? $orig$jscomp$14$$ : function($searchElement$jscomp$5$$, $i$jscomp$11_opt_fromIndex$jscomp$11$$) {
+    var $array$jscomp$8$$ = this;
+    $array$jscomp$8$$ instanceof String && ($array$jscomp$8$$ = String($array$jscomp$8$$));
+    var $len$$ = $array$jscomp$8$$.length;
+    $i$jscomp$11_opt_fromIndex$jscomp$11$$ = $i$jscomp$11_opt_fromIndex$jscomp$11$$ || 0;
+    for ($i$jscomp$11_opt_fromIndex$jscomp$11$$ < 0 && ($i$jscomp$11_opt_fromIndex$jscomp$11$$ = Math.max($i$jscomp$11_opt_fromIndex$jscomp$11$$ + $len$$, 0)); $i$jscomp$11_opt_fromIndex$jscomp$11$$ < $len$$; $i$jscomp$11_opt_fromIndex$jscomp$11$$++) {
+      var $element$jscomp$9$$ = $array$jscomp$8$$[$i$jscomp$11_opt_fromIndex$jscomp$11$$];
+      if ($element$jscomp$9$$ === $searchElement$jscomp$5$$ || Object.is($element$jscomp$9$$, $searchElement$jscomp$5$$)) {
+        return !0;
+      }
+    }
+    return !1;
+  };
+});
+$$jscomp$polyfill$$("String.prototype.includes", function($orig$jscomp$15$$) {
+  return $orig$jscomp$15$$ ? $orig$jscomp$15$$ : function($searchString$jscomp$3$$, $opt_position$jscomp$3$$) {
+    if (this == null) {
+      throw new TypeError("The 'this' value for String.prototype.includes must not be null or undefined");
+    }
+    if ($searchString$jscomp$3$$ instanceof RegExp) {
+      throw new TypeError("First argument to String.prototype.includes must not be a regular expression");
+    }
+    return this.indexOf($searchString$jscomp$3$$, $opt_position$jscomp$3$$ || 0) !== -1;
+  };
+});
+$$jscomp$polyfill$$("WeakMap", function($NativeWeakMap$$) {
+  function $PolyfillWeakMap$$($iter$jscomp$1_opt_iterable$jscomp$4$$) {
+    this.$g$ = ($index$jscomp$111$$ += Math.random() + 1).toString();
+    if ($iter$jscomp$1_opt_iterable$jscomp$4$$) {
+      $iter$jscomp$1_opt_iterable$jscomp$4$$ = $$jscomp$makeIterator$$($iter$jscomp$1_opt_iterable$jscomp$4$$);
+      for (var $entry_item$jscomp$21$$; !($entry_item$jscomp$21$$ = $iter$jscomp$1_opt_iterable$jscomp$4$$.next()).done;) {
+        $entry_item$jscomp$21$$ = $entry_item$jscomp$21$$.value, this.set($entry_item$jscomp$21$$[0], $entry_item$jscomp$21$$[1]);
+      }
+    }
+  }
+  function $WeakMapMembership$$() {
+  }
+  function $isValidKey$$($key$jscomp$44$$) {
+    var $type$jscomp$171$$ = typeof $key$jscomp$44$$;
+    return $type$jscomp$171$$ === "object" && $key$jscomp$44$$ !== null || $type$jscomp$171$$ === "function";
+  }
+  function $insert$$($target$jscomp$103$$) {
+    if (!$$jscomp$owns$$($target$jscomp$103$$, $prop$jscomp$3$$)) {
+      var $obj$jscomp$31$$ = new $WeakMapMembership$$();
+      $$jscomp$defineProperty$$($target$jscomp$103$$, $prop$jscomp$3$$, {value:$obj$jscomp$31$$});
+    }
+  }
+  function $patch$$($name$jscomp$77$$) {
+    var $prev$$ = Object[$name$jscomp$77$$];
+    $prev$$ && (Object[$name$jscomp$77$$] = function($target$jscomp$104$$) {
+      if ($target$jscomp$104$$ instanceof $WeakMapMembership$$) {
+        return $target$jscomp$104$$;
+      }
+      Object.isExtensible($target$jscomp$104$$) && $insert$$($target$jscomp$104$$);
+      return $prev$$($target$jscomp$104$$);
+    });
+  }
+  if (function() {
+    if (!$NativeWeakMap$$ || !Object.seal) {
+      return !1;
+    }
+    try {
+      var $x$jscomp$99$$ = Object.seal({}), $y$jscomp$82$$ = Object.seal({}), $map$$ = new $NativeWeakMap$$([[$x$jscomp$99$$, 2], [$y$jscomp$82$$, 3]]);
+      if ($map$$.get($x$jscomp$99$$) != 2 || $map$$.get($y$jscomp$82$$) != 3) {
+        return !1;
+      }
+      $map$$.delete($x$jscomp$99$$);
+      $map$$.set($y$jscomp$82$$, 4);
+      return !$map$$.has($x$jscomp$99$$) && $map$$.get($y$jscomp$82$$) == 4;
+    } catch ($err$jscomp$4$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeWeakMap$$;
+  }
+  var $prop$jscomp$3$$ = "$jscomp_hidden_" + Math.random();
+  $patch$$("freeze");
+  $patch$$("preventExtensions");
+  $patch$$("seal");
+  var $index$jscomp$111$$ = 0;
+  $PolyfillWeakMap$$.prototype.set = function($key$jscomp$45$$, $value$jscomp$186$$) {
+    if (!$isValidKey$$($key$jscomp$45$$)) {
+      throw Error("Invalid WeakMap key");
+    }
+    $insert$$($key$jscomp$45$$);
+    if (!$$jscomp$owns$$($key$jscomp$45$$, $prop$jscomp$3$$)) {
+      throw Error("WeakMap key fail: " + $key$jscomp$45$$);
+    }
+    $key$jscomp$45$$[$prop$jscomp$3$$][this.$g$] = $value$jscomp$186$$;
+    return this;
+  };
+  $PolyfillWeakMap$$.prototype.get = function($key$jscomp$46$$) {
+    return $isValidKey$$($key$jscomp$46$$) && $$jscomp$owns$$($key$jscomp$46$$, $prop$jscomp$3$$) ? $key$jscomp$46$$[$prop$jscomp$3$$][this.$g$] : void 0;
+  };
+  $PolyfillWeakMap$$.prototype.has = function($key$jscomp$47$$) {
+    return $isValidKey$$($key$jscomp$47$$) && $$jscomp$owns$$($key$jscomp$47$$, $prop$jscomp$3$$) && $$jscomp$owns$$($key$jscomp$47$$[$prop$jscomp$3$$], this.$g$);
+  };
+  $PolyfillWeakMap$$.prototype.delete = function($key$jscomp$48$$) {
+    return $isValidKey$$($key$jscomp$48$$) && $$jscomp$owns$$($key$jscomp$48$$, $prop$jscomp$3$$) && $$jscomp$owns$$($key$jscomp$48$$[$prop$jscomp$3$$], this.$g$) ? delete $key$jscomp$48$$[$prop$jscomp$3$$][this.$g$] : !1;
+  };
+  return $PolyfillWeakMap$$;
+});
+$$jscomp$polyfill$$("Map", function($NativeMap$$) {
+  function $createHead$$() {
+    var $head$$ = {};
+    return $head$$.$previous$ = $head$$.next = $head$$.head = $head$$;
+  }
+  function $makeIterator$$($map$jscomp$3$$, $func$jscomp$4$$) {
+    var $entry$jscomp$8$$ = $map$jscomp$3$$[1];
+    return $$jscomp$iteratorPrototype$$(function() {
+      if ($entry$jscomp$8$$) {
+        for (; $entry$jscomp$8$$.head != $map$jscomp$3$$[1];) {
+          $entry$jscomp$8$$ = $entry$jscomp$8$$.$previous$;
+        }
+        for (; $entry$jscomp$8$$.next != $entry$jscomp$8$$.head;) {
+          return $entry$jscomp$8$$ = $entry$jscomp$8$$.next, {done:!1, value:$func$jscomp$4$$($entry$jscomp$8$$)};
+        }
+        $entry$jscomp$8$$ = null;
+      }
+      return {done:!0, value:void 0};
+    });
+  }
+  function $maybeGetEntry$$($index$jscomp$112_map$jscomp$2$$, $key$jscomp$54$$) {
+    var $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = $key$jscomp$54$$ && typeof $key$jscomp$54$$;
+    $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ == "object" || $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ == "function" ? $idMap$$.has($key$jscomp$54$$) ? $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = $idMap$$.get($key$jscomp$54$$) : ($id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = "" + ++$mapIndex$$, $idMap$$.set($key$jscomp$54$$, $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$)) : $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$ = 
+    "p_" + $key$jscomp$54$$;
+    var $list$$ = $index$jscomp$112_map$jscomp$2$$[0][$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$];
+    if ($list$$ && $$jscomp$owns$$($index$jscomp$112_map$jscomp$2$$[0], $id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$)) {
+      for ($index$jscomp$112_map$jscomp$2$$ = 0; $index$jscomp$112_map$jscomp$2$$ < $list$$.length; $index$jscomp$112_map$jscomp$2$$++) {
+        var $entry$jscomp$7$$ = $list$$[$index$jscomp$112_map$jscomp$2$$];
+        if ($key$jscomp$54$$ !== $key$jscomp$54$$ && $entry$jscomp$7$$.key !== $entry$jscomp$7$$.key || $key$jscomp$54$$ === $entry$jscomp$7$$.key) {
+          return {id:$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$, list:$list$$, index:$index$jscomp$112_map$jscomp$2$$, entry:$entry$jscomp$7$$};
+        }
+      }
+    }
+    return {id:$id$jscomp$7_id$jscomp$inline_49_type$jscomp$inline_48$$, list:$list$$, index:-1, entry:void 0};
+  }
+  function $PolyfillMap$$($iter$jscomp$3_opt_iterable$jscomp$5$$) {
+    this[0] = {};
+    this[1] = $createHead$$();
+    this.size = 0;
+    if ($iter$jscomp$3_opt_iterable$jscomp$5$$) {
+      $iter$jscomp$3_opt_iterable$jscomp$5$$ = $$jscomp$makeIterator$$($iter$jscomp$3_opt_iterable$jscomp$5$$);
+      for (var $entry$jscomp$1_item$jscomp$23$$; !($entry$jscomp$1_item$jscomp$23$$ = $iter$jscomp$3_opt_iterable$jscomp$5$$.next()).done;) {
+        $entry$jscomp$1_item$jscomp$23$$ = $entry$jscomp$1_item$jscomp$23$$.value, this.set($entry$jscomp$1_item$jscomp$23$$[0], $entry$jscomp$1_item$jscomp$23$$[1]);
+      }
+    }
+  }
+  if (function() {
+    if (!$NativeMap$$ || typeof $NativeMap$$ != "function" || !$NativeMap$$.prototype.entries || typeof Object.seal != "function") {
+      return !1;
+    }
+    try {
+      var $key$jscomp$49$$ = Object.seal({x:4}), $map$jscomp$1$$ = new $NativeMap$$($$jscomp$makeIterator$$([[$key$jscomp$49$$, "s"]]));
+      if ($map$jscomp$1$$.get($key$jscomp$49$$) != "s" || $map$jscomp$1$$.size != 1 || $map$jscomp$1$$.get({x:4}) || $map$jscomp$1$$.set({x:4}, "t") != $map$jscomp$1$$ || $map$jscomp$1$$.size != 2) {
+        return !1;
+      }
+      var $iter$jscomp$2$$ = $map$jscomp$1$$.entries(), $item$jscomp$22$$ = $iter$jscomp$2$$.next();
+      if ($item$jscomp$22$$.done || $item$jscomp$22$$.value[0] != $key$jscomp$49$$ || $item$jscomp$22$$.value[1] != "s") {
+        return !1;
+      }
+      $item$jscomp$22$$ = $iter$jscomp$2$$.next();
+      return $item$jscomp$22$$.done || $item$jscomp$22$$.value[0].x != 4 || $item$jscomp$22$$.value[1] != "t" || !$iter$jscomp$2$$.next().done ? !1 : !0;
+    } catch ($err$jscomp$5$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeMap$$;
+  }
+  var $idMap$$ = new WeakMap();
+  $PolyfillMap$$.prototype.set = function($key$jscomp$50$$, $value$jscomp$187$$) {
+    $key$jscomp$50$$ = $key$jscomp$50$$ === 0 ? 0 : $key$jscomp$50$$;
+    var $r$jscomp$1$$ = $maybeGetEntry$$(this, $key$jscomp$50$$);
+    $r$jscomp$1$$.list || ($r$jscomp$1$$.list = this[0][$r$jscomp$1$$.id] = []);
+    $r$jscomp$1$$.entry ? $r$jscomp$1$$.entry.value = $value$jscomp$187$$ : ($r$jscomp$1$$.entry = {next:this[1], $previous$:this[1].$previous$, head:this[1], key:$key$jscomp$50$$, value:$value$jscomp$187$$}, $r$jscomp$1$$.list.push($r$jscomp$1$$.entry), this[1].$previous$.next = $r$jscomp$1$$.entry, this[1].$previous$ = $r$jscomp$1$$.entry, this.size++);
+    return this;
+  };
+  $PolyfillMap$$.prototype.delete = function($key$jscomp$51_r$jscomp$2$$) {
+    $key$jscomp$51_r$jscomp$2$$ = $maybeGetEntry$$(this, $key$jscomp$51_r$jscomp$2$$);
+    return $key$jscomp$51_r$jscomp$2$$.entry && $key$jscomp$51_r$jscomp$2$$.list ? ($key$jscomp$51_r$jscomp$2$$.list.splice($key$jscomp$51_r$jscomp$2$$.index, 1), $key$jscomp$51_r$jscomp$2$$.list.length || delete this[0][$key$jscomp$51_r$jscomp$2$$.id], $key$jscomp$51_r$jscomp$2$$.entry.$previous$.next = $key$jscomp$51_r$jscomp$2$$.entry.next, $key$jscomp$51_r$jscomp$2$$.entry.next.$previous$ = $key$jscomp$51_r$jscomp$2$$.entry.$previous$, $key$jscomp$51_r$jscomp$2$$.entry.head = null, this.size--, 
+    !0) : !1;
+  };
+  $PolyfillMap$$.prototype.clear = function() {
+    this[0] = {};
+    this[1] = this[1].$previous$ = $createHead$$();
+    this.size = 0;
+  };
+  $PolyfillMap$$.prototype.has = function($key$jscomp$52$$) {
+    return !!$maybeGetEntry$$(this, $key$jscomp$52$$).entry;
+  };
+  $PolyfillMap$$.prototype.get = function($entry$jscomp$2_key$jscomp$53$$) {
+    return ($entry$jscomp$2_key$jscomp$53$$ = $maybeGetEntry$$(this, $entry$jscomp$2_key$jscomp$53$$).entry) && $entry$jscomp$2_key$jscomp$53$$.value;
+  };
+  $PolyfillMap$$.prototype.entries = function() {
+    return $makeIterator$$(this, function($entry$jscomp$3$$) {
+      return [$entry$jscomp$3$$.key, $entry$jscomp$3$$.value];
+    });
+  };
+  $PolyfillMap$$.prototype.keys = function() {
+    return $makeIterator$$(this, function($entry$jscomp$4$$) {
+      return $entry$jscomp$4$$.key;
+    });
+  };
+  $PolyfillMap$$.prototype.values = function() {
+    return $makeIterator$$(this, function($entry$jscomp$5$$) {
+      return $entry$jscomp$5$$.value;
+    });
+  };
+  $PolyfillMap$$.prototype.forEach = function($callback$jscomp$71$$, $opt_thisArg$jscomp$15$$) {
+    for (var $iter$jscomp$4$$ = this.entries(), $entry$jscomp$6_item$jscomp$24$$; !($entry$jscomp$6_item$jscomp$24$$ = $iter$jscomp$4$$.next()).done;) {
+      $entry$jscomp$6_item$jscomp$24$$ = $entry$jscomp$6_item$jscomp$24$$.value, $callback$jscomp$71$$.call($opt_thisArg$jscomp$15$$, $entry$jscomp$6_item$jscomp$24$$[1], $entry$jscomp$6_item$jscomp$24$$[0], this);
+    }
+  };
+  $PolyfillMap$$.prototype[Symbol.iterator] = $PolyfillMap$$.prototype.entries;
+  var $mapIndex$$ = 0;
+  return $PolyfillMap$$;
+});
+$$jscomp$polyfill$$("Set", function($NativeSet$$) {
+  function $PolyfillSet$$($iter$jscomp$7_opt_iterable$jscomp$6$$) {
+    this.$g$ = new Map();
+    if ($iter$jscomp$7_opt_iterable$jscomp$6$$) {
+      $iter$jscomp$7_opt_iterable$jscomp$6$$ = $$jscomp$makeIterator$$($iter$jscomp$7_opt_iterable$jscomp$6$$);
+      for (var $entry$jscomp$10$$; !($entry$jscomp$10$$ = $iter$jscomp$7_opt_iterable$jscomp$6$$.next()).done;) {
+        this.add($entry$jscomp$10$$.value);
+      }
+    }
+    this.size = this.$g$.size;
+  }
+  if (function() {
+    if (!$NativeSet$$ || typeof $NativeSet$$ != "function" || !$NativeSet$$.prototype.entries || typeof Object.seal != "function") {
+      return !1;
+    }
+    try {
+      var $value$jscomp$188$$ = Object.seal({x:4}), $set$$ = new $NativeSet$$($$jscomp$makeIterator$$([$value$jscomp$188$$]));
+      if (!$set$$.has($value$jscomp$188$$) || $set$$.size != 1 || $set$$.add($value$jscomp$188$$) != $set$$ || $set$$.size != 1 || $set$$.add({x:4}) != $set$$ || $set$$.size != 2) {
+        return !1;
+      }
+      var $iter$jscomp$6$$ = $set$$.entries(), $item$jscomp$26$$ = $iter$jscomp$6$$.next();
+      if ($item$jscomp$26$$.done || $item$jscomp$26$$.value[0] != $value$jscomp$188$$ || $item$jscomp$26$$.value[1] != $value$jscomp$188$$) {
+        return !1;
+      }
+      $item$jscomp$26$$ = $iter$jscomp$6$$.next();
+      return $item$jscomp$26$$.done || $item$jscomp$26$$.value[0] == $value$jscomp$188$$ || $item$jscomp$26$$.value[0].x != 4 || $item$jscomp$26$$.value[1] != $item$jscomp$26$$.value[0] ? !1 : $iter$jscomp$6$$.next().done;
+    } catch ($err$jscomp$6$$) {
+      return !1;
+    }
+  }()) {
+    return $NativeSet$$;
+  }
+  $PolyfillSet$$.prototype.add = function($value$jscomp$189$$) {
+    $value$jscomp$189$$ = $value$jscomp$189$$ === 0 ? 0 : $value$jscomp$189$$;
+    this.$g$.set($value$jscomp$189$$, $value$jscomp$189$$);
+    this.size = this.$g$.size;
+    return this;
+  };
+  $PolyfillSet$$.prototype.delete = function($result$jscomp$6_value$jscomp$190$$) {
+    $result$jscomp$6_value$jscomp$190$$ = this.$g$.delete($result$jscomp$6_value$jscomp$190$$);
+    this.size = this.$g$.size;
+    return $result$jscomp$6_value$jscomp$190$$;
+  };
+  $PolyfillSet$$.prototype.clear = function() {
+    this.$g$.clear();
+    this.size = 0;
+  };
+  $PolyfillSet$$.prototype.has = function($value$jscomp$191$$) {
+    return this.$g$.has($value$jscomp$191$$);
+  };
+  $PolyfillSet$$.prototype.entries = function() {
+    return this.$g$.entries();
+  };
+  $PolyfillSet$$.prototype.values = function() {
+    return this.$g$.values();
+  };
+  $PolyfillSet$$.prototype.keys = $PolyfillSet$$.prototype.values;
+  $PolyfillSet$$.prototype[Symbol.iterator] = $PolyfillSet$$.prototype.values;
+  $PolyfillSet$$.prototype.forEach = function($callback$jscomp$72$$, $opt_thisArg$jscomp$16$$) {
+    var $set$jscomp$1$$ = this;
+    this.$g$.forEach(function($value$jscomp$192$$) {
+      return $callback$jscomp$72$$.call($opt_thisArg$jscomp$16$$, $value$jscomp$192$$, $value$jscomp$192$$, $set$jscomp$1$$);
+    });
+  };
+  return $PolyfillSet$$;
+});
+(function() {
+  function $getValidIconNames$$() {
+    return $validIconNames$$ ? Promise.resolve($validIconNames$$) : $iconNamesPromise$$ ? $iconNamesPromise$$ : $iconNamesPromise$$ = fetch("https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json").then(function($response$jscomp$2$$) {
+      if (!$response$jscomp$2$$.ok) {
+        throw Error("HTTP error! status: " + $response$jscomp$2$$.status + " fetching https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json");
+      }
+      return $response$jscomp$2$$.json();
+    }).then(function($names$$) {
+      if (!Array.isArray($names$$)) {
+        throw new TypeError("Fetched icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json is not an array.");
+      }
+      return $validIconNames$$ = $names$$;
+    }).catch(function($error$jscomp$11$$) {
+      console.error("IconChecker: Failed to load valid icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json.", $error$jscomp$11$$);
+      $iconNamesPromise$$ = null;
+      throw $error$jscomp$11$$;
+    });
+  }
+  function $checkAndReplaceIconElement$$($iconEl$$) {
+    var $iconName$$, $style$jscomp$1$$, $validNames$$, $isIconNameValid$$;
+    return $$jscomp$asyncExecutePromiseGenerator$$(new $$jscomp$generator$Generator_$$(new $$jscomp$generator$Engine_$$(function($$jscomp$generator$context$1825642716$50$$) {
+      switch($$jscomp$generator$context$1825642716$50$$.$g$) {
+        case 1:
+          $iconName$$ = ($iconEl$$.textContent || "").trim();
+          if (!$iconName$$ || $iconEl$$.classList.contains("js-replaced-missing-icon") && $iconName$$ === "radio_button_unchecked") {
+            return $$jscomp$generator$context$1825642716$50$$.return();
+          }
+          $style$jscomp$1$$ = window.getComputedStyle($iconEl$$);
+          if ($style$jscomp$1$$.display === "none" || $style$jscomp$1$$.visibility === "hidden") {
+            return $$jscomp$generator$context$1825642716$50$$.return();
+          }
+          $$jscomp$generator$context$1825642716$50$$.$F$(2);
+          return $$jscomp$generator$context$1825642716$50$$.$A$($getValidIconNames$$(), 4);
+        case 4:
+          $validNames$$ = $$jscomp$generator$context$1825642716$50$$.$o$;
+          $$jscomp$generator$context$1825642716$50$$.$D$(3);
+          break;
+        case 2:
+          return $$jscomp$generator$context$1825642716$50$$.$B$(), console.warn('IconChecker: Skipping check for icon "' + $iconName$$ + '" as valid names could not be loaded.'), $$jscomp$generator$context$1825642716$50$$.return();
+        case 3:
+          ($isIconNameValid$$ = $validNames$$.includes($iconName$$)) ? $iconEl$$.classList.contains("js-replaced-missing-icon") && $iconEl$$.classList.remove("js-replaced-missing-icon") : $iconName$$ === "radio_button_unchecked" && $iconEl$$.classList.contains("js-replaced-missing-icon") || ($iconEl$$.textContent = "radio_button_unchecked", $iconEl$$.classList.add("js-replaced-missing-icon")), $$jscomp$generator$context$1825642716$50$$.$C$();
+      }
+    })));
+  }
+  function $scanInitialIcons$$($rootElement$$) {
+    $rootElement$$ = $rootElement$$ === void 0 ? document.body : $rootElement$$;
+    $rootElement$$.querySelectorAll($CSS_SELECTOR$$).forEach(function($iconEl$jscomp$1$$) {
+      $checkAndReplaceIconElement$$($iconEl$jscomp$1$$);
+    });
+  }
+  function $initialize$$() {
+    $getValidIconNames$$().catch(function() {
+    });
+    document.fonts.ready.then(function() {
+      requestAnimationFrame(function() {
+        $scanInitialIcons$$(document.body);
+        (new MutationObserver(function($$jscomp$iter$0_mutationsList$$) {
+          var $elementsToCheck$$ = new Set();
+          $$jscomp$iter$0_mutationsList$$ = $$jscomp$makeIterator$$($$jscomp$iter$0_mutationsList$$);
+          for (var $$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$iter$0_mutationsList$$.next(); !$$jscomp$key$1825642716$49$mutation_mutation_parent$$.done; $$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$iter$0_mutationsList$$.next()) {
+            if ($$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.value, $$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "childList") {
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.addedNodes.forEach(function($node$jscomp$5$$) {
+                $node$jscomp$5$$.nodeType === Node.ELEMENT_NODE && ($node$jscomp$5$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($node$jscomp$5$$), $node$jscomp$5$$.querySelectorAll($CSS_SELECTOR$$).forEach(function($icon$$) {
+                  $elementsToCheck$$.add($icon$$);
+                }));
+              });
+            } else if ($$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "attributes" && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.attributeName === "class") {
+              var $target$jscomp$107$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target;
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.nodeType === Node.ELEMENT_NODE && $target$jscomp$107$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($target$jscomp$107$$);
+            } else {
+              $$jscomp$key$1825642716$49$mutation_mutation_parent$$.type === "characterData" && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.parentNode && ($$jscomp$key$1825642716$49$mutation_mutation_parent$$ = $$jscomp$key$1825642716$49$mutation_mutation_parent$$.target.parentNode, $$jscomp$key$1825642716$49$mutation_mutation_parent$$.nodeType === Node.ELEMENT_NODE && $$jscomp$key$1825642716$49$mutation_mutation_parent$$.matches($CSS_SELECTOR$$) && $elementsToCheck$$.add($$jscomp$key$1825642716$49$mutation_mutation_parent$$));
+            }
+          }
+          $elementsToCheck$$.size > 0 && setTimeout(function() {
+            $elementsToCheck$$.forEach(function($iconEl$jscomp$2$$) {
+              $checkAndReplaceIconElement$$($iconEl$jscomp$2$$);
+            });
+          }, 500);
+        })).observe(document.body, {childList:!0, subtree:!0, attributes:!0, attributeFilter:["class"], characterData:!0});
+      });
+    }).catch(function($error$jscomp$13$$) {
+      console.error("IconChecker: Font loading error. Scanning icons anyway.", $error$jscomp$13$$);
+      requestAnimationFrame(function() {
+        $scanInitialIcons$$(document.body);
+      });
+    });
+  }
+  var $CSS_SELECTOR$$ = ["material-icons", "material-symbols-outlined", "material-symbols-rounded", "material-symbols-sharp"].map(function($cls$$) {
+    return "." + $cls$$;
+  }).join(","), $validIconNames$$ = null, $iconNamesPromise$$ = null;
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", function() {
+    $initialize$$();
+  }) : $initialize$$();
+})();
+}).call(this);
+
+//# sourceURL=gg.icon_checker_bin.js
+</script>
+
+<meta name="surface-hint" content="desktop-responsive" data-hint="injected-ffc2e83d85">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labyrinth Master - Interactive Maze Generator & Solver</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Custom Scrollbar for controls if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        canvas {
+            touch-action: none; /* Prevent scrolling when touching canvas */
+        }
+        
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center gap-2;
+        }
+        .btn-secondary {
+            @apply bg-white hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg border border-slate-300 shadow-sm transition-all duration-200 flex items-center justify-center gap-2;
+        }
+        .control-group {
+            @apply flex flex-col gap-1;
+        }
+        .label {
+            @apply text-xs font-bold text-slate-500 uppercase tracking-wider;
+        }
+/*# sourceURL=gg.inline_style.0.css */
+    </style>
+    <!-- 
+    No external images are used in this application. 
+    All visuals are rendered programmatically via HTML5 Canvas.
+    -->
+</head>
+<body class="text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between z-10 shadow-sm shrink-0">
+        <div class="flex items-center gap-3 mb-4 md:mb-0">
+            <span class="material-symbols-outlined text-4xl text-blue-600">apps</span>
+            <div>
+                <h1 class="text-xl font-bold text-slate-900 leading-tight">Labyrinth Master</h1>
+                <p class="text-sm text-slate-500">Generate, Play, and Solve</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-6 text-sm">
+            <div class="hidden md:flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                <span class="text-slate-600">Start</span>
+            </div>
+            <div class="hidden md:flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="text-slate-600">End</span>
+            </div>
+            <div class="hidden md:flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                <span class="text-slate-600">Player</span>
+            </div>
+            <div class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full font-medium border border-blue-100 flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">keyboard</span>
+                <span>Use Arrow Keys to Move</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        
+        <!-- Sidebar Controls -->
+        <aside class="w-full md:w-80 bg-white border-r border-slate-200 p-6 flex flex-col gap-6 overflow-y-auto shrink-0 z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+            
+            <!-- Status Card -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Status</h2>
+                <div id="statusText" class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-500 animate-pulse">cached</span>
+                    Ready
+                </div>
+                <div id="stepCount" class="text-sm text-slate-500 mt-1">Steps taken: 0</div>
+            </div>
+
+            <!-- Settings -->
+            <div class="space-y-5">
+                <div class="control-group">
+                    <label class="label">Maze Size</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="setDifficulty('easy')" id="btn-easy" class="px-3 py-2 text-sm border rounded-md transition-colors bg-blue-100 border-blue-300 text-blue-700 font-medium">Small</button>
+                        <button onclick="setDifficulty('medium')" id="btn-medium" class="px-3 py-2 text-sm border rounded-md transition-colors bg-white border-slate-300 text-slate-600 hover:bg-slate-50">Medium</button>
+                        <button onclick="setDifficulty('hard')" id="btn-hard" class="px-3 py-2 text-sm border rounded-md transition-colors bg-white border-slate-300 text-slate-600 hover:bg-slate-50">Large</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="label flex justify-between">
+                        <span>Generation Speed</span>
+                        <span id="speedLabel" class="text-slate-400 font-normal">Fast</span>
+                    </label>
+                    <input type="range" id="speedRange" min="1" max="50" value="40" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <!-- Actions -->
+            <div class="flex flex-col gap-3 mt-auto">
+                <button onclick="initGame()" class="btn-primary w-full">
+                    <span class="material-symbols-outlined">refresh</span>
+                    Generate New Maze
+                </button>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="solveMazeVisual()" id="btn-solve" class="btn-secondary">
+                        <span class="material-symbols-outlined text-orange-500">lightbulb</span>
+                        Solve
+                    </button>
+                    <button onclick="resetPlayer()" class="btn-secondary">
+                        <span class="material-symbols-outlined text-slate-500">replay</span>
+                        Reset
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100 text-xs text-blue-800 leading-relaxed">
+                <strong>How to play:</strong> Navigate the blue square to the red target using arrow keys (or WASD). Or click "Solve" to watch the AI find the path!
+            </div>
+        </aside>
+
+        <!-- Canvas Area -->
+        <section class="flex-1 bg-slate-100 relative overflow-hidden flex items-center justify-center p-4">
+            <div class="relative shadow-2xl rounded-lg overflow-hidden bg-white border-4 border-white ring-1 ring-slate-900/5">
+                <canvas id="mazeCanvas"></canvas>
+                
+                <!-- Overlay Message -->
+                <div id="messageOverlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-20">
+                    <div class="bg-white p-8 rounded-2xl shadow-2xl text-center transform scale-90 transition-transform duration-300" id="messageBox">
+                        <span class="material-symbols-outlined text-6xl text-yellow-500 mb-4">emoji_events</span>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Maze Conquered!</h2>
+                        <p class="text-slate-600 mb-6">You found the exit successfully.</p>
+                        <button onclick="initGame()" class="btn-primary w-full justify-center">Play Again</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /**
+         * Labyrinth Master - Core Logic
+         * Uses Depth-First Search (Recursive Backtracker) for generation
+         * and Breadth-First Search (BFS) for solving.
+         */
+
+        const canvas = document.getElementById('mazeCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusText = document.getElementById('statusText');
+        const speedRange = document.getElementById('speedRange');
+        const speedLabel = document.getElementById('speedLabel');
+        const stepCountEl = document.getElementById('stepCount');
+        const messageOverlay = document.getElementById('messageOverlay');
+        const messageBox = document.getElementById('messageBox');
+        
+        // Game State
+        let cols, rows;
+        let size = 20; // Cell size in pixels
+        let grid = [];
+        let stack = [];
+        let current;
+        let player = { col: 0, row: 0 };
+        let end = { col: 0, row: 0 };
+        let isGenerating = false;
+        let isSolving = false;
+        let solvedPath = [];
+        let difficulty = 'easy'; // easy, medium, hard
+        let steps = 0;
+        let animationFrameId;
+
+        // Constants
+        const WALL_THICKNESS = 2;
+        const COLOR_BG = '#ffffff';
+        const COLOR_WALL = '#1e293b'; // slate-800
+        const COLOR_VISITED = '#ffffff';
+        const COLOR_CURRENT_GEN = '#93c5fd'; // blue-300
+        const COLOR_START = '#22c55e'; // green-500
+        const COLOR_END = '#ef4444'; // red-500
+        const COLOR_PLAYER = '#3b82f6'; // blue-500
+        const COLOR_PATH = '#f59e0b'; // amber-500
+        const COLOR_SEARCH = '#e2e8f0'; // slate-200
+
+        // Speed mapping (invert slider: high value = low delay)
+        const getSpeedDelay = () => {
+            const val = parseInt(speedRange.value);
+            if (val === 50) return 0; // Instant
+            return 100 - (val * 2); 
+        };
+
+        // Update Speed Label
+        speedRange.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            if (val === 50) speedLabel.textContent = 'Instant';
+            else if (val > 35) speedLabel.textContent = 'Fast';
+            else if (val > 15) speedLabel.textContent = 'Normal';
+            else speedLabel.textContent = 'Slow';
+        });
+
+        // Difficulty Settings
+        const configs = {
+            'easy': { cols: 15, rows: 15, cellSize: 30 },
+            'medium': { cols: 25, rows: 25, cellSize: 20 },
+            'hard': { cols: 40, rows: 30, cellSize: 15 } // Adjusted for 4:3 aspect mostly
+        };
+
+        function setDifficulty(level) {
+            difficulty = level;
+            // Update UI buttons
+            ['easy', 'medium', 'hard'].forEach(d => {
+                const btn = document.getElementById(`btn-${d}`);
+                if (d === level) {
+                    btn.classList.remove('bg-white', 'border-slate-300', 'text-slate-600');
+                    btn.classList.add('bg-blue-100', 'border-blue-300', 'text-blue-700');
+                } else {
+                    btn.classList.add('bg-white', 'border-slate-300', 'text-slate-600');
+                    btn.classList.remove('bg-blue-100', 'border-blue-300', 'text-blue-700');
+                }
+            });
+            initGame();
+        }
+
+        // --- Cell Class ---
+        class Cell {
+            constructor(c, r) {
+                this.c = c;
+                this.r = r;
+                // Walls: [top, right, bottom, left]
+                this.walls = [true, true, true, true];
+                this.visited = false;
+                this.inPath = false; // For solution visualization
+                this.inSearch = false; // For BFS visualization
+            }
+
+            draw(ctx, size) {
+                const x = this.c * size;
+                const y = this.r * size;
+
+                // Fill background
+                if (this.visited) {
+                    ctx.fillStyle = COLOR_VISITED;
+                    ctx.fillRect(x, y, size, size);
+                }
+                
+                // Visualization colors (layered)
+                if (this.inSearch && !this.inPath) {
+                    ctx.fillStyle = COLOR_SEARCH;
+                    ctx.fillRect(x, y, size, size);
+                }
+                if (this.inPath) {
+                    ctx.fillStyle = 'rgba(245, 158, 11, 0.2)'; // Faint amber path
+                    ctx.fillRect(x, y, size, size);
+                }
+
+                // Draw Walls
+                ctx.strokeStyle = COLOR_WALL;
+                ctx.lineWidth = WALL_THICKNESS;
+                ctx.lineCap = 'round';
+
+                ctx.beginPath();
+                if (this.walls[0]) { // Top
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + size, y);
+                }
+                if (this.walls[1]) { // Right
+                    ctx.moveTo(x + size, y);
+                    ctx.lineTo(x + size, y + size);
+                }
+                if (this.walls[2]) { // Bottom
+                    ctx.moveTo(x + size, y + size);
+                    ctx.lineTo(x, y + size);
+                }
+                if (this.walls[3]) { // Left
+                    ctx.moveTo(x, y + size);
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+
+            checkNeighbors() {
+                let neighbors = [];
+                
+                let top = grid[index(this.c, this.r - 1)];
+                let right = grid[index(this.c + 1, this.r)];
+                let bottom = grid[index(this.c, this.r + 1)];
+                let left = grid[index(this.c - 1, this.r)];
+
+                if (top && !top.visited) neighbors.push(top);
+                if (right && !right.visited) neighbors.push(right);
+                if (bottom && !bottom.visited) neighbors.push(bottom);
+                if (left && !left.visited) neighbors.push(left);
+
+                if (neighbors.length > 0) {
+                    let r = Math.floor(Math.random() * neighbors.length);
+                    return neighbors[r];
+                } else {
+                    return undefined;
+                }
+            }
+        }
+
+        // --- Helper Functions ---
+        function index(c, r) {
+            if (c < 0 || r < 0 || c >= cols || r >= rows) return -1;
+            return c + r * cols;
+        }
+
+        function removeWalls(a, b) {
+            let x = a.c - b.c;
+            if (x === 1) { a.walls[3] = false; b.walls[1] = false; }
+            if (x === -1) { a.walls[1] = false; b.walls[3] = false; }
+            
+            let y = a.r - b.r;
+            if (y === 1) { a.walls[0] = false; b.walls[2] = false; }
+            if (y === -1) { a.walls[2] = false; b.walls[0] = false; }
+        }
+
+        // --- Core Game Functions ---
+
+        function initGame() {
+            // Cancel any ongoing animation
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            
+            // Setup Dimensions
+            const config = configs[difficulty];
+            cols = config.cols;
+            rows = config.rows;
+            size = config.cellSize;
+
+            // Resize Canvas
+            canvas.width = cols * size;
+            canvas.height = rows * size;
+            
+            // Reset State
+            grid = [];
+            stack = [];
+            solvedPath = [];
+            steps = 0;
+            stepCountEl.textContent = `Steps taken: ${steps}`;
+            isSolving = false;
+            
+            // Hide Modals
+            messageOverlay.classList.add('opacity-0', 'pointer-events-none');
+            messageBox.classList.remove('scale-100');
+            messageBox.classList.add('scale-90');
+
+            // Initialize Grid
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    grid.push(new Cell(c, r));
+                }
+            }
+
+            // Start Generation
+            current = grid[0];
+            player = { col: 0, row: 0 };
+            end = { col: cols - 1, row: rows - 1 };
+            
+            isGenerating = true;
+            statusText.innerHTML = '<span class="material-symbols-outlined text-blue-500 animate-spin">settings</span> Generating...';
+            
+            generateMaze();
+        }
+
+        function generateMaze() {
+            const delay = getSpeedDelay();
+
+            function step() {
+                // If "Instant" is selected, loop many times per frame
+                const loopCount = (delay === 0) ? 100 : 1; 
+                
+                for(let i=0; i<loopCount; i++) {
+                    current.visited = true;
+                    // Check neighbors
+                    let next = current.checkNeighbors();
+                    
+                    if (next) {
+                        next.visited = true;
+                        stack.push(current);
+                        removeWalls(current, next);
+                        current = next;
+                    } else if (stack.length > 0) {
+                        current = stack.pop();
+                    } else {
+                        // Finished
+                        isGenerating = false;
+                        statusText.innerHTML = '<span class="material-symbols-outlined text-green-500">check_circle</span> Ready to Play';
+                        draw(); // Final draw
+                        return;
+                    }
+                }
+
+                draw();
+                if (isGenerating) {
+                    if (delay > 0) {
+                        setTimeout(() => {
+                            animationFrameId = requestAnimationFrame(step);
+                        }, delay);
+                    } else {
+                         animationFrameId = requestAnimationFrame(step);
+                    }
+                }
+            }
+            step();
+        }
+
+        function draw() {
+            ctx.fillStyle = COLOR_BG;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Cells
+            for (let i = 0; i < grid.length; i++) {
+                grid[i].draw(ctx, size);
+            }
+
+            // Highlight Generating Head
+            if (isGenerating) {
+                ctx.fillStyle = COLOR_CURRENT_GEN;
+                ctx.fillRect(current.c * size, current.r * size, size, size);
+            }
+
+            // Draw End Point
+            ctx.fillStyle = COLOR_END;
+            ctx.beginPath();
+            ctx.arc((end.col * size) + size/2, (end.row * size) + size/2, size/3, 0, 2*Math.PI);
+            ctx.fill();
+
+            // Draw Player (if not generating)
+            if (!isGenerating) {
+                ctx.fillStyle = COLOR_PLAYER;
+                ctx.beginPath();
+                // Add a little bounce or glow effect potentially
+                ctx.shadowColor = 'rgba(59, 130, 246, 0.5)';
+                ctx.shadowBlur = 10;
+                ctx.arc((player.col * size) + size/2, (player.row * size) + size/2, size/3, 0, 2*Math.PI);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+            
+            // Draw Solution Path Line
+            if (solvedPath.length > 0) {
+                ctx.strokeStyle = COLOR_PATH;
+                ctx.lineWidth = size / 4;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.beginPath();
+                // Move to center of first cell
+                let startCell = solvedPath[0];
+                ctx.moveTo(startCell.c * size + size/2, startCell.r * size + size/2);
+                
+                for(let i=1; i<solvedPath.length; i++) {
+                    let cell = solvedPath[i];
+                    ctx.lineTo(cell.c * size + size/2, cell.r * size + size/2);
+                }
+                ctx.stroke();
+            }
+        }
+
+        // --- Player Movement ---
+        function movePlayer(dc, dr) {
+            if (isGenerating || isSolving) return;
+
+            const currentCell = grid[index(player.col, player.row)];
+            // Check walls
+            // Walls: [top, right, bottom, left]
+            // dy -1 (up) -> check top wall (index 0)
+            // dx 1 (right) -> check right wall (index 1)
+            // dy 1 (down) -> check bottom wall (index 2)
+            // dx -1 (left) -> check left wall (index 3)
+
+            let blocked = false;
+            if (dr === -1 && currentCell.walls[0]) blocked = true;
+            if (dc === 1 && currentCell.walls[1]) blocked = true;
+            if (dr === 1 && currentCell.walls[2]) blocked = true;
+            if (dc === -1 && currentCell.walls[3]) blocked = true;
+
+            if (!blocked) {
+                player.col += dc;
+                player.row += dr;
+                steps++;
+                stepCountEl.textContent = `Steps taken: ${steps}`;
+                draw();
+                checkWin();
+            }
+        }
+
+        function checkWin() {
+            if (player.col === end.col && player.row === end.row) {
+                // Win!
+                messageOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                messageBox.classList.remove('scale-90');
+                messageBox.classList.add('scale-100');
+                // Confetti logic could go here
+            }
+        }
+
+        function resetPlayer() {
+            player.col = 0;
+            player.row = 0;
+            steps = 0;
+            stepCountEl.textContent = `Steps taken: ${steps}`;
+            solvedPath = [];
+            grid.forEach(c => { c.inPath = false; c.inSearch = false; });
+            draw();
+        }
+
+        // --- Solving Logic (BFS) ---
+        function solveMazeVisual() {
+            if (isGenerating || isSolving) return;
+            isSolving = true;
+            statusText.innerHTML = '<span class="material-symbols-outlined text-orange-500 animate-pulse">lightbulb</span> Solving...';
+            
+            // Reset visual flags
+            grid.forEach(c => { c.inSearch = false; c.inPath = false; });
+            solvedPath = [];
+
+            let queue = [];
+            let startNode = grid[index(player.col, player.row)]; // Start from current player pos
+            let visited = new Set();
+            let parentMap = new Map(); // For reconstructing path
+
+            queue.push(startNode);
+            visited.add(startNode);
+            
+            const delay = getSpeedDelay();
+
+            function loop() {
+                // If instant, process many nodes at once
+                let iterations = (delay === 0) ? 50 : 1; 
+
+                for(let k=0; k<iterations; k++) {
+                    if (queue.length === 0) {
+                        isSolving = false;
+                        statusText.innerHTML = '<span class="material-symbols-outlined text-red-500">error</span> No Path Found';
+                        draw();
+                        return;
+                    }
+
+                    let curr = queue.shift();
+                    curr.inSearch = true;
+
+                    // Check if End
+                    if (curr.c === end.col && curr.r === end.row) {
+                        reconstructPath(parentMap, curr);
+                        isSolving = false;
+                        statusText.innerHTML = '<span class="material-symbols-outlined text-green-500">flag</span> Solved!';
+                        return;
+                    }
+
+                    // Get Neighbors (respecting walls)
+                    let neighbors = getAccessibleNeighbors(curr);
+                    for (let neighbor of neighbors) {
+                        if (!visited.has(neighbor)) {
+                            visited.add(neighbor);
+                            parentMap.set(neighbor, curr);
+                            queue.push(neighbor);
+                        }
+                    }
+                }
+
+                draw();
+                if (delay > 0) setTimeout(() => requestAnimationFrame(loop), delay);
+                else requestAnimationFrame(loop);
+            }
+
+            loop();
+        }
+
+        function getAccessibleNeighbors(cell) {
+            let res = [];
+            // Top
+            if (!cell.walls[0]) {
+                let n = grid[index(cell.c, cell.r - 1)];
+                if (n) res.push(n);
+            }
+            // Right
+            if (!cell.walls[1]) {
+                let n = grid[index(cell.c + 1, cell.r)];
+                if (n) res.push(n);
+            }
+            // Bottom
+            if (!cell.walls[2]) {
+                let n = grid[index(cell.c, cell.r + 1)];
+                if (n) res.push(n);
+            }
+            // Left
+            if (!cell.walls[3]) {
+                let n = grid[index(cell.c - 1, cell.r)];
+                if (n) res.push(n);
+            }
+            return res;
+        }
+
+        function reconstructPath(parentMap, endNode) {
+            let path = [];
+            let curr = endNode;
+            while (curr) {
+                path.unshift(curr); // Add to front
+                curr.inPath = true; // Mark visual flag
+                curr = parentMap.get(curr);
+            }
+            solvedPath = path;
+            draw();
+        }
+
+        // --- Event Listeners ---
+        window.addEventListener('keydown', (e) => {
+            // Prevent default scrolling for arrow keys
+            if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
+
+            switch (e.key) {
+                case 'ArrowUp': case 'w': movePlayer(0, -1); break;
+                case 'ArrowDown': case 's': movePlayer(0, 1); break;
+                case 'ArrowLeft': case 'a': movePlayer(-1, 0); break;
+                case 'ArrowRight': case 'd': movePlayer(1, 0); break;
+            }
+        });
+
+        // Initialize on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            setDifficulty('medium'); // Starts the game
+        });
+//# sourceURL=gg.inline_script.0.js
+
+    </script>
+</body>
+</html>
