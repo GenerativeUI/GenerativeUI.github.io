@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-49MPHKQZRV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-49MPHKQZRV');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAGEN Dataset — Generative UI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            color: #e0e0e8;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 2rem 2rem 2.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-home {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-home:hover {
+            background: #6366f1;
+        }
+
+        .btn-github {
+            background: rgba(255, 255, 255, 0.1);
+            color: #c8c8d8;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-github:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .header-title {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a5b4fc, #818cf8, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            color: #9ca3af;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .header-title p a {
+            color: #c7d2fe;
+            text-decoration: underline;
+        }
+
+        .header-title p a:visited {
+            color: #e0e7ff;
+        }
+
+        .header-title p a:hover {
+            color: #fff;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        .category-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(79, 70, 229, 0.04));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #e0e0e8;
+            transition: all 0.25s;
+            margin-bottom: 1rem;
+        }
+
+        .category-card:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(79, 70, 229, 0.10));
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        }
+
+        .category-info h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #a5b4fc;
+            margin-bottom: 0.35rem;
+        }
+
+        .category-info p {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .category-arrow {
+            font-size: 1.5rem;
+            color: #6366f1;
+            transition: transform 0.2s;
+        }
+
+        .category-card:hover .category-arrow {
+            transform: translateX(4px);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-left: 0.75rem;
+            vertical-align: middle;
+        }
+
+        /* SVG icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-top">
+            <div class="header-links">
+                <a href="../../index.html" class="btn btn-home">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                    </svg>
+                    Project Page
+                </a>
+            </div>
+            <a href="https://github.com/GenerativeUI/GenerativeUI.github.io/tree/main/static/pagen"
+                class="btn btn-github" target="_blank">
+                <svg class="icon" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                Browse on GitHub
+            </a>
+        </div>
+        <div class="header-title">
+            <h1>PAGEN Dataset</h1>
+            <p>A dataset of expert-crafted results to aid in evaluating Generative UI implementations. See <a
+                    href="https://arxiv.org/pdf/2604.09577" target="_blank">paper</a> for details.</p>
+        </div>
+    </header>
+
+    <main>
+        <a href="category1_lmsys/index.html" class="category-card">
+            <div class="category-info">
+                <h2>Category 1 — LMSYS <span class="badge">92 topics</span></h2>
+            </div>
+            <span class="category-arrow">→</span>
+        </a>
+
+        <a href="category2_custom/index.html" class="category-card">
+            <div class="category-info">
+                <h2>Category 2 — Custom <span class="badge">100 topics</span></h2>
+            </div>
+            <span class="category-arrow">→</span>
+        </a>
+    </main>
+</body>
+
+</html>
